@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Header\CAirplane.h" />
+    <ClInclude Include="..\Header\CCamera.h" />
+    <ClInclude Include="..\Header\CCody.h" />
+    <ClInclude Include="..\Header\CComponent.h" />
+    <ClInclude Include="..\Header\CFont.h" />
+    <ClInclude Include="..\Header\CFontMgr.h" />
+    <ClInclude Include="..\Header\CFrame.h" />
+    <ClInclude Include="..\Header\CFrameMgr.h" />
+    <ClInclude Include="..\Header\CGameObject.h" />
+    <ClInclude Include="..\Header\CGraphicDev.h" />
+    <ClInclude Include="..\Header\CInnerBox.h" />
+    <ClInclude Include="..\Header\CLayer.h" />
+    <ClInclude Include="..\Header\CManagement.h" />
+    <ClInclude Include="..\Header\CMesh.h" />
+    <ClInclude Include="..\Header\CObj.h" />
+    <ClInclude Include="..\Header\CPskFile.h" />
+    <ClInclude Include="..\Header\CPyramid.h" />
+    <ClInclude Include="..\Header\CRcTex.h" />
+    <ClInclude Include="..\Header\CScene.h" />
+    <ClInclude Include="..\Header\CTerrain.h" />
+    <ClInclude Include="..\Header\CTexture.h" />
+    <ClInclude Include="..\Header\CTimer.h" />
+    <ClInclude Include="..\Header\CTimerMgr.h" />
+    <ClInclude Include="..\Header\CTransform.h" />
+    <ClInclude Include="..\Header\CVIBuffer.h" />
+    <ClInclude Include="..\Header\Engine_Define.h" />
+    <ClInclude Include="..\Header\Engine_Enum.h" />
+    <ClInclude Include="..\Header\Engine_Function.h" />
+    <ClInclude Include="..\Header\Engine_Macro.h" />
+    <ClInclude Include="..\Header\Engine_Struct.h" />
+    <ClInclude Include="..\Header\Engine_Typedef.h" />
+    <ClInclude Include="..\Header\CHeightMapLoader.h" />
+    <ClInclude Include="..\Header\CKeyMgr.h" />
+    <ClInclude Include="..\Header\CProtoMgr.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Code\CAirplane.cpp" />
+    <ClCompile Include="..\Code\CCamera.cpp" />
+    <ClCompile Include="..\Code\CCody.cpp" />
+    <ClCompile Include="..\Code\CComponent.cpp" />
+    <ClCompile Include="..\Code\CFont.cpp" />
+    <ClCompile Include="..\Code\CFontMgr.cpp" />
+    <ClCompile Include="..\Code\CFrame.cpp" />
+    <ClCompile Include="..\Code\CFrameMgr.cpp" />
+    <ClCompile Include="..\Code\CGameObject.cpp" />
+    <ClCompile Include="..\Code\CGraphicDev.cpp" />
+    <ClCompile Include="..\Code\CInnerBox.cpp" />
+    <ClCompile Include="..\Code\CLayer.cpp" />
+    <ClCompile Include="..\Code\CManagement.cpp" />
+    <ClCompile Include="..\Code\CMesh.cpp" />
+    <ClCompile Include="..\Code\CObj.cpp" />
+    <ClCompile Include="..\Code\CPskFile.cpp" />
+    <ClCompile Include="..\Code\CPyramid.cpp" />
+    <ClCompile Include="..\Code\CRcTex.cpp" />
+    <ClCompile Include="..\Code\CScene.cpp" />
+    <ClCompile Include="..\Code\CTerrain.cpp" />
+    <ClCompile Include="..\Code\CTexture.cpp" />
+    <ClCompile Include="..\Code\CTimer.cpp" />
+    <ClCompile Include="..\Code\CTimerMgr.cpp" />
+    <ClCompile Include="..\Code\CTransform.cpp" />
+    <ClCompile Include="..\Code\CVIBuffer.cpp" />
+    <ClCompile Include="..\Code\CHeightMapLoader.cpp" />
+    <ClCompile Include="..\Code\CKeyMgr.cpp" />
+    <ClCompile Include="..\Code\CProtoMgr.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{d568006e-c979-43d2-8ebc-15d78c5a3831}</ProjectGuid>
+    <RootNamespace>Engine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>../Bin\</OutDir>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib/x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>../Bin\</OutDir>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib/x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>../Bin\</OutDir>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib/x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>../Bin\</OutDir>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib/x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../Header;../../Base</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Engine\Header\*.h" "$(SolutionDir)Reference\Header\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../Header;../../Base</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Engine\Header\*.h" "$(SolutionDir)Reference\Header\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../Header;../../Base</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Engine\Header\*.h" "$(SolutionDir)Reference\Header\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../Header;../../Base</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Engine\Header\*.h" "$(SolutionDir)Reference\Header\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

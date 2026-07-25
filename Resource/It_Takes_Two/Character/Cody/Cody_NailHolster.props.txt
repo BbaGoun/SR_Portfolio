@@ -1,0 +1,68 @@
+Skeleton = Skeleton'/Game/Characters/Common/Base_Skeleton.Base_Skeleton'
+bHasVertexColors = true
+LODInfo[5] =
+{
+    LODInfo[0] =
+    {
+        DisplayFactor = 0
+        LODHysteresis = 0.02
+        LODMaterialMap[0] = {}
+        bEnableShadowCasting[0] = {}
+        BonesToRemove[0] = {}
+        BonesToPrioritize[0] = {}
+        SourceImportFilename = ""
+    }
+    LODInfo[1] =
+    {
+        DisplayFactor = 0
+        LODHysteresis = 0
+        LODMaterialMap[7] = { -1, -1, -1, -1, 4, 5, 6 }
+        bEnableShadowCasting[0] = {}
+        BonesToRemove[0] = {}
+        BonesToPrioritize[0] = {}
+        SourceImportFilename = ""
+    }
+    LODInfo[2] =
+    {
+        DisplayFactor = 0
+        LODHysteresis = 0
+        LODMaterialMap[7] = { -1, -1, -1, -1, 4, 5, 6 }
+        bEnableShadowCasting[0] = {}
+        BonesToRemove[0] = {}
+        BonesToPrioritize[0] = {}
+        SourceImportFilename = ""
+    }
+    LODInfo[3] =
+    {
+        DisplayFactor = 0
+        LODHysteresis = 0
+        LODMaterialMap[5] = { -1, -1, -1, -1, -1 }
+        bEnableShadowCasting[0] = {}
+        BonesToRemove[0] = {}
+        BonesToPrioritize[0] = {}
+        SourceImportFilename = ""
+    }
+    LODInfo[4] =
+    {
+        DisplayFactor = 0
+        LODHysteresis = 0
+        LODMaterialMap[5] = { -1, -1, -1, 4, 6 }
+        bEnableShadowCasting[0] = {}
+        BonesToRemove[0] = {}
+        BonesToPrioritize[0] = {}
+        SourceImportFilename = ""
+    }
+}
+MorphTargets[0] = {}
+Sockets[0] = {}
+SamplingInfo =
+{
+    Regions[0] = {}
+    BuiltData =
+    {
+        WholeMeshBuiltData[5] = { , , , ,  }
+        RegionBuiltData[0] = {}
+    }
+}
+SkinWeightProfiles[0] = {}
+NumVertexColorChannels = 0

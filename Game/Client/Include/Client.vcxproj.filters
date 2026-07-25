@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="00. MainApp">
+      <UniqueIdentifier>{32a9f3aa-6d9f-4d1d-b650-86a86f10cf47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene">
+      <UniqueIdentifier>{d8e1b22f-04db-4bdc-ac27-1707308ed746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject">
+      <UniqueIdentifier>{b5a6e975-1ba4-438e-a1c9-4425cc22c495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Loading">
+      <UniqueIdentifier>{0e293edf-66a2-4d1f-b2a3-3e9dc8f1deb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Loading\LoadingThread">
+      <UniqueIdentifier>{a5460c36-fe13-40c6-91aa-5e752b79692a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Test">
+      <UniqueIdentifier>{4a0fedf5-0002-4576-8a9d-93ab4a1073a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\BackGround">
+      <UniqueIdentifier>{82ca06a2-1d49-48df-9619-97fbd9172848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\SkyBox">
+      <UniqueIdentifier>{859f3918-5c4b-4bf1-8123-8e96160970aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Enemy">
+      <UniqueIdentifier>{2abdddf8-d6c9-4e51-ac7c-39bdb81140fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Jet">
+      <UniqueIdentifier>{5cbc5a26-f72f-4f9f-a707-07e4199c6a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Land">
+      <UniqueIdentifier>{e078520d-f092-48a0-9725-02e48e842cd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\GOCody">
+      <UniqueIdentifier>{bcc5ba6d-131a-4e42-a2d6-3f1a1ab100cb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMainApp.h">
+      <Filter>00. MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLoading.h">
+      <Filter>01. Scene\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLoadingThread.h">
+      <Filter>01. Scene\Loading\LoadingThread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene_Test.h">
+      <Filter>01. Scene\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBackGround.h">
+      <Filter>02. GameObject\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CEnemy.h">
+      <Filter>02. GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CJet.h">
+      <Filter>02. GameObject\Jet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLand.h">
+      <Filter>02. GameObject\Land</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSkyBox.h">
+      <Filter>02. GameObject\SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGOCody.h">
+      <Filter>02. GameObject\GOCody</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Client.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMainApp.cpp">
+      <Filter>00. MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLoading.cpp">
+      <Filter>01. Scene\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLoadingThread.cpp">
+      <Filter>01. Scene\Loading\LoadingThread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene_Test.cpp">
+      <Filter>01. Scene\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBackGround.cpp">
+      <Filter>02. GameObject\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEnemy.cpp">
+      <Filter>02. GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CJet.cpp">
+      <Filter>02. GameObject\Jet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLand.cpp">
+      <Filter>02. GameObject\Land</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSkyBox.cpp">
+      <Filter>02. GameObject\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGOCody.cpp">
+      <Filter>02. GameObject\GOCody</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Client.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
