@@ -3,6 +3,7 @@
 #include "CGameObject.h"
 #include "CTimerMgr.h"
 #include "CFrameMgr.h"
+#include "CCameraMgr.h"
 
 CCamera::CCamera() : CComponent()
 {
@@ -40,9 +41,6 @@ void CCamera::SetCamera_BeforeRender()
 	if (pTransComp == nullptr)
 		pTransComp = static_cast<CTransform*>(m_pOwner->Get_Component(ID_STATIC, L"Com_Transform"));
 
-	_vec3 camPos = pTransComp->m_vInfo[INFO_POS];
-	_vec3 vAt = camPos;
-
 	_vec3 vInfoRight, vInfoUp, vInfoLook;
 	pTransComp->Get_Info(INFO_RIGHT, &vInfoRight);
 	pTransComp->Get_Info(INFO_UP, &vInfoUp);
@@ -50,6 +48,9 @@ void CCamera::SetCamera_BeforeRender()
 	D3DXVec3Normalize(&vInfoRight, &vInfoRight);
 	D3DXVec3Normalize(&vInfoUp, &vInfoUp);
 	D3DXVec3Normalize(&vInfoLook, &vInfoLook);
+
+	_vec3 camPos = pTransComp->m_vInfo[INFO_POS] + vInfoUp * 5;
+	_vec3 vAt = camPos;
 
 	// 카메라가 대상으로부터 떨어지는 정도
 	_vec3 vOffset = -vInfoLook * 10;
@@ -67,6 +68,12 @@ void CCamera::SetCamera_BeforeRender()
 
 	camPos += vOffset;
 
+	_matrix matRotQInverse;
+	D3DXMatrixInverse(&matRotQInverse, 0, &matRotQ);
+
+	_vec3 vAtOffset = vInfoLook;
+	D3DXVec3TransformCoord(&vAtOffset, &vAtOffset, &matRotQInverse);
+
 	_vec3 vUp = vInfoUp;
 
 	_matrix matView, matProj;
@@ -76,13 +83,12 @@ void CCamera::SetCamera_BeforeRender()
 	D3DXMatrixPerspectiveFovLH(
 		&matProj,
 		D3DXToRadian(m_fFov),
-		m_fAspect,
+		((float)WINCX/2-1)/(float)WINCY,
 		m_fNear,
 		m_fFar
 	);
 
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+	CCameraMgr::GetInstance()->UpdateCameraInfo(m_eCameraID, &matView, &matProj);
 }
 
 HRESULT CCamera::Ready_Camera()

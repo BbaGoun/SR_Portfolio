@@ -4,6 +4,7 @@
 #include "CProtoMgr.h"
 #include "CTexture.h"
 #include "CKeyMgr.h"
+#include "CCameraMgr.h"
 
 CGOCody::CGOCody(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -25,19 +26,18 @@ HRESULT CGOCody::Ready_GameObject()
 
 	pComponent = m_pBufferCom = static_cast<CCody*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Cody"));
 	pComponent->SetOwner(this);
-
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTransformCom = static_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
 	pComponent->SetOwner(this);
-
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 	m_pTransformCom->m_vScale = { 0.05f, 0.05f, 0.05f };
 
 	pComponent = m_pCameraCom = static_cast<CCamera*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Camera"));
 	pComponent->SetOwner(this);
-
 	m_mapComponent[ID_STATIC].insert({ L"Com_Camera", pComponent });
+	CCameraMgr::GetInstance()->AddCamera();
+	m_pCameraCom->SetCameraID(CAM_CODY);
 
 	return S_OK;
 }
@@ -52,6 +52,7 @@ _int CGOCody::Update_GameObject(const _float& fTimeDelta)
 void CGOCody::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	m_pCameraCom->SetCamera_BeforeRender();
 }
 
 void CGOCody::Render_GameObject()
@@ -60,13 +61,23 @@ void CGOCody::Render_GameObject()
 
 	matWorld = m_pTransformCom->m_matWorld;
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 
-	m_pCameraCom->SetCamera_BeforeRender();
-	m_pBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	for (int i = 0; i < CAM_GLOBAL; ++i)
+	{
+		switch (i) {
+		case 0:
+			m_pGraphicDev->SetViewport(&g_LeftView);
+			break;
+		case 1:
+			m_pGraphicDev->SetViewport(&g_RightView);
+			break;
+		}
+		CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo(i);
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
+		m_pBufferCom->Render_Buffer();
+	}
 }
 
 void CGOCody::Key_Input(const _float& fTimeDelta)

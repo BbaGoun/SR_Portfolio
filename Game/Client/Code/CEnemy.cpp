@@ -32,12 +32,12 @@ HRESULT CEnemy::Ready_GameObject()
 
 	pComponent = CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform");
 	pComponent->SetOwner(this);
-	m_pTransformComp = static_cast<CTransform*>(pComponent);
-	m_pTransformComp->m_qRotation = { sinf(D3DXToRadian(90) / (float)2), 0, 0, cosf(D3DXToRadian(90) / (float)2) };
+	m_pTransformCom = static_cast<CTransform*>(pComponent);
+	m_pTransformCom->m_qRotation = { sinf(D3DXToRadian(90) / (float)2), 0, 0, cosf(D3DXToRadian(90) / (float)2) };
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Transform", pComponent });
 
-	m_pTransformComp->m_vScale = { 1, 1, 1 };
+	m_pTransformCom->m_vScale = { 1, 1, 1 };
 
 	return S_OK;
 }
@@ -57,7 +57,7 @@ void CEnemy::Render_GameObject()
 {
 	D3DXMATRIX *matWorld;
 
-	matWorld = m_pTransformComp->Get_World();
+	matWorld = m_pTransformCom->Get_World();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, matWorld);
@@ -74,7 +74,7 @@ void CEnemy::Follow(const _float& fTimeDelta)
 		CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameObject", L"Obj_Player", L"Com_Transform")
 	)->Get_Info(INFO_POS, &playerPos);
 
-	m_pTransformComp->FollowObj(&playerPos, 7.5, fTimeDelta);
+	m_pTransformCom->FollowObj(&playerPos, 7.5, fTimeDelta);
 }
 
 CEnemy* CEnemy::Create(LPDIRECT3DDEVICE9 pGraphicDev)

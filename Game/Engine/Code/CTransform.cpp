@@ -83,9 +83,6 @@ void CTransform::FollowObj(_vec3* pPos, _float _fSpeed, _float _fTimeDelta)
 	
 	_float fLength = D3DXVec3Length(&vFollowDir);
 
-	if (fLength < 0.05f)
-		return;
-
 	float step = min(fLength, _fSpeed * _fTimeDelta);
 
 	D3DXVec3Normalize(&vFollowDir, &vFollowDir);
@@ -95,9 +92,9 @@ void CTransform::FollowObj(_vec3* pPos, _float _fSpeed, _float _fTimeDelta)
 	_matrix matScale, matRot, matTrans;
 
 	// 크기
-	D3DXMatrixScaling(&matScale, 
-		m_vScale.x, 
-		m_vScale.y, 
+	D3DXMatrixScaling(&matScale,
+		m_vScale.x,
+		m_vScale.y,
 		m_vScale.z);
 
 	// 회전
@@ -117,13 +114,13 @@ _matrix* CTransform::GetFollowRotation(_vec3* pFollowDir, _matrix* _pRot)
 	// 플레이어를 향하는 방향과 현재 삼각형이 향하는 방향의 외적
 	// 현재 삼각형이 향하는 방향에서 플레이어를 향하는 방향으로 바꾸는 축을 알아낸다.
 	_vec3 vCross;
-	D3DXVec3Cross(&vCross, &m_vInfo[INFO_UP], pFollowDir);
+	D3DXVec3Cross(&vCross, &m_vInfo[INFO_LOOK], pFollowDir);
 
 	if (vCross.x == 0 && vCross.y == 0 && vCross.z == 0)
 		return D3DXMatrixIdentity(_pRot);
 
 	// 현재 삼각형이 향하는 방향에서 플레이어를 향하는 방향으로 회전할 때, 사잇각을 알아낸다.
-	float theta = acosf(D3DXVec3Dot(&m_vInfo[INFO_UP], pFollowDir));
+	float theta = acosf(D3DXVec3Dot(&m_vInfo[INFO_LOOK], pFollowDir));
 
 	// 해당 축으로 사잇각 만큼 회전하는 회전 행렬을 구함
 	return	D3DXMatrixRotationAxis(_pRot, &vCross, theta);

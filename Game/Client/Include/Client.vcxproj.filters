@@ -49,6 +49,9 @@
     <Filter Include="02. GameObject\GOCody">
       <UniqueIdentifier>{bcc5ba6d-131a-4e42-a2d6-3f1a1ab100cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\GOMay">
+      <UniqueIdentifier>{9348a796-3561-4fac-acb1-d33004229715}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -96,6 +99,15 @@
     <ClInclude Include="..\Header\CGOCody.h">
       <Filter>02. GameObject\GOCody</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CGOMay.h">
+      <Filter>02. GameObject\GOMay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Client_Define.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Client_Enum.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -133,6 +145,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CGOCody.cpp">
       <Filter>02. GameObject\GOCody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGOMay.cpp">
+      <Filter>02. GameObject\GOMay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Client_Define.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

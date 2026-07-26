@@ -1,0 +1,26 @@
+Materials[1] =
+{
+    Materials[0] = MaterialInstanceConstant'/Game/Characters/May/Materials/Trackrunner_Emissive.Trackrunner_Emissive'
+}
+SourceModels[0] = {}
+StaticMaterials[1] =
+{
+    StaticMaterials[0] =
+    {
+        MaterialInterface = MaterialInstanceConstant'/Game/Characters/May/Materials/Trackrunner_Emissive.Trackrunner_Emissive'
+        MaterialSlotName = Track_mat
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 272.211, 70.7609, 0, 0 }
+        }
+    }
+}
+Sockets[0] = {}
+ExtendedBounds =
+{
+    Origin = { X=1.25399, Y=-0.550474, Z=15.1339 }
+    BoxExtent = { X=14.7462, Y=11.7553, Z=17.0521 }
+    SphereRadius = 22.5504
+}

@@ -27,8 +27,11 @@ public:
 	virtual CComponent* Clone() override;
 
 protected:
-	vector<PSKBone>					m_vecBones;
-	vector<PSKMaterial>				m_vecMaterials;
+	map<uint8_t, LPDIRECT3DTEXTURE9>		m_mapTextures;
+	vector<PSKSubset>						m_vecSubsets;
+
+	vector<PSKBone>							m_vecBones;
+	vector<PSKMaterial>						m_vecMaterials;
 
 protected:
 	virtual void		Free() override;

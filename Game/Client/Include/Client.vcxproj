@@ -177,8 +177,11 @@
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
     <ClInclude Include="..\Header\CEnemy.h" />
+    <ClInclude Include="..\Header\CGOMay.h" />
     <ClInclude Include="..\Header\CJet.h" />
     <ClInclude Include="..\Header\CLand.h" />
+    <ClInclude Include="..\Header\Client_Define.h" />
+    <ClInclude Include="..\Header\Client_Enum.h" />
     <ClInclude Include="..\Header\CLoading.h" />
     <ClInclude Include="..\Header\CLoadingThread.h" />
     <ClInclude Include="..\Header\CMainApp.h" />
@@ -194,8 +197,10 @@
   <ItemGroup>
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CEnemy.cpp" />
+    <ClCompile Include="..\Code\CGOMay.cpp" />
     <ClCompile Include="..\Code\CJet.cpp" />
     <ClCompile Include="..\Code\CLand.cpp" />
+    <ClCompile Include="..\Code\Client_Define.cpp" />
     <ClCompile Include="..\Code\CLoading.cpp" />
     <ClCompile Include="..\Code\CLoadingThread.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />

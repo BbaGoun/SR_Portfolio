@@ -1,24 +1,66 @@
 ﻿#include "CPskFile.h"
+#include <fstream>
+#include <string>
+
+namespace
+{
+	std::wstring ToWide(const std::string& str)
+	{
+		if (str.empty())
+			return std::wstring();
+
+		int iLen = MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, nullptr, 0);
+		if (iLen <= 1)
+			return std::wstring();
+
+		std::wstring result(iLen - 1, L'\0');
+		MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, &result[0], iLen);
+		return result;
+	}
+
+	std::string ReadMatValue(const std::wstring& matPath, const char* key)
+	{
+		std::ifstream fin(matPath);
+		if (!fin.is_open())
+			return std::string();
+
+		std::string prefix = std::string(key) + "=";
+		std::string line;
+
+		while (std::getline(fin, line))
+		{
+			if (line.compare(0, prefix.size(), prefix) == 0) {
+				std::string value = line.substr(prefix.size());
+				while (!value.empty() && (value.back() == '\r' || value.back() == ' '))
+					value.pop_back();
+				return value;
+			}
+		}
+
+		return std::string();
+	}
+}
 
 CPskFile::CPskFile() : CVIBuffer()
-, m_pBaseColorMap(nullptr)
 {
 }
 
 CPskFile::CPskFile(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
-, m_pBaseColorMap(nullptr)
 {
 }
 
 CPskFile::CPskFile(const CPskFile& rhs) : CVIBuffer(rhs)
-, m_pBaseColorMap(rhs.m_pBaseColorMap)
+, m_vecSubsets(rhs.m_vecSubsets)
+, m_mapTextures(rhs.m_mapTextures)
 , m_vecBones(rhs.m_vecBones)
 , m_vecMaterials(rhs.m_vecMaterials)
 {
 	if (m_pVB)				m_pVB->AddRef();
 	if (m_pIB)				m_pIB->AddRef();
 	if (m_pVtxDecl)			m_pVtxDecl->AddRef();
-	if (m_pBaseColorMap)	m_pBaseColorMap->AddRef();
+	
+	for (auto& pair : m_mapTextures)
+		pair.second->AddRef();
 }
 
 CPskFile::~CPskFile()
@@ -53,17 +95,17 @@ HRESULT CPskFile::LoadPsk(const WCHAR* pPskPath)
 
 	// ── PNTS0000 ──────────────────────────────────
 	ReadFile(hFile, &header, sizeof(VChunkHeader), &dwByte, nullptr);
-	vector<_vec3> points(header.DataCount);
+	vector<_vec3> vecPoints(header.DataCount);
 	if (header.DataCount > 0)
-		ReadFile(hFile, points.data(), header.DataSize * header.DataCount, &dwByte, nullptr);
+		ReadFile(hFile, vecPoints.data(), header.DataSize * header.DataCount, &dwByte, nullptr);
 
-	uint32_t numPoints = (uint32_t)points.size();
+	uint32_t numPoints = (uint32_t)vecPoints.size();
 
 	// ── 오른손 좌표계 -> 왼손 좌표계 ──────────────────────
 	// 모델들은 +x를 바라보며, +y가 오른쪽이고, +z가 머리 방향인 좌표계를 사용한다.
 	// 이를 DirectX에 맞도록 변형해야한다.
 
-	for (auto& p : points) {
+	for (auto& p : vecPoints) {
 		float oldX = p.x, oldY = p.y, oldZ = p.z;
 		p.x = oldY; // 오른쪽이 x에 오게
 		p.y = oldZ; // 머리가 y에 오게
@@ -74,8 +116,7 @@ HRESULT CPskFile::LoadPsk(const WCHAR* pPskPath)
 	ReadFile(hFile, &header, sizeof(VChunkHeader), &dwByte, nullptr);
 	uint32_t wedgeCount = header.DataCount;
 
-	vector<uint32_t>	wdgPointIdx(wedgeCount);
-	vector<float>		wdgU(wedgeCount), wdgV(wedgeCount);
+	vector<PSKWedgeG>	vecPskWedges(wedgeCount);
 
 	if (numPoints <= 65536)
 	{
@@ -84,9 +125,10 @@ HRESULT CPskFile::LoadPsk(const WCHAR* pPskPath)
 			ReadFile(hFile, wedges.data(), header.DataSize * wedgeCount, &dwByte, nullptr);
 		for (uint32_t i = 0; i < wedgeCount; ++i)
 		{
-			wdgPointIdx[i]	= wedges[i].PointIndex;
-			wdgU[i]			= wedges[i].U;
-			wdgV[i]			= wedges[i].V;
+			vecPskWedges[i].PointIndex	= (uint32_t)wedges[i].PointIndex;
+			vecPskWedges[i].U			= wedges[i].U;
+			vecPskWedges[i].V			= wedges[i].V;
+			vecPskWedges[i].MatIndex	= (uint32_t)wedges[i].MatIndex;
 		}
 	}
 	else
@@ -96,42 +138,50 @@ HRESULT CPskFile::LoadPsk(const WCHAR* pPskPath)
 			ReadFile(hFile, wedges.data(), header.DataSize * wedgeCount, &dwByte, nullptr);
 		for (uint32_t i = 0; i < wedgeCount; ++i)
 		{
-			wdgPointIdx[i]	= wedges[i].PointIndex;
-			wdgU[i]			= wedges[i].U;
-			wdgV[i]			= wedges[i].V;
+			vecPskWedges[i].PointIndex	= wedges[i].PointIndex;
+			vecPskWedges[i].U			= wedges[i].U;
+			vecPskWedges[i].V			= wedges[i].V;
+			vecPskWedges[i].MatIndex	= wedges[i].MatIndex;
 		}
 	}
 
 	// ── FACE0000 / FACE0032 ──────────────────────
 	ReadFile(hFile, &header, sizeof(VChunkHeader), &dwByte, nullptr);
 	uint32_t triCount = header.DataCount;
-	bool bFace32 = (strncmp(header.ChunkID, "FACE0032", 8) == 0);
+	bool bFace00 = (strncmp(header.ChunkID, "FACE0000", 8) == 0);
 
-	vector<DWORD> faceIdx;
-	faceIdx.reserve(triCount * 3);
+	vector<PSKTriangle32> vecPskFaces(triCount);
 
-	if (bFace32)
-	{
-		vector<PSKTriangle32> faces(triCount);
-		if (triCount > 0)
-			ReadFile(hFile, faces.data(), header.DataSize * triCount, &dwByte, nullptr);
-		for (uint32_t i = 0; i < triCount; ++i)
-		{
-			faceIdx.push_back(faces[i].WedgeIndex[0]);
-			faceIdx.push_back(faces[i].WedgeIndex[1]);
-			faceIdx.push_back(faces[i].WedgeIndex[2]);
-		}
-	}
-	else
+	if (bFace00)
 	{
 		vector<PSKTriangle00> faces(triCount);
 		if (triCount > 0)
 			ReadFile(hFile, faces.data(), header.DataSize * triCount, &dwByte, nullptr);
 		for (uint32_t i = 0; i < triCount; ++i)
 		{
-			faceIdx.push_back((DWORD)faces[i].WedgeIndex[0]);
-			faceIdx.push_back((DWORD)faces[i].WedgeIndex[1]);
-			faceIdx.push_back((DWORD)faces[i].WedgeIndex[2]);
+			// 인덱스 순서가 반대여서 뒤집음
+			vecPskFaces[i].WedgeIndex[0]		= (uint32_t)faces[i].WedgeIndex[2];
+			vecPskFaces[i].WedgeIndex[1]		= (uint32_t)faces[i].WedgeIndex[1];
+			vecPskFaces[i].WedgeIndex[2]		= (uint32_t)faces[i].WedgeIndex[0];
+			vecPskFaces[i].MatIndex			= faces[i].MatIndex;
+			vecPskFaces[i].AuxMatIndex		= faces[i].AuxMatIndex;
+			vecPskFaces[i].SmoothingGroups	= faces[i].SmoothingGroups;
+		}
+	}
+	else
+	{
+		vector<PSKTriangle32> faces(triCount);
+		if (triCount > 0)
+			ReadFile(hFile, faces.data(), header.DataSize * triCount, &dwByte, nullptr);
+		for (uint32_t i = 0; i < triCount; ++i)
+		{
+			// 인덱스 순서가 반대여서 뒤집음
+			vecPskFaces[i].WedgeIndex[0]		= faces[i].WedgeIndex[2];
+			vecPskFaces[i].WedgeIndex[1]		= faces[i].WedgeIndex[1];
+			vecPskFaces[i].WedgeIndex[2]		= faces[i].WedgeIndex[0];
+			vecPskFaces[i].MatIndex			= faces[i].MatIndex;
+			vecPskFaces[i].AuxMatIndex		= faces[i].AuxMatIndex;
+			vecPskFaces[i].SmoothingGroups	= faces[i].SmoothingGroups;
 		}
 	}
 
@@ -140,6 +190,79 @@ HRESULT CPskFile::LoadPsk(const WCHAR* pPskPath)
 	m_vecMaterials.resize(header.DataCount);
 	if (header.DataCount > 0)
 		ReadFile(hFile, m_vecMaterials.data(), header.DataSize * header.DataCount, &dwByte, nullptr);
+
+	// 매핑하여 실제 경로의 텍스처를 가져와 Com객체를 생성해야함.
+
+    std::wstring pskPath = pPskPath;
+    size_t slash = pskPath.find_last_of(L"/\\");
+    std::wstring baseDir = pskPath.substr(0, slash + 1);
+
+    // baseDir + L"Materials\\Cody_Head.mat"
+    // baseDir + L"Textures\\Head_mat_C1.png"
+
+	for (size_t i = 0; i < m_vecMaterials.size(); ++i)
+	{
+		const PSKMaterial& material = m_vecMaterials[i];
+
+		// Name[64]가 null 종료되지 않을 가능성에 대비해 길이를 제한한다.
+		size_t nameLength = strnlen_s(material.Name, sizeof(material.Name));
+		std::string materialName(material.Name, nameLength);
+
+		std::wstring matPath =
+			baseDir + L"Materials\\" + ToWide(materialName) + L".mat";
+
+		// .mat에서 "Other[0]=" 뒤의 값을 읽는다.
+		std::string textureStem = ReadMatValue(matPath, "Other[0]");
+		if (textureStem.empty())
+			continue;
+
+		std::wstring texturePath =
+			baseDir + L"Textures\\" + ToWide(textureStem) + L".png";
+
+		LPDIRECT3DTEXTURE9 texture = nullptr;
+
+		HRESULT hr = D3DXCreateTextureFromFileW(
+			m_pGraphicDev,
+			texturePath.c_str(),
+			&texture);
+
+		if (SUCCEEDED(hr))
+			m_mapTextures.emplace(static_cast<uint8_t>(i), texture);
+	}
+
+
+    // ── 서브셋 생성을 위해 MatIndex를 기준으로 정렬 ────────────────
+	sort(vecPskFaces.begin(), vecPskFaces.end(),
+		[](PSKTriangle32& a, PSKTriangle32& b) {
+			return a.MatIndex < b.MatIndex;
+		});
+
+	if (!vecPskFaces.empty())
+	{
+		uint8_t currentMaterial = vecPskFaces[0].MatIndex;
+		DWORD firstFace = 0;
+
+		for (DWORD i = 1; i < vecPskFaces.size(); ++i)
+		{
+			if (vecPskFaces[i].MatIndex != currentMaterial)
+			{
+				m_vecSubsets.push_back({
+					firstFace * 3,
+					i - firstFace,
+					currentMaterial
+					});
+
+				firstFace = i;
+				currentMaterial = vecPskFaces[i].MatIndex;
+			}
+		}
+
+		m_vecSubsets.push_back({
+			firstFace * 3,
+			static_cast<DWORD>(vecPskFaces.size()) - firstFace,
+			currentMaterial
+			});
+	}
 
 	// ── REFSKELT ──────────────────────────────────
 	ReadFile(hFile, &header, sizeof(VChunkHeader), &dwByte, nullptr);
@@ -187,24 +310,24 @@ HRESULT CPskFile::LoadPsk(const WCHAR* pPskPath)
 
 	for (uint32_t i = 0; i < wedgeCount; ++i)
 	{
-		uint32_t pi = wdgPointIdx[i];
+		uint32_t pi = vecPskWedges[i].PointIndex;
 		VTXMESH& v	= vecVtx[i];
 
-		v.vPosition = { points[pi].x, points[pi].y, points[pi].z };
+		if (pi >= numPoints)
+			continue;
+
+		v.vPosition = { vecPoints[pi].x, vecPoints[pi].y, vecPoints[pi].z };
 		v.vNormal	= { 0.f, 0.f, 0.f };
-		v.vTexUV	= { wdgU[i], wdgV[i] };
+		v.vTexUV	= { vecPskWedges[i].U, vecPskWedges[i].V };
 
 		memset(v.aBoneWeights, 0, sizeof(v.aBoneWeights));
 		memset(v.aBoneIndices, 0, sizeof(v.aBoneIndices));
 
-		if (pi < numPoints)
+		const auto& pw = ptWeights[pi];
+		for (size_t j = 0; j < pw.size() && j < 4; ++j)
 		{
-			const auto& pw = ptWeights[pi];
-			for (size_t j = 0; j < pw.size() && j < 4; ++j)
-			{
-				v.aBoneWeights[j] = pw[j].second;
-				v.aBoneIndices[j] = static_cast<BYTE>(pw[j].first);
-			}
+			v.aBoneWeights[j] = pw[j].second;
+			v.aBoneIndices[j] = static_cast<BYTE>(pw[j].first);
 		}
 	}
 
@@ -212,9 +335,9 @@ HRESULT CPskFile::LoadPsk(const WCHAR* pPskPath)
 	// PSK 포맷은 노말을 저장하지 않으므로 직접 계산
 	for (uint32_t i = 0; i < triCount; ++i)
 	{
-		DWORD i0 = faceIdx[i * 3 + 0];
-		DWORD i1 = faceIdx[i * 3 + 1];
-		DWORD i2 = faceIdx[i * 3 + 2];
+		DWORD i0 = vecPskFaces[i].WedgeIndex[0];
+		DWORD i1 = vecPskFaces[i].WedgeIndex[1];
+		DWORD i2 = vecPskFaces[i].WedgeIndex[2];
 
 		_vec3 e1, e2, fn;
 		D3DXVec3Subtract(&e1, &vecVtx[i1].vPosition, &vecVtx[i0].vPosition);
@@ -233,7 +356,7 @@ HRESULT CPskFile::LoadPsk(const WCHAR* pPskPath)
 	m_dwVtxSize = sizeof(VTXMESH);
 	m_dwVtxCnt	= wedgeCount;
 	m_dwTriCnt	= triCount;
-	m_dwIdxCnt	= (DWORD)faceIdx.size();
+	m_dwIdxCnt = (DWORD)triCount * 3;
 	m_IdxFmt	= D3DFMT_INDEX32;
 
 	if (FAILED(m_pGraphicDev->CreateVertexDeclaration(MeshVertexElements, &m_pVtxDecl)))
@@ -262,8 +385,15 @@ HRESULT CPskFile::LoadPsk(const WCHAR* pPskPath)
 		&m_pIB, 0)))
 		return E_FAIL;
 
-	m_pIB->Lock(0, 0, &pData, 0);
-	memcpy(pData, faceIdx.data(), sizeof(DWORD) * m_dwIdxCnt);
+	INDEX32* pIndices;
+
+	m_pIB->Lock(0, 0, (void**)&pIndices, 0);
+
+	for (uint32_t i = 0; i < vecPskFaces.size(); ++i) {
+		pIndices[i]._0 = vecPskFaces[i].WedgeIndex[0];
+		pIndices[i]._1 = vecPskFaces[i].WedgeIndex[1];
+		pIndices[i]._2 = vecPskFaces[i].WedgeIndex[2];
+	}
 	m_pIB->Unlock();
 
 	return S_OK;
@@ -290,13 +420,26 @@ HRESULT CPskFile::Ready_Buffer()
 
 void CPskFile::Render_Buffer()
 {
-
-
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
 	m_pGraphicDev->SetVertexDeclaration(m_pVtxDecl);
 	m_pGraphicDev->SetIndices(m_pIB);
 
-	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
+	for (auto& subset : m_vecSubsets)
+	{
+		auto iter = m_mapTextures.find(subset.MatIndex);
+		m_pGraphicDev->SetTexture(
+			0,
+			iter != m_mapTextures.end() ? iter->second : nullptr
+		);
+
+		m_pGraphicDev->DrawIndexedPrimitive(
+			D3DPT_TRIANGLELIST,
+			0,
+			0,
+			m_dwVtxCnt,
+			subset.dwStartIndex,
+			subset.dwPrimCount);
+	}
 }
 
 CComponent* CPskFile::Clone()
@@ -309,7 +452,11 @@ void CPskFile::Free()
 	Safe_Release(m_pVB);
 	Safe_Release(m_pIB);
 	Safe_Release(m_pVtxDecl);
-	Safe_Release(m_pBaseColorMap);
+
+	for (auto& pair : m_mapTextures)
+		Safe_Release(pair.second);
+
+	m_mapTextures.clear();
 
 	CComponent::Free();
 }

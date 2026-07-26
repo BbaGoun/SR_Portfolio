@@ -24,6 +24,7 @@ public:
 
 		m_vAngle.x = clampT<float>(m_vAngle.x, -30.f, 30.f);
 	}
+	void SetCameraID(int _eID) { m_eCameraID = _eID; }
 
 protected:
 	HRESULT	Ready_Camera();
@@ -39,6 +40,8 @@ public:
 	_float			m_fAspect;
 	_float			m_fNear;
 	_float			m_fFar;
+
+	int				m_eCameraID;
 
 protected:
 	virtual void		Free() override;

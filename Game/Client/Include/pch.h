@@ -22,6 +22,9 @@
 
 #include <process.h>
 
+#include "Client_Define.h"
+#include "Client_Enum.h"
+
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC
@@ -34,9 +37,6 @@
 
 #endif
 #endif
-
-extern HWND g_hWnd;
-extern HINSTANCE g_hInst;
 
 using namespace std;
 

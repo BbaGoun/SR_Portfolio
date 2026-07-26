@@ -3,6 +3,7 @@
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
 #include "CTexture.h"
+#include "CCameraMgr.h"
 
 CLand::CLand(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -52,16 +53,26 @@ void CLand::Render_GameObject()
 {
 	D3DXMATRIX* matWorld;
 
-
 	matWorld = m_pTransformCom->Get_World();
 
 	m_pTextureCom->Set_Texture(0);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, matWorld);
 
-	m_pBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	for (int i = 0; i < CAM_GLOBAL; ++i)
+	{
+		switch (i) {
+		case 0:
+			m_pGraphicDev->SetViewport(&g_LeftView);
+			break;
+		case 1:
+			m_pGraphicDev->SetViewport(&g_RightView);
+			break;
+		}
+		CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo(i);
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
+		m_pBufferCom->Render_Buffer();
+	}
 }
 
 CLand* CLand::Create(LPDIRECT3DDEVICE9 pGraphicDev)

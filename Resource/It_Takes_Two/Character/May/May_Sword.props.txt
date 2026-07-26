@@ -1,0 +1,38 @@
+Materials[2] =
+{
+    Materials[0] = MaterialInstanceConstant'/Game/Effects/Materials/ToySword_01.ToySword_01'
+    Materials[1] = MaterialInstanceConstant'/Game/Characters/May/Materials/Castle/ToySword.ToySword'
+}
+SourceModels[0] = {}
+StaticMaterials[2] =
+{
+    StaticMaterials[0] =
+    {
+        MaterialInterface = MaterialInstanceConstant'/Game/Effects/Materials/ToySword_01.ToySword_01'
+        MaterialSlotName = ToySword_mat
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 129.12, 156.586, 0, 0 }
+        }
+    }
+    StaticMaterials[1] =
+    {
+        MaterialInterface = MaterialInstanceConstant'/Game/Characters/May/Materials/Castle/ToySword.ToySword'
+        MaterialSlotName = ToySword_mat
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 112.992, 157.234, 0, 0 }
+        }
+    }
+}
+Sockets[0] = {}
+ExtendedBounds =
+{
+    Origin = { X=0, Y=-7.54651, Z=75.7546 }
+    BoxExtent = { X=6.86837, Y=31.5724, Z=112.453 }
+    SphereRadius = 116.801
+}

@@ -11,6 +11,7 @@
 #include "CAirplane.h"
 #include "CLand.h"
 #include "CGOCody.h"
+#include "CGOMay.h"
 
 CScene_Test::CScene_Test(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -80,7 +81,7 @@ HRESULT CScene_Test::Ready_GameObject_Layer()
 
 	CGameObject* pGameObject = nullptr;
 
-	pGameObject = CEnemy::Create(m_pGraphicDev);
+	pGameObject = CGOMay::Create(m_pGraphicDev);
 
 	if (pGameObject == nullptr)
 		return E_FAIL;

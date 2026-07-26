@@ -84,7 +84,7 @@ namespace Engine
 
 	// 웨지 - 버텍스 + UV (VTXW0000)
 	// The format of this structure depends on the edge count.
-	// 65536d보다 작거나 같으면 
+	// 65536d보다 작거나 같으면
 	struct PSKWedgeL {
 		uint16_t	PointIndex;
 		uint16_t	Padding1;
@@ -146,7 +146,20 @@ namespace Engine
 		uint32_t  PointIndex;	// 버텍스 인덱스
 		uint32_t  BoneIndex;	// 본 인덱스
 	};
+
+	struct PSKSubset
+	{
+		DWORD					dwStartIndex;	// 인덱스 버퍼 내 시작 위치
+		DWORD					dwPrimCount;	// 이 서브셋의 삼각형 수
+		uint8_t					MatIndex;		// 이 서브셋에 사용할 텍스처
+	};
 #pragma pack(pop)
+
+	typedef struct _tagCameraInfo
+	{
+		_matrix matView;
+		_matrix matProj;
+	}CameraInfo;
 }
 
 

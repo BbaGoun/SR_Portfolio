@@ -1,0 +1,38 @@
+Materials[2] =
+{
+    Materials[0] = MaterialInstanceConstant'/Game/Characters/May/Materials/Matchbox/MatchBox_Container_01.MatchBox_Container_01'
+    Materials[1] = MaterialInstanceConstant'/Game/Weapons/MatchSniper/Materials/MatchSniperMatches_01.MatchSniperMatches_01'
+}
+SourceModels[0] = {}
+StaticMaterials[2] =
+{
+    StaticMaterials[0] =
+    {
+        MaterialInterface = MaterialInstanceConstant'/Game/Characters/May/Materials/Matchbox/MatchBox_Container_01.MatchBox_Container_01'
+        MaterialSlotName = Box_mat
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 149.73, 168.516, 0, 0 }
+        }
+    }
+    StaticMaterials[1] =
+    {
+        MaterialInterface = MaterialInstanceConstant'/Game/Weapons/MatchSniper/Materials/MatchSniperMatches_01.MatchSniperMatches_01'
+        MaterialSlotName = Matches_mat
+        UVChannelData =
+        {
+            bInitialized = true
+            bOverrideDensities = false
+            LocalUVDensities[4] = { 19.5816, 167.739, 0, 0 }
+        }
+    }
+}
+Sockets[0] = {}
+ExtendedBounds =
+{
+    Origin = { X=-0.715636, Y=-1.4, Z=3.67427 }
+    BoxExtent = { X=7.05939, Y=20.2468, Z=28.6128 }
+    SphereRadius = 29.5298
+}

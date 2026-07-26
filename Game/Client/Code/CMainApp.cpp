@@ -5,6 +5,7 @@
 #include "CKeyMgr.h"
 #include "CLoading.h"
 #include "CFontMgr.h"
+#include "CCameraMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr)
@@ -128,4 +129,5 @@ void CMainApp::Free()
 	CProtoMgr::DestroyInstance();
 	CKeyMgr::DestroyInstance();
 	CFontMgr::DestroyInstance();
+	CCameraMgr::DestroyInstance();
 }

@@ -2,7 +2,6 @@
 #include "CGameObject.h"
 #include "CTransform.h"
 #include "CCody.h"
-#include "CTexture.h"
 #include "CCamera.h"
 
 class CGOCody :

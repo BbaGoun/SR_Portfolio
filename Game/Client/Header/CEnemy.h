@@ -22,7 +22,7 @@ private:
 	void	Follow(const _float& fTimeDelta);
 
 private:
-	CTransform* m_pTransformComp;
+	CTransform* m_pTransformCom;
 	CPyramid* m_pBufferCom;
 	CTexture* m_pTextureCom;
 

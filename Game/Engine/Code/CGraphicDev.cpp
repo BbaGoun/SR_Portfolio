@@ -90,6 +90,17 @@ HRESULT		CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode,
 
 void	CGraphicDev::Render_Begin(D3DXCOLOR Color)
 {
+	// Clear는 현재 Viewport 영역만 지운다.
+	// 직전 프레임이 오른쪽 Viewport로 끝났으면 왼쪽이 Clear되지 않아 잔상이 남는다.
+	D3DVIEWPORT9 tFullView{};
+	tFullView.X = 0;
+	tFullView.Y = 0;
+	tFullView.Width = WINCX;
+	tFullView.Height = WINCY;
+	tFullView.MinZ = 0.f;
+	tFullView.MaxZ = 1.f;
+	m_pGraphicDev->SetViewport(&tFullView);
+
 	m_pGraphicDev->Clear(0,		// 렉트의 개수
 						NULL,	// 렉트의 주소
 						D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,

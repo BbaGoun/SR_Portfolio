@@ -13,6 +13,10 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND    g_hWnd;
+D3DVIEWPORT9 g_LeftView = { 0, 0, (WINCX / 2) - 1, WINCY, 0, 1 };
+D3DVIEWPORT9 g_RightView = { (WINCX / 2) + 1, 0, WINCX / 2, WINCY, 0, 1 };
+D3DVIEWPORT9 g_TopView = { 0, 0, WINCX, (WINCY / 2) - 1, 0, 1 };
+D3DVIEWPORT9 g_BottomView = { 0, (WINCY / 2) + 1, WINCX, WINCY / 2, 0, 1 };
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);

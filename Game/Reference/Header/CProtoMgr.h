@@ -11,6 +11,7 @@
 #include "CTexture.h"
 #include "CTerrain.h"
 #include "CCody.h"
+#include "CMay.h"
 
 BEGIN(Engine)
 
