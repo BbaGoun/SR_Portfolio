@@ -1,0 +1,72 @@
+#include "pch.h"
+#include "CLand2.h"
+#include "CGraphicDev.h"
+#include "CProtoMgr.h"
+#include "CTexture.h"
+#include "CCameraMgr.h"
+
+CLand2::CLand2(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
+{
+}
+
+CLand2::CLand2(const CGameObject& rhs) : CGameObject(rhs)
+{
+}
+
+CLand2::~CLand2()
+{
+}
+
+HRESULT CLand2::Ready_GameObject()
+{
+	CGameObject::Ready_GameObject();
+
+	CComponent* pComponent = nullptr;
+
+	pComponent = m_pBufferCom = static_cast<CTerrain*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Terrain2"));
+	pComponent->Set_Owner(this);
+
+	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+
+	return S_OK;
+}
+
+_int CLand2::Update_GameObject(const _float& fTimeDelta)
+{
+	return CGameObject::Update_GameObject(fTimeDelta);
+}
+
+void CLand2::LateUpdate_GameObject(const _float& fTimeDelta)
+{
+	CGameObject::LateUpdate_GameObject(fTimeDelta);
+}
+
+void CLand2::Render_GameObject()
+{
+	D3DXMATRIX* matWorld;
+
+	matWorld = m_pTransformCom->Get_World();
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, matWorld);
+
+	m_pBufferCom->Render_Buffer();
+}
+
+CLand2* CLand2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CLand2* pObj = new CLand2(pGraphicDev);
+
+	if (FAILED(pObj->Ready_GameObject()))
+	{
+		MSG_BOX("Land Create Failed");
+		Safe_Release(pObj);
+		return nullptr;
+	}
+
+	return pObj;
+}
+
+void CLand2::Free()
+{
+	CGameObject::Free();
+}

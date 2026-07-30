@@ -1,24 +1,28 @@
 ﻿#include "CTransform.h"
+#include "CGameObject.h"
 
 CTransform::CTransform() : CComponent()
-, m_qRotation({ 0, 0, 0, 1})
-, m_vScale({1, 1, 1})
+, m_quaternion({ 0, 0, 0, 1 })
+, m_vScale({ 1, 1, 1 })
+, m_bDirty(true)
 {
 	ZeroMemory(&m_vInfo, sizeof(_vec3) * INFO_END);
 	D3DXMatrixIdentity(&m_matWorld);
 }
 
 CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev) : CComponent(pGraphicDev)
-, m_qRotation({ 0, 0, 0, 1 })
+, m_quaternion({ 0, 0, 0, 1 })
 , m_vScale({ 1, 1, 1 })
+, m_bDirty(true)
 {
 	ZeroMemory(&m_vInfo, sizeof(_vec3) * INFO_END);
 	D3DXMatrixIdentity(&m_matWorld);
 }
 
 CTransform::CTransform(const CTransform& rhs):CComponent(rhs)
-, m_qRotation(rhs.m_qRotation)
+, m_quaternion(rhs.m_quaternion)
 , m_vScale(rhs.m_vScale)
+, m_bDirty(rhs.m_bDirty)
 {
 	for (int i = 0; i < INFO_END; ++i)
 		m_vInfo[i] = rhs.m_vInfo[i];
@@ -32,33 +36,6 @@ CTransform::~CTransform()
 
 _int CTransform::Update_Component(const _float& fTimeDelta)
 {
-	// 1. 월드 행렬의 초기화?
-	D3DXMatrixIdentity(&m_matWorld);
-
-	// 2. Right, Up, Look의 초기화
-	for (int i = 0; i < INFO_POS; ++i) {
-		memcpy(&m_vInfo[i], &m_matWorld.m[i][0], sizeof(_vec3));
-	}
-
-	// 3. 크기 적용
-	for (int i = 0; i < INFO_POS; ++i) {
-		m_vInfo[i] *= *(((float*)&m_vScale) + i);
-	}
-
-	// 4. 회전 적용
-	_matrix matRotQ;
-	D3DXMatrixRotationQuaternion(&matRotQ, &m_qRotation);
-	
-	for (int i = 0; i < INFO_POS; ++i) {
-		D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &matRotQ);
-	}
-
-	// 5. 월드 행렬 생성
-	// 이동은 이 GameObject에서 변경됨
-	for (int i = 0; i < INFO_END; ++i) {
-		memcpy(&m_matWorld.m[i][0], m_vInfo[i], sizeof(_vec3));
-	}
-
 	return 0;
 }
 
@@ -77,9 +54,57 @@ HRESULT CTransform::Ready_Transform()
 	return S_OK;
 }
 
+_matrix* CTransform::Get_World()
+{
+	if (!m_bDirty)
+		return &m_matWorld;
+
+	// 1. 월드 행렬의 초기화
+	D3DXMatrixIdentity(&m_matWorld);
+
+	// 2. Right, Up, Look의 초기화
+	for (int i = 0; i < INFO_POS; ++i) {
+		memcpy(&m_vInfo[i], &m_matWorld.m[i][0], sizeof(_vec3));
+	}
+
+	// 3. 크기 적용
+	for (int i = 0; i < INFO_POS; ++i) {
+		m_vInfo[i] *= *(((float*)&m_vScale) + i);
+	}
+
+	// 4. 회전 적용
+	_matrix matRotQ;
+	D3DXMatrixRotationQuaternion(&matRotQ, &m_quaternion);
+
+	for (int i = 0; i < INFO_POS; ++i) {
+		D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &matRotQ);
+	}
+
+	// 5. 월드 행렬 생성
+	// 이동은 컴포넌트를 수정한 GameObject에서 직접 수행됨
+	// 월드 행렬에 이동 상태를 옮길 뿐
+	for (int i = 0; i < INFO_END; ++i) {
+		memcpy(&m_matWorld.m[i][0], m_vInfo[i], sizeof(_vec3));
+	}
+
+	// 6. 부모의 월드 행렬 가져오기
+	if (m_pOwner->Get_Parent() != nullptr) {
+		_matrix* parentWorld = m_pOwner->Get_Parent()->Get_Transform()->Get_World();
+
+		// 7. 로컬 월드 행렬 * 부모의 월드 행렬 = 실제 월드 행렬 
+		m_matWorld *= (*parentWorld);
+	}
+
+	m_bDirty = false;
+
+	return &m_matWorld;
+}
+
 void CTransform::FollowObj(_vec3* pPos, _float _fSpeed, _float _fTimeDelta)
 {
-	_vec3 vFollowDir = *pPos - m_vInfo[INFO_POS];
+	_vec3 pos;
+	Get_Info(INFO_POS, &pos);
+	_vec3 vFollowDir = *pPos - pos;
 	
 	_float fLength = D3DXVec3Length(&vFollowDir);
 
@@ -107,6 +132,15 @@ void CTransform::FollowObj(_vec3* pPos, _float _fSpeed, _float _fTimeDelta)
 		m_vInfo[INFO_POS].z);
 
 	m_matWorld = matScale * matRot * matTrans;
+
+	m_bDirty = false;
+
+	// 서브 트리만 설정 (자신은 방금 계산했으므로)
+	vector<CGameObject*> vecChildren = m_pOwner->Get_Children();
+
+	for (auto& child : vecChildren) {
+		child->Get_Transform()->Set_Dirty();
+	}
 }
 
 _matrix* CTransform::GetFollowRotation(_vec3* pFollowDir, _matrix* _pRot)
@@ -124,6 +158,20 @@ _matrix* CTransform::GetFollowRotation(_vec3* pFollowDir, _matrix* _pRot)
 
 	// 해당 축으로 사잇각 만큼 회전하는 회전 행렬을 구함
 	return	D3DXMatrixRotationAxis(_pRot, &vCross, theta);
+}
+
+void CTransform::Set_Dirty()
+{
+	if (!m_bDirty) {
+		// 자신 설정
+		m_bDirty = true;
+		// 서브 트리 설정
+		vector<CGameObject*> vecChildren = m_pOwner->Get_Children();
+
+		for (auto& child : vecChildren) {
+			child->Get_Transform()->Set_Dirty();
+		}
+	}
 }
 
 CTransform* CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)

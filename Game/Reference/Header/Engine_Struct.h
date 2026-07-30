@@ -70,6 +70,13 @@ namespace Engine
 
 	}INDEX32;	
 
+	// 인덱스 3개와 면의 법선
+	typedef struct tagFACE32
+	{
+		INDEX32 indices;
+		_vec3	vNoraml;
+	}FACE32;
+
 #pragma pack(push, 1)
 	// PSK 파일의 각 청크 헤더 (ACTRHEAD)
 	struct VChunkHeader {

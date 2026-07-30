@@ -1,15 +1,20 @@
 #include "CGameObject.h"
+#include "CProtoMgr.h"
 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
     : m_pGraphicDev(pGraphicDev)
+    , m_pParent(nullptr), m_pTransformCom(nullptr)
 {
     m_pGraphicDev->AddRef();
 }
 
 CGameObject::CGameObject(const CGameObject& rhs)
     : m_pGraphicDev(rhs.m_pGraphicDev)
+    , m_pParent(rhs.m_pParent)
+    , m_vecChildren(rhs.m_vecChildren)
 {
     m_pGraphicDev->AddRef();
+    Ready_GameObject();
 }
 
 CGameObject::~CGameObject()
@@ -28,6 +33,10 @@ CComponent* CGameObject::Get_Component(COMPONENTID eID, const _tchar* pComponent
 
 HRESULT CGameObject::Ready_GameObject()
 {
+    m_pTransformCom = static_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
+    m_pTransformCom->Set_Owner(this);
+    m_mapComponent[ID_STATIC].insert({ L"Com_Transform", m_pTransformCom });
+
     return S_OK;
 }
 

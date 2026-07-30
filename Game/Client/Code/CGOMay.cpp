@@ -19,24 +19,15 @@ CGOMay::~CGOMay()
 
 HRESULT CGOMay::Ready_GameObject()
 {
+	CGameObject::Ready_GameObject();
+	//m_pTransformCom->m_qRotation = { sinf(D3DXToRadian(90) / (float)2), 0, 0, cosf(D3DXToRadian(90) / (float)2) };
+	//m_pTransformCom->m_vScale = { 0.05f, 0.05f, 0.05f };
+
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = static_cast<CMay*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_May"));
-	pComponent->SetOwner(this);
+	pComponent->Set_Owner(this);
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
-
-	pComponent = CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform");
-	pComponent->SetOwner(this);
-	m_pTransformCom = static_cast<CTransform*>(pComponent);
-	m_pTransformCom->m_qRotation = { sinf(D3DXToRadian(90) / (float)2), 0, 0, cosf(D3DXToRadian(90) / (float)2) };
-	m_pTransformCom->m_vScale = { 0.05f, 0.05f, 0.05f };
-	m_mapComponent[ID_STATIC].insert({ L"Com_Transform", pComponent });
-
-	pComponent = m_pCameraCom = static_cast<CCamera*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Camera"));
-	pComponent->SetOwner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Camera", pComponent });
-	CCameraMgr::GetInstance()->AddCamera();
-	m_pCameraCom->SetCameraID(CAM_MAY);
 
 	return S_OK;
 }
@@ -50,7 +41,6 @@ void CGOMay::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	Follow(fTimeDelta);
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
-	m_pCameraCom->SetCamera_BeforeRender();
 }
 
 void CGOMay::Render_GameObject()
@@ -61,21 +51,21 @@ void CGOMay::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, matWorld);
 
-	for (int i = 0; i < CAM_GLOBAL; ++i)
-	{
-		switch (i) {
-		case 0:
-			m_pGraphicDev->SetViewport(&g_LeftView);
-			break;
-		case 1:
-			m_pGraphicDev->SetViewport(&g_RightView);
-			break;
-		}
-		CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo(i);
-		m_pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
-		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
-		m_pBufferCom->Render_Buffer();
-	}
+	//for (int i = 0; i < CAM_GLOBAL; ++i)
+	//{
+	//	switch (i) {
+	//	case 0:
+	//		m_pGraphicDev->SetViewport(&g_LeftView);
+	//		break;
+	//	case 1:
+	//		m_pGraphicDev->SetViewport(&g_RightView);
+	//		break;
+	//	}
+	//	CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo();
+	//	m_pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
+	//	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
+	//	m_pBufferCom->Render_Buffer();
+	//}
 }
 
 void CGOMay::Follow(const _float& fTimeDelta)

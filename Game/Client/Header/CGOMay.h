@@ -23,7 +23,6 @@ private:
 	void	Follow(const _float& fTimeDelta);
 
 private:
-	CTransform* m_pTransformCom;
 	CMay* m_pBufferCom;
 	CCamera* m_pCameraCom;
 

@@ -6,6 +6,10 @@ namespace Engine
 	#define	WINCX		1280
 	#define	WINCY		720
 
+	/*
+	우리가 진짜 원하는 건 칸이 2^n개인 것이고, 
+	칸이 2^n개이려면 정점은 2^n+1개가 되어야 하기 때문
+	*/
 	#define	VTXCNTX		129
 	#define VTXCNTZ		129
 	#define VTXITV		1

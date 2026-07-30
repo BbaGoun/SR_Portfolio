@@ -5,12 +5,18 @@
 #include "CTexture.h"
 #include "CKeyMgr.h"
 #include "CCameraMgr.h"
+#include "CManagement.h"
+#include "CDInputMgr.h"
 
 CGOCody::CGOCody(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
+, m_bFix(true)
+, m_bCheck(false)
 {
 }
 
 CGOCody::CGOCody(const CGameObject& rhs) : CGameObject(rhs)
+, m_bFix(true)
+, m_bCheck(false)
 {
 }
 
@@ -20,24 +26,9 @@ CGOCody::~CGOCody()
 
 HRESULT CGOCody::Ready_GameObject()
 {
+	CGameObject::Ready_GameObject();
+
 	m_fSpeed = 10;
-
-	CComponent* pComponent = nullptr;
-
-	pComponent = m_pBufferCom = static_cast<CCody*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Cody"));
-	pComponent->SetOwner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
-
-	pComponent = m_pTransformCom = static_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
-	pComponent->SetOwner(this);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
-	m_pTransformCom->m_vScale = { 0.05f, 0.05f, 0.05f };
-
-	pComponent = m_pCameraCom = static_cast<CCamera*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Camera"));
-	pComponent->SetOwner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Camera", pComponent });
-	CCameraMgr::GetInstance()->AddCamera();
-	m_pCameraCom->SetCameraID(CAM_CODY);
 
 	return S_OK;
 }
@@ -45,6 +36,22 @@ HRESULT CGOCody::Ready_GameObject()
 _int CGOCody::Update_GameObject(const _float& fTimeDelta)
 {
 	Key_Input(fTimeDelta);
+	Mouse_Input(fTimeDelta);
+	
+	if (m_bJump) {
+		m_fJumpTime += fTimeDelta * 5;
+		m_vForce.y = max(-19.6f,
+			m_vForce.y - (9.8f * m_fJumpTime * m_fJumpTime) * fTimeDelta);
+	}
+	else
+		m_vForce.y = 0;
+
+	_vec3 pos;
+	m_pTransformCom->Get_Info(INFO_POS, &pos);
+	pos += m_vForce * fTimeDelta;
+	AdjustPosY(pos);
+
+	Mouse_Fix();
 
 	return CGameObject::Update_GameObject(fTimeDelta);
 }
@@ -52,87 +59,163 @@ _int CGOCody::Update_GameObject(const _float& fTimeDelta)
 void CGOCody::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
-	m_pCameraCom->SetCamera_BeforeRender();
 }
 
 void CGOCody::Render_GameObject()
 {
-	D3DXMATRIX matWorld;
-
-	matWorld = m_pTransformCom->m_matWorld;
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-
-	for (int i = 0; i < CAM_GLOBAL; ++i)
-	{
-		switch (i) {
-		case 0:
-			m_pGraphicDev->SetViewport(&g_LeftView);
-			break;
-		case 1:
-			m_pGraphicDev->SetViewport(&g_RightView);
-			break;
-		}
-		CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo(i);
-		m_pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
-		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
-		m_pBufferCom->Render_Buffer();
-	}
 }
 
 void CGOCody::Key_Input(const _float& fTimeDelta)
 {
-	_vec3 vLook;
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	m_vForce.x = 0;
+	m_vForce.z = 0;
 
-	if (GetAsyncKeyState('A')) {
-		m_pTransformCom->Rotate(QUATER_ROLL, 180 * fTimeDelta);
-	}
-	if (GetAsyncKeyState('D')) {
-		m_pTransformCom->Rotate(QUATER_ROLL, -180 * fTimeDelta);
-	}
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_D))
+	{
+		_vec3	vRight;
+		m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
 
-	if (GetAsyncKeyState('Q')) {
-		m_pTransformCom->Rotate(QUATER_YAW, -180 * fTimeDelta);
-	}
-	if (GetAsyncKeyState('E')) {
-		m_pTransformCom->Rotate(QUATER_YAW, 180 * fTimeDelta);
+		_vec3	vLength = vRight * m_fSpeed;
+
+		m_vForce += vLength;
 	}
 
-	if (GetAsyncKeyState('W')) {
-		m_pTransformCom->Rotate(QUATER_PITCH, -180 * fTimeDelta);
-	}
-	if (GetAsyncKeyState('S')) {
-		m_pTransformCom->Rotate(QUATER_PITCH, 180 * fTimeDelta);
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_A))
+	{
+		_vec3	vRight;
+		m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3	vLength = vRight * m_fSpeed;
+
+		m_vForce -= vLength;
 	}
 
-	if (GetAsyncKeyState(VK_UP)) {
-		m_pCameraCom->Rotate(QUATER_PITCH, -180 * fTimeDelta);
-	}
-	if (GetAsyncKeyState(VK_DOWN)) {
-		m_pCameraCom->Rotate(QUATER_PITCH, 180 * fTimeDelta);
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_W))
+	{
+		_vec3	vLook;
+		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3	vLength = vLook * m_fSpeed;
+
+		m_vForce += vLength;
 	}
 
-	if (GetAsyncKeyState(VK_LEFT)) {
-		m_pCameraCom->Rotate(QUATER_YAW, -180 * fTimeDelta);
-	}
-	if (GetAsyncKeyState(VK_RIGHT)) {
-		m_pCameraCom->Rotate(QUATER_YAW, 180 * fTimeDelta);
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_S))
+	{
+		_vec3	vLook;
+		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3	vLength = vLook * m_fSpeed;
+
+		m_vForce -= vLength;
 	}
 
-	if (GetAsyncKeyState(VK_SPACE)) {
-		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vLook, &vLook), m_fSpeed, fTimeDelta);
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIK_SPACE)) {
+		if (!m_bJump) {
+			m_bJump = true;
+			m_vForce.y = 15;
+			m_fJumpTime = 0;
+		}
+	}
+	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIK_SPACE)) {
+		if (m_bJump) {
+			m_vForce.y = -19.6f;
+		}
 	}
 
-	if (CKeyMgr::GetInstance()->KeyPressing(VK_LSHIFT)) {
-		m_fSpeed = 20;
-		float fov = m_pCameraCom->m_fFov;
-		m_pCameraCom->m_fFov = min(90, fov + (90 - fov) * 0.1);
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIK_TAB)) {
+		m_bFix = !m_bFix;
 	}
-	if (!CKeyMgr::GetInstance()->KeyPressing(VK_LSHIFT)) {
-		m_fSpeed = 10;
-		float fov = m_pCameraCom->m_fFov;
-		m_pCameraCom->m_fFov = max(60, fov - (fov - 60) * 0.1);
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIK_F5)) {
+		CAMERA_STATE state = CCameraMgr::GetInstance()->GetCamerState();
+		switch (state) {
+		case CAMERA_FIRST:
+			CCameraMgr::GetInstance()->SetMainCamera(CAMERA_BACK_THIRD);
+			break;
+		case CAMERA_BACK_THIRD:
+			CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FRONT_THIRD);
+			break;
+		case CAMERA_FRONT_THIRD:
+			CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FIRST);
+			break;
+		}
+	}
+}
+
+void CGOCody::Mouse_Input(const _float& fTimeDelta)
+{
+	_matrix* matWorld = m_pTransformCom->Get_World();
+
+	_long	dwMouseMove(0);
+
+	if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_X))
+	{
+		m_pTransformCom->Rotate(QUATER_YAW, dwMouseMove / 10.f);
+	}
+}
+
+void CGOCody::Mouse_Fix()
+{
+	if (!m_bFix)
+		return;
+
+	POINT center = { WINCX >> 1, WINCY >> 1 };
+	ClientToScreen(g_hWnd, &center);
+	SetCursorPos(center.x, center.y);
+}
+
+void CGOCody::AdjustPosY(_vec3 pos)
+{
+	CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"Environment", L"Env_Land2", L"Com_Buffer");
+	if (pCom == nullptr)
+		return;
+	vector<VTXMESH> vertices = static_cast<CTerrain2*>(pCom)->GetVertices();
+
+	if ((0 <= pos.x && pos.x < VTXITV * (VTXCNTX - 1)) &&
+		(0 <= pos.z && pos.z < VTXITV * (VTXCNTZ - 1))) 
+	{
+		int col = pos.x / VTXITV;
+		int row = pos.z / VTXITV;
+
+		float xInPlane = float(pos.x - col * VTXITV) / VTXITV;
+		float zInPlane = float(pos.z - row * VTXITV) / VTXITV;
+
+		_vec3 p0, p1, p2;
+		// 왼쪽 위 삼각형
+		if (zInPlane - xInPlane > 0) {
+			p0 = vertices[(row + 1) * VTXCNTX + col].vPosition;		// 왼쪽 위
+			p1 = vertices[(row + 1) * VTXCNTX + col+1].vPosition;	// 오른쪽 위
+			p2 = vertices[row * VTXCNTX + col].vPosition;			// 왼쪽 아래
+		}
+		else { // 오른쪽 아래 삼각형
+			p0 = vertices[row * VTXCNTX + col+1].vPosition;			// 오른쪽 아래
+			p1 = vertices[row * VTXCNTX + col].vPosition;			// 왼쪽 아래
+			p2 = vertices[(row + 1) * VTXCNTX + col + 1].vPosition; // 오른쪽 위
+		}
+		D3DXPLANE plane;
+		D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
+
+		// normal·p + d = 0
+		// ax + by + cz + d = 0
+		// by = -(ax + cz + d)
+		// y = -(ax + cz + d) / b
+		float y = -(plane.a * pos.x + plane.c * pos.z + plane.d) / plane.b;
+		
+		if (pos.y <= y+0.1f) {
+			m_bJump = false;
+			m_pTransformCom->Set_Pos({ pos.x, y, pos.z });
+		}
+		else {
+			if (!m_bJump) {
+				m_bJump = true;
+				m_fJumpTime = 0;
+			}
+			m_pTransformCom->Set_Pos(pos);
+		}
+	}
+	else {
+		m_pTransformCom->Set_Pos({ pos.x, 0, pos.z });
 	}
 }
 

@@ -23,7 +23,6 @@ private:
 	void	Key_Input(const _float& fTimeDelta);
 
 private:
-	CTransform* m_pTransformCom;
 	CAirplane* m_pBufferCom;
 	CCamera* m_pCameraCom;
 

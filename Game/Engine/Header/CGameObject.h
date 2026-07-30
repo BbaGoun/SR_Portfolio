@@ -1,6 +1,7 @@
 #pragma once
 #include "CBase.h"
 #include "CComponent.h"
+#include "CTransform.h"
 
 BEGIN(Engine)
 
@@ -13,6 +14,14 @@ protected:
 
 public:
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
+	CTransform* Get_Transform() { return m_pTransformCom; }
+	void	Set_Child(CGameObject* _pGO){
+		m_vecChildren.push_back(_pGO);
+		_pGO->m_pParent = this;
+		_pGO->Get_Transform()->Set_Dirty();
+	}
+	const vector<CGameObject*>& Get_Children() { return m_vecChildren; }
+	CGameObject* Get_Parent() { return m_pParent; }
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -23,7 +32,10 @@ public:
 protected:
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
 	LPDIRECT3DDEVICE9						m_pGraphicDev;
-
+	
+	vector<CGameObject*>					m_vecChildren;
+	CGameObject*							m_pParent;
+	CTransform*								m_pTransformCom;
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);

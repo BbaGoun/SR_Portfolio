@@ -21,12 +21,12 @@ HRESULT CBackGround::Ready_GameObject()
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
-	pComponent->SetOwner(this);
+	pComponent->Set_Owner(this);
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_LogoTexture"));
-	pComponent->SetOwner(this);
+	pComponent->Set_Owner(this);
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 

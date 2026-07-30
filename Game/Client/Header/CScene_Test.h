@@ -19,7 +19,7 @@ public:
 
 private:
 	HRESULT	Ready_Prototype();
-	HRESULT Ready_GameObject_Layer();
+	HRESULT Ready_GameLogic_Layer();
 	HRESULT Ready_Environment_Layer();
 
 protected:

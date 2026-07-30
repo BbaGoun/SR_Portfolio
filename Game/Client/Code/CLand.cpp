@@ -19,22 +19,19 @@ CLand::~CLand()
 
 HRESULT CLand::Ready_GameObject()
 {
+	CGameObject::Ready_GameObject();
+
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = static_cast<CTerrain*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Terrain"));
-	pComponent->SetOwner(this);
+	pComponent->Set_Owner(this);
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_TerrainTexture"));
-	pComponent->SetOwner(this);
+	pComponent->Set_Owner(this);
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
-
-	pComponent = m_pTransformCom = static_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
-	pComponent->SetOwner(this);
-
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
 
 	return S_OK;
 }
@@ -58,21 +55,7 @@ void CLand::Render_GameObject()
 	m_pTextureCom->Set_Texture(0);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, matWorld);
 
-	for (int i = 0; i < CAM_GLOBAL; ++i)
-	{
-		switch (i) {
-		case 0:
-			m_pGraphicDev->SetViewport(&g_LeftView);
-			break;
-		case 1:
-			m_pGraphicDev->SetViewport(&g_RightView);
-			break;
-		}
-		CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo(i);
-		m_pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
-		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
-		m_pBufferCom->Render_Buffer();
-	}
+	m_pBufferCom->Render_Buffer();
 }
 
 CLand* CLand::Create(LPDIRECT3DDEVICE9 pGraphicDev)

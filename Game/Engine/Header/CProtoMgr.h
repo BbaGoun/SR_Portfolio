@@ -10,6 +10,7 @@
 #include "CTransform.h"
 #include "CTexture.h"
 #include "CTerrain.h"
+#include "CTerrain2.h"
 #include "CCody.h"
 #include "CMay.h"
 

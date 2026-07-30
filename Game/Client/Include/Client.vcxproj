@@ -176,10 +176,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
+    <ClInclude Include="..\Header\CCodyBody.h" />
+    <ClInclude Include="..\Header\CFixedThirdPerCam.h" />
     <ClInclude Include="..\Header\CEnemy.h" />
+    <ClInclude Include="..\Header\CFirstPerCam.h" />
+    <ClInclude Include="..\Header\CBackThirdPerCam.h" />
+    <ClInclude Include="..\Header\CFrontThirdPerCam.h" />
     <ClInclude Include="..\Header\CGOMay.h" />
+    <ClInclude Include="..\Header\CHeadPivot.h" />
     <ClInclude Include="..\Header\CJet.h" />
     <ClInclude Include="..\Header\CLand.h" />
+    <ClInclude Include="..\Header\CLand2.h" />
     <ClInclude Include="..\Header\Client_Define.h" />
     <ClInclude Include="..\Header\Client_Enum.h" />
     <ClInclude Include="..\Header\CLoading.h" />
@@ -196,10 +203,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CBackGround.cpp" />
+    <ClCompile Include="..\Code\CCodyBody.cpp" />
+    <ClCompile Include="..\Code\CFixedThirdPerCam.cpp" />
     <ClCompile Include="..\Code\CEnemy.cpp" />
+    <ClCompile Include="..\Code\CFirstPerCam.cpp" />
+    <ClCompile Include="..\Code\CBackThirdPerCam.cpp" />
+    <ClCompile Include="..\Code\CFrontThirdPerCam.cpp" />
     <ClCompile Include="..\Code\CGOMay.cpp" />
+    <ClCompile Include="..\Code\CHeadPivot.cpp" />
     <ClCompile Include="..\Code\CJet.cpp" />
     <ClCompile Include="..\Code\CLand.cpp" />
+    <ClCompile Include="..\Code\CLand2.cpp" />
     <ClCompile Include="..\Code\Client_Define.cpp" />
     <ClCompile Include="..\Code\CLoading.cpp" />
     <ClCompile Include="..\Code\CLoadingThread.cpp" />

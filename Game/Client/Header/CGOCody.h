@@ -20,13 +20,18 @@ public:
 
 private:
 	void	Key_Input(const _float& fTimeDelta);
+	void	Mouse_Input(const _float& fTimeDelta);
+	void	Mouse_Fix();
+	void	AdjustPosY(_vec3 pos);
 
 private:
-	CTransform* m_pTransformCom;
-	CCody* m_pBufferCom;
-	CCamera* m_pCameraCom;
+	_float	m_fSpeed;
+	_vec3	m_vForce = { 0, 0, 0 };
+	_bool	m_bJump = false;
+	_float	m_fJumpTime;
 
-	_float m_fSpeed;
+	_bool		m_bFix;
+	_bool		m_bCheck;
 
 public:
 	static CGOCody* Create(LPDIRECT3DDEVICE9 pGraphicDev);

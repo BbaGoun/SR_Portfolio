@@ -1,16 +1,15 @@
-﻿#pragma once
+#pragma once
 #include "CGameObject.h"
 #include "CTransform.h"
 #include "CTerrain.h"
-#include "CTexture.h"
 
-class CLand :
+class CLand2 :
 	public CGameObject
 {
 private:
-	explicit CLand(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CLand(const CGameObject& rhs);
-	~CLand() override;
+	explicit CLand2(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CLand2(const CGameObject& rhs);
+	~CLand2() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -22,10 +21,9 @@ private:
 
 private:
 	CTerrain* m_pBufferCom;
-	CTexture* m_pTextureCom;
 
 public:
-	static CLand* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CLand2* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
 	virtual		void		Free() override;

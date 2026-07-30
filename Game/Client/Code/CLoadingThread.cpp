@@ -39,29 +39,26 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Cody", Engine::CCody::Create(m_pGraphicDev))))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_May", Engine::CMay::Create(m_pGraphicDev))))
-        return E_FAIL;
-
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_InnerBox", Engine::CInnerBox::Create(m_pGraphicDev))))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Terrain", Engine::CTerrain::Create(m_pGraphicDev))))
+    //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Terrain", Engine::CTerrain::Create(m_pGraphicDev))))
+    //    return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Terrain2", Engine::CTerrain2::Create(m_pGraphicDev))))
         return E_FAIL;
 
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Texture Loading.....................................");
     LeaveCriticalSection(Get_Crt());
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2))))
-        return E_FAIL;
+    //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2))))
+    //    return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Daylight_Box_UV.png", 1))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/burger3.dds", 1))))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EffectTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90))))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DogTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/dog%d.jpg", 2))))
         return E_FAIL;
 
     EnterCriticalSection(Get_Crt());
@@ -69,9 +66,6 @@ _uint CLoadingThread::Loading_Stage()
     LeaveCriticalSection(Get_Crt());
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create(m_pGraphicDev))))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Camera", Engine::CCamera::Create(m_pGraphicDev))))
         return E_FAIL;
 
     EnterCriticalSection(Get_Crt());

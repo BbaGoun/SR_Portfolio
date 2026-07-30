@@ -1,50 +1,28 @@
-﻿#pragma once
-#include "CComponent.h"
+#pragma once
+#include "CGameObject.h"
 
 BEGIN(Engine)
 
-class ENGINE_DLL CCamera :
-	public CComponent
+class ENGINE_DLL CCamera :  public CGameObject
 {
 protected:
-	explicit CCamera();
 	explicit CCamera(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CCamera(const CCamera& rhs);
 	virtual ~CCamera();
 
 public:
-	virtual _int Update_Component(const _float& fTimeDelta) override;
-	virtual void LateUpdate_Component(const _float& fTimeDelta) override;
-	void SetCamera_BeforeRender();
-
-public:
-	void Rotate(QUATERNION eType, const _float& fAngle)
-	{
-		*(((float*)&m_vAngle) + eType) += fAngle;
-
-		m_vAngle.x = clampT<float>(m_vAngle.x, -30.f, 30.f);
-	}
-	void SetCameraID(int _eID) { m_eCameraID = _eID; }
+	virtual			HRESULT		Ready_GameObject();
+	virtual			_int		Update_GameObject(const _float& fTimeDelta);
+	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 
 protected:
-	HRESULT	Ready_Camera();
-
-public:
-	static CCamera* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual CComponent* Clone() override;
-
-public:
-	_vec3			m_vAngle;
-
-	_float			m_fFov;
-	_float			m_fAspect;
-	_float			m_fNear;
-	_float			m_fFar;
-
-	int				m_eCameraID;
+	_matrix		m_matView, m_matProj;
+	_vec3		m_vEye, m_vAt, m_vUp;
+	_float		m_fFov, m_fAspect, m_fNear, m_fFar;
 
 protected:
-	virtual void		Free() override;
+	virtual void		Free();
+
 };
 
 END

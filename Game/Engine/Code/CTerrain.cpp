@@ -10,6 +10,7 @@ CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 }
 
 CTerrain::CTerrain(const CTerrain& rhs) : CVIBuffer(rhs)
+, m_vecPoints(rhs.m_vecPoints)
 {
 }
 
@@ -41,6 +42,7 @@ HRESULT CTerrain::Ready_Buffer()
 
 	VTXTEX* vertices = nullptr;
 
+	m_vecPoints.resize(m_dwVtxCnt);
 	m_pVB->Lock(0, 0, (void**)&vertices, 0);
 
 	for (int i = 0; i < VTXCNTZ; ++i) {
@@ -50,6 +52,7 @@ HRESULT CTerrain::Ready_Buffer()
 				(float)j * VTXITV, 
 				float(heightMapBytes[index*4+2]*0.1f),
 				(float)i * VTXITV };
+			m_vecPoints[index] = vertices[index].vPosition;
 			vertices[index].vTexUV = { (float)j / (float)(VTXCNTX - 1), (float)(VTXCNTZ - 1 - i) / (float)(VTXCNTZ - 1) };
 		}
 	}
@@ -62,10 +65,12 @@ HRESULT CTerrain::Ready_Buffer()
 
 	for (int i = 0; i < VTXCNTZ-1; ++i) {
 		for (int j = 0; j < VTXCNTX-1; ++j) {
+			// 왼쪽 위 삼각형
 			indices[(i * (VTXCNTX - 1) + j) * 2]._0 = i * VTXCNTX + j;
 			indices[(i * (VTXCNTX - 1) + j) * 2]._1 = (i + 1) * VTXCNTX + j;
 			indices[(i * (VTXCNTX - 1) + j) * 2]._2 = (i + 1) * VTXCNTX + (j + 1);
 
+			// 오른쪽 아래 삼각형
 			indices[(i * (VTXCNTX - 1) + j) * 2 + 1]._0 = i * VTXCNTX + j;
 			indices[(i * (VTXCNTX - 1) + j) * 2 + 1]._1 = (i + 1) * VTXCNTX + (j + 1);
 			indices[(i * (VTXCNTX - 1) + j) * 2 + 1]._2 = i * VTXCNTX + (j + 1);

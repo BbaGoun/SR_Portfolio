@@ -18,26 +18,20 @@ CEnemy::~CEnemy()
 
 HRESULT CEnemy::Ready_GameObject()
 {
+	CGameObject::Ready_GameObject();
+	//m_pTransformCom->m_qRotation = { sinf(D3DXToRadian(90) / (float)2), 0, 0, cosf(D3DXToRadian(90) / (float)2) };
+	
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = static_cast<CPyramid*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Pyramid"));
-	pComponent->SetOwner(this);
+	pComponent->Set_Owner(this);
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_DogTexture"));
-	pComponent->SetOwner(this);
+	pComponent->Set_Owner(this);
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
-
-	pComponent = CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform");
-	pComponent->SetOwner(this);
-	m_pTransformCom = static_cast<CTransform*>(pComponent);
-	m_pTransformCom->m_qRotation = { sinf(D3DXToRadian(90) / (float)2), 0, 0, cosf(D3DXToRadian(90) / (float)2) };
-
-	m_mapComponent[ID_STATIC].insert({ L"Com_Transform", pComponent });
-
-	m_pTransformCom->m_vScale = { 1, 1, 1 };
 
 	return S_OK;
 }

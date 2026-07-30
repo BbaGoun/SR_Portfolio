@@ -2,7 +2,7 @@
 #include "CMainApp.h"
 #include "CScene_Test.h"
 #include "CProtoMgr.h"
-#include "CKeyMgr.h"
+#include "CDInputMgr.h"
 #include "CLoading.h"
 #include "CFontMgr.h"
 #include "CCameraMgr.h"
@@ -43,7 +43,7 @@ HRESULT CMainApp::Ready_MainApp()
 
 int CMainApp::Update_MainApp(const float& fTimeDelta)
 {
-	CKeyMgr::GetInstance()->Key_Update();
+	CDInputMgr::GetInstance()->Update_InputDev();
 	m_pManagementClass->Update_Scene(fTimeDelta);
 
 	return 0;
@@ -52,12 +52,19 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 void CMainApp::LateUpdate_MainApp(const float& fTimeDelta)
 {
 	m_pManagementClass->LateUpdate_Scene(fTimeDelta);
-	CKeyMgr::GetInstance()->Key_LateUpdate();
+	CDInputMgr::GetInstance()->LateUpdate_InputDev();
 }
 
 void CMainApp::Render_MainApp()
 {
 	m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+
+	m_pGraphicDev->SetViewport(&g_FullView);
+	if (CCameraMgr::GetInstance()->GetCamerState() != CAMERA_END) {
+		CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo();
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
+	}
 
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
 
@@ -127,7 +134,7 @@ void CMainApp::Free()
 	m_pManagementClass->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 	CProtoMgr::DestroyInstance();
-	CKeyMgr::DestroyInstance();
+	CDInputMgr::DestroyInstance();
 	CFontMgr::DestroyInstance();
 	CCameraMgr::DestroyInstance();
 }

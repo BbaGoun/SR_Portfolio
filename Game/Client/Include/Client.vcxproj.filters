@@ -52,6 +52,30 @@
     <Filter Include="02. GameObject\GOMay">
       <UniqueIdentifier>{9348a796-3561-4fac-acb1-d33004229715}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Camera">
+      <UniqueIdentifier>{3c825b67-dcc3-4053-ba3a-63cb123f4e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Camera\FirstPersonCamera">
+      <UniqueIdentifier>{6358c447-5368-456b-8cf9-5e5691e92983}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Camera\FixedThirdPersonCamera">
+      <UniqueIdentifier>{fea974b1-0821-4c2a-93c7-30822e6f7f09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\GOCody\HeadPivot">
+      <UniqueIdentifier>{c5999d27-5689-41b8-838a-61e5fbc2650c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\GOCody\Body">
+      <UniqueIdentifier>{6a04b310-393d-424f-b556-b980405fd106}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Camera\BackThirdPersonCamera">
+      <UniqueIdentifier>{023176fa-6807-4182-a302-7da613fae6b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Camera\FrontThirdPersonCamera">
+      <UniqueIdentifier>{fec12351-5443-45eb-98c0-29438785992c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Land2">
+      <UniqueIdentifier>{abc5ec96-6112-4f26-a7f4-31f2a42cd918}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -108,6 +132,27 @@
     <ClInclude Include="..\Header\Client_Enum.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFixedThirdPerCam.h">
+      <Filter>02. GameObject\Camera\FixedThirdPersonCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHeadPivot.h">
+      <Filter>02. GameObject\GOCody\HeadPivot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFirstPerCam.h">
+      <Filter>02. GameObject\Camera\FirstPersonCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBackThirdPerCam.h">
+      <Filter>02. GameObject\Camera\BackThirdPersonCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCodyBody.h">
+      <Filter>02. GameObject\GOCody\Body</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFrontThirdPerCam.h">
+      <Filter>02. GameObject\Camera\FrontThirdPersonCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLand2.h">
+      <Filter>02. GameObject\Land2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -151,6 +196,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\Client_Define.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFixedThirdPerCam.cpp">
+      <Filter>02. GameObject\Camera\FixedThirdPersonCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHeadPivot.cpp">
+      <Filter>02. GameObject\GOCody\HeadPivot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFirstPerCam.cpp">
+      <Filter>02. GameObject\Camera\FirstPersonCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBackThirdPerCam.cpp">
+      <Filter>02. GameObject\Camera\BackThirdPersonCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCodyBody.cpp">
+      <Filter>02. GameObject\GOCody\Body</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFrontThirdPerCam.cpp">
+      <Filter>02. GameObject\Camera\FrontThirdPersonCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLand2.cpp">
+      <Filter>02. GameObject\Land2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

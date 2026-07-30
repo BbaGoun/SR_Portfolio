@@ -20,8 +20,8 @@ public:
 	virtual void LateUpdate_Component(const _float& fTimeDelta) { }
 	
 public:
-	void SetOwner(CGameObject* _pOwner) { m_pOwner = _pOwner; }
-	CGameObject* GetOwner() { return m_pOwner; }
+	void Set_Owner(CGameObject* _pOwner) { m_pOwner = _pOwner; }
+	CGameObject* Get_Owner() { return m_pOwner; }
 
 protected:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;

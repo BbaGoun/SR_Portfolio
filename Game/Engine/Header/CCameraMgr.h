@@ -1,26 +1,42 @@
 ﻿#pragma once
 #include "CBase.h"
 #include "Engine_Define.h"
+#include "CCamera.h"
 
 BEGIN(Engine);
+
+enum CAMERA_STATE{
+	CAMERA_FIRST,
+	CAMERA_BACK_THIRD,
+	CAMERA_FRONT_THIRD,
+	CAMERA_TOP_VIEW,
+	CAMERA_END
+};
 
 class ENGINE_DLL CCameraMgr :
     public CBase
 {
     DECLARE_SINGLETON(CCameraMgr)
 
-
 private:
 	explicit	CCameraMgr();
 	~CCameraMgr() override;
 
 public:
-	void AddCamera() { m_vecCameraInfos.push_back({}); }
-	void UpdateCameraInfo(int _index, _matrix* _matView, _matrix* _matProj);
-	const CameraInfo& GetCameraInfo(int _index) { return m_vecCameraInfos[_index]; }
+	HRESULT Ready_Camera(CAMERA_STATE _eID, CCamera* _pCamera);
+	void UpdateMainCameraInfo(_matrix* _matView, _matrix* _matProj);
+	HRESULT SetMainCamera(CAMERA_STATE _eID);
+	CCamera* GetMainCamera() { return m_pMainCamera; }
+	CAMERA_STATE GetCamerState() { return m_eCameraState; }
+	const CameraInfo& GetCameraInfo() { return m_tCameraInfo; }
+	bool CheckIsMainCamera(CCamera* _pCamera) { return _pCamera == m_pMainCamera; }
+
 
 private:
-	vector<CameraInfo> m_vecCameraInfos;
+	CCamera* m_cameras[CAMERA_END];
+	CCamera* m_pMainCamera;
+	CAMERA_STATE m_eCameraState;
+	CameraInfo m_tCameraInfo;
 
 private:
 	// CBase을(를) 통해 상속됨

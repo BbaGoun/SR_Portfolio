@@ -20,15 +20,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CAirplane.h" />
-    <ClInclude Include="..\Header\CCamera.h" />
     <ClInclude Include="..\Header\CCameraMgr.h" />
     <ClInclude Include="..\Header\CCody.h" />
     <ClInclude Include="..\Header\CComponent.h" />
+    <ClInclude Include="..\Header\CDInputMgr.h" />
     <ClInclude Include="..\Header\CFont.h" />
     <ClInclude Include="..\Header\CFontMgr.h" />
     <ClInclude Include="..\Header\CFrame.h" />
     <ClInclude Include="..\Header\CFrameMgr.h" />
     <ClInclude Include="..\Header\CGameObject.h" />
+    <ClInclude Include="..\Header\CCamera.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
     <ClInclude Include="..\Header\CInnerBox.h" />
     <ClInclude Include="..\Header\CLayer.h" />
@@ -41,6 +42,7 @@
     <ClInclude Include="..\Header\CRcTex.h" />
     <ClInclude Include="..\Header\CScene.h" />
     <ClInclude Include="..\Header\CTerrain.h" />
+    <ClInclude Include="..\Header\CTerrain2.h" />
     <ClInclude Include="..\Header\CTexture.h" />
     <ClInclude Include="..\Header\CTimer.h" />
     <ClInclude Include="..\Header\CTimerMgr.h" />
@@ -53,20 +55,20 @@
     <ClInclude Include="..\Header\Engine_Struct.h" />
     <ClInclude Include="..\Header\Engine_Typedef.h" />
     <ClInclude Include="..\Header\CHeightMapLoader.h" />
-    <ClInclude Include="..\Header\CKeyMgr.h" />
     <ClInclude Include="..\Header\CProtoMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAirplane.cpp" />
-    <ClCompile Include="..\Code\CCamera.cpp" />
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
     <ClCompile Include="..\Code\CCody.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
+    <ClCompile Include="..\Code\CDInputMgr.cpp" />
     <ClCompile Include="..\Code\CFont.cpp" />
     <ClCompile Include="..\Code\CFontMgr.cpp" />
     <ClCompile Include="..\Code\CFrame.cpp" />
     <ClCompile Include="..\Code\CFrameMgr.cpp" />
     <ClCompile Include="..\Code\CGameObject.cpp" />
+    <ClCompile Include="..\Code\CCamera.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
     <ClCompile Include="..\Code\CInnerBox.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />
@@ -79,13 +81,13 @@
     <ClCompile Include="..\Code\CRcTex.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
     <ClCompile Include="..\Code\CTerrain.cpp" />
+    <ClCompile Include="..\Code\CTerrain2.cpp" />
     <ClCompile Include="..\Code\CTexture.cpp" />
     <ClCompile Include="..\Code\CTimer.cpp" />
     <ClCompile Include="..\Code\CTimerMgr.cpp" />
     <ClCompile Include="..\Code\CTransform.cpp" />
     <ClCompile Include="..\Code\CVIBuffer.cpp" />
     <ClCompile Include="..\Code\CHeightMapLoader.cpp" />
-    <ClCompile Include="..\Code\CKeyMgr.cpp" />
     <ClCompile Include="..\Code\CProtoMgr.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

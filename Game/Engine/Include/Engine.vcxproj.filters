@@ -19,9 +19,6 @@
     <Filter Include="99. Headers">
       <UniqueIdentifier>{4ab1eeeb-a314-4a88-ab88-26b96f2d9676}</UniqueIdentifier>
     </Filter>
-    <Filter Include="90. KeyMgr">
-      <UniqueIdentifier>{ef240718-0671-454b-97a0-476b48da8068}</UniqueIdentifier>
-    </Filter>
     <Filter Include="89. HeightMapLoader">
       <UniqueIdentifier>{3d5cb1a0-cfa5-440d-9515-61b60901d391}</UniqueIdentifier>
     </Filter>
@@ -45,9 +42,6 @@
     </Filter>
     <Filter Include="04. Component\Shape">
       <UniqueIdentifier>{b3624249-8e48-4bd2-b145-5e2528b2459a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\Camera">
-      <UniqueIdentifier>{e3fb5d09-ca15-46e6-9c15-de452f84eccd}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. Component\Transform">
       <UniqueIdentifier>{45fc99bb-7d70-4f4e-a090-e0e090d2dfaa}</UniqueIdentifier>
@@ -100,6 +94,15 @@
     <Filter Include="95. CameraMgr">
       <UniqueIdentifier>{6090026c-70e9-40bf-a59e-4be142215198}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Management\GameObject\Camera">
+      <UniqueIdentifier>{9c29759e-3fd7-47dc-a9a3-62d2a44a2440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90. DInputMgr">
+      <UniqueIdentifier>{ef240718-0671-454b-97a0-476b48da8068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\Terrain2">
+      <UniqueIdentifier>{2dfb1d83-2ffe-4247-930f-d50708c997c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -119,9 +122,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Engine_Typedef.h">
       <Filter>99. Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CKeyMgr.h">
-      <Filter>90. KeyMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CHeightMapLoader.h">
       <Filter>89. HeightMapLoader</Filter>
@@ -152,9 +152,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\CGameObject.h">
       <Filter>03. Management\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CCamera.h">
-      <Filter>04. Component\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTransform.h">
       <Filter>04. Component\Transform</Filter>
@@ -210,6 +207,15 @@
     <ClInclude Include="..\Header\CCameraMgr.h">
       <Filter>95. CameraMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCamera.h">
+      <Filter>03. Management\GameObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDInputMgr.h">
+      <Filter>90. DInputMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTerrain2.h">
+      <Filter>04. Component\Shape\Terrain2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -254,9 +260,6 @@
     <ClCompile Include="..\Code\CAirplane.cpp">
       <Filter>04. Component\Shape\ObjFile\Airplane</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CCamera.cpp">
-      <Filter>04. Component\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CMesh.cpp">
       <Filter>04. Component\Shape\AssetBinary</Filter>
     </ClCompile>
@@ -278,9 +281,6 @@
     <ClCompile Include="..\Code\CFontMgr.cpp">
       <Filter>80. FontMgr</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CKeyMgr.cpp">
-      <Filter>90. KeyMgr</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CHeightMapLoader.cpp">
       <Filter>89. HeightMapLoader</Filter>
     </ClCompile>
@@ -301,6 +301,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCameraMgr.cpp">
       <Filter>95. CameraMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCamera.cpp">
+      <Filter>03. Management\GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDInputMgr.cpp">
+      <Filter>90. DInputMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTerrain2.cpp">
+      <Filter>04. Component\Shape\Terrain2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

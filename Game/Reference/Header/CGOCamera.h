@@ -3,12 +3,12 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL CCamera :  public CGameObject
+class ENGINE_DLL CGOCamera :  public CGameObject
 {
 protected:
-	explicit CCamera(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CCamera(const CCamera& rhs);
-	virtual ~CCamera();
+	explicit CGOCamera(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CGOCamera(const CGOCamera& rhs);
+	virtual ~CGOCamera();
 
 public:
 	virtual			HRESULT		Ready_GameObject();

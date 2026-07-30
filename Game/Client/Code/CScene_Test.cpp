@@ -2,16 +2,18 @@
 #include "CScene_Test.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
-#include "CTransform.h"
-#include "CEnemy.h"
 #include "CSkyBox.h"
-#include "CPyramid.h"
-#include "CJet.h"
 #include "CCamera.h"
-#include "CAirplane.h"
 #include "CLand.h"
 #include "CGOCody.h"
-#include "CGOMay.h"
+#include "CHeadPivot.h"
+#include "CFirstPerCam.h"
+#include "CBackThirdPerCam.h"
+#include "CFrontThirdPerCam.h"
+#include "CFixedThirdPerCam.h"
+#include "CCameraMgr.h"
+#include "CCodyBody.h"
+#include "CLand2.h"
 
 CScene_Test::CScene_Test(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -26,7 +28,7 @@ HRESULT CScene_Test::Ready_Scene()
 	if (FAILED(Ready_Prototype()))
 		return E_FAIL;
 
-	if (FAILED(Ready_GameObject_Layer()))
+	if (FAILED(Ready_GameLogic_Layer()))
 		return E_FAIL;
 
 	if (FAILED(Ready_Environment_Layer()))
@@ -69,7 +71,7 @@ HRESULT CScene_Test::Ready_Prototype()
 	return S_OK;
 }
 
-HRESULT CScene_Test::Ready_GameObject_Layer()
+HRESULT CScene_Test::Ready_GameLogic_Layer()
 {
 	// 게임 오브젝트
 	CLayer* pGameObjectLayer = CLayer::Create();
@@ -79,22 +81,97 @@ HRESULT CScene_Test::Ready_GameObject_Layer()
 
 	m_mapLayer.insert({ L"GameObject", pGameObjectLayer });
 
+	// # 플레이어
+	CGameObject* pPlayer = CGOCody::Create(m_pGraphicDev);
+
+	if (pPlayer == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pPlayer)))
+		return E_FAIL;
+
+	// ## 플레이어 머리
+	CGameObject* pHead = CHeadPivot::Create(m_pGraphicDev);
+
+	if (pHead == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_HeadPivot", pHead)))
+		return E_FAIL;
+
+	pPlayer->Set_Child(pHead);
+
 	CGameObject* pGameObject = nullptr;
 
-	pGameObject = CGOMay::Create(m_pGraphicDev);
+	// ## 플레이어 몸체
+	pGameObject = CCodyBody::Create(m_pGraphicDev);
 
 	if (pGameObject == nullptr)
 		return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Enemy", pGameObject)))
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Body", pGameObject)))
 		return E_FAIL;
 
-	pGameObject = CGOCody::Create(m_pGraphicDev);
+	pPlayer->Set_Child(pGameObject);
+
+	// ## 플레이어에 달린 고정 3인칭 카메라
+	pGameObject = CFixedThirdPerCam::Create(m_pGraphicDev);
 
 	if (pGameObject == nullptr)
 		return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pGameObject)))
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_TopViewCam", pGameObject)))
+		return E_FAIL;
+
+	pPlayer->Set_Child(pGameObject);
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_TOP_VIEW,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+
+	// ### 머리에 달린 카메라
+	pGameObject = CFirstPerCam::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_FirstCam", pGameObject)))
+		return E_FAIL;
+
+	pHead->Set_Child(pGameObject);
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FIRST,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FIRST)))
+		return E_FAIL;
+
+	// ### 플레이어 뒤에 달린 3인칭 카메라
+	pGameObject = CBackThirdPerCam::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_BackThirdCam", pGameObject)))
+		return E_FAIL;
+
+	pHead->Set_Child(pGameObject);
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_BACK_THIRD,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+
+	// ### 플레이어 앞에 달린 3인칭 카메라
+	pGameObject = CFrontThirdPerCam::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_FrontThirdCam", pGameObject)))
+		return E_FAIL;
+
+	pHead->Set_Child(pGameObject);
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FRONT_THIRD,
+		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
 
 	return S_OK;
@@ -118,12 +195,20 @@ HRESULT CScene_Test::Ready_Environment_Layer()
 	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_SkyBox", pEnvObject)))
 		return E_FAIL;
 
-	pEnvObject = CLand::Create(m_pGraphicDev);
+	//pEnvObject = CLand::Create(m_pGraphicDev);
+
+	//if (pEnvObject == nullptr)
+	//	return E_FAIL;
+
+	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land", pEnvObject)))
+	//	return E_FAIL;
+
+	pEnvObject = CLand2::Create(m_pGraphicDev);
 
 	if (pEnvObject == nullptr)
 		return E_FAIL;
 
-	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land", pEnvObject)))
+	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
 		return E_FAIL;
 
 	return S_OK;

@@ -20,24 +20,16 @@ CJet::~CJet()
 
 HRESULT CJet::Ready_GameObject()
 {
+	CGameObject::Ready_GameObject();
+
 	m_fSpeed = 10;
 
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = static_cast<CAirplane*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Airplane"));
-	pComponent->SetOwner(this);
+	pComponent->Set_Owner(this);
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
-
-	pComponent = m_pTransformCom = static_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
-	pComponent->SetOwner(this);
-
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Transform", pComponent });
-
-	pComponent = m_pCameraCom = static_cast<CCamera*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Camera"));
-	pComponent->SetOwner(this);
-
-	m_mapComponent[ID_STATIC].insert({ L"Com_Camera", pComponent });
 
 	return S_OK;
 }
@@ -56,14 +48,13 @@ void CJet::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CJet::Render_GameObject()
 {
-	D3DXMATRIX matWorld;
+	_matrix* matWorld;
 
-	matWorld = m_pTransformCom->m_matWorld;
+	matWorld = m_pTransformCom->Get_World();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, matWorld);
 
-	m_pCameraCom->SetCamera_BeforeRender();
 	m_pBufferCom->Render_Obj();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -95,25 +86,11 @@ void CJet::Key_Input(const _float& fTimeDelta)
 		m_pTransformCom->Rotate(QUATER_PITCH, 180 * fTimeDelta);
 	}
 
-	if (GetAsyncKeyState(VK_UP)) {
-		m_pCameraCom->Rotate(QUATER_PITCH, -180 * fTimeDelta);
-	}
-	if (GetAsyncKeyState(VK_DOWN)) {
-		m_pCameraCom->Rotate(QUATER_PITCH, 180 * fTimeDelta);
-	}
-
-	if (GetAsyncKeyState(VK_LEFT)) {
-		m_pCameraCom->Rotate(QUATER_YAW, -180 * fTimeDelta);
-	}
-	if (GetAsyncKeyState(VK_RIGHT)) {
-		m_pCameraCom->Rotate(QUATER_YAW, 180 * fTimeDelta);
-	}
-
 	if (GetAsyncKeyState(VK_SPACE)) {
 		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vLook, &vLook), m_fSpeed, fTimeDelta);
 	}
 
-	if (CKeyMgr::GetInstance()->KeyPressing(VK_LSHIFT)) {
+	/*if (CKeyMgr::GetInstance()->KeyPressing(VK_LSHIFT)) {
 		m_fSpeed = 20;
 		float fov = m_pCameraCom->m_fFov;
 		m_pCameraCom->m_fFov = min(90, fov + (90 - fov) * 0.1);
@@ -122,7 +99,7 @@ void CJet::Key_Input(const _float& fTimeDelta)
 		m_fSpeed = 10;
 		float fov = m_pCameraCom->m_fFov;
 		m_pCameraCom->m_fFov = max(60, fov - (fov - 60) * 0.1);
-	}
+	}*/
 }
 
 CJet* CJet::Create(LPDIRECT3DDEVICE9 pGraphicDev)

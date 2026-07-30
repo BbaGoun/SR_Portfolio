@@ -21,7 +21,6 @@ public:
 private:
 
 private:
-	CTransform* m_pTransformCom;
 	CInnerBox* m_pBufferCom;
 	CTexture* m_pTextureCom;
 
