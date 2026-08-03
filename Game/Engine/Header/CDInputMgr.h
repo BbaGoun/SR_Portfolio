@@ -36,6 +36,16 @@ public:
 		return m_tMouseState.rgbButtons[eMouse];
 	}
 
+	_bool	Get_DIMouseKeyDown(MOUSEKEYSTATE eMouse) {
+		return !(m_tBeforeMouseState.rgbButtons[eMouse] & 0x80)
+			&& (m_tMouseState.rgbButtons[eMouse] & 0x80);
+	}
+
+	_bool	Get_DIMouseKeyUp(MOUSEKEYSTATE eMouse) {
+		return (m_tBeforeMouseState.rgbButtons[eMouse] & 0x80)
+			&& !(m_tMouseState.rgbButtons[eMouse] & 0x80);
+	}
+
 	// 현재 마우스의 특정 축 좌표를 반환
 	_long	Get_DIMouseMove(MOUSEMOVESTATE eMouseState)
 	{
@@ -58,6 +68,7 @@ private:
 	_byte					m_byBeforeKeyState[256];
 	_byte					m_byKeyState[256];		// 키보드에 있는 모든 키값을 저장하기 위한 변수
 	// IX, IY, IZ는 모니터에서 이전 위치에 대한 각 축에서 상대적 이동 값
+	DIMOUSESTATE			m_tBeforeMouseState;
 	DIMOUSESTATE			m_tMouseState;
 
 public:

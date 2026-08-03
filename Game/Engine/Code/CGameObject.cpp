@@ -58,6 +58,12 @@ void CGameObject::Render_GameObject()
 {
 }
 
+void CGameObject::Set_CollisionLayer(COLLISION_LAYER eID)
+{
+    m_iCollisionLayer = 1;
+    m_iCollisionLayer << eID;
+}
+
 CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponentTag)
 {
     auto        iter = find_if(m_mapComponent[eID].begin(),

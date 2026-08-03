@@ -10,10 +10,10 @@
 #include "CFirstPerCam.h"
 #include "CBackThirdPerCam.h"
 #include "CFrontThirdPerCam.h"
-#include "CFixedThirdPerCam.h"
 #include "CCameraMgr.h"
 #include "CCodyBody.h"
 #include "CLand2.h"
+#include "CTopViewCam.h"
 
 CScene_Test::CScene_Test(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -50,7 +50,7 @@ void CScene_Test::LateUpdate_Scene(const _float& fTimeDelta)
 
 void CScene_Test::Render_Scene()
 {
-	CScene::Render_Scene();
+	//CScene::Render_Scene();
 }
 
 CScene_Test* CScene_Test::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -79,7 +79,7 @@ HRESULT CScene_Test::Ready_GameLogic_Layer()
 	if (pGameObjectLayer == nullptr)
 		return E_FAIL;
 
-	m_mapLayer.insert({ L"GameObject", pGameObjectLayer });
+	m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
 
 	// # 플레이어
 	CGameObject* pPlayer = CGOCody::Create(m_pGraphicDev);
@@ -113,20 +113,6 @@ HRESULT CScene_Test::Ready_GameLogic_Layer()
 		return E_FAIL;
 
 	pPlayer->Set_Child(pGameObject);
-
-	// ## 플레이어에 달린 고정 3인칭 카메라
-	pGameObject = CFixedThirdPerCam::Create(m_pGraphicDev);
-
-	if (pGameObject == nullptr)
-		return E_FAIL;
-
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_TopViewCam", pGameObject)))
-		return E_FAIL;
-
-	pPlayer->Set_Child(pGameObject);
-	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_TOP_VIEW,
-		static_cast<CCamera*>(pGameObject))))
-		return E_FAIL;
 
 	// ### 머리에 달린 카메라
 	pGameObject = CFirstPerCam::Create(m_pGraphicDev);
@@ -171,6 +157,19 @@ HRESULT CScene_Test::Ready_GameLogic_Layer()
 
 	pHead->Set_Child(pGameObject);
 	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FRONT_THIRD,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+
+	// # 탑뷰 3인칭 카메라
+	pGameObject = CTopViewCam::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_TopViewCam", pGameObject)))
+		return E_FAIL;
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_TOP_VIEW,
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
 

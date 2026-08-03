@@ -12,10 +12,12 @@ public:
 	virtual			HRESULT		Ready_GameObject() override;
 	virtual			_int		Update_GameObject(const _float& fTimeDelta) override;
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta) override;
-	virtual			void		Render_GameObject() override {};
+	virtual			void		Render_GameObject() override { LayTest(); };
 
 private:
 	void	Mouse_Input(const _float& fTimeDelta);
+	void	ClickTarget();
+	void	LayTest();
 
 private:
 	_float	m_fPitch;

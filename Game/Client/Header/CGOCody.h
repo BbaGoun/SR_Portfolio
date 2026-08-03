@@ -16,19 +16,25 @@ public:
 	virtual			HRESULT		Ready_GameObject() override;
 	virtual			_int		Update_GameObject(const _float& fTimeDelta) override;
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta) override;
-	virtual			void		Render_GameObject() override;
+	virtual			void		Render_GameObject() override {};
+
+public:
+	void	Set_Target(_vec3 pos) { m_bTarget = true; m_vTargetPos = pos; }
 
 private:
-	void	Key_Input(const _float& fTimeDelta);
-	void	Mouse_Input(const _float& fTimeDelta);
+	void	Key_Input();
+	void	Mouse_Input();
 	void	Mouse_Fix();
 	void	AdjustPosY(_vec3 pos);
+	void	FollowTarget();
 
 private:
 	_float	m_fSpeed;
 	_vec3	m_vForce = { 0, 0, 0 };
 	_bool	m_bJump = false;
 	_float	m_fJumpTime;
+	_vec3	m_vTargetPos;
+	_bool	m_bTarget;
 
 	_bool		m_bFix;
 	_bool		m_bCheck;

@@ -4,6 +4,7 @@
 #include "CProtoMgr.h"
 #include "CTexture.h"
 #include "CCameraMgr.h"
+#include "CRenderer.h"
 
 CLand2::CLand2(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -20,6 +21,7 @@ CLand2::~CLand2()
 HRESULT CLand2::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
+	m_pTransformCom->Set_Scale({ 2, 2, 2 });
 
 	CComponent* pComponent = nullptr;
 
@@ -33,6 +35,7 @@ HRESULT CLand2::Ready_GameObject()
 
 _int CLand2::Update_GameObject(const _float& fTimeDelta)
 {
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_PRIORITY, this);
 	return CGameObject::Update_GameObject(fTimeDelta);
 }
 
@@ -49,7 +52,9 @@ void CLand2::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, matWorld);
 
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pBufferCom->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 CLand2* CLand2::Create(LPDIRECT3DDEVICE9 pGraphicDev)

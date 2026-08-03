@@ -6,6 +6,7 @@
 #include "CLoading.h"
 #include "CFontMgr.h"
 #include "CCameraMgr.h"
+#include "CRenderer.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr)
@@ -83,6 +84,9 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
+	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+
 	if (FAILED(CFontMgr::GetInstance()->Ready_Font(m_pGraphicDev, L"Font_Default", L"견명조", 20, 15, FW_HEAVY)))
 		return E_FAIL;
 
@@ -137,4 +141,5 @@ void CMainApp::Free()
 	CDInputMgr::DestroyInstance();
 	CFontMgr::DestroyInstance();
 	CCameraMgr::DestroyInstance();
+	CRenderer::DestroyInstance();
 }

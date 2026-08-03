@@ -4,6 +4,7 @@
 #include "CProtoMgr.h"
 #include "CTexture.h"
 #include "CCameraMgr.h"
+#include "CRenderer.h"
 
 CLand::CLand(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -38,6 +39,7 @@ HRESULT CLand::Ready_GameObject()
 
 _int CLand::Update_GameObject(const _float& fTimeDelta)
 {
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_PRIORITY, this);
 	return CGameObject::Update_GameObject(fTimeDelta);
 }
 

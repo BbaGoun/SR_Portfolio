@@ -4,6 +4,7 @@
 #include "CProtoMgr.h"
 #include "CTexture.h"
 #include "CCameraMgr.h"
+#include "CRenderer.h"
 
 CSkyBox::CSkyBox(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -39,6 +40,7 @@ HRESULT CSkyBox::Ready_GameObject()
 
 _int CSkyBox::Update_GameObject(const _float& fTimeDelta)
 {
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_PRIORITY, this);
 	return CGameObject::Update_GameObject(fTimeDelta);
 }
 
@@ -57,10 +59,15 @@ void CSkyBox::Render_GameObject()
 
 	matWorld = m_pTransformCom->Get_World();
 
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);	// Z버퍼에 Z값을 저장할 지 묻는 옵션
+
 	m_pTextureCom->Set_Texture(0);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, matWorld);
 
 	m_pBufferCom->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);	// Z버퍼에 Z값을 저장할 지 묻는 옵션
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 CSkyBox* CSkyBox::Create(LPDIRECT3DDEVICE9 pGraphicDev)

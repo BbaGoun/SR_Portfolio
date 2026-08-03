@@ -12,6 +12,7 @@
 #include <string>
 #include <unordered_map>
 #include <ctime>
+#include <bitset>
 
 #include <io.h>
 #include <iostream>

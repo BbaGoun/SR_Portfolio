@@ -177,7 +177,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
     <ClInclude Include="..\Header\CCodyBody.h" />
-    <ClInclude Include="..\Header\CFixedThirdPerCam.h" />
+    <ClInclude Include="..\Header\CTopViewCam.h" />
     <ClInclude Include="..\Header\CEnemy.h" />
     <ClInclude Include="..\Header\CFirstPerCam.h" />
     <ClInclude Include="..\Header\CBackThirdPerCam.h" />
@@ -204,7 +204,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CCodyBody.cpp" />
-    <ClCompile Include="..\Code\CFixedThirdPerCam.cpp" />
+    <ClCompile Include="..\Code\CTopViewCam.cpp" />
     <ClCompile Include="..\Code\CEnemy.cpp" />
     <ClCompile Include="..\Code\CFirstPerCam.cpp" />
     <ClCompile Include="..\Code\CBackThirdPerCam.cpp" />

@@ -28,6 +28,9 @@ public:
 	virtual			_int		Update_GameObject(const _float& fTimeDelta);
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual			void		Render_GameObject();
+	
+public:
+	void			Set_CollisionLayer(COLLISION_LAYER eID);
 
 protected:
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
@@ -36,6 +39,7 @@ protected:
 	vector<CGameObject*>					m_vecChildren;
 	CGameObject*							m_pParent;
 	CTransform*								m_pTransformCom;
+	uint32_t								m_iCollisionLayer;
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);

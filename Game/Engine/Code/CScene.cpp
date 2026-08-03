@@ -3,6 +3,7 @@
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
     : m_pGraphicDev(pGraphicDev)
 {
+    m_CollisionMatrix.set();
     m_pGraphicDev->AddRef();
 }
 
@@ -18,6 +19,15 @@ CComponent* CScene::Get_Component(COMPONENTID eID, const _tchar* pLayerTag, cons
         return nullptr;
 
     return iter->second->Get_Component(eID, pObjTag, pComponentTag);
+}
+
+HRESULT CScene::Add_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag, CGameObject* pGameObject)
+{
+    if (pGameObject == nullptr)
+        return E_FAIL;
+
+    if (FAILED(m_mapLayer.find(pLayerTag)->second->Add_GameObject(pObjTag, pGameObject)))
+        return E_FAIL;
 }
 
 HRESULT CScene::Ready_Scene()
@@ -45,6 +55,14 @@ void CScene::Render_Scene()
         pLayer.second->Render_Layer();
 }
 
+void CScene::Set_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer, bool bCollision)
+{
+    if (srcLayer > dstLayer)
+        swap(srcLayer, dstLayer);
+
+    int index = (31 - srcLayer + 1) * (31 - srcLayer) * 0.5f + (31 - dstLayer);
+    m_CollisionMatrix.set(index, bCollision);
+}
 
 void CScene::Free()
 {

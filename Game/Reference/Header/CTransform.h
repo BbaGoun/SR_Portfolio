@@ -39,6 +39,9 @@ public:
 		m_quaternion = *pQuater;
 		Set_Dirty();
 	}
+	D3DXQUATERNION Get_Quaternion() {
+		return m_quaternion;
+	}
 	void		Rotate(QUATERNION eType, _float fAngle)
 	{
 		if (eType == QUATER_PITCH)

@@ -1,4 +1,5 @@
 #include "CCamera.h"
+#include "CCalculator.h"
 
 CCamera::CCamera(LPDIRECT3DDEVICE9 pGraphicDev)
     : CGameObject(pGraphicDev)
@@ -37,10 +38,12 @@ HRESULT CCamera::Ready_GameObject()
 {
     CGameObject::Ready_GameObject();
 
-    D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
+    CCalculator::CustomLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
+    //D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
     m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 
-    D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
+    CCalculator::CustomPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
+    //D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
     m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
 	return S_OK;

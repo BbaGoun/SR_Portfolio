@@ -12,7 +12,9 @@ CTerrain2::CTerrain2(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 }
 
 CTerrain2::CTerrain2(const CTerrain2& rhs) : CVIBuffer(rhs)
-, m_vecVertices(rhs.m_vecVertices), m_pTexture(rhs.m_pTexture)
+, m_vecVertices(rhs.m_vecVertices)
+, m_vecFaces(rhs.m_vecFaces)
+, m_pTexture(rhs.m_pTexture)
 {
 	m_pTexture->AddRef();
 }
@@ -55,7 +57,8 @@ HRESULT CTerrain2::Ready_Buffer()
 				(float)j * VTXITV,
 				float(heightMapBytes[index * 4 + 2] * 0.2f),
 				(float)i * VTXITV };
-			vertices[index].vTexUV = { (float)j / (float)(VTXCNTX - 1), (float)(VTXCNTZ - 1 - i) / (float)(VTXCNTZ - 1) };
+			vertices[index].vTexUV = { (float)j / (float)(VTXCNTX - 1), 
+										(float)(VTXCNTZ - 1 - i) / (float)(VTXCNTZ - 1)};
 			m_vecVertices[index].vPosition = vertices[index].vPosition;
 			m_vecVertices[index].vTexUV = vertices[index].vTexUV;
 		}

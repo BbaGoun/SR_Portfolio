@@ -1,4 +1,5 @@
 #include "CManagement.h"
+#include "CRenderer.h"
 
 IMPLEMENT_SINGLETON(CManagement)
 
@@ -17,6 +18,18 @@ CComponent* CManagement::Get_Component(COMPONENTID eID, const _tchar* pLayerTag,
         return nullptr;
 
     return m_pScene->Get_Component(eID, pLayerTag, pObjTag, pComponentTag);
+}
+
+void CManagement::Add_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag, CGameObject* pGameObject)
+{
+    if (pGameObject == nullptr)
+    {
+        MSG_BOX("Add_GameObject nullptr");
+        return;
+    }
+
+    if(FAILED(m_pScene->Add_GameObject(pLayerTag, pObjTag, pGameObject)))
+        MSG_BOX("Add_GameObject Fail");
 }
 
 HRESULT CManagement::Set_Scene(CScene* pScene)
@@ -49,6 +62,8 @@ void CManagement::LateUpdate_Scene(const _float& fTimeDelta)
 
 void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
+    CRenderer::GetInstance()->Render_GameObject(pGraphicDev);
+
     if (nullptr == m_pScene)
         return;
 

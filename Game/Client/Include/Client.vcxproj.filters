@@ -58,9 +58,6 @@
     <Filter Include="02. GameObject\Camera\FirstPersonCamera">
       <UniqueIdentifier>{6358c447-5368-456b-8cf9-5e5691e92983}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Camera\FixedThirdPersonCamera">
-      <UniqueIdentifier>{fea974b1-0821-4c2a-93c7-30822e6f7f09}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\GOCody\HeadPivot">
       <UniqueIdentifier>{c5999d27-5689-41b8-838a-61e5fbc2650c}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,9 @@
     </Filter>
     <Filter Include="02. GameObject\Land2">
       <UniqueIdentifier>{abc5ec96-6112-4f26-a7f4-31f2a42cd918}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Camera\TopViewCamera">
+      <UniqueIdentifier>{fea974b1-0821-4c2a-93c7-30822e6f7f09}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -132,8 +132,8 @@
     <ClInclude Include="..\Header\Client_Enum.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CFixedThirdPerCam.h">
-      <Filter>02. GameObject\Camera\FixedThirdPersonCamera</Filter>
+    <ClInclude Include="..\Header\CTopViewCam.h">
+      <Filter>02. GameObject\Camera\TopViewCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CHeadPivot.h">
       <Filter>02. GameObject\GOCody\HeadPivot</Filter>
@@ -197,8 +197,8 @@
     <ClCompile Include="..\Code\Client_Define.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CFixedThirdPerCam.cpp">
-      <Filter>02. GameObject\Camera\FixedThirdPersonCamera</Filter>
+    <ClCompile Include="..\Code\CTopViewCam.cpp">
+      <Filter>02. GameObject\Camera\TopViewCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CHeadPivot.cpp">
       <Filter>02. GameObject\GOCody\HeadPivot</Filter>

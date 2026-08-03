@@ -4,7 +4,7 @@
 #include "CProtoMgr.h"
 #include "CTexture.h"
 #include "CCameraMgr.h"
-
+#include "CRenderer.h"
 
 CCodyBody::CCodyBody(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -34,6 +34,7 @@ HRESULT CCodyBody::Ready_GameObject()
 
 _int CCodyBody::Update_GameObject(const _float& fTimeDelta)
 {
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	return CGameObject::Update_GameObject(fTimeDelta);
 }
 

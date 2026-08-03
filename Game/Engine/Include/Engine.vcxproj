@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CAirplane.h" />
+    <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCameraMgr.h" />
     <ClInclude Include="..\Header\CCody.h" />
     <ClInclude Include="..\Header\CComponent.h" />
@@ -40,6 +41,7 @@
     <ClInclude Include="..\Header\CPskFile.h" />
     <ClInclude Include="..\Header\CPyramid.h" />
     <ClInclude Include="..\Header\CRcTex.h" />
+    <ClInclude Include="..\Header\CRenderer.h" />
     <ClInclude Include="..\Header\CScene.h" />
     <ClInclude Include="..\Header\CTerrain.h" />
     <ClInclude Include="..\Header\CTerrain2.h" />
@@ -59,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAirplane.cpp" />
+    <ClCompile Include="..\Code\CCalculator.cpp" />
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
     <ClCompile Include="..\Code\CCody.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
@@ -79,6 +82,7 @@
     <ClCompile Include="..\Code\CPskFile.cpp" />
     <ClCompile Include="..\Code\CPyramid.cpp" />
     <ClCompile Include="..\Code\CRcTex.cpp" />
+    <ClCompile Include="..\Code\CRenderer.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
     <ClCompile Include="..\Code\CTerrain.cpp" />
     <ClCompile Include="..\Code\CTerrain2.cpp" />
@@ -96,6 +100,7 @@
     <ProjectGuid>{d568006e-c979-43d2-8ebc-15d78c5a3831}</ProjectGuid>
     <RootNamespace>Engine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Engine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

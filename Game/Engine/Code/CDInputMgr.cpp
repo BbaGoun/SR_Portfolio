@@ -64,6 +64,7 @@ void Engine::CDInputMgr::Update_InputDev(void)
 void Engine::CDInputMgr::LateUpdate_InputDev(void)
 {
 	memcpy(m_byBeforeKeyState, m_byKeyState, 256);
+	memcpy(&m_tBeforeMouseState, &m_tMouseState, sizeof(m_tMouseState));
 }
 
 void Engine::CDInputMgr::Free(void)

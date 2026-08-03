@@ -19,9 +19,6 @@
     <Filter Include="99. Headers">
       <UniqueIdentifier>{4ab1eeeb-a314-4a88-ab88-26b96f2d9676}</UniqueIdentifier>
     </Filter>
-    <Filter Include="89. HeightMapLoader">
-      <UniqueIdentifier>{3d5cb1a0-cfa5-440d-9515-61b60901d391}</UniqueIdentifier>
-    </Filter>
     <Filter Include="80. FontMgr">
       <UniqueIdentifier>{678f081c-ebd7-4ae6-81d8-5eb3676f5a99}</UniqueIdentifier>
     </Filter>
@@ -103,6 +100,18 @@
     <Filter Include="04. Component\Shape\Terrain2">
       <UniqueIdentifier>{2dfb1d83-2ffe-4247-930f-d50708c997c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98. Renderer">
+      <UniqueIdentifier>{f73f6720-c508-42db-9187-7abb121b370d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Utility">
+      <UniqueIdentifier>{9784b565-b356-46e8-b8f5-fa5aa93accad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Utility\CCalculator">
+      <UniqueIdentifier>{d43e0a19-b353-4ab7-acc3-22549acb2d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Utility\HeightMapLoader">
+      <UniqueIdentifier>{3d5cb1a0-cfa5-440d-9515-61b60901d391}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -124,7 +133,7 @@
       <Filter>99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CHeightMapLoader.h">
-      <Filter>89. HeightMapLoader</Filter>
+      <Filter>97. Utility\HeightMapLoader</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CFontMgr.h">
       <Filter>80. FontMgr</Filter>
@@ -216,6 +225,12 @@
     <ClInclude Include="..\Header\CTerrain2.h">
       <Filter>04. Component\Shape\Terrain2</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CRenderer.h">
+      <Filter>98. Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCalculator.h">
+      <Filter>97. Utility\CCalculator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -282,7 +297,7 @@
       <Filter>80. FontMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CHeightMapLoader.cpp">
-      <Filter>89. HeightMapLoader</Filter>
+      <Filter>97. Utility\HeightMapLoader</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CFont.cpp">
       <Filter>80. FontMgr\Font</Filter>
@@ -310,6 +325,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTerrain2.cpp">
       <Filter>04. Component\Shape\Terrain2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRenderer.cpp">
+      <Filter>98. Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCalculator.cpp">
+      <Filter>97. Utility\CCalculator</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

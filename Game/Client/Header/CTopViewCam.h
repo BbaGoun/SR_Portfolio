@@ -1,12 +1,12 @@
 #pragma once
 #include "CCamera.h"
 
-class CFixedThirdPerCam : public CCamera
+class CTopViewCam : public CCamera
 {
 private:
-	explicit CFixedThirdPerCam(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CFixedThirdPerCam(const CFixedThirdPerCam& rhs);
-	virtual ~CFixedThirdPerCam();
+	explicit CTopViewCam(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CTopViewCam(const CTopViewCam& rhs);
+	virtual ~CTopViewCam();
 
 public:
 	HRESULT		Ready_GameObject(const _vec3& pEye,
@@ -21,8 +21,16 @@ public:
 	virtual void	LateUpdate_GameObject(const _float& fTimeDelta);
 	virtual void	Render_GameObject() {}
 
+private:
+	void Mouse_Input();
+	void ClickTarget();
+
+private:
+	_float m_fYaw;
+	_float m_fDistScale;
+
 public:
-	static CFixedThirdPerCam* Create(LPDIRECT3DDEVICE9 pGraphicDev,
+	static CTopViewCam* Create(LPDIRECT3DDEVICE9 pGraphicDev,
 								const _vec3& pEye = { 0, 30, -30 },
 								const _vec3& pAt = { 0, 0, 0 },
 								const _vec3& pUp = { 0, 1, 0 },
