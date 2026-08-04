@@ -37,15 +37,15 @@ HRESULT CScene_Test::Ready_Scene()
 	return S_OK;
 }
 
-_int CScene_Test::Update_Scene(const _float& fTimeDelta)
+_int CScene_Test::Update_Scene(const _float& fDeltaTime)
 {
-	_int iExit = CScene::Update_Scene(fTimeDelta);
+	_int iExit = CScene::Update_Scene(fDeltaTime);
 	return iExit;
 }
 
-void CScene_Test::LateUpdate_Scene(const _float& fTimeDelta)
+void CScene_Test::LateUpdate_Scene(const _float& fDeltaTime)
 {
-	CScene::LateUpdate_Scene(fTimeDelta);
+	CScene::LateUpdate_Scene(fDeltaTime);
 }
 
 void CScene_Test::Render_Scene()

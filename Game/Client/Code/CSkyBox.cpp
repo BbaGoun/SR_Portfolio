@@ -38,19 +38,19 @@ HRESULT CSkyBox::Ready_GameObject()
 	return S_OK;
 }
 
-_int CSkyBox::Update_GameObject(const _float& fTimeDelta)
+_int CSkyBox::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_PRIORITY, this);
-	return CGameObject::Update_GameObject(fTimeDelta);
+	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CSkyBox::LateUpdate_GameObject(const _float& fTimeDelta)
+void CSkyBox::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	CCamera* p_Camera = CCameraMgr::GetInstance()->GetMainCamera();
 	_vec3 pos;
 	p_Camera->Get_Transform()->Get_Info(INFO_POS, &pos);
 	m_pTransformCom->Set_Pos(pos);
-	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 void CSkyBox::Render_GameObject()

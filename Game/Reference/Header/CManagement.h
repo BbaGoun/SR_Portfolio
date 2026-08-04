@@ -27,8 +27,9 @@ public:
 
 public:
 	HRESULT			Set_Scene(CScene* pScene);
-	_int			Update_Scene(const _float& fTimeDelta);
-	void			LateUpdate_Scene(const _float& fTimeDelta);
+	void			FixedUpdate_Scene(const _float& fFixedDeltaTime);
+	_int			Update_Scene(const _float& fDeltaTime);
+	void			LateUpdate_Scene(const _float& fDeltaTime);
 	void			Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:

@@ -18,8 +18,8 @@ public:
 		const _float& fNear,
 		const _float& fFar);
 
-	virtual _int	Update_GameObject(const _float& fTimeDelta);
-	virtual void	LateUpdate_GameObject(const _float& fTimeDelta);
+	virtual _int	Update_GameObject(const _float& fDeltaTime);
+	virtual void	LateUpdate_GameObject(const _float& fDeltaTime);
 	virtual void	Render_GameObject() {}
 
 public:

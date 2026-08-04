@@ -36,15 +36,15 @@ HRESULT CEnemy::Ready_GameObject()
 	return S_OK;
 }
 
-_int CEnemy::Update_GameObject(const _float& fTimeDelta)
+_int CEnemy::Update_GameObject(const _float& fDeltaTime)
 {
-	return CGameObject::Update_GameObject(fTimeDelta);
+	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CEnemy::LateUpdate_GameObject(const _float& fTimeDelta)
+void CEnemy::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-	Follow(fTimeDelta);
-	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	Follow(fDeltaTime);
+	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 void CEnemy::Render_GameObject()
@@ -61,14 +61,14 @@ void CEnemy::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-void CEnemy::Follow(const _float& fTimeDelta)
+void CEnemy::Follow(const _float& fDeltaTime)
 {
 	_vec3 playerPos;
 	static_cast<CTransform*>(
 		CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameObject", L"Obj_Player", L"Com_Transform")
 	)->Get_Info(INFO_POS, &playerPos);
 
-	m_pTransformCom->FollowObj(&playerPos, 7.5, fTimeDelta);
+	m_pTransformCom->FollowObj(&playerPos, 7.5, fDeltaTime);
 }
 
 CEnemy* CEnemy::Create(LPDIRECT3DDEVICE9 pGraphicDev)

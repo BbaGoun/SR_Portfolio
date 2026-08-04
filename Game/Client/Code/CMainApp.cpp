@@ -42,17 +42,23 @@ HRESULT CMainApp::Ready_MainApp()
 	return S_OK;
 }
 
-int CMainApp::Update_MainApp(const float& fTimeDelta)
+
+void CMainApp::FixedUpdate_MainApp(const float& fFixedDeltaTime)
+{
+	m_pManagementClass->FixedUpdate_Scene(fFixedDeltaTime);
+}
+
+int CMainApp::Update_MainApp(const float& fDeltaTime)
 {
 	CDInputMgr::GetInstance()->Update_InputDev();
-	m_pManagementClass->Update_Scene(fTimeDelta);
+	m_pManagementClass->Update_Scene(fDeltaTime);
 
 	return 0;
 }
 
-void CMainApp::LateUpdate_MainApp(const float& fTimeDelta)
+void CMainApp::LateUpdate_MainApp(const float& fDeltaTime)
 {
-	m_pManagementClass->LateUpdate_Scene(fTimeDelta);
+	m_pManagementClass->LateUpdate_Scene(fDeltaTime);
 	CDInputMgr::GetInstance()->LateUpdate_InputDev();
 }
 

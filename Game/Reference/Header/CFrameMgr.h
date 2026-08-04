@@ -15,7 +15,7 @@ private:
 
 public:
 	HRESULT			Ready_Frame(const _tchar* pFrameTag, const _float& fCallLimit);
-	_bool			IsPermit_Call(const _tchar* pFrameTag, const _float& fTimeDelta);
+	_bool			IsPermit_Call(const _tchar* pFrameTag, const _float& fDeltaTime);
 
 private:
 	CFrame*			Find_Frame(const _tchar* pFrameTag);

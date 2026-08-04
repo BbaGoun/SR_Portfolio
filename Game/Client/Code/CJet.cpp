@@ -34,16 +34,16 @@ HRESULT CJet::Ready_GameObject()
 	return S_OK;
 }
 
-_int CJet::Update_GameObject(const _float& fTimeDelta)
+_int CJet::Update_GameObject(const _float& fDeltaTime)
 {
-	Key_Input(fTimeDelta);
+	Key_Input(fDeltaTime);
 
-	return CGameObject::Update_GameObject(fTimeDelta);
+	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CJet::LateUpdate_GameObject(const _float& fTimeDelta)
+void CJet::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 void CJet::Render_GameObject()
@@ -60,34 +60,34 @@ void CJet::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-void CJet::Key_Input(const _float& fTimeDelta)
+void CJet::Key_Input(const _float& fDeltaTime)
 {
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
 	if (GetAsyncKeyState('A')) {
-		m_pTransformCom->Rotate(QUATER_ROLL, 180 * fTimeDelta);
+		m_pTransformCom->Rotate(QUATER_ROLL, 180 * fDeltaTime);
 	}
 	if (GetAsyncKeyState('D')) {
-		m_pTransformCom->Rotate(QUATER_ROLL, -180 * fTimeDelta);
+		m_pTransformCom->Rotate(QUATER_ROLL, -180 * fDeltaTime);
 	}
 
 	if (GetAsyncKeyState('Q')) {
-		m_pTransformCom->Rotate(QUATER_YAW, -180 * fTimeDelta);
+		m_pTransformCom->Rotate(QUATER_YAW, -180 * fDeltaTime);
 	}
 	if (GetAsyncKeyState('E')) {
-		m_pTransformCom->Rotate(QUATER_YAW, 180 * fTimeDelta);
+		m_pTransformCom->Rotate(QUATER_YAW, 180 * fDeltaTime);
 	}
 
 	if (GetAsyncKeyState('W')) {
-		m_pTransformCom->Rotate(QUATER_PITCH, -180 * fTimeDelta);
+		m_pTransformCom->Rotate(QUATER_PITCH, -180 * fDeltaTime);
 	}
 	if (GetAsyncKeyState('S')) {
-		m_pTransformCom->Rotate(QUATER_PITCH, 180 * fTimeDelta);
+		m_pTransformCom->Rotate(QUATER_PITCH, 180 * fDeltaTime);
 	}
 
 	if (GetAsyncKeyState(VK_SPACE)) {
-		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vLook, &vLook), m_fSpeed, fTimeDelta);
+		m_pTransformCom->Move_Pos(D3DXVec3Normalize(&vLook, &vLook), m_fSpeed, fDeltaTime);
 	}
 
 	/*if (CKeyMgr::GetInstance()->KeyPressing(VK_LSHIFT)) {

@@ -15,8 +15,9 @@ private:		// 생성자, 소멸자
 
 public:
 	HRESULT		Ready_MainApp();
-	int			Update_MainApp(const float& fTimeDelta);
-	void		LateUpdate_MainApp(const float& fTimeDelta);
+	void		FixedUpdate_MainApp(const float& fFixedDeltaTime);
+	int			Update_MainApp(const float& fDeltaTime);
+	void		LateUpdate_MainApp(const float& fDeltaTime);
 	void		Render_MainApp();
 
 private:

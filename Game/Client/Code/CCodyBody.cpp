@@ -32,15 +32,15 @@ HRESULT CCodyBody::Ready_GameObject()
 	return S_OK;
 }
 
-_int CCodyBody::Update_GameObject(const _float& fTimeDelta)
+_int CCodyBody::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-	return CGameObject::Update_GameObject(fTimeDelta);
+	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CCodyBody::LateUpdate_GameObject(const _float& fTimeDelta)
+void CCodyBody::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 void CCodyBody::Render_GameObject()

@@ -34,13 +34,21 @@ HRESULT CLayer::Ready_Layer()
 	return S_OK;
 }
 
-_int CLayer::Update_Layer(const _float& fTimeDelta)
+void CLayer::FixedUpdate_Layer(const _float& fFixedDeltaTime)
+{
+	for (auto& pObj : m_mapObject)
+	{
+		pObj.second->FixedUpdate_GameObject(fFixedDeltaTime);
+	}	
+}
+
+_int CLayer::Update_Layer(const _float& fDeltaTime)
 {
 	_int	iResult(0);
 
 	for (auto& pObj : m_mapObject)
 	{
-		iResult = pObj.second->Update_GameObject(fTimeDelta);
+		iResult = pObj.second->Update_GameObject(fDeltaTime);
 
 		if (iResult & 0x80000000)
 			return iResult;
@@ -49,10 +57,10 @@ _int CLayer::Update_Layer(const _float& fTimeDelta)
 	return iResult;
 }
 
-void CLayer::LateUpdate_Layer(const _float& fTimeDelta)
+void CLayer::LateUpdate_Layer(const _float& fDeltaTime)
 {
 	for (auto& pObj : m_mapObject)
-		pObj.second->LateUpdate_GameObject(fTimeDelta);
+		pObj.second->LateUpdate_GameObject(fDeltaTime);
 }
 
 void CLayer::Render_Layer()

@@ -80,7 +80,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
 
     // 타이머 설치
-    if (FAILED(CTimerMgr::GetInstance()->Ready_Timer(L"Timer_Immediate")))
+    if (FAILED(CTimerMgr::GetInstance()->Ready_Timer(L"Timer_Global")))
         return E_FAIL;
 
     if (FAILED(CTimerMgr::GetInstance()->Ready_Timer(L"Timer_FPS60")))
@@ -112,16 +112,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_Immediate");
-            _float fTimer_Immediate = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_Immediate");
+            CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_Global");
+            _float fGlobal_TimeDelta = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_Global");
 
-            if (CFrameMgr::GetInstance()->IsPermit_Call(L"Frame60", fTimer_Immediate))
+            if (CFrameMgr::GetInstance()->IsPermit_Call(L"Frame60", fGlobal_TimeDelta))
             {
                 CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_FPS60");
-                _float fTimer_FPS60 = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+                _float fFPS60_DeltaTime = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+                _float fFixed_DeltaTime;
+                int fixedStep = CTimerMgr::GetInstance()->Get_FixedStep(L"Timer_FPS60", &fFixed_DeltaTime);
 
-                pMainApp->Update_MainApp(fTimer_FPS60);
-                pMainApp->LateUpdate_MainApp(fTimer_FPS60);
+                for(int i=0; i<fixedStep; ++i)
+                    pMainApp->FixedUpdate_MainApp(fFixed_DeltaTime);
+
+                pMainApp->Update_MainApp(fFPS60_DeltaTime);
+                pMainApp->LateUpdate_MainApp(fFPS60_DeltaTime);
                 pMainApp->Render_MainApp();
             }
 

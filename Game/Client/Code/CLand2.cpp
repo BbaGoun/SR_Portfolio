@@ -33,15 +33,15 @@ HRESULT CLand2::Ready_GameObject()
 	return S_OK;
 }
 
-_int CLand2::Update_GameObject(const _float& fTimeDelta)
+_int CLand2::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_PRIORITY, this);
-	return CGameObject::Update_GameObject(fTimeDelta);
+	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CLand2::LateUpdate_GameObject(const _float& fTimeDelta)
+void CLand2::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 void CLand2::Render_GameObject()

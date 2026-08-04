@@ -33,9 +33,9 @@ HRESULT CLoading::Ready_Scene()
     return S_OK;
 }
 
-_int CLoading::Update_Scene(const _float& fTimeDelta)
+_int CLoading::Update_Scene(const _float& fDeltaTime)
 {
-    _int    iExit = CScene::Update_Scene(fTimeDelta);
+    _int    iExit = CScene::Update_Scene(fDeltaTime);
 
     if (m_pLoadingThread->Get_Finish())
     {
@@ -57,9 +57,9 @@ _int CLoading::Update_Scene(const _float& fTimeDelta)
     return iExit;
 }
 
-void CLoading::LateUpdate_Scene(const _float& fTimeDelta)
+void CLoading::LateUpdate_Scene(const _float& fDeltaTime)
 {
-    CScene::LateUpdate_Scene(fTimeDelta);
+    CScene::LateUpdate_Scene(fDeltaTime);
 }
 
 void CLoading::Render_Scene()

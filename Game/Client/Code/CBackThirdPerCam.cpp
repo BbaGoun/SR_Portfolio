@@ -40,12 +40,12 @@ HRESULT CBackThirdPerCam::Ready_GameObject(
 	return S_OK;
 }
 
-_int CBackThirdPerCam::Update_GameObject(const _float& fTimeDelta)
+_int CBackThirdPerCam::Update_GameObject(const _float& fDeltaTime)
 {
 	return 0;
 }
 
-void CBackThirdPerCam::LateUpdate_GameObject(const _float& fTimeDelta)
+void CBackThirdPerCam::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
 		_vec3 vLook;
@@ -56,7 +56,7 @@ void CBackThirdPerCam::LateUpdate_GameObject(const _float& fTimeDelta)
 		m_vAt = m_vEye;
 		m_vEye = m_vEye - vLook * 20;
 
-		CCamera::LateUpdate_GameObject(fTimeDelta);
+		CCamera::LateUpdate_GameObject(fDeltaTime);
 		CCameraMgr::GetInstance()->UpdateMainCameraInfo(&m_matView, &m_matProj);
 	}
 }

@@ -35,14 +35,10 @@ HRESULT CGOCody::Ready_GameObject()
 	return S_OK;
 }
 
-_int CGOCody::Update_GameObject(const _float& fTimeDelta)
+void CGOCody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	Key_Input();
-	Mouse_Input();
-	FollowTarget();
-	
 	if (m_bJump) {
-		m_fJumpTime += fTimeDelta;
+		m_fJumpTime += fFixedDeltaTime;
 		m_vForce.y = max(-19.6f,
 			m_vForce.y - (9.8f * m_fJumpTime * m_fJumpTime));
 	}
@@ -51,17 +47,24 @@ _int CGOCody::Update_GameObject(const _float& fTimeDelta)
 
 	_vec3 pos;
 	m_pTransformCom->Get_Info(INFO_POS, &pos);
-	pos += m_vForce * fTimeDelta;
+	pos += m_vForce * fFixedDeltaTime;
 	AdjustPosY(pos);
-
-	Mouse_Fix();
-
-	return CGameObject::Update_GameObject(fTimeDelta);
 }
 
-void CGOCody::LateUpdate_GameObject(const _float& fTimeDelta)
+_int CGOCody::Update_GameObject(const _float& fDeltaTime)
 {
-	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	Key_Input();
+	Mouse_Input();
+	FollowTarget();
+	
+	Mouse_Fix();
+
+	return CGameObject::Update_GameObject(fDeltaTime);
+}
+
+void CGOCody::LateUpdate_GameObject(const _float& fDeltaTime)
+{
+	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 void CGOCody::Key_Input()

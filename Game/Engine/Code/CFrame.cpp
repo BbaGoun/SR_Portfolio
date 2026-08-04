@@ -8,9 +8,9 @@ CFrame::~CFrame()
 {
 }
 
-_bool CFrame::IsPermit_Call(const _float& fTimeDelta)
+_bool CFrame::IsPermit_Call(const _float& fDeltaTime)
 {
-	m_fAccTimeDelta += fTimeDelta;
+	m_fAccTimeDelta += fDeltaTime;
 
 	if (m_fAccTimeDelta >= m_fCallLimit)
 	{

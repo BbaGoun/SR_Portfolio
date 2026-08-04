@@ -29,14 +29,14 @@ HRESULT CFrameMgr::Ready_Frame(const _tchar* pFrameTag,
 }
 
 _bool CFrameMgr::IsPermit_Call(const _tchar* pFrameTag, 
-                                const _float& fTimeDelta)
+                                const _float& fDeltaTime)
 {
     CFrame* pFrame = Find_Frame(pFrameTag);
 
     if (nullptr == pFrame)
         return false;
 
-    return pFrame->IsPermit_Call(fTimeDelta);
+    return pFrame->IsPermit_Call(fDeltaTime);
 }
 
 CFrame* CFrameMgr::Find_Frame(const _tchar* pFrameTag)

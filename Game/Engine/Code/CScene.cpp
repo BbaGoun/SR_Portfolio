@@ -35,18 +35,24 @@ HRESULT CScene::Ready_Scene()
     return S_OK;
 }
 
-_int CScene::Update_Scene(const _float& fTimeDelta)
+void CScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 {
     for (auto& pLayer : m_mapLayer)
-        pLayer.second->Update_Layer(fTimeDelta);
+        pLayer.second->FixedUpdate_Layer(fFixedDeltaTime);
+}
+
+_int CScene::Update_Scene(const _float& fDeltaTime)
+{
+    for (auto& pLayer : m_mapLayer)
+        pLayer.second->Update_Layer(fDeltaTime);
 
     return 0;
 }
 
-void CScene::LateUpdate_Scene(const _float& fTimeDelta)
+void CScene::LateUpdate_Scene(const _float& fDeltaTime)
 {
     for (auto& pLayer : m_mapLayer)
-        pLayer.second->LateUpdate_Layer(fTimeDelta);
+        pLayer.second->LateUpdate_Layer(fDeltaTime);
 }
 
 void CScene::Render_Scene()

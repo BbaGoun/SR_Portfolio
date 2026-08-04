@@ -12,7 +12,7 @@ private:
 	virtual ~CFrame();
 
 public:
-	_bool		IsPermit_Call(const _float& fTimeDelta);
+	_bool		IsPermit_Call(const _float& fDeltaTime);
 	HRESULT		Ready_Frame(const _float& fCallLimit);
 
 private:

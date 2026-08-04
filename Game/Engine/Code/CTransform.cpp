@@ -34,12 +34,12 @@ CTransform::~CTransform()
 {
 }
 
-_int CTransform::Update_Component(const _float& fTimeDelta)
+_int CTransform::Update_Component(const _float& fDeltaTime)
 {
 	return 0;
 }
 
-void CTransform::LateUpdate_Component(const _float& fTimeDelta)
+void CTransform::LateUpdate_Component(const _float& fDeltaTime)
 {
 }
 
@@ -100,7 +100,7 @@ _matrix* CTransform::Get_World()
 	return &m_matWorld;
 }
 
-void CTransform::FollowObj(_vec3* pPos, _float _fSpeed, _float _fTimeDelta)
+void CTransform::FollowObj(_vec3* pPos, _float _fSpeed, _float _fDeltaTime)
 {
 	_vec3 pos;
 	Get_Info(INFO_POS, &pos);
@@ -108,7 +108,7 @@ void CTransform::FollowObj(_vec3* pPos, _float _fSpeed, _float _fTimeDelta)
 	
 	_float fLength = D3DXVec3Length(&vFollowDir);
 
-	float step = min(fLength, _fSpeed * _fTimeDelta);
+	float step = min(fLength, _fSpeed * _fDeltaTime);
 
 	D3DXVec3Normalize(&vFollowDir, &vFollowDir);
 

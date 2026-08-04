@@ -31,21 +31,21 @@ HRESULT CHeadPivot::Ready_GameObject()
 	return S_OK;
 }
 
-_int CHeadPivot::Update_GameObject(const _float& fTimeDelta)
+_int CHeadPivot::Update_GameObject(const _float& fDeltaTime)
 {
-	Mouse_Input(fTimeDelta);
+	Mouse_Input(fDeltaTime);
 
-	return CGameObject::Update_GameObject(fTimeDelta);
+	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CHeadPivot::LateUpdate_GameObject(const _float& fTimeDelta)
+void CHeadPivot::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-	CGameObject::LateUpdate_GameObject(fTimeDelta);
+	CGameObject::LateUpdate_GameObject(fDeltaTime);
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 }
 
-void CHeadPivot::Mouse_Input(const _float& fTimeDelta)
+void CHeadPivot::Mouse_Input(const _float& fDeltaTime)
 {
 	_matrix* matWorld = m_pTransformCom->Get_World();
 

@@ -44,20 +44,28 @@ HRESULT CManagement::Set_Scene(CScene* pScene)
     return S_OK;
 }
 
-_int CManagement::Update_Scene(const _float& fTimeDelta)
-{
-    if (nullptr == m_pScene)
-        return -1;
-
-    return m_pScene->Update_Scene(fTimeDelta);
-}
-
-void CManagement::LateUpdate_Scene(const _float& fTimeDelta)
+void CManagement::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 {
     if (nullptr == m_pScene)
         return;
 
-    m_pScene->LateUpdate_Scene(fTimeDelta);
+    m_pScene->FixedUpdate_Scene(fFixedDeltaTime);
+}
+
+_int CManagement::Update_Scene(const _float& fDeltaTime)
+{
+    if (nullptr == m_pScene)
+        return -1;
+
+    return m_pScene->Update_Scene(fDeltaTime);
+}
+
+void CManagement::LateUpdate_Scene(const _float& fDeltaTime)
+{
+    if (nullptr == m_pScene)
+        return;
+
+    m_pScene->LateUpdate_Scene(fDeltaTime);
 }
 
 void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)

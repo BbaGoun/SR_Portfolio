@@ -17,7 +17,7 @@ _float CTimerMgr::Get_TimeDelta(const _tchar* pTimerTag)
 	if (nullptr == pTimer)
 		return 0.f;
 
-	return pTimer->Get_TimeDelta();
+	return pTimer->GetDeltaTime();
 }
 
 void CTimerMgr::Set_TimeDelta(const _tchar* pTimerTag)
@@ -27,6 +27,15 @@ void CTimerMgr::Set_TimeDelta(const _tchar* pTimerTag)
 		return;
 
 	pTimer->Update_Timer();
+}
+
+int CTimerMgr::Get_FixedStep(const _tchar* pTimerTag, float* pFixed_DeltaTime)
+{
+	CTimer* pTimer = Find_Timer(pTimerTag);
+	if (nullptr == pTimer)
+		return 0;
+
+	return pTimer->GetFixedStep(pFixed_DeltaTime);
 }
 
 HRESULT CTimerMgr::Ready_Timer(const _tchar* pTimerTag)

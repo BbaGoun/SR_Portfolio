@@ -46,7 +46,7 @@ HRESULT CTopViewCam::Ready_GameObject(const _vec3& pEye,
 	return S_OK;
 }
 
-_int CTopViewCam::Update_GameObject(const _float& fTimeDelta)
+_int CTopViewCam::Update_GameObject(const _float& fDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
 		Mouse_Input();
@@ -54,7 +54,7 @@ _int CTopViewCam::Update_GameObject(const _float& fTimeDelta)
 	return 0;
 }
 
-void CTopViewCam::LateUpdate_GameObject(const _float& fTimeDelta)
+void CTopViewCam::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
 		CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_Player", L"Com_Transform");
@@ -76,7 +76,7 @@ void CTopViewCam::LateUpdate_GameObject(const _float& fTimeDelta)
 		m_vAt = pos;
 		m_vUp = { 0, 1, 0 };
 
-		CCamera::LateUpdate_GameObject(fTimeDelta);
+		CCamera::LateUpdate_GameObject(fDeltaTime);
 		CCameraMgr::GetInstance()->UpdateMainCameraInfo(&m_matView, &m_matProj);
 	}
 }

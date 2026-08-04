@@ -15,12 +15,12 @@ private:
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
-	virtual			_int		Update_GameObject(const _float& fTimeDelta) override;
-	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta) override;
+	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
+	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
 private:
-	void	Follow(const _float& fTimeDelta);
+	void	Follow(const _float& fDeltaTime);
 
 private:
 	CMay* m_pBufferCom;

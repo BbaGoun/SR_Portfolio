@@ -16,6 +16,7 @@ private:
 public:
 	_float			Get_TimeDelta(const _tchar* pTimerTag);
 	void			Set_TimeDelta(const _tchar* pTimerTag);
+	int				Get_FixedStep(const _tchar* pTimerTag, float* pFixed_DeltaTime);
 
 public:
 	HRESULT			Ready_Timer(const _tchar* pTimerTag);

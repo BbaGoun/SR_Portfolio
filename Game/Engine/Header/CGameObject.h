@@ -25,8 +25,9 @@ public:
 
 public:
 	virtual			HRESULT		Ready_GameObject();
-	virtual			_int		Update_GameObject(const _float& fTimeDelta);
-	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
+	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) {};
+	virtual			_int		Update_GameObject(const _float& fDeltaTime);
+	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime);
 	virtual			void		Render_GameObject();
 	
 	virtual			void		CollisionEnter() {};

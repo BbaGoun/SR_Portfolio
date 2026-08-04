@@ -15,12 +15,12 @@ private:
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
-	virtual			_int		Update_GameObject(const _float& fTimeDelta) override;
-	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta) override;
+	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
+	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
 private:
-	void	Key_Input(const _float& fTimeDelta);
+	void	Key_Input(const _float& fDeltaTime);
 
 private:
 	CAirplane* m_pBufferCom;

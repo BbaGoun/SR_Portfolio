@@ -13,16 +13,16 @@ protected:
 	virtual ~CTransform();
 
 public:
-	virtual _int Update_Component(const _float& fTimeDelta) override;
-	virtual void LateUpdate_Component(const _float& fTimeDelta) override;
+	virtual _int Update_Component(const _float& fDeltaTime) override;
+	virtual void LateUpdate_Component(const _float& fDeltaTime) override;
 
 protected:
 	HRESULT	Ready_Transform();
 
 public:
-	void		Move_Pos(const _vec3* pDir, const _float& fSpeed, const _float& fTimeDelta)
+	void		Move_Pos(const _vec3* pDir, const _float& fSpeed, const _float& fDeltaTime)
 	{
-		m_vInfo[INFO_POS] += *pDir * fSpeed * fTimeDelta;
+		m_vInfo[INFO_POS] += *pDir * fSpeed * fDeltaTime;
 		Set_Dirty();
 	}
 
@@ -75,7 +75,7 @@ public:
 	void Set_Dirty();
 	
 public:
-	void FollowObj(_vec3* _pPos, _float _fSpeed, _float _fTimeDelta);
+	void FollowObj(_vec3* _pPos, _float _fSpeed, _float _fDeltaTime);
 	_matrix* GetFollowRotation(_vec3* _pFollowDir, _matrix* _pRot);
 
 private:

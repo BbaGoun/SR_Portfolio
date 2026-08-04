@@ -25,8 +25,9 @@ public:
 
 public:
 	virtual			HRESULT		Ready_Scene();
-	virtual			_int		Update_Scene(const _float& fTimeDelta);
-	virtual			void		LateUpdate_Scene(const _float& fTimeDelta);
+	virtual			void		FixedUpdate_Scene(const _float& fFixedDeltaTime);
+	virtual			_int		Update_Scene(const _float& fDeltaTime);
+	virtual			void		LateUpdate_Scene(const _float& fDeltaTime);
 	virtual			void		Render_Scene();
 
 	void			Set_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer, bool bCollision);

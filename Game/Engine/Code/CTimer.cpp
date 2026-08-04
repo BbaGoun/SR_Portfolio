@@ -1,6 +1,9 @@
 #include "CTimer.h"
 
-CTimer::CTimer() : m_fTimeDelta(0.f)
+CTimer::CTimer() : m_fUnscaledTime(0.f), m_fScaledTime(0.f)
+, m_fLastFixedTime(0.f), m_fMaxDeltaTime(0.333f)
+, m_fUnscaledDeltaTime(0.f), m_fDeltaTime(0.f)
+, m_fFixedDeltaTime(0.02f), m_fTimeScale(1.f)
 {
 	ZeroMemory(&m_FixTime, sizeof(LARGE_INTEGER));
 	ZeroMemory(&m_LastTime, sizeof(LARGE_INTEGER));
@@ -10,6 +13,22 @@ CTimer::CTimer() : m_fTimeDelta(0.f)
 
 CTimer::~CTimer()
 {
+}
+
+int CTimer::GetFixedStep(float* pFixed_DeltaTime)
+{
+	float fFixedAccumulator = GetScaledTime() - GetLastFixedTime();
+	float fixedDt = GetFixedDeltaTime();
+	int fixedSteps = 0;
+	while (fFixedAccumulator >= fixedDt) {
+		fFixedAccumulator -= fixedDt;
+		++fixedSteps;
+		PlusLastFixedTime();
+	}
+
+	*pFixed_DeltaTime = fixedDt;
+
+	return fixedSteps;
 }
 
 HRESULT CTimer::Ready_Timer()
@@ -33,7 +52,13 @@ void CTimer::Update_Timer()
 		m_FixTime = m_FrameTime;
 	}
 
-	m_fTimeDelta = (m_FrameTime.QuadPart - m_LastTime.QuadPart) / (_float)m_CpuTick.QuadPart;
+	float elapsed = (m_FrameTime.QuadPart - m_LastTime.QuadPart) / (_float)m_CpuTick.QuadPart;
+
+	SetUnscaledDeltaTime(elapsed);
+	SetDeltaTime(elapsed);
+
+	PlusUnscaledTime();
+	PlusScaledTime();
 
 	m_LastTime = m_FrameTime;
 }

@@ -40,18 +40,18 @@ HRESULT CGameObject::Ready_GameObject()
     return S_OK;
 }
 
-_int CGameObject::Update_GameObject(const _float& fTimeDelta)
+_int CGameObject::Update_GameObject(const _float& fDeltaTime)
 {
     for (auto& pComponent : m_mapComponent[ID_DYNAMIC])
-        pComponent.second->Update_Component(fTimeDelta);
+        pComponent.second->Update_Component(fDeltaTime);
 
     return 0;
 }
 
-void CGameObject::LateUpdate_GameObject(const _float& fTimeDelta)
+void CGameObject::LateUpdate_GameObject(const _float& fDeltaTime)
 {
     for (auto& pComponent : m_mapComponent[ID_DYNAMIC])
-        pComponent.second->LateUpdate_Component(fTimeDelta);
+        pComponent.second->LateUpdate_Component(fDeltaTime);
 }
 
 void CGameObject::Render_GameObject()
