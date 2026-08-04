@@ -3,7 +3,7 @@
 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
     : m_pGraphicDev(pGraphicDev)
-    , m_pParent(nullptr), m_pTransformCom(nullptr)
+    , m_pParent(nullptr), m_pTransformCom(nullptr), m_iCullDistance(210'000'000)
 {
     m_pGraphicDev->AddRef();
 }
@@ -12,6 +12,7 @@ CGameObject::CGameObject(const CGameObject& rhs)
     : m_pGraphicDev(rhs.m_pGraphicDev)
     , m_pParent(rhs.m_pParent)
     , m_vecChildren(rhs.m_vecChildren)
+    , m_iCullDistance(rhs.m_iCullDistance)
 {
     m_pGraphicDev->AddRef();
     Ready_GameObject();

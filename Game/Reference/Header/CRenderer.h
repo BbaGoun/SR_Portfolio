@@ -30,6 +30,11 @@ public:
 	void	Render_UI(LPDIRECT3DDEVICE9& pGraphicDev);
 
 private:
+	void	PreCull(LPDIRECT3DDEVICE9& pGraphicDev);
+	void	PreRender(LPDIRECT3DDEVICE9& pGraphicDev);
+	void	PostRender(LPDIRECT3DDEVICE9& pGraphicDev);
+
+private:
 	list<CGameObject*>	m_RenderGroup[RENDER_END];
 
 private:

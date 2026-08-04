@@ -37,6 +37,13 @@ HRESULT CScene_Test::Ready_Scene()
 	return S_OK;
 }
 
+void CScene_Test::FixedUpdate_Scene(const _float& fFixedDeltaTime)
+{
+	CScene::FixedUpdate_Scene(fFixedDeltaTime);
+
+	// 충돌 처리
+}
+
 _int CScene_Test::Update_Scene(const _float& fDeltaTime)
 {
 	_int iExit = CScene::Update_Scene(fDeltaTime);

@@ -22,10 +22,15 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)
 
 void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 {
+	PreCull(pGraphicDev);
+	PreRender(pGraphicDev);
+
 	Render_Priority(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
 	Render_UI(pGraphicDev);
+
+	PostRender(pGraphicDev);
 
 	Clear_RenderGroup();
 }
@@ -75,6 +80,33 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	for (auto& pObj : m_RenderGroup[RENDER_UI])
 		pObj->Render_GameObject();
+}
+
+void CRenderer::PreCull(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	for (size_t i = 0; i < RENDER_END; ++i)
+	{
+		for (auto& pObj : m_RenderGroup[i])
+			pObj->PreCull_GameObject();
+	}
+}
+
+void CRenderer::PreRender(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	for (size_t i = 0; i < RENDER_END; ++i)
+	{
+		for (auto& pObj : m_RenderGroup[i])
+			pObj->PreRender_GameObject();
+	}
+}
+
+void CRenderer::PostRender(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	for (size_t i = 0; i < RENDER_END; ++i)
+	{
+		for (auto& pObj : m_RenderGroup[i])
+			pObj->PostRender_GameObject();
+	}
 }
 
 void CRenderer::Free()

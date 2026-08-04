@@ -30,6 +30,11 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime);
 	virtual			void		Render_GameObject();
 	
+	virtual			void		PreCull_GameObject() {};
+	virtual			void		PreRender_GameObject() {};
+	virtual			void		PostRender_GameObject() {};
+
+
 	virtual			void		CollisionEnter() {};
 	virtual			void		CollisionExit() {};
 	virtual			void		CollisionStay() {};
@@ -49,6 +54,8 @@ protected:
 	CGameObject*							m_pParent;
 	CTransform*								m_pTransformCom;
 	uint32_t								m_iCollisionLayer;
+
+	uint32_t								m_iCullDistance;
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);
