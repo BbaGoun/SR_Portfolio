@@ -112,6 +112,18 @@
     <Filter Include="97. Utility\HeightMapLoader">
       <UniqueIdentifier>{3d5cb1a0-cfa5-440d-9515-61b60901d391}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Collision">
+      <UniqueIdentifier>{b9b63981-2805-4ff0-bc28-a0369095a44f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Collision\CollisionMgr">
+      <UniqueIdentifier>{6a53c4bd-5442-41e5-b8c8-2064f51aedbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Collision\Cube_Collider">
+      <UniqueIdentifier>{3071ec23-7f5c-441b-88b5-391b2cf1d7c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Collision\Sphere_Collider">
+      <UniqueIdentifier>{ceb6a661-2fe4-4494-a41f-0e3c41b29da3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -231,6 +243,18 @@
     <ClInclude Include="..\Header\CCalculator.h">
       <Filter>97. Utility\CCalculator</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCollider.h">
+      <Filter>04. Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCollisionMgr.h">
+      <Filter>04. Component\Collision\CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCube_Collider.h">
+      <Filter>04. Component\Collision\Cube_Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSphere_Collider.h">
+      <Filter>04. Component\Collision\Sphere_Collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -331,6 +355,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCalculator.cpp">
       <Filter>97. Utility\CCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollider.cpp">
+      <Filter>04. Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollisionMgr.cpp">
+      <Filter>04. Component\Collision\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCube_Collider.cpp">
+      <Filter>04. Component\Collision\Cube_Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSphere_Collider.cpp">
+      <Filter>04. Component\Collision\Sphere_Collider</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -76,6 +76,9 @@
     <Filter Include="02. GameObject\Camera\TopViewCamera">
       <UniqueIdentifier>{fea974b1-0821-4c2a-93c7-30822e6f7f09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\CollisionTest">
+      <UniqueIdentifier>{1d9596f4-f904-4f19-871e-a4c8158626b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
