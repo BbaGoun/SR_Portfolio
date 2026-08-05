@@ -55,6 +55,8 @@ protected:
 	CTransform*								m_pTransformCom;
 	uint32_t								m_iCollisionLayer;
 
+	uint32_t								m_iCullDistance;
+
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);
 

@@ -125,6 +125,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 for(int i=0; i<fixedStep; ++i)
                     pMainApp->FixedUpdate_MainApp(fFixed_DeltaTime);
 
+                // 이 부분이 FixedUpdate 말한대로 이번 프레임에 FixedUpdate를 몇번 호출해야하나 횟수를 얻어서 여러번
+                // 실행한다.
+
                 pMainApp->Update_MainApp(fFPS60_DeltaTime);
                 pMainApp->LateUpdate_MainApp(fFPS60_DeltaTime);
                 pMainApp->Render_MainApp();
