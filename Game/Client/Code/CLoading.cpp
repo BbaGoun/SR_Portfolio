@@ -7,6 +7,7 @@
 #include "CScene_Test.h"
 #include "CManagement.h"
 #include "CRcTex.h"
+#include "CCollisionTest.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
     : CScene(pGraphicDev), m_pLoadingThread(nullptr)
@@ -41,7 +42,8 @@ _int CLoading::Update_Scene(const _float& fDeltaTime)
     {
         if (GetAsyncKeyState(VK_RETURN))
         {
-            Engine::CScene* pStage = CScene_Test::Create(m_pGraphicDev);
+            //Engine::CScene* pStage = CScene_Test::Create(m_pGraphicDev);
+            Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
 
             if (nullptr == pStage)
                 return E_FAIL;

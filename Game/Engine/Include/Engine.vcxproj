@@ -22,6 +22,7 @@
     <ClInclude Include="..\Header\CAirplane.h" />
     <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCameraMgr.h" />
+    <ClInclude Include="..\Header\CCartWheelCol.h" />
     <ClInclude Include="..\Header\CCody.h" />
     <ClInclude Include="..\Header\CCollider.h" />
     <ClInclude Include="..\Header\CCollisionMgr.h" />
@@ -67,6 +68,7 @@
     <ClCompile Include="..\Code\CAirplane.cpp" />
     <ClCompile Include="..\Code\CCalculator.cpp" />
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
+    <ClCompile Include="..\Code\CCartWheelCol.cpp" />
     <ClCompile Include="..\Code\CCody.cpp" />
     <ClCompile Include="..\Code\CCollider.cpp" />
     <ClCompile Include="..\Code\CCollisionMgr.cpp" />

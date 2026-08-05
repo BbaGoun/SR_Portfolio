@@ -1,25 +1,27 @@
 #pragma once
 #include "CGameObject.h"
-class CCart :  public CGameObject
+namespace Engine
+{
+	class CCartWheelCol;
+}
+class CWheel_FR : public CGameObject
 {
 private:
-	explicit CCart(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CCart(const CGameObject& rhs);
-	virtual ~CCart() override;
+	explicit CWheel_FR(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CWheel_FR(const CGameObject& rhs);
+	virtual ~CWheel_FR() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
 	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) override;
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
-	virtual			void		Render_GameObject() override {};
+	virtual			void		Render_GameObject() override;
 
 public:
-	static CCart* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	void	KeyInput(const _float& fDeltaTime);
+	static CWheel_FR* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:
-	_float	m_fSpeed;
-	_vec3	m_vForce = { 0, 0, 0 };
+	Engine::CCartWheelCol* m_pBufferCom;
 
 protected:
 	virtual		void		Free() override;

@@ -178,6 +178,7 @@
     <ClInclude Include="..\Header\CBackGround.h" />
     <ClInclude Include="..\Header\CCart.h" />
     <ClInclude Include="..\Header\CCodyBody.h" />
+    <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CTopViewCam.h" />
     <ClInclude Include="..\Header\CEnemy.h" />
     <ClInclude Include="..\Header\CFirstPerCam.h" />
@@ -196,6 +197,7 @@
     <ClInclude Include="..\Header\CScene_Test.h" />
     <ClInclude Include="..\Header\CSkyBox.h" />
     <ClInclude Include="..\Header\CGOCody.h" />
+    <ClInclude Include="..\Header\CWheel.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -206,6 +208,7 @@
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CCart.cpp" />
     <ClCompile Include="..\Code\CCodyBody.cpp" />
+    <ClCompile Include="..\Code\CCollisionTest.cpp" />
     <ClCompile Include="..\Code\CTopViewCam.cpp" />
     <ClCompile Include="..\Code\CEnemy.cpp" />
     <ClCompile Include="..\Code\CFirstPerCam.cpp" />
@@ -223,6 +226,7 @@
     <ClCompile Include="..\Code\CScene_Test.cpp" />
     <ClCompile Include="..\Code\CSkyBox.cpp" />
     <ClCompile Include="..\Code\CGOCody.cpp" />
+    <ClCompile Include="..\Code\CWheel.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

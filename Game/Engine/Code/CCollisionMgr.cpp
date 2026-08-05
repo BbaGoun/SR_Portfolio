@@ -43,7 +43,6 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 			{
 				//pDstCollider->OnTrigger 호출
 				//pSrcCollider->OnTrigger 호출
-				return;
 			}
 			else
 			{
@@ -61,7 +60,6 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 			{
 				//pDstCollider->OnTrigger 호출
 				//pSrcCollider->OnTrigger 호출
-				return;
 			}
 			else
 			{
@@ -69,24 +67,53 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 				//pSrcCollider->OnCollision 호출
 			}
 		}
-
-	}
-	else if (pDstType == CAPSULE_COLLIDER && pSrcType == CAPSULE_COLLIDER)
-	{
-
 	}
 	else if (pDstType == CUBE_COLLIDER && pSrcType == SPHERE_COLLIDER)
 	{
-
+		if (CubeVsSphere(pDstCollider, pSrcCollider))
+		{
+			MSG_BOX("Collision!");
+			if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
+			{
+				//pDstCollider->OnTrigger 호출
+				//pSrcCollider->OnTrigger 호출
+			}
+			else
+			{
+				//pDstCollider->OnCollision 호출
+				//pSrcCollider->OnCollision 호출
+			}
+		}
 	}
-	else if (pDstType == SPHERE_COLLIDER && pSrcType == CAPSULE_COLLIDER)
+	else if (pDstType == SPHERE_COLLIDER && pSrcType == CUBE_COLLIDER)
 	{
-
+		if (SphereVsCube(pDstCollider, pSrcCollider))
+		{
+			MSG_BOX("Collision!");
+			if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
+			{
+				//pDstCollider->OnTrigger 호출
+				//pSrcCollider->OnTrigger 호출
+			}
+			else
+			{
+				//pDstCollider->OnCollision 호출
+				//pSrcCollider->OnCollision 호출
+			}
+		}
 	}
-	else if (pDstType == CAPSULE_COLLIDER && pSrcType == CUBE_COLLIDER)
-	{
-
-	}
+	//else if (pDstType == CAPSULE_COLLIDER && pSrcType == CAPSULE_COLLIDER)
+	//{
+	//
+	//}
+	//else if (pDstType == SPHERE_COLLIDER && pSrcType == CAPSULE_COLLIDER)
+	//{
+	//
+	//}
+	//else if (pDstType == CAPSULE_COLLIDER && pSrcType == CUBE_COLLIDER)
+	//{
+	//
+	//}
 
 	return;
 }
@@ -95,8 +122,8 @@ bool CCollisionMgr::CubeVsCube(CCollider* pDstCollider, CCollider* pSrcCollider)
 {
 	vector<_vec3> vAxis;
 
-	CTransform* pDstTransform = dynamic_cast<CTransform*>(pDstCollider->Get_Owner()->Get_Component(ID_DYNAMIC, L"Com_Transform"));
-	CTransform* pSrcTransform = dynamic_cast<CTransform*>(pSrcCollider->Get_Owner()->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	CTransform* pDstTransform = dynamic_cast<CTransform*>(pDstCollider->Get_Owner()->Get_Transform());
+	CTransform* pSrcTransform = dynamic_cast<CTransform*>(pSrcCollider->Get_Owner()->Get_Transform());
 
 	_vec3 vDstAxis,vSrcAxis;
 	for (int i = 0; i < 3; ++i)
@@ -187,16 +214,84 @@ bool CCollisionMgr::SphereVsSphere(CCollider* pDst, CCollider* pSrc)
 	return true;
 }
 
-bool CCollisionMgr::CubeVsSphere(CCollider* pDst, CCollider* pSrc)
+bool CCollisionMgr::CubeVsSphere(CCollider* pCube, CCollider* pSphere)
 {
+	CCube_Collider* pCubeCollider = dynamic_cast<CCube_Collider*>(pCube);
+	CSphere_Collider* pSphereCollider = dynamic_cast<CSphere_Collider*>(pSphere);
 
-	return false;
+	_vec3 vCubePos = pCubeCollider->GetCenter();
+	_vec3 vSpherePos = pSphereCollider->GetCenter();
+
+	_vec3 vDistance = vSpherePos - vCubePos;
+
+	CTransform* pCubeTransform = pCube->Get_Owner()->Get_Transform();
+
+	_matrix matCubeWorld;
+	_vec3 vRight, vUp, vLook;
+	matCubeWorld = *(pCubeTransform->Get_World());
+
+	memcpy(&vRight, &matCubeWorld.m[0][0], sizeof(_vec3));
+	memcpy(&vUp,	&matCubeWorld.m[1][0], sizeof(_vec3));
+	memcpy(&vLook,	&matCubeWorld.m[2][0], sizeof(_vec3));
+	D3DXVec3Normalize(&vRight, &vRight);
+	D3DXVec3Normalize(&vUp, &vUp);
+	D3DXVec3Normalize(&vLook, &vLook);
+
+	float fX = D3DXVec3Dot(&vDistance, &vRight);
+	float fY = D3DXVec3Dot(&vDistance, &vUp);
+	float fZ = D3DXVec3Dot(&vDistance, &vLook);
+
+	fX = clampT(fX, -pCubeCollider->GetSize().x, pCubeCollider->GetSize().x);
+	fY = clampT(fY, -pCubeCollider->GetSize().y, pCubeCollider->GetSize().y);
+	fZ = clampT(fZ, -pCubeCollider->GetSize().z, pCubeCollider->GetSize().z);
+
+	_vec3 vCloseSet = vCubePos + vRight * fX + vUp * fY + vLook * fZ;
+
+	vDistance = (vCloseSet - vSpherePos);
+
+	float fDistance = D3DXVec3Length(&vDistance);
+
+	return fDistance <= pSphereCollider->GetRadius();
 }
 
-bool CCollisionMgr::SphereVsCube(CCollider* pDst, CCollider* pSrc)
+bool CCollisionMgr::SphereVsCube(CCollider* pSphere, CCollider* pCube)
 {
+	CCube_Collider* pCubeCollider = dynamic_cast<CCube_Collider*>(pCube);
+	CSphere_Collider* pSphereCollider = dynamic_cast<CSphere_Collider*>(pSphere);
 
-	return false;
+	_vec3 vCubePos = pCubeCollider->GetCenter();
+	_vec3 vSpherePos = pSphereCollider->GetCenter();
+
+	_vec3 vDistance = vSpherePos - vCubePos;
+
+	CTransform* pCubeTransform = pCube->Get_Owner()->Get_Transform();
+
+	_matrix matCubeWorld;
+	_vec3 vRight, vUp, vLook;
+	matCubeWorld = *(pCubeTransform->Get_World());
+
+	memcpy(&vRight, &matCubeWorld.m[0][0], sizeof(_vec3));
+	memcpy(&vUp, &matCubeWorld.m[1][0], sizeof(_vec3));
+	memcpy(&vLook, &matCubeWorld.m[2][0], sizeof(_vec3));
+	D3DXVec3Normalize(&vRight, &vRight);
+	D3DXVec3Normalize(&vUp, &vUp);
+	D3DXVec3Normalize(&vLook, &vLook);
+
+	float fX = D3DXVec3Dot(&vDistance, &vRight);
+	float fY = D3DXVec3Dot(&vDistance, &vUp);
+	float fZ = D3DXVec3Dot(&vDistance, &vLook);
+
+	fX = clampT(fX, -pCubeCollider->GetSize().x, pCubeCollider->GetSize().x);
+	fY = clampT(fY, -pCubeCollider->GetSize().y, pCubeCollider->GetSize().y);
+	fZ = clampT(fZ, -pCubeCollider->GetSize().z, pCubeCollider->GetSize().z);
+
+	_vec3 vCloseSet = vCubePos + vRight * fX + vUp * fY + vLook * fZ;
+
+	vDistance = (vCloseSet - vSpherePos);
+
+	float fDistance = D3DXVec3Length(&vDistance);
+
+	return fDistance <= pSphereCollider->GetRadius();
 }
 
 //void CCollisionMgr::AddCollider(OBJID eID, CCollider* pCollider)

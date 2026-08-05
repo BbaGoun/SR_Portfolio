@@ -46,10 +46,10 @@ _int CSkyBox::Update_GameObject(const _float& fDeltaTime)
 
 void CSkyBox::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-	CCamera* p_Camera = CCameraMgr::GetInstance()->GetMainCamera();
-	_vec3 pos;
-	p_Camera->Get_Transform()->Get_Info(INFO_POS, &pos);
-	m_pTransformCom->Set_Pos(pos);
+	//CCamera* p_Camera = CCameraMgr::GetInstance()->GetMainCamera();
+	//_vec3 pos;
+	//p_Camera->Get_Transform()->Get_Info(INFO_POS, &pos);
+	//m_pTransformCom->Set_Pos(pos);
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 

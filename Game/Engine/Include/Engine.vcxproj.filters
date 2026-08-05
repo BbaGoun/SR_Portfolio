@@ -124,6 +124,12 @@
     <Filter Include="04. Component\Collision\Sphere_Collider">
       <UniqueIdentifier>{ceb6a661-2fe4-4494-a41f-0e3c41b29da3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\CartBody">
+      <UniqueIdentifier>{db79d51b-b8ff-4a78-a932-dceb7f9ac962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\CartWheel">
+      <UniqueIdentifier>{5d788d13-4e5d-40ad-af51-78dc87cc65c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -255,6 +261,9 @@
     <ClInclude Include="..\Header\CSphere_Collider.h">
       <Filter>04. Component\Collision\Sphere_Collider</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCartWheelCol.h">
+      <Filter>04. Component\Shape\CartWheel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -367,6 +376,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSphere_Collider.cpp">
       <Filter>04. Component\Collision\Sphere_Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCartWheelCol.cpp">
+      <Filter>04. Component\Shape\CartWheel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

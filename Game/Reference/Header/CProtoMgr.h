@@ -2,6 +2,7 @@
 #include "CComponent.h"
 #include "CBase.h"
 
+#include "CCartWheelCol.h"
 #include "CRcTex.h"
 #include "CPyramid.h"
 #include "CInnerBox.h"
