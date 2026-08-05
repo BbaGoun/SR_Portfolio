@@ -18,13 +18,13 @@ public:
 	virtual void LateUpdate_Component();
 
 public:
-	void	Collision(CCollider* pDst, CCollider* pSrc);
-	bool	CubeVsCube(CCollider* pDst, CCollider* pSrc);
-	bool	SphereVsSphere(CCollider* pDst, CCollider* pSrc);
-	bool	CubeVsSphere(CCollider* pDst, CCollider* pSrc);
-	bool	SphereVsCube(CCollider* pDst, CCollider* pSrc);
+	static	void	Collision(CCollider* pDst, CCollider* pSrc);
+	static	bool	CubeVsCube(CCollider* pDst, CCollider* pSrc);
+	static	bool	SphereVsSphere(CCollider* pDst, CCollider* pSrc);
+	static	bool	CubeVsSphere(CCollider* pDst, CCollider* pSrc);
+	static	bool	SphereVsCube(CCollider* pDst, CCollider* pSrc);
 
-	//void	AddCollider(OBJID eID, CCollider* pCollider);
+//void	AddCollider(OBJID eID, CCollider* pCollider);
 //private:
 //	list<CCollider*>	m_ColliderList[OBJ_END];
 };

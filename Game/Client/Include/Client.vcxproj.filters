@@ -79,6 +79,9 @@
     <Filter Include="01. Scene\CollisionTest">
       <UniqueIdentifier>{1d9596f4-f904-4f19-871e-a4c8158626b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Cart">
+      <UniqueIdentifier>{9b57413b-c72d-4546-b362-b5ed99bdabb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -156,6 +159,9 @@
     <ClInclude Include="..\Header\CLand2.h">
       <Filter>02. GameObject\Land2</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCart.h">
+      <Filter>02. GameObject\Cart</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -220,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CLand2.cpp">
       <Filter>02. GameObject\Land2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCart.cpp">
+      <Filter>02. GameObject\Cart</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

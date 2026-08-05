@@ -145,8 +145,10 @@ bool CCollisionMgr::CubeVsCube(CCollider* pDstCollider, CCollider* pSrcCollider)
 		vRight	*= vDstScale.x;
 		vUp		*= vDstScale.y;
 		vLook	*= vDstScale.z;
-		_vec3 vSum = vDstPos + vRight + vUp + vLook;
-		float fDstRadius = fabsf(D3DXVec3Dot(&vSum, &Axis) - fDstCenter);
+
+		float fDstRadius = fabs(D3DXVec3Dot(&vRight, &Axis)) 
+						 + fabs(D3DXVec3Dot(&vUp,	 &Axis)) 
+						 + fabs(D3DXVec3Dot(&vLook,  &Axis));
 
 		matSrcWorld = *(pSrcTransform->Get_World());
 		memcpy(&vRight, &matSrcWorld.m[0][0], sizeof(_vec3));
@@ -160,9 +162,10 @@ bool CCollisionMgr::CubeVsCube(CCollider* pDstCollider, CCollider* pSrcCollider)
 		vRight	*= vSrcScale.x;
 		vUp		*= vSrcScale.y;
 		vLook	*= vSrcScale.z;
-		vSum = vSrcPos + vRight + vUp + vLook;
 
-		float fSrcRadius = fabsf(D3DXVec3Dot(&vSum, &Axis) - fSrcCenter);
+		float fSrcRadius = fabs(D3DXVec3Dot(&vRight, &Axis)) 
+						 + fabs(D3DXVec3Dot(&vUp,	 &Axis)) 
+						 + fabs(D3DXVec3Dot(&vLook,	 &Axis));
 		if (fDistance > fDstRadius + fSrcRadius)
 			return false;
 	}
