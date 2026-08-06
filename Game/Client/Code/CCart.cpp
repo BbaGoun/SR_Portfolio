@@ -31,6 +31,8 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_vForce *= 0.98;
 	_float fForceLength = D3DXVec3Length(&m_vForce);
 	if (fForceLength < 0.1f) m_vForce *= 0;
+
+	//cout << m_vForce.z << endl;
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
@@ -63,18 +65,25 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
 	{
-		//if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
-		//{
-		//	D3DXQUATERNION q;
-		//	D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(-45.f), 0.f, 0.f); //yaw,pitch,roll
-		//	m_pTransformCom->Set_Quaternion(&q);								   
-		//}																		   
-		//else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))	   
-		//{																		   
-		//	D3DXQUATERNION q;													   
-		//	D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(45.f), 0.f, 0.f);  //yaw,pitch,roll
-		//	m_pTransformCom->Set_Quaternion(&q);
-		//}
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+		{
+			if (m_fAngle > 0)
+				m_fAngle = 0;
+			if (m_fAngle > -45)
+				m_fAngle -= 1;
+			_matrix matRot;
+			D3DXMatrixRotationY(&matRot, D3DXToRadian(m_fAngle));
+			D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
+
+			cout << vLook.x << "\t" << vLook.y << "\t" << vLook.z << endl;
+
+		}																		   
+		else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))	   
+		{																		   
+			//D3DXQUATERNION q;													   
+			//D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(45.f), 0.f, 0.f);  //yaw,pitch,roll
+			//m_pTransformCom->Set_Quaternion(&q);
+		}
 
 		m_vForce += vLook;
 	}

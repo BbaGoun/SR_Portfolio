@@ -19,6 +19,7 @@ public:
 	void	KeyInput(const _float& fDeltaTime);
 private:
 	_float	m_fSpeed;
+	_float	m_fAngle;
 
 protected:
 	virtual		void		Free() override;
