@@ -266,6 +266,7 @@ void CTerrain2::Render_Buffer()
 {
 	m_pGraphicDev->SetTexture(0, m_pTexture);
 	CVIBuffer::Render_Buffer();
+	m_pGraphicDev->SetTexture(0, nullptr);
 }
 
 CTerrain2* CTerrain2::Create(LPDIRECT3DDEVICE9 pGraphicDev)

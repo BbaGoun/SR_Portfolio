@@ -30,8 +30,6 @@ private:
 	void	FollowTarget();
 
 private:
-	_float	m_fSpeed;
-	_vec3	m_vForce = { 0, 0, 0 };
 	_bool	m_bJump = false;
 	_float	m_fJumpTime;
 	_vec3	m_vTargetPos;

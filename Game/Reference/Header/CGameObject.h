@@ -34,7 +34,6 @@ public:
 	virtual			void		PreRender_GameObject() {};
 	virtual			void		PostRender_GameObject() {};
 
-
 	virtual			void		CollisionEnter() {};
 	virtual			void		CollisionExit() {};
 	virtual			void		CollisionStay() {};
@@ -45,6 +44,14 @@ public:
 
 public:
 	void			Set_CollisionLayer(COLLISION_LAYER eID);
+	
+	_vec3			Get_Force() { return m_vForce; }
+	void			Set_Force(_vec3 _newForce) { m_vForce = _newForce; }
+	void			Add_Force(_vec3 _addedForce) { m_vForce += _addedForce; }
+
+	_vec3			Get_Rotation() { return m_vRotation; }
+	void			Set_Rotation(_vec3 _newRotation) { m_vRotation = _newRotation; }
+	void			Add_Rotation(_vec3 _addedRotation) { m_vRotation += _addedRotation; }
 
 protected:
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
@@ -54,6 +61,12 @@ protected:
 	CGameObject*							m_pParent;
 	CTransform*								m_pTransformCom;
 	uint32_t								m_iCollisionLayer;
+
+	uint32_t								m_iCullDistance;
+
+	_float									m_fSpeed;
+	_vec3									m_vForce;
+	_vec3									m_vRotation;
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);
