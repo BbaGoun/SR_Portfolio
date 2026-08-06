@@ -456,3 +456,9 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudio,c++
+
+### Reference except ###
+/Game/Reference/Header/*
+/Game/Reference/Library/*
+!/Game/Reference/Header/.gitkeep
+!/Game/Reference/Library/.gitkeep

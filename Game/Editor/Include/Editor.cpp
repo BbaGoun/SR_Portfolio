@@ -72,13 +72,37 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_ int       nCmdShow)
 {
     // Make process DPI aware and obtain main monitor scale
+    
+    // Windows에 "이 앱은 DPI를 스스로 처리한다"고 알린다.
+    // 이 호출이 없으면 OS가 창을 자동 확대해서 글자 및 UI가 흐릿해질 수 있다.
     ImGui_ImplWin32_EnableDpiAwareness();
+    
+    // 주 모니터의 DPI 스케일을 구한다. 96 DPI = 1.0 | 144 DPI = 1.5 | 192 DPI = 2.0
+    // MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY)
+    // 는 좌표 (0, 0) 근처를 가리키는 방식으로, 주 모니터 핸들을 얻는다.
     float main_scale = ImGui_ImplWin32_GetDpiScaleForMonitor(::MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY));
 
     // Create application window
-    WNDCLASSEXW wc = { sizeof(wc), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr, L"ImGui Example", nullptr };
+    WNDCLASSEXW wc = {
+        sizeof(wc),
+        CS_CLASSDC,
+        WndProc,
+        0L, 0L,
+        GetModuleHandle(nullptr),
+        nullptr, nullptr,
+        nullptr, nullptr,
+        L"Editor Window", nullptr };
     ::RegisterClassExW(&wc);
-    HWND hwnd = ::CreateWindowW(wc.lpszClassName, L"Dear ImGui DirectX9 Example", WS_OVERLAPPEDWINDOW, 100, 100, (int)(1280 * main_scale), (int)(800 * main_scale), nullptr, nullptr, wc.hInstance, nullptr);
+
+    HWND hwnd = ::CreateWindowW(
+        wc.lpszClassName, 
+        L"DirectX9 Editor", 
+        WS_OVERLAPPEDWINDOW, 
+        100, 100, 
+        (int)(1280 * main_scale), 
+        (int)(800 * main_scale), 
+        nullptr, nullptr, 
+        wc.hInstance, nullptr);
 
     // Initialize Direct3D
     if (!CreateDeviceD3D(hwnd))

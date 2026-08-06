@@ -1,7 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 #include "CTransform.h"
-#include "CTerrain.h"
+#include "CTerrain2.h"
 
 class CLand2 :
 	public CGameObject
@@ -20,7 +20,7 @@ public:
 private:
 
 private:
-	CTerrain* m_pBufferCom;
+	CTerrain2* m_pBufferCom;
 
 public:
 	static CLand2* Create(LPDIRECT3DDEVICE9 pGraphicDev);
