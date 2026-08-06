@@ -1,24 +1,30 @@
 #pragma once
 #include "CGameObject.h"
-class CCart :  public CGameObject
+namespace Engine
+{
+	class CCartBodyCol;
+	class CCube_Collider;
+}
+class CBox : public CGameObject
 {
 private:
-	explicit CCart(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CCart(const CGameObject& rhs);
-	virtual ~CCart() override;
+	explicit CBox(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CBox(const CGameObject& rhs);
+	virtual ~CBox() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
 	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) override;
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
-	virtual			void		Render_GameObject() override {};
+	virtual			void		Render_GameObject() override ;
 
 public:
-	static CCart* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	void	KeyInput(const _float& fDeltaTime);
+	static CBox* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
 private:
-	_float	m_fMaxSpeed;
+	Engine::CCartBodyCol*		m_pBufferCom;
+	Engine::CCube_Collider*		m_pColliderCom;
 
 
 protected:

@@ -10,6 +10,12 @@
 #include "CCart.h"
 #include "CWheel.h"
 #include "CCartBody.h"
+#include "CBox.h"
+#include "CCollisionMgr.h"
+#include "CManagement.h"
+#include "CCartBody1.h"
+#include "CCartBody2.h"
+#include "CFollowSmoothCam.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -38,6 +44,14 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 	CScene::FixedUpdate_Scene(fFixedDeltaTime);
 
 	// Ãæµ¹ Ã³¸®
+	//CCollider* pCartCollider = static_cast<CCollider*>
+	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CartBody", L"Com_Collider"));
+	//CCollider* pCartSphereCollider = static_cast<CCollider*>
+	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CartBody", L"Com_SphereCollider"));
+	//CCollider* pBoxCollider = static_cast<CCollider*>
+	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Box", L"Com_Collider"));
+	//CCollisionMgr::GetInstance()->Collision(pCartSphereCollider, pBoxCollider);
+
 }
 
 _int CCollisionTest::Update_Scene(const _float& fDeltaTime)
@@ -93,69 +107,128 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Cart", pCart)))
 		return E_FAIL;
 
-	CGameObject* pGameObject = nullptr;
-	// ## Ä«Æ® ¸öÃ¼
-	pGameObject = CCartBody::Create(m_pGraphicDev);
 
+	// ## Ä«Æ® ¸öÃ¼
+	CGameObject* pCartBody = CCartBody::Create(m_pGraphicDev);
+
+	if (pCartBody == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CartBody", pCartBody)))
+		return E_FAIL;
+
+	pCart->Set_Child(pCartBody);
+
+	CGameObject* pGameObject = nullptr;
+	// ## Ä«Æ® ¸öÃ¼1
+	pGameObject = CCartBody1::Create(m_pGraphicDev);
+	pGameObject->Get_Transform()->Set_Scale({ 2.5,1.5,1 });
+	pGameObject->Get_Transform()->Set_Pos({ 0,0,-3 });
 	if (pGameObject == nullptr)
 		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CartBody", pGameObject)))
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody1", pGameObject)))
+		return E_FAIL;
+	
+	pCartBody->Set_Child(pGameObject);
+
+	// ## Ä«Æ® ¸öÃ¼2
+	pGameObject = CCartBody2::Create(m_pGraphicDev);
+	pGameObject->Get_Transform()->Set_Scale({ 2.5,0.5,0.5 });
+	pGameObject->Get_Transform()->Set_Pos({ 0,1,-1.5 });
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody2", pGameObject)))
 		return E_FAIL;
 
-	pCart->Set_Child(pGameObject);
+	pCartBody->Set_Child(pGameObject);
+
+	// ## Ä«Æ® ¸öÃ¼3
+	pGameObject = CCartBody1::Create(m_pGraphicDev);
+	pGameObject->Get_Transform()->Set_Scale({ 2.5,1,0.5 });
+	pGameObject->Get_Transform()->Set_Pos({ 0,-0.5,-1.5 });
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody3", pGameObject)))
+		return E_FAIL;
+	
+	pCartBody->Set_Child(pGameObject);
+
+	// ## Ä«Æ® ¸öÃ¼4
+	pGameObject = CCartBody1::Create(m_pGraphicDev);
+	pGameObject->Get_Transform()->Set_Scale({ 2.5,0.75,6 });
+	pGameObject->Get_Transform()->Set_Pos({ 0,-0.5,-1.5 });
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody4", pGameObject)))
+		return E_FAIL;
+
+	pCartBody->Set_Child(pGameObject);
 
 	// ## ¿ÞÂÊ ¾Õ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FL);
-
+	
 	if (pGameObject == nullptr)
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_FL", pGameObject)))
 		return E_FAIL;
-
+	
 	pCart->Set_Child(pGameObject);
 	// ## ¿À¸¥ÂÊ ¾Õ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FR);
-
+	
 	if (pGameObject == nullptr)
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_FR", pGameObject)))
 		return E_FAIL;
-
+	
 	pCart->Set_Child(pGameObject);
-
+	
 	// ## ¿ÞÂÊ µÞ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BL);
-
+	
 	if (pGameObject == nullptr)
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BL", pGameObject)))
 		return E_FAIL;
-
+	
 	pCart->Set_Child(pGameObject);
-
+	
 	// ## ¿À¸¥ÂÊ µÞ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BR);
-
+	
 	if (pGameObject == nullptr)
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BR", pGameObject)))
 		return E_FAIL;
-
+	
 	pCart->Set_Child(pGameObject);
 
-	// ## Å¾ºä 3ÀÎÄª Ä«¸Þ¶ó
-	pGameObject = CTopViewCam::Create(m_pGraphicDev);
+	//// # ÇÃ·¹ÀÌ¾î µû¶ó´Ù´Ï´Â 3ÀÎÄª Ä«¸Þ¶ó
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev);
 
 	if (pGameObject == nullptr)
 		return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_TopViewCam", pGameObject)))
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_FollowSmoothCam", pGameObject)))
 		return E_FAIL;
 
-	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_TOP_VIEW,
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
-	pCart->Set_Child(pGameObject);
+
+
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
+		return E_FAIL;
+
+
+	// # ¹Ú½º
+	CGameObject* pBox = CBox::Create(m_pGraphicDev);
+
+	if (pBox == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Box", pBox)))
+		return E_FAIL;
+
 	return S_OK;
 }
 

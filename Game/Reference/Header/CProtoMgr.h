@@ -2,6 +2,12 @@
 #include "CComponent.h"
 #include "CBase.h"
 
+#include "CQuadrangularPrism.h"
+#include "CTriangularPrism.h"
+
+#include "CCube_Collider.h"
+#include "CSphere_Collider.h"
+
 #include "CCartBodyCol.h"
 #include "CCartWheelCol.h"
 #include "CRcTex.h"

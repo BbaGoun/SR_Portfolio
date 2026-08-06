@@ -36,6 +36,7 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 
 	if (pDstType == CUBE_COLLIDER && pSrcType == CUBE_COLLIDER)
 	{
+		//cout << "Cube" << endl;
 		if (CubeVsCube(pDstCollider, pSrcCollider))
 		{
 			MSG_BOX("Collision!");

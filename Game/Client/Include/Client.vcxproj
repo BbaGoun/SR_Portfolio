@@ -176,10 +176,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
+    <ClInclude Include="..\Header\CBox.h" />
     <ClInclude Include="..\Header\CCart.h" />
     <ClInclude Include="..\Header\CCartBody.h" />
+    <ClInclude Include="..\Header\CCartBody1.h" />
+    <ClInclude Include="..\Header\CCartBody2.h" />
     <ClInclude Include="..\Header\CCodyBody.h" />
     <ClInclude Include="..\Header\CCollisionTest.h" />
+    <ClInclude Include="..\Header\CFollowSmoothCam.h" />
     <ClInclude Include="..\Header\CTopViewCam.h" />
     <ClInclude Include="..\Header\CEnemy.h" />
     <ClInclude Include="..\Header\CFirstPerCam.h" />
@@ -207,10 +211,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CBackGround.cpp" />
+    <ClCompile Include="..\Code\CBox.cpp" />
     <ClCompile Include="..\Code\CCart.cpp" />
     <ClCompile Include="..\Code\CCartBody.cpp" />
+    <ClCompile Include="..\Code\CCartBody1.cpp" />
+    <ClCompile Include="..\Code\CCartBody2.cpp" />
     <ClCompile Include="..\Code\CCodyBody.cpp" />
     <ClCompile Include="..\Code\CCollisionTest.cpp" />
+    <ClCompile Include="..\Code\CFollowSmoothCam.cpp" />
     <ClCompile Include="..\Code\CTopViewCam.cpp" />
     <ClCompile Include="..\Code\CEnemy.cpp" />
     <ClCompile Include="..\Code\CFirstPerCam.cpp" />

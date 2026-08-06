@@ -1,22 +1,22 @@
-#include "CCartBodyCol.h"
+#include "CQuadrangularPrism.h"
 
-CCartBodyCol::CCartBodyCol() : CVIBuffer()
+CQuadrangularPrism::CQuadrangularPrism() : CVIBuffer()
 {
 }
 
-CCartBodyCol::CCartBodyCol(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
+CQuadrangularPrism::CQuadrangularPrism(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {
 }
 
-CCartBodyCol::CCartBodyCol(const CCartBodyCol& rhs) : CVIBuffer(rhs)
+CQuadrangularPrism::CQuadrangularPrism(const CQuadrangularPrism& rhs) : CVIBuffer(rhs)
 {
 }
 
-CCartBodyCol::~CCartBodyCol()
+CQuadrangularPrism::~CQuadrangularPrism()
 {
 }
 
-HRESULT CCartBodyCol::Ready_Buffer()
+HRESULT CQuadrangularPrism::Ready_Buffer()
 {
     m_dwVtxSize = sizeof(VTXCOL);
     m_dwVtxCnt = 8;
@@ -33,22 +33,22 @@ HRESULT CCartBodyCol::Ready_Buffer()
 
     m_pVB->Lock(0, 0, (void**)&vertices, 0);
 
-    vertices[0].vPosition = { -2.5f, 1.f, 5.f };
+    vertices[0].vPosition = { -1.f, 1.f, 1.f };
     vertices[0].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-    vertices[1].vPosition = { 2.5f, 1.f, 5.f };
+    vertices[1].vPosition = { 1.f, 1.f, 1.f };
     vertices[1].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-    vertices[2].vPosition = { 2.5f, -1.f, 5.f };
+    vertices[2].vPosition = { 1.f, -1.f, 1.f };
     vertices[2].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-    vertices[3].vPosition = { -2.5f, -1.f, 5.f };
+    vertices[3].vPosition = { -1.f, -1.f, 1.f };
     vertices[3].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
-    vertices[4].vPosition = { -2.5f, 1.f, -5.f };
+    vertices[4].vPosition = { -1.f, 1.f, -1.f };
     vertices[4].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-    vertices[5].vPosition = { 2.5f, 1.f, -5.f };
+    vertices[5].vPosition = { 1.f, 1.f, -1.f };
     vertices[5].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-    vertices[6].vPosition = { 2.5f, -1.f, -5.f };
+    vertices[6].vPosition = { 1.f, -1.f, -1.f };
     vertices[6].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-    vertices[7].vPosition = { -2.5f, -1.f, -5.f };
+    vertices[7].vPosition = { -1.f, -1.f, -1.f };
     vertices[7].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
     m_pVB->Unlock();
@@ -111,27 +111,27 @@ HRESULT CCartBodyCol::Ready_Buffer()
     return S_OK;
 }
 
-CCartBodyCol* CCartBodyCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CQuadrangularPrism* CQuadrangularPrism::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-    CCartBodyCol* pCCartBodyCol = new CCartBodyCol(pGraphicDev);
+    CQuadrangularPrism* pCQuadrangularPrism = new CQuadrangularPrism(pGraphicDev);
 
-    if (FAILED(pCCartBodyCol->Ready_Buffer())) {
-        Safe_Release(pCCartBodyCol);
-        MSG_BOX("CCartBodyCol Create Fail");
+    if (FAILED(pCQuadrangularPrism->Ready_Buffer())) {
+        Safe_Release(pCQuadrangularPrism);
+        MSG_BOX("CQuadrangularPrism Create Fail");
         return nullptr;
     }
 
-    return pCCartBodyCol;
+    return pCQuadrangularPrism;
 }
 
-CComponent* CCartBodyCol::Clone()
+CComponent* CQuadrangularPrism::Clone()
 {
-    CComponent* pComp = new CCartBodyCol(*this);
+    CComponent* pComp = new CQuadrangularPrism(*this);
 
     return pComp;
 }
 
-void CCartBodyCol::Free()
+void CQuadrangularPrism::Free()
 {
     CVIBuffer::Free();
 }

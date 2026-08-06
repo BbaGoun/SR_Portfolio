@@ -56,6 +56,7 @@ _int CCamera::Update_GameObject(const _float& fDeltaTime)
 
 void CCamera::LateUpdate_GameObject(const _float& fDeltaTime)
 {
+    CGameObject::LateUpdate_GameObject(fDeltaTime);
     D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
     m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 }

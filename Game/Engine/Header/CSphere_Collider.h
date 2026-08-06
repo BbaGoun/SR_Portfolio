@@ -13,7 +13,7 @@ private:
 
 public:
 	virtual _int Update_Component(const _float& fTimeDelta);
-	virtual void LateUpdate_Component();
+	virtual void LateUpdate_Component(const _float& fTimeDelta);
 
 public:
 	HRESULT		Ready_CSphere_Collider();

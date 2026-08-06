@@ -3,15 +3,14 @@
 #include "Engine_Enum.h"
 namespace Engine
 {
-	class CCube_Collider;
-	class CSphere_Collider;
+	class CTriangularPrism;
 }
-class CCartBody : public CGameObject
+class CCartBody2 : public CGameObject
 {
 private:
-	explicit CCartBody(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CCartBody(const CGameObject& rhs);
-	virtual ~CCartBody() override;
+	explicit CCartBody2(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CCartBody2(const CGameObject& rhs);
+	virtual ~CCartBody2() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -21,11 +20,10 @@ public:
 	virtual			void		Render_GameObject() override;
 
 public:
-	static CCartBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CCartBody2* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	Engine::CCube_Collider*		m_pColliderCom;
-	Engine::CSphere_Collider*	m_pSphereColliderCom;
+	Engine::CTriangularPrism* m_pBufferCom;
 
 protected:
 	virtual		void		Free() override;

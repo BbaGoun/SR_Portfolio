@@ -130,6 +130,15 @@
     <Filter Include="04. Component\Shape\CartWheel">
       <UniqueIdentifier>{5d788d13-4e5d-40ad-af51-78dc87cc65c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\Prism">
+      <UniqueIdentifier>{c5363baf-94eb-4490-8ba6-ff484069a8a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\Prism\Quadrangular">
+      <UniqueIdentifier>{1e282bd4-f05d-460a-8d93-f293a2d502dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\Prism\Triangular">
+      <UniqueIdentifier>{0b2a77d0-f793-4545-93e3-5778d5715798}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -267,6 +276,12 @@
     <ClInclude Include="..\Header\CCartBodyCol.h">
       <Filter>04. Component\Shape\CartBody</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CQuadrangularPrism.h">
+      <Filter>04. Component\Shape\Prism\Quadrangular</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTriangularPrism.h">
+      <Filter>04. Component\Shape\Prism\Triangular</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -385,6 +400,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCartBodyCol.cpp">
       <Filter>04. Component\Shape\CartBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CQuadrangularPrism.cpp">
+      <Filter>04. Component\Shape\Prism\Quadrangular</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTriangularPrism.cpp">
+      <Filter>04. Component\Shape\Prism\Triangular</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

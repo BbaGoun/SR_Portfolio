@@ -29,9 +29,9 @@ _int CSphere_Collider::Update_Component(const _float& fTimeDelta)
 {
 	return 0;
 }
-void CSphere_Collider::LateUpdate_Component()
+void CSphere_Collider::LateUpdate_Component(const _float& fTimeDelta)
 {
-	CTransform* pOwnerTransfrom = dynamic_cast<CTransform*> (m_pOwner->Get_Component(ID_DYNAMIC, L"Com_Transform"));
+	CTransform* pOwnerTransfrom = (m_pOwner->Get_Transform());
 
 	_vec3 vOwnerPos;
 	pOwnerTransfrom->Get_Info(INFO_POS, &vOwnerPos);
