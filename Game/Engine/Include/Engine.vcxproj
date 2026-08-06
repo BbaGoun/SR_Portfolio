@@ -196,7 +196,8 @@
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)Engine\Header\*.h" "$(SolutionDir)Reference\Header\" /Y
 xcopy "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\" /Y
-xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Command>
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Editor\Bin\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -218,7 +219,8 @@ xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Comm
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)Engine\Header\*.h" "$(SolutionDir)Reference\Header\" /Y
 xcopy "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\" /Y
-xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Command>
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Editor\Bin\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -238,7 +240,8 @@ xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Comm
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)Engine\Header\*.h" "$(SolutionDir)Reference\Header\" /Y
 xcopy "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\" /Y
-xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Command>
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Editor\Bin\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -260,7 +263,8 @@ xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Comm
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)Engine\Header\*.h" "$(SolutionDir)Reference\Header\" /Y
 xcopy "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\" /Y
-xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y</Command>
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\" /Y
+xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Editor\Bin\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
