@@ -25,7 +25,7 @@ HRESULT CLand2::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = static_cast<CTerrain*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Terrain2"));
+	pComponent = m_pBufferCom = static_cast<CTerrain2*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Terrain2"));
 	pComponent->Set_Owner(this);
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });

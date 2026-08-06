@@ -168,6 +168,7 @@ void CGOCody::Mouse_Input()
 		if (dwMouseMove = CDInputMgr::GetInstance()->Get_DIMouseMove(DIMS_X))
 		{
 			m_pTransformCom->Rotate(QUATER_YAW, dwMouseMove / 10.f);
+			// m_pRotation.y += dwMouseMove / 10.f;
 		}
 	}
 }
