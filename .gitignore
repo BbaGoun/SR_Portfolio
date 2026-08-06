@@ -457,7 +457,7 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudio,c++
 
-### Reference except ###
+### Reference Except ###
 /Game/Reference/Header/*
 /Game/Reference/Library/*
 !/Game/Reference/Header/.gitkeep
