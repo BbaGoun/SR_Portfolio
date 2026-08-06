@@ -4,6 +4,7 @@
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
     : m_pGraphicDev(pGraphicDev)
     , m_pParent(nullptr), m_pTransformCom(nullptr), m_iCullDistance(210'000'000)
+    , m_fSpeed(0), m_vForce({ 0, 0, 0 }), m_vRotation({ 0, 0, 0 })
 {
     m_pGraphicDev->AddRef();
 }
@@ -13,6 +14,7 @@ CGameObject::CGameObject(const CGameObject& rhs)
     , m_pParent(rhs.m_pParent)
     , m_vecChildren(rhs.m_vecChildren)
     , m_iCullDistance(rhs.m_iCullDistance)
+    , m_fSpeed(rhs.m_fSpeed), m_vForce(rhs.m_vForce), m_vRotation(rhs.m_vRotation)
 {
     m_pGraphicDev->AddRef();
     Ready_GameObject();
