@@ -3,7 +3,6 @@
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
 #include "CTexture.h"
-#include "CKeyMgr.h"
 #include "CCameraMgr.h"
 #include "CManagement.h"
 #include "CDInputMgr.h"

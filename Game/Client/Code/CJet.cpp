@@ -3,7 +3,6 @@
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
 #include "CTexture.h"
-#include "CKeyMgr.h"
 #include "CAirplane.h"
 
 CJet::CJet(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
