@@ -85,6 +85,9 @@
     <Filter Include="02. GameObject\Cart\Wheel">
       <UniqueIdentifier>{14d11323-8b15-4ff0-849c-b889a1c6e54d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Cart\CartBody">
+      <UniqueIdentifier>{2d915fa9-4695-4bd0-82a0-0afb0c2a78cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -171,6 +174,9 @@
     <ClInclude Include="..\Header\CWheel.h">
       <Filter>02. GameObject\Cart\Wheel</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCartBody.h">
+      <Filter>02. GameObject\Cart\CartBody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -244,6 +250,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CWheel.cpp">
       <Filter>02. GameObject\Cart\Wheel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCartBody.cpp">
+      <Filter>02. GameObject\Cart\CartBody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

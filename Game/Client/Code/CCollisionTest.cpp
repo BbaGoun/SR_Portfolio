@@ -9,6 +9,7 @@
 #include "CTopViewCam.h"
 #include "CCart.h"
 #include "CWheel.h"
+#include "CCartBody.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -89,11 +90,21 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (pCart == nullptr)
 		return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pCart)))
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Cart", pCart)))
 		return E_FAIL;
 
 	CGameObject* pGameObject = nullptr;
-	// # ¿ÞÂÊ ¾Õ¹ÙÄû
+	// ## Ä«Æ® ¸öÃ¼
+	pGameObject = CCartBody::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CartBody", pGameObject)))
+		return E_FAIL;
+
+	pCart->Set_Child(pGameObject);
+
+	// ## ¿ÞÂÊ ¾Õ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FL);
 
 	if (pGameObject == nullptr)
@@ -102,7 +113,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 
 	pCart->Set_Child(pGameObject);
-	// # ¿À¸¥ÂÊ ¾Õ¹ÙÄû
+	// ## ¿À¸¥ÂÊ ¾Õ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FR);
 
 	if (pGameObject == nullptr)
@@ -112,7 +123,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	pCart->Set_Child(pGameObject);
 
-	// # ¿ÞÂÊ µÞ¹ÙÄû
+	// ## ¿ÞÂÊ µÞ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BL);
 
 	if (pGameObject == nullptr)
@@ -122,7 +133,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	pCart->Set_Child(pGameObject);
 
-	// # ¿À¸¥ÂÊ µÞ¹ÙÄû
+	// ## ¿À¸¥ÂÊ µÞ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BR);
 
 	if (pGameObject == nullptr)
@@ -132,7 +143,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	pCart->Set_Child(pGameObject);
 
-	// # Å¾ºä 3ÀÎÄª Ä«¸Þ¶ó
+	// ## Å¾ºä 3ÀÎÄª Ä«¸Þ¶ó
 	pGameObject = CTopViewCam::Create(m_pGraphicDev);
 
 	if (pGameObject == nullptr)
@@ -166,22 +177,22 @@ HRESULT CCollisionTest::Ready_Environment_Layer()
 		return E_FAIL;
 
 	//pEnvObject = CLand::Create(m_pGraphicDev);
-
+	//
 	//if (pEnvObject == nullptr)
 	//	return E_FAIL;
-
+	//
 	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land", pEnvObject)))
 	//	return E_FAIL;
 
-	//pEnvObject = CLand2::Create(m_pGraphicDev);
-	//
-	//if (pEnvObject == nullptr)
-	//	return E_FAIL;
-	//
-	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
-	//	return E_FAIL;
-	//
-	//return S_OK;
+	pEnvObject = CLand2::Create(m_pGraphicDev);
+	
+	if (pEnvObject == nullptr)
+		return E_FAIL;
+	
+	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
+		return E_FAIL;
+	
+	return S_OK;
 }
 
 void CCollisionTest::Free()

@@ -20,6 +20,7 @@ public:
 private:
 	_float	m_fSpeed;
 	_vec3	m_vForce = { 0, 0, 0 };
+	_vec3	m_vFrictionForce = { 0, 0, 0 };
 
 protected:
 	virtual		void		Free() override;

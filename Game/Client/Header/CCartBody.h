@@ -1,15 +1,16 @@
 #pragma once
 #include "CGameObject.h"
+#include "Engine_Enum.h"
 namespace Engine
 {
-	class CCartWheelCol;
+	class CCartBodyCol;
 }
-class CWheel_FR : public CGameObject
+class CCartBody : public CGameObject
 {
 private:
-	explicit CWheel_FR(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CWheel_FR(const CGameObject& rhs);
-	virtual ~CWheel_FR() override;
+	explicit CCartBody(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CCartBody(const CGameObject& rhs);
+	virtual ~CCartBody() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -19,9 +20,13 @@ public:
 	virtual			void		Render_GameObject() override;
 
 public:
-	static CWheel_FR* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	void			KeyInput(const _float& fDeltaTime);
+
+public:
+	static CCartBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
 private:
-	Engine::CCartWheelCol* m_pBufferCom;
+	Engine::CCartBodyCol*		m_pBufferCom;
 
 protected:
 	virtual		void		Free() override;

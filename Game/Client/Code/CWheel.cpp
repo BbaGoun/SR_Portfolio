@@ -59,7 +59,7 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CWheel::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-	KeyInput();
+	KeyInput(fDeltaTime);
 	return _int();
 }
 
@@ -73,32 +73,32 @@ void CWheel::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 }
 
-void CWheel::KeyInput()
+void CWheel::KeyInput(const _float& fDeltaTime)
 {
-	if (m_eWheelType >= WHEEL_BL)
-		return;
 	D3DXQUATERNION q;
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
 	{
-		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(0.f), 0.f, 0.f);//yaw,pitch,roll
+		m_pTransformCom->Rotate(QUATER_PITCH, 3600 * fDeltaTime);
 	}
 	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
 	{
-		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(0.f), 0.f, 0.f);//yaw,pitch,roll
+		m_pTransformCom->Rotate(QUATER_PITCH, -3600 * fDeltaTime);
 	}
-	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT)&& m_eWheelType < WHEEL_BL)
 	{
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(-45.f), 0.f, 0.f);//yaw,pitch,roll
+		m_pTransformCom->Set_Quaternion(&q);
 	}
-	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT) && m_eWheelType < WHEEL_BL)
 	{
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(45.f), 0.f, 0.f);//yaw,pitch,roll
+		m_pTransformCom->Set_Quaternion(&q);
 	}
 	else
 	{
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(0.f), 0.f, 0.f);//yaw,pitch,roll
+		m_pTransformCom->Set_Quaternion(&q);
 	}
-	m_pTransformCom->Set_Quaternion(&q);
 }
 
 CWheel* CWheel::Create(LPDIRECT3DDEVICE9 pGraphicDev,WHEEL_TYPE eType)

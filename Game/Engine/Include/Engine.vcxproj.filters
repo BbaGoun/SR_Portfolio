@@ -264,6 +264,9 @@
     <ClInclude Include="..\Header\CCartWheelCol.h">
       <Filter>04. Component\Shape\CartWheel</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCartBodyCol.h">
+      <Filter>04. Component\Shape\CartBody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -379,6 +382,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCartWheelCol.cpp">
       <Filter>04. Component\Shape\CartWheel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCartBodyCol.cpp">
+      <Filter>04. Component\Shape\CartBody</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

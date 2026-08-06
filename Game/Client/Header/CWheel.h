@@ -22,14 +22,14 @@ public:
 public:
 	void			SetWheelType(WHEEL_TYPE eType) { m_eWheelType = eType; }
 	WHEEL_TYPE		GetWheelType() { return m_eWheelType; }
-	void			KeyInput();
+	void			KeyInput(const _float& fDeltaTime);
 
 public:
 	static CWheel* Create(LPDIRECT3DDEVICE9 pGraphicDev, WHEEL_TYPE eType);
 
 private:
-	Engine::CCartWheelCol* m_pBufferCom;
-	WHEEL_TYPE		m_eWheelType;
+	Engine::CCartWheelCol*	m_pBufferCom;
+	WHEEL_TYPE				m_eWheelType;
 
 protected:
 	virtual		void		Free() override;

@@ -177,6 +177,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
     <ClInclude Include="..\Header\CCart.h" />
+    <ClInclude Include="..\Header\CCartBody.h" />
     <ClInclude Include="..\Header\CCodyBody.h" />
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CTopViewCam.h" />
@@ -207,6 +208,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CCart.cpp" />
+    <ClCompile Include="..\Code\CCartBody.cpp" />
     <ClCompile Include="..\Code\CCodyBody.cpp" />
     <ClCompile Include="..\Code\CCollisionTest.cpp" />
     <ClCompile Include="..\Code\CTopViewCam.cpp" />

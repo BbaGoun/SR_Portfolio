@@ -45,6 +45,9 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartWheelCol", Engine::CCartWheelCol::Create(m_pGraphicDev))))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartBodyCol", Engine::CCartBodyCol::Create(m_pGraphicDev))))
+        return E_FAIL;
+
     //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Terrain", Engine::CTerrain::Create(m_pGraphicDev))))
     //    return E_FAIL;
 
