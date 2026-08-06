@@ -43,6 +43,9 @@ public:
 	virtual			void		TriggerExit() {};
 	virtual			void		TriggerStay() {};
 
+	virtual			_vec3		GetForce() { return m_vForce; }
+	virtual			void		SetForce(_vec3 vForce) { m_vForce = vForce; }
+
 public:
 	void			Set_CollisionLayer(COLLISION_LAYER eID);
 
@@ -56,6 +59,8 @@ protected:
 	uint32_t								m_iCollisionLayer;
 
 	uint32_t								m_iCullDistance;
+
+	_vec3									m_vForce = { 0,0,0 };
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);

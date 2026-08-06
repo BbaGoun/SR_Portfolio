@@ -59,7 +59,10 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CWheel::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-	KeyInput(fDeltaTime);
+	
+	_vec3 vParentForce = m_pParent->GetForce();
+	m_pTransformCom->Rotate(QUATER_PITCH, 100 * vParentForce.z * fDeltaTime);
+	if (D3DXVec3Length(&vParentForce) == 0)KeyInput(fDeltaTime);
 	return _int();
 }
 
@@ -76,15 +79,7 @@ void CWheel::Render_GameObject()
 void CWheel::KeyInput(const _float& fDeltaTime)
 {
 	D3DXQUATERNION q;
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
-	{
-		m_pTransformCom->Rotate(QUATER_PITCH, 3600 * fDeltaTime);
-	}
-	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
-	{
-		m_pTransformCom->Rotate(QUATER_PITCH, -3600 * fDeltaTime);
-	}
-	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT)&& m_eWheelType < WHEEL_BL)
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT)&& m_eWheelType < WHEEL_BL)
 	{
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(-45.f), 0.f, 0.f);//yaw,pitch,roll
 		m_pTransformCom->Set_Quaternion(&q);

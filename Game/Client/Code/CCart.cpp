@@ -29,6 +29,8 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
 	m_vForce *= 0.98;
+	_float fForceLength = D3DXVec3Length(&m_vForce);
+	if (fForceLength < 0.1f) m_vForce *= 0;
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
