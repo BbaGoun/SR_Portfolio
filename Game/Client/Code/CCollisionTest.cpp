@@ -221,16 +221,40 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 
 
-	// # 박스
-	for (int i = 0; i < 3; ++i)
+	// # 트랙
+	for (int i = 0; i < 40; ++i)
 	{
-		CGameObject* pBox = CBox::Create(m_pGraphicDev);
+		CGameObject* pBox = CCartBody1::Create(m_pGraphicDev);
 
 		if (pBox == nullptr)
 			return E_FAIL;
-		pBox->Get_Transform()->Set_Pos({ float(i*10), 0.f, float(i*10) });
-		_tchar* szBuff = "";
-		wsprintf(szBuff,L"Obj_Box%d", i);
+		if (i < 20)
+		{
+			pBox->Get_Transform()->Set_Pos({ 100 * cosf(2 * D3DX_PI / 40 * i), 0.f, 100 + 100 * sinf(2 * D3DX_PI / 40 * i) });
+		}
+		else
+		{
+			pBox->Get_Transform()->Set_Pos({ 100 * cosf(2 * D3DX_PI / 40 * i), 0.f, -100 + 100 * sinf(2 * D3DX_PI / 40 * i) });
+		}
+		const _tchar*	szBuff = L"Obj_Box" + i; 
+		if (FAILED(pGameObjectLayer->Add_GameObject(szBuff, pBox)))
+			return E_FAIL;
+	}
+	for (int i = 0; i < 40; ++i)
+	{
+		CGameObject* pBox = CCartBody1::Create(m_pGraphicDev);
+
+		if (pBox == nullptr)
+			return E_FAIL;
+		if (i < 20)
+		{
+			pBox->Get_Transform()->Set_Pos({ -100.f, 0.f,100 - 10.f * i });
+		}
+		else
+		{
+			pBox->Get_Transform()->Set_Pos({ 100.f, 0.f,100 - 10.f * (i - 20) });
+		}
+		const _tchar* szBuff = L"Obj_Box" + i + 40;
 		if (FAILED(pGameObjectLayer->Add_GameObject(szBuff, pBox)))
 			return E_FAIL;
 	}
