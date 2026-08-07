@@ -1,4 +1,4 @@
-//#include "pch.h"
+#include "pch.h"
 #include "CMainEditor.h"
 #include "CProtoMgr.h"
 #include "CDInputMgr.h"

@@ -160,6 +160,36 @@ _matrix* CTransform::GetFollowRotation(_vec3* pFollowDir, _matrix* _pRot)
 	return	D3DXMatrixRotationAxis(_pRot, &vCross, theta);
 }
 
+void CTransform::Chase_Target(const _vec3* pPos, const _float& fSpeed, const _float& fTimeDelta)
+{
+	_vec3	vDir = *pPos - m_vInfo[INFO_POS];
+
+	m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
+
+	_matrix		matScale, matRot, matTrans;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixTranslation(&matTrans,
+		m_vInfo[INFO_POS].x,
+		m_vInfo[INFO_POS].y,
+		m_vInfo[INFO_POS].z);
+
+	matRot = *Compute_Lookattarget(pPos);
+
+	m_matWorld = matScale * matRot * matTrans;
+}
+
+_matrix* CTransform::Compute_Lookattarget(const _vec3* pPos)
+{
+	_vec3	vDir = *pPos - m_vInfo[INFO_POS];
+
+	D3DXMATRIX	matRot;
+	_vec3	vAxis, vUp;
+	return D3DXMatrixRotationAxis(&matRot,
+								  D3DXVec3Cross(&vAxis, &m_vInfo[INFO_LOOK], &vDir),
+								  acosf(D3DXVec3Dot(D3DXVec3Normalize(&vDir, &vDir),
+										D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
+}
 void CTransform::Set_Dirty()
 {
 	if (!m_bDirty) {

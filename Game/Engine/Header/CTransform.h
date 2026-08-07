@@ -78,7 +78,8 @@ public:
 	void FollowObj(_vec3* _pPos, _float _fSpeed, _float _fDeltaTime);
 	_matrix* GetFollowRotation(_vec3* _pFollowDir, _matrix* _pRot);
 
-private:
+	void		Chase_Target(const _vec3* pPos, const _float& fSpeed, const _float& fTimeDelta);
+	_matrix*	Compute_Lookattarget(const _vec3* pPos);
 
 public:
 	static CTransform* Create(LPDIRECT3DDEVICE9 pGraphicDev);

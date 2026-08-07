@@ -7,7 +7,7 @@
 #include "CFontMgr.h"
 #include "CCameraMgr.h"
 #include "CRenderer.h"
-
+#include "CCollisionMgr.h"
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr)
 	, m_pManagementClass(CManagement::GetInstance())
@@ -139,6 +139,7 @@ void CMainApp::Free()
 	Safe_Release(m_pGraphicDev);
 	Safe_Release(m_pDeviceClass);
 
+	CCollisionMgr::DestroyInstance();
 	CFrameMgr::DestroyInstance();
 	CTimerMgr::DestroyInstance();
 	m_pManagementClass->DestroyInstance();
