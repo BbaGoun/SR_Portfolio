@@ -90,22 +90,43 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		m_fSpeed += 1;
 	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
 		m_fSpeed -= 1;
-
+	
 	if (fabsf(m_fSpeed) > 0.1f)
 	{
 		if (m_fSpeed > 0)
 		{
 			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
-				m_vRotation.y += D3DXToRadian(-0.5);
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+					m_vRotation.y += D3DXToRadian(-1.5);
+				else
+					m_vRotation.y += D3DXToRadian(-0.5);
+
+			}
 			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
-				m_vRotation.y += D3DXToRadian(0.5);
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+					m_vRotation.y += D3DXToRadian(1.5);
+				else
+					m_vRotation.y += D3DXToRadian(0.5);
+			}
 		}
 		else
 		{
 			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
-				m_vRotation.y += D3DXToRadian(0.5);
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+					m_vRotation.y += D3DXToRadian(1.5);
+				else
+					m_vRotation.y += D3DXToRadian(0.5);
+			}
 			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
-				m_vRotation.y += D3DXToRadian(-0.5);
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+					m_vRotation.y += D3DXToRadian(-1.5);
+				else
+					m_vRotation.y += D3DXToRadian(-0.5);
+			}
 		}
 	}
 }

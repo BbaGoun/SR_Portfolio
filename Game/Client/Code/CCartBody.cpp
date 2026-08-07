@@ -79,7 +79,7 @@ CCartBody* CCartBody::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{
-		MSG_BOX("CCartBody_FL Create Failed");
+		MSG_BOX("CCartBody Create Failed");
 		Safe_Release(pObj);
 		return nullptr;
 	}
