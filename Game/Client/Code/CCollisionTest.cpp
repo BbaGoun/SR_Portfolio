@@ -222,13 +222,18 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 
 	// # ¹Ú½º
-	CGameObject* pBox = CBox::Create(m_pGraphicDev);
+	for (int i = 0; i < 3; ++i)
+	{
+		CGameObject* pBox = CBox::Create(m_pGraphicDev);
 
-	if (pBox == nullptr)
-		return E_FAIL;
-
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Box", pBox)))
-		return E_FAIL;
+		if (pBox == nullptr)
+			return E_FAIL;
+		pBox->Get_Transform()->Set_Pos({ float(i*10), 0.f, float(i*10) });
+		_tchar* szBuff = "";
+		wsprintf(szBuff,L"Obj_Box%d", i);
+		if (FAILED(pGameObjectLayer->Add_GameObject(szBuff, pBox)))
+			return E_FAIL;
+	}
 
 	return S_OK;
 }
@@ -258,13 +263,13 @@ HRESULT CCollisionTest::Ready_Environment_Layer()
 	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land", pEnvObject)))
 	//	return E_FAIL;
 
-	pEnvObject = CLand2::Create(m_pGraphicDev);
-	
-	if (pEnvObject == nullptr)
-		return E_FAIL;
-	
-	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
-		return E_FAIL;
+	//pEnvObject = CLand2::Create(m_pGraphicDev);
+	//
+	//if (pEnvObject == nullptr)
+	//	return E_FAIL;
+	//
+	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
+	//	return E_FAIL;
 	
 	return S_OK;
 }

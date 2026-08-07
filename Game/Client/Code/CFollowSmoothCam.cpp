@@ -69,7 +69,7 @@ void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	
 		_vec3 vDeltaPos = vTargetPos - vMyPos;
 		float	fDeltaPos = D3DXVec3Length(&vDeltaPos);
-		cout << fDeltaPos << endl;
+		//cout << fDeltaPos << endl;
 		if (fDeltaPos > 10.f)
 		{
 			float	fChaseSpeed = 5 + fDeltaPos * 2;

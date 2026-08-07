@@ -21,6 +21,7 @@ CCart::~CCart()
 HRESULT CCart::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
+	m_vForce = { 0,0,0 };
 	m_fSpeed = 0.f;
 	m_fMaxSpeed = 3.f;
 	return S_OK;
@@ -28,9 +29,7 @@ HRESULT CCart::Ready_GameObject()
 
 void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-
 	//m_pTransformCom->Rotate(QUATER_YAW, m_vRotation.y);
-	
 	////////////////////방향////////////////////////
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
@@ -41,16 +40,18 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	//if (fRotationLength < 0.1f) m_vRotation *= 0;
 
 	////////////////////이동////////////////////////
-	m_fSpeed *= 0.98;
-	if (fabsf(m_fSpeed) < 0.1f)
-		m_fSpeed = 0;
-	_vec3 vLook;
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	if(m_fSpeed > 0.1f)
-		m_pTransformCom->Move_Pos(&vLook, m_fSpeed, fFixedDeltaTime);
-	else
-		m_pTransformCom->Move_Pos(&vLook, m_fSpeed, fFixedDeltaTime);
+	//m_fSpeed *= 0.98;
+	//if (fabsf(m_fSpeed) < 0.1f)
+	//	m_fSpeed = 0;
+	//_vec3 vLook;
+	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	//m_pTransformCom->Move_Pos(&vLook, m_fSpeed, fFixedDeltaTime);
 
+	m_pTransformCom->Move_Pos(&m_vForce, 1, fFixedDeltaTime);
+	
+	m_vForce *= 0.98;
+	if (D3DXVec3Length(&m_vForce) < 1.f)
+		m_vForce *= 0;
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
@@ -87,26 +88,42 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	D3DXVec3Normalize(&vLook, &vLook);
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
-		m_fSpeed += 1;
-	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
-		m_fSpeed -= 1;
-	
-	if (fabsf(m_fSpeed) > 0.1f)
 	{
-		if (m_fSpeed > 0)
+		cout << "Up" << endl;
+		m_vForce += vLook;
+	}
+	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
+	{
+		m_vForce -= vLook;
+	}
+	
+	float fForceLength = D3DXVec3Length(&m_vForce);
+
+	if (fForceLength > 0.1f)
+	{
+		if (D3DXVec3Dot(&m_vForce,&vLook) > 0)// fForcceLength와 Look의 내적값으로 비교
 		{
 			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 			{
 				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+				{
+					m_fSpeed *= 0.98;
+					if (fabsf(m_fSpeed) < 0.1f)
+						m_fSpeed = 0;
 					m_vRotation.y += D3DXToRadian(-1.5);
+				}
 				else
 					m_vRotation.y += D3DXToRadian(-0.5);
-
 			}
 			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 			{
 				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+				{
+					m_fSpeed *= 0.99;
+					if (fabsf(m_fSpeed) < 0.1f)
+						m_fSpeed = 0;
 					m_vRotation.y += D3DXToRadian(1.5);
+				}
 				else
 					m_vRotation.y += D3DXToRadian(0.5);
 			}

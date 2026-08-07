@@ -17,6 +17,7 @@ public:
 public:
 	static CCart* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void	KeyInput(const _float& fDeltaTime);
+
 private:
 	_float	m_fMaxSpeed;
 
