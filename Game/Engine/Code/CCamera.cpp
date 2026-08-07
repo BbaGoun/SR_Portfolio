@@ -38,12 +38,12 @@ HRESULT CCamera::Ready_GameObject()
 {
     CGameObject::Ready_GameObject();
 
-    CCalculator::CustomLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
-    //D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
+    //CCalculator::CustomLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
+    D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
     m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 
-    CCalculator::CustomPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
-    //D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
+    //CCalculator::CustomPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
+    D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
     m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
 	return S_OK;
@@ -56,6 +56,7 @@ _int CCamera::Update_GameObject(const _float& fDeltaTime)
 
 void CCamera::LateUpdate_GameObject(const _float& fDeltaTime)
 {
+    CGameObject::LateUpdate_GameObject(fDeltaTime);
     D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
     m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 }
