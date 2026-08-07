@@ -100,6 +100,9 @@
     <Filter Include="02. GameObject\Cart\CartBody\CartBody2">
       <UniqueIdentifier>{8b9571f1-d76e-464a-bab7-d7b17e618d3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\MapTest">
+      <UniqueIdentifier>{7f49cea8-a756-4797-a98f-c47c0ef0412f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="01. Scene\Item">
       <UniqueIdentifier>{8cfc90e9-be4b-467b-a9ea-b5f4e04dec79}</UniqueIdentifier>
     </Filter>
@@ -204,6 +207,9 @@
     <ClInclude Include="..\Header\CCartBody2.h">
       <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMapTest.h">
+      <Filter>01. Scene\MapTest</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CiTem.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -292,6 +298,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCartBody2.cpp">
       <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapTest.cpp">
+      <Filter>01. Scene\MapTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CiTem.cpp">
       <Filter>01. Scene\Item</Filter>
