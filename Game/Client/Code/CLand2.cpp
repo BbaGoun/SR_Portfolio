@@ -54,6 +54,7 @@ void CLand2::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pBufferCom->Render_Buffer();
+	m_pGraphicDev->SetTexture(0, nullptr);
 	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 

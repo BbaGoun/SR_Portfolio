@@ -115,6 +115,33 @@
     <Filter Include="04. Component\Shape\Cube">
       <UniqueIdentifier>{24374f82-ca16-4daa-972a-68af2f4e4f38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Collision">
+      <UniqueIdentifier>{b9b63981-2805-4ff0-bc28-a0369095a44f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Collision\CollisionMgr">
+      <UniqueIdentifier>{6a53c4bd-5442-41e5-b8c8-2064f51aedbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Collision\Cube_Collider">
+      <UniqueIdentifier>{3071ec23-7f5c-441b-88b5-391b2cf1d7c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Collision\Sphere_Collider">
+      <UniqueIdentifier>{ceb6a661-2fe4-4494-a41f-0e3c41b29da3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\CartBody">
+      <UniqueIdentifier>{db79d51b-b8ff-4a78-a932-dceb7f9ac962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\CartWheel">
+      <UniqueIdentifier>{5d788d13-4e5d-40ad-af51-78dc87cc65c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\Prism">
+      <UniqueIdentifier>{c5363baf-94eb-4490-8ba6-ff484069a8a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\Prism\Quadrangular">
+      <UniqueIdentifier>{1e282bd4-f05d-460a-8d93-f293a2d502dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\Prism\Triangular">
+      <UniqueIdentifier>{0b2a77d0-f793-4545-93e3-5778d5715798}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -237,6 +264,30 @@
     <ClInclude Include="..\Header\CCube.h">
       <Filter>04. Component\Shape\Cube</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCollider.h">
+      <Filter>04. Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCollisionMgr.h">
+      <Filter>04. Component\Collision\CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCube_Collider.h">
+      <Filter>04. Component\Collision\Cube_Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSphere_Collider.h">
+      <Filter>04. Component\Collision\Sphere_Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCartWheelCol.h">
+      <Filter>04. Component\Shape\CartWheel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCartBodyCol.h">
+      <Filter>04. Component\Shape\CartBody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CQuadrangularPrism.h">
+      <Filter>04. Component\Shape\Prism\Quadrangular</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTriangularPrism.h">
+      <Filter>04. Component\Shape\Prism\Triangular</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -340,6 +391,30 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCube.cpp">
       <Filter>04. Component\Shape\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollider.cpp">
+      <Filter>04. Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollisionMgr.cpp">
+      <Filter>04. Component\Collision\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCube_Collider.cpp">
+      <Filter>04. Component\Collision\Cube_Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSphere_Collider.cpp">
+      <Filter>04. Component\Collision\Sphere_Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCartWheelCol.cpp">
+      <Filter>04. Component\Shape\CartWheel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCartBodyCol.cpp">
+      <Filter>04. Component\Shape\CartBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CQuadrangularPrism.cpp">
+      <Filter>04. Component\Shape\Prism\Quadrangular</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTriangularPrism.cpp">
+      <Filter>04. Component\Shape\Prism\Triangular</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

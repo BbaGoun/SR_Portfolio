@@ -136,5 +136,5 @@ void CCalculator::DrawRayLine(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vStart, _vec3
 
 	pGraphicDev->DrawPrimitiveUP(D3DPT_LINELIST, 1, vertices, sizeof(VTXLINE));
 
-	pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 }

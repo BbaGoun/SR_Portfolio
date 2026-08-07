@@ -53,6 +53,8 @@ public:
 	void			Set_Rotation(_vec3 _newRotation) { m_vRotation = _newRotation; }
 	void			Add_Rotation(_vec3 _addedRotation) { m_vRotation += _addedRotation; }
 
+	_float			Get_Speed() { return m_fSpeed; }
+
 protected:
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
 	LPDIRECT3DDEVICE9						m_pGraphicDev;
