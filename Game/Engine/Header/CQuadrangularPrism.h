@@ -13,9 +13,13 @@ protected:
 
 public:
     HRESULT Ready_Buffer() override;
+    void    SetColor(D3DXCOLOR Color) { m_Color = Color; }
 
     static CQuadrangularPrism* Create(LPDIRECT3DDEVICE9 pGraphicDev);
     CComponent* Clone() override;
+
+private:
+    D3DXCOLOR   m_Color;
 
 protected:
     virtual void		Free() override;

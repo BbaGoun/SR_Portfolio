@@ -34,11 +34,11 @@ HRESULT CQuadrangularPrism::Ready_Buffer()
     m_pVB->Lock(0, 0, (void**)&vertices, 0);
 
     vertices[0].vPosition = { -1.f, 1.f, 1.f };
-    vertices[0].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+    vertices[0].dwColor = m_Color;
     vertices[1].vPosition = { 1.f, 1.f, 1.f };
-    vertices[1].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+    vertices[1].dwColor = m_Color;
     vertices[2].vPosition = { 1.f, -1.f, 1.f };
-    vertices[2].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+    vertices[2].dwColor = m_Color;
     vertices[3].vPosition = { -1.f, -1.f, 1.f };
     vertices[3].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
@@ -47,9 +47,9 @@ HRESULT CQuadrangularPrism::Ready_Buffer()
     vertices[5].vPosition = { 1.f, 1.f, -1.f };
     vertices[5].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
     vertices[6].vPosition = { 1.f, -1.f, -1.f };
-    vertices[6].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+    vertices[6].dwColor = m_Color;
     vertices[7].vPosition = { -1.f, -1.f, -1.f };
-    vertices[7].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+    vertices[7].dwColor = m_Color;
 
     m_pVB->Unlock();
 
