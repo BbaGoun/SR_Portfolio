@@ -201,6 +201,9 @@
     <ClInclude Include="..\Header\CCartBody2.h">
       <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
     </ClInclude>
+    <ClInclude Include="CSceneUI.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -289,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCartBody2.cpp">
       <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneUI.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
