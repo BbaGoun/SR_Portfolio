@@ -107,6 +107,10 @@ namespace Engine
 	inline T clampT(T _value, T _min, T _max) {
 		return max(_min, min(_max, _value));
 	}
+
+	inline DirectX::XMVECTOR ToXMVec(_vec3 vec){
+		return DirectX::XMLoadFloat3(reinterpret_cast<const DirectX::XMFLOAT3*>(&vec));
+	}
 }
 
 #endif // Engine_Function_h__

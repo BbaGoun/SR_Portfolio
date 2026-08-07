@@ -112,6 +112,9 @@
     <Filter Include="97. Utility\HeightMapLoader">
       <UniqueIdentifier>{3d5cb1a0-cfa5-440d-9515-61b60901d391}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\Cube">
+      <UniqueIdentifier>{24374f82-ca16-4daa-972a-68af2f4e4f38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -231,6 +234,9 @@
     <ClInclude Include="..\Header\CCalculator.h">
       <Filter>97. Utility\CCalculator</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCube.h">
+      <Filter>04. Component\Shape\Cube</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -331,6 +337,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCalculator.cpp">
       <Filter>97. Utility\CCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCube.cpp">
+      <Filter>04. Component\Shape\Cube</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

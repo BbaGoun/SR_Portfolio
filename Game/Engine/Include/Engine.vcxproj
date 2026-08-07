@@ -24,6 +24,7 @@
     <ClInclude Include="..\Header\CCameraMgr.h" />
     <ClInclude Include="..\Header\CCody.h" />
     <ClInclude Include="..\Header\CComponent.h" />
+    <ClInclude Include="..\Header\CCube.h" />
     <ClInclude Include="..\Header\CDInputMgr.h" />
     <ClInclude Include="..\Header\CFont.h" />
     <ClInclude Include="..\Header\CFontMgr.h" />
@@ -65,6 +66,7 @@
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
     <ClCompile Include="..\Code\CCody.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
+    <ClCompile Include="..\Code\CCube.cpp" />
     <ClCompile Include="..\Code\CDInputMgr.cpp" />
     <ClCompile Include="..\Code\CFont.cpp" />
     <ClCompile Include="..\Code\CFontMgr.cpp" />
