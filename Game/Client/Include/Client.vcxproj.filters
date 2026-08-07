@@ -103,6 +103,9 @@
     <Filter Include="01. Scene\MapTest">
       <UniqueIdentifier>{7f49cea8-a756-4797-a98f-c47c0ef0412f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\Item">
+      <UniqueIdentifier>{8cfc90e9-be4b-467b-a9ea-b5f4e04dec79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -207,11 +210,11 @@
     <ClInclude Include="..\Header\CMapTest.h">
       <Filter>01. Scene\MapTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CiTem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Client.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -298,6 +301,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMapTest.cpp">
       <Filter>01. Scene\MapTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CiTem.cpp">
+      <Filter>01. Scene\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>01. Scene\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
