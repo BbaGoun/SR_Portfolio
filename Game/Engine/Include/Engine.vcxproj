@@ -28,6 +28,7 @@
     <ClInclude Include="..\Header\CCollider.h" />
     <ClInclude Include="..\Header\CCollisionMgr.h" />
     <ClInclude Include="..\Header\CComponent.h" />
+    <ClInclude Include="..\Header\CCube.h" />
     <ClInclude Include="..\Header\CCube_Collider.h" />
     <ClInclude Include="..\Header\CDInputMgr.h" />
     <ClInclude Include="..\Header\CFont.h" />
@@ -77,6 +78,7 @@
     <ClCompile Include="..\Code\CCollider.cpp" />
     <ClCompile Include="..\Code\CCollisionMgr.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
+    <ClCompile Include="..\Code\CCube.cpp" />
     <ClCompile Include="..\Code\CCube_Collider.cpp" />
     <ClCompile Include="..\Code\CDInputMgr.cpp" />
     <ClCompile Include="..\Code\CFont.cpp" />

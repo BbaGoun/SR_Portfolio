@@ -112,6 +112,9 @@
     <Filter Include="97. Utility\HeightMapLoader">
       <UniqueIdentifier>{3d5cb1a0-cfa5-440d-9515-61b60901d391}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\Cube">
+      <UniqueIdentifier>{24374f82-ca16-4daa-972a-68af2f4e4f38}</UniqueIdentifier>
+    </Filter>
     <Filter Include="04. Component\Collision">
       <UniqueIdentifier>{b9b63981-2805-4ff0-bc28-a0369095a44f}</UniqueIdentifier>
     </Filter>
@@ -258,6 +261,9 @@
     <ClInclude Include="..\Header\CCalculator.h">
       <Filter>97. Utility\CCalculator</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCube.h">
+      <Filter>04. Component\Shape\Cube</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CCollider.h">
       <Filter>04. Component\Collision</Filter>
     </ClInclude>
@@ -382,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCalculator.cpp">
       <Filter>97. Utility\CCalculator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCube.cpp">
+      <Filter>04. Component\Shape\Cube</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCollider.cpp">
       <Filter>04. Component\Collision</Filter>

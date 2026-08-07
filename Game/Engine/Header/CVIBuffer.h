@@ -19,6 +19,16 @@ public:
     virtual HRESULT Ready_Buffer();
     virtual void Render_Buffer();
 
+    DirectX::BoundingBox* GetBoundingBox(DirectX::BoundingBox* pBoundingBox) {
+        DirectX::XMVECTOR vMin = ToXMVec(m_minVtx);
+        DirectX::XMVECTOR vMax = ToXMVec(m_maxVtx);
+        DirectX::BoundingBox::CreateFromPoints(*pBoundingBox, vMin, vMax);
+        return pBoundingBox;
+    }
+
+protected:
+    void UpdateMinMaxVtx(_vec3 position);
+
 public:
     CComponent* Clone() override;
 
@@ -35,6 +45,9 @@ protected:
     LPDIRECT3DINDEXBUFFER9		m_pIB;
     DWORD						m_dwIdxCnt;
     D3DFORMAT					m_IdxFmt;
+
+    _vec3                       m_minVtx;
+    _vec3                       m_maxVtx;
 
 protected:
     virtual void		Free();
