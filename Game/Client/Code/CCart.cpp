@@ -5,7 +5,7 @@
 #include "CDInputMgr.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev), m_eCurCartState(CART_STOP)
+	:CGameObject(pGraphicDev), m_bDrift(false)
 {
 }
 
@@ -22,33 +22,29 @@ HRESULT CCart::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 	m_vForce = { 0,0,0 };
+
 	m_fSpeed = 1.f;
 	m_fMaxSpeed = 3.f;
-	m_eCurCartState = CART_STOP;
+	
+	m_bDrift = false;
+	m_fLookForceAngle = 0.f;
+
+	m_fNormalTurnAngle	= 1.0f;
+	m_fDriftTurnAngle	= 1.5f;
+
+	m_bBoost = false;
+
+
 	return S_OK;
 }
 
 void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	//m_pTransformCom->Rotate(QUATER_YAW, m_vRotation.y);
-	////////////////////방향////////////////////////
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
 	m_pTransformCom->Set_Quaternion(&q);
 
-	//m_vRotation *= 0.98;
-	//_float fRotationLength = D3DXVec3Length(&m_vRotation);
-	//if (fRotationLength < 0.1f) m_vRotation *= 0;
-
-	////////////////////이동////////////////////////
-	//m_fSpeed *= 0.98;
-	//if (fabsf(m_fSpeed) < 0.1f)
-	//	m_fSpeed = 0;
-	//_vec3 vLook;
-	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	//m_pTransformCom->Move_Pos(&vLook, m_fSpeed, fFixedDeltaTime);
-
-	m_pTransformCom->Move_Pos(&m_vForce, 1, fFixedDeltaTime);
+	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
 	
 	m_vForce *= 0.98;
 	if (D3DXVec3Length(&m_vForce) < 1.f)
@@ -58,8 +54,8 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CCart::Update_GameObject(const _float& fDeltaTime)
 {
 	KeyInput(fDeltaTime);
-	UpdateState();
-	//COutCartState();
+	UpdateDrift();
+	Boost();
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -90,17 +86,36 @@ void CCart::KeyInput(const _float& fDeltaTime)
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
 	{
-		if (m_eCurCartState != CART_DRIFT)
+		if (m_bDrift == false)
 			m_vForce += vLook;
 		else
+		{
 			m_vForce += vLook * 0.8f;
+			//if (m_fLookForceAngle < 0.2f)
+			//{
+			//	m_bDrift = false;
+			//	m_bShortBoost = true;
+			//}
+		}
 	}
 	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
 	{
-		if (m_eCurCartState != CART_DRIFT)
+		m_bBoost = false;
+		m_fSpeed = 1.f;
+		if (m_bDrift == false)
 			m_vForce -= vLook;
 		else
 			m_vForce -= vLook * 0.8f;
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))
+	{
+		m_bBoost = true;
+		m_fBoostCal = 1.05f;
+	}
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+	{
+		m_bDrift = true;
 	}
 
 	float fForceLength = D3DXVec3Length(&m_vForce);
@@ -111,31 +126,29 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		{
 			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 			{
-				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
-				{
-					m_eCurCartState = CART_DRIFT;
-					m_vRotation.y += D3DXToRadian(-1.5);
+				if (m_bDrift == true || m_bBoost == true)
+				{					
+					m_vRotation.y += D3DXToRadian(-m_fDriftTurnAngle);
 				}
 				else
 				{
-					m_vRotation.y += D3DXToRadian(-0.5);
+					m_vRotation.y += D3DXToRadian(-m_fNormalTurnAngle);
 					_matrix matRot;
-					D3DXMatrixRotationY(&matRot, D3DXToRadian(-0.5));
+					D3DXMatrixRotationY(&matRot, D3DXToRadian(-m_fNormalTurnAngle));
 					D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
 				}
 			}
 			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 			{
-				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+				if (m_bDrift == true || m_bBoost == true)
 				{
-					m_eCurCartState = CART_DRIFT;
-					m_vRotation.y += D3DXToRadian(1.5);
+					m_vRotation.y += D3DXToRadian(m_fDriftTurnAngle);
 				}
 				else
 				{
-					m_vRotation.y += D3DXToRadian(0.5);
+					m_vRotation.y += D3DXToRadian(m_fNormalTurnAngle);
 					_matrix matRot;
-					D3DXMatrixRotationY(&matRot, D3DXToRadian(0.5));
+					D3DXMatrixRotationY(&matRot, D3DXToRadian(m_fNormalTurnAngle));
 					D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
 				}
 			}
@@ -144,25 +157,25 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		{
 			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 			{
-				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
-					m_vRotation.y += D3DXToRadian(1.5);
+				if (m_bDrift == true)
+					m_vRotation.y += D3DXToRadian(m_fDriftTurnAngle);
 				else
 				{
-					m_vRotation.y += D3DXToRadian(0.5);
+					m_vRotation.y += D3DXToRadian(m_fNormalTurnAngle);
 					_matrix matRot;
-					D3DXMatrixRotationY(&matRot, D3DXToRadian(0.5));
+					D3DXMatrixRotationY(&matRot, D3DXToRadian(m_fNormalTurnAngle));
 					D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
 				}
 			}
 			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 			{
-				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
-					m_vRotation.y += D3DXToRadian(-1.5);
+				if (m_bDrift == true)
+					m_vRotation.y += D3DXToRadian(-m_fDriftTurnAngle);
 				else
 				{
-					m_vRotation.y += D3DXToRadian(-0.5);
+					m_vRotation.y += D3DXToRadian(-m_fNormalTurnAngle);
 					_matrix matRot;
-					D3DXMatrixRotationY(&matRot, D3DXToRadian(-0.5));
+					D3DXMatrixRotationY(&matRot, D3DXToRadian(-m_fNormalTurnAngle));
 					D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
 				}
 			}
@@ -170,9 +183,9 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	}
 }
 
-void CCart::UpdateState()
+void CCart::UpdateDrift()
 {
-	if (m_eCurCartState == CART_DRIFT)
+	if (m_bDrift == true)
 	{
 		_vec3 vLook, vTempForce;
 		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
@@ -184,37 +197,56 @@ void CCart::UpdateState()
 		D3DXVec3Normalize(&vLook, &vLook);
 		D3DXVec3Normalize(&vTempForce, &vTempForce);
 
-		cout << acosf(D3DXVec3Dot(&vLook, &vTempForce)) << endl;
-		if (acosf(D3DXVec3Dot(&vLook, &vTempForce)) < 0.3f)
+		m_fLookForceAngle = acosf(D3DXVec3Dot(&vLook, &vTempForce));
+		//cout << m_fLookForceAngle << endl;
+
+		if (m_fLookForceAngle < 0.1f)
 		{
-			m_eCurCartState = CART_DRIVE;
+			m_bDrift = false;
 			cout << "EndDrift" << endl;
 		}
 	}
 }
 
-void CCart::COutCartState()
+void CCart::Boost()
 {
-	switch (m_eCurCartState)
+	if (m_bBoost == false)
+		return;
+	//if (m_fSpeed == 1)
+	//{
+	//	//_vec3 vLook, vTempForce;
+	//	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	//	//vTempForce = m_vForce;
+	//	//
+	//	//vLook.y = 0;
+	//	//vTempForce.y = 0;
+	//	//
+	//	//D3DXVec3Normalize(&vLook, &vLook);
+	//	//D3DXVec3Normalize(&vTempForce, &vTempForce);
+	//	//
+	//	//float fAngle;
+	//	//fAngle = D3DXVec3Dot(&vTempForce, &vLook);
+	//	//
+	//	//_matrix matRot;
+	//	//D3DXMatrixRotationY(&matRot, D3DXToRadian(fAngle));
+	//	//D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
+	//
+	//	m_fSpeed += 2; 
+	//
+	//	cout << "Shoort Boost" << endl;
+	//}
+
+	if (m_fSpeed > 3)
+		m_fBoostCal = 0.995;
+	m_fSpeed *= m_fBoostCal;
+	if (m_fSpeed < 1)
 	{
-	case CART_STOP:
-		cout << "CART_STOP" << endl;
-		break;
-	case CART_DRIVE:
-		cout << "CART_DRIVE" << endl;
-		break;
-	case CART_DRIFT:
-		cout << "CART_DRIFT" << endl;
-		break;
-	case CART_BOOST:
-		cout << "CART_BOOST" << endl;
-		break;
-	case CART_END:
-		break;
-	default:
-		break;
+		cout << "End Boost" << endl;
+		m_bBoost = false;
+		m_fSpeed = 1;
 	}
 }
+
 
 void CCart::Free()
 {

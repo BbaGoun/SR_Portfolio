@@ -1,13 +1,6 @@
 #pragma once
 #include "CGameObject.h"
 
-enum CART_STATE {
-	CART_STOP,
-	CART_DRIVE,
-	CART_DRIFT,
-	CART_BOOST,
-	CART_END
-};
 class CCart :  public CGameObject
 {
 private:
@@ -25,12 +18,19 @@ public:
 public:
 	static CCart*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void			KeyInput(const _float& fDeltaTime);
-	void			UpdateState();
-	void			COutCartState();
+	void			UpdateDrift();
+	void			Boost();
 
 private:
 	_float		m_fMaxSpeed;
-	CART_STATE	m_eCurCartState;
+	bool		m_bDrift;
+
+	float		m_fNormalTurnAngle;
+	float		m_fDriftTurnAngle;
+
+	float		m_fLookForceAngle;
+	bool		m_bBoost;
+	float		m_fBoostCal;
 
 
 protected:
