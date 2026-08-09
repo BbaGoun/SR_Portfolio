@@ -45,8 +45,6 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CMissile::Update_GameObject(const _float& fTimeDelta)
 {
-	cout << "Missile Update" << endl;
-
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
