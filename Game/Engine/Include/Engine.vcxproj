@@ -43,6 +43,7 @@
     <ClInclude Include="..\Header\CManagement.h" />
     <ClInclude Include="..\Header\CMay.h" />
     <ClInclude Include="..\Header\CMesh.h" />
+    <ClInclude Include="..\Header\CMissileTex.h" />
     <ClInclude Include="..\Header\CObj.h" />
     <ClInclude Include="..\Header\CPskFile.h" />
     <ClInclude Include="..\Header\CPyramid.h" />
@@ -93,6 +94,7 @@
     <ClCompile Include="..\Code\CManagement.cpp" />
     <ClCompile Include="..\Code\CMay.cpp" />
     <ClCompile Include="..\Code\CMesh.cpp" />
+    <ClCompile Include="..\Code\CMissileTex.cpp" />
     <ClCompile Include="..\Code\CObj.cpp" />
     <ClCompile Include="..\Code\CPskFile.cpp" />
     <ClCompile Include="..\Code\CPyramid.cpp" />
