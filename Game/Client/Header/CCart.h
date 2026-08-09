@@ -26,6 +26,7 @@ private:
 	bool		m_bDrift;
 
 	float		m_fNormalTurnAngle;
+	float		m_fBoostTurnAngle;
 	float		m_fDriftTurnAngle;
 
 	float		m_fLookForceAngle;

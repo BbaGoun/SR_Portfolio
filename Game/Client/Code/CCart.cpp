@@ -29,6 +29,7 @@ HRESULT CCart::Ready_GameObject()
 	m_bDrift = false;
 	m_fLookForceAngle = 0.f;
 
+	m_fBoostTurnAngle	= 0.5f;
 	m_fNormalTurnAngle	= 1.0f;
 	m_fDriftTurnAngle	= 1.5f;
 
@@ -89,14 +90,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		if (m_bDrift == false)
 			m_vForce += vLook;
 		else
-		{
 			m_vForce += vLook * 0.8f;
-			//if (m_fLookForceAngle < 0.2f)
-			//{
-			//	m_bDrift = false;
-			//	m_bShortBoost = true;
-			//}
-		}
 	}
 	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
 	{
@@ -118,33 +112,36 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		m_bDrift = true;
 	}
 
-	float fForceLength = D3DXVec3Length(&m_vForce);
 
+	float fForceLength = D3DXVec3Length(&m_vForce);
 	if (fForceLength > 0.1f)
 	{
-		if (D3DXVec3Dot(&m_vForce,&vLook) > 0)	// fForcceLength와 Look의 내적값으로 전진후진 판단
+		if (D3DXVec3Dot(&m_vForce,&vLook) > 0)	// m_vForce와 vLook의 내적값으로 전진후진 판단
 		{
-			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+			if (m_bDrift == true)
 			{
-				if (m_bDrift == true || m_bBoost == true)
-				{					
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 					m_vRotation.y += D3DXToRadian(-m_fDriftTurnAngle);
-				}
-				else
+				else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+					m_vRotation.y += D3DXToRadian(m_fDriftTurnAngle);
+			}
+			else if (m_bBoost == true)
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+					m_vRotation.y += D3DXToRadian(-m_fBoostTurnAngle);
+				else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+					m_vRotation.y += D3DXToRadian(m_fBoostTurnAngle);
+			}
+			else
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 				{
 					m_vRotation.y += D3DXToRadian(-m_fNormalTurnAngle);
 					_matrix matRot;
 					D3DXMatrixRotationY(&matRot, D3DXToRadian(-m_fNormalTurnAngle));
 					D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
 				}
-			}
-			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
-			{
-				if (m_bDrift == true || m_bBoost == true)
-				{
-					m_vRotation.y += D3DXToRadian(m_fDriftTurnAngle);
-				}
-				else
+				else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 				{
 					m_vRotation.y += D3DXToRadian(m_fNormalTurnAngle);
 					_matrix matRot;
@@ -155,23 +152,30 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		}
 		else
 		{
-			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+			if (m_bDrift == true)
 			{
-				if (m_bDrift == true)
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 					m_vRotation.y += D3DXToRadian(m_fDriftTurnAngle);
-				else
+				else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+					m_vRotation.y += D3DXToRadian(-m_fDriftTurnAngle);
+			}
+			else if (m_bBoost == true)
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+					m_vRotation.y += D3DXToRadian(m_fBoostTurnAngle);
+				else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+					m_vRotation.y += D3DXToRadian(-m_fBoostTurnAngle);
+			}
+			else
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 				{
 					m_vRotation.y += D3DXToRadian(m_fNormalTurnAngle);
 					_matrix matRot;
 					D3DXMatrixRotationY(&matRot, D3DXToRadian(m_fNormalTurnAngle));
 					D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
 				}
-			}
-			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
-			{
-				if (m_bDrift == true)
-					m_vRotation.y += D3DXToRadian(-m_fDriftTurnAngle);
-				else
+				else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 				{
 					m_vRotation.y += D3DXToRadian(-m_fNormalTurnAngle);
 					_matrix matRot;
@@ -200,7 +204,7 @@ void CCart::UpdateDrift()
 		m_fLookForceAngle = acosf(D3DXVec3Dot(&vLook, &vTempForce));
 		//cout << m_fLookForceAngle << endl;
 
-		if (m_fLookForceAngle < 0.1f)
+		if (m_fLookForceAngle < 0.3f)
 		{
 			m_bDrift = false;
 			cout << "EndDrift" << endl;
