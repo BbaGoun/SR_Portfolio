@@ -21,6 +21,7 @@ HRESULT CMissile::Ready_GameObject()
 	// m_pTransformCom->m_vScale = { 0.2f, 0.2f, 0.3f };
 	// m_pTransformCom->m_vInfo[INFO_POS] = { 3.f, 1.3f, 0.f };
 
+	m_pTransformCom->Set_Pos({ 3.f, 1.3f, 0.f });
 	Engine::CComponent* pComponent = nullptr;
 
 	// 미사일
@@ -44,6 +45,8 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CMissile::Update_GameObject(const _float& fTimeDelta)
 {
+	cout << "Missile Update" << endl;
+
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA

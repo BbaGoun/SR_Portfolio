@@ -19,9 +19,9 @@ public:
 	static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	HRESULT	Ready_Prototype();
+	HRESULT	Ready_Prototype() { return S_OK; }
 	HRESULT Ready_GameLogic_Layer();
-	HRESULT Ready_Environment_Layer();
+	HRESULT Ready_Environment_Layer() { return S_OK; }
 
 protected:
 	virtual void			Free() override;

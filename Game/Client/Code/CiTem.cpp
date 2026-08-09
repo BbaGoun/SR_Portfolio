@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CItem.h"
+#include "CMissile.h"
 
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -11,13 +12,7 @@ CItem::~CItem()
 
 HRESULT CItem::Ready_Scene()
 {
-	if (FAILED(Ready_Prototype()))
-		return E_FAIL;
-
 	if (FAILED(Ready_GameLogic_Layer()))
-		return E_FAIL;
-
-	if (FAILED(Ready_Environment_Layer()))
 		return E_FAIL;
 
 	return S_OK;
@@ -57,18 +52,23 @@ CItem* CItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pScene;
 }
 
-HRESULT CItem::Ready_Prototype()
-{
-	return S_OK;
-}
-
 HRESULT CItem::Ready_GameLogic_Layer()
 {
-	return S_OK;
-}
+	CLayer* pGameObjectLayer = CLayer::Create();
 
-HRESULT CItem::Ready_Environment_Layer()
-{
+	if (pGameObjectLayer == nullptr)
+		return E_FAIL;
+
+	m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
+
+	CGameObject* pMissile = CMissile::Create(m_pGraphicDev);
+
+	if (pMissile == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Missile", pMissile)))
+		return E_FAIL;
+
 	return S_OK;
 }
 
