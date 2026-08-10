@@ -20,7 +20,6 @@ public:
 	void			KeyInput(const _float& fDeltaTime);
 	void			UpdateDrift();
 	void			Boost();
-	const bool			Get_Reversing() { return m_bReversing; }
 
 private:
 	_float		m_fMaxSpeed;
@@ -33,7 +32,7 @@ private:
 	float		m_fLookForceAngle;
 	bool		m_bBoost;
 	float		m_fBoostCal;
-	bool		m_bReversing;
+
 
 
 protected:

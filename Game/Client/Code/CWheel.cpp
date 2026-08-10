@@ -54,23 +54,20 @@ HRESULT CWheel::Ready_GameObject()
 
 void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	// y축 회전
-	//D3DXQUATERNION q;
-	//D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(0.f), 0.f, 0.f);
-	//m_pTransformCom->Set_Quaternion(&q);
-
-	// x축 회전
 	_vec3 vParentForce = m_pParent->Get_Force();
 	float fParentForceLen = D3DXVec3Length(&vParentForce);
 
 	_vec3 vPlayerLook;
 	m_pParent->Get_Transform()->Get_Info(INFO_LOOK, &vPlayerLook);
 
-	if(D3DXVec3Dot(&vPlayerLook,&vParentForce) >= 0)
-		m_pTransformCom->Rotate(QUATER_PITCH, 50 * fParentForceLen * fFixedDeltaTime);
+	if (D3DXVec3Dot(&vPlayerLook, &vParentForce) >= 0)
+		m_vRotation.x += fParentForceLen * fFixedDeltaTime;
 	else
-		m_pTransformCom->Rotate(QUATER_PITCH, -50 * fParentForceLen * fFixedDeltaTime);
+		m_vRotation.x -= fParentForceLen * fFixedDeltaTime;
 
+	D3DXQUATERNION q;
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
+	m_pTransformCom->Set_Quaternion(&q);
 }
 
 _int CWheel::Update_GameObject(const _float& fDeltaTime)
@@ -94,6 +91,13 @@ void CWheel::Render_GameObject()
 
 void CWheel::KeyInput(const _float& fDeltaTime)
 {
+	_vec3 vParentForce = m_pParent->Get_Force();
+	float fParentForceLen = D3DXVec3Length(&vParentForce);
+	if (fParentForceLen > 5.0f)
+	{
+		m_vRotation.y = 0;
+		return;
+	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT)&& m_eWheelType < WHEEL_BL)
 	{
 		m_vRotation.y = -45;

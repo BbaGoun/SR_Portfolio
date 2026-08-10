@@ -55,11 +55,11 @@ void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		CTransform* pTrans = static_cast<CTransform*>(pCom);
 		_vec3	vMyPos;
 		_vec3	vPlayerPos;
-		_vec3	vPlayerUp;
+		_vec3	vPlayerUp = { 0,1,0 };
 		_vec3	vPlayerLOOK;
 
 		pTrans->Get_Info(INFO_POS, &vPlayerPos);
-		pTrans->Get_Info(INFO_UP, &vPlayerUp);
+		//pTrans->Get_Info(INFO_UP, &vPlayerUp);
 		pTrans->Get_Info(INFO_LOOK, &vPlayerLOOK);
 
 		m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
