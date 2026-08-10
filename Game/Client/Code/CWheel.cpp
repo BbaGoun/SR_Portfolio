@@ -60,9 +60,17 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	//m_pTransformCom->Set_Quaternion(&q);
 
 	// xÃà È¸Àü
-	_vec3 fParentForce = m_pParent->Get_Force();
-	float fParentForceLen = D3DXVec3Length(&fParentForce);
-	m_pTransformCom->Rotate(QUATER_PITCH, 50 * fParentForceLen * fFixedDeltaTime);
+	_vec3 vParentForce = m_pParent->Get_Force();
+	float fParentForceLen = D3DXVec3Length(&vParentForce);
+
+	_vec3 vPlayerLook;
+	m_pParent->Get_Transform()->Get_Info(INFO_LOOK, &vPlayerLook);
+
+	if(D3DXVec3Dot(&vPlayerLook,&vParentForce) >= 0)
+		m_pTransformCom->Rotate(QUATER_PITCH, 50 * fParentForceLen * fFixedDeltaTime);
+	else
+		m_pTransformCom->Rotate(QUATER_PITCH, -50 * fParentForceLen * fFixedDeltaTime);
+
 }
 
 _int CWheel::Update_GameObject(const _float& fDeltaTime)

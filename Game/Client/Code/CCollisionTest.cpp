@@ -204,7 +204,12 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	pCart->Set_Child(pGameObject);
 
 	//// # 플레이어 따라다니는 3인칭 카메라
-	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev);
+	_vec3 vEye, vAt, vUp, vLook;
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 10) + (vLook * -12);
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp);
 
 	if (pGameObject == nullptr)
 		return E_FAIL;
@@ -215,7 +220,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
-
 
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;

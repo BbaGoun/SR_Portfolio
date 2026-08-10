@@ -4,7 +4,7 @@
 #include "CManagement.h"
 #include "CDInputMgr.h"
 #include "CTerrain2.h"
-#include <CGOCody.h>
+#include "CCart.h"
 
 CFollowSmoothCam::CFollowSmoothCam(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -39,49 +39,52 @@ HRESULT CFollowSmoothCam::Ready_GameObject(const _vec3& pEye,
 
 	if (FAILED(CCamera::Ready_GameObject()))
 		return E_FAIL;
-
+	m_pTransformCom->Set_Pos(m_vEye);
 	m_fYaw = 0;
 	m_fDistScale = 1;
-
+	m_fBackDistance = 0.f;
 	return S_OK;
 }
-
 void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
 		CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_Cart", L"Com_Transform");
 		if (pCom == nullptr)
 			return;
-	
+
 		CTransform* pTrans = static_cast<CTransform*>(pCom);
 		_vec3	vMyPos;
 		_vec3	vPlayerPos;
 		_vec3	vPlayerUp;
 		_vec3	vPlayerLOOK;
-	
+
 		pTrans->Get_Info(INFO_POS, &vPlayerPos);
 		pTrans->Get_Info(INFO_UP, &vPlayerUp);
 		pTrans->Get_Info(INFO_LOOK, &vPlayerLOOK);
-	
+
 		m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
-	
+
 		_vec3	vTargetPos = vPlayerPos + (vPlayerUp * 10) + (vPlayerLOOK * -12);
-	
-		_vec3 vDeltaPos = vTargetPos - vMyPos;
+
+		_vec3	vPlayerForce = pTrans->Get_Owner()->Get_Force();
+		_vec3	vDeltaPos = vTargetPos - vMyPos;
+
 		float	fDeltaPos = D3DXVec3Length(&vDeltaPos);
-		//cout << fDeltaPos << endl;
-		if (fDeltaPos > 10.f)
-		{
-			float	fChaseSpeed = 5 + fDeltaPos * 2;
+		float	fChaseSpeed = fDeltaPos * 4;
+
+		if (D3DXVec3Dot(&vPlayerLOOK, &vPlayerForce) >= 0.2)
 			m_pTransformCom->Chase_Target(&vTargetPos, fChaseSpeed, fFixedDeltaTime);
-			m_pTransformCom->Get_Info(INFO_POS, &m_vEye);
-			
-		}
+		else if (D3DXVec3Dot(&vPlayerLOOK, &vPlayerForce) < 0)
+			m_pTransformCom->Chase_Target(&vTargetPos, fChaseSpeed * 2, fFixedDeltaTime);
+
+		m_pTransformCom->Get_Info(INFO_POS, &m_vEye);
 		m_vEye.y = vTargetPos.y;
 		m_vAt = vPlayerPos;
 		m_vUp = vPlayerUp;
 	}
 }
+
+
 _int CFollowSmoothCam::Update_GameObject(const _float& fDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
