@@ -37,100 +37,107 @@ HRESULT CMissileTex::Ready_Buffer()
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 
 
-	pVertex[0].vPosition = { -0.7f,  0.6f, 1.0f };
+	// 몸통
+	pVertex[0].vPosition = { -0.1f,  0.1f,  0.2f };
 	pVertex[0].vTexUV = pVertex[0].vPosition;
 
-	pVertex[1].vPosition = { 0.7f,  0.6f, 1.0f };
+	pVertex[1].vPosition = { 0.1f,  0.1f,  0.2f };
 	pVertex[1].vTexUV = pVertex[1].vPosition;
 
-	pVertex[2].vPosition = { 0.7f, -0.6f, 1.0f };
+	pVertex[2].vPosition = { 0.1f, -0.1f,  0.2f };
 	pVertex[2].vTexUV = pVertex[2].vPosition;
 
-	pVertex[3].vPosition = { -0.7f, -0.6f, 1.0f };
+	pVertex[3].vPosition = { -0.1f, -0.1f,  0.2f };
 	pVertex[3].vTexUV = pVertex[3].vPosition;
 
-	pVertex[4].vPosition = { -0.7f,  0.6f, -0.8f };
+	pVertex[4].vPosition = { -0.1f,  0.1f, -0.15f };
 	pVertex[4].vTexUV = pVertex[4].vPosition;
 
-	pVertex[5].vPosition = { 0.7f,  0.6f, -0.8f };
+	pVertex[5].vPosition = { 0.1f,  0.1f, -0.15f };
 	pVertex[5].vTexUV = pVertex[5].vPosition;
 
-	pVertex[6].vPosition = { 0.7f, -0.6f, -0.8f };
+	pVertex[6].vPosition = { 0.1f, -0.1f, -0.15f };
 	pVertex[6].vTexUV = pVertex[6].vPosition;
 
-	pVertex[7].vPosition = { -0.7f, -0.6f, -0.8f };
+	pVertex[7].vPosition = { -0.1f, -0.1f, -0.15f };
 	pVertex[7].vTexUV = pVertex[7].vPosition;
 
-	pVertex[8].vPosition = { -1.3f,  0.2f, 0.2f };
+
+	// 왼쪽 날개
+	pVertex[8].vPosition = { -0.2f,  0.05f,  0.05f };
 	pVertex[8].vTexUV = pVertex[8].vPosition;
 
-	pVertex[9].vPosition = { -0.7f,  0.2f, 0.2f };
+	pVertex[9].vPosition = { -0.1f,  0.05f,  0.05f };
 	pVertex[9].vTexUV = pVertex[9].vPosition;
 
-	pVertex[10].vPosition = { -0.7f, -0.2f, 0.2f };
+	pVertex[10].vPosition = { -0.1f, -0.05f,  0.05f };
 	pVertex[10].vTexUV = pVertex[10].vPosition;
 
-	pVertex[11].vPosition = { -1.3f, -0.2f, 0.2f };
+	pVertex[11].vPosition = { -0.2f, -0.05f,  0.05f };
 	pVertex[11].vTexUV = pVertex[11].vPosition;
 
-	pVertex[12].vPosition = { -1.3f,  0.2f, -0.5f };
+	pVertex[12].vPosition = { -0.2f,  0.05f, -0.1f };
 	pVertex[12].vTexUV = pVertex[12].vPosition;
 
-	pVertex[13].vPosition = { -0.7f,  0.2f, -0.5f };
+	pVertex[13].vPosition = { -0.1f,  0.05f, -0.1f };
 	pVertex[13].vTexUV = pVertex[13].vPosition;
 
-	pVertex[14].vPosition = { -0.7f, -0.2f, -0.5f };
+	pVertex[14].vPosition = { -0.1f, -0.05f, -0.1f };
 	pVertex[14].vTexUV = pVertex[14].vPosition;
 
-	pVertex[15].vPosition = { -1.3f, -0.2f, -0.5f };
+	pVertex[15].vPosition = { -0.2f, -0.05f, -0.1f };
 	pVertex[15].vTexUV = pVertex[15].vPosition;
 
-	pVertex[16].vPosition = { 0.7f,  0.2f, 0.2f };
+
+	// 오른쪽 날개
+	pVertex[16].vPosition = { 0.1f,  0.05f,  0.05f };
 	pVertex[16].vTexUV = pVertex[16].vPosition;
 
-	pVertex[17].vPosition = { 1.3f,  0.2f, 0.2f };
+	pVertex[17].vPosition = { 0.2f,  0.05f,  0.05f };
 	pVertex[17].vTexUV = pVertex[17].vPosition;
 
-	pVertex[18].vPosition = { 1.3f, -0.2f, 0.2f };
+	pVertex[18].vPosition = { 0.2f, -0.05f,  0.05f };
 	pVertex[18].vTexUV = pVertex[18].vPosition;
 
-	pVertex[19].vPosition = { 0.7f, -0.2f, 0.2f };
+	pVertex[19].vPosition = { 0.1f, -0.05f,  0.05f };
 	pVertex[19].vTexUV = pVertex[19].vPosition;
 
-	pVertex[20].vPosition = { 0.7f,  0.2f, -0.5f };
+	pVertex[20].vPosition = { 0.1f,  0.05f, -0.1f };
 	pVertex[20].vTexUV = pVertex[20].vPosition;
 
-	pVertex[21].vPosition = { 1.3f,  0.2f, -0.5f };
+	pVertex[21].vPosition = { 0.2f,  0.05f, -0.1f };
 	pVertex[21].vTexUV = pVertex[21].vPosition;
 
-	pVertex[22].vPosition = { 1.3f, -0.2f, -0.5f };
+	pVertex[22].vPosition = { 0.2f, -0.05f, -0.1f };
 	pVertex[22].vTexUV = pVertex[22].vPosition;
 
-	pVertex[23].vPosition = { 0.7f, -0.2f, -0.5f };
+	pVertex[23].vPosition = { 0.1f, -0.05f, -0.1f };
 	pVertex[23].vTexUV = pVertex[23].vPosition;
 
-	pVertex[24].vPosition = { -0.25f,  0.25f, -0.8f };
+
+	// 뒤쪽 작은 사각형
+	pVertex[24].vPosition = { -0.05f,  0.05f, -0.15f };
 	pVertex[24].vTexUV = pVertex[24].vPosition;
 
-	pVertex[25].vPosition = { 0.25f,  0.25f, -0.8f };
+	pVertex[25].vPosition = { 0.05f,  0.05f, -0.15f };
 	pVertex[25].vTexUV = pVertex[25].vPosition;
 
-	pVertex[26].vPosition = { 0.25f, -0.25f, -0.8f };
+	pVertex[26].vPosition = { 0.05f, -0.05f, -0.15f };
 	pVertex[26].vTexUV = pVertex[26].vPosition;
 
-	pVertex[27].vPosition = { -0.25f, -0.25f, -0.8f };
+	pVertex[27].vPosition = { -0.05f, -0.05f, -0.15f };
 	pVertex[27].vTexUV = pVertex[27].vPosition;
 
-	pVertex[28].vPosition = { -0.25f,  0.25f, -1.2f };
+	pVertex[28].vPosition = { -0.05f,  0.05f, -0.25f };
 	pVertex[28].vTexUV = pVertex[28].vPosition;
 
-	pVertex[29].vPosition = { 0.25f,  0.25f, -1.2f };
+	pVertex[29].vPosition = { 0.05f,  0.05f, -0.25f };
 	pVertex[29].vTexUV = pVertex[29].vPosition;
 
-	pVertex[30].vPosition = { 0.25f, -0.25f, -1.2f };
+	pVertex[30].vPosition = { 0.05f, -0.05f, -0.25f };
 	pVertex[30].vTexUV = pVertex[30].vPosition;
 
-	pVertex[31].vPosition = { -0.25f, -0.25f, -1.2f };
+	pVertex[31].vPosition = { -0.05f, -0.05f, -0.25f };
 	pVertex[31].vTexUV = pVertex[31].vPosition;
 
 	m_pVB->Unlock();
@@ -140,6 +147,8 @@ HRESULT CMissileTex::Ready_Buffer()
 
 	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
 
+
+	// 몸통
 	pIndex[0]._0 = 1;
 	pIndex[0]._1 = 5;
 	pIndex[0]._2 = 6;
@@ -188,6 +197,8 @@ HRESULT CMissileTex::Ready_Buffer()
 	pIndex[11]._1 = 2;
 	pIndex[11]._2 = 3;
 
+
+	// 왼쪽 날개
 	pIndex[12]._0 = 9;
 	pIndex[12]._1 = 13;
 	pIndex[12]._2 = 14;
@@ -236,6 +247,8 @@ HRESULT CMissileTex::Ready_Buffer()
 	pIndex[23]._1 = 10;
 	pIndex[23]._2 = 11;
 
+
+	// 오른쪽 날개
 	pIndex[24]._0 = 17;
 	pIndex[24]._1 = 21;
 	pIndex[24]._2 = 22;
@@ -284,6 +297,8 @@ HRESULT CMissileTex::Ready_Buffer()
 	pIndex[35]._1 = 18;
 	pIndex[35]._2 = 19;
 
+
+	// 뒤쪽 작은 사각형
 	pIndex[36]._0 = 25;
 	pIndex[36]._1 = 29;
 	pIndex[36]._2 = 30;
@@ -336,6 +351,8 @@ HRESULT CMissileTex::Ready_Buffer()
 
 	return S_OK;
 }
+
+
 
 
 void CMissileTex::Render_Buffer()
