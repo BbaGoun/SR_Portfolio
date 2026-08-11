@@ -23,7 +23,7 @@ HRESULT CMissile::Ready_GameObject()
 
 	m_pTransformCom->Set_Scale({ 10.f, 10.f, 10.f });
 
-	m_fSpeed = 50.f;
+	m_fSpeed = 100.f;
 
 	Engine::CComponent* pComponent = nullptr;
 
