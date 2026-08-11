@@ -132,6 +132,7 @@ void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 
 
 	_vec3 vPos;
+	_vec3 MTV = { 0,0,0 };
 	pSrcTransform->Get_Info(INFO_POS, &vPos);
 	if (fY <= fX && fY <= fZ)
 	{
@@ -160,7 +161,6 @@ void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 		vDstScale = ToVec3(dynamic_cast<CCube_Collider*>(pDst)->Get_Info().Extents);
 		vSrcScale = ToVec3(dynamic_cast<CCube_Collider*>(pSrc)->Get_Info().Extents);
 		
-		_vec3 MTV = { 0,0,0 };
 		float fMin = 123456789;
 		for (auto Axis : vAxis)
 		{
@@ -225,9 +225,9 @@ void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 	//pSrcObj->Set_Force(_vec3({ 0,0,0 }));
 
 	// 2. »ìÂ¦ µÚ·Î Æ¨±â±â(?)
-	//_vec3 vNewForce = pSrcObj->Get_Force();
+	_vec3 vNewForce = pSrcObj->Get_Force();
 	//D3DXVec3Normalize(&vNewForce, &vNewForce);
-	//pSrcObj->Set_Force(vNewForce * -1);
+	pSrcObj->Add_Force(MTV * D3DXVec3Length(&vNewForce) * 1.5);
 }
 
 //bool CCollisionMgr::CubeVsCube(CCollider* pDstCollider, CCollider* pSrcCollider)
