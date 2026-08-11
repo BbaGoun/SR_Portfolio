@@ -111,6 +111,21 @@ namespace Engine
 	inline DirectX::XMVECTOR ToXMVec(_vec3 vec){
 		return DirectX::XMLoadFloat3(reinterpret_cast<const DirectX::XMFLOAT3*>(&vec));
 	}
+
+	inline DirectX::XMFLOAT3 ToXMFLOAT3(const _vec3& v)
+	{
+		return DirectX::XMFLOAT3(v.x, v.y, v.z);
+	}
+
+	inline _vec3 ToVec3(const DirectX::XMFLOAT3& _XMFLOAT3)
+	{
+		return _vec3(_XMFLOAT3.x, _XMFLOAT3.y, _XMFLOAT3.z);
+	}
+
+	inline DirectX::XMFLOAT4 ToXMFLOAT4(const D3DXQUATERNION& q)
+	{
+		return DirectX::XMFLOAT4(q.x, q.y, q.z, q.w);
+	}
 }
 
 #endif // Engine_Function_h__

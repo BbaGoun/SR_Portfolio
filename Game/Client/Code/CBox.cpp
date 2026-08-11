@@ -31,15 +31,15 @@ HRESULT CBox::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-	pComponent->Set_Owner(this);
-
-	m_pColliderCom->SetCenter({ 0,0,100.f });
-	m_pColliderCom->SetSize({ 2.5f,1.f,5.f });
-	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider", pComponent });
+	//pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
+	//if (nullptr == pComponent)
+	//	return E_FAIL;
+	//pComponent->Set_Owner(this);
+	//
+	//m_pColliderCom->SetCenter({ 0,0,100.f });
+	//m_pColliderCom->SetSize({ 2.5f,1.f,5.f });
+	//m_pColliderCom->SetColliderType(CUBE_COLLIDER);
+	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider", pComponent });
 
 	return S_OK;
 }

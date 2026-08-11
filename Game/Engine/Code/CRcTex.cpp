@@ -73,7 +73,6 @@ CRcTex* CRcTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		MSG_BOX("CRcTex Create Fail");
 		return nullptr;
 	}
-
 	return pCRcTex;
 }
 

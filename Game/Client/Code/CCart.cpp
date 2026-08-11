@@ -35,6 +35,31 @@ HRESULT CCart::Ready_GameObject()
 
 	m_bBoost = false;
 
+	Engine::CComponent* pComponent = nullptr;
+
+	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
+	if (nullptr == pComponent)
+		return E_FAIL;
+
+	m_pColliderCom->Set_Owner(this);
+	m_pColliderCom->SetIsTrigger(false);
+	m_pColliderCom->Set_Extents({ 2.5f,1.5f,5.f });
+	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
+
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider", pComponent });
+
+
+	//pComponent = m_pSphereColliderCom = dynamic_cast<CSphere_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SphereCollider"));
+	//if (nullptr == pComponent)
+	//	return E_FAIL;
+	//pComponent->Set_Owner(this);
+	//
+	//m_pSphereColliderCom->SetCenter({ 0.f,-0.5f,3.f });
+	//m_pSphereColliderCom->SetRadius(6.f);
+	//m_pSphereColliderCom->SetColliderType(SPHERE_COLLIDER);
+	//
+	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_SphereCollider", pComponent });
+
 	return S_OK;
 }
 
@@ -49,12 +74,17 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_vForce *= 0.98;
 	if (D3DXVec3Length(&m_vForce) < 1.f)
 		m_vForce *= 0;
+
+	_vec3 vLook;
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	m_pColliderCom->Set_Offset(vLook*3);
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
 {
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	KeyInput(fDeltaTime);
-	Boost();
+	UpdateBoost();
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -62,6 +92,13 @@ void CCart::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 	UpdateDrift();
+}
+
+void CCart::Render_GameObject()
+{
+#ifdef _DEBUG
+	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
+#endif
 }
 
 
@@ -281,7 +318,7 @@ void CCart::UpdateDrift()
 	}
 }
 
-void CCart::Boost()
+void CCart::UpdateBoost()
 {
 	if (m_bBoost == false)
 		return;

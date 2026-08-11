@@ -103,6 +103,9 @@
     <Filter Include="01. Scene\Item">
       <UniqueIdentifier>{8cfc90e9-be4b-467b-a9ea-b5f4e04dec79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\CollisionBox">
+      <UniqueIdentifier>{2d007e2e-4859-437b-8792-e22af7780408}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -207,6 +210,9 @@
     <ClInclude Include="..\Header\CiTem.h">
       <Filter>01. Scene\Item</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCollisionBox.h">
+      <Filter>02. GameObject\CollisionBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -298,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollisionBox.cpp">
+      <Filter>02. GameObject\CollisionBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

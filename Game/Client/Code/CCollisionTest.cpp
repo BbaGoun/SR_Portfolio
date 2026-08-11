@@ -16,6 +16,7 @@
 #include "CCartBody1.h"
 #include "CCartBody2.h"
 #include "CFollowSmoothCam.h"
+#include "CCollisionBox.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -44,13 +45,14 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 	CScene::FixedUpdate_Scene(fFixedDeltaTime);
 
 	// 충돌 처리
-	//CCollider* pCartCollider = static_cast<CCollider*>
-	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CartBody", L"Com_Collider"));
+	CCollider* pCartCollider = static_cast<CCollider*>
+		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Cart", L"Com_Collider"));
 	//CCollider* pCartSphereCollider = static_cast<CCollider*>
-	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CartBody", L"Com_SphereCollider"));
-	//CCollider* pBoxCollider = static_cast<CCollider*>
-	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Box", L"Com_Collider"));
-	//CCollisionMgr::GetInstance()->Collision(pCartSphereCollider, pBoxCollider);
+	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Cart", L"Com_SphereCollider"));
+	
+	CCollider* pBoxCollider = static_cast<CCollider*>
+		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CollisionBox", L"Com_Collider"));
+	CCollisionMgr::GetInstance()->Collision(pBoxCollider, pCartCollider);
 
 }
 
@@ -232,6 +234,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 		if (pBox == nullptr)
 			return E_FAIL;
+		pBox->Get_Transform()->Set_Scale({ 2,2,2 });
 		if (i < 20)
 		{
 			pBox->Get_Transform()->Set_Pos({ 100 * cosf(2 * D3DX_PI / 40 * i), 0.f, 100 + 100 * sinf(2 * D3DX_PI / 40 * i) });
@@ -250,6 +253,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 		if (pBox == nullptr)
 			return E_FAIL;
+		pBox->Get_Transform()->Set_Scale({ 2,2,2 });
 		if (i < 20)
 		{
 			pBox->Get_Transform()->Set_Pos({ -100.f, 0.f,100 - 10.f * i });
@@ -262,6 +266,15 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		if (FAILED(pGameObjectLayer->Add_GameObject(szBuff, pBox)))
 			return E_FAIL;
 	}
+
+	CGameObject* pBox = CCollisionBox::Create(m_pGraphicDev);
+
+	if (pBox == nullptr)
+		return E_FAIL;
+	pBox->Get_Transform()->Set_Pos({ -200.f, 1.f,200.f  });
+	
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox", pBox)))
+		return E_FAIL;
 
 	return S_OK;
 }

@@ -1,6 +1,12 @@
 #pragma once
 #include "CGameObject.h"
 
+namespace Engine
+{
+	class CCube_Collider;
+	class CSphere_Collider;
+}
+
 class CCart :  public CGameObject
 {
 private:
@@ -13,13 +19,13 @@ public:
 	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) override;
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
-	virtual			void		Render_GameObject() override {};
+	virtual			void		Render_GameObject() override;
 
 public:
 	static CCart*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void			KeyInput(const _float& fDeltaTime);
 	void			UpdateDrift();
-	void			Boost();
+	void			UpdateBoost();
 
 private:
 	_float		m_fMaxSpeed;
@@ -34,6 +40,7 @@ private:
 	float		m_fBoostCal;
 
 
+	Engine::CCube_Collider* m_pColliderCom;
 
 protected:
 	virtual		void		Free() override;

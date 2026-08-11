@@ -4,7 +4,7 @@ CCollider::CCollider()
 }
 
 CCollider::CCollider(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CComponent(pGraphicDev)
+	:CComponent(pGraphicDev), m_bIsTrigger(false), m_eColliderType(CUBE_COLLIDER)
 {
 }
 
