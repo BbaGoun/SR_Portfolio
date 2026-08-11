@@ -216,7 +216,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
 
-
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
 

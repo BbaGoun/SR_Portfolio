@@ -20,6 +20,9 @@ CMissileTex::~CMissileTex()
 
 HRESULT CMissileTex::Ready_Buffer()
 {
+	// VTXCUBE는 스카이박스를 만들기 위한 용도로 3차원 UV값을 갖는데, 일반적인 물체는 사용하지 않는 포멧
+	// 직접 색을 지정하려면 VTXCOL를 쓰고, 텍스처를 입히고 싶으면 VTXTEX를 사용
+
 	m_dwVtxSize = sizeof(VTXCUBE);
 	m_dwVtxCnt = 32;
 	m_dwTriCnt = 48;

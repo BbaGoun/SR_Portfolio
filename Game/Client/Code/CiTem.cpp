@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "CItem.h"
 #include "CMissile.h"
+#include "CTopViewCam.h"
+#include "CCameraMgr.h"
+#include "CBox.h"
 
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -61,14 +64,44 @@ HRESULT CItem::Ready_GameLogic_Layer()
 
 	m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
 
+	//
 	CGameObject* pMissile = CMissile::Create(m_pGraphicDev);
 
 	if (pMissile == nullptr)
 		return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Missile", pMissile)))
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Missile", pMissile)))
+	//	return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pMissile)))	// 카메라가 플레이어를 쫒아가게 되어 있으니 L"Obj_Player" 로 설정
 		return E_FAIL;
 
+
+	//
+	CGameObject* pBox = CBox::Create(m_pGraphicDev);
+
+	if (pBox == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Box", pBox)))	
+		return E_FAIL;
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// (테스트용으로 아이템에 카메라 만듬)
+	CGameObject* pTopViewCam = CTopViewCam::Create(m_pGraphicDev);
+
+	if (pTopViewCam == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_TopViewCam", pTopViewCam)))
+		return E_FAIL;
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_TOP_VIEW,
+		static_cast<CCamera*>(pTopViewCam))))
+		return E_FAIL;
+
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_TOP_VIEW)))
+		return E_FAIL;
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	return S_OK;
 }
 

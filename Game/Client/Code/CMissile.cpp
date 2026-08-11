@@ -21,7 +21,10 @@ HRESULT CMissile::Ready_GameObject()
 	// m_pTransformCom->m_vScale = { 0.2f, 0.2f, 0.3f };
 	// m_pTransformCom->m_vInfo[INFO_POS] = { 3.f, 1.3f, 0.f };
 
-	m_pTransformCom->Set_Pos({ 3.f, 1.3f, 0.f });
+	m_pTransformCom->Set_Scale({ 10.f, 10.f, 10.f });
+
+	m_fSpeed = 50.f;
+
 	Engine::CComponent* pComponent = nullptr;
 
 	// 미사일
@@ -38,9 +41,19 @@ HRESULT CMissile::Ready_GameObject()
 
 void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	Engine::CTransform* pTransform = nullptr;
 
+	pTransform = dynamic_cast<Engine::CTransform*>(CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_Box", L"Com_Transform"));
+	// 여기선 ID_DYNAMIC이 아닌 ID_STATIC 로 사용
+	if (nullptr == pTransform)
+		return;
 
+	_vec3 pBoxPos;
+	pTransform->Get_Info(INFO_POS, &pBoxPos);
 
+	// _vec3 pMissilePos;
+	// m_pTransformCom->Get_Info(INFO_POS, &pMissilePos);
+	m_pTransformCom->FollowObj(&pBoxPos, m_fSpeed, fFixedDeltaTime);
 }
 
 _int CMissile::Update_GameObject(const _float& fTimeDelta)

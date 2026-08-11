@@ -21,8 +21,8 @@ public:
 	virtual			void		Render_GameObject()									  override;
 
 private:
-	Engine::CMissileTex* m_pBufferCom;
-
+	Engine::CMissileTex*	m_pBufferCom;
+			_float			m_fSpeed;
 public:
 	static CMissile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

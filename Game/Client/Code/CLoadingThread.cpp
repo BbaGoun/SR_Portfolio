@@ -37,9 +37,6 @@ _uint CLoadingThread::Loading_Stage()
     lstrcpy(m_szLoading, L"Buffer Loading.....................................");
     LeaveCriticalSection(Get_Crt());
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Cody", Engine::CCody::Create(m_pGraphicDev))))
-        return E_FAIL;
-
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_InnerBox", Engine::CInnerBox::Create(m_pGraphicDev))))
         return E_FAIL;
 
