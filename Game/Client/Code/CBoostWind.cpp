@@ -1,28 +1,28 @@
 #include "pch.h"
-#include "CBoostEffect.h"
+#include "CBoostWind.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
 #include "CCart.h"
 #include "CCameraMgr.h"
-CBoostEffect::CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev)
+CBoostWind::CBoostWind(LPDIRECT3DDEVICE9 pGraphicDev, BOOSTER_TYPE eID)
+	:CGameObject(pGraphicDev), m_eBoosterID(eID)
 {
 }
 
-CBoostEffect::CBoostEffect(const CGameObject& rhs)
+CBoostWind::CBoostWind(const CGameObject& rhs)
 	:CGameObject(rhs)
 {
 }
 
-CBoostEffect::~CBoostEffect()
+CBoostWind::~CBoostWind()
 {
 }
 
-HRESULT CBoostEffect::Ready_GameObject()
+HRESULT CBoostWind::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Scale({ 5,5,0 });
+	m_pTransformCom->Set_Scale({ 8,8,0 });
 	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
@@ -31,20 +31,37 @@ HRESULT CBoostEffect::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterEffect"));
-	if (nullptr == pComponent)
-		return E_FAIL;
+	if (m_eBoosterID == WIND_L)
+	{
+		D3DXQUATERNION q;
+		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(-60), 0, 0.f);
+		m_pTransformCom->Set_Quaternion(&q);
+		m_pTransformCom->Set_Pos({ -4,0,6 });
+		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterWindL"));
+		if (nullptr == pComponent)
+			return E_FAIL;
+	}
+	else if (m_eBoosterID == WIND_R)
+	{
+		D3DXQUATERNION q;
+		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(60), 0, 0.f);
+		m_pTransformCom->Set_Quaternion(&q);
+		m_pTransformCom->Set_Pos({ 4,0,6 });
+		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterWindR"));
+		if (nullptr == pComponent)
+			return E_FAIL;
+	}
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 
 	return S_OK;
 }
 
-void CBoostEffect::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
+void CBoostWind::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 }
 
-_int CBoostEffect::Update_GameObject(const _float& fDeltaTime)
+_int CBoostWind::Update_GameObject(const _float& fDeltaTime)
 {
 	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
 	{
@@ -61,13 +78,13 @@ _int CBoostEffect::Update_GameObject(const _float& fDeltaTime)
 	}
 }
 
-void CBoostEffect::LateUpdate_GameObject(const _float& fDeltaTime)
+void CBoostWind::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
 		CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
-void CBoostEffect::Render_GameObject()
+void CBoostWind::Render_GameObject()
 {
 	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
 	{
@@ -104,7 +121,6 @@ void CBoostEffect::Render_GameObject()
 		//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-		//m_pTextureCom->Set_Texture(0);
 		m_pTextureCom->Set_Texture((_uint)m_fFrame);
 
 		m_pBufferCom->Render_Buffer();
@@ -112,20 +128,20 @@ void CBoostEffect::Render_GameObject()
 	}
 }
 
-CBoostEffect* CBoostEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CBoostWind* CBoostWind::Create(LPDIRECT3DDEVICE9 pGraphicDev, BOOSTER_TYPE eID)
 {
-	CBoostEffect* pObj = new CBoostEffect(pGraphicDev);
+	CBoostWind* pObj = new CBoostWind(pGraphicDev, eID);
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{
-		MSG_BOX("CBoostEffect Create Failed");
+		MSG_BOX("CBoostWind Create Failed");
 		Safe_Release(pObj);
 		return nullptr;
 	}
 	return pObj;
 }
 
-void CBoostEffect::Free()
+void CBoostWind::Free()
 {
 	CGameObject::Free();
 }

@@ -17,8 +17,9 @@
 #include "CCartBody2.h"
 #include "CFollowSmoothCam.h"
 #include "CCollisionBox.h"
-#include "CBoostEffect.h"
+#include "CBoostWind.h"
 #include "CUI_Exit.h"
+#include "CBoostJet.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -207,14 +208,31 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	
 	pCart->Set_Child(pGameObject);
 
-	// ## 부스터 이펙트
-	pGameObject = CBoostEffect::Create(m_pGraphicDev);
+	// ## 부스터 왼쪽 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostEffect", pGameObject)))
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindL", pGameObject)))
 		return E_FAIL;
-	pGameObject->Get_Transform()->Set_Pos({ 0,0,0 });
+	pCart->Set_Child(pGameObject);
+
+	// ## 부스터 오른쪽 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindR", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
+
+	// ## 부스터 제트 이펙트
+	pGameObject = CBoostJet::Create(m_pGraphicDev);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostJet", pGameObject)))
+		return E_FAIL;
 	pCart->Set_Child(pGameObject);
 
 	//// # 플레이어 따라다니는 3인칭 카메라
@@ -237,14 +255,15 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
-	// CUI_Exit
 
+	// CUI_Exit
 	pGameObject = CUI_Exit::Create(m_pGraphicDev);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"UI_Exit", pGameObject)))
 		return E_FAIL;
+
 	// # 트랙
 	for (int i = 0; i < 40; ++i)
 	{

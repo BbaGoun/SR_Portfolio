@@ -6,12 +6,12 @@ namespace Engine
 	class CTexture;
 	class CRcTex;
 }
-class CBoostEffect : public CGameObject
+class CBoostWind : public CGameObject
 {
 private:
-	explicit CBoostEffect(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CBoostEffect(const CGameObject& rhs);
-	virtual ~CBoostEffect() override;
+	explicit CBoostWind(LPDIRECT3DDEVICE9 pGraphicDev, BOOSTER_TYPE eID);
+	explicit CBoostWind(const CGameObject& rhs);
+	virtual ~CBoostWind() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -21,13 +21,15 @@ public:
 	virtual			void		Render_GameObject() override;
 
 public:
-	static CBoostEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CBoostWind* Create(LPDIRECT3DDEVICE9 pGraphicDev, BOOSTER_TYPE eID);
 
 private:
 	Engine::CRcTex*		m_pBufferCom;
 	Engine::CTexture*	m_pTextureCom;
 
 	float				m_fFrame = 0;
+
+	BOOSTER_TYPE		m_eBoosterID;
 
 protected:
 	virtual		void		Free() override;
