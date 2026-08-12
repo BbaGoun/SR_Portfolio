@@ -3,6 +3,7 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
+#include "CInnerBox.h"
 CCollisionBox::CCollisionBox(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -25,7 +26,7 @@ HRESULT CCollisionBox::Ready_GameObject()
 
 	m_pTransformCom->Set_Scale({ 10,10,10 });
 	
-	pComponent = m_pBufferCom = dynamic_cast<CQuadrangularPrism*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_QuadrangularPrism"));
+	pComponent = m_pBufferCom = dynamic_cast<CInnerBox*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_InnerBox"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 	pComponent->Set_Owner(this);
@@ -42,6 +43,12 @@ HRESULT CCollisionBox::Ready_GameObject()
 	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 	
 	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider", pComponent });
+
+
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_V_ItemBoxTexture"));
+	pComponent->Set_Owner(this);
+
+	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 
 
 	return S_OK;
@@ -64,10 +71,13 @@ void CCollisionBox::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CCollisionBox::Render_GameObject()
 {
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
+	m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
 	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 }
 
 CCollisionBox* CCollisionBox::Create(LPDIRECT3DDEVICE9 pGraphicDev)

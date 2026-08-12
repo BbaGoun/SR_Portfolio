@@ -24,8 +24,10 @@ public:
 	static CBoostEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pTextureCom;
+	Engine::CRcTex*		m_pBufferCom;
+	Engine::CTexture*	m_pTextureCom;
+
+	float				m_fFrame = 0;
 
 protected:
 	virtual		void		Free() override;

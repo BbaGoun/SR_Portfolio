@@ -18,6 +18,7 @@
 #include "CFollowSmoothCam.h"
 #include "CCollisionBox.h"
 #include "CBoostEffect.h"
+#include "CUI_Exit.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -213,7 +214,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostEffect", pGameObject)))
 		return E_FAIL;
-	pGameObject->Get_Transform()->Set_Pos({1,-1,-2});
+	pGameObject->Get_Transform()->Set_Pos({ 0,0,0 });
 	pCart->Set_Child(pGameObject);
 
 	//// # 플레이어 따라다니는 3인칭 카메라
@@ -236,8 +237,14 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
+	// CUI_Exit
 
+	pGameObject = CUI_Exit::Create(m_pGraphicDev);
 
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"UI_Exit", pGameObject)))
+		return E_FAIL;
 	// # 트랙
 	for (int i = 0; i < 40; ++i)
 	{

@@ -1,5 +1,5 @@
 #include "CRenderer.h"
-
+#include "CCameraMgr.h"
 IMPLEMENT_SINGLETON(CRenderer)
 
 CRenderer::CRenderer()
@@ -83,8 +83,33 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 
 void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
+	D3DVIEWPORT9 oldViewPort;
+	pGraphicDev->GetViewport(&oldViewPort);
+
+	if (CCameraMgr::GetInstance()->GetMainCamera())
+	{
+		D3DVIEWPORT9 newViewPort;
+		
+		_matrix matView, matProj;
+		D3DXMatrixIdentity(&matView);
+		matView._11 = 80.f;
+		matView._22 = 60.f;
+		pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+
+		matProj = CCameraMgr::GetInstance()->GetCameraInfo().matProj;
+
+		D3DXMatrixOrthoLH(&matProj, (float)WINCX, (float)WINCY, 1.f, 1000.f);
+
+		//matProj._34 = 0;
+		//matProj._44 = 1;
+
+		pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+	}
+
 	for (auto& pObj : m_RenderGroup[RENDER_UI])
 		pObj->Render_GameObject();
+
+	pGraphicDev->SetViewport(&oldViewPort);
 }
 
 void CRenderer::PreCull(LPDIRECT3DDEVICE9& pGraphicDev)

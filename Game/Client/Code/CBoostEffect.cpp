@@ -22,7 +22,7 @@ CBoostEffect::~CBoostEffect()
 HRESULT CBoostEffect::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-
+	m_pTransformCom->Set_Scale({ 5,5,0 });
 	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
@@ -49,6 +49,10 @@ _int CBoostEffect::Update_GameObject(const _float& fDeltaTime)
 	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
 	{
 		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
+		m_fFrame += 45.f * fDeltaTime;
+		if (m_fFrame > 2.f)
+			m_fFrame = 0;
 
 		_vec3 vPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -97,9 +101,11 @@ void CBoostEffect::Render_GameObject()
 
 		// 빌보드 적용(크기가 달라질 경우 계산식 변경)
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+		//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-		m_pTextureCom->Set_Texture(0);
+		//m_pTextureCom->Set_Texture(0);
+		m_pTextureCom->Set_Texture((_uint)m_fFrame);
 
 		m_pBufferCom->Render_Buffer();
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
