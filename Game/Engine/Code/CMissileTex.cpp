@@ -143,6 +143,15 @@ HRESULT CMissileTex::Ready_Buffer()
 	pVertex[31].vPosition = { -0.05f, -0.05f, -0.25f };
 	pVertex[31].vTexUV = pVertex[31].vPosition;
 
+
+	_float fScale = 10.f;
+
+	for (_uint i = 0; i < m_dwVtxCnt; ++i)
+	{
+		pVertex[i].vPosition *= fScale;
+		pVertex[i].vTexUV = pVertex[i].vPosition;
+	}
+
 	m_pVB->Unlock();
 
 

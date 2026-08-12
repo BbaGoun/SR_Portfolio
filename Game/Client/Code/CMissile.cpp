@@ -20,10 +20,9 @@ HRESULT CMissile::Ready_GameObject()
 
 	// m_pTransformCom->m_vScale = { 0.2f, 0.2f, 0.3f };
 	// m_pTransformCom->m_vInfo[INFO_POS] = { 3.f, 1.3f, 0.f };
+	//m_pTransformCom->Set_Scale({ 1.f, 1.f, 1.f });
 
-	m_pTransformCom->Set_Scale({ 10.f, 10.f, 10.f });
-
-	m_fSpeed = 100.f;
+	m_fSpeed = 10.f;
 
 	Engine::CComponent* pComponent = nullptr;
 

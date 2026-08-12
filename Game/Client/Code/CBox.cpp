@@ -21,6 +21,8 @@ HRESULT CBox::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
+	m_fSpeed = 0.f;
+	m_fMaxSpeed = 3.f;
 	m_pTransformCom->Set_Pos({ 0,0,100.f });
 
 	Engine::CComponent* pComponent = nullptr;
@@ -46,11 +48,33 @@ HRESULT CBox::Ready_GameObject()
 
 void CBox::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	//m_pTransformCom->Rotate(QUATER_YAW, m_vRotation.y);
 
+////////////////////방향////////////////////////
+	D3DXQUATERNION q;
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+	m_pTransformCom->Set_Quaternion(&q);
+
+	//m_vRotation *= 0.98;
+	//_float fRotationLength = D3DXVec3Length(&m_vRotation);
+	//if (fRotationLength < 0.1f) m_vRotation *= 0;
+
+	////////////////////이동////////////////////////
+	m_fSpeed *= 0.98;
+	if (fabsf(m_fSpeed) < 0.1f)
+		m_fSpeed = 0;
+	_vec3 vLook;
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	if (m_fSpeed > 0.1f)
+		m_pTransformCom->Move_Pos(&vLook, m_fSpeed, fFixedDeltaTime);
+	else
+		m_pTransformCom->Move_Pos(&vLook, m_fSpeed, fFixedDeltaTime);
 }
 
 _int CBox::Update_GameObject(const _float& fDeltaTime)
 {
+	KeyInput(fDeltaTime);
+
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -64,6 +88,57 @@ void CBox::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pBufferCom->Render_Buffer();
+}
+
+void CBox::KeyInput(const _float& fDeltaTime)
+{
+	_vec3 vLook;
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	D3DXVec3Normalize(&vLook, &vLook);
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
+		m_fSpeed += 1;
+	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
+		m_fSpeed -= 1;
+
+	if (fabsf(m_fSpeed) > 0.1f)
+	{
+		if (m_fSpeed > 0)
+		{
+			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+					m_vRotation.y += D3DXToRadian(-1.5);
+				else
+					m_vRotation.y += D3DXToRadian(-0.5);
+
+			}
+			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+					m_vRotation.y += D3DXToRadian(1.5);
+				else
+					m_vRotation.y += D3DXToRadian(0.5);
+			}
+		}
+		else
+		{
+			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+					m_vRotation.y += D3DXToRadian(1.5);
+				else
+					m_vRotation.y += D3DXToRadian(0.5);
+			}
+			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+			{
+				if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+					m_vRotation.y += D3DXToRadian(-1.5);
+				else
+					m_vRotation.y += D3DXToRadian(-0.5);
+			}
+		}
+	}
 }
 
 CBox* CBox::Create(LPDIRECT3DDEVICE9 pGraphicDev)

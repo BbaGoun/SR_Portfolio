@@ -19,13 +19,14 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override ;
 
+	void		KeyInput(const _float& fDeltaTime);
 public:
 	static CBox* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	Engine::CCartBodyCol*		m_pBufferCom;
 	Engine::CCube_Collider*		m_pColliderCom;
-
+			_float				m_fMaxSpeed;
 
 protected:
 	virtual		void		Free() override;
