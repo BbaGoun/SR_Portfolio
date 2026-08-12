@@ -62,8 +62,9 @@ public:
 		Set_Dirty();
 	}
 
-	_matrix* Get_World();
-	void	 Get_Info(INFO eType, _vec3* pInfo)
+	_matrix*	Get_World();
+
+	void		Get_Info(INFO eType, _vec3* pInfo)
 	{
 		_matrix* pMatWorld = Get_World();
 		_vec3 vUnit;

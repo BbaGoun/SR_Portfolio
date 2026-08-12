@@ -26,6 +26,7 @@ public:
 	void			KeyInput(const _float& fDeltaTime);
 	void			UpdateDrift();
 	void			UpdateBoost();
+	bool			GetBoost() { return m_bBoost; }
 
 private:
 	_float		m_fMaxSpeed;

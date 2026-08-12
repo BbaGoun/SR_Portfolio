@@ -106,6 +106,9 @@
     <Filter Include="02. GameObject\CollisionBox">
       <UniqueIdentifier>{2d007e2e-4859-437b-8792-e22af7780408}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Cart\BoostEffect">
+      <UniqueIdentifier>{c7a8c4f7-5a87-4e8b-a638-0d2f080dbd57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -213,6 +216,9 @@
     <ClInclude Include="..\Header\CCollisionBox.h">
       <Filter>02. GameObject\CollisionBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CBoostEffect.h">
+      <Filter>02. GameObject\Cart\BoostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -307,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCollisionBox.cpp">
       <Filter>02. GameObject\CollisionBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoostEffect.cpp">
+      <Filter>02. GameObject\Cart\BoostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

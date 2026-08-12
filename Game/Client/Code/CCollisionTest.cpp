@@ -17,6 +17,7 @@
 #include "CCartBody2.h"
 #include "CFollowSmoothCam.h"
 #include "CCollisionBox.h"
+#include "CBoostEffect.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -203,6 +204,16 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BR", pGameObject)))
 		return E_FAIL;
 	
+	pCart->Set_Child(pGameObject);
+
+	// ## 부스터 이펙트
+	pGameObject = CBoostEffect::Create(m_pGraphicDev);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostEffect", pGameObject)))
+		return E_FAIL;
+	pGameObject->Get_Transform()->Set_Pos({1,-1,-2});
 	pCart->Set_Child(pGameObject);
 
 	//// # 플레이어 따라다니는 3인칭 카메라

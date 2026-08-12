@@ -55,6 +55,9 @@ public:
 
 	_float			Get_Speed() { return m_fSpeed; }
 
+	_float			Get_ViewZ() { return m_fViewZ; }
+	void			Compute_ViewZ(const _vec3* pPos);
+
 protected:
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
 	LPDIRECT3DDEVICE9						m_pGraphicDev;
@@ -69,6 +72,9 @@ protected:
 	_float									m_fSpeed;
 	_vec3									m_vForce;
 	_vec3									m_vRotation;
+
+
+	_float									m_fViewZ;
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);

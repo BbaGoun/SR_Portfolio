@@ -176,6 +176,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
+    <ClInclude Include="..\Header\CBoostEffect.h" />
     <ClInclude Include="..\Header\CBox.h" />
     <ClInclude Include="..\Header\CCart.h" />
     <ClInclude Include="..\Header\CCartBody.h" />
@@ -213,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CBackGround.cpp" />
+    <ClCompile Include="..\Code\CBoostEffect.cpp" />
     <ClCompile Include="..\Code\CBox.cpp" />
     <ClCompile Include="..\Code\CCart.cpp" />
     <ClCompile Include="..\Code\CCartBody.cpp" />
