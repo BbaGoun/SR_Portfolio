@@ -220,14 +220,15 @@ void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 	}
 	pSrcTransform->Set_Pos(vPos);
 
-
-	// 1. ¼Óµµ 0À¸·Î °íÁ¤
-	//pSrcObj->Set_Force(_vec3({ 0,0,0 }));
-
-	// 2. »ìÂ¦ µÚ·Î Æ¨±â±â(?)
+	// »ìÂ¦ µÚ·Î Æ¨±â±â
 	_vec3 vNewForce = pSrcObj->Get_Force();
-	//D3DXVec3Normalize(&vNewForce, &vNewForce);
-	pSrcObj->Add_Force(MTV * D3DXVec3Length(&vNewForce) * 1.5);
+	vNewForce = MTV * D3DXVec3Length(&vNewForce) * 1.5f;
+	float fForceLength = D3DXVec3Length(&vNewForce);
+	cout << "OriginalForce:\t" << fForceLength << endl;
+	if (fForceLength >= 30)
+		vNewForce = vNewForce * 30 / fForceLength;
+	cout << "AfterForce:\t" << D3DXVec3Length(&vNewForce) << endl;
+	pSrcObj->Add_Force(vNewForce);
 }
 
 //bool CCollisionMgr::CubeVsCube(CCollider* pDstCollider, CCollider* pSrcCollider)

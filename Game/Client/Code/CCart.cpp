@@ -303,7 +303,6 @@ void CCart::UpdateDrift()
 
 		_vec3 vCross;
 		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
-		cout << vCross.y << endl;
 
 		m_fLookForceAngle = acosf(D3DXVec3Dot(&vLook, &vTempForce));
 
@@ -351,7 +350,6 @@ void CCart::UpdateBoost()
 	m_fSpeed *= m_fBoostCal;
 	if (m_fSpeed < 1)
 	{
-		cout << "End Boost" << endl;
 		m_bBoost = false;
 		m_fSpeed = 1;
 	}

@@ -210,7 +210,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
 	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
 	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	vEye = vAt + (vUp * 10) + (vLook * -12);
+	vEye = vAt + (vUp * 10) + (vLook * -20);
 	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp);
 
 	if (pGameObject == nullptr)

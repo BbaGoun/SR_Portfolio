@@ -64,23 +64,23 @@ void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
 
-		_vec3	vTargetPos = vPlayerPos + (vPlayerUp * 10) + (vPlayerLOOK * -12);
+		_vec3	vTargetPos = vPlayerPos + (vPlayerUp * 10) + (vPlayerLOOK * -20);
 
 		_vec3	vPlayerForce = pTrans->Get_Owner()->Get_Force();
 		_vec3	vDeltaPos = vTargetPos - vMyPos;
 
 		float	fDeltaPos = D3DXVec3Length(&vDeltaPos);
-		float	fChaseSpeed = fDeltaPos * 4;
+		float	fChaseSpeed = fDeltaPos * 6;
 
 		if (D3DXVec3Dot(&vPlayerLOOK, &vPlayerForce) >= 0.2)
 			m_pTransformCom->Chase_Target(&vTargetPos, fChaseSpeed, fFixedDeltaTime);
 		else if (D3DXVec3Dot(&vPlayerLOOK, &vPlayerForce) < 0)
-			m_pTransformCom->Chase_Target(&vTargetPos, fChaseSpeed * 2, fFixedDeltaTime);
+			m_pTransformCom->Chase_Target(&vTargetPos, fDeltaPos * 8, fFixedDeltaTime);
 
 		m_pTransformCom->Get_Info(INFO_POS, &m_vEye);
-		m_vEye.y = vTargetPos.y;
-		m_vAt = vPlayerPos;
-		m_vUp = vPlayerUp;
+		m_vEye.y	= vTargetPos.y;
+		m_vAt		= vPlayerPos;
+		m_vUp		= vPlayerUp;
 	}
 }
 
