@@ -2,6 +2,7 @@
 #include "CBase.h"
 #include "CComponent.h"
 #include "CTransform.h"
+#include "Engine_Define.h"
 
 BEGIN(Engine)
 
@@ -15,13 +16,14 @@ protected:
 public:
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	CTransform* Get_Transform() { return m_pTransformCom; }
-	void	Set_Child(CGameObject* _pGO){
-		m_vecChildren.push_back(_pGO);
-		_pGO->m_pParent = this;
-		_pGO->Get_Transform()->Set_Dirty();
-	}
+	void	Set_Child(CGameObject* _pGO);
+	void	Insert_Child(CGameObject* _pGO, int _iIndex);
+	void	Insert_Before(CGameObject* _pGO);
+	void	Insert_After(CGameObject* _pGO);
 	const vector<CGameObject*>& Get_Children() { return m_vecChildren; }
 	CGameObject* Get_Parent() { return m_pParent; }
+	void	Delete_Child(CGameObject* _pObj);
+	void	To_Root();
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -29,7 +31,7 @@ public:
 	virtual			_int		Update_GameObject(const _float& fDeltaTime);
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime);
 	virtual			void		Render_GameObject();
-	
+
 	virtual			void		PreCull_GameObject() {};
 	virtual			void		PreRender_GameObject() {};
 	virtual			void		PostRender_GameObject() {};
@@ -37,14 +39,14 @@ public:
 	virtual			void		CollisionEnter() {};
 	virtual			void		CollisionExit() {};
 	virtual			void		CollisionStay() {};
-	
+
 	virtual			void		TriggerEnter() {};
 	virtual			void		TriggerExit() {};
 	virtual			void		TriggerStay() {};
 
 public:
 	void			Set_CollisionLayer(COLLISION_LAYER eID);
-	
+
 	_vec3			Get_Force() { return m_vForce; }
 	void			Set_Force(_vec3 _newForce) { m_vForce = _newForce; }
 	void			Add_Force(_vec3 _addedForce) { m_vForce += _addedForce; }
@@ -55,7 +57,18 @@ public:
 
 	_float			Get_Speed() { return m_fSpeed; }
 
+	void			SetGuid(uint64_t _guid) { m_uGuid = _guid; }
+	uint64_t		GetGuid() { return m_uGuid; }
+	void			SetName(const WCHAR* _name) { wcscpy_s(m_wName, 128, _name); }
+	const WCHAR*	GetName() { return m_wName; }
+	void			SetTag(const WCHAR* _tag) { wcscpy_s(m_wTag, 128, _tag); }
+	const WCHAR*	GetTag() { return m_wTag; }
+
 protected:
+	uint64_t								m_uGuid;
+	WCHAR									m_wName[128];
+	WCHAR									m_wTag[128];
+
 	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
 	LPDIRECT3DDEVICE9						m_pGraphicDev;
 	

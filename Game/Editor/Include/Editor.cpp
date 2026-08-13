@@ -8,16 +8,27 @@
 
 #include "pch.h"
 #include "CMainEditor.h"
+#include "CTimerMgr.h"
+#include "CFrameMgr.h"
 
 // Data
-LPDIRECT3D9              g_pD3D = nullptr;
-LPDIRECT3DDEVICE9        g_pd3dDevice = nullptr;
-bool                     g_DeviceLost = false;
-UINT                     g_ResizeWidth = 0, g_ResizeHeight = 0;
-D3DPRESENT_PARAMETERS    g_d3dpp = {};
-float                    main_scale = 1;
-HWND                     g_hwnd = nullptr;
+LPDIRECT3D9             g_pD3D = nullptr;
+LPDIRECT3DDEVICE9       g_pd3dDevice = nullptr;
+bool                    g_DeviceLost = false;
+UINT                    g_ResizeWidth = 0, g_ResizeHeight = 0;
+D3DPRESENT_PARAMETERS   g_d3dpp = {};
+float                   main_scale = 1;
+HWND                    g_hWnd = nullptr;
 
+// 선택된 오브젝트에 대한 설정
+bool                    g_bSelected = false;
+uint64_t                g_uSelected = 0;
+// Transform 조작 창의 설정
+ImGuizmo::OPERATION g_GizmoOp = ImGuizmo::TRANSLATE;
+ImGuizmo::MODE g_GizmoMode = ImGuizmo::WORLD;
+
+
+CMainEditor* pMainEditor;
 
 // Forward declarations of helper functions
 bool CreateDeviceD3D(HWND hWnd);
@@ -32,11 +43,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_ int       nCmdShow)
 {
     // Make process DPI aware and obtain main monitor scale
-    
+
     // Windows에 "이 앱은 DPI를 스스로 처리한다"고 알린다.
     // 이 호출이 없으면 OS가 창을 자동 확대해서 글자 및 UI가 흐릿해질 수 있다.
     ImGui_ImplWin32_EnableDpiAwareness();
-    
+
     // 주 모니터의 DPI 스케일을 구한다. 96 DPI = 1.0 | 144 DPI = 1.5 | 192 DPI = 2.0
     // MonitorFromPoint(POINT{ 0, 0 }, MONITOR_DEFAULTTOPRIMARY)
     // 는 좌표 (0, 0) 근처를 가리키는 방식으로, 주 모니터 핸들을 얻는다.
@@ -58,18 +69,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 
-    g_hwnd = ::CreateWindowW(
-        wc.lpszClassName, 
-        L"DirectX9 Editor", 
-        WS_OVERLAPPEDWINDOW, 
-        100, 50, 
-        (int)((rc.right-rc.left) * main_scale), 
-        (int)((rc.bottom-rc.top) * main_scale), 
-        nullptr, nullptr, 
+    g_hWnd = ::CreateWindowW(
+        wc.lpszClassName,
+        L"DirectX9 Editor",
+        WS_OVERLAPPEDWINDOW,
+        100, 50,
+        (int)((rc.right - rc.left) * main_scale),
+        (int)((rc.bottom - rc.top) * main_scale),
+        nullptr, nullptr,
         wc.hInstance, nullptr);
 
     // Initialize Direct3D
-    if (!CreateDeviceD3D(g_hwnd))
+    if (!CreateDeviceD3D(g_hWnd))
     {
         CleanupDeviceD3D();
         ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
@@ -77,10 +88,24 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     // Show the window
-    ::ShowWindow(g_hwnd, SW_SHOWDEFAULT);
-    ::UpdateWindow(g_hwnd);
+    ::ShowWindow(g_hWnd, SW_SHOWDEFAULT);
+    ::UpdateWindow(g_hWnd);
 
-    CMainEditor* pMainEditor = CMainEditor::Create();
+    pMainEditor = CMainEditor::Create();
+
+    if (nullptr == pMainEditor)
+        return FALSE;
+
+    // 타이머 설치
+    if (FAILED(CTimerMgr::GetInstance()->Ready_Timer(L"Timer_Global")))
+        return E_FAIL;
+
+    if (FAILED(CTimerMgr::GetInstance()->Ready_Timer(L"Timer_FPS60")))
+        return E_FAIL;
+
+    // 프레임 설치
+    if (FAILED(CFrameMgr::GetInstance()->Ready_Frame(L"Frame60", 60.f)))
+        return E_FAIL;
 
     // Main loop
     bool done = false;
@@ -122,7 +147,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             ResetDevice();
         }
 
-        pMainEditor->Update_MainEditor();
+        pMainEditor->GameLoop();
+
+    }
+
+    _ulong dwRefCnt(0);
+
+    if (dwRefCnt = Engine::Safe_Release(pMainEditor))
+    {
+        MSG_BOX("pMainEditor Release Failed");
+        return -1;
     }
 
     // Cleanup
@@ -131,7 +165,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ImGui::DestroyContext();
 
     CleanupDeviceD3D();
-    ::DestroyWindow(g_hwnd);
+    ::DestroyWindow(g_hWnd);
     ::UnregisterClassW(wc.lpszClassName, wc.hInstance);
 
     return 0;
@@ -166,6 +200,9 @@ void CleanupDeviceD3D()
 
 void ResetDevice()
 {
+    // D3DPOOL_DEFAULT로 선언된 리소스 해제
+    pMainEditor->InvalidateDeviceObjects();
+
     ImGui_ImplDX9_InvalidateDeviceObjects();
     HRESULT hr = g_pd3dDevice->Reset(&g_d3dpp);
     if (hr == D3DERR_INVALIDCALL)

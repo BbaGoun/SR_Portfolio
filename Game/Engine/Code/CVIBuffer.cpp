@@ -80,6 +80,13 @@ void CVIBuffer::Render_Buffer()
 	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
 }
 
+void CVIBuffer::SetBoundingBox()
+{
+	DirectX::XMVECTOR vMin = ToXMVec(m_minVtx);
+	DirectX::XMVECTOR vMax = ToXMVec(m_maxVtx);
+	DirectX::BoundingBox::CreateFromPoints(m_boundingBox, vMin, vMax);
+}
+
 void CVIBuffer::UpdateMinMaxVtx(_vec3 position)
 {
 	if (m_minVtx.x > position.x)

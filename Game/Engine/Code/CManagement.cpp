@@ -3,7 +3,7 @@
 
 IMPLEMENT_SINGLETON(CManagement)
 
-CManagement::CManagement() : m_pScene(nullptr)
+CManagement::CManagement() : m_pScene(nullptr), m_pNextScene(nullptr)
 {
 }
 
@@ -32,6 +32,51 @@ void CManagement::Add_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag,
         MSG_BOX("Add_GameObject Fail");
 }
 
+const map<const _tchar*, CGameObject*>& CManagement::Get_GameObjects(const _tchar* pLayerTag)
+{
+    return m_pScene->Get_GameObjects(pLayerTag);
+}
+
+const vector<CGameObject*>& CManagement::Get_Roots(const _tchar* pLayerTag)
+{
+    static const vector<CGameObject*> s_empty;
+    if (!m_pScene)
+        return s_empty;
+    return m_pScene->Get_Roots(pLayerTag);
+}
+
+void CManagement::Attach_Root(CGameObject* _pObj)
+{
+    if (m_pScene)
+        m_pScene->Attach_Root(_pObj);
+}
+
+void CManagement::Detach_Root(CGameObject* _pObj)
+{
+    if (m_pScene)
+        m_pScene->Detach_Root(_pObj);
+}
+
+void CManagement::Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc)
+{
+    if (m_pScene)
+        m_pScene->Insert_Root_Before(_pDst, _pSrc);
+}
+
+void CManagement::Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc)
+{
+    if (m_pScene)
+        m_pScene->Insert_Root_After(_pDst, _pSrc);
+}
+
+void CManagement::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj)
+{
+    if (FAILED(m_pScene->Delete_GameObject(pLayerTag, _pObj)))
+    {
+        MSG_BOX("Delete Failed");
+    }
+}
+
 HRESULT CManagement::Set_Scene(CScene* pScene)
 {
     if (nullptr == pScene)
@@ -40,8 +85,20 @@ HRESULT CManagement::Set_Scene(CScene* pScene)
     Safe_Release(m_pScene);
 
     m_pScene = pScene;
+    m_pNextScene = nullptr;
 
     return S_OK;
+}
+
+void CManagement::Request_Scene(CScene* pScene)
+{
+    m_pNextScene = pScene;
+}
+
+void CManagement::Change_NextScene()
+{
+    if (m_pNextScene && m_pNextScene != m_pScene)
+        Set_Scene(m_pNextScene);
 }
 
 void CManagement::FixedUpdate_Scene(const _float& fFixedDeltaTime)
@@ -76,6 +133,12 @@ void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
         return;
 
     m_pScene->Render_Scene();
+}
+
+void CManagement::InvalidateDeviceObjects()
+{
+    if (m_pScene)
+        m_pScene->InvalidateDeviceObjects();
 }
 
 void CManagement::Free()

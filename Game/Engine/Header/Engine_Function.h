@@ -111,6 +111,25 @@ namespace Engine
 	inline DirectX::XMVECTOR ToXMVec(_vec3 vec){
 		return DirectX::XMLoadFloat3(reinterpret_cast<const DirectX::XMFLOAT3*>(&vec));
 	}
+
+	inline std::string ToUtf8(const _tchar* wstr) {
+		if (!wstr) return "";
+		int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, NULL, 0, NULL, NULL);
+		std::string str(size_needed, 0);
+		WideCharToMultiByte(CP_UTF8, 0, wstr, -1, &str[0], size_needed, NULL, NULL);
+		str.pop_back(); // Remove trailing null terminator copy
+		return str;
+	}
+
+	inline std::wstring FromUtf8(const char* utf8)
+	{
+		if (!utf8) return L"";
+		int n = MultiByteToWideChar(CP_UTF8, 0, utf8, -1, nullptr, 0);
+		std::wstring w(n, 0);
+		MultiByteToWideChar(CP_UTF8, 0, utf8, -1, &w[0], n);
+		if (!w.empty() && w.back() == L'\0') w.pop_back();
+		return w;
+	}
 }
 
 #endif // Engine_Function_h__

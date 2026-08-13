@@ -61,6 +61,8 @@ HRESULT CCube::Ready_Buffer()
 		UpdateMinMaxVtx(vertices[i].vPosition);
 	}
 
+	SetBoundingBox();
+
 	m_pVB->Unlock();
 
 	INDEX32* indices = nullptr;

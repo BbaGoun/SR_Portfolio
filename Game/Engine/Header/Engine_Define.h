@@ -32,6 +32,7 @@ using namespace std;
 // 경고 처리 무시
 #pragma warning(disable : 4251)
 
+#ifndef _EDITOR
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC
@@ -43,6 +44,7 @@ using namespace std;
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
 #define new DBG_NEW 
 
+#endif
 #endif
 #endif
 
