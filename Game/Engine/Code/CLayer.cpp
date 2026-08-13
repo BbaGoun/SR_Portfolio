@@ -47,10 +47,22 @@ HRESULT CLayer::Delete_GameObject(CGameObject* _pObj)
 	if (it == m_mapObject.end())
 		return E_FAIL;
 
-	// ??? ???? ???
+	// 자신 삭제 등록
 	m_vecDelete.push_back(_pObj->GetTag());
 
-	// ??? ???? ???
+	// 자식 삭제 등록
+	Delete_Children(_pObj);
+
+	// 부모의 자식 목록에서 자신을 삭제
+	if(_pObj->Get_Parent())
+		_pObj->Get_Parent()->Delete_Child(_pObj);
+	else
+		Detach_Root(_pObj);
+	return S_OK;
+}
+
+void CLayer::Delete_Children(CGameObject* _pObj)
+{
 	auto& children = _pObj->Get_Children();
 	for (auto& pObj : children) {
 		auto it2 = find_if(m_mapObject.begin(), m_mapObject.end(),
@@ -58,14 +70,8 @@ HRESULT CLayer::Delete_GameObject(CGameObject* _pObj)
 		if (it2 == m_mapObject.end())
 			continue;
 		m_vecDelete.push_back(pObj->GetTag());
+		Delete_Children(pObj);
 	}
-
-	// ?????? ??? ?????? ????? ????
-	if(_pObj->Get_Parent())
-		_pObj->Get_Parent()->Delete_Child(_pObj);
-	else
-		Detach_Root(_pObj);
-	return S_OK;
 }
 
 HRESULT CLayer::PostProcess_Delete()
@@ -75,8 +81,8 @@ HRESULT CLayer::PostProcess_Delete()
 			CTag_Finder(tag));
 		if (it == m_mapObject.end())
 			continue;
-		// map?? ??? const?? ??? delete[]?? ?? ?? ????.
-		// ???? ??? ?????? ????? ????
+		// map의 키는 const라 바로 delete[]를 할 수 없음.
+		// 주소를 미리 받아오고 나중에 삭제
 		_tchar* pKey = const_cast<_tchar*>(it->first);
 		CGameObject* pObj = it->second;
 
@@ -227,7 +233,7 @@ void CLayer::Free()
 {
 	for_each(m_mapObject.begin(), m_mapObject.end(), CDeleteMap());
 	for_each(m_mapObject.begin(), m_mapObject.end(), [](pair<const _tchar*, CGameObject*> p)->void {
-		// p?? ??????? delete[]?? ????
+		// p가 복사본이라서 delete[]가 가능
 		Safe_Delete_Array(p.first);
 		});
 	m_mapObject.clear();

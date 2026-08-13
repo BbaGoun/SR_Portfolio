@@ -21,6 +21,7 @@ public:
 	void			Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc);
 	bool			Contains(CGameObject* _pObj) const;
 	HRESULT			Delete_GameObject(CGameObject* _pObj);
+	void			Delete_Children(CGameObject* _pObj);
 	HRESULT			PostProcess_Delete();
 
 public:
