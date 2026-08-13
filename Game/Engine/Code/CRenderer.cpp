@@ -78,8 +78,23 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 
 void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	_matrix matOut, matView;
+	
+	D3DXMatrixIdentity(&matView);
+	pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	
+	
+	D3DXMatrixOrthoLH(&matOut, (float)WINCX, (float)WINCY, 1.f, 1000.f);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOut);
+
 	for (auto& pObj : m_RenderGroup[RENDER_UI])
 		pObj->Render_GameObject();
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void CRenderer::PreCull(LPDIRECT3DDEVICE9& pGraphicDev)

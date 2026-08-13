@@ -184,6 +184,9 @@
     <ClInclude Include="..\Header\CCodyBody.h" />
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
+    <ClInclude Include="..\Header\CScene_Test.h" />
+    <ClInclude Include="..\Header\CSpeedBar.h" />
+    <ClInclude Include="..\Header\CSpeedGauge.h" />
     <ClInclude Include="..\Header\CTopViewCam.h" />
     <ClInclude Include="..\Header\CEnemy.h" />
     <ClInclude Include="..\Header\CFirstPerCam.h" />
@@ -199,12 +202,10 @@
     <ClInclude Include="..\Header\CLoading.h" />
     <ClInclude Include="..\Header\CLoadingThread.h" />
     <ClInclude Include="..\Header\CMainApp.h" />
-    <ClInclude Include="..\Header\CScene_Test.h" />
     <ClInclude Include="..\Header\CSkyBox.h" />
     <ClInclude Include="..\Header\CGOCody.h" />
     <ClInclude Include="..\Header\CWheel.h" />
     <ClInclude Include="Client.h" />
-    <ClInclude Include="CSceneUI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -220,6 +221,9 @@
     <ClCompile Include="..\Code\CCodyBody.cpp" />
     <ClCompile Include="..\Code\CCollisionTest.cpp" />
     <ClCompile Include="..\Code\CFollowSmoothCam.cpp" />
+    <ClCompile Include="..\Code\CScene_Test.cpp" />
+    <ClCompile Include="..\Code\CSpeedBar.cpp" />
+    <ClCompile Include="..\Code\CSpeedGauge.cpp" />
     <ClCompile Include="..\Code\CTopViewCam.cpp" />
     <ClCompile Include="..\Code\CEnemy.cpp" />
     <ClCompile Include="..\Code\CFirstPerCam.cpp" />
@@ -234,12 +238,10 @@
     <ClCompile Include="..\Code\CLoading.cpp" />
     <ClCompile Include="..\Code\CLoadingThread.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />
-    <ClCompile Include="..\Code\CScene_Test.cpp" />
     <ClCompile Include="..\Code\CSkyBox.cpp" />
     <ClCompile Include="..\Code\CGOCody.cpp" />
     <ClCompile Include="..\Code\CWheel.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="CSceneUI.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

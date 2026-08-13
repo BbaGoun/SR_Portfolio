@@ -100,6 +100,15 @@
     <Filter Include="02. GameObject\Cart\CartBody\CartBody2">
       <UniqueIdentifier>{8b9571f1-d76e-464a-bab7-d7b17e618d3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI">
+      <UniqueIdentifier>{4a3cd350-7e47-4f0b-a579-790c098cea88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\SpeedBar">
+      <UniqueIdentifier>{dc8e1cbf-e7ac-4f5c-955e-70d377d8fb9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\ItemIcon">
+      <UniqueIdentifier>{82085e98-f089-408d-9abc-2b34b51c409e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -125,9 +134,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\CLoadingThread.h">
       <Filter>01. Scene\Loading\LoadingThread</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CScene_Test.h">
-      <Filter>01. Scene\Test</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBackGround.h">
       <Filter>02. GameObject\BackGround</Filter>
@@ -201,8 +207,14 @@
     <ClInclude Include="..\Header\CCartBody2.h">
       <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
     </ClInclude>
-    <ClInclude Include="CSceneUI.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\Header\CScene_Test.h">
+      <Filter>01. Scene\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSpeedBar.h">
+      <Filter>02. GameObject\UI\SpeedBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSpeedGauge.h">
+      <Filter>02. GameObject\UI\SpeedBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -220,9 +232,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CLoadingThread.cpp">
       <Filter>01. Scene\Loading\LoadingThread</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScene_Test.cpp">
-      <Filter>01. Scene\Test</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBackGround.cpp">
       <Filter>02. GameObject\BackGround</Filter>
@@ -293,8 +302,14 @@
     <ClCompile Include="..\Code\CCartBody2.cpp">
       <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
     </ClCompile>
-    <ClCompile Include="CSceneUI.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\Code\CScene_Test.cpp">
+      <Filter>01. Scene\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSpeedBar.cpp">
+      <Filter>02. GameObject\UI\SpeedBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSpeedGauge.cpp">
+      <Filter>02. GameObject\UI\SpeedBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

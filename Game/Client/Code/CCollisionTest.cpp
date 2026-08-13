@@ -16,6 +16,7 @@
 #include "CCartBody1.h"
 #include "CCartBody2.h"
 #include "CFollowSmoothCam.h"
+#include "CSpeedBar.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -228,6 +229,16 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Box", pBox)))
+		return E_FAIL;
+
+	
+
+	// #UI
+
+	CGameObject* pSpeedBar = CSpeedBar::Create(m_pGraphicDev);
+	if (pSpeedBar == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"UI_SpeedBar", pSpeedBar)))
 		return E_FAIL;
 
 	return S_OK;
