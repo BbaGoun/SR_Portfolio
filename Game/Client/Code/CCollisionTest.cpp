@@ -20,6 +20,9 @@
 #include "CBoostWind.h"
 #include "CUI_Exit.h"
 #include "CBoostJet.h"
+#include "CHUD_Main.h"
+#include "CHUD_Gage.h"
+#include "CHUD_Num.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -38,6 +41,9 @@ HRESULT CCollisionTest::Ready_Scene()
 		return E_FAIL;
 
 	if (FAILED(Ready_Environment_Layer()))
+		return E_FAIL;
+
+	if (FAILED(Ready_UI_Layer()))
 		return E_FAIL;
 
 	return S_OK;
@@ -256,13 +262,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
 
-	// CUI_Exit
-	pGameObject = CUI_Exit::Create(m_pGraphicDev);
-
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"UI_Exit", pGameObject)))
-		return E_FAIL;
 
 	// # Æ®·¢
 	for (int i = 0; i < 40; ++i)
@@ -349,6 +348,44 @@ HRESULT CCollisionTest::Ready_Environment_Layer()
 	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
 	//	return E_FAIL;
 	
+	return S_OK;
+}
+
+
+HRESULT CCollisionTest::Ready_UI_Layer()
+{
+	CLayer* pUILayer = CLayer::Create();
+
+	if (pUILayer == nullptr)
+		return E_FAIL;
+
+	m_mapLayer.insert({ L"UI", pUILayer });
+
+	CGameObject* pUIObject = nullptr;
+
+	// UI_HUDMain
+	pUIObject = CHUD_Main::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDMain", pUIObject)))
+		return E_FAIL;
+
+	// UI_HUDGage
+	pUIObject = CHUD_Gage::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDGage", pUIObject)))
+		return E_FAIL;
+
+	// UI_HUDNum
+	pUIObject = CHUD_Num::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDNum", pUIObject)))
+		return E_FAIL;
+
+
+
 	return S_OK;
 }
 

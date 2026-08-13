@@ -109,14 +109,26 @@
     <Filter Include="02. GameObject\Cart\BoostEffect">
       <UniqueIdentifier>{c7a8c4f7-5a87-4e8b-a638-0d2f080dbd57}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI_Test">
-      <UniqueIdentifier>{77b0e0b9-78db-4975-b5b9-26be286bd1d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Cart\BoostEffect\BoostJet">
       <UniqueIdentifier>{0d1931e9-6d11-46c4-b1e6-d66294ec4643}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\Cart\BoostEffect\BoostWind">
       <UniqueIdentifier>{4d4021d3-2776-418b-b6db-ffcdf124c2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI">
+      <UniqueIdentifier>{77b0e0b9-78db-4975-b5b9-26be286bd1d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD">
+      <UniqueIdentifier>{06fcef9e-f0e4-4a30-8852-d43fa436b7e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\Num">
+      <UniqueIdentifier>{45e4ae89-db24-459f-bb4c-d03f0ddbf99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\HUD_Main">
+      <UniqueIdentifier>{f78c48f2-c807-400d-b397-3d86306486d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\Gage">
+      <UniqueIdentifier>{bd8bd500-6a9a-4ffc-a739-75f687414e13}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -226,13 +238,22 @@
       <Filter>02. GameObject\CollisionBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CUI_Exit.h">
-      <Filter>02. GameObject\UI_Test</Filter>
+      <Filter>02. GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBoostJet.h">
       <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBoostWind.h">
       <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Main.h">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Gage.h">
+      <Filter>02. GameObject\UI\UI_HUD\Gage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Num.h">
+      <Filter>02. GameObject\UI\UI_HUD\Num</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -330,13 +351,22 @@
       <Filter>02. GameObject\CollisionBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUI_Exit.cpp">
-      <Filter>02. GameObject\UI_Test</Filter>
+      <Filter>02. GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBoostJet.cpp">
       <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBoostWind.cpp">
       <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Main.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Gage.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\Gage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Num.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\Num</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

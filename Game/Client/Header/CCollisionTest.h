@@ -22,6 +22,7 @@ private:
 	HRESULT	Ready_Prototype();
 	HRESULT Ready_GameLogic_Layer();
 	HRESULT Ready_Environment_Layer();
+	HRESULT Ready_UI_Layer();
 
 protected:
 	virtual void			Free() override;

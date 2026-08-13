@@ -22,7 +22,8 @@ HRESULT CUI_Exit::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Pos({ 8,5,10 });
+	m_pTransformCom->Set_Pos({ -640,360,1 });
+	m_pTransformCom->Set_Scale({ 100,100,1 });
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 
