@@ -1,8 +1,7 @@
 #pragma once
 #include "CScene.h"
 
-class CCollisionTest :
-	public CScene
+class CCollisionTest : public CScene
 {
 private:
 	explicit CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev);

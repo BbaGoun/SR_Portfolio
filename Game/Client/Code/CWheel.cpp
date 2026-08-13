@@ -3,6 +3,10 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
+#include "CManagement.h"
+#include "CCart.h"
+#include "CLand3.h"
+
 CWheel::CWheel(LPDIRECT3DDEVICE9 pGraphicDev, WHEEL_TYPE eType)
 	:CGameObject(pGraphicDev),m_eWheelType(eType)
 {
@@ -19,7 +23,11 @@ CWheel::~CWheel()
 
 HRESULT CWheel::Ready_GameObject()
 {
-	CGameObject::Ready_GameObject();
+	//CGameObject::Ready_GameObject();
+
+	m_pTransformCom = static_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
+	m_pTransformCom->Set_Owner(this);
+	m_mapComponent[ID_STATIC].insert({ L"Com_Transform", m_pTransformCom });
 
 	switch (m_eWheelType)
 	{
@@ -68,11 +76,36 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
 	m_pTransformCom->Set_Quaternion(&q);
+
+	CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"Environment", L"Env_Land3", L"Com_Buffer");
+	CTerrain3* pTerrain3 = dynamic_cast<CTerrain3*>(pCom);
+	CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+
+
+	if (pCart->GetDrift())
+	{
+		CLand3* pLand3 = dynamic_cast<CLand3*>(pCom->Get_Owner());
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		if (pLand3->CheckInTerrain(vPos))
+		{
+			// Land3의 로컬로 내림
+			_matrix* pMatWorld = pLand3->Get_Transform()->Get_World();
+			_matrix matInvWorld;
+			_vec3 originPos = vPos;
+			D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
+			D3DXVec3TransformCoord(&vPos, &vPos, &matInvWorld);
+
+			pTerrain3->Set_SkidMark(vPos);
+		}
+	}
 }
 
 _int CWheel::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+
+	
 
 	KeyInput(fDeltaTime);
 	return CGameObject::Update_GameObject(fDeltaTime);

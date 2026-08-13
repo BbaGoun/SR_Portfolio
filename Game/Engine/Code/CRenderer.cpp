@@ -85,8 +85,6 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	if (CCameraMgr::GetInstance()->GetMainCamera())
 	{
-		D3DVIEWPORT9 newViewPort;
-		
 		_matrix matView, matProj;
 		D3DXMatrixIdentity(&matView);
 		pGraphicDev->SetTransform(D3DTS_VIEW, &matView);

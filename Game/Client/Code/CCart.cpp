@@ -85,6 +85,11 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	KeyInput(fDeltaTime);
 	UpdateBoost();
+
+	//_vec3 vPos;
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//cout << "x: " << vPos.x << "\ty: " << vPos.y << "\tz: " << vPos.z << endl;
+
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

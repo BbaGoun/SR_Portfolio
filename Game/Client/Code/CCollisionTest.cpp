@@ -23,6 +23,7 @@
 #include "CHUD_Main.h"
 #include "CHUD_Gage.h"
 #include "CHUD_Num.h"
+#include "CLand3.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -347,7 +348,13 @@ HRESULT CCollisionTest::Ready_Environment_Layer()
 	//
 	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
 	//	return E_FAIL;
-	
+	pEnvObject = CLand3::Create(m_pGraphicDev);
+
+	if (pEnvObject == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land3", pEnvObject)))
+		return E_FAIL;
 	return S_OK;
 }
 

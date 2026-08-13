@@ -27,6 +27,7 @@ public:
 	void			UpdateDrift();
 	void			UpdateBoost();
 	bool			GetBoost() { return m_bBoost; }
+	bool			GetDrift() { return m_bDrift; }
 
 private:
 	_float		m_fMaxSpeed;

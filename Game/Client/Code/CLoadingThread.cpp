@@ -59,6 +59,8 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Terrain2", Engine::CTerrain2::Create(m_pGraphicDev))))
         return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Terrain3", Engine::CTerrain3::Create(m_pGraphicDev))))
+        return E_FAIL;
 
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Texture Loading.....................................");

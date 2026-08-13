@@ -48,9 +48,6 @@ HRESULT CHUD_Num::Ready_GameObject()
 _int CHUD_Num::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
-	//m_fFrame += 10 * fDeltaTime;
-	//if (m_fFrame > 10)
-	//	m_fFrame = 0;
 
 	CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_Cart", L"Com_Transform");
 	CGameObject* pCart = pCom->Get_Owner();

@@ -53,6 +53,7 @@
     <ClInclude Include="..\Header\CSphere_Collider.h" />
     <ClInclude Include="..\Header\CTerrain.h" />
     <ClInclude Include="..\Header\CTerrain2.h" />
+    <ClInclude Include="..\Header\CTerrain3.h" />
     <ClInclude Include="..\Header\CTexture.h" />
     <ClInclude Include="..\Header\CTimer.h" />
     <ClInclude Include="..\Header\CTimerMgr.h" />
@@ -103,6 +104,7 @@
     <ClCompile Include="..\Code\CSphere_Collider.cpp" />
     <ClCompile Include="..\Code\CTerrain.cpp" />
     <ClCompile Include="..\Code\CTerrain2.cpp" />
+    <ClCompile Include="..\Code\CTerrain3.cpp" />
     <ClCompile Include="..\Code\CTexture.cpp" />
     <ClCompile Include="..\Code\CTimer.cpp" />
     <ClCompile Include="..\Code\CTimerMgr.cpp" />

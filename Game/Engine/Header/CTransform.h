@@ -74,6 +74,8 @@ public:
 		*pInfo = vUnit;
 	}
 	void Set_Dirty();
+
+	_vec3		Get_Scale() { return m_vScale; }
 	
 public:
 	void FollowObj(_vec3* _pPos, _float _fSpeed, _float _fDeltaTime);

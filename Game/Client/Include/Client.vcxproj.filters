@@ -130,6 +130,9 @@
     <Filter Include="02. GameObject\UI\UI_HUD\Gage">
       <UniqueIdentifier>{bd8bd500-6a9a-4ffc-a739-75f687414e13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Land3">
+      <UniqueIdentifier>{f65dd40c-8e32-476d-91b0-4980159e909b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -255,6 +258,9 @@
     <ClInclude Include="..\Header\CHUD_Num.h">
       <Filter>02. GameObject\UI\UI_HUD\Num</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CLand3.h">
+      <Filter>02. GameObject\Land3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -367,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CHUD_Num.cpp">
       <Filter>02. GameObject\UI\UI_HUD\Num</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLand3.cpp">
+      <Filter>02. GameObject\Land3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
