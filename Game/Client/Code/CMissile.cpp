@@ -22,7 +22,8 @@ HRESULT CMissile::Ready_GameObject()
 	// m_pTransformCom->m_vInfo[INFO_POS] = { 3.f, 1.3f, 0.f };
 	//m_pTransformCom->Set_Scale({ 1.f, 1.f, 1.f });
 
-	m_fSpeed = 10.f;
+	m_fSpeed = 50.f;
+	m_fAngle = 0.f;
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -47,12 +48,74 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (nullptr == pTransform)
 		return;
 
-	_vec3 pBoxPos;
-	pTransform->Get_Info(INFO_POS, &pBoxPos);
+	_vec3 outerBoxPos;
+	pTransform->Get_Info(INFO_POS, &outerBoxPos);
 
-	// _vec3 pMissilePos;
-	// m_pTransformCom->Get_Info(INFO_POS, &pMissilePos);
-	m_pTransformCom->FollowObj(&pBoxPos, m_fSpeed, fFixedDeltaTime);
+	 _vec3 pMissilePos;
+	m_pTransformCom->Get_Info(INFO_POS, &pMissilePos);
+
+	_vec3 vDir = outerBoxPos - pMissilePos;
+	_float fDistance = D3DXVec3Length(&vDir);
+
+	_float radius = clampT(fDistance-10, 0.f, 80.f);
+
+	_vec3 innerBoxPos = outerBoxPos;
+
+	m_fAngle += D3DXToRadian(400.f) * fFixedDeltaTime;
+
+	D3DXMATRIX matRadius;
+	D3DXMATRIX matRot;
+	D3DXMATRIX matCenter;
+
+	D3DXMatrixTranslation(&matRadius, radius, 0.0f, 0.0f);
+	D3DXMatrixRotationZ(&matRot, m_fAngle);
+	D3DXMatrixTranslation(&matCenter, outerBoxPos.x, outerBoxPos.y, outerBoxPos.z);
+
+	_matrix matWorld = matRadius * matRot * matCenter;
+
+	_vec3 vOriginPos = { 0.f, 0.f, 0.f };
+	D3DXVec3TransformCoord(&outerBoxPos, &vOriginPos, &matWorld);
+
+	 // _vec3 pMissilePos;
+	 // m_pTransformCom->Get_Info(INFO_POS, &pMissilePos);
+	// m_pTransformCom->FollowObj(&pBoxPos, m_fSpeed, fFixedDeltaTime);
+
+
+
+	if (fDistance > 8.f)	// 지금 박스가 회전이냐 미사일이 회전이냐?
+	{
+		_vec3 vMoveDir = outerBoxPos - pMissilePos;
+		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
+
+		 _matrix matRot;
+		 m_pTransformCom->GetFollowRotation(&vMoveDir, &matRot);
+
+		 //_quaternion q;
+		 //D3DXQuaternionRotationMatrix(&q, &matRot);
+		 //m_pTransformCom->Set_Quaternion(&q);
+
+		 //_vec3 vLook;
+		 //m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+		 m_pTransformCom->Move_Pos(&vMoveDir, m_fSpeed, fFixedDeltaTime);
+	}
+
+	else
+	{
+		_vec3 vMoveDir = innerBoxPos - pMissilePos;
+		// vMoveDir.y = 0;
+		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
+
+		 _matrix matRot;
+		 m_pTransformCom->GetFollowRotation(&vMoveDir, &matRot);
+
+		 // _quaternion q;
+		 //D3DXQuaternionRotationMatrix(&q, &matRot);
+		 //m_pTransformCom->Set_Quaternion(&q);
+
+		 //_vec3 vLook;
+		 //m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+		 m_pTransformCom->Move_Pos(&vMoveDir, m_fSpeed, fFixedDeltaTime);
+	}
 }
 
 _int CMissile::Update_GameObject(const _float& fTimeDelta)
