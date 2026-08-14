@@ -125,7 +125,10 @@ namespace Engine
 	inline DirectX::XMFLOAT4 ToXMFLOAT4(const D3DXQUATERNION& q)
 	{
 		return DirectX::XMFLOAT4(q.x, q.y, q.z, q.w);
-	inline std::string ToUtf8(const _tchar* wstr) {
+	}
+
+	inline std::string ToUtf8(const _tchar* wstr) 
+	{
 		if (!wstr) return "";
 		int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, NULL, 0, NULL, NULL);
 		std::string str(size_needed, 0);
