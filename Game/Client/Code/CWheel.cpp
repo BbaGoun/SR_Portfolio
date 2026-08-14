@@ -23,11 +23,7 @@ CWheel::~CWheel()
 
 HRESULT CWheel::Ready_GameObject()
 {
-	//CGameObject::Ready_GameObject();
-
-	m_pTransformCom = static_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
-	m_pTransformCom->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Transform", m_pTransformCom });
+	CGameObject::Ready_GameObject();
 
 	switch (m_eWheelType)
 	{
@@ -104,8 +100,6 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CWheel::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-
-	
 
 	KeyInput(fDeltaTime);
 	return CGameObject::Update_GameObject(fDeltaTime);

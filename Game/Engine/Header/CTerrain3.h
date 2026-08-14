@@ -22,7 +22,6 @@ public:
 
     static CTerrain3* Create(LPDIRECT3DDEVICE9 pGraphicDev);
     CComponent* Clone() override;
-    void        Set_SkidMark(int vPos);
     void        Set_SkidMark(_vec3 vPos);
     int         GetVTXCNTX() { return m_iVTXCNTX; }
     int         GetVTXCNTZ() { return m_iVTXCNTZ; }

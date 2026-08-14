@@ -138,14 +138,6 @@ CComponent* CTerrain3::Clone()
 	return pComp;
 }
 
-void CTerrain3::Set_SkidMark(int vPos)
-{
-	VTXTC* pVertex = NULL;
-	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
-	pVertex[vPos].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-	m_pVB->Unlock();
-}
-
 void CTerrain3::Set_SkidMark(_vec3 vPos)
 {
 	int col = vPos.x / VTXITV;
@@ -154,21 +146,18 @@ void CTerrain3::Set_SkidMark(_vec3 vPos)
 	float xInPlane = float(vPos.x - col * VTXITV) / VTXITV;
 	float zInPlane = float(vPos.z - row * VTXITV) / VTXITV;
 
-	_vec3 p0, p1, p2;
 	// 왼쪽 위 삼각형
 	VTXTC* pVertex = NULL;
-	HRESULT hr = m_pVB->Lock(0, 0, (void**)&pVertex, 0);
-	if (FAILED(hr))
-		return;
+	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 	if (zInPlane - xInPlane > 0) {
-		pVertex[(row + 1) * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);;		// 왼쪽 위
-		pVertex[(row + 1) * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);;	// 오른쪽 위
-		//pVertex[row * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);;			// 왼쪽 아래
+		pVertex[(row + 1) * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);		// 왼쪽 위
+		pVertex[(row + 1) * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);	// 오른쪽 위
+		//pVertex[row * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);			// 왼쪽 아래
 	}
 	else { // 오른쪽 아래 삼각형
 		pVertex[row * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);			// 오른쪽 아래
-		pVertex[row * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);			// 왼쪽 아래
-		//pVertex[(row + 1) * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f); // 오른쪽 위
+		pVertex[row * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);				// 왼쪽 아래
+		//pVertex[(row + 1) * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);	// 오른쪽 위
 	}
 	m_pVB->Unlock();
 }

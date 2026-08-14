@@ -24,10 +24,6 @@ HRESULT CLand3::Ready_GameObject()
 	//m_pTransformCom->Set_Scale({ 4, 1, 4 });
 	m_pTransformCom->Set_Pos({ 0,-2,0 });
 
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	cout << "x: " << vPos.x << "\ty: " << vPos.y << "\tz: " << vPos.z << endl;
-
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = static_cast<CTerrain3*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Terrain3"));
