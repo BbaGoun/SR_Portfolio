@@ -24,6 +24,8 @@
 #include "CHUD_Gage.h"
 #include "CHUD_Num.h"
 #include "CLand3.h"
+#include "CRainBow_Cloud.h"
+#include "CUI_Rainbow.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -62,7 +64,16 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 	
 	CCollider* pBoxCollider = static_cast<CCollider*>
 		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CollisionBox", L"Com_Collider"));
+
+
+	CCollider* pRainBowCollider = static_cast<CCollider*>
+		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Rainbow_Cloud", L"Com_Collider"));
+	
+
 	CCollisionMgr::GetInstance()->Collision(pBoxCollider, pCartCollider);
+	CCollisionMgr::GetInstance()->Collision(pRainBowCollider, pCartCollider);
+
+
 
 }
 
@@ -118,6 +129,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Cart", pCart)))
 		return E_FAIL;
+	pCart->SetLayer(pGameObjectLayer);
 
 
 	// ## 카트 몸체
@@ -215,21 +227,38 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	
 	pCart->Set_Child(pGameObject);
 
-	// ## 부스터 왼쪽 바람 이펙트
-	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L);
+	// ## 부스터 왼쪽1 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindL", pGameObject)))
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindL1", pGameObject)))
 		return E_FAIL;
 	pCart->Set_Child(pGameObject);
 
-	// ## 부스터 오른쪽 바람 이펙트
-	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R);
+	// ## 부스터 왼쪽2 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindL2", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
+	
+	// ## 부스터 오른쪽1 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindR", pGameObject)))
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindR1", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
+	// ## 부스터 오른쪽2 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindR2", pGameObject)))
 		return E_FAIL;
 	pCart->Set_Child(pGameObject);
 
@@ -280,7 +309,8 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		{
 			pBox->Get_Transform()->Set_Pos({ 100 * cosf(2 * D3DX_PI / 40 * i), 0.f, -100 + 100 * sinf(2 * D3DX_PI / 40 * i) });
 		}
-		const _tchar*	szBuff = L"Obj_Box" + i; 
+		TCHAR szBuff[32];
+		wsprintf(szBuff, L"Obj_Box%d", i);
 		if (FAILED(pGameObjectLayer->Add_GameObject(szBuff, pBox)))
 			return E_FAIL;
 	}
@@ -299,7 +329,9 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		{
 			pBox->Get_Transform()->Set_Pos({ 100.f, 0.f,100 - 10.f * (i - 20) });
 		}
-		const _tchar* szBuff = L"Obj_Box" + i + 40;
+
+		TCHAR szBuff[32];
+		wsprintf(szBuff, L"Obj_Box%d", i);
 		if (FAILED(pGameObjectLayer->Add_GameObject(szBuff, pBox)))
 			return E_FAIL;
 	}
@@ -312,6 +344,16 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox", pBox)))
 		return E_FAIL;
+
+
+	// 무지개 구름 이펙트
+	pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
+		return E_FAIL;
+	pGameObject->SetLayer(pGameObjectLayer);
 
 	return S_OK;
 }
@@ -391,6 +433,12 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDNum", pUIObject)))
 		return E_FAIL;
 
+	// UI_Rainbow
+	pUIObject = CUI_Rainbow::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Rainbow", pUIObject)))
+		return E_FAIL;
 
 
 	return S_OK;

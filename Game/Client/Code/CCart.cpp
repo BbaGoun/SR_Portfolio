@@ -3,6 +3,8 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
+#include "CRainBow_Cloud.h"
+#include "CManagement.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -21,19 +23,21 @@ CCart::~CCart()
 HRESULT CCart::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_vForce = { 0,0,0 };
+	m_vForce			= { 0,0,0 };
 
-	m_fSpeed = 1.f;
-	m_fMaxSpeed = 3.f;
+	m_fSpeed			= 1.f;
+	m_fMaxSpeed			= 3.f;
 	
-	m_bDrift = false;
-	m_fLookForceAngle = 0.f;
+	m_bDrift			= false;
+	m_fLookForceAngle	= 0.f;
 
 	m_fBoostTurnAngle	= 0.5f;
 	m_fNormalTurnAngle	= 0.8f;
 	m_fDriftTurnAngle	= 1.5f;
 
-	m_bBoost = false;
+	m_bBoost			= false;
+	m_bRainbowUI		= false;
+	m_iRainbowObjectCnt = 0;
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -106,6 +110,21 @@ void CCart::Render_GameObject()
 #endif
 }
 
+void CCart::CollisionEnter(CCollider* pOtherCollider)
+{
+}
+
+void CCart::TriggerEnter(CCollider* pOtherCollider)
+{
+	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
+
+	if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
+	{
+		if (m_bRainbowUI == false)
+			m_bRainbowUI = true;
+	}
+}
+
 
 CCart* CCart::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
@@ -125,6 +144,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Q))
+	{
+		CreateRainbowObject();
+	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
 	{
@@ -358,6 +382,32 @@ void CCart::UpdateBoost()
 		m_bBoost = false;
 		m_fSpeed = 1;
 	}
+}
+
+void CCart::CreateRainbowObject()
+{
+
+	CGameObject* pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
+
+	if (nullptr == pGameObject)
+		return ;
+
+	TCHAR wObjectTag[32];
+	wsprintf(wObjectTag, L"Rainbow_Cloud", m_iRainbowObjectCnt++);
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
+		return ;
+
+	_vec3 vPos,vLook;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	vPos += vLook * 100;
+	pGameObject->Get_Transform()->Set_Pos(vPos);
+
+	D3DXQUATERNION q;
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+	pGameObject->Get_Transform()->Set_Quaternion(&q);
+	pGameObject->SetLayer(m_pLayer);
 }
 
 

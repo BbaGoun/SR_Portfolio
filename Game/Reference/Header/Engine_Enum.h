@@ -26,7 +26,7 @@ namespace Engine
 
 	enum WHEEL_TYPE { WHEEL_FL, WHEEL_FR, WHEEL_BL, WHEEL_BR, WHEEL_END };
 
-	enum BOOSTER_TYPE { WIND_L, WIND_R, WIND_END };
+	enum BOOSTER_TYPE { WIND_L1, WIND_R1, WIND_L2, WIND_R2, WIND_END }; //이거 가끔 이전으로 돌아갈 때가 있는데 왜그런거지
 
 	enum COLLISION_LAYER {
 		CL_DEFAULT,

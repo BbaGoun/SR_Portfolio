@@ -21,6 +21,14 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+	virtual			void		CollisionEnter(CCollider* pOtherCollider) override;
+	virtual			void		CollisionExit(CCollider* pOtherCollider) {};
+	virtual			void		CollisionStay(CCollider* pOtherCollider) {};
+
+	virtual			void		TriggerEnter(CCollider* pOtherCollider) override;
+	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
+	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
+
 public:
 	static CCart*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void			KeyInput(const _float& fDeltaTime);
@@ -28,7 +36,11 @@ public:
 	void			UpdateBoost();
 	bool			GetBoost() { return m_bBoost; }
 	bool			GetDrift() { return m_bDrift; }
+	bool			GetRainbowUI() { return m_bRainbowUI; }
 
+	void			SetRainbowUI(bool bRainbowState) { m_bRainbowUI = bRainbowState; }
+
+	void			CreateRainbowObject();
 private:
 	_float		m_fMaxSpeed;
 	bool		m_bDrift;
@@ -41,6 +53,8 @@ private:
 	bool		m_bBoost;
 	float		m_fBoostCal;
 
+	float		m_bRainbowUI;
+	int			m_iRainbowObjectCnt;
 
 	Engine::CCube_Collider* m_pColliderCom;
 

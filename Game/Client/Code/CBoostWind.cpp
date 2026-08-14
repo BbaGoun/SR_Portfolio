@@ -31,25 +31,43 @@ HRESULT CBoostWind::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 
-	if (m_eBoosterID == WIND_L)
+	D3DXQUATERNION q;
+	switch (m_eBoosterID)
 	{
-		D3DXQUATERNION q;
+	case Engine::WIND_L1:
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(-60), 0, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
 		m_pTransformCom->Set_Pos({ -4,0,6 });
 		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterWindL"));
 		if (nullptr == pComponent)
 			return E_FAIL;
-	}
-	else if (m_eBoosterID == WIND_R)
-	{
-		D3DXQUATERNION q;
+		break;
+	case Engine::WIND_L2:
+		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(-30), 0, 0.f);
+		m_pTransformCom->Set_Quaternion(&q);
+		m_pTransformCom->Set_Pos({ -6,0,6 });
+		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterWindL"));
+		if (nullptr == pComponent)
+			return E_FAIL;
+		break;
+	case Engine::WIND_R1:
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(60), 0, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
 		m_pTransformCom->Set_Pos({ 4,0,6 });
 		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterWindR"));
 		if (nullptr == pComponent)
 			return E_FAIL;
+		break;
+	case Engine::WIND_R2:
+		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(30), 0, 0.f);
+		m_pTransformCom->Set_Quaternion(&q);
+		m_pTransformCom->Set_Pos({ 6,0,6 });
+		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterWindR"));
+		if (nullptr == pComponent)
+			return E_FAIL;
+		break;
+	default:
+		break;
 	}
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
@@ -89,42 +107,42 @@ void CBoostWind::Render_GameObject()
 	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
 	{
 		_matrix	matBill, matWorld, matView, matParent;
-		
+		_vec3 vParent_Rotaiton;
 		matWorld = *m_pTransformCom->Get_World();
-		matParent = *m_pParent->Get_Transform()->Get_World();
+		
+		vParent_Rotaiton = m_pParent->Get_Rotation();
+		D3DXMatrixRotationY(&matParent, vParent_Rotaiton.y);
+		
 		matView = CCameraMgr::GetInstance()->GetCameraInfo().matView;
 		
-		// 부모의 y축 회전 반영X
+		// 부모
 		D3DXMatrixIdentity(&matBill);
-
+		
 		matBill._11 = matParent._11;
 		matBill._13 = matParent._13;
 		matBill._31 = matParent._31;
 		matBill._33 = matParent._33;
 
 		D3DXMatrixInverse(&matBill, 0, &matBill);
-		matWorld = matBill * matWorld;
-
-		// 카메라의 y축 회전 반영X
+		matWorld = matBill * matWorld; 
+		
+		// 카메라
 		D3DXMatrixIdentity(&matBill);
-
+		
 		matBill._11 = matView._11;
 		matBill._13 = matView._13;
 		matBill._31 = matView._31;
 		matBill._33 = matView._33;
-
+		
 		D3DXMatrixInverse(&matBill, 0, &matBill);
 		matWorld = matBill * matWorld;
-
+		
 		// 빌보드 적용(크기가 달라질 경우 계산식 변경)
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+		
 		//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 		m_pTextureCom->Set_Texture((_uint)m_fFrame);
-
 		m_pBufferCom->Render_Buffer();
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	}
 }
 

@@ -118,7 +118,6 @@ HRESULT CLayer::Delete_GameObject(CGameObject* _pObj)
 {
 	if (!_pObj)
 		return E_FAIL;
-
 	auto it = find_if(m_mapObject.begin(), m_mapObject.end(),
 		CTag_Finder(_pObj->GetTag()));
 	if (it == m_mapObject.end())
