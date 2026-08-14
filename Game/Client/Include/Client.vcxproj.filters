@@ -76,9 +76,6 @@
     <Filter Include="소스 파일\02. GameObject\Camera\BackThirdPersonCamera">
       <UniqueIdentifier>{023176fa-6807-4182-a302-7da613fae6b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\02. GameObject\Camera\FrontThirdPersonCamera">
-      <UniqueIdentifier>{fec12351-5443-45eb-98c0-29438785992c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\02. GameObject\Camera\TopViewCamera">
       <UniqueIdentifier>{fea974b1-0821-4c2a-93c7-30822e6f7f09}</UniqueIdentifier>
     </Filter>
@@ -108,6 +105,12 @@
     </Filter>
     <Filter Include="소스 파일\02. GameObject\Missile">
       <UniqueIdentifier>{d8fdb4e9-6eb8-4892-ae3c-55e3d09b8c64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. GameObject\Camera\DynamicCamera">
+      <UniqueIdentifier>{9c7827e9-db63-4244-acaf-0d75724d183d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. GameObject\Camera\FrontThirdPersonCamera">
+      <UniqueIdentifier>{fec12351-5443-45eb-98c0-29438785992c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +222,9 @@
     <ClInclude Include="..\Header\CItem.h">
       <Filter>01. Scene\Item</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDynamicCamera.h">
+      <Filter>소스 파일\02. GameObject\Camera\DynamicCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -316,6 +322,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CItem.cpp">
       <Filter>01. Scene\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDynamicCamera.cpp">
+      <Filter>소스 파일\02. GameObject\Camera\DynamicCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

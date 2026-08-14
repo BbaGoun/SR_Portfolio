@@ -4,6 +4,8 @@
 #include "CTopViewCam.h"
 #include "CCameraMgr.h"
 #include "CBox.h"
+#include "CFollowSmoothCam.h"
+#include "CDynamicCamera.h"
 
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -64,19 +66,15 @@ HRESULT CItem::Ready_GameLogic_Layer()
 
 	m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
 
-	//
+	
 	CGameObject* pMissile = CMissile::Create(m_pGraphicDev);
 
 	if (pMissile == nullptr)
 		return E_FAIL;
 
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Missile", pMissile)))
-	//	return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pMissile)))	// 카메라가 플레이어를 쫒아가게 되어 있으니 L"Obj_Player" 로 설정
+		if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pMissile)))	// 카메라가 플레이어를 쫒아가게 되어 있으니 L"Obj_Player" 로 설정
 		return E_FAIL;
 
-
-	//
 	CGameObject* pBox = CBox::Create(m_pGraphicDev);
 
 	if (pBox == nullptr)
@@ -84,24 +82,37 @@ HRESULT CItem::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Box", pBox)))	
 		return E_FAIL;
-
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// (테스트용으로 아이템에 카메라 만듬)
-	CGameObject* pTopViewCam = CTopViewCam::Create(m_pGraphicDev);
+	// 다이나믹 카메라
+	_vec3 vEye = { 0.f, 30.f, -30.f };
+	_vec3 vAt = { 0.f, 0.f, 100.f };
+	_vec3 vUp = { 0.f, 1.f, 0.f };
 
-	if (pTopViewCam == nullptr)
+	CGameObject* pDynamicCam = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
+	
+	if (pDynamicCam == nullptr)
 		return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_TopViewCam", pTopViewCam)))
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_DynamicCamera", pDynamicCam)))
 		return E_FAIL;
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//// (테스트용으로 아이템에 카메라 만듬)
+	//CGameObject* pTopViewCam = CTopViewCam::Create(m_pGraphicDev);
 
-	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_TOP_VIEW,
-		static_cast<CCamera*>(pTopViewCam))))
-		return E_FAIL;
+	//if (pTopViewCam == nullptr)
+	//	return E_FAIL;
 
-	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_TOP_VIEW)))
-		return E_FAIL;
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_TopViewCam", pTopViewCam)))
+	//	return E_FAIL;
+
+	//if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_TOP_VIEW,
+	//	static_cast<CCamera*>(pTopViewCam))))
+	//	return E_FAIL;
+
+	//if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_TOP_VIEW)))
+	//	return E_FAIL;
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	return S_OK;
 }
 

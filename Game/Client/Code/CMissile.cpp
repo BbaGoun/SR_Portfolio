@@ -22,7 +22,7 @@ HRESULT CMissile::Ready_GameObject()
 	// m_pTransformCom->m_vInfo[INFO_POS] = { 3.f, 1.3f, 0.f };
 	//m_pTransformCom->Set_Scale({ 1.f, 1.f, 1.f });
 
-	m_fSpeed = 50.f;
+	m_fSpeed = 120.f;
 	m_fAngle = 0.f;
 
 	Engine::CComponent* pComponent = nullptr;
@@ -48,7 +48,7 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (nullptr == pTransform)
 		return;
 
-	_vec3 outerBoxPos;
+	_vec3 outerBoxPos;	// 박스 주변 도는 목표점 위치
 	pTransform->Get_Info(INFO_POS, &outerBoxPos);
 
 	 _vec3 pMissilePos;
@@ -57,11 +57,11 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	_vec3 vDir = outerBoxPos - pMissilePos;
 	_float fDistance = D3DXVec3Length(&vDir);
 
-	_float radius = clampT(fDistance-10, 0.f, 80.f);
+	_float radius = clampT((fDistance-10.f) * 10.f, 0.f, 1500.f);
 
-	_vec3 innerBoxPos = outerBoxPos;
+	_vec3 innerBoxPos = outerBoxPos;	// 실제 박스 중심 위치
 
-	m_fAngle += D3DXToRadian(400.f) * fFixedDeltaTime;
+	m_fAngle += D3DXToRadian(800.f) * fFixedDeltaTime;
 
 	D3DXMATRIX matRadius;
 	D3DXMATRIX matRot;
@@ -76,45 +76,39 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	_vec3 vOriginPos = { 0.f, 0.f, 0.f };
 	D3DXVec3TransformCoord(&outerBoxPos, &vOriginPos, &matWorld);
 
-	 // _vec3 pMissilePos;
-	 // m_pTransformCom->Get_Info(INFO_POS, &pMissilePos);
-	// m_pTransformCom->FollowObj(&pBoxPos, m_fSpeed, fFixedDeltaTime);
-
-
-
-	if (fDistance > 8.f)	// 지금 박스가 회전이냐 미사일이 회전이냐?
+	if (fDistance > 8.f)
 	{
 		_vec3 vMoveDir = outerBoxPos - pMissilePos;
 		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
 
-		 _matrix matRot;
-		 m_pTransformCom->GetFollowRotation(&vMoveDir, &matRot);
+		_vec3 vLookDir = innerBoxPos - pMissilePos;
+		D3DXVec3Normalize(&vLookDir, &vLookDir);
 
-		 //_quaternion q;
-		 //D3DXQuaternionRotationMatrix(&q, &matRot);
-		 //m_pTransformCom->Set_Quaternion(&q);
+		_matrix matRot;
+		m_pTransformCom->GetFollowRotation(&vLookDir, &matRot);
 
-		 //_vec3 vLook;
-		 //m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-		 m_pTransformCom->Move_Pos(&vMoveDir, m_fSpeed, fFixedDeltaTime);
+		_quaternion qRot;
+		D3DXQuaternionRotationMatrix(&qRot, &matRot);
+
+		m_pTransformCom->Multiple_Quaternion(&qRot);
+		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
 	}
-
 	else
 	{
 		_vec3 vMoveDir = innerBoxPos - pMissilePos;
-		// vMoveDir.y = 0;
 		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
 
-		 _matrix matRot;
-		 m_pTransformCom->GetFollowRotation(&vMoveDir, &matRot);
+		_vec3 vLookDir = innerBoxPos - pMissilePos;
+		D3DXVec3Normalize(&vLookDir, &vLookDir);
 
-		 // _quaternion q;
-		 //D3DXQuaternionRotationMatrix(&q, &matRot);
-		 //m_pTransformCom->Set_Quaternion(&q);
+		_matrix matRot;
+		m_pTransformCom->GetFollowRotation(&vLookDir, &matRot);
 
-		 //_vec3 vLook;
-		 //m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-		 m_pTransformCom->Move_Pos(&vMoveDir, m_fSpeed, fFixedDeltaTime);
+		_quaternion qRot;
+		D3DXQuaternionRotationMatrix(&qRot, &matRot);
+
+		m_pTransformCom->Multiple_Quaternion(&qRot);
+		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
 	}
 }
 

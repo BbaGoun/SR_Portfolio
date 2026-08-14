@@ -183,6 +183,7 @@
     <ClInclude Include="..\Header\CCartBody2.h" />
     <ClInclude Include="..\Header\CCodyBody.h" />
     <ClInclude Include="..\Header\CCollisionTest.h" />
+    <ClInclude Include="..\Header\CDynamicCamera.h" />
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
     <ClInclude Include="..\Header\CItem.h" />
     <ClInclude Include="..\Header\CMapTest.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="..\Code\CCartBody2.cpp" />
     <ClCompile Include="..\Code\CCodyBody.cpp" />
     <ClCompile Include="..\Code\CCollisionTest.cpp" />
+    <ClCompile Include="..\Code\CDynamicCamera.cpp" />
     <ClCompile Include="..\Code\CFollowSmoothCam.cpp" />
     <ClCompile Include="..\Code\CItem.cpp" />
     <ClCompile Include="..\Code\CMapTest.cpp" />
