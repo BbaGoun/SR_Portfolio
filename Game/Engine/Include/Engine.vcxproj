@@ -31,6 +31,7 @@
     <ClInclude Include="..\Header\CCube.h" />
     <ClInclude Include="..\Header\CCube_Collider.h" />
     <ClInclude Include="..\Header\CDInputMgr.h" />
+    <ClInclude Include="..\Header\CEmpty.h" />
     <ClInclude Include="..\Header\CFont.h" />
     <ClInclude Include="..\Header\CFontMgr.h" />
     <ClInclude Include="..\Header\CFrame.h" />
@@ -82,6 +83,7 @@
     <ClCompile Include="..\Code\CCube.cpp" />
     <ClCompile Include="..\Code\CCube_Collider.cpp" />
     <ClCompile Include="..\Code\CDInputMgr.cpp" />
+    <ClCompile Include="..\Code\CEmpty.cpp" />
     <ClCompile Include="..\Code\CFont.cpp" />
     <ClCompile Include="..\Code\CFontMgr.cpp" />
     <ClCompile Include="..\Code\CFrame.cpp" />

@@ -39,6 +39,9 @@ public:
 		m_quaternion = *pQuater;
 		Set_Dirty();
 	}
+
+	void		Set_LocalWorld(_matrix* _MatLocal);
+
 	D3DXQUATERNION Get_Quaternion() {
 		return m_quaternion;
 	}
@@ -62,13 +65,25 @@ public:
 		Set_Dirty();
 	}
 
-	_matrix*	Get_World();
-
-	void		Get_Info(INFO eType, _vec3* pInfo)
+	_matrix* Get_World();
+	_matrix* Get_LocalWorld() {
+		Get_World();
+		return &m_matLocalWorld;
+	}
+	void	 Get_Info(INFO eType, _vec3* pInfo)
 	{
 		_matrix* pMatWorld = Get_World();
 		_vec3 vUnit;
 		memcpy(vUnit, &pMatWorld->m[eType][0], sizeof(_vec3));
+		if (eType != INFO_POS)
+			D3DXVec3Normalize(&vUnit, &vUnit);
+		*pInfo = vUnit;
+	}
+	void	 Get_LocalInfo(INFO eType, _vec3* pInfo)
+	{
+		Get_World();
+		_vec3 vUnit;
+		memcpy(vUnit, &m_matLocalWorld.m[eType][0], sizeof(_vec3));
 		if (eType != INFO_POS)
 			D3DXVec3Normalize(&vUnit, &vUnit);
 		*pInfo = vUnit;
@@ -94,7 +109,8 @@ private:
 	D3DXQUATERNION	m_quaternion;
 	_vec3			m_vScale;
 
-	D3DXMATRIX		m_matWorld;
+	_matrix			m_matWorld;
+	_matrix			m_matLocalWorld;
 	_bool			m_bDirty;
 
 protected:

@@ -54,17 +54,41 @@ HRESULT CTransform::Ready_Transform()
 	return S_OK;
 }
 
+void CTransform::Set_LocalWorld(_matrix* _MatLocal)
+{
+	// 크기 분해
+	_vec3 vRight, vUp, vLook;
+	memcpy(&vRight, &_MatLocal->m[0], sizeof(_vec3));
+	memcpy(&vUp, &_MatLocal->m[1], sizeof(_vec3));
+	memcpy(&vLook, &_MatLocal->m[2], sizeof(_vec3));
+	m_vScale = { D3DXVec3Length(&vRight), D3DXVec3Length(&vUp), D3DXVec3Length(&vLook) };
+
+	// 회전 분해
+	_matrix matRot;
+	D3DXMatrixIdentity(&matRot);
+	memcpy(&matRot.m[0], D3DXVec3Normalize(&vRight, &vRight), sizeof(_vec3));
+	memcpy(&matRot.m[1], D3DXVec3Normalize(&vUp, &vUp), sizeof(_vec3));
+	memcpy(&matRot.m[2], D3DXVec3Normalize(&vLook, &vLook), sizeof(_vec3));
+
+	D3DXQuaternionRotationMatrix(&m_quaternion, &matRot);
+
+	// 이동 분해
+	memcpy(&m_vInfo[INFO_POS], &_MatLocal->m[3], sizeof(_vec3));
+
+	Set_Dirty();
+}
+
 _matrix* CTransform::Get_World()
 {
 	if (!m_bDirty)
 		return &m_matWorld;
 
 	// 1. 월드 행렬의 초기화
-	D3DXMatrixIdentity(&m_matWorld);
+	D3DXMatrixIdentity(&m_matLocalWorld);
 
 	// 2. Right, Up, Look의 초기화
 	for (int i = 0; i < INFO_POS; ++i) {
-		memcpy(&m_vInfo[i], &m_matWorld.m[i][0], sizeof(_vec3));
+		memcpy(&m_vInfo[i], &m_matLocalWorld.m[i][0], sizeof(_vec3));
 	}
 
 	// 3. 크기 적용
@@ -84,8 +108,10 @@ _matrix* CTransform::Get_World()
 	// 이동은 컴포넌트를 수정한 GameObject에서 직접 수행됨
 	// 월드 행렬에 이동 상태를 옮길 뿐
 	for (int i = 0; i < INFO_END; ++i) {
-		memcpy(&m_matWorld.m[i][0], m_vInfo[i], sizeof(_vec3));
+		memcpy(&m_matLocalWorld.m[i][0], m_vInfo[i], sizeof(_vec3));
 	}
+
+	m_matWorld = m_matLocalWorld;
 
 	// 6. 부모의 월드 행렬 가져오기
 	if (m_pOwner->Get_Parent() != nullptr) {

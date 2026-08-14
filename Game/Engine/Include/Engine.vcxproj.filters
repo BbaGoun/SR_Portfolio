@@ -145,6 +145,9 @@
     <Filter Include="04. Component\Shape\Terrain3">
       <UniqueIdentifier>{93dc6801-9724-4a44-8c78-82363190d9f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Management\GameObject\CEmpty">
+      <UniqueIdentifier>{390fe467-04bc-4dbe-a81b-8521d6eac13a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -294,6 +297,9 @@
     <ClInclude Include="..\Header\CTerrain3.h">
       <Filter>04. Component\Shape\Terrain3</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CEmpty.h">
+      <Filter>03. Management\GameObject\CEmpty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -424,6 +430,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTerrain3.cpp">
       <Filter>04. Component\Shape\Terrain3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEmpty.cpp">
+      <Filter>03. Management\GameObject\CEmpty</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -189,6 +189,7 @@
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
     <ClInclude Include="..\Header\CHUD_Main.h" />
     <ClInclude Include="..\Header\CHUD_Num.h" />
+    <ClInclude Include="..\Header\CMapTest.h" />
     <ClInclude Include="..\Header\CiTem.h" />
     <ClInclude Include="..\Header\CLand3.h" />
     <ClInclude Include="..\Header\CTopViewCam.h" />
@@ -233,6 +234,7 @@
     <ClCompile Include="..\Code\CFollowSmoothCam.cpp" />
     <ClCompile Include="..\Code\CHUD_Main.cpp" />
     <ClCompile Include="..\Code\CHUD_Num.cpp" />
+    <ClCompile Include="..\Code\CMapTest.cpp" />
     <ClCompile Include="..\Code\CiTem.cpp" />
     <ClCompile Include="..\Code\CLand3.cpp" />
     <ClCompile Include="..\Code\CTopViewCam.cpp" />
