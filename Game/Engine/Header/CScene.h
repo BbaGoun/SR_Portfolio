@@ -29,7 +29,13 @@ public:
 	void			Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc);
 	void			Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc);
 	HRESULT			Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj);
+	uint64_t		GenerateGuid() {
+		return m_uNextGuid++;
+	}
+	virtual			void		InvalidateDeviceObjects() {};
 
+private:
+	CLayer* Find_Layer_Of(CGameObject* pObj);
 
 public:
 	virtual			HRESULT		Ready_Scene();
@@ -38,10 +44,7 @@ public:
 	virtual			void		LateUpdate_Scene(const _float& fDeltaTime);
 	virtual			void		Render_Scene();
 
-	virtual			void		InvalidateDeviceObjects() {};
-	uint64_t		GenerateGuid() {
-		return m_uNextGuid++;
-	}
+
 	void			Set_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer, bool bCollision);
 
 protected:

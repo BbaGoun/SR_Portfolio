@@ -37,6 +37,83 @@ HRESULT CLayer::Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject)
 	return S_OK;
 }
 
+bool CLayer::Contains(CGameObject* _pObj) const
+{
+	if (!_pObj)
+		return false;
+	for (auto& p : m_mapObject)
+	{
+		if (p.second == _pObj)
+			return true;
+	}
+	return false;
+}
+
+void CLayer::Attach_Root(CGameObject* _pObj)
+{
+	if (!_pObj)
+		return;
+	// 이미 루트인 경우 중복되는 것을 방지
+	Detach_Root(_pObj);
+
+	if (_pObj->Get_Parent() == nullptr)
+		m_vecRoots.push_back(_pObj);
+}
+
+void CLayer::Detach_Root(CGameObject* _pObj)
+{
+	if (!_pObj)
+		return;
+	m_vecRoots.erase(std::remove(m_vecRoots.begin(), m_vecRoots.end(), _pObj), m_vecRoots.end());
+}
+
+void CLayer::Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc)
+{
+	if (!_pDst || !_pSrc || _pDst == _pSrc)
+		return;
+
+	// 일단 루트로 불러오기
+	_pSrc->To_Root();
+
+	auto itSrc = std::find(m_vecRoots.begin(), m_vecRoots.end(), _pSrc);
+	auto itDst = std::find(m_vecRoots.begin(), m_vecRoots.end(), _pDst);
+	if (itSrc == m_vecRoots.end() || itDst == m_vecRoots.end())
+		return;
+
+	int iSrc = (int)(itSrc - m_vecRoots.begin());
+	int iDst = (int)(itDst - m_vecRoots.begin());
+	// 잠깐 삭제
+	m_vecRoots.erase(m_vecRoots.begin() + iSrc);
+	if (iDst > iSrc)
+		--iDst;
+	// 이전으로 삽입
+	m_vecRoots.insert(m_vecRoots.begin() + iDst, _pSrc);
+}
+
+void CLayer::Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc)
+{
+	if (!_pDst || !_pSrc || _pDst == _pSrc)
+		return;
+
+	// 일단 루트로 불러오기
+	_pSrc->To_Root();
+
+	auto itSrc = std::find(m_vecRoots.begin(), m_vecRoots.end(), _pSrc);
+	auto itDst = std::find(m_vecRoots.begin(), m_vecRoots.end(), _pDst);
+	if (itSrc == m_vecRoots.end() || itDst == m_vecRoots.end())
+		return;
+
+	int iSrc = (int)(itSrc - m_vecRoots.begin());
+	int iDst = (int)(itDst - m_vecRoots.begin()) + 1;
+	//잠깐 삭제
+	m_vecRoots.erase(m_vecRoots.begin() + iSrc);
+	if (iDst > iSrc)
+		--iDst;
+	// 이후로 삽입
+	m_vecRoots.insert(m_vecRoots.begin() + iDst, _pSrc);
+}
+
+
 HRESULT CLayer::Delete_GameObject(CGameObject* _pObj)
 {
 	if (!_pObj)
@@ -144,76 +221,6 @@ void CLayer::Render_Layer()
 	for (auto& pObj : m_mapObject)
 		pObj.second->Render_GameObject();
 }
-
-bool CLayer::Contains(CGameObject* _pObj) const
-{
-	if (!_pObj)
-		return false;
-	for (auto& p : m_mapObject)
-	{
-		if (p.second == _pObj)
-			return true;
-	}
-	return false;
-}
-
-void CLayer::Detach_Root(CGameObject* _pObj)
-{
-	if (!_pObj)
-		return;
-	m_vecRoots.erase(std::remove(m_vecRoots.begin(), m_vecRoots.end(), _pObj), m_vecRoots.end());
-}
-
-void CLayer::Attach_Root(CGameObject* _pObj)
-{
-	if (!_pObj)
-		return;
-	Detach_Root(_pObj);
-	if (_pObj->Get_Parent() == nullptr)
-		m_vecRoots.push_back(_pObj);
-}
-
-void CLayer::Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc)
-{
-	if (!_pDst || !_pSrc || _pDst == _pSrc)
-		return;
-
-	_pSrc->To_Root();
-
-	auto itSrc = std::find(m_vecRoots.begin(), m_vecRoots.end(), _pSrc);
-	auto itDst = std::find(m_vecRoots.begin(), m_vecRoots.end(), _pDst);
-	if (itSrc == m_vecRoots.end() || itDst == m_vecRoots.end())
-		return;
-
-	int iSrc = (int)(itSrc - m_vecRoots.begin());
-	int iDst = (int)(itDst - m_vecRoots.begin());
-	m_vecRoots.erase(m_vecRoots.begin() + iSrc);
-	if (iDst > iSrc)
-		--iDst;
-	m_vecRoots.insert(m_vecRoots.begin() + iDst, _pSrc);
-}
-
-void CLayer::Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc)
-{
-	if (!_pDst || !_pSrc || _pDst == _pSrc)
-		return;
-
-	_pSrc->To_Root();
-
-	auto itSrc = std::find(m_vecRoots.begin(), m_vecRoots.end(), _pSrc);
-	auto itDst = std::find(m_vecRoots.begin(), m_vecRoots.end(), _pDst);
-	if (itSrc == m_vecRoots.end() || itDst == m_vecRoots.end())
-		return;
-
-	int iSrc = (int)(itSrc - m_vecRoots.begin());
-	int iDst = (int)(itDst - m_vecRoots.begin()) + 1;
-	m_vecRoots.erase(m_vecRoots.begin() + iSrc);
-	if (iDst > iSrc)
-		--iDst;
-	m_vecRoots.insert(m_vecRoots.begin() + iDst, _pSrc);
-}
-
-
 
 CLayer* CLayer::Create()
 {

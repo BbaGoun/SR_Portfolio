@@ -45,9 +45,11 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
     if (_pGO == nullptr)
         return;
 
+    // 자신을 자식으로 할 수 없음
     if (this == _pGO)
         return;
 
+    // 조상이 내 자식이 될수는 없음
     CGameObject* ancestor = m_pParent;
     while (ancestor != nullptr) {
         if (_pGO == ancestor)
@@ -55,13 +57,16 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
         ancestor = ancestor->m_pParent;
     }
 
+    // 같은 부모 내에서 순서 재조정인가
     const bool bSameParent = (_pGO->m_pParent == this);
 
     _vec3 vPos;
+    // 같은 부모가 아니면 위치 보존을 위해 이전 위치를 저장
     if (!bSameParent)
         _pGO->Get_Transform()->Get_Info(INFO_POS, &vPos);
 
     int iOld = -1;
+    // 같은 부모면 이전 위치를 기억
     if (bSameParent)
     {
         auto it = std::find(m_vecChildren.begin(), m_vecChildren.end(), _pGO);
@@ -69,6 +74,7 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
             iOld = (int)(it - m_vecChildren.begin());
     }
 
+    // 부모가 있으면 부모와 연결을 끊고, 최상위였으면 최상위 목록에서 삭제
     if (_pGO->m_pParent != nullptr)
     {
         auto& vecOld = _pGO->m_pParent->m_vecChildren;
@@ -78,15 +84,20 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
     else
         CManagement::GetInstance()->Detach_Root(_pGO);
 
+    // iOld가 0보다 크거나 같다는 것은 같은 부모였다는 것
+    // 삭제한 위치보다 넣으려는 위치가 더 뒤면 삭제 때문에 1칸 앞당겨짐
     if (iOld >= 0 && _iIndex > iOld)
         --_iIndex;
 
+    // clmap
     if (_iIndex < 0 || _iIndex > (int)m_vecChildren.size())
         _iIndex = (int)m_vecChildren.size();
 
+    // 삽입
     m_vecChildren.insert(m_vecChildren.begin() + _iIndex, _pGO);
     _pGO->m_pParent = this;
 
+    // 아까 저장한 위치로 보존
     if (!bSameParent)
     {
         _matrix* pMatParent = Get_Transform()->Get_World();
@@ -148,10 +159,12 @@ void CGameObject::To_Root()
     _vec3 vPos;
     Get_Transform()->Get_Info(INFO_POS, &vPos);
 
+    // 부모와의 연결을 해제
     if (m_pParent != nullptr)
     {
         m_pParent->Delete_Child(this);
         m_pParent = nullptr;
+        // 위치가 그대로 이도록 설정
         Get_Transform()->Set_Pos(vPos);
     }
 

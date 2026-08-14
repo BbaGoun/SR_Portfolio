@@ -77,6 +77,13 @@ void CManagement::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj)
     }
 }
 
+void CManagement::InvalidateDeviceObjects()
+{
+    if (m_pScene)
+        m_pScene->InvalidateDeviceObjects();
+}
+
+
 HRESULT CManagement::Set_Scene(CScene* pScene)
 {
     if (nullptr == pScene)
@@ -133,12 +140,6 @@ void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
         return;
 
     m_pScene->Render_Scene();
-}
-
-void CManagement::InvalidateDeviceObjects()
-{
-    if (m_pScene)
-        m_pScene->InvalidateDeviceObjects();
 }
 
 void CManagement::Free()

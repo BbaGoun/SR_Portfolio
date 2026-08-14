@@ -32,7 +32,11 @@ HRESULT CScene::Add_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag, C
 
 const map<const _tchar*, CGameObject*>& CScene::Get_GameObjects(const _tchar* pLayerTag)
 {
-    return m_mapLayer.find(pLayerTag)->second->Get_GameObjects();
+    static const map<const _tchar*, CGameObject*> s_empty;
+    auto it = m_mapLayer.find(pLayerTag);
+    if (it == m_mapLayer.end() || !it->second)
+        return s_empty;
+    return it->second->Get_GameObjects();
 }
 
 const vector<CGameObject*>& CScene::Get_Roots(const _tchar* pLayerTag)
@@ -44,21 +48,9 @@ const vector<CGameObject*>& CScene::Get_Roots(const _tchar* pLayerTag)
     return it->second->Get_Roots();
 }
 
-static CLayer* Find_Layer_Of(map<const _tchar*, CLayer*>& layers, CGameObject* pObj)
-{
-    if (!pObj)
-        return nullptr;
-    for (auto& p : layers)
-    {
-        if (p.second && p.second->Contains(pObj))
-            return p.second;
-    }
-    return nullptr;
-}
-
 void CScene::Attach_Root(CGameObject* _pObj)
 {
-    if (CLayer* pLayer = Find_Layer_Of(m_mapLayer, _pObj))
+    if (CLayer* pLayer = Find_Layer_Of(_pObj))
         pLayer->Attach_Root(_pObj);
 }
 
@@ -73,13 +65,13 @@ void CScene::Detach_Root(CGameObject* _pObj)
 
 void CScene::Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc)
 {
-    if (CLayer* pLayer = Find_Layer_Of(m_mapLayer, _pDst))
+    if (CLayer* pLayer = Find_Layer_Of(_pDst))
         pLayer->Insert_Root_Before(_pDst, _pSrc);
 }
 
 void CScene::Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc)
 {
-    if (CLayer* pLayer = Find_Layer_Of(m_mapLayer, _pDst))
+    if (CLayer* pLayer = Find_Layer_Of(_pDst))
         pLayer->Insert_Root_After(_pDst, _pSrc);
 }
 
@@ -88,6 +80,18 @@ HRESULT CScene::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj)
     m_mapLayer.find(pLayerTag)->second->Delete_GameObject(_pObj);
 
     return S_OK;
+}
+
+CLayer* CScene::Find_Layer_Of(CGameObject* pObj)
+{
+    if (!pObj)
+        return nullptr;
+    for (auto& p : m_mapLayer)
+    {
+        if (p.second && p.second->Contains(pObj))
+            return p.second;
+    }
+    return nullptr;
 }
 
 HRESULT CScene::Ready_Scene()

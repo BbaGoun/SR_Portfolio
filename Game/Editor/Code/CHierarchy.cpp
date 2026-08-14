@@ -129,6 +129,7 @@ void CHierarchy::Draw_TreeNode(CGameObject* pObj)
         m_uOpenGuid = 0;
     }
 
+    // 전달하는 Guid를 ID로 하여 노드가 분리됨.
     bool open = ImGui::TreeNodeEx(
         (void*)(uintptr_t)pObj->GetGuid(),
         flags,

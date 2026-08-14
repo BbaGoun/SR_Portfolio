@@ -33,6 +33,7 @@ public:
 	void			Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj);
 
 	uint64_t		GenerateGuid() { return m_pScene->GenerateGuid(); }
+	void			InvalidateDeviceObjects();
 
 public:
 	HRESULT			Set_Scene(CScene* pScene);
@@ -43,7 +44,6 @@ public:
 	_int			Update_Scene(const _float& fDeltaTime);
 	void			LateUpdate_Scene(const _float& fDeltaTime);
 	void			Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
-	void			InvalidateDeviceObjects();
 
 private:
 	CScene*					m_pScene;
