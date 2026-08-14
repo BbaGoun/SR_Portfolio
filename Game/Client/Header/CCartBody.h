@@ -23,10 +23,6 @@ public:
 public:
 	static CCartBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-private:
-	Engine::CCube_Collider*		m_pColliderCom;
-	Engine::CSphere_Collider*	m_pSphereColliderCom;
-
 protected:
 	virtual		void		Free() override;
 };

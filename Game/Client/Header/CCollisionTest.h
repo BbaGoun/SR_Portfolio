@@ -1,8 +1,7 @@
 #pragma once
 #include "CScene.h"
 
-class CCollisionTest :
-	public CScene
+class CCollisionTest : public CScene
 {
 private:
 	explicit CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -22,6 +21,7 @@ private:
 	HRESULT	Ready_Prototype();
 	HRESULT Ready_GameLogic_Layer();
 	HRESULT Ready_Environment_Layer();
+	HRESULT Ready_UI_Layer();
 
 protected:
 	virtual void			Free() override;

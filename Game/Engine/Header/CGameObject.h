@@ -57,6 +57,8 @@ public:
 
 	_float			Get_Speed() { return m_fSpeed; }
 
+	_float			Get_ViewZ() { return m_fViewZ; }
+	void			Compute_ViewZ(const _vec3* pPos);
 	void			SetGuid(uint64_t _guid) { m_uGuid = _guid; }
 	uint64_t		GetGuid() { return m_uGuid; }
 	void			SetName(const WCHAR* _name) { wcscpy_s(m_wName, 128, _name); }
@@ -82,6 +84,9 @@ protected:
 	_float									m_fSpeed;
 	_vec3									m_vForce;
 	_vec3									m_vRotation;
+
+
+	_float									m_fViewZ;
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);

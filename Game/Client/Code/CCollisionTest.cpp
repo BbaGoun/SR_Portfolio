@@ -16,6 +16,14 @@
 #include "CCartBody1.h"
 #include "CCartBody2.h"
 #include "CFollowSmoothCam.h"
+#include "CCollisionBox.h"
+#include "CBoostWind.h"
+#include "CUI_Exit.h"
+#include "CBoostJet.h"
+#include "CHUD_Main.h"
+#include "CHUD_Gage.h"
+#include "CHUD_Num.h"
+#include "CLand3.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -36,6 +44,9 @@ HRESULT CCollisionTest::Ready_Scene()
 	if (FAILED(Ready_Environment_Layer()))
 		return E_FAIL;
 
+	if (FAILED(Ready_UI_Layer()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -44,13 +55,14 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 	CScene::FixedUpdate_Scene(fFixedDeltaTime);
 
 	// 충돌 처리
-	//CCollider* pCartCollider = static_cast<CCollider*>
-	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CartBody", L"Com_Collider"));
+	CCollider* pCartCollider = static_cast<CCollider*>
+		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Cart", L"Com_Collider"));
 	//CCollider* pCartSphereCollider = static_cast<CCollider*>
-	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CartBody", L"Com_SphereCollider"));
-	//CCollider* pBoxCollider = static_cast<CCollider*>
-	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Box", L"Com_Collider"));
-	//CCollisionMgr::GetInstance()->Collision(pCartSphereCollider, pBoxCollider);
+	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Cart", L"Com_SphereCollider"));
+	
+	CCollider* pBoxCollider = static_cast<CCollider*>
+		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CollisionBox", L"Com_Collider"));
+	CCollisionMgr::GetInstance()->Collision(pBoxCollider, pCartCollider);
 
 }
 
@@ -203,8 +215,40 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	
 	pCart->Set_Child(pGameObject);
 
+	// ## 부스터 왼쪽 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindL", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
+
+	// ## 부스터 오른쪽 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindR", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
+
+	// ## 부스터 제트 이펙트
+	pGameObject = CBoostJet::Create(m_pGraphicDev);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostJet", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
+
 	//// # 플레이어 따라다니는 3인칭 카메라
-	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev);
+	_vec3 vEye, vAt, vUp, vLook;
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 10) + (vLook * -20);
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp);
 
 	if (pGameObject == nullptr)
 		return E_FAIL;
@@ -216,18 +260,57 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
 
-
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
 
 
-	// # 박스
-	CGameObject* pBox = CBox::Create(m_pGraphicDev);
+	// # 트랙
+	for (int i = 0; i < 40; ++i)
+	{
+		CGameObject* pBox = CCartBody1::Create(m_pGraphicDev);
+
+		if (pBox == nullptr)
+			return E_FAIL;
+		pBox->Get_Transform()->Set_Scale({ 2,2,2 });
+		if (i < 20)
+		{
+			pBox->Get_Transform()->Set_Pos({ 100 * cosf(2 * D3DX_PI / 40 * i), 0.f, 100 + 100 * sinf(2 * D3DX_PI / 40 * i) });
+		}
+		else
+		{
+			pBox->Get_Transform()->Set_Pos({ 100 * cosf(2 * D3DX_PI / 40 * i), 0.f, -100 + 100 * sinf(2 * D3DX_PI / 40 * i) });
+		}
+		const _tchar*	szBuff = L"Obj_Box" + i; 
+		if (FAILED(pGameObjectLayer->Add_GameObject(szBuff, pBox)))
+			return E_FAIL;
+	}
+	for (int i = 0; i < 40; ++i)
+	{
+		CGameObject* pBox = CCartBody1::Create(m_pGraphicDev);
+
+		if (pBox == nullptr)
+			return E_FAIL;
+		pBox->Get_Transform()->Set_Scale({ 2,2,2 });
+		if (i < 20)
+		{
+			pBox->Get_Transform()->Set_Pos({ -100.f, 0.f,100 - 10.f * i });
+		}
+		else
+		{
+			pBox->Get_Transform()->Set_Pos({ 100.f, 0.f,100 - 10.f * (i - 20) });
+		}
+		const _tchar* szBuff = L"Obj_Box" + i + 40;
+		if (FAILED(pGameObjectLayer->Add_GameObject(szBuff, pBox)))
+			return E_FAIL;
+	}
+
+	CGameObject* pBox = CCollisionBox::Create(m_pGraphicDev);
 
 	if (pBox == nullptr)
 		return E_FAIL;
-
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Box", pBox)))
+	pBox->Get_Transform()->Set_Pos({ -200.f, 1.f,200.f  });
+	
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox", pBox)))
 		return E_FAIL;
 
 	return S_OK;
@@ -258,14 +341,58 @@ HRESULT CCollisionTest::Ready_Environment_Layer()
 	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land", pEnvObject)))
 	//	return E_FAIL;
 
-	pEnvObject = CLand2::Create(m_pGraphicDev);
-	
+	//pEnvObject = CLand2::Create(m_pGraphicDev);
+	//
+	//if (pEnvObject == nullptr)
+	//	return E_FAIL;
+	//
+	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
+	//	return E_FAIL;
+	pEnvObject = CLand3::Create(m_pGraphicDev);
+
 	if (pEnvObject == nullptr)
 		return E_FAIL;
-	
-	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
+
+	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land3", pEnvObject)))
 		return E_FAIL;
-	
+	return S_OK;
+}
+
+
+HRESULT CCollisionTest::Ready_UI_Layer()
+{
+	CLayer* pUILayer = CLayer::Create();
+
+	if (pUILayer == nullptr)
+		return E_FAIL;
+
+	m_mapLayer.insert({ L"UI", pUILayer });
+
+	CGameObject* pUIObject = nullptr;
+
+	// UI_HUDMain
+	pUIObject = CHUD_Main::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDMain", pUIObject)))
+		return E_FAIL;
+
+	// UI_HUDGage
+	pUIObject = CHUD_Gage::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDGage", pUIObject)))
+		return E_FAIL;
+
+	// UI_HUDNum
+	pUIObject = CHUD_Num::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDNum", pUIObject)))
+		return E_FAIL;
+
+
+
 	return S_OK;
 }
 

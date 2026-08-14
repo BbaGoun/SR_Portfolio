@@ -106,6 +106,36 @@
     <Filter Include="01. Scene\Item">
       <UniqueIdentifier>{8cfc90e9-be4b-467b-a9ea-b5f4e04dec79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\CollisionBox">
+      <UniqueIdentifier>{2d007e2e-4859-437b-8792-e22af7780408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\BoostEffect">
+      <UniqueIdentifier>{c7a8c4f7-5a87-4e8b-a638-0d2f080dbd57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\BoostEffect\BoostJet">
+      <UniqueIdentifier>{0d1931e9-6d11-46c4-b1e6-d66294ec4643}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\BoostEffect\BoostWind">
+      <UniqueIdentifier>{4d4021d3-2776-418b-b6db-ffcdf124c2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI">
+      <UniqueIdentifier>{77b0e0b9-78db-4975-b5b9-26be286bd1d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD">
+      <UniqueIdentifier>{06fcef9e-f0e4-4a30-8852-d43fa436b7e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\Num">
+      <UniqueIdentifier>{45e4ae89-db24-459f-bb4c-d03f0ddbf99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\HUD_Main">
+      <UniqueIdentifier>{f78c48f2-c807-400d-b397-3d86306486d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\Gage">
+      <UniqueIdentifier>{bd8bd500-6a9a-4ffc-a739-75f687414e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Land3">
+      <UniqueIdentifier>{f65dd40c-8e32-476d-91b0-4980159e909b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -213,6 +243,30 @@
     <ClInclude Include="..\Header\CiTem.h">
       <Filter>01. Scene\Item</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCollisionBox.h">
+      <Filter>02. GameObject\CollisionBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Exit.h">
+      <Filter>02. GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoostJet.h">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoostWind.h">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Main.h">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Gage.h">
+      <Filter>02. GameObject\UI\UI_HUD\Gage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Num.h">
+      <Filter>02. GameObject\UI\UI_HUD\Num</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLand3.h">
+      <Filter>02. GameObject\Land3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -306,7 +360,31 @@
       <Filter>01. Scene\Item</Filter>
     </ClCompile>
     <ClCompile Include="Client.cpp">
-      <Filter>01. Scene\Item</Filter>
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollisionBox.cpp">
+      <Filter>02. GameObject\CollisionBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Exit.cpp">
+      <Filter>02. GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoostJet.cpp">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoostWind.cpp">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Main.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Gage.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\Gage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Num.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\Num</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLand3.cpp">
+      <Filter>02. GameObject\Land3</Filter>
     </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>소스 파일</Filter>

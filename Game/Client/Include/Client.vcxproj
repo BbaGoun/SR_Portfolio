@@ -176,6 +176,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
+    <ClInclude Include="..\Header\CBoostWind.h" />
+    <ClInclude Include="..\Header\CBoostJet.h" />
     <ClInclude Include="..\Header\CBox.h" />
     <ClInclude Include="..\Header\CCart.h" />
     <ClInclude Include="..\Header\CCartBody.h" />
@@ -183,9 +185,13 @@
     <ClInclude Include="..\Header\CCartBody2.h" />
     <ClInclude Include="..\Header\CCodyBody.h" />
     <ClInclude Include="..\Header\CCollisionTest.h" />
+    <ClInclude Include="..\Header\CCollisionBox.h" />
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
+    <ClInclude Include="..\Header\CHUD_Main.h" />
+    <ClInclude Include="..\Header\CHUD_Num.h" />
     <ClInclude Include="..\Header\CMapTest.h" />
     <ClInclude Include="..\Header\CiTem.h" />
+    <ClInclude Include="..\Header\CLand3.h" />
     <ClInclude Include="..\Header\CTopViewCam.h" />
     <ClInclude Include="..\Header\CEnemy.h" />
     <ClInclude Include="..\Header\CFirstPerCam.h" />
@@ -204,6 +210,8 @@
     <ClInclude Include="..\Header\CScene_Test.h" />
     <ClInclude Include="..\Header\CSkyBox.h" />
     <ClInclude Include="..\Header\CGOCody.h" />
+    <ClInclude Include="..\Header\CUI_Exit.h" />
+    <ClInclude Include="..\Header\CHUD_Gage.h" />
     <ClInclude Include="..\Header\CWheel.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
@@ -213,6 +221,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CBackGround.cpp" />
+    <ClCompile Include="..\Code\CBoostWind.cpp" />
+    <ClCompile Include="..\Code\CBoostJet.cpp" />
     <ClCompile Include="..\Code\CBox.cpp" />
     <ClCompile Include="..\Code\CCart.cpp" />
     <ClCompile Include="..\Code\CCartBody.cpp" />
@@ -220,9 +230,13 @@
     <ClCompile Include="..\Code\CCartBody2.cpp" />
     <ClCompile Include="..\Code\CCodyBody.cpp" />
     <ClCompile Include="..\Code\CCollisionTest.cpp" />
+    <ClCompile Include="..\Code\CCollisionBox.cpp" />
     <ClCompile Include="..\Code\CFollowSmoothCam.cpp" />
+    <ClCompile Include="..\Code\CHUD_Main.cpp" />
+    <ClCompile Include="..\Code\CHUD_Num.cpp" />
     <ClCompile Include="..\Code\CMapTest.cpp" />
     <ClCompile Include="..\Code\CiTem.cpp" />
+    <ClCompile Include="..\Code\CLand3.cpp" />
     <ClCompile Include="..\Code\CTopViewCam.cpp" />
     <ClCompile Include="..\Code\CEnemy.cpp" />
     <ClCompile Include="..\Code\CFirstPerCam.cpp" />
@@ -240,6 +254,8 @@
     <ClCompile Include="..\Code\CScene_Test.cpp" />
     <ClCompile Include="..\Code\CSkyBox.cpp" />
     <ClCompile Include="..\Code\CGOCody.cpp" />
+    <ClCompile Include="..\Code\CUI_Exit.cpp" />
+    <ClCompile Include="..\Code\CHUD_Gage.cpp" />
     <ClCompile Include="..\Code\CWheel.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">

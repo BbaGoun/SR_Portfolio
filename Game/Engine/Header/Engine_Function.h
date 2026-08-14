@@ -5,8 +5,8 @@
 
 namespace Engine
 {
-	// ÅÛÇÃ¸´Àº ±â´ÉÀÇ Á¤ÇØÁ®ÀÖÀ¸³ª ÀÚ·áÇüÀº Á¤ÇØÁ®ÀÖÁö ¾ÊÀº °Í
-	// ±â´ÉÀ» ÀÎ½ºÅÏ½ºÈ­ ÇÏ±â À§ÇÏ¿© ¸¸µé¾îµÎ´Â Æ²
+	// í…œí”Œë¦¿ì€ ê¸°ëŠ¥ì˜ ì •í•´ì ¸ìˆìœ¼ë‚˜ ìë£Œí˜•ì€ ì •í•´ì ¸ìˆì§€ ì•Šì€ ê²ƒ
+	// ê¸°ëŠ¥ì„ ì¸ìŠ¤í„´ìŠ¤í™” í•˜ê¸° ìœ„í•˜ì—¬ ë§Œë“¤ì–´ë‘ëŠ” í‹€
 
 	template<typename T>
 	void	Safe_Delete(T& Pointer)
@@ -84,7 +84,7 @@ namespace Engine
 		}
 	};
 
-	// ¿¬°üÄÁÅ×ÀÌ³Ê »èÁ¦¿ë
+	// ì—°ê´€ì»¨í…Œì´ë„ˆ ì‚­ì œìš©
 	class CDeleteMap
 	{
 	public:
@@ -112,6 +112,19 @@ namespace Engine
 		return DirectX::XMLoadFloat3(reinterpret_cast<const DirectX::XMFLOAT3*>(&vec));
 	}
 
+	inline DirectX::XMFLOAT3 ToXMFLOAT3(const _vec3& v)
+	{
+		return DirectX::XMFLOAT3(v.x, v.y, v.z);
+	}
+
+	inline _vec3 ToVec3(const DirectX::XMFLOAT3& _XMFLOAT3)
+	{
+		return _vec3(_XMFLOAT3.x, _XMFLOAT3.y, _XMFLOAT3.z);
+	}
+
+	inline DirectX::XMFLOAT4 ToXMFLOAT4(const D3DXQUATERNION& q)
+	{
+		return DirectX::XMFLOAT4(q.x, q.y, q.z, q.w);
 	inline std::string ToUtf8(const _tchar* wstr) {
 		if (!wstr) return "";
 		int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, NULL, 0, NULL, NULL);

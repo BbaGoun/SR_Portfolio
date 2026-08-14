@@ -204,6 +204,20 @@ void CGameObject::Set_CollisionLayer(COLLISION_LAYER eID)
     m_iCollisionLayer << eID;
 }
 
+void CGameObject::Compute_ViewZ(const _vec3* pPos)
+{
+    _matrix matCamWorld;
+    m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+    D3DXMatrixInverse(&matCamWorld, 0, &matCamWorld);
+
+    _vec3   vCamPos;
+    memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
+
+    _vec3   vDir = vCamPos - *pPos;
+
+    m_fViewZ = D3DXVec3Length(&vDir);
+}
+
 CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponentTag)
 {
     auto        iter = find_if(m_mapComponent[eID].begin(),
