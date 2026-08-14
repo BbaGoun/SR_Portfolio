@@ -21,9 +21,9 @@ public:
 	void	Insert_Before(CGameObject* _pGO);
 	void	Insert_After(CGameObject* _pGO);
 	const vector<CGameObject*>& Get_Children() { return m_vecChildren; }
-	CGameObject* Get_Parent() { return m_pParent; }
 	void	Delete_Child(CGameObject* _pObj);
 	void	To_Root();
+	CGameObject* Get_Parent() { return m_pParent; }
 
 public:
 	virtual			HRESULT		Ready_GameObject();

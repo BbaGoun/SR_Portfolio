@@ -133,6 +133,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	CGameObject* pGameObject = nullptr;
 	// ## 카트 몸체1
 	pGameObject = CCartBody1::Create(m_pGraphicDev);
+	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,1.5,1 });
 	pGameObject->Get_Transform()->Set_Pos({ 0,0,-3 });
 	if (pGameObject == nullptr)
@@ -140,10 +141,10 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody1", pGameObject)))
 		return E_FAIL;
 	
-	pCartBody->Set_Child(pGameObject);
 	
 	// ## 카트 몸체2
 	pGameObject = CCartBody2::Create(m_pGraphicDev);
+	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,0.5,0.5 });
 	pGameObject->Get_Transform()->Set_Pos({ 0,1,-1.5 });
 	if (pGameObject == nullptr)
@@ -151,10 +152,10 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody2", pGameObject)))
 		return E_FAIL;
 	
-	pCartBody->Set_Child(pGameObject);
 	
 	// ## 카트 몸체3
 	pGameObject = CCartBody1::Create(m_pGraphicDev);
+	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,1,0.5 });
 	pGameObject->Get_Transform()->Set_Pos({ 0,-0.5,-1.5 });
 	if (pGameObject == nullptr)
@@ -162,10 +163,10 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody3", pGameObject)))
 		return E_FAIL;
 	
-	pCartBody->Set_Child(pGameObject);
 	
 	// ## 카트 몸체4
 	pGameObject = CCartBody1::Create(m_pGraphicDev);
+	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,1.f,4 });
 	pGameObject->Get_Transform()->Set_Pos({ 0,-0.75,0.5 });
 	if (pGameObject == nullptr)
@@ -173,7 +174,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody4", pGameObject)))
 		return E_FAIL;
 	
-	pCartBody->Set_Child(pGameObject);
 
 
 	// ## 왼쪽 앞바퀴
