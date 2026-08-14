@@ -142,6 +142,9 @@
     <Filter Include="04. Component\Shape\Prism\Triangular">
       <UniqueIdentifier>{0b2a77d0-f793-4545-93e3-5778d5715798}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Management\GameObject\CEmpty">
+      <UniqueIdentifier>{390fe467-04bc-4dbe-a81b-8521d6eac13a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -288,6 +291,9 @@
     <ClInclude Include="..\Header\CTriangularPrism.h">
       <Filter>04. Component\Shape\Prism\Triangular</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CEmpty.h">
+      <Filter>03. Management\GameObject\CEmpty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -415,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTriangularPrism.cpp">
       <Filter>04. Component\Shape\Prism\Triangular</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEmpty.cpp">
+      <Filter>03. Management\GameObject\CEmpty</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

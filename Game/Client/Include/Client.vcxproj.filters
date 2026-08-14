@@ -211,7 +211,7 @@
       <Filter>01. Scene\MapTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CiTem.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>01. Scene\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -307,6 +307,9 @@
     </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>01. Scene\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
