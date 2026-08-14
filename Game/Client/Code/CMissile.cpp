@@ -4,6 +4,8 @@
 #include "CRenderer.h"
 #include "CManagement.h"
 #include "CMissileTex.h"
+#include "CCollisionMgr.h"
+#include "CCube_Collider.h"
 
 CMissile::CMissile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -76,40 +78,43 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	_vec3 vOriginPos = { 0.f, 0.f, 0.f };
 	D3DXVec3TransformCoord(&outerBoxPos, &vOriginPos, &matWorld);
 
-	if (fDistance > 8.f)
-	{
-		_vec3 vMoveDir = outerBoxPos - pMissilePos;
-		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
+		if (fDistance > 8.f)
+		{
+			_vec3 vMoveDir = outerBoxPos - pMissilePos;
+			D3DXVec3Normalize(&vMoveDir, &vMoveDir);
 
-		_vec3 vLookDir = innerBoxPos - pMissilePos;
-		D3DXVec3Normalize(&vLookDir, &vLookDir);
+			_vec3 vLookDir = innerBoxPos - pMissilePos;
+			D3DXVec3Normalize(&vLookDir, &vLookDir);
 
-		_matrix matRot;
-		m_pTransformCom->GetFollowRotation(&vLookDir, &matRot);
+			_matrix matRot;
+			m_pTransformCom->GetFollowRotation(&vLookDir, &matRot);
 
-		_quaternion qRot;
-		D3DXQuaternionRotationMatrix(&qRot, &matRot);
+			_quaternion qRot;
+			D3DXQuaternionRotationMatrix(&qRot, &matRot);
 
-		m_pTransformCom->Multiple_Quaternion(&qRot);
-		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
-	}
-	else
-	{
-		_vec3 vMoveDir = innerBoxPos - pMissilePos;
-		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
+			m_pTransformCom->Multiple_Quaternion(&qRot);
+			m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
+		}
 
-		_vec3 vLookDir = innerBoxPos - pMissilePos;
-		D3DXVec3Normalize(&vLookDir, &vLookDir);
+		else
+		{
+			_vec3 vMoveDir = innerBoxPos - pMissilePos;
+			D3DXVec3Normalize(&vMoveDir, &vMoveDir);
 
-		_matrix matRot;
-		m_pTransformCom->GetFollowRotation(&vLookDir, &matRot);
+			_vec3 vLookDir = innerBoxPos - pMissilePos;
+			D3DXVec3Normalize(&vLookDir, &vLookDir);
 
-		_quaternion qRot;
-		D3DXQuaternionRotationMatrix(&qRot, &matRot);
+			_matrix matRot;
+			m_pTransformCom->GetFollowRotation(&vLookDir, &matRot);
 
-		m_pTransformCom->Multiple_Quaternion(&qRot);
-		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
-	}
+			_quaternion qRot;
+			D3DXQuaternionRotationMatrix(&qRot, &matRot);
+
+			m_pTransformCom->Multiple_Quaternion(&qRot);
+			m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
+		}
+
+		Engine::CCube_Collider* CCollider = nullptr;
 }
 
 _int CMissile::Update_GameObject(const _float& fTimeDelta)
