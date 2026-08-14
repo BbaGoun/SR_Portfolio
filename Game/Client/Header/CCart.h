@@ -40,6 +40,7 @@ public:
 
 	void			SetRainbowUI(bool bRainbowState) { m_bRainbowUI = bRainbowState; }
 
+
 	void			CreateRainbowObject();
 private:
 	_float		m_fMaxSpeed;
@@ -54,7 +55,6 @@ private:
 	float		m_fBoostCal;
 
 	float		m_bRainbowUI;
-	int			m_iRainbowObjectCnt;
 
 	Engine::CCube_Collider* m_pColliderCom;
 

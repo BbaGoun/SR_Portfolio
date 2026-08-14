@@ -346,14 +346,14 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 
 
-	// 무지개 구름 이펙트
-	pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
-	
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
-		return E_FAIL;
-	pGameObject->SetLayer(pGameObjectLayer);
+	//// 무지개 구름 이펙트
+	//pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
+	//
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
+	//	return E_FAIL;
+	//pGameObject->SetLayer(pGameObjectLayer);
 
 	return S_OK;
 }

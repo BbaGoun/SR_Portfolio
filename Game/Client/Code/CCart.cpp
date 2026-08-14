@@ -37,7 +37,6 @@ HRESULT CCart::Ready_GameObject()
 
 	m_bBoost			= false;
 	m_bRainbowUI		= false;
-	m_iRainbowObjectCnt = 0;
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -391,9 +390,6 @@ void CCart::CreateRainbowObject()
 
 	if (nullptr == pGameObject)
 		return ;
-
-	TCHAR wObjectTag[32];
-	wsprintf(wObjectTag, L"Rainbow_Cloud", m_iRainbowObjectCnt++);
 
 	if (FAILED(m_pLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
 		return ;
