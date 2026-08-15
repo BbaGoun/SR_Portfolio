@@ -64,7 +64,12 @@ private:
 	float		m_fBananaTimer;
 	_vec3		m_vBananaSpinStartLook;
 
+	float		m_fCurGage;
+	float		m_fGainGage;
+
 	Engine::CCube_Collider* m_pColliderCom;
+
+
 
 protected:
 	virtual		void		Free() override;

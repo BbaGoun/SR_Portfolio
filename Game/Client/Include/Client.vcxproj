@@ -208,6 +208,7 @@
     <ClInclude Include="..\Header\CScene_Test.h" />
     <ClInclude Include="..\Header\CSkyBox.h" />
     <ClInclude Include="..\Header\CGOCody.h" />
+    <ClInclude Include="..\Header\CUI_BoosterBar.h" />
     <ClInclude Include="..\Header\CUI_Exit.h" />
     <ClInclude Include="..\Header\CHUD_Gage.h" />
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="..\Code\CScene_Test.cpp" />
     <ClCompile Include="..\Code\CSkyBox.cpp" />
     <ClCompile Include="..\Code\CGOCody.cpp" />
+    <ClCompile Include="..\Code\CUI_BoosterBar.cpp" />
     <ClCompile Include="..\Code\CUI_Exit.cpp" />
     <ClCompile Include="..\Code\CHUD_Gage.cpp" />
     <ClCompile Include="..\Code\CUI_Rainbow.cpp" />

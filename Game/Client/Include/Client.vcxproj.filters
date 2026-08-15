@@ -136,6 +136,15 @@
     <Filter Include="02. GameObject\Item\Banana">
       <UniqueIdentifier>{4de29079-460b-4184-99c7-5fa447048b9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI\UI_Booster">
+      <UniqueIdentifier>{0036db55-c776-4fad-9fbb-1da8a991da44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Booster\UI_BoosterBar">
+      <UniqueIdentifier>{8ef9adcb-37b7-43f5-b4f7-a8e0edc7010b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Booster\UI_BoosterBG">
+      <UniqueIdentifier>{6a0eba07-e98e-47f8-a58a-a5d842776ca0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -264,6 +273,9 @@
     <ClInclude Include="..\Header\CBanana.h">
       <Filter>02. GameObject\Item\Banana</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI_BoosterBar.h">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -382,6 +394,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CBanana.cpp">
       <Filter>02. GameObject\Item\Banana</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_BoosterBar.cpp">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

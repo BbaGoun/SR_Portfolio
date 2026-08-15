@@ -26,6 +26,7 @@
 #include "CLand3.h"
 #include "CRainBow_Cloud.h"
 #include "CUI_Rainbow.h"
+#include "CUI_BoosterBar.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -442,6 +443,12 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_Rainbow", pUIObject)))
 		return E_FAIL;
 
+	// UI_BoosterBar
+	pUIObject = CUI_BoosterBar::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
+		return E_FAIL;
 
 	return S_OK;
 }
