@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CBoostWind.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -22,14 +22,14 @@ CBoostWind::~CBoostWind()
 HRESULT CBoostWind::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Scale({ 8,8,0 });
+	m_pTransformCom->Set_Scale({ 16,16,0 });
 	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	D3DXQUATERNION q;
 	switch (m_eBoosterID)
@@ -70,7 +70,7 @@ HRESULT CBoostWind::Ready_GameObject()
 		break;
 	}
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	return S_OK;
 }
@@ -115,7 +115,7 @@ void CBoostWind::Render_GameObject()
 		
 		matView = CCameraMgr::GetInstance()->GetCameraInfo().matView;
 		
-		// ºÎ¸ð
+		// ë¶€ëª¨
 		D3DXMatrixIdentity(&matBill);
 		
 		matBill._11 = matParent._11;
@@ -126,7 +126,7 @@ void CBoostWind::Render_GameObject()
 		D3DXMatrixInverse(&matBill, 0, &matBill);
 		matWorld = matBill * matWorld; 
 		
-		// Ä«¸Þ¶ó
+		// ì¹´ë©”ë¼
 		D3DXMatrixIdentity(&matBill);
 		
 		matBill._11 = matView._11;
@@ -137,7 +137,7 @@ void CBoostWind::Render_GameObject()
 		D3DXMatrixInverse(&matBill, 0, &matBill);
 		matWorld = matBill * matWorld;
 		
-		// ºôº¸µå Àû¿ë(Å©±â°¡ ´Þ¶óÁú °æ¿ì °è»ê½Ä º¯°æ)
+		// ë¹Œë³´ë“œ ì ìš©(í¬ê¸°ê°€ ë‹¬ë¼ì§ˆ ê²½ìš° ê³„ì‚°ì‹ ë³€ê²½)
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 		
 		//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());

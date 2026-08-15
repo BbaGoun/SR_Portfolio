@@ -1,11 +1,7 @@
-#include "CCube_Collider.h"
+﻿#include "CCube_Collider.h"
 #include "CTransform.h"
 #include "CGameObject.h"
 #include "CCalculator.h"
-
-CCube_Collider::CCube_Collider()
-{
-}
 
 CCube_Collider::CCube_Collider(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CCollider(pGraphicDev)

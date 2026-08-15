@@ -1,23 +1,13 @@
 ﻿#include "CTransform.h"
 #include "CGameObject.h"
 
-CTransform::CTransform() : CComponent()
-, m_localQuaternion({ 0, 0, 0, 1 })
-, m_worldQuaternion({ 0, 0, 0, 1 })
-, m_vScale({ 1, 1, 1 })
-, m_bDirty(true)
-{
-	ZeroMemory(&m_vInfo, sizeof(_vec3) * INFO_END);
-	D3DXMatrixIdentity(&m_matWorld);
-	D3DXMatrixIdentity(&m_matLocalWorld);
-}
-
 CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev) : CComponent(pGraphicDev)
 , m_localQuaternion({ 0, 0, 0, 1 })
 , m_worldQuaternion({ 0, 0, 0, 1 })
 , m_vScale({ 1, 1, 1 })
 , m_bDirty(true)
 {
+	m_eID = ID_STATIC;
 	ZeroMemory(&m_vInfo, sizeof(_vec3) * INFO_END);
 	D3DXMatrixIdentity(&m_matWorld);
 	D3DXMatrixIdentity(&m_matLocalWorld);
@@ -29,6 +19,7 @@ CTransform::CTransform(const CTransform& rhs):CComponent(rhs)
 , m_vScale(rhs.m_vScale)
 , m_bDirty(rhs.m_bDirty)
 {
+	m_eID = ID_STATIC;
 	for (int i = 0; i < INFO_END; ++i)
 		m_vInfo[i] = rhs.m_vInfo[i];
 

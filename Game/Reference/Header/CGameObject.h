@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CBase.h"
 #include "CComponent.h"
 #include "CTransform.h"
@@ -15,6 +15,8 @@ protected:
 	virtual ~CGameObject();
 
 public:
+	template<typename T, typename = std::enable_if_t<std::is_base_of_v<CComponent, T>>>
+	T* Get_Component();
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	CTransform* Get_Transform() { return m_pTransformCom; }
 	void	Set_Child(CGameObject* _pGO);
@@ -75,7 +77,7 @@ protected:
 	WCHAR									m_wName[128];
 	WCHAR									m_wTag[128];
 
-	map<const _tchar*, CComponent*>			m_mapComponent[ID_END];
+	map<const _tchar*, CComponent*>			m_mapComponent;
 	LPDIRECT3DDEVICE9						m_pGraphicDev;
 	
 	vector<CGameObject*>					m_vecChildren;
@@ -102,3 +104,13 @@ protected:
 };
 
 END
+
+template<typename T, typename>
+inline T* CGameObject::Get_Component()
+{
+	for (auto& p : m_mapComponent) {
+		if (T* pCom = dynamic_cast<T*>(p.second))
+			return pCom;
+	}
+	return nullptr;
+}

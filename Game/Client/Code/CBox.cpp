@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CBox.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -29,7 +29,7 @@ HRESULT CBox::Ready_GameObject()
 	if (nullptr == pComponent)
 		return E_FAIL;
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	//pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
 	//if (nullptr == pComponent)

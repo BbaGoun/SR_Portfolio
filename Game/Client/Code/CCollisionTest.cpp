@@ -1,4 +1,4 @@
-#include "pch.h"
+Ôªø#include "pch.h"
 #include "CCollisionTest.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -18,7 +18,6 @@
 #include "CFollowSmoothCam.h"
 #include "CCollisionBox.h"
 #include "CBoostWind.h"
-#include "CUI_Exit.h"
 #include "CBoostJet.h"
 #include "CHUD_Main.h"
 #include "CHUD_Gage.h"
@@ -56,7 +55,7 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 {
 	CScene::FixedUpdate_Scene(fFixedDeltaTime);
 
-	// √Êµπ √≥∏Æ
+	// Ï∂©Îèå Ï≤òÎ¶¨
 	CCollider* pCartCollider = static_cast<CCollider*>
 		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Cart", L"Com_Collider"));
 	//CCollider* pCartSphereCollider = static_cast<CCollider*>
@@ -115,7 +114,7 @@ HRESULT CCollisionTest::Ready_Prototype()
 
 HRESULT CCollisionTest::Ready_GameLogic_Layer()
 {
-	// ∞‘¿” ø¿∫Í¡ß∆Æ
+	// Í≤åÏûÑ Ïò§Î∏åÏ†ùÌä∏
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)
@@ -123,7 +122,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
 
-	// # ƒ´∆Æ
+	// # Ïπ¥Ìä∏
 	CGameObject* pCart = CCart::Create(m_pGraphicDev);
 
 	if (pCart == nullptr)
@@ -134,7 +133,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	pCart->SetLayer(pGameObjectLayer);
 
 
-	// ## ƒ´∆Æ ∏ˆ√º
+	// ## Ïπ¥Ìä∏ Î™∏Ï≤¥
 	CGameObject* pCartBody = CCartBody::Create(m_pGraphicDev);
 
 	if (pCartBody == nullptr)
@@ -145,7 +144,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	pCart->Set_Child(pCartBody);
 
 	CGameObject* pGameObject = nullptr;
-	// ## ƒ´∆Æ ∏ˆ√º1
+	// ## Ïπ¥Ìä∏ Î™∏Ï≤¥1
 	pGameObject = CCartBody1::Create(m_pGraphicDev);
 	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,1.5,1 });
@@ -156,7 +155,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	
 	
-	// ## ƒ´∆Æ ∏ˆ√º2
+	// ## Ïπ¥Ìä∏ Î™∏Ï≤¥2
 	pGameObject = CCartBody2::Create(m_pGraphicDev);
 	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,0.5,0.5 });
@@ -167,7 +166,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	
 	
-	// ## ƒ´∆Æ ∏ˆ√º3
+	// ## Ïπ¥Ìä∏ Î™∏Ï≤¥3
 	pGameObject = CCartBody1::Create(m_pGraphicDev);
 	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,1,0.5 });
@@ -178,7 +177,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	
 	
-	// ## ƒ´∆Æ ∏ˆ√º4
+	// ## Ïπ¥Ìä∏ Î™∏Ï≤¥4
 	pGameObject = CCartBody1::Create(m_pGraphicDev);
 	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,1.f,4 });
@@ -190,7 +189,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	
 
 
-	// ## øﬁ¬  æ’πŸƒ˚
+	// ## ÏôºÏ™Ω ÏïûÎ∞îÌÄ¥
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FL);
 	
 	if (pGameObject == nullptr)
@@ -199,7 +198,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	
 	pCartBody->Set_Child(pGameObject);
-	// ## ø¿∏•¬  æ’πŸƒ˚
+	// ## Ïò§Î•∏Ï™Ω ÏïûÎ∞îÌÄ¥
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FR);
 	
 	if (pGameObject == nullptr)
@@ -209,7 +208,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	
 	pCartBody->Set_Child(pGameObject);
 	
-	// ## øﬁ¬  µﬁπŸƒ˚
+	// ## ÏôºÏ™Ω Îí∑Î∞îÌÄ¥
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BL);
 	
 	if (pGameObject == nullptr)
@@ -219,7 +218,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	
 	pCartBody->Set_Child(pGameObject);
 	
-	// ## ø¿∏•¬  µﬁπŸƒ˚
+	// ## Ïò§Î•∏Ï™Ω Îí∑Î∞îÌÄ¥
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BR);
 	
 	if (pGameObject == nullptr)
@@ -229,7 +228,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	
 	pCartBody->Set_Child(pGameObject);
 
-	// ## ∫ŒΩ∫≈Õ øﬁ¬ 1 πŸ∂˜ ¿Ã∆Â∆Æ
+	// ## Î∂ÄÏä§ÌÑ∞ ÏôºÏ™Ω1 Î∞îÎûå Ïù¥ÌéôÌä∏
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
 
 	if (nullptr == pGameObject)
@@ -238,7 +237,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	pCart->Set_Child(pGameObject);
 
-	// ## ∫ŒΩ∫≈Õ øﬁ¬ 2 πŸ∂˜ ¿Ã∆Â∆Æ
+	// ## Î∂ÄÏä§ÌÑ∞ ÏôºÏ™Ω2 Î∞îÎûå Ïù¥ÌéôÌä∏
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
 	
 	if (nullptr == pGameObject)
@@ -247,7 +246,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	pCart->Set_Child(pGameObject);
 	
-	// ## ∫ŒΩ∫≈Õ ø¿∏•¬ 1 πŸ∂˜ ¿Ã∆Â∆Æ
+	// ## Î∂ÄÏä§ÌÑ∞ Ïò§Î•∏Ï™Ω1 Î∞îÎûå Ïù¥ÌéôÌä∏
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
 
 	if (nullptr == pGameObject)
@@ -255,7 +254,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindR1", pGameObject)))
 		return E_FAIL;
 	pCart->Set_Child(pGameObject);
-	// ## ∫ŒΩ∫≈Õ ø¿∏•¬ 2 πŸ∂˜ ¿Ã∆Â∆Æ
+	// ## Î∂ÄÏä§ÌÑ∞ Ïò§Î•∏Ï™Ω2 Î∞îÎûå Ïù¥ÌéôÌä∏
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
 	
 	if (nullptr == pGameObject)
@@ -264,7 +263,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	pCart->Set_Child(pGameObject);
 
-	// ## ∫ŒΩ∫≈Õ ¡¶∆Æ ¿Ã∆Â∆Æ
+	// ## Î∂ÄÏä§ÌÑ∞ Ï†úÌä∏ Ïù¥ÌéôÌä∏
 	pGameObject = CBoostJet::Create(m_pGraphicDev);
 
 	if (nullptr == pGameObject)
@@ -273,7 +272,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	pCart->Set_Child(pGameObject);
 
-	//// # «√∑π¿ÃæÓ µ˚∂Û¥Ÿ¥œ¥¬ 3¿Œƒ™ ƒ´∏ﬁ∂Û
+	//// # ÌîåÎ†àÏù¥Ïñ¥ Îî∞ÎùºÎã§ÎãàÎäî 3Ïù∏Ïπ≠ Ïπ¥Î©îÎùº
 	_vec3 vEye, vAt, vUp, vLook;
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
 	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
@@ -295,7 +294,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 
 
-	// # ∆Æ∑¢
+	// # Ìä∏Îûô
 	for (int i = 0; i < 40; ++i)
 	{
 		CGameObject* pBox = CCartBody1::Create(m_pGraphicDev);
@@ -348,7 +347,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 
 
-	//// π´¡ˆ∞≥ ±∏∏ß ¿Ã∆Â∆Æ
+	//// Î¨¥ÏßÄÍ∞ú Íµ¨Î¶Ñ Ïù¥ÌéôÌä∏
 	//pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
 	//
 	//if (nullptr == pGameObject)

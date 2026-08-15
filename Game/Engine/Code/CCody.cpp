@@ -1,9 +1,5 @@
 ﻿#include "CCody.h"
 
-CCody::CCody() : CPskFile()
-{
-}
-
 CCody::CCody(LPDIRECT3DDEVICE9 pGraphicDev) : CPskFile(pGraphicDev)
 {
 }
