@@ -28,6 +28,7 @@ HRESULT CMissile::Ready_GameObject()
 	m_fAngle = 0.f;
 
 	Engine::CComponent* pComponent = nullptr;
+	Engine::CCube_Collider* pCollider = nullptr;
 
 	// 미사일
 	pComponent = m_pBufferCom = dynamic_cast<CMissileTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_MissileTex"));
@@ -37,6 +38,19 @@ HRESULT CMissile::Ready_GameObject()
 	pComponent->Set_Owner(this);
 
 	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+
+	// 미사일 충돌
+	pCollider = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
+	if (nullptr == pCollider)
+		return E_FAIL;
+
+	pCollider->Set_Owner(this);
+
+	pCollider->SetCenter({ 0,0,100.f });
+	pCollider->SetSize({ 2.5f,1.f,5.f });
+	pCollider->SetColliderType(CUBE_COLLIDER);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider", pCollider });
+
 
 	return S_OK;
 }
