@@ -35,6 +35,17 @@ void CInspector::Update_Window()
 
     ImGui::Begin("Inspector");
     
+    bool sceneFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_None);
+
+    if (!ImGui::IsAnyItemActive() && sceneFocused) {
+        if (ImGui::IsKeyDown(ImGuiKey_Q))
+            g_GizmoOp = ImGuizmo::TRANSLATE;
+        if (ImGui::IsKeyDown(ImGuiKey_W))
+            g_GizmoOp = ImGuizmo::ROTATE;
+        if (ImGui::IsKeyDown(ImGuiKey_E))
+            g_GizmoOp = ImGuizmo::SCALE;
+    }
+
     if (!g_bSelected) { 
         ImGui::Text("Nothing selected"); 
         ImGui::End(); 
@@ -69,20 +80,30 @@ void CInspector::Update_Window()
 
     CTransform* pTF = pObj->Get_Transform();
 
-    if (ImGui::InputFloat3("Tr", t)) {
-        ImGuizmo::RecomposeMatrixFromComponents(t, r, s, matLocal);
-        pTF->Set_LocalWorld(&matLocal);
-    }
-    if (ImGui::InputFloat3("Rt", r)) {
-        ImGuizmo::RecomposeMatrixFromComponents(t, r, s, matLocal);
-        pTF->Set_LocalWorld(&matLocal);
-    }
-    if (ImGui::InputFloat3("Sc", s)) {
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Position");
+    ImGui::SameLine();
+    if (ImGui::DragFloat3("##Tr", t, 0.25f)) {
         ImGuizmo::RecomposeMatrixFromComponents(t, r, s, matLocal);
         pTF->Set_LocalWorld(&matLocal);
     }
 
-    // Q, W, E로 이동/회전/크기 전환
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Rotation");
+    ImGui::SameLine();
+    if (ImGui::DragFloat3("##Rt", r)) {
+        ImGuizmo::RecomposeMatrixFromComponents(t, r, s, matLocal);
+        pTF->Set_LocalWorld(&matLocal);
+    }
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Scale   ");
+
+    ImGui::SameLine();
+    if (ImGui::DragFloat3("##Sc", s, 0.1f)) {
+        ImGuizmo::RecomposeMatrixFromComponents(t, r, s, matLocal);
+        pTF->Set_LocalWorld(&matLocal);
+    }
 
     ImGui::End();
 }

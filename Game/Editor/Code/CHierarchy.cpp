@@ -48,12 +48,28 @@ void CHierarchy::Update_Window()
         ImGui::EndMenuBar();
     }
 
+    bool sceneFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_None);
+
+    if (!m_bRenaming && sceneFocused) {
+        if (ImGui::IsKeyDown(ImGuiKey_Q))
+            g_GizmoOp = ImGuizmo::TRANSLATE;
+        if (ImGui::IsKeyDown(ImGuiKey_W))
+            g_GizmoOp = ImGuizmo::ROTATE;
+        if (ImGui::IsKeyDown(ImGuiKey_E))
+            g_GizmoOp = ImGuizmo::SCALE;
+    }
+
     Show_Hierarchy();
 
     ImVec2 viewPos = ImGui::GetCursorScreenPos(); 
     ImVec2 viewSize = ImGui::GetContentRegionAvail(); 
 
-    ImGui::Dummy(viewSize);
+    ImGui::InvisibleButton("##dummy", viewSize);
+
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+        g_bSelected = false;
+        g_uSelected = 0;
+    }
 
     if (ImGui::BeginDragDropTarget())
     {
