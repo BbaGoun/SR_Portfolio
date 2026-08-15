@@ -43,9 +43,6 @@
     <Filter Include="04. Component\Transform">
       <UniqueIdentifier>{45fc99bb-7d70-4f4e-a090-e0e090d2dfaa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Component\Shape\Terrain">
-      <UniqueIdentifier>{74ba68f5-f889-4837-8f2f-d674f1beb521}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Component\Texture">
       <UniqueIdentifier>{5023dac1-46b0-47e4-81b8-93fe40d22782}</UniqueIdentifier>
     </Filter>
@@ -57,9 +54,6 @@
     </Filter>
     <Filter Include="04. Component\Shape\ObjFile">
       <UniqueIdentifier>{0466a01c-b2aa-4080-9762-b14a0a0253d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\Shape\ObjFile\Airplane">
-      <UniqueIdentifier>{50539446-ac39-48d7-92f8-d1eb06a03bb8}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. Component\Shape\AssetBinary">
       <UniqueIdentifier>{97e480d0-1c03-4e11-9c82-98788dafce15}</UniqueIdentifier>
@@ -84,9 +78,6 @@
     </Filter>
     <Filter Include="04. Component\Shape\PskFile\Cody">
       <UniqueIdentifier>{5a3e480d-9f66-472a-8f36-d4ff4d4e23d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\Shape\PskFile\CMay">
-      <UniqueIdentifier>{15af70ad-1f96-4c97-9dc5-79321f6fd6cd}</UniqueIdentifier>
     </Filter>
     <Filter Include="95. CameraMgr">
       <UniqueIdentifier>{6090026c-70e9-40bf-a59e-4be142215198}</UniqueIdentifier>
@@ -207,9 +198,6 @@
     <ClInclude Include="..\Header\CVIBuffer.h">
       <Filter>04. Component\Shape\VIBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CTerrain.h">
-      <Filter>04. Component\Shape\Terrain</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CComponent.h">
       <Filter>04. Component</Filter>
     </ClInclude>
@@ -218,9 +206,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\CObj.h">
       <Filter>04. Component\Shape\ObjFile</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CAirplane.h">
-      <Filter>04. Component\Shape\ObjFile\Airplane</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMesh.h">
       <Filter>04. Component\Shape\AssetBinary</Filter>
@@ -245,9 +230,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\CCody.h">
       <Filter>04. Component\Shape\PskFile\Cody</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CMay.h">
-      <Filter>04. Component\Shape\PskFile\CMay</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCameraMgr.h">
       <Filter>95. CameraMgr</Filter>
@@ -332,17 +314,11 @@
     <ClCompile Include="..\Code\CRcTex.cpp">
       <Filter>04. Component\Shape\RcTex</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CTerrain.cpp">
-      <Filter>04. Component\Shape\Terrain</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CTexture.cpp">
       <Filter>04. Component\Texture</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTransform.cpp">
       <Filter>04. Component\Transform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CAirplane.cpp">
-      <Filter>04. Component\Shape\ObjFile\Airplane</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMesh.cpp">
       <Filter>04. Component\Shape\AssetBinary</Filter>
@@ -379,9 +355,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCody.cpp">
       <Filter>04. Component\Shape\PskFile\Cody</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMay.cpp">
-      <Filter>04. Component\Shape\PskFile\CMay</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCameraMgr.cpp">
       <Filter>95. CameraMgr</Filter>

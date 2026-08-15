@@ -4,7 +4,6 @@
 #include "CProtoMgr.h"
 #include "CSkyBox.h"
 #include "CCamera.h"
-#include "CLand.h"
 #include "CGOCody.h"
 #include "CHeadPivot.h"
 #include "CFirstPerCam.h"

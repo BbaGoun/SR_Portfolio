@@ -1,4 +1,4 @@
-#include "CScene.h"
+﻿#include "CScene.h"
 
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
     : m_pGraphicDev(pGraphicDev)
@@ -9,6 +9,28 @@ CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CScene::~CScene()
 {
+}
+
+CGameObject* CScene::Find_GameObjectByTag(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+    auto    iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), CTag_Finder(pLayerTag));
+
+    if (iter == m_mapLayer.end())
+        return nullptr;
+
+    return iter->second->Find_GameObjectByTag(pObjTag);
+}
+
+const vector<CGameObject*>& CScene::Find_GameObjectsByTag(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+    static vector<CGameObject*> s_empty;
+
+    auto    iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), CTag_Finder(pLayerTag));
+
+    if (iter == m_mapLayer.end())
+        return s_empty;
+
+    return iter->second->Find_GameObjectsByTag(pObjTag);
 }
 
 CComponent* CScene::Get_Component(COMPONENTID eID, const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag)
@@ -30,9 +52,9 @@ HRESULT CScene::Add_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag, C
         return E_FAIL;
 }
 
-const map<const _tchar*, CGameObject*>& CScene::Get_GameObjects(const _tchar* pLayerTag)
+const map<const _tchar*, vector<CGameObject*>>& CScene::Get_GameObjects(const _tchar* pLayerTag)
 {
-    static const map<const _tchar*, CGameObject*> s_empty;
+    static map<const _tchar*, vector<CGameObject*>> s_empty;
     auto it = m_mapLayer.find(pLayerTag);
     if (it == m_mapLayer.end() || !it->second)
         return s_empty;
