@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CHUD_Num.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -24,16 +24,16 @@ HRESULT CHUD_Num::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Scale({ 17,22.5,1 });
+	m_pTransformCom->Set_Scale({ 34, 45, 1 });
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_HUDNum"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	m_fThirdFrame	= 0;
 	m_fSecondFrame	= 0;

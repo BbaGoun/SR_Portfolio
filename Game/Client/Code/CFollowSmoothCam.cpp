@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CFollowSmoothCam.h"
 #include "CCameraMgr.h"
 #include "CManagement.h"
@@ -48,11 +48,13 @@ HRESULT CFollowSmoothCam::Ready_GameObject(const _vec3& pEye,
 void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
-		CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_Cart", L"Com_Transform");
-		if (pCom == nullptr)
+		//CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_Cart", L"Com_Transform");
+		CTransform* pTrans = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart")->Get_Component<CTransform>();
+		
+		if (pTrans == nullptr)
 			return;
 
-		CTransform* pTrans = static_cast<CTransform*>(pCom);
+		//CTransform* pTrans = static_cast<CTransform*>(pCom);
 		_vec3	vMyPos;
 		_vec3	vPlayerPos;
 		_vec3	vPlayerUp = { 0,1,0 };

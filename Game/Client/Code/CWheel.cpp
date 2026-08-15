@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CWheel.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -51,7 +51,7 @@ HRESULT CWheel::Ready_GameObject()
 	if (nullptr == pComponent)
 		return E_FAIL;
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	return S_OK;
 }
@@ -85,7 +85,7 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
 		if (pLand3->CheckInTerrain(vPos))
 		{
-			// Land3ÀÇ ·ÎÄÃ·Î ³»¸²
+			// Land3ì˜ ë¡œì»¬ë¡œ ë‚´ë¦¼
 			_matrix* pMatWorld = pLand3->Get_Transform()->Get_World();
 			_matrix matInvWorld;
 			_vec3 originPos = vPos;

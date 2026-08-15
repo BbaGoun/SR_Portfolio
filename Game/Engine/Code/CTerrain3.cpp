@@ -1,10 +1,5 @@
-#include "CTerrain3.h"
+ï»¿#include "CTerrain3.h"
 #include "CHeightMapLoader.h"
-
-CTerrain3::CTerrain3() : CVIBuffer()
-, m_pTexture(nullptr)
-{
-}
 
 CTerrain3::CTerrain3(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 , m_pTexture(nullptr)
@@ -79,7 +74,7 @@ HRESULT CTerrain3::Ready_Buffer()
 
 	for (int i = 0; i < m_iVTXCNTZ - 1; ++i) {
 		for (int j = 0; j < m_iVTXCNTX - 1; ++j) {
-			// ¿ÞÂÊ À§ »ï°¢Çü
+			// ì™¼ìª½ ìœ„ ì‚¼ê°í˜•
 			indices[(i * (m_iVTXCNTX - 1) + j) * 2]._0 = (i + 1) * m_iVTXCNTX + j;
 			indices[(i * (m_iVTXCNTX - 1) + j) * 2]._1 = (i + 1) * m_iVTXCNTX + (j + 1);
 			indices[(i * (m_iVTXCNTX - 1) + j) * 2]._2 = i * m_iVTXCNTX + j;
@@ -90,7 +85,7 @@ HRESULT CTerrain3::Ready_Buffer()
 					indices[(i * (m_iVTXCNTX - 1) + j) * 2]._2
 				},{} };
 
-			// ¿À¸¥ÂÊ ¾Æ·¡ »ï°¢Çü
+			// ì˜¤ë¥¸ìª½ ì•„ëž˜ ì‚¼ê°í˜•
 			indices[(i * (m_iVTXCNTX - 1) + j) * 2 + 1]._0 = i * m_iVTXCNTX + (j + 1);
 			indices[(i * (m_iVTXCNTX - 1) + j) * 2 + 1]._1 = i * m_iVTXCNTX + j;
 			indices[(i * (m_iVTXCNTX - 1) + j) * 2 + 1]._2 = (i + 1) * m_iVTXCNTX + (j + 1);
@@ -146,18 +141,18 @@ void CTerrain3::Set_SkidMark(_vec3 vPos)
 	float xInPlane = float(vPos.x - col * VTXITV) / VTXITV;
 	float zInPlane = float(vPos.z - row * VTXITV) / VTXITV;
 
-	// ¿ÞÂÊ À§ »ï°¢Çü
+	// ì™¼ìª½ ìœ„ ì‚¼ê°í˜•
 	VTXTC* pVertex = NULL;
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 	if (zInPlane - xInPlane > 0) {
-		pVertex[(row + 1) * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);		// ¿ÞÂÊ À§
-		pVertex[(row + 1) * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);	// ¿À¸¥ÂÊ À§
-		//pVertex[row * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);			// ¿ÞÂÊ ¾Æ·¡
+		pVertex[(row + 1) * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);		// ì™¼ìª½ ìœ„
+		pVertex[(row + 1) * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);	// ì˜¤ë¥¸ìª½ ìœ„
+		//pVertex[row * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);			// ì™¼ìª½ ì•„ëž˜
 	}
-	else { // ¿À¸¥ÂÊ ¾Æ·¡ »ï°¢Çü
-		pVertex[row * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);			// ¿À¸¥ÂÊ ¾Æ·¡
-		pVertex[row * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);				// ¿ÞÂÊ ¾Æ·¡
-		//pVertex[(row + 1) * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);	// ¿À¸¥ÂÊ À§
+	else { // ì˜¤ë¥¸ìª½ ì•„ëž˜ ì‚¼ê°í˜•
+		pVertex[row * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);			// ì˜¤ë¥¸ìª½ ì•„ëž˜
+		pVertex[row * m_iVTXCNTX + col].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);				// ì™¼ìª½ ì•„ëž˜
+		//pVertex[(row + 1) * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);	// ì˜¤ë¥¸ìª½ ìœ„
 	}
 	m_pVB->Unlock();
 }

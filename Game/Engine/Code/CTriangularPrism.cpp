@@ -1,8 +1,4 @@
-#include "CTriangularPrism.h"
-
-CTriangularPrism::CTriangularPrism() : CVIBuffer()
-{
-}
+﻿#include "CTriangularPrism.h"
 
 CTriangularPrism::CTriangularPrism(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {

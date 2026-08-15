@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CCollisionBox.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -30,7 +30,7 @@ HRESULT CCollisionBox::Ready_GameObject()
 	if (nullptr == pComponent)
 		return E_FAIL;
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 
 	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
@@ -42,13 +42,13 @@ HRESULT CCollisionBox::Ready_GameObject()
 	m_pColliderCom->Set_Extents({ 10,10,10 });
 	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 	
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider", pComponent });
+	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_V_ItemBoxTexture"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 
 	return S_OK;

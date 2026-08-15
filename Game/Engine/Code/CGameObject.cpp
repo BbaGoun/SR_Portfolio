@@ -1,4 +1,4 @@
-#include "CGameObject.h"
+ï»¿#include "CGameObject.h"
 #include "CProtoMgr.h"
 #include "CManagement.h"
 
@@ -45,11 +45,11 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
     if (_pGO == nullptr)
         return;
 
-    // ÀÚ½ÅÀ» ÀÚ½ÄÀ¸·Î ÇÒ ¼ö ¾øÀ½
+    // ìžì‹ ì„ ìžì‹ìœ¼ë¡œ í•  ìˆ˜ ì—†ìŒ
     if (this == _pGO)
         return;
 
-    // Á¶»óÀÌ ³» ÀÚ½ÄÀÌ µÉ¼ö´Â ¾øÀ½
+    // ì¡°ìƒì´ ë‚´ ìžì‹ì´ ë ìˆ˜ëŠ” ì—†ìŒ
     CGameObject* ancestor = m_pParent;
     while (ancestor != nullptr) {
         if (_pGO == ancestor)
@@ -57,16 +57,16 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
         ancestor = ancestor->m_pParent;
     }
 
-    // °°Àº ºÎ¸ð ³»¿¡¼­ ¼ø¼­ ÀçÁ¶Á¤ÀÎ°¡
+    // ê°™ì€ ë¶€ëª¨ ë‚´ì—ì„œ ìˆœì„œ ìž¬ì¡°ì •ì¸ê°€
     const bool bSameParent = (_pGO->m_pParent == this);
 
     _matrix matLocal;
-    // °°Àº ºÎ¸ð°¡ ¾Æ´Ï¸é ·ÎÄÃ º¸Á¸À» À§ÇØ ÀúÀå
+    // ê°™ì€ ë¶€ëª¨ê°€ ì•„ë‹ˆë©´ ë¡œì»¬ ë³´ì¡´ì„ ìœ„í•´ ì €ìž¥
     if (!bSameParent)
         matLocal = *_pGO->Get_Transform()->Get_LocalWorld();
 
     int iOld = -1;
-    // °°Àº ºÎ¸ð¸é ÀÌÀü À§Ä¡¸¦ ±â¾ï
+    // ê°™ì€ ë¶€ëª¨ë©´ ì´ì „ ìœ„ì¹˜ë¥¼ ê¸°ì–µ
     if (bSameParent)
     {
         auto it = std::find(m_vecChildren.begin(), m_vecChildren.end(), _pGO);
@@ -74,7 +74,7 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
             iOld = (int)(it - m_vecChildren.begin());
     }
 
-    // ºÎ¸ð°¡ ÀÖÀ¸¸é ºÎ¸ð¿Í ¿¬°áÀ» ²÷°í, ÃÖ»óÀ§¿´À¸¸é ÃÖ»óÀ§ ¸ñ·Ï¿¡¼­ »èÁ¦
+    // ë¶€ëª¨ê°€ ìžˆìœ¼ë©´ ë¶€ëª¨ì™€ ì—°ê²°ì„ ëŠê³ , ìµœìƒìœ„ì˜€ìœ¼ë©´ ìµœìƒìœ„ ëª©ë¡ì—ì„œ ì‚­ì œ
     if (_pGO->m_pParent != nullptr)
     {
         auto& vecOld = _pGO->m_pParent->m_vecChildren;
@@ -84,8 +84,8 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
     else
         CManagement::GetInstance()->Detach_Root(_pGO);
 
-    // iOld°¡ 0º¸´Ù Å©°Å³ª °°´Ù´Â °ÍÀº °°Àº ºÎ¸ð¿´´Ù´Â °Í
-    // »èÁ¦ÇÑ À§Ä¡º¸´Ù ³ÖÀ¸·Á´Â À§Ä¡°¡ ´õ µÚ¸é »èÁ¦ ¶§¹®¿¡ 1Ä­ ¾Õ´ç°ÜÁü
+    // iOldê°€ 0ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ë‹¤ëŠ” ê²ƒì€ ê°™ì€ ë¶€ëª¨ì˜€ë‹¤ëŠ” ê²ƒ
+    // ì‚­ì œí•œ ìœ„ì¹˜ë³´ë‹¤ ë„£ìœ¼ë ¤ëŠ” ìœ„ì¹˜ê°€ ë” ë’¤ë©´ ì‚­ì œ ë•Œë¬¸ì— 1ì¹¸ ì•žë‹¹ê²¨ì§
     if (iOld >= 0 && _iIndex > iOld)
         --_iIndex;
 
@@ -93,11 +93,11 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
     if (_iIndex < 0 || _iIndex > (int)m_vecChildren.size())
         _iIndex = (int)m_vecChildren.size();
 
-    // »ðÀÔ
+    // ì‚½ìž…
     m_vecChildren.insert(m_vecChildren.begin() + _iIndex, _pGO);
     _pGO->m_pParent = this;
 
-    // ¾Æ±î ÀúÀåÇÑ À§Ä¡·Î º¸Á¸
+    // ì•„ê¹Œ ì €ìž¥í•œ ìœ„ì¹˜ë¡œ ë³´ì¡´
     if (!bSameParent)
     {
         _matrix* pMatParent = Get_Transform()->Get_World();
@@ -159,12 +159,12 @@ void CGameObject::To_Root()
     _vec3 vPos;
     Get_Transform()->Get_Info(INFO_POS, &vPos);
 
-    // ºÎ¸ð¿ÍÀÇ ¿¬°áÀ» ÇØÁ¦
+    // ë¶€ëª¨ì™€ì˜ ì—°ê²°ì„ í•´ì œ
     if (m_pParent != nullptr)
     {
         m_pParent->Delete_Child(this);
         m_pParent = nullptr;
-        // À§Ä¡°¡ ±×´ë·Î ÀÌµµ·Ï ¼³Á¤
+        // ìœ„ì¹˜ê°€ ê·¸ëŒ€ë¡œ ì´ë„ë¡ ì„¤ì •
         Get_Transform()->Set_Pos(vPos);
     }
 
@@ -175,23 +175,25 @@ HRESULT CGameObject::Ready_GameObject()
 {
     m_pTransformCom = static_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
     m_pTransformCom->Set_Owner(this);
-    m_mapComponent[ID_STATIC].insert({ L"Com_Transform", m_pTransformCom });
+    m_mapComponent.insert({ L"Com_Transform", m_pTransformCom });
 
     return S_OK;
 }
 
 _int CGameObject::Update_GameObject(const _float& fDeltaTime)
 {
-    for (auto& pComponent : m_mapComponent[ID_DYNAMIC])
-        pComponent.second->Update_Component(fDeltaTime);
+    for (auto& pComponent : m_mapComponent)
+        if(pComponent.second->Get_ID() == ID_DYNAMIC)
+            pComponent.second->Update_Component(fDeltaTime);
 
     return 0;
 }
 
 void CGameObject::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-    for (auto& pComponent : m_mapComponent[ID_DYNAMIC])
-        pComponent.second->LateUpdate_Component(fDeltaTime);
+    for (auto& pComponent : m_mapComponent)
+        if (pComponent.second->Get_ID() == ID_DYNAMIC)
+            pComponent.second->LateUpdate_Component(fDeltaTime);
 }
 
 void CGameObject::Render_GameObject()
@@ -220,11 +222,14 @@ void CGameObject::Compute_ViewZ(const _vec3* pPos)
 
 CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponentTag)
 {
-    auto        iter = find_if(m_mapComponent[eID].begin(),
-                                m_mapComponent[eID].end(), 
+    auto        iter = find_if(m_mapComponent.begin(),
+                                m_mapComponent.end(), 
                                  CTag_Finder(pComponentTag));
 
-    if (iter == m_mapComponent[eID].end())
+    if (iter == m_mapComponent.end())
+        return nullptr;
+
+    if (iter->second->Get_ID() != eID)
         return nullptr;
 
     return iter->second;
@@ -232,11 +237,8 @@ CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponen
 
 void CGameObject::Free()
 {
-    for (_uint i = 0; i < ID_END; ++i)
-    {
-        for_each(m_mapComponent[i].begin(), m_mapComponent[i].end(), CDeleteMap());
-        m_mapComponent[i].clear();
-    }
+    for_each(m_mapComponent.begin(), m_mapComponent.end(), CDeleteMap());
+    m_mapComponent.clear();
 
     Safe_Release(m_pGraphicDev);
 }

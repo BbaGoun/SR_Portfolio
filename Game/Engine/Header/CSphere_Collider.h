@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CCollider.h"
 
 BEGIN(Engine)
@@ -6,7 +6,6 @@ class CGameObject;
 class ENGINE_DLL CSphere_Collider : public CCollider
 {
 private:
-	explicit CSphere_Collider();
 	explicit CSphere_Collider(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CSphere_Collider(const CCollider& rhs);
 	virtual ~CSphere_Collider();

@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CBoostJet.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -22,7 +22,7 @@ CBoostJet::~CBoostJet()
 HRESULT CBoostJet::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Scale({ 1,5,1 });
+	m_pTransformCom->Set_Scale({ 2,10,1 });
 	m_pTransformCom->Set_Pos({ 1,-1,-6 });
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, 0.f, D3DXToRadian(90), 0.f);
@@ -33,13 +33,13 @@ HRESULT CBoostJet::Ready_GameObject()
 	if (nullptr == pComponent)
 		return E_FAIL;
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterJet"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	return S_OK;
 }
@@ -77,7 +77,7 @@ void CBoostJet::Render_GameObject()
 		matParent = *m_pParent->Get_Transform()->Get_World();
 		matView = CCameraMgr::GetInstance()->GetCameraInfo().matView;
 
-		// ºÎ¸ðÀÇ yÃà È¸Àü ¹Ý¿µX
+		// ë¶€ëª¨ì˜ yì¶• íšŒì „ ë°˜ì˜X
 		D3DXMatrixIdentity(&matBill);
 
 		matBill._11 = matParent._11;
@@ -88,7 +88,7 @@ void CBoostJet::Render_GameObject()
 		D3DXMatrixInverse(&matBill, 0, &matBill);
 		matWorld = matBill * matWorld;
 
-		// Ä«¸Þ¶óÀÇ yÃà È¸Àü ¹Ý¿µX
+		// ì¹´ë©”ë¼ì˜ yì¶• íšŒì „ ë°˜ì˜X
 		D3DXMatrixIdentity(&matBill);
 
 		matBill._11 = matView._11;
@@ -99,7 +99,7 @@ void CBoostJet::Render_GameObject()
 		D3DXMatrixInverse(&matBill, 0, &matBill);
 		matWorld = matBill * matWorld;
 
-		// ºôº¸µå Àû¿ë(Å©±â°¡ ´Þ¶óÁú °æ¿ì °è»ê½Ä º¯°æ)
+		// ë¹Œë³´ë“œ ì ìš©(í¬ê¸°ê°€ ë‹¬ë¼ì§ˆ ê²½ìš° ê³„ì‚°ì‹ ë³€ê²½)
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 		//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 

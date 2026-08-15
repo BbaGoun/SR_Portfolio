@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CLand3.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -29,7 +29,7 @@ HRESULT CLand3::Ready_GameObject()
 	pComponent = m_pBufferCom = static_cast<CTerrain3*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Terrain3"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	return S_OK;
 }

@@ -1,8 +1,4 @@
-#include "CInnerBox.h"
-
-CInnerBox::CInnerBox() : CVIBuffer()
-{
-}
+ï»¿#include "CInnerBox.h"
 
 CInnerBox::CInnerBox(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {
@@ -57,7 +53,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	//vertices[7].vPosition = { -1, -1, -1 };
 	//vertices[7].vTexUV = {0, 0.66666};
 
-	//// Àü°³µµ¸¦ ´Ý±â À§ÇÑ ¿©ºÐ
+	//// ì „ê°œë„ë¥¼ ë‹«ê¸° ìœ„í•œ ì—¬ë¶„
 	//vertices[8].vPosition = { -1, 1, -1 };
 	//vertices[8].vTexUV = { 0.25, 0 };
 
@@ -83,7 +79,7 @@ HRESULT CInnerBox::Ready_Buffer()
 
 	//m_pIB->Lock(0, 0, (void**)&indices, 0);
 
-	//// (0, 0)¸é
+	//// (0, 0)ë©´
 	//indices[0]._0 = 0;
 	//indices[0]._1 = 1;
 	//indices[0]._2 = 2;
@@ -92,7 +88,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	//indices[1]._1 = 2;
 	//indices[1]._2 = 3;
 
-	//// (1, 0)¸é
+	//// (1, 0)ë©´
 	//indices[2]._0 = 4;
 	//indices[2]._1 = 0;
 	//indices[2]._2 = 3;
@@ -101,7 +97,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	//indices[3]._1 = 3;
 	//indices[3]._2 = 7;
 
-	//// (1, 2)¸é
+	//// (1, 2)ë©´
 	//indices[4]._0 = 1;
 	//indices[4]._1 = 5;
 	//indices[4]._2 = 6;
@@ -110,7 +106,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	//indices[5]._1 = 6;
 	//indices[5]._2 = 2;
 
-	//// (0, 1)¸é
+	//// (0, 1)ë©´
 	//indices[6]._0 = 8;
 	//indices[6]._1 = 9;
 	//indices[6]._2 = 1;
@@ -119,7 +115,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	//indices[7]._1 = 1;
 	//indices[7]._2 = 0;
 
-	//// (2, 1)¸é
+	//// (2, 1)ë©´
 	//indices[8]._0 = 3;
 	//indices[8]._1 = 2;
 	//indices[8]._2 = 10;
@@ -128,7 +124,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	//indices[9]._1 = 10;
 	//indices[9]._2 = 11;
 
-	//// (1, 3)¸é
+	//// (1, 3)ë©´
 	//indices[10]._0 = 5;
 	//indices[10]._1 = 12;
 	//indices[10]._2 = 13;
@@ -184,7 +180,7 @@ HRESULT CInnerBox::Ready_Buffer()
 
 	m_pIB->Lock(0, 0, (void**)&indices, 0);
 
-	// µÞ ¸é
+	// ë’· ë©´
 	indices[0]._0 = 0;
 	indices[0]._1 = 1;
 	indices[0]._2 = 2;
@@ -193,7 +189,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	indices[1]._1 = 2;
 	indices[1]._2 = 3;
 
-	// À­ ¸é
+	// ìœ— ë©´
 	indices[2]._0 = 4;
 	indices[2]._1 = 5;
 	indices[2]._2 = 1;
@@ -202,7 +198,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	indices[3]._1 = 1;
 	indices[3]._2 = 0;
 
-	// ¾Õ ¸é
+	// ì•ž ë©´
 	indices[4]._0 = 5;
 	indices[4]._1 = 4;
 	indices[4]._2 = 7;
@@ -211,7 +207,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	indices[5]._1 = 7;
 	indices[5]._2 = 6;
 
-	// ¾Æ·§ ¸é
+	// ì•„ëž« ë©´
 	indices[6]._0 = 3;
 	indices[6]._1 = 2;
 	indices[6]._2 = 6;
@@ -220,7 +216,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	indices[7]._1 = 6;
 	indices[7]._2 = 7;
 
-	// ¿ÞÂÊ ¸é
+	// ì™¼ìª½ ë©´
 	indices[8]._0 = 4;
 	indices[8]._1 = 0;
 	indices[8]._2 = 3;
@@ -229,7 +225,7 @@ HRESULT CInnerBox::Ready_Buffer()
 	indices[9]._1 = 3;
 	indices[9]._2 = 7;
 
-	// ¿À¸¥ÂÊ ¸é
+	// ì˜¤ë¥¸ìª½ ë©´
 	indices[10]._0 = 1;
 	indices[10]._1 = 5;
 	indices[10]._2 = 6;

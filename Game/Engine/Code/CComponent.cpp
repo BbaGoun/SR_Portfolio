@@ -1,10 +1,5 @@
-#include "CComponent.h"
+﻿#include "CComponent.h"
 #include "CGameObject.h"
-
-CComponent::CComponent()
-	: m_pGraphicDev(nullptr), m_bClone(false), m_pOwner(nullptr)
-{
-}
 
 CComponent::CComponent(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev), m_bClone(false), m_pOwner(nullptr)

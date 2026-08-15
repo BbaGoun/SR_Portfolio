@@ -1,17 +1,6 @@
 ﻿#include "CVIBuffer.h"
 #include "CGraphicDev.h"
 
-CVIBuffer::CVIBuffer() : CComponent()
-, m_pVB(nullptr), m_pIB(nullptr)
-, m_dwVtxSize(0), m_dwVtxCnt(0)
-, m_dwTriCnt(0), m_dwFVF(0)
-, m_pVtxDecl(nullptr)
-, m_dwIdxCnt(0), m_IdxFmt(D3DFMT_INDEX32)
-, m_minVtx({FLT_MAX, FLT_MAX, FLT_MAX})
-, m_maxVtx({FLT_MIN, FLT_MIN, FLT_MIN})
-{
-}
-
 CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev):CComponent(pGraphicDev)
 , m_pVB(nullptr), m_pIB(nullptr)
 , m_dwVtxSize(0), m_dwVtxCnt(0)
@@ -21,6 +10,7 @@ CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev):CComponent(pGraphicDev)
 , m_minVtx({ FLT_MAX, FLT_MAX, FLT_MAX })
 , m_maxVtx({ FLT_MIN, FLT_MIN, FLT_MIN })
 {
+	m_eID = ID_STATIC;
 }
 
 CVIBuffer::CVIBuffer(const CVIBuffer& rhs) : CComponent(rhs)
@@ -32,6 +22,8 @@ CVIBuffer::CVIBuffer(const CVIBuffer& rhs) : CComponent(rhs)
 , m_minVtx(rhs.m_minVtx)
 , m_maxVtx(rhs.m_maxVtx)
 {
+	m_eID = ID_STATIC;
+
 	if (m_pVB)			m_pVB->AddRef();
 	if (m_pIB)			m_pIB->AddRef();
 }

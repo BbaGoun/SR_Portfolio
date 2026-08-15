@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CCodyBody.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -27,7 +27,7 @@ HRESULT CCodyBody::Ready_GameObject()
 
 	pComponent = m_pBufferCom = static_cast<CCody*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Cody"));
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	return S_OK;
 }

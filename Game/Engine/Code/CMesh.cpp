@@ -1,15 +1,5 @@
 ﻿#include "CMesh.h"
 
-CMesh::CMesh() : CComponent() 
-, m_pVB(nullptr), m_pIB(nullptr)
-, m_dwVtxSize(0), m_dwVtxCnt(0)
-, m_dwTriCnt(0), m_dwFVF(0)
-, m_pVtxDecl(nullptr)
-, m_dwIdxCnt(0), m_IdxFmt(D3DFMT_INDEX32)
-, m_pBaseColorMap(nullptr)
-{
-}
-
 CMesh::CMesh(LPDIRECT3DDEVICE9 pGraphicDev) : CComponent(pGraphicDev)
 , m_pVB(nullptr), m_pIB(nullptr)
 , m_dwVtxSize(0), m_dwVtxCnt(0)

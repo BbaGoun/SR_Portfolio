@@ -1,8 +1,4 @@
-#include "CRcTex.h"
-
-CRcTex::CRcTex() : CVIBuffer()
-{
-}
+﻿#include "CRcTex.h"
 
 CRcTex::CRcTex(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {
@@ -33,16 +29,16 @@ HRESULT CRcTex::Ready_Buffer()
 
 	m_pVB->Lock(0, 0, (void**)&vertices, 0);
 
-	vertices[0].vPosition = { -1, 1, 0 };
+	vertices[0].vPosition = { -0.5f, 0.5f, 0 };
 	vertices[0].vTexUV = {0.f, 0.f};
 
-	vertices[1].vPosition = { 1, 1, 0 };
+	vertices[1].vPosition = { 0.5f, 0.5f, 0 };
 	vertices[1].vTexUV = { 1.f, 0.f };
 
-	vertices[2].vPosition = { 1, -1, 0 };
+	vertices[2].vPosition = { 0.5f, -0.5f, 0 };
 	vertices[2].vTexUV = { 1.f, 1.f };
 
-	vertices[3].vPosition = { -1, -1, 0 };
+	vertices[3].vPosition = { -0.5f, -0.5f, 0 };
 	vertices[3].vTexUV = { 0.f, 1.f };
 
 	m_pVB->Unlock();

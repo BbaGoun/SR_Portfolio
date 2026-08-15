@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CUI_Rainbow.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -25,18 +25,18 @@ HRESULT CUI_Rainbow::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 	m_pTransformCom->Set_Pos({ 0,0,1 });
-	m_pTransformCom->Set_Scale({ 800,600,1 });
+	m_pTransformCom->Set_Scale({ 1600, 1200, 1 });
 
 
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RainBow_NonAlpha"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	m_fTimer = 0;
 	m_bCurState = false;
