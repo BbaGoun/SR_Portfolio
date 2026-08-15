@@ -141,10 +141,10 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		bool bCollision = Engine::CCollisionMgr::CubeVsCube(pBoxCollider, pMissileCollider);
 
-		if (bCollision == true)
-		{
-			CManagement::GetInstance()->Delete_GameObject(L"GameLogic", L"Obj_Missile");
-		}
+		//if (bCollision == true)
+		//{
+		//	CManagement::GetInstance()->Delete_GameObject(L"GameLogic", L"Obj_Missile");
+		//}
 }
 
 _int CMissile::Update_GameObject(const _float& fTimeDelta)

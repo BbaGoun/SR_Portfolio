@@ -18,6 +18,7 @@ public:
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override ;
+					void		Missile_Somersault();
 
 	void		KeyInput(const _float& fDeltaTime);
 public:

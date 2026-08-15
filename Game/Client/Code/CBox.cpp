@@ -3,6 +3,8 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
+#include "CCollisionMgr.h"
+#include "CManagement.h"
 
 CBox::CBox(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -70,6 +72,34 @@ void CBox::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_pTransformCom->Move_Pos(&vLook, m_fSpeed, fFixedDeltaTime);
 	else
 		m_pTransformCom->Move_Pos(&vLook, m_fSpeed, fFixedDeltaTime);
+
+	////////////////////ÇÇ°Ý////////////////////////
+	Engine::CCube_Collider* pBoxCollider = nullptr;
+	pBoxCollider = dynamic_cast<Engine::CCube_Collider*>(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Box", L"Com_Collider"));
+
+	if (nullptr == pBoxCollider)
+		return;
+
+	Engine::CCube_Collider* pMissileCollider = nullptr;
+	pMissileCollider = dynamic_cast<Engine::CCube_Collider*>(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Missile", L"Com_Collider"));
+
+	if (nullptr == pMissileCollider)
+		return;
+
+	bool bCollision = Engine::CCollisionMgr::CubeVsCube(pBoxCollider, pMissileCollider);
+
+	if (bCollision == true)
+	{
+		Missile_Somersault();
+	}
+
+	_vec3 vPos;
+
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	vPos.y += m_vForce.y * fFixedDeltaTime;
+
+	m_pTransformCom->Set_Pos(vPos);
 }
 
 _int CBox::Update_GameObject(const _float& fDeltaTime)
@@ -89,6 +119,13 @@ void CBox::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pBufferCom->Render_Buffer();
+}
+
+void CBox::Missile_Somersault()
+{
+	m_vForce.y = 20.f;
+
+	m_vRotation.x += D3DXToRadian(360.f);
 }
 
 void CBox::KeyInput(const _float& fDeltaTime)
