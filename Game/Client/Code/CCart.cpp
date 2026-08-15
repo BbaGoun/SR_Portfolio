@@ -3,6 +3,9 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
+#include "CRainBow_Cloud.h"
+#include "CManagement.h"
+#include "CBanana.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -21,20 +24,25 @@ CCart::~CCart()
 HRESULT CCart::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_vForce = { 0,0,0 };
+	m_vForce			= { 0,0,0 };
 
-	m_fSpeed = 1.f;
-	m_fMaxSpeed = 3.f;
+	m_fSpeed			= 1.f;
+	m_fMaxSpeed			= 3.f;
 	
-	m_bDrift = false;
-	m_fLookForceAngle = 0.f;
+	m_bDrift			= false;
+	m_fLookForceAngle	= 0.f;
 
 	m_fBoostTurnAngle	= 0.5f;
 	m_fNormalTurnAngle	= 0.8f;
 	m_fDriftTurnAngle	= 1.5f;
 
-	m_bBoost = false;
+	m_bBoost			= false;
+	m_bRainbowUI		= false;
+	m_bBanana			= false;
 
+	m_fBananaTimer		= 0;
+
+	m_vBananaSpinStartLook = { 0,0,0 };
 	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
@@ -85,7 +93,7 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	KeyInput(fDeltaTime);
 	UpdateBoost();
-
+	//BananaTimer(fDeltaTime);
 	//_vec3 vPos;
 	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	//cout << "x: " << vPos.x << "\ty: " << vPos.y << "\tz: " << vPos.z << endl;
@@ -106,6 +114,34 @@ void CCart::Render_GameObject()
 #endif
 }
 
+void CCart::CollisionEnter(CCollider* pOtherCollider)
+{
+}
+
+void CCart::TriggerEnter(CCollider* pOtherCollider)
+{
+	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
+
+	if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
+	{
+		if (m_bRainbowUI == false)
+			m_bRainbowUI = true;
+	}
+
+	if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
+	{
+		if (m_bBanana == false)
+		{
+			m_bBanana = true;
+			m_bBoost = false;
+			//D3DXVec3Normalize(&m_vForce, &m_vForce);
+			m_vBananaSpinStartLook = m_vForce;
+			D3DXVec3Normalize(&m_vBananaSpinStartLook, &m_vBananaSpinStartLook);
+			
+		}
+	}
+}
+
 
 CCart* CCart::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
@@ -122,9 +158,25 @@ CCart* CCart::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CCart::KeyInput(const _float& fDeltaTime)
 {
+	if (m_bBanana == true)
+		return;
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Q))
+	{
+		CreateRainbowObject();
+	}
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
+	{
+		CreateBananaObject();
+	}
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))
+	{
+		m_bBoost = true;
+		m_fBoostCal = 1.05f;
+	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
 	{
@@ -133,9 +185,12 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		else
 			m_vForce += vLook * 0.8f;
 	}
-	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
+	else
 	{
 		m_bBoost = false;
+	}
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
+	{
 		m_fSpeed = 1.f;
 		if (m_bDrift == false)
 			m_vForce -= vLook;
@@ -143,11 +198,6 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			m_vForce -= vLook * 0.8f;
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))
-	{
-		m_bBoost = true;
-		m_fBoostCal = 1.05f;
-	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
 	{
 		m_bDrift = true;
@@ -357,6 +407,59 @@ void CCart::UpdateBoost()
 	{
 		m_bBoost = false;
 		m_fSpeed = 1;
+	}
+}
+
+void CCart::CreateRainbowObject()
+{
+	CGameObject* pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
+
+	if (nullptr == pGameObject)
+		return ;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
+		return ;
+
+	_vec3 vPos,vLook;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	vPos += vLook * 100;
+	pGameObject->Get_Transform()->Set_Pos(vPos);
+
+	D3DXQUATERNION q;
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+	pGameObject->Get_Transform()->Set_Quaternion(&q);
+	pGameObject->SetLayer(m_pLayer);
+}
+
+void CCart::CreateBananaObject()
+{
+	CGameObject* pGameObject = CBanana::Create(m_pGraphicDev);
+
+	if (nullptr == pGameObject)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Banana", pGameObject)))
+		return;
+
+	_vec3 vPos, vLook;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	vPos -= vLook * 10;
+	pGameObject->Get_Transform()->Set_Pos(vPos);
+
+	pGameObject->SetLayer(m_pLayer);
+}
+
+void CCart::BananaTimer(const _float& fDeltaTime)
+{
+	if (m_bBanana == false)
+		return;
+	m_fBananaTimer += fDeltaTime;
+
+	if (m_fBananaTimer > 4)
+	{
+		m_bBanana = false;
 	}
 }
 

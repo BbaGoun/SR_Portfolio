@@ -19,6 +19,8 @@ CCollisionMgr::~CCollisionMgr()
 
 void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 {
+	if (pDstCollider == nullptr || pSrcCollider == nullptr)
+		return;
 	COLLIDER_TYPE pDstType = pDstCollider->GetColliderType();
 	COLLIDER_TYPE pSrcType = pSrcCollider->GetColliderType();
 
@@ -31,14 +33,14 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 			//MSG_BOX("Collision!");
 			if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
 			{
-				pDstCubeCollider->Get_Owner()->TriggerEnter();
-				pSrcCubeCollider->Get_Owner()->TriggerEnter();
+				pDstCubeCollider->Get_Owner()->TriggerEnter(pSrcCollider);
+				pSrcCubeCollider->Get_Owner()->TriggerEnter(pDstCollider);
 			}
 			else
 			{
 				PysicalCubevsCube(pDstCubeCollider, pSrcCubeCollider);
-				pDstCubeCollider->Get_Owner()->TriggerEnter();
-				pSrcCubeCollider->Get_Owner()->TriggerEnter();
+				pDstCubeCollider->Get_Owner()->CollisionEnter(pSrcCollider);
+				pSrcCubeCollider->Get_Owner()->CollisionEnter(pDstCollider);
 			}
 		}
 	}

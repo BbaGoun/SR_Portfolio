@@ -112,17 +112,29 @@
     <Filter Include="02. GameObject\UI\UI_HUD">
       <UniqueIdentifier>{06fcef9e-f0e4-4a30-8852-d43fa436b7e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI\UI_HUD\Num">
-      <UniqueIdentifier>{45e4ae89-db24-459f-bb4c-d03f0ddbf99a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\UI\UI_HUD\HUD_Main">
       <UniqueIdentifier>{f78c48f2-c807-400d-b397-3d86306486d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI\UI_HUD\Gage">
-      <UniqueIdentifier>{bd8bd500-6a9a-4ffc-a739-75f687414e13}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Land3">
       <UniqueIdentifier>{f65dd40c-8e32-476d-91b0-4980159e909b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item">
+      <UniqueIdentifier>{10b4db78-0a63-465f-aba5-774dba1b97d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Rainbow_Cloud">
+      <UniqueIdentifier>{1ba4c8fa-a3e4-42eb-bccc-a638b73312b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Rainbow">
+      <UniqueIdentifier>{92fd2f23-c461-4387-ab50-bac95f3c8e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\HUD_Num">
+      <UniqueIdentifier>{45e4ae89-db24-459f-bb4c-d03f0ddbf99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\HUD_Gage">
+      <UniqueIdentifier>{bd8bd500-6a9a-4ffc-a739-75f687414e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Banana">
+      <UniqueIdentifier>{4de29079-460b-4184-99c7-5fa447048b9a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -235,13 +247,22 @@
       <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CHUD_Gage.h">
-      <Filter>02. GameObject\UI\UI_HUD\Gage</Filter>
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Gage</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CHUD_Num.h">
-      <Filter>02. GameObject\UI\UI_HUD\Num</Filter>
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Num</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CLand3.h">
       <Filter>02. GameObject\Land3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRainBow_Cloud.h">
+      <Filter>02. GameObject\Item\Rainbow_Cloud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Rainbow.h">
+      <Filter>02. GameObject\UI\UI_Rainbow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBanana.h">
+      <Filter>02. GameObject\Item\Banana</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -342,16 +363,25 @@
       <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CHUD_Gage.cpp">
-      <Filter>02. GameObject\UI\UI_HUD\Gage</Filter>
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Gage</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CHUD_Num.cpp">
-      <Filter>02. GameObject\UI\UI_HUD\Num</Filter>
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Num</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CLand3.cpp">
       <Filter>02. GameObject\Land3</Filter>
     </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRainbow_Cloud.cpp">
+      <Filter>02. GameObject\Item\Rainbow_Cloud</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Rainbow.cpp">
+      <Filter>02. GameObject\UI\UI_Rainbow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBanana.cpp">
+      <Filter>02. GameObject\Item\Banana</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -20,6 +20,10 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+	void			BananaSpin(const _float& fDeltaTime);
+	bool			m_bBananaSpinState;
+	float			m_fSpinSpeed;
+
 public:
 	static CCartBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

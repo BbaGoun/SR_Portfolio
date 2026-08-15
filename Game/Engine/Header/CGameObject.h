@@ -5,7 +5,8 @@
 #include "Engine_Define.h"
 
 BEGIN(Engine)
-
+class CCollider;
+class CLayer;
 class ENGINE_DLL CGameObject : public CBase
 {
 protected:
@@ -36,13 +37,13 @@ public:
 	virtual			void		PreRender_GameObject() {};
 	virtual			void		PostRender_GameObject() {};
 
-	virtual			void		CollisionEnter() {};
-	virtual			void		CollisionExit() {};
-	virtual			void		CollisionStay() {};
+	virtual			void		CollisionEnter(CCollider* pOtherCollider) {};
+	virtual			void		CollisionExit(CCollider* pOtherCollider) {};
+	virtual			void		CollisionStay(CCollider* pOtherCollider) {};
 
-	virtual			void		TriggerEnter() {};
-	virtual			void		TriggerExit() {};
-	virtual			void		TriggerStay() {};
+	virtual			void		TriggerEnter(CCollider* pOtherCollider) {};
+	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
+	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
 
 public:
 	void			Set_CollisionLayer(COLLISION_LAYER eID);
@@ -66,6 +67,9 @@ public:
 	void			SetTag(const WCHAR* _tag) { wcscpy_s(m_wTag, 128, _tag); }
 	const WCHAR*	GetTag() { return m_wTag; }
 
+	void			SetLayer(CLayer* pLayer) { m_pLayer = pLayer; }
+	CLayer*			GetLayer() { return m_pLayer; }
+
 protected:
 	uint64_t								m_uGuid;
 	WCHAR									m_wName[128];
@@ -87,6 +91,8 @@ protected:
 
 
 	_float									m_fViewZ;
+
+	CLayer*									m_pLayer;
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);
