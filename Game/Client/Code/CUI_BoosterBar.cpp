@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CUI_BoosterBar.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -21,24 +21,24 @@ HRESULT CUI_BoosterBar::Ready_GameObject()
 {
 	m_fCurGage = 0.f;
 	m_fGainGage = 0.f;
-	m_fSizeX = 104.5f;
+	m_fSizeX = 209.f;
 
 	CGameObject::Ready_GameObject();
 
 	CComponent* pComponent = nullptr;
 
 	m_pTransformCom->Set_Pos({ 0,-250,1 });
-	m_pTransformCom->Set_Scale({ m_fSizeX,7,1 });
+	m_pTransformCom->Set_Scale({ m_fSizeX,14,1 });
 
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterBar"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 
 	return S_OK;
@@ -62,8 +62,8 @@ void CUI_BoosterBar::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CUI_BoosterBar::Render_GameObject()
 {
-	m_pTransformCom->Set_Scale({ m_fCurGage * 0.01f * m_fSizeX,7,1 });
-	m_pTransformCom->Set_Pos({ - m_fSizeX + m_fCurGage * 0.01f * m_fSizeX,-250,1 });
+	m_pTransformCom->Set_Scale({ m_fCurGage * 0.01f * m_fSizeX, 14, 1 });
+	m_pTransformCom->Set_Pos({ 0.5f * (-m_fSizeX + m_fCurGage * 0.01f * m_fSizeX), -250, 1 });
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pTextureCom->Set_Texture(0);
