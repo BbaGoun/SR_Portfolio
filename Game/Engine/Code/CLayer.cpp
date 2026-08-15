@@ -196,11 +196,12 @@ HRESULT CLayer::PostProcess_Delete()
 
 		CGameObject* pObj = p.second;
 		// 오브젝트를 삭제
-		it->second.erase(remove(it->second.begin(), it->second.end(), pObj));
+		vector<CGameObject*>& vec = it->second;
+		vec.erase(remove(vec.begin(), vec.end(), pObj), vec.end());
 		Detach_Root(pObj);
 		Safe_Release(pObj);
 		
-		if (it->second.empty()) // vector가 비었으면
+		if (vec.empty()) // vector가 비었으면
 		{
 			// map의 키는 const라 바로 delete[]를 할 수 없음.
 			// 주소를 미리 받아오고 나중에 삭제

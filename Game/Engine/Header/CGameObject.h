@@ -17,6 +17,8 @@ protected:
 public:
 	template<typename T, typename = std::enable_if_t<std::is_base_of_v<CComponent, T>>>
 	T* Get_Component();
+	template<typename T, typename = std::enable_if_t<std::is_base_of_v<CComponent, T>>>
+	vector<T*> Get_Components();
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	CTransform* Get_Transform() { return m_pTransformCom; }
 	void	Set_Child(CGameObject* _pGO);
@@ -49,6 +51,8 @@ public:
 
 public:
 	void			Set_CollisionLayer(COLLISION_LAYER eID);
+	COLLISION_LAYER	Get_CollisionLayer() { return m_eCollisionLayer; }
+	uint32_t		Get_CollisionLayerBit() { return m_uCollisionLayerBit; }
 
 	_vec3			Get_Force() { return m_vForce; }
 	void			Set_Force(_vec3 _newForce) { m_vForce = _newForce; }
@@ -83,7 +87,9 @@ protected:
 	vector<CGameObject*>					m_vecChildren;
 	CGameObject*							m_pParent;
 	CTransform*								m_pTransformCom;
-	uint32_t								m_iCollisionLayer;
+	
+	COLLISION_LAYER							m_eCollisionLayer;
+	uint32_t								m_uCollisionLayerBit;
 
 	uint32_t								m_iCullDistance;
 
@@ -113,4 +119,15 @@ inline T* CGameObject::Get_Component()
 			return pCom;
 	}
 	return nullptr;
+}
+
+template<typename T, typename>
+inline vector<T*> CGameObject::Get_Components()
+{
+	vector<T*> vec;
+	for (auto& p : m_mapComponent) {
+		if (T* pCom = dynamic_cast<T*>(p.second))
+			vec.push_back(pCom);
+	}
+	return vec;
 }

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Engine_Define.h"
 
 BEGIN(Engine)
@@ -19,10 +19,9 @@ public:
 template<int N>
 inline uint32_t CCalculator::Get_LayerMask(COLLISION_LAYER layers[N])
 {
-	bitset<32> collisionMask;
-	collisionMask.reset();
+	uint32_t collisionMask = 0;
 	for (int i = 0; i < N; ++i) {
-		collisionMask.set(layers[i], 1);
+		collisionMask |= (1u << layers[i]);
 	}
 	return collisionMask;
 }
