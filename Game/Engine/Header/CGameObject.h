@@ -16,7 +16,7 @@ protected:
 
 public:
 	template<typename T, typename = std::enable_if_t<std::is_base_of_v<CComponent, T>>>
-	CComponent* Get_Component();
+	T* Get_Component();
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	CTransform* Get_Transform() { return m_pTransformCom; }
 	void	Set_Child(CGameObject* _pGO);
@@ -106,11 +106,11 @@ protected:
 END
 
 template<typename T, typename>
-inline CComponent* CGameObject::Get_Component()
+inline T* CGameObject::Get_Component()
 {
 	for (auto& p : m_mapComponent) {
-		if (typeid(p.second) == typeid(T*))
-			return p.second;
+		if (T* pCom = dynamic_cast<T*>(p.second))
+			return pCom;
 	}
 	return nullptr;
 }
