@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CBase.h"
 #include "Engine_Define.h"
@@ -10,7 +10,6 @@ class CGameObject;
 class ENGINE_DLL CComponent : public CBase
 {
 protected:
-	explicit CComponent();
 	explicit CComponent(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CComponent(const CComponent& rhs);
 	virtual ~CComponent();
@@ -22,14 +21,16 @@ public:
 public:
 	void Set_Owner(CGameObject* _pOwner) { m_pOwner = _pOwner; }
 	CGameObject* Get_Owner() { return m_pOwner; }
+	COMPONENTID Get_ID() { return m_eID; }
 
 protected:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	_bool						m_bClone;
 	CGameObject*				m_pOwner;
+	COMPONENTID					m_eID;
 
 public:
-	virtual CComponent* Clone()	PURE;		// ÇÁ·ÎÅäÅ¸ÀÔ µğÀÚÀÎ ÆĞÅÏÀ» »ç¿ëÇÏ´Â ¿¹
+	virtual CComponent* Clone()	PURE;		// í”„ë¡œí† íƒ€ì… ë””ìì¸ íŒ¨í„´ì„ ì‚¬ìš©í•˜ëŠ” ì˜ˆ
 
 protected:
 	virtual void		Free();

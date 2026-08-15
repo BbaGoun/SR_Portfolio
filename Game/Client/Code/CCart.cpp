@@ -54,7 +54,7 @@ HRESULT CCart::Ready_GameObject()
 	m_pColliderCom->Set_Extents({ 2.5f,1.5f,5.f });
 	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider", pComponent });
+	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
 
 	//pComponent = m_pSphereColliderCom = dynamic_cast<CSphere_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SphereCollider"));

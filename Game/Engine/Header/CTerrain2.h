@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CVIBuffer.h"
 
 BEGIN(Engine)
@@ -7,7 +7,6 @@ class ENGINE_DLL CTerrain2 :
     public CVIBuffer
 {
 protected:
-    explicit CTerrain2();
     explicit CTerrain2(LPDIRECT3DDEVICE9 pGraphicDev);
     explicit CTerrain2(const CTerrain2& rhs);
     virtual ~CTerrain2() override;

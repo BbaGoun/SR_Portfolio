@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CRainbow_Cloud.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -23,15 +23,15 @@ HRESULT CRainbow_Cloud::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 
 	CComponent* pComponent = nullptr;
-	m_pTransformCom->Set_Scale({ 30,15,1 });
+	m_pTransformCom->Set_Scale({ 60,30,1 });
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RainBow_Alpha"));
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 
 	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
@@ -41,7 +41,7 @@ HRESULT CRainbow_Cloud::Ready_GameObject()
 	m_pColliderCom->SetIsTrigger(true);
 	m_pColliderCom->Set_Extents({ 30,15,1 });
 	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider", pComponent });
+	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
 	m_fTimer = 0;
 

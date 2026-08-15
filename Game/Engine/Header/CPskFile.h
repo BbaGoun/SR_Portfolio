@@ -7,7 +7,6 @@ class ENGINE_DLL CPskFile :
 	public CVIBuffer
 {
 protected:
-	explicit CPskFile();
 	explicit CPskFile(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CPskFile(const CPskFile& rhs);
 	virtual ~CPskFile();

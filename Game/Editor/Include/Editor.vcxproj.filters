@@ -123,9 +123,6 @@
     <ClInclude Include="..\Header\CLoadingThread.h">
       <Filter>02. Scenes\Loading\LoadingThread</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CBackGround.h">
-      <Filter>03. GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Editor_Function.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -193,9 +190,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CLoading.cpp">
       <Filter>02. Scenes\Loading</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CBackGround.cpp">
-      <Filter>03. GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

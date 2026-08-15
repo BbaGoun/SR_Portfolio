@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CHUD_Gage.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -24,18 +24,18 @@ HRESULT CHUD_Gage::Ready_GameObject()
 	CComponent* pComponent = nullptr;
 
 	m_pTransformCom->Set_Pos({ 0,-307.5,1 });
-	m_pTransformCom->Set_Scale({ 141,52.5,1 });
+	m_pTransformCom->Set_Scale({ 282, 105, 1 });
 
 
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_HUDGage"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	m_fFrame = 0;
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CCollider.h"
 #include "DirectXCollision.h"
 
@@ -7,7 +7,6 @@ class CGameObject;
 class ENGINE_DLL CCube_Collider : public CCollider
 {
 private:
-	explicit CCube_Collider();
 	explicit CCube_Collider(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CCube_Collider(const CCollider& rhs);
 	virtual ~CCube_Collider();

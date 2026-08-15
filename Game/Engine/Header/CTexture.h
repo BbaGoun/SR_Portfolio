@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CComponent.h"
 
 BEGIN(Engine)
@@ -6,7 +6,6 @@ BEGIN(Engine)
 class ENGINE_DLL CTexture :  public CComponent
 {
 private:
-	explicit CTexture();
 	explicit CTexture(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CTexture(const CTexture& rhs);
 	virtual ~CTexture();

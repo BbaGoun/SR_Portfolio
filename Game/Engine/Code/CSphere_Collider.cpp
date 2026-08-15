@@ -1,10 +1,6 @@
-#include "CSphere_Collider.h"
+﻿#include "CSphere_Collider.h"
 #include "CTransform.h"
 #include "CGameObject.h"
-
-CSphere_Collider::CSphere_Collider()
-{
-}
 
 CSphere_Collider::CSphere_Collider(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CCollider(pGraphicDev)

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CBanana.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -25,12 +25,12 @@ HRESULT CBanana::Ready_GameObject()
 	CComponent* pComponent = nullptr;
 	pComponent = m_pBufferCom = static_cast<CInnerBox*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_InnerBox"));
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BananaTexture"));
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 
 	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
@@ -40,7 +40,7 @@ HRESULT CBanana::Ready_GameObject()
 	m_pColliderCom->SetIsTrigger(true);
 	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 	m_pColliderCom->Set_Extents({ 1,1,1 });
-	m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider", pComponent });
+	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
 	return S_OK;
 }

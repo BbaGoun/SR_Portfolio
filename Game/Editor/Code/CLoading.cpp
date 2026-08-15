@@ -6,7 +6,6 @@
 #include "CManagement.h"
 #include "CRcTex.h"
 #include "CEditorScene.h"
-#include "CBackGround.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
     : CScene(pGraphicDev), m_pLoadingThread(nullptr)

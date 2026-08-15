@@ -243,9 +243,6 @@
     <ClInclude Include="..\Header\CCollisionBox.h">
       <Filter>02. GameObject\CollisionBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CUI_Exit.h">
-      <Filter>02. GameObject\UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CBoostJet.h">
       <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
     </ClInclude>
@@ -361,9 +358,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCollisionBox.cpp">
       <Filter>02. GameObject\CollisionBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CUI_Exit.cpp">
-      <Filter>02. GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBoostJet.cpp">
       <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>

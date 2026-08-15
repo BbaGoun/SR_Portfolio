@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CComponent.h"
 
 BEGIN(Engine)
@@ -8,7 +8,6 @@ class ENGINE_DLL CCollider :  public CComponent
 {
 
 protected:
-	explicit CCollider();
 	explicit CCollider(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CCollider(const CCollider& rhs);
 	virtual ~CCollider();
@@ -27,7 +26,7 @@ public:
 	void			SetColliderType(COLLIDER_TYPE eType)	{ m_eColliderType = eType; }
 	COLLIDER_TYPE	GetColliderType()						{ return m_eColliderType; }
 
-	virtual			CComponent* Clone(); //PURE·Î ¼³Á¤
+	virtual			CComponent* Clone(); //PUREë¡œ ì„¤ì •
 
 protected:
 	bool			m_bIsTrigger;
