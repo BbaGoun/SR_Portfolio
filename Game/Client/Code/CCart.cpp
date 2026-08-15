@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CCart.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -187,6 +187,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	}
 	else
 	{
+		m_fSpeed = 1.f;
 		m_bBoost = false;
 	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
@@ -207,7 +208,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	float fForceLength = D3DXVec3Length(&m_vForce);
 	if (fForceLength < 1.0f)
 		return;
-	if (D3DXVec3Dot(&m_vForce, &vLook) > 0)	// m_vForce¿Í vLookÀÇ ³»Àû°ªÀ¸·Î ÀüÁøÈÄÁø ÆÇ´Ü
+	if (D3DXVec3Dot(&m_vForce, &vLook) > 0)	// m_vForceì™€ vLookì˜ ë‚´ì ê°’ìœ¼ë¡œ ì „ì§„í›„ì§„ íŒë‹¨
 	{
 		if (m_bDrift == true)
 		{
