@@ -175,7 +175,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Header\CBackGround.h" />
     <ClInclude Include="..\Header\CEditorScene.h" />
     <ClInclude Include="..\Header\CGameWindow.h" />
     <ClInclude Include="..\Header\CHierarchy.h" />
@@ -201,7 +200,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CEditorScene.cpp" />
     <ClCompile Include="..\Code\CGameWindow.cpp" />
     <ClCompile Include="..\Code\CHierarchy.cpp" />
