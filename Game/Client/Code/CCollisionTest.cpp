@@ -26,6 +26,7 @@
 #include "CRainBow_Cloud.h"
 #include "CUI_Rainbow.h"
 #include "CUI_BoosterBar.h"
+#include "CUI_BoosterBG.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -347,16 +348,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox", pBox)))
 		return E_FAIL;
 
-
-	//// 무지개 구름 이펙트
-	//pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
-	//
-	//if (nullptr == pGameObject)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
-	//	return E_FAIL;
-	//pGameObject->SetLayer(pGameObjectLayer);
-
 	return S_OK;
 }
 
@@ -440,6 +431,13 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_Rainbow", pUIObject)))
+		return E_FAIL;
+
+	// UI_BoosterBG
+	pUIObject = CUI_BoosterBG::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBG", pUIObject)))
 		return E_FAIL;
 
 	// UI_BoosterBar

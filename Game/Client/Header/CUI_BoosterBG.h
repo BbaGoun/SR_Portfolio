@@ -3,13 +3,13 @@
 #include "CRcTex.h"
 #include "CTexture.h"
 
-class CUI_BoosterBar :
+class CUI_BoosterBG :
 	public CGameObject
 {
 private:
-	explicit CUI_BoosterBar(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CUI_BoosterBar(const CGameObject& rhs);
-	~CUI_BoosterBar() override;
+	explicit CUI_BoosterBG(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CUI_BoosterBG(const CGameObject& rhs);
+	~CUI_BoosterBG() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -18,16 +18,13 @@ public:
 	virtual			void		Render_GameObject() override;
 
 private:
-	CRcTex*			m_pBufferCom;
-	CTexture*		m_pTextureCom;
+	CRcTex* m_pBufferCom;
+	CTexture* m_pTextureCom;
 
-	float			m_fCurGage;
-	float			m_fGainGage;
-	float			m_fResultGauge;
 	float			m_fSizeX;
 
 public:
-	static CUI_BoosterBar* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CUI_BoosterBG* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
 	virtual		void		Free() override;
