@@ -72,8 +72,11 @@ HRESULT CItem::Ready_GameLogic_Layer()
 	if (pMissile == nullptr)
 		return E_FAIL;
 
-		if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pMissile)))	// 카메라가 플레이어를 쫒아가게 되어 있으니 L"Obj_Player" 로 설정
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Missile", pMissile)))	// 카메라가 플레이어를 쫒아가게 되어 있으니 L"Obj_Player" 로 설정
 		return E_FAIL;
+
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pMissile)))	// 카메라가 플레이어를 쫒아가게 되어 있으니 L"Obj_Player" 로 설정
+	//return E_FAIL;
 
 	CGameObject* pBox = CBox::Create(m_pGraphicDev);
 

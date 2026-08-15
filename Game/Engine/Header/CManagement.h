@@ -25,6 +25,8 @@ public:
 		CGameObject*  pGameObject
 	);
 
+	void		Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
+
 public:
 	HRESULT			Set_Scene(CScene* pScene);
 	void			FixedUpdate_Scene(const _float& fFixedDeltaTime);

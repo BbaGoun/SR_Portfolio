@@ -44,13 +44,24 @@ HRESULT CMissile::Ready_GameObject()
 void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	Engine::CTransform* pTransform = nullptr;
-
 	pTransform = dynamic_cast<Engine::CTransform*>(CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_Box", L"Com_Transform"));
 	// 여기선 ID_DYNAMIC이 아닌 ID_STATIC 로 사용
 	if (nullptr == pTransform)
 		return;
 
-	_vec3 outerBoxPos;	// 박스 주변 도는 목표점 위치
+	Engine::CCube_Collider* pBoxCollider = nullptr;
+	pBoxCollider = dynamic_cast<Engine::CCube_Collider*>(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Box", L"Com_Collider"));
+
+	if (nullptr == pBoxCollider)
+		return;
+
+	Engine::CCube_Collider* pMissileCollider = nullptr;
+	pMissileCollider = dynamic_cast<Engine::CCube_Collider*>(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Missile", L"Com_Collider"));
+
+	if (nullptr == pMissileCollider)
+		return;
+
+	_vec3 outerBoxPos;
 	pTransform->Get_Info(INFO_POS, &outerBoxPos);
 
 	 _vec3 pMissilePos;
@@ -61,7 +72,7 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	_float radius = clampT((fDistance-10.f) * 10.f, 0.f, 1500.f);
 
-	_vec3 innerBoxPos = outerBoxPos;	// 실제 박스 중심 위치
+	_vec3 innerBoxPos = outerBoxPos;
 
 	m_fAngle += D3DXToRadian(800.f) * fFixedDeltaTime;
 
@@ -114,7 +125,12 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
 		}
 
-		Engine::CCube_Collider* CCollider = nullptr;
+		bool bCollision = Engine::CCollisionMgr::CubeVsCube(pBoxCollider, pMissileCollider);
+
+		if (bCollision == true)
+		{
+			CManagement::GetInstance()->Delete_GameObject(L"GameLogic", L"Obj_Missile");
+		}
 }
 
 _int CMissile::Update_GameObject(const _float& fTimeDelta)

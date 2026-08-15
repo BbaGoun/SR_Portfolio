@@ -32,6 +32,14 @@ void CManagement::Add_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag,
         MSG_BOX("Add_GameObject Fail");
 }
 
+void CManagement::Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+    if (nullptr == m_pScene)
+        return;
+
+    m_pScene->Delete_GameObject(pLayerTag, pObjTag);
+}
+
 HRESULT CManagement::Set_Scene(CScene* pScene)
 {
     if (nullptr == pScene)

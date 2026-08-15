@@ -23,6 +23,8 @@ public:
 		CGameObject*  pGameObject
 	);
 
+	HRESULT		Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
+
 public:
 	virtual			HRESULT		Ready_Scene();
 	virtual			void		FixedUpdate_Scene(const _float& fFixedDeltaTime);
