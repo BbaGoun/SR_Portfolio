@@ -12,8 +12,6 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CGameObject::CGameObject(const CGameObject& rhs)
     : m_pGraphicDev(rhs.m_pGraphicDev)
-    , m_pParent(rhs.m_pParent)
-    , m_vecChildren(rhs.m_vecChildren)
     , m_iCullDistance(rhs.m_iCullDistance)
     , m_fSpeed(rhs.m_fSpeed), m_vForce(rhs.m_vForce), m_vRotation(rhs.m_vRotation)
 {
@@ -60,10 +58,10 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
     // 같은 부모 내에서 순서 재조정인가
     const bool bSameParent = (_pGO->m_pParent == this);
 
-    _vec3 vPos;
-    // 같은 부모가 아니면 위치 보존을 위해 이전 위치를 저장
+    _matrix matLocal;
+    // 같은 부모가 아니면 로컬 보존을 위해 저장
     if (!bSameParent)
-        _pGO->Get_Transform()->Get_Info(INFO_POS, &vPos);
+        matLocal = *_pGO->Get_Transform()->Get_LocalWorld();
 
     int iOld = -1;
     // 같은 부모면 이전 위치를 기억
@@ -103,8 +101,8 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
         _matrix* pMatParent = Get_Transform()->Get_World();
         _matrix matInvParent;
         D3DXMatrixInverse(&matInvParent, 0, pMatParent);
-        D3DXVec3TransformCoord(&vPos, &vPos, &matInvParent);
-        _pGO->Get_Transform()->Set_Pos(vPos);
+        matLocal *= matInvParent;
+        _pGO->Get_Transform()->Set_LocalWorld(&matLocal);
     }
 }
 

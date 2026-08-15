@@ -2,25 +2,30 @@
 #include "CGameObject.h"
 
 CTransform::CTransform() : CComponent()
-, m_quaternion({ 0, 0, 0, 1 })
+, m_localQuaternion({ 0, 0, 0, 1 })
+, m_worldQuaternion({ 0, 0, 0, 1 })
 , m_vScale({ 1, 1, 1 })
 , m_bDirty(true)
 {
 	ZeroMemory(&m_vInfo, sizeof(_vec3) * INFO_END);
 	D3DXMatrixIdentity(&m_matWorld);
+	D3DXMatrixIdentity(&m_matLocalWorld);
 }
 
 CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev) : CComponent(pGraphicDev)
-, m_quaternion({ 0, 0, 0, 1 })
+, m_localQuaternion({ 0, 0, 0, 1 })
+, m_worldQuaternion({ 0, 0, 0, 1 })
 , m_vScale({ 1, 1, 1 })
 , m_bDirty(true)
 {
 	ZeroMemory(&m_vInfo, sizeof(_vec3) * INFO_END);
 	D3DXMatrixIdentity(&m_matWorld);
+	D3DXMatrixIdentity(&m_matLocalWorld);
 }
 
 CTransform::CTransform(const CTransform& rhs):CComponent(rhs)
-, m_quaternion(rhs.m_quaternion)
+, m_localQuaternion(rhs.m_localQuaternion)
+, m_worldQuaternion(rhs.m_worldQuaternion)
 , m_vScale(rhs.m_vScale)
 , m_bDirty(rhs.m_bDirty)
 {
@@ -28,6 +33,7 @@ CTransform::CTransform(const CTransform& rhs):CComponent(rhs)
 		m_vInfo[i] = rhs.m_vInfo[i];
 
 	m_matWorld = rhs.m_matWorld;
+	m_matLocalWorld = rhs.m_matLocalWorld;
 }
 
 CTransform::~CTransform()
@@ -70,7 +76,7 @@ void CTransform::Set_LocalWorld(_matrix* _MatLocal)
 	memcpy(&matRot.m[1], D3DXVec3Normalize(&vUp, &vUp), sizeof(_vec3));
 	memcpy(&matRot.m[2], D3DXVec3Normalize(&vLook, &vLook), sizeof(_vec3));
 
-	D3DXQuaternionRotationMatrix(&m_quaternion, &matRot);
+	D3DXQuaternionRotationMatrix(&m_localQuaternion, &matRot);
 
 	// 이동 분해
 	memcpy(&m_vInfo[INFO_POS], &_MatLocal->m[3], sizeof(_vec3));
@@ -98,7 +104,7 @@ _matrix* CTransform::Get_World()
 
 	// 4. 회전 적용
 	_matrix matRotQ;
-	D3DXMatrixRotationQuaternion(&matRotQ, &m_quaternion);
+	D3DXMatrixRotationQuaternion(&matRotQ, &m_localQuaternion);
 
 	for (int i = 0; i < INFO_POS; ++i) {
 		D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &matRotQ);
@@ -111,18 +117,25 @@ _matrix* CTransform::Get_World()
 		memcpy(&m_matLocalWorld.m[i][0], m_vInfo[i], sizeof(_vec3));
 	}
 
+	CGameObject* pParent = m_pOwner->Get_Parent();
 	m_matWorld = m_matLocalWorld;
 
-	// 6. 부모의 월드 행렬 가져오기
-	if (m_pOwner->Get_Parent() != nullptr) {
-		_matrix* parentWorld = m_pOwner->Get_Parent()->Get_Transform()->Get_World();
-
-		// 7. 로컬 월드 행렬 * 부모의 월드 행렬 = 실제 월드 행렬 
-		m_matWorld *= (*parentWorld);
+	if (pParent == nullptr)
+	{
+		m_worldQuaternion = m_localQuaternion;
+		m_bDirty = false;
+		return &m_matWorld;
 	}
 
-	m_bDirty = false;
+	// 6. 부모의 월드 행렬/쿼터니언 가져오기
+	_matrix* parentWorld = pParent->Get_Transform()->Get_World();
+	_quaternion qParent = pParent->Get_Transform()->Get_WorldQuaternion();
+	m_worldQuaternion = m_localQuaternion * qParent;
 
+	// 7. 로컬 월드 행렬 * 부모의 월드 행렬 = 실제 월드 행렬 
+	m_matWorld *= (*parentWorld);
+
+	m_bDirty = false;
 	return &m_matWorld;
 }
 

@@ -1,4 +1,4 @@
-#include "CManagement.h"
+﻿#include "CManagement.h"
 #include "CRenderer.h"
 
 IMPLEMENT_SINGLETON(CManagement)
@@ -10,6 +10,24 @@ CManagement::CManagement() : m_pScene(nullptr), m_pNextScene(nullptr)
 CManagement::~CManagement()
 {
     Free();
+}
+
+CGameObject* CManagement::Find_GameObjectByTag(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+    if (nullptr == m_pScene)
+        return nullptr;
+
+    return m_pScene->Find_GameObjectByTag(pLayerTag, pObjTag);
+}
+
+const vector<CGameObject*>& CManagement::Find_GameObjectsByTag(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+    static vector<CGameObject*> s_empty;
+
+    if (nullptr == m_pScene)
+        return s_empty;
+
+    return m_pScene->Find_GameObjectsByTag(pLayerTag, pObjTag);
 }
 
 CComponent* CManagement::Get_Component(COMPONENTID eID, const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag)
@@ -32,8 +50,13 @@ void CManagement::Add_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag,
         MSG_BOX("Add_GameObject Fail");
 }
 
-const map<const _tchar*, CGameObject*>& CManagement::Get_GameObjects(const _tchar* pLayerTag)
+const map<const _tchar*, vector<CGameObject*>>& CManagement::Get_GameObjects(const _tchar* pLayerTag)
 {
+    static map<const _tchar*, vector<CGameObject*>> s_empty;
+
+    if(nullptr == m_pScene)
+        return s_empty;
+
     return m_pScene->Get_GameObjects(pLayerTag);
 }
 

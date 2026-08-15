@@ -37,20 +37,8 @@
     <Filter Include="02. GameObject\SkyBox">
       <UniqueIdentifier>{859f3918-5c4b-4bf1-8123-8e96160970aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Enemy">
-      <UniqueIdentifier>{2abdddf8-d6c9-4e51-ac7c-39bdb81140fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Jet">
-      <UniqueIdentifier>{5cbc5a26-f72f-4f9f-a707-07e4199c6a01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Land">
-      <UniqueIdentifier>{e078520d-f092-48a0-9725-02e48e842cd7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\GOCody">
       <UniqueIdentifier>{bcc5ba6d-131a-4e42-a2d6-3f1a1ab100cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\GOMay">
-      <UniqueIdentifier>{9348a796-3561-4fac-acb1-d33004229715}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\Camera">
       <UniqueIdentifier>{3c825b67-dcc3-4053-ba3a-63cb123f4e1d}</UniqueIdentifier>
@@ -168,23 +156,11 @@
     <ClInclude Include="..\Header\CBackGround.h">
       <Filter>02. GameObject\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CEnemy.h">
-      <Filter>02. GameObject\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CJet.h">
-      <Filter>02. GameObject\Jet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CLand.h">
-      <Filter>02. GameObject\Land</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CSkyBox.h">
       <Filter>02. GameObject\SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CGOCody.h">
       <Filter>02. GameObject\GOCody</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CGOMay.h">
-      <Filter>02. GameObject\GOMay</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Client_Define.h">
       <Filter>헤더 파일</Filter>
@@ -287,23 +263,11 @@
     <ClCompile Include="..\Code\CBackGround.cpp">
       <Filter>02. GameObject\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CEnemy.cpp">
-      <Filter>02. GameObject\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CJet.cpp">
-      <Filter>02. GameObject\Jet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CLand.cpp">
-      <Filter>02. GameObject\Land</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CSkyBox.cpp">
       <Filter>02. GameObject\SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CGOCody.cpp">
       <Filter>02. GameObject\GOCody</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CGOMay.cpp">
-      <Filter>02. GameObject\GOMay</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Client_Define.cpp">
       <Filter>소스 파일</Filter>

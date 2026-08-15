@@ -12,6 +12,9 @@ protected:
 	virtual ~CScene();
 
 public:
+	CGameObject* Find_GameObjectByTag(const _tchar* pLayerTag, const _tchar* pObjTag);
+	const vector<CGameObject*>& Find_GameObjectsByTag(const _tchar* pLayerTag, const _tchar* pObjTag);
+
 	CComponent* Get_Component(COMPONENTID eID,
 		const _tchar* pLayerTag,
 		const _tchar* pObjTag,
@@ -22,7 +25,8 @@ public:
 		const _tchar* pObjTag,
 		CGameObject*  pGameObject
 	);
-	const map<const _tchar*, CGameObject*>& Get_GameObjects(const _tchar* pLayerTag);
+
+	const map<const _tchar*, vector<CGameObject*>>& Get_GameObjects(const _tchar* pLayerTag);
 	const vector<CGameObject*>& Get_Roots(const _tchar* pLayerTag);
 	void			Attach_Root(CGameObject* _pObj);
 	void			Detach_Root(CGameObject* _pObj);

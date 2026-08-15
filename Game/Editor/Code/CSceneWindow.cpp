@@ -1,4 +1,4 @@
-#include "pch.h"
+Ôªø#include "pch.h"
 #include "CSceneWindow.h"
 #include "CManagement.h"
 
@@ -32,10 +32,10 @@ void CSceneWindow::Update_Window()
     ImGui::SetNextWindowSizeConstraints(ImVec2(250.0f, 250.0f), ImVec2(FLT_MAX, FLT_MAX));
     ImGuiIO& io = ImGui::GetIO();
 
-    // ø¿∫Í¡ß∆Æ ∏Ò∑œ ∞°¡Æø¿±‚
+    // Ïò§Î∏åÏ†ùÌä∏ Î™©Î°ù Í∞ÄÏ†∏Ïò§Í∏∞
     const auto& map = CManagement::GetInstance()->Get_GameObjects(L"Default");
 
-    // ∫‰ «‡∑ƒ ºº∆√
+    // Î∑∞ ÌñâÎ†¨ ÏÑ∏ÌåÖ
     static _vec3 vEye = { 0, 5.f, -5.f };
     static float yaw = 0.f, pitch = -0.7f;
     _vec3 vLook = { cosf(pitch) * sinf(yaw), sinf(pitch), cosf(pitch) * cosf(yaw) };
@@ -66,17 +66,22 @@ void CSceneWindow::Update_Window()
         g_GizmoOp = ImGuizmo::ROTATE;
     ImGui::SameLine();
     if (ImGui::RadioButton("Scale", g_GizmoOp == ImGuizmo::SCALE)) g_GizmoOp = ImGuizmo::SCALE;
+    ImGui::SameLine();
+    static float gizmoSize = 0.1f;
+    ImGui::Text("| Gizmo Size");
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+    ImGui::SliderFloat("##Gizmo Size", &gizmoSize, 0.1f, 0.25f);
 
+    ImVec2 viewPos = ImGui::GetCursorScreenPos(); // content ÏòÅÏó≠Ïùò Ï¢åÏÉÅÎã®
+    ImVec2 viewSize = ImGui::GetContentRegionAvail(); // content ÏòÅÏó≠Ïùò ÌÅ¨Í∏∞
 
-    ImVec2 viewPos = ImGui::GetCursorScreenPos(); // content øµø™¿« ¡¬ªÛ¥‹
-    ImVec2 viewSize = ImGui::GetContentRegionAvail(); // content øµø™¿« ≈©±‚
-
-    // ≈ıøµ «‡∑ƒ ºº∆√
+    // Ìà¨ÏòÅ ÌñâÎ†¨ ÏÑ∏ÌåÖ
     _matrix matProj, matInvProj;
     D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(45.f), viewSize.x / viewSize.y, 0.1f, 100.f);
     D3DXMatrixInverse(&matInvProj, 0, &matProj);
 
-    // ### ±‚¡∏ ≈•∫Í∏¶ RTø° ±◊∏Æ¥¬ ∞˙¡§
+    // ### Í∏∞Ï°¥ ÌÅêÎ∏åÎ•º RTÏóê Í∑∏Î¶¨Îäî Í≥ºÏ†ï
     if (!m_pSceneTex || m_rtW != viewSize.x || m_rtH != viewSize.y) {
         Safe_Release(m_pSceneTex);
         Safe_Release(m_pSceneDepth);
@@ -121,24 +126,27 @@ void CSceneWindow::Update_Window()
         m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
         m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 
-        // ø¿∫Í¡ß∆Æ ∏Ò∑œ¿ª ±◊∏≤.
+        // Ïò§Î∏åÏ†ùÌä∏ Î™©Î°ùÏùÑ Í∑∏Î¶º.
         for (auto& p : map) {
-            if (p.second == nullptr)
-                continue;
+            for (auto& pObj : p.second) {
+                if (pObj == nullptr)
+                    continue;
 
-            m_pGraphicDev->SetTransform(D3DTS_WORLD, p.second->Get_Transform()->Get_World());
-            if (p.second->Get_Component(ID_STATIC, L"Com_Buffer") != nullptr)
-                p.second->Render_GameObject();
-            else
-                m_pCubeBuffer->Render_Buffer();
+                m_pGraphicDev->SetTransform(D3DTS_WORLD, pObj->Get_Transform()->Get_World());
+                if (pObj->Get_Component(ID_STATIC, L"Com_Buffer") != nullptr)
+                    pObj->Render_GameObject();
+                else
+                    m_pCubeBuffer->Render_Buffer();
+            }
+
         }
 
-        // ∫π±∏
+        // Î≥µÍµ¨
         m_pGraphicDev->SetRenderTarget(0, pOldRT);
         m_pGraphicDev->SetDepthStencilSurface(pOldDepth);
         pRT->Release(); pOldRT->Release(); pOldDepth->Release();
 
-        // ### ImGui Scene √¢ø° RT ¿ÃπÃ¡ˆ∏¶ ∫Ÿ¿Ã±‚
+        // ### ImGui Scene Ï∞ΩÏóê RT Ïù¥ÎØ∏ÏßÄÎ•º Î∂ôÏù¥Í∏∞
         ImGui::Image((ImTextureRef)m_pSceneTex, viewSize);
     }
 
@@ -149,33 +157,35 @@ void CSceneWindow::Update_Window()
         viewSize.x,
         viewSize.y);
 
-    // ImGuizmo¥¬ ¡∂¿€ ªÛ≈¬(mbUsing µÓ)∏¶ ¿¸ø™ Context + ID∑Œ ∞¸∏Æ«’¥œ¥Ÿ.
-    // ∞¯Ωƒ øπ¡¶µµ ø©∑Ø ø¿∫Í¡ß∆Æ¿œ ∂ß π›µÂΩ√ PushID / PopID∏¶ æπ¥œ¥Ÿ.
+    // ImGuizmoÎäî Ï°∞Ïûë ÏÉÅÌÉú(mbUsing Îì±)Î•º Ï†ÑÏó≠ Context + IDÎ°ú Í¥ÄÎ¶¨Ìï©ÎãàÎã§.
+    // Í≥µÏãù ÏòàÏ†úÎèÑ Ïó¨Îü¨ Ïò§Î∏åÏ†ùÌä∏Ïùº Îïå Î∞òÎìúÏãú PushID / PopIDÎ•º ÏîÅÎãàÎã§.
 
-    // ø¿∫Í¡ß∆Æ¿« guid∑Œ º±≈√
+    // Ïò§Î∏åÏ†ùÌä∏Ïùò guidÎ°ú ÏÑ†ÌÉù
     if (g_bSelected) {
         CGameObject* pSel = FindByGuid(g_uSelected, map);
         if (pSel) {
-            // ¡∂¿€øÎ ∫πªÁ∫ª (Get_World()∞° µπ∑¡¡÷¥¬ πˆ∆€∏¶ ¡˜¡¢ ±˙¡ˆ æ ∞‘)
+            // Ï°∞ÏûëÏö© Î≥µÏÇ¨Î≥∏ (Get_World()Í∞Ä ÎèåÎ†§Ï£ºÎäî Î≤ÑÌçºÎ•º ÏßÅÏ†ë Íπ®ÏßÄ ÏïäÍ≤å)
             _matrix matWorld = *pSel->Get_Transform()->Get_World();
 
-            // Manipulate¥¬ ø˘µÂ «‡∑ƒ¿ª ¿˚øÎ«œø© ±‚¡Ó∏∏¶ ∫∏ø©¡÷∞Ì
-            // ±‚¡Ó∏¿« ¡∂¿€¿∏∑Œ «ÿ¥Á ø˘µÂ «‡∑ƒ¿ª πŸ∑Œ ºˆ¡§«—¥Ÿ.
-            // ±‚¡Ó∏¿« ¿ßƒ°¥¬ ∫Œ∏±Ó¡ˆ ∞Ì∑¡µ» ø˘µÂ «‡∑ƒ
+            // ManipulateÎäî ÏõîÎìú ÌñâÎ†¨ÏùÑ Ï†ÅÏö©ÌïòÏó¨ Í∏∞Ï¶àÎ™®Î•º Î≥¥Ïó¨Ï£ºÍ≥†
+            // Í∏∞Ï¶àÎ™®Ïùò Ï°∞ÏûëÏúºÎ°ú Ìï¥Îãπ ÏõîÎìú ÌñâÎ†¨ÏùÑ Î∞îÎ°ú ÏàòÏ†ïÌïúÎã§.
+            // Í∏∞Ï¶àÎ™®Ïùò ÏúÑÏπòÎäî Î∂ÄÎ™®ÍπåÏßÄ Í≥†Î†§Îêú ÏõîÎìú ÌñâÎ†¨
+
+            ImGuizmo::SetGizmoSizeClipSpace(gizmoSize);
             ImGuizmo::Manipulate(
                 (float*)matView, (float*)matProj,
                 g_GizmoOp, g_GizmoMode, (float*)&matWorld);
 
             if (ImGuizmo::IsUsing())
             {
-                // ±‚¡Ó∏¿« ¡∂¿€¿∫ ∑Œƒ√ø° ¿˚øÎµ«æﬂ «œπ«∑Œ ∫Œ∏¿« øµ«‚¿ª ¥ŸΩ√ æ¯æÿ¥Ÿ.
+                // Í∏∞Ï¶àÎ™®Ïùò Ï°∞ÏûëÏùÄ Î°úÏª¨Ïóê Ï†ÅÏö©ÎêòÏïº ÌïòÎØÄÎ°ú Î∂ÄÎ™®Ïùò ÏòÅÌñ•ÏùÑ Îã§Ïãú ÏóÜÏï§Îã§.
                 _matrix matLocal = matWorld;
                 if (CGameObject* pParent = pSel->Get_Parent())
                 {
                     _matrix matParent = *pParent->Get_Transform()->Get_World();
                     _matrix matInvParent;
                     D3DXMatrixInverse(&matInvParent, nullptr, &matParent);
-                    // local * parent = world  °Ê  local = world * inverse(parent)
+                    // local * parent = world  ‚Üí  local = world * inverse(parent)
                     matLocal = matWorld * matInvParent;
                 }
 
@@ -203,24 +213,24 @@ void CSceneWindow::Update_Window()
         {
             bool isPicked = false;
 
-            // ø¿∫Í¡ß∆Æ «»≈∑ °Ê selected ∞ªΩ≈
-            // ∫‰ ∆˜∆Æ -> ≈ıøµ
+            // Ïò§Î∏åÏ†ùÌä∏ ÌîΩÌÇπ ‚Üí selected Í∞±Ïã†
+            // Î∑∞ Ìè¨Ìä∏ -> Ìà¨ÏòÅ
             _vec3 pickPos = { 0, 0, 1 };
             pickPos.x = (local.x - viewSize.x / 2.f) / (viewSize.x / 2.f);
             pickPos.y = -(local.y - viewSize.y / 2.f) / (viewSize.y / 2.f);
 
-            // ≈ıøµ -> ∫‰
+            // Ìà¨ÏòÅ -> Î∑∞
             D3DXVec3TransformCoord(&pickPos, &pickPos, &matInvProj);
 
-            // ∫‰ø°º≠ ∑π¿Ã¿˙ ª˝º∫
+            // Î∑∞ÏóêÏÑú Î†àÏù¥Ï†Ä ÏÉùÏÑ±
             _vec3 rayOrigin = { 0, 0, 0 };
             _vec3 rayDir = pickPos;
 
-            // ray∏¶ ∫‰ -> ø˘µÂ
+            // rayÎ•º Î∑∞ -> ÏõîÎìú
             D3DXVec3TransformCoord(&rayOrigin, &rayOrigin, &matInvView);
             D3DXVec3TransformNormal(&rayDir, &rayDir, &matInvView);
 
-            // forπÆ¿∏∑Œ ∏µÁ ø¿∫Í¡ß∆Æ ≈Ωªˆ
+            // forÎ¨∏ÏúºÎ°ú Î™®Îì† Ïò§Î∏åÏ†ùÌä∏ ÌÉêÏÉâ
             float bestDist = FLT_MAX;
             uint64_t bestGuid = 0;
             bool hit = false;
@@ -228,30 +238,33 @@ void CSceneWindow::Update_Window()
 
             for (auto& p : map)
             {
-                if (!p.second) 
-                    continue;
-                
-                _matrix matWorld = *p.second->Get_Transform()->Get_World();
-                _matrix matInv;
-                D3DXMatrixInverse(&matInv, 0, &matWorld);
-                _vec3 oLocal, dLocal;
-                D3DXVec3TransformCoord(&oLocal, &rayOrigin, &matInv);
-                D3DXVec3TransformNormal(&dLocal, &rayDir, &matInv);
-                D3DXVec3Normalize(&dLocal, &dLocal);
-
-                CComponent* pBuf = p.second->Get_Component(ID_STATIC, L"Com_Buffer");
-                if (pBuf == nullptr)
-                    m_pCubeBuffer->GetBoundingBox(&box);
-                else {
-                    static_cast<CVIBuffer*>(pBuf)->GetBoundingBox(&box);
-                }
-
-                float dist;
-                if (box.Intersects(ToXMVec(oLocal), ToXMVec(dLocal), dist) && dist < bestDist)
+                for (auto& pObj : p.second)
                 {
-                    bestDist = dist;
-                    bestGuid = p.second->GetGuid();
-                    hit = true;
+                    if (!pObj)
+                        continue;
+
+                    _matrix matWorld = *pObj->Get_Transform()->Get_World();
+                    _matrix matInv;
+                    D3DXMatrixInverse(&matInv, 0, &matWorld);
+                    _vec3 oLocal, dLocal;
+                    D3DXVec3TransformCoord(&oLocal, &rayOrigin, &matInv);
+                    D3DXVec3TransformNormal(&dLocal, &rayDir, &matInv);
+                    D3DXVec3Normalize(&dLocal, &dLocal);
+
+                    CComponent* pBuf = pObj->Get_Component(ID_STATIC, L"Com_Buffer");
+                    if (pBuf == nullptr)
+                        m_pCubeBuffer->GetBoundingBox(&box);
+                    else {
+                        static_cast<CVIBuffer*>(pBuf)->GetBoundingBox(&box);
+                    }
+
+                    float dist;
+                    if (box.Intersects(ToXMVec(oLocal), ToXMVec(dLocal), dist) && dist < bestDist)
+                    {
+                        bestDist = dist;
+                        bestGuid = pObj->GetGuid();
+                        hit = true;
+                    }
                 }
             }
             if (hit) {
@@ -266,7 +279,7 @@ void CSceneWindow::Update_Window()
 
         if (ImGui::IsMouseDragging(ImGuiMouseButton_Right))
         {
-            // ƒ´∏ﬁ∂Û »∏¿¸ (ºº∑Œ : Pitch, ∞°∑Œ : Yaw)
+            // Ïπ¥Î©îÎùº ÌöåÏ†Ñ (ÏÑ∏Î°ú : Pitch, Í∞ÄÎ°ú : Yaw)
             yaw += io.MouseDelta.x / 150.f;
             pitch += -io.MouseDelta.y / 150.f;
             pitch = clampT(pitch, -1.5f, 1.5f);
@@ -274,7 +287,7 @@ void CSceneWindow::Update_Window()
 
         if (ImGui::IsMouseDragging(ImGuiMouseButton_Middle))
         {
-            // ƒ´∏ﬁ∂Û ¿Ãµø (∞°∑Œ : Right, ºº∑Œ : Up)
+            // Ïπ¥Î©îÎùº Ïù¥Îèô (Í∞ÄÎ°ú : Right, ÏÑ∏Î°ú : Up)
             _vec3 vRight, vUp;
             memcpy(&vRight, &matInvView.m[0], sizeof(_vec3));
             memcpy(&vUp, &matInvView.m[1], sizeof(_vec3));
@@ -284,7 +297,7 @@ void CSceneWindow::Update_Window()
 
         if (ImGui::GetIO().MouseWheel != 0.f)
         {
-            // ƒ´∏ﬁ∂Û ¡‹¿Œ ¡‹æ∆øÙ (Look¿∏∑Œ ∞≈∏Æ ¡∂¡§)
+            // Ïπ¥Î©îÎùº Ï§åÏù∏ Ï§åÏïÑÏõÉ (LookÏúºÎ°ú Í±∞Î¶¨ Ï°∞Ï†ï)
             _vec3 vLook;
             memcpy(&vLook, &matInvView.m[2], sizeof(_vec3));
             vEye += io.MouseWheel * vLook;
