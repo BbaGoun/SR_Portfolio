@@ -68,12 +68,14 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 
 	CCollider* pRainBowCollider = static_cast<CCollider*>
 		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Rainbow_Cloud", L"Com_Collider"));
+
+	CCollider* pBananaCollider = static_cast<CCollider*>
+		(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Banana", L"Com_Collider"));
 	
 
 	CCollisionMgr::GetInstance()->Collision(pBoxCollider, pCartCollider);
 	CCollisionMgr::GetInstance()->Collision(pRainBowCollider, pCartCollider);
-
-
+	CCollisionMgr::GetInstance()->Collision(pBananaCollider, pCartCollider);
 
 }
 
@@ -196,7 +198,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_FL", pGameObject)))
 		return E_FAIL;
 	
-	pCart->Set_Child(pGameObject);
+	pCartBody->Set_Child(pGameObject);
 	// ## ¿À¸¥ÂÊ ¾Õ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FR);
 	
@@ -205,7 +207,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_FR", pGameObject)))
 		return E_FAIL;
 	
-	pCart->Set_Child(pGameObject);
+	pCartBody->Set_Child(pGameObject);
 	
 	// ## ¿ÞÂÊ µÞ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BL);
@@ -215,7 +217,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BL", pGameObject)))
 		return E_FAIL;
 	
-	pCart->Set_Child(pGameObject);
+	pCartBody->Set_Child(pGameObject);
 	
 	// ## ¿À¸¥ÂÊ µÞ¹ÙÄû
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BR);
@@ -225,7 +227,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BR", pGameObject)))
 		return E_FAIL;
 	
-	pCart->Set_Child(pGameObject);
+	pCartBody->Set_Child(pGameObject);
 
 	// ## ºÎ½ºÅÍ ¿ÞÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);

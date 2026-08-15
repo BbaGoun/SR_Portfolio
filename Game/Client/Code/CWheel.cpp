@@ -58,11 +58,12 @@ HRESULT CWheel::Ready_GameObject()
 
 void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	_vec3 vParentForce = m_pParent->Get_Force();
+	CCart* pCart = dynamic_cast<CCart*>(m_pParent->Get_Parent());
+	_vec3 vParentForce = pCart->Get_Force();
 	float fParentForceLen = D3DXVec3Length(&vParentForce);
 
 	_vec3 vPlayerLook;
-	m_pParent->Get_Transform()->Get_Info(INFO_LOOK, &vPlayerLook);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vPlayerLook);
 
 	if (D3DXVec3Dot(&vPlayerLook, &vParentForce) >= 0)
 		m_vRotation.x += fParentForceLen * fFixedDeltaTime;
@@ -75,7 +76,6 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"Environment", L"Env_Land3", L"Com_Buffer");
 	CTerrain3* pTerrain3 = dynamic_cast<CTerrain3*>(pCom);
-	CCart* pCart = dynamic_cast<CCart*>(m_pParent);
 
 
 	if (pCart->GetDrift())
@@ -118,7 +118,7 @@ void CWheel::Render_GameObject()
 
 void CWheel::KeyInput(const _float& fDeltaTime)
 {
-	_vec3 vParentForce = m_pParent->Get_Force();
+	_vec3 vParentForce = m_pParent->Get_Parent()->Get_Force();
 	float fParentForceLen = D3DXVec3Length(&vParentForce);
 	if (fParentForceLen > 5.0f)
 	{

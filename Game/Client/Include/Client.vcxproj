@@ -176,6 +176,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
+    <ClInclude Include="..\Header\CBanana.h" />
     <ClInclude Include="..\Header\CBoostWind.h" />
     <ClInclude Include="..\Header\CBoostJet.h" />
     <ClInclude Include="..\Header\CBox.h" />
@@ -223,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CBackGround.cpp" />
+    <ClCompile Include="..\Code\CBanana.cpp" />
     <ClCompile Include="..\Code\CBoostWind.cpp" />
     <ClCompile Include="..\Code\CBoostJet.cpp" />
     <ClCompile Include="..\Code\CBox.cpp" />

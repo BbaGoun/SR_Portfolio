@@ -145,6 +145,9 @@
     <Filter Include="02. GameObject\UI\UI_HUD\HUD_Gage">
       <UniqueIdentifier>{bd8bd500-6a9a-4ffc-a739-75f687414e13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\Banana">
+      <UniqueIdentifier>{4de29079-460b-4184-99c7-5fa447048b9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -282,6 +285,9 @@
     <ClInclude Include="..\Header\CUI_Rainbow.h">
       <Filter>02. GameObject\UI\UI_Rainbow</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CBanana.h">
+      <Filter>02. GameObject\Item\Banana</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -409,6 +415,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_Rainbow.cpp">
       <Filter>02. GameObject\UI\UI_Rainbow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBanana.cpp">
+      <Filter>02. GameObject\Item\Banana</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

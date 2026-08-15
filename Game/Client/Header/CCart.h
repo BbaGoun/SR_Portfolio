@@ -36,25 +36,33 @@ public:
 	void			UpdateBoost();
 	bool			GetBoost() { return m_bBoost; }
 	bool			GetDrift() { return m_bDrift; }
-	bool			GetRainbowUI() { return m_bRainbowUI; }
 
+	bool			GetRainbowUI() { return m_bRainbowUI; }
 	void			SetRainbowUI(bool bRainbowState) { m_bRainbowUI = bRainbowState; }
 
+	void			SetBanana(bool bBanana) { m_bBanana = bBanana; }
+	bool			GetBanana() { return m_bBanana; }
 
 	void			CreateRainbowObject();
+	void			CreateBananaObject();
+	void			BananaTimer(const _float& fDeltaTime );
+
 private:
 	_float		m_fMaxSpeed;
 	bool		m_bDrift;
+	bool		m_bBoost;
+	bool		m_bBanana;
+	bool		m_bRainbowUI;
 
 	float		m_fNormalTurnAngle;
 	float		m_fBoostTurnAngle;
 	float		m_fDriftTurnAngle;
 
 	float		m_fLookForceAngle;
-	bool		m_bBoost;
 	float		m_fBoostCal;
 
-	float		m_bRainbowUI;
+	float		m_fBananaTimer;
+	_vec3		m_vBananaSpinStartLook;
 
 	Engine::CCube_Collider* m_pColliderCom;
 
