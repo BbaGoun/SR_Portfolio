@@ -273,6 +273,9 @@
     <ClInclude Include="..\Header\CUI_BoosterBar.h">
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI_BoosterBG.h">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -391,6 +394,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_BoosterBar.cpp">
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_BoosterBG.cpp">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

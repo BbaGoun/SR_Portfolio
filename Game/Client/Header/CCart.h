@@ -47,6 +47,9 @@ public:
 	void			CreateBananaObject();
 	void			BananaTimer(const _float& fDeltaTime );
 
+	float			GetCurGage() { return m_fCurGage; }
+	float			GetGainGage() { return m_fGainGage; }
+
 private:
 	_float		m_fMaxSpeed;
 	bool		m_bDrift;
@@ -66,6 +69,9 @@ private:
 
 	float		m_fCurGage;
 	float		m_fGainGage;
+
+	float		m_fBoostItemCnt;
+
 
 	Engine::CCube_Collider* m_pColliderCom;
 
