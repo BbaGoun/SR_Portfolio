@@ -6,6 +6,7 @@
 #include "CRainBow_Cloud.h"
 #include "CManagement.h"
 #include "CBanana.h"
+#include "CCollisionMgr.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -116,6 +117,13 @@ void CCart::Render_GameObject()
 
 void CCart::CollisionEnter(CCollider* pOtherCollider)
 {
+	const _tchar* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
+
+	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
+	{
+		CCollisionMgr::GetInstance()->PysicalCubevsCube(
+			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
+	}
 }
 
 void CCart::TriggerEnter(CCollider* pOtherCollider)

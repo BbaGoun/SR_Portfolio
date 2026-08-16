@@ -49,6 +49,9 @@ HRESULT CCollisionTest::Ready_Scene()
 	if (FAILED(Ready_UI_Layer()))
 		return E_FAIL;
 
+	if (FAILED(Ready_Collision_Matrix()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -77,10 +80,13 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 	//CCollisionMgr::GetInstance()->Collision(pBananaCollider, pCartCollider);
 
 	auto map = Get_GameObjects(L"GameLogic");
+	//auto map2 = Get_GameObjects(L"Environment");
 
 	vector<CGameObject*> objects;
 	for (auto& p : map)
 		objects.insert(objects.end(), p.second.begin(), p.second.end());
+	/*for (auto& p : map2)
+		objects.insert(objects.end(), p.second.begin(), p.second.end());*/
 
 	// GameLogic에서 오브젝트 A, B 꺼내기
 	for (auto it1 = objects.begin(); it1 != objects.end(); ++it1) {
@@ -381,6 +387,16 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox", pBox)))
 		return E_FAIL;
 
+	pBox = CCollisionBox::Create(m_pGraphicDev);
+
+	if (pBox == nullptr)
+		return E_FAIL;
+	pBox->Get_Transform()->Set_Pos({ -200.f, 1.f, 0.f });
+	pBox->Set_CollisionLayer(CL_LAYER1);
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
+		return E_FAIL;
+
 
 	//// 무지개 구름 이펙트
 	//pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
@@ -482,6 +498,13 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
 		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CCollisionTest::Ready_Collision_Matrix()
+{
+	Set_CollisionMatrix(CL_DEFAULT, CL_LAYER1, false);
 
 	return S_OK;
 }
