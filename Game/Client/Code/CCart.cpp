@@ -7,6 +7,7 @@
 #include "CManagement.h"
 #include "CBanana.h"
 #include "CCollisionMgr.h"
+#include <CLand3.h>
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -80,7 +81,7 @@ HRESULT CCart::Ready_GameObject()
 void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	D3DXQUATERNION q;
-	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, m_vRotation.z);
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, m_vRotation.z);
 	m_pTransformCom->Set_Quaternion(&q);
 
 	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
@@ -92,6 +93,10 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 	m_pColliderCom->Set_Offset(vLook*3);
+
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	AdjustPosY(vPos);
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
@@ -383,9 +388,6 @@ void CCart::UpdateDrift()
 		m_vRotation.z *= 0.98;
 		m_vRotation.z = clampT(float(m_vRotation.z), -0.1f, 0.1f);
 
-		m_fGainGage += m_fLookForceAngle * 0.5f;
-		m_fGainGage += D3DXVec3Length(&m_vForce) * m_fSpeed * 0.005f;
-
 		if (m_fLookForceAngle < 0.3f)
 		{
 			m_fCurGage += m_fGainGage;
@@ -397,6 +399,11 @@ void CCart::UpdateDrift()
 			m_fGainGage = 0;
 			m_vRotation.z = 0;
 			m_bDrift = false;
+		}
+		else
+		{
+			m_fGainGage += m_fLookForceAngle * 0.5f;
+			m_fGainGage += D3DXVec3Length(&m_vForce) * m_fSpeed * 0.005f;
 		}
 	}
 }
@@ -491,7 +498,52 @@ void CCart::BananaTimer(const _float& fDeltaTime)
 		m_bBanana = false;
 	}
 }
+void CCart::AdjustPosY(_vec3 pos)
+{
+	CLand3* pLand3 = dynamic_cast<CLand3*>(CManagement::GetInstance()->Find_GameObjectByTag(L"Environment", L"Env_Land3"));
+	CTerrain3* pTerrain3 = pLand3->Get_Component<CTerrain3>();
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	if (pLand3->CheckInTerrain(vPos))
+	{
+		vector<VTXTC> vertices = static_cast<CTerrain3*>(pTerrain3)->GetVertices();
+		// 플레이어를 지형의 로컬 스페이스로 변환
+		_matrix* pMatWorld = pLand3->Get_Component<CTransform>()->Get_World();
+		_matrix matInvWorld;
+		_vec3 originPos = pos;
 
+		D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
+		D3DXVec3TransformCoord(&pos, &pos, &matInvWorld);
+
+		if ((0 <= pos.x && pos.x < VTXITV * (VTXCNTX - 1)) &&
+			(0 <= pos.z && pos.z < VTXITV * (VTXCNTZ - 1)))
+		{
+			int col = pos.x / VTXITV;
+			int row = pos.z / VTXITV;
+
+			float xInPlane = float(pos.x - col * VTXITV) / VTXITV;
+			float zInPlane = float(pos.z - row * VTXITV) / VTXITV;
+
+			_vec3 p0, p1, p2;
+			// 왼쪽 위 삼각형
+			if (zInPlane - xInPlane > 0) {
+				p0 = vertices[(row + 1) * VTXCNTX + col].vPosition;		// 왼쪽 위
+				p1 = vertices[(row + 1) * VTXCNTX + col + 1].vPosition;	// 오른쪽 위
+				p2 = vertices[row * VTXCNTX + col].vPosition;			// 왼쪽 아래
+			}
+			else { // 오른쪽 아래 삼각형
+				p0 = vertices[row * VTXCNTX + col + 1].vPosition;		// 오른쪽 아래
+				p1 = vertices[row * VTXCNTX + col].vPosition;			// 왼쪽 아래
+				p2 = vertices[(row + 1) * VTXCNTX + col + 1].vPosition; // 오른쪽 위
+			}
+			D3DXPLANE plane;
+			D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
+
+			float y = -(plane.a * pos.x + plane.c * pos.z + plane.d) / plane.b;
+			m_pTransformCom->Set_Pos({ pos.x,y,pos.z });
+		}
+	}
+}
 
 void CCart::Free()
 {

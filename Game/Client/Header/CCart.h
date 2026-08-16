@@ -50,6 +50,8 @@ public:
 	float			GetCurGage() { return m_fCurGage; }
 	float			GetGainGage() { return m_fGainGage; }
 
+	void			AdjustPosY(_vec3 pos);
+
 private:
 	_float		m_fMaxSpeed;
 	bool		m_bDrift;
