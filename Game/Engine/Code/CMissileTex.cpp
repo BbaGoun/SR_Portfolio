@@ -1,8 +1,4 @@
-#include "CMissileTex.h"
-
-CMissileTex::CMissileTex()
-{
-}
+ï»¿#include "CMissileTex.h"
 
 CMissileTex::CMissileTex(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CVIBuffer(pGraphicDev)
@@ -20,8 +16,8 @@ CMissileTex::~CMissileTex()
 
 HRESULT CMissileTex::Ready_Buffer()
 {
-	// VTXCUBE´Â ½ºÄ«ÀÌ¹Ú½º¸¦ ¸¸µé±â À§ÇÑ ¿ëµµ·Î 3Â÷¿ø UV°ªÀ» °®´Âµ¥, ÀÏ¹İÀûÀÎ ¹°Ã¼´Â »ç¿ëÇÏÁö ¾Ê´Â Æ÷¸ä
-	// Á÷Á¢ »öÀ» ÁöÁ¤ÇÏ·Á¸é VTXCOL¸¦ ¾²°í, ÅØ½ºÃ³¸¦ ÀÔÈ÷°í ½ÍÀ¸¸é VTXTEX¸¦ »ç¿ë
+	// VTXCUBEëŠ” ìŠ¤ì¹´ì´ë°•ìŠ¤ë¥¼ ë§Œë“¤ê¸° ìœ„í•œ ìš©ë„ë¡œ 3ì°¨ì› UVê°’ì„ ê°–ëŠ”ë°, ì¼ë°˜ì ì¸ ë¬¼ì²´ëŠ” ì‚¬ìš©í•˜ì§€ ì•ŠëŠ” í¬ë©§
+	// ì§ì ‘ ìƒ‰ì„ ì§€ì •í•˜ë ¤ë©´ VTXCOLë¥¼ ì“°ê³ , í…ìŠ¤ì²˜ë¥¼ ì…íˆê³  ì‹¶ìœ¼ë©´ VTXTEXë¥¼ ì‚¬ìš©
 
 	m_dwVtxSize = sizeof(VTXCUBE);
 	m_dwVtxCnt = 32;
@@ -36,11 +32,11 @@ HRESULT CMissileTex::Ready_Buffer()
 
 	VTXCUBE* pVertex = NULL;
 
-	// &pVertex : ¹öÅØ½º ¹öÆÛ¿¡ ÀúÀåµÈ ¹öÅØ½º Áß Ã¹¹øÂ° ¹öÅØ½ºÀÇ ÁÖ¼Ò¸¦ ¾ò¾î¿È
+	// &pVertex : ë²„í…ìŠ¤ ë²„í¼ì— ì €ì¥ëœ ë²„í…ìŠ¤ ì¤‘ ì²«ë²ˆì§¸ ë²„í…ìŠ¤ì˜ ì£¼ì†Œë¥¼ ì–»ì–´ì˜´
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 
 
-	// ¸öÅë
+	// ëª¸í†µ
 	pVertex[0].vPosition = { -0.1f,  0.1f,  0.2f };
 	pVertex[0].vTexUV = pVertex[0].vPosition;
 
@@ -66,7 +62,7 @@ HRESULT CMissileTex::Ready_Buffer()
 	pVertex[7].vTexUV = pVertex[7].vPosition;
 
 
-	// ¿ŞÂÊ ³¯°³
+	// ì™¼ìª½ ë‚ ê°œ
 	pVertex[8].vPosition = { -0.2f,  0.05f,  0.05f };
 	pVertex[8].vTexUV = pVertex[8].vPosition;
 
@@ -92,7 +88,7 @@ HRESULT CMissileTex::Ready_Buffer()
 	pVertex[15].vTexUV = pVertex[15].vPosition;
 
 
-	// ¿À¸¥ÂÊ ³¯°³
+	// ì˜¤ë¥¸ìª½ ë‚ ê°œ
 	pVertex[16].vPosition = { 0.1f,  0.05f,  0.05f };
 	pVertex[16].vTexUV = pVertex[16].vPosition;
 
@@ -118,7 +114,7 @@ HRESULT CMissileTex::Ready_Buffer()
 	pVertex[23].vTexUV = pVertex[23].vPosition;
 
 
-	// µÚÂÊ ÀÛÀº »ç°¢Çü
+	// ë’¤ìª½ ì‘ì€ ì‚¬ê°í˜•
 	pVertex[24].vPosition = { -0.05f,  0.05f, -0.15f };
 	pVertex[24].vTexUV = pVertex[24].vPosition;
 
@@ -160,7 +156,7 @@ HRESULT CMissileTex::Ready_Buffer()
 	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
 
 
-	// ¸öÅë
+	// ëª¸í†µ
 	pIndex[0]._0 = 1;
 	pIndex[0]._1 = 5;
 	pIndex[0]._2 = 6;
@@ -210,7 +206,7 @@ HRESULT CMissileTex::Ready_Buffer()
 	pIndex[11]._2 = 3;
 
 
-	// ¿ŞÂÊ ³¯°³
+	// ì™¼ìª½ ë‚ ê°œ
 	pIndex[12]._0 = 9;
 	pIndex[12]._1 = 13;
 	pIndex[12]._2 = 14;
@@ -260,7 +256,7 @@ HRESULT CMissileTex::Ready_Buffer()
 	pIndex[23]._2 = 11;
 
 
-	// ¿À¸¥ÂÊ ³¯°³
+	// ì˜¤ë¥¸ìª½ ë‚ ê°œ
 	pIndex[24]._0 = 17;
 	pIndex[24]._1 = 21;
 	pIndex[24]._2 = 22;
@@ -310,7 +306,7 @@ HRESULT CMissileTex::Ready_Buffer()
 	pIndex[35]._2 = 19;
 
 
-	// µÚÂÊ ÀÛÀº »ç°¢Çü
+	// ë’¤ìª½ ì‘ì€ ì‚¬ê°í˜•
 	pIndex[36]._0 = 25;
 	pIndex[36]._1 = 29;
 	pIndex[36]._2 = 30;

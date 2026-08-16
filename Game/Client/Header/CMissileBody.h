@@ -7,11 +7,11 @@ namespace Engine
 	class CMissileTex;
 }
 
-class CMissile : public CGameObject
+class CMissileBody : public CGameObject
 {
 private:
-	explicit CMissile(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CMissile() override;
+	explicit CMissileBody(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CMissileBody() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject()									  override;
@@ -21,10 +21,11 @@ public:
 	virtual			void		Render_GameObject()									  override;
 
 private:
-			_float			m_fSpeed;
-			_float			m_fAngle;
+	Engine::CMissileTex* m_pBufferCom;
+	_float			m_fSpeed;
+	_float			m_fAngle;
 public:
-	static CMissile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CMissileBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
 	virtual void	Free() override;

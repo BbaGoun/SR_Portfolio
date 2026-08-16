@@ -33,7 +33,7 @@ void CCube_Collider::LateUpdate_Component(const _float& fTimeDelta)
 	pOwnerTransfrom->Get_Info(INFO_POS, &vOwnerPos);
 	vOwnerPos += m_vOffset;
 
-	D3DXQUATERNION q = pOwnerTransfrom->Get_Quaternion();
+	D3DXQUATERNION q = pOwnerTransfrom->Get_WorldQuaternion();
 	m_tBoundingBox.Orientation = ToXMFLOAT4(q);
 	m_tBoundingBox.Center = ToXMFLOAT3(vOwnerPos);
 }

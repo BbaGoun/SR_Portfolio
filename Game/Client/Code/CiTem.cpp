@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CItem.h"
 #include "CMissile.h"
 #include "CTopViewCam.h"
@@ -6,6 +6,8 @@
 #include "CBox.h"
 #include "CFollowSmoothCam.h"
 #include "CDynamicCamera.h"
+#include "CMissileBody.h"
+#include <CMissileTarget.h>
 
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -75,15 +77,22 @@ HRESULT CItem::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Missile", pMissile)))	// ī�޶� �÷��̾ �i�ư��� �Ǿ� ������ L"Obj_Player" �� ����
 		return E_FAIL;
 
+	CGameObject* pMissileBody = CMissileBody::Create(m_pGraphicDev);
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileBody", pMissileBody)))	// ī�޶� �÷��̾ �i�ư��� �Ǿ� ������ L"Obj_Player" �� ����
+		return E_FAIL;
+
+	pMissile->Set_Child(pMissileBody);
+
 	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pMissile)))	// ī�޶� �÷��̾ �i�ư��� �Ǿ� ������ L"Obj_Player" �� ����
 	//return E_FAIL;
 
-	CGameObject* pBox = CBox::Create(m_pGraphicDev);
+	CGameObject* pMissileTarget = CMissileTarget::Create(m_pGraphicDev);
 
-	if (pBox == nullptr)
+	if (pMissileTarget == nullptr)
 		return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Box", pBox)))	
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget", pMissileTarget)))	
 		return E_FAIL;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// ���̳��� ī�޶�
