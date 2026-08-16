@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Header\CAirplane.h" />
     <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCameraMgr.h" />
     <ClInclude Include="..\Header\CCartBodyCol.h" />
@@ -31,6 +30,7 @@
     <ClInclude Include="..\Header\CCube.h" />
     <ClInclude Include="..\Header\CCube_Collider.h" />
     <ClInclude Include="..\Header\CDInputMgr.h" />
+    <ClInclude Include="..\Header\CEmpty.h" />
     <ClInclude Include="..\Header\CFont.h" />
     <ClInclude Include="..\Header\CFontMgr.h" />
     <ClInclude Include="..\Header\CFrame.h" />
@@ -41,7 +41,6 @@
     <ClInclude Include="..\Header\CInnerBox.h" />
     <ClInclude Include="..\Header\CLayer.h" />
     <ClInclude Include="..\Header\CManagement.h" />
-    <ClInclude Include="..\Header\CMay.h" />
     <ClInclude Include="..\Header\CMesh.h" />
     <ClInclude Include="..\Header\CMissileTex.h" />
     <ClInclude Include="..\Header\CObj.h" />
@@ -52,8 +51,8 @@
     <ClInclude Include="..\Header\CRenderer.h" />
     <ClInclude Include="..\Header\CScene.h" />
     <ClInclude Include="..\Header\CSphere_Collider.h" />
-    <ClInclude Include="..\Header\CTerrain.h" />
     <ClInclude Include="..\Header\CTerrain2.h" />
+    <ClInclude Include="..\Header\CTerrain3.h" />
     <ClInclude Include="..\Header\CTexture.h" />
     <ClInclude Include="..\Header\CTimer.h" />
     <ClInclude Include="..\Header\CTimerMgr.h" />
@@ -70,7 +69,6 @@
     <ClInclude Include="..\Header\CProtoMgr.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\CAirplane.cpp" />
     <ClCompile Include="..\Code\CCalculator.cpp" />
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
     <ClCompile Include="..\Code\CCartBodyCol.cpp" />
@@ -82,6 +80,7 @@
     <ClCompile Include="..\Code\CCube.cpp" />
     <ClCompile Include="..\Code\CCube_Collider.cpp" />
     <ClCompile Include="..\Code\CDInputMgr.cpp" />
+    <ClCompile Include="..\Code\CEmpty.cpp" />
     <ClCompile Include="..\Code\CFont.cpp" />
     <ClCompile Include="..\Code\CFontMgr.cpp" />
     <ClCompile Include="..\Code\CFrame.cpp" />
@@ -92,7 +91,6 @@
     <ClCompile Include="..\Code\CInnerBox.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />
     <ClCompile Include="..\Code\CManagement.cpp" />
-    <ClCompile Include="..\Code\CMay.cpp" />
     <ClCompile Include="..\Code\CMesh.cpp" />
     <ClCompile Include="..\Code\CMissileTex.cpp" />
     <ClCompile Include="..\Code\CObj.cpp" />
@@ -103,8 +101,8 @@
     <ClCompile Include="..\Code\CRenderer.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
     <ClCompile Include="..\Code\CSphere_Collider.cpp" />
-    <ClCompile Include="..\Code\CTerrain.cpp" />
     <ClCompile Include="..\Code\CTerrain2.cpp" />
+    <ClCompile Include="..\Code\CTerrain3.cpp" />
     <ClCompile Include="..\Code\CTexture.cpp" />
     <ClCompile Include="..\Code\CTimer.cpp" />
     <ClCompile Include="..\Code\CTimerMgr.cpp" />

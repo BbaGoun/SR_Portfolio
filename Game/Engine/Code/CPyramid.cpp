@@ -1,10 +1,6 @@
-#include "CPyramid.h"
+ï»¿#include "CPyramid.h"
 #include "CTexture.h"
 #include "CGameObject.h"
-
-CPyramid::CPyramid() : CVIBuffer()
-{
-}
 
 CPyramid::CPyramid(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {
@@ -120,11 +116,11 @@ void CPyramid::Render_Buffer()
 
 	CTexture* pTexture = static_cast<CTexture*>(m_pOwner->Get_Component(ID_STATIC, L"Com_Texture"));
 
-	// ¿·¸é: ÀÎµ¦½º 0~11 (Á¤Á¡ 0~8), »ï°¢Çü 4°³
+	// ì˜†ë©´: ì¸ë±ìŠ¤ 0~11 (ì •ì  0~8), ì‚¼ê°í˜• 4ê°œ
 	pTexture->Set_Texture(0);
 	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 9, 0, 4);
 
-	// ¹Ù´Ú: ÀÎµ¦½º 12~17 (Á¤Á¡ 9~12), »ï°¢Çü 2°³
+	// ë°”ë‹¥: ì¸ë±ìŠ¤ 12~17 (ì •ì  9~12), ì‚¼ê°í˜• 2ê°œ
 	pTexture->Set_Texture(1);
 	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 9, 4, 12, 2);
 }

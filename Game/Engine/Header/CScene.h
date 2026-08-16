@@ -12,6 +12,9 @@ protected:
 	virtual ~CScene();
 
 public:
+	CGameObject* Find_GameObjectByTag(const _tchar* pLayerTag, const _tchar* pObjTag);
+	const vector<CGameObject*>& Find_GameObjectsByTag(const _tchar* pLayerTag, const _tchar* pObjTag);
+
 	CComponent* Get_Component(COMPONENTID eID,
 		const _tchar* pLayerTag,
 		const _tchar* pObjTag,
@@ -23,7 +26,20 @@ public:
 		CGameObject*  pGameObject
 	);
 
-	HRESULT		Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
+	const map<const _tchar*, vector<CGameObject*>>& Get_GameObjects(const _tchar* pLayerTag);
+	const vector<CGameObject*>& Get_Roots(const _tchar* pLayerTag);
+	void			Attach_Root(CGameObject* _pObj);
+	void			Detach_Root(CGameObject* _pObj);
+	void			Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc);
+	void			Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc);
+	HRESULT			Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj);
+	uint64_t		GenerateGuid() {
+		return m_uNextGuid++;
+	}
+	virtual			void		InvalidateDeviceObjects() {};
+
+private:
+	CLayer* Find_Layer_Of(CGameObject* pObj);
 
 public:
 	virtual			HRESULT		Ready_Scene();
@@ -33,11 +49,13 @@ public:
 	virtual			void		Render_Scene();
 
 	void			Set_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer, bool bCollision);
+	bool			Get_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer);
 
 protected:
 	map<const _tchar*, CLayer*>			m_mapLayer;
-	bitset<528>							m_CollisionMatrix;
+	uint32_t							m_CollisionMatrix[32];
 	LPDIRECT3DDEVICE9					m_pGraphicDev;
+	uint64_t							m_uNextGuid = 1;
 
 protected:
 	virtual void			Free();

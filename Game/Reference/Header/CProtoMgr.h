@@ -13,14 +13,12 @@
 #include "CRcTex.h"
 #include "CPyramid.h"
 #include "CInnerBox.h"
-#include "CAirplane.h"
 #include "CCamera.h"
 #include "CTransform.h"
 #include "CTexture.h"
-#include "CTerrain.h"
 #include "CTerrain2.h"
+#include "CTerrain3.h"
 #include "CCody.h"
-#include "CMay.h"
 
 BEGIN(Engine)
 

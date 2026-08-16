@@ -1,16 +1,15 @@
-#include "CCollider.h"
-CCollider::CCollider()
-{
-}
+﻿#include "CCollider.h"
 
 CCollider::CCollider(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CComponent(pGraphicDev)
+	:CComponent(pGraphicDev), m_bIsTrigger(false), m_eColliderType(CT_END)
 {
+	m_eID = ID_DYNAMIC;
 }
 
 CCollider::CCollider(const CCollider& rhs)
 	:CComponent(rhs),m_bIsTrigger(rhs.m_bIsTrigger), m_eColliderType(rhs.m_eColliderType)
 {
+	m_eID = ID_DYNAMIC;
 }
 
 CCollider::~CCollider()

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CCartBody1.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -27,7 +27,7 @@ HRESULT CCartBody1::Ready_GameObject()
 	if (nullptr == pComponent)
 		return E_FAIL;
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 
 	return S_OK;

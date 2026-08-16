@@ -10,14 +10,10 @@
 // 여기에 미리 컴파일하려는 헤더 추가
 #include "framework.h"
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <DirectXCollision.h>
+#define _EDITOR
 
-#include <vector>
-#include <list>
-#include <map>
-#include <algorithm>
+#include "Engine_Define.h"
+#include "Editor_Function.h"
 
 #include "imgui.h"
 #include "imgui_impl_dx9.h"
@@ -25,18 +21,24 @@
 #include "ImGuizmo.h"
 #include <cmath>
 
+#pragma warning(disable : 4005)
+
+#include <process.h>
+
 extern LPDIRECT3D9				g_pD3D;
 extern LPDIRECT3DDEVICE9		g_pd3dDevice;
 extern bool						g_DeviceLost;
 extern UINT						g_ResizeWidth;
 extern UINT						g_ResizeHeight;
-extern D3DPRESENT_PARAMETERS    g_d3dpp;
-extern float                    main_scale;
-extern HWND                     g_hwnd;
+extern D3DPRESENT_PARAMETERS	g_d3dpp;
+extern float					main_scale;
+extern HWND						g_hWnd;
 
-#pragma warning(disable : 4005)
+extern bool						g_bSelected;
+extern uint64_t					g_uSelected;
 
-#include <process.h>
+extern ImGuizmo::OPERATION		g_GizmoOp;
+extern ImGuizmo::MODE			g_GizmoMode;
 
 using namespace std;
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include	"CBase.h"
 #include	"CScene.h"
@@ -14,6 +14,9 @@ private:
 	virtual		~CManagement();
 
 public:
+	CGameObject* Find_GameObjectByTag(const _tchar* pLayerTag, const _tchar* pObjTag);
+	const vector<CGameObject*>& Find_GameObjectsByTag(const _tchar* pLayerTag, const _tchar* pObjTag);
+
 	CComponent* Get_Component(COMPONENTID eID,
 		const _tchar* pLayerTag,
 		const _tchar* pObjTag,
@@ -24,11 +27,24 @@ public:
 		const _tchar* pObjTag,
 		CGameObject*  pGameObject
 	);
+	const map<const _tchar*, vector<CGameObject*>>& Get_GameObjects(const _tchar* pLayerTag);
+	const vector<CGameObject*>& Get_Roots(const _tchar* pLayerTag);
+	void			Attach_Root(CGameObject* _pObj);
+	void			Detach_Root(CGameObject* _pObj);
+	void			Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc);
+	void			Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc);
+	void			Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj);
+
+	uint64_t		GenerateGuid() { return m_pScene->GenerateGuid(); }
+	void			InvalidateDeviceObjects();
 
 	void		Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
 
 public:
 	HRESULT			Set_Scene(CScene* pScene);
+	void			Request_Scene(CScene* pScene);
+	void			Change_NextScene();
+
 	void			FixedUpdate_Scene(const _float& fFixedDeltaTime);
 	_int			Update_Scene(const _float& fDeltaTime);
 	void			LateUpdate_Scene(const _float& fDeltaTime);
@@ -36,6 +52,7 @@ public:
 
 private:
 	CScene*					m_pScene;
+	CScene*					m_pNextScene;
 
 public:
 	virtual void			Free();

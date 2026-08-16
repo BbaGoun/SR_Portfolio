@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CComponent.h"
 
 BEGIN(Engine)
@@ -10,7 +10,6 @@ class ENGINE_DLL CObj :
 	public CComponent
 {
 protected:
-	explicit CObj();
 	explicit CObj(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CObj(const CObj& rhs);
 	virtual ~CObj();

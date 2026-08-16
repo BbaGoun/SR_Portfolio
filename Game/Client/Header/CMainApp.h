@@ -4,7 +4,6 @@
 #include "CGraphicDev.h"
 #include "CTimerMgr.h"
 #include "CFrameMgr.h"
-
 #include "CManagement.h"
 
 class CMainApp : public CBase

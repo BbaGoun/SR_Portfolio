@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CCollisionTest.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -16,6 +16,17 @@
 #include "CCartBody1.h"
 #include "CCartBody2.h"
 #include "CFollowSmoothCam.h"
+#include "CCollisionBox.h"
+#include "CBoostWind.h"
+#include "CBoostJet.h"
+#include "CHUD_Main.h"
+#include "CHUD_Gage.h"
+#include "CHUD_Num.h"
+#include "CLand3.h"
+#include "CRainBow_Cloud.h"
+#include "CUI_Rainbow.h"
+#include "CUI_BoosterBar.h"
+#include "CUI_BoosterBG.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -36,6 +47,12 @@ HRESULT CCollisionTest::Ready_Scene()
 	if (FAILED(Ready_Environment_Layer()))
 		return E_FAIL;
 
+	if (FAILED(Ready_UI_Layer()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Collision_Matrix()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -43,15 +60,64 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 {
 	CScene::FixedUpdate_Scene(fFixedDeltaTime);
 
-	// �浹 ó��
+	// 충돌 처리
 	//CCollider* pCartCollider = static_cast<CCollider*>
-	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CartBody", L"Com_Collider"));
-	//CCollider* pCartSphereCollider = static_cast<CCollider*>
-	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CartBody", L"Com_SphereCollider"));
+	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Cart", L"Com_Collider"));
+	////CCollider* pCartSphereCollider = static_cast<CCollider*>
+	////	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Cart", L"Com_SphereCollider"));
+	//
 	//CCollider* pBoxCollider = static_cast<CCollider*>
-	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Box", L"Com_Collider"));
-	//CCollisionMgr::GetInstance()->Collision(pCartSphereCollider, pBoxCollider);
+	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_CollisionBox", L"Com_Collider"));
 
+
+	//CCollider* pRainBowCollider = static_cast<CCollider*>
+	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Rainbow_Cloud", L"Com_Collider"));
+
+	//CCollider* pBananaCollider = static_cast<CCollider*>
+	//	(CManagement::GetInstance()->Get_Component(ID_DYNAMIC, L"GameLogic", L"Obj_Banana", L"Com_Collider"));
+
+	//CCollisionMgr::GetInstance()->Collision(pBoxCollider, pCartCollider);
+	//CCollisionMgr::GetInstance()->Collision(pRainBowCollider, pCartCollider);
+	//CCollisionMgr::GetInstance()->Collision(pBananaCollider, pCartCollider);
+
+	auto map = Get_GameObjects(L"GameLogic");
+	//auto map2 = Get_GameObjects(L"Environment");
+
+	vector<CGameObject*> objects;
+	for (auto& p : map)
+		objects.insert(objects.end(), p.second.begin(), p.second.end());
+	/*for (auto& p : map2)
+		objects.insert(objects.end(), p.second.begin(), p.second.end());*/
+
+	// GameLogic에서 오브젝트 A, B 꺼내기
+	for (auto it1 = objects.begin(); it1 != objects.end(); ++it1) {
+		CGameObject* pObj1 = *it1;
+		for (auto it2 = it1 + 1; it2 != objects.end(); ++it2) {
+			CGameObject* pObj2 = *it2;
+
+			// nullptr 무시
+			if (!pObj1 || !pObj2)
+				continue;
+			// 같은 오브젝트 무시
+			if (pObj1 == pObj2)
+				continue;
+			// 충돌 레이어 검사
+			COLLISION_LAYER CL1, CL2;
+			CL1 = pObj1->Get_CollisionLayer();
+			CL2 = pObj2->Get_CollisionLayer();
+			if (Get_CollisionMatrix(CL1, CL2)) {
+				// 모든 종류의 Collider 검사
+				vector<CCollider*> colliders1 = pObj1->Get_Components<CCollider>();
+				vector<CCollider*> colliders2 = pObj2->Get_Components<CCollider>();
+
+				for (auto& col1 : colliders1) {
+					for (auto& col2 : colliders2) {
+						CCollisionMgr::GetInstance()->Collision(col1, col2);
+					}
+				}
+			}
+		}
+	}
 }
 
 _int CCollisionTest::Update_Scene(const _float& fDeltaTime)
@@ -90,7 +156,7 @@ HRESULT CCollisionTest::Ready_Prototype()
 
 HRESULT CCollisionTest::Ready_GameLogic_Layer()
 {
-	// ���� ������Ʈ
+	// 게임 오브젝트
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)
@@ -98,7 +164,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
 
-	// # īƮ
+	// # 카트
 	CGameObject* pCart = CCart::Create(m_pGraphicDev);
 
 	if (pCart == nullptr)
@@ -106,9 +172,10 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Cart", pCart)))
 		return E_FAIL;
+	pCart->SetLayer(pGameObjectLayer);
 
 
-	// ## īƮ ��ü
+	// ## 카트 몸체
 	CGameObject* pCartBody = CCartBody::Create(m_pGraphicDev);
 
 	if (pCartBody == nullptr)
@@ -119,8 +186,9 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	pCart->Set_Child(pCartBody);
 
 	CGameObject* pGameObject = nullptr;
-	// ## īƮ ��ü1
+	// ## 카트 몸체1
 	pGameObject = CCartBody1::Create(m_pGraphicDev);
+	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,1.5,1 });
 	pGameObject->Get_Transform()->Set_Pos({ 0,0,-3 });
 	if (pGameObject == nullptr)
@@ -128,10 +196,10 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody1", pGameObject)))
 		return E_FAIL;
 	
-	pCartBody->Set_Child(pGameObject);
 	
-	// ## īƮ ��ü2
+	// ## 카트 몸체2
 	pGameObject = CCartBody2::Create(m_pGraphicDev);
+	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,0.5,0.5 });
 	pGameObject->Get_Transform()->Set_Pos({ 0,1,-1.5 });
 	if (pGameObject == nullptr)
@@ -139,10 +207,10 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody2", pGameObject)))
 		return E_FAIL;
 	
-	pCartBody->Set_Child(pGameObject);
 	
-	// ## īƮ ��ü3
+	// ## 카트 몸체3
 	pGameObject = CCartBody1::Create(m_pGraphicDev);
+	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,1,0.5 });
 	pGameObject->Get_Transform()->Set_Pos({ 0,-0.5,-1.5 });
 	if (pGameObject == nullptr)
@@ -150,10 +218,10 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody3", pGameObject)))
 		return E_FAIL;
 	
-	pCartBody->Set_Child(pGameObject);
 	
-	// ## īƮ ��ü4
+	// ## 카트 몸체4
 	pGameObject = CCartBody1::Create(m_pGraphicDev);
+	pCartBody->Set_Child(pGameObject);
 	pGameObject->Get_Transform()->Set_Scale({ 2.5,1.f,4 });
 	pGameObject->Get_Transform()->Set_Pos({ 0,-0.75,0.5 });
 	if (pGameObject == nullptr)
@@ -161,10 +229,9 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody4", pGameObject)))
 		return E_FAIL;
 	
-	pCartBody->Set_Child(pGameObject);
 
 
-	// ## ���� �չ���
+	// ## 왼쪽 앞바퀴
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FL);
 	
 	if (pGameObject == nullptr)
@@ -172,8 +239,8 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_FL", pGameObject)))
 		return E_FAIL;
 	
-	pCart->Set_Child(pGameObject);
-	// ## ������ �չ���
+	pCartBody->Set_Child(pGameObject);
+	// ## 오른쪽 앞바퀴
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FR);
 	
 	if (pGameObject == nullptr)
@@ -181,9 +248,9 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_FR", pGameObject)))
 		return E_FAIL;
 	
-	pCart->Set_Child(pGameObject);
+	pCartBody->Set_Child(pGameObject);
 	
-	// ## ���� �޹���
+	// ## 왼쪽 뒷바퀴
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BL);
 	
 	if (pGameObject == nullptr)
@@ -191,9 +258,9 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BL", pGameObject)))
 		return E_FAIL;
 	
-	pCart->Set_Child(pGameObject);
+	pCartBody->Set_Child(pGameObject);
 	
-	// ## ������ �޹���
+	// ## 오른쪽 뒷바퀴
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BR);
 	
 	if (pGameObject == nullptr)
@@ -201,10 +268,59 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BR", pGameObject)))
 		return E_FAIL;
 	
+	pCartBody->Set_Child(pGameObject);
+
+	// ## 부스터 왼쪽1 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindL1", pGameObject)))
+		return E_FAIL;
 	pCart->Set_Child(pGameObject);
 
-	//// # �÷��̾� ����ٴϴ� 3��Ī ī�޶�
-	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev);
+	// ## 부스터 왼쪽2 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindL2", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
+	
+	// ## 부스터 오른쪽1 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindR1", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
+	// ## 부스터 오른쪽2 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindR2", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
+
+	// ## 부스터 제트 이펙트
+	pGameObject = CBoostJet::Create(m_pGraphicDev);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostJet", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
+
+	//// # 플레이어 따라다니는 3인칭 카메라
+	_vec3 vEye, vAt, vUp, vLook;
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 10) + (vLook * -20);
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp);
 
 	if (pGameObject == nullptr)
 		return E_FAIL;
@@ -220,15 +336,68 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 
 
-	// # �ڽ�
-	CGameObject* pBox = CBox::Create(m_pGraphicDev);
+	// # 트랙
+	for (int i = 0; i < 40; ++i)
+	{
+		CGameObject* pBox = CCartBody1::Create(m_pGraphicDev);
+
+		if (pBox == nullptr)
+			return E_FAIL;
+		pBox->Get_Transform()->Set_Scale({ 2,2,2 });
+		if (i < 20)
+		{
+			pBox->Get_Transform()->Set_Pos({ 100 * cosf(2 * D3DX_PI / 40 * i), 0.f, 100 + 100 * sinf(2 * D3DX_PI / 40 * i) });
+		}
+		else
+		{
+			pBox->Get_Transform()->Set_Pos({ 100 * cosf(2 * D3DX_PI / 40 * i), 0.f, -100 + 100 * sinf(2 * D3DX_PI / 40 * i) });
+		}
+		TCHAR szBuff[32];
+		wsprintf(szBuff, L"Obj_Box%d", i);
+		if (FAILED(pGameObjectLayer->Add_GameObject(szBuff, pBox)))
+			return E_FAIL;
+	}
+	for (int i = 0; i < 40; ++i)
+	{
+		CGameObject* pBox = CCartBody1::Create(m_pGraphicDev);
+
+		if (pBox == nullptr)
+			return E_FAIL;
+		pBox->Get_Transform()->Set_Scale({ 2,2,2 });
+		if (i < 20)
+		{
+			pBox->Get_Transform()->Set_Pos({ -100.f, 0.f,100 - 10.f * i });
+		}
+		else
+		{
+			pBox->Get_Transform()->Set_Pos({ 100.f, 0.f,100 - 10.f * (i - 20) });
+		}
+
+		TCHAR szBuff[32];
+		wsprintf(szBuff, L"Obj_Box%d", i);
+		if (FAILED(pGameObjectLayer->Add_GameObject(szBuff, pBox)))
+			return E_FAIL;
+	}
+
+	CGameObject* pBox = CCollisionBox::Create(m_pGraphicDev);
 
 	if (pBox == nullptr)
 		return E_FAIL;
-
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Box", pBox)))
+	pBox->Get_Transform()->Set_Pos({ -200.f, 1.f,200.f  });
+	
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox", pBox)))
 		return E_FAIL;
 
+	pBox = CCollisionBox::Create(m_pGraphicDev);
+
+	if (pBox == nullptr)
+		return E_FAIL;
+	pBox->Get_Transform()->Set_Pos({ -200.f, 1.f, 0.f });
+	pBox->Set_CollisionLayer(CL_LAYER1);
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
+		return E_FAIL;
+  
 	return S_OK;
 }
 
@@ -257,14 +426,84 @@ HRESULT CCollisionTest::Ready_Environment_Layer()
 	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land", pEnvObject)))
 	//	return E_FAIL;
 
-	pEnvObject = CLand2::Create(m_pGraphicDev);
-	
+	//pEnvObject = CLand2::Create(m_pGraphicDev);
+	//
+	//if (pEnvObject == nullptr)
+	//	return E_FAIL;
+	//
+	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
+	//	return E_FAIL;
+	pEnvObject = CLand3::Create(m_pGraphicDev);
+
 	if (pEnvObject == nullptr)
 		return E_FAIL;
-	
-	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
+
+	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land3", pEnvObject)))
 		return E_FAIL;
-	
+	return S_OK;
+}
+
+
+HRESULT CCollisionTest::Ready_UI_Layer()
+{
+	CLayer* pUILayer = CLayer::Create();
+
+	if (pUILayer == nullptr)
+		return E_FAIL;
+
+	m_mapLayer.insert({ L"UI", pUILayer });
+
+	CGameObject* pUIObject = nullptr;
+
+	// UI_HUDMain
+	pUIObject = CHUD_Main::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDMain", pUIObject)))
+		return E_FAIL;
+
+	// UI_HUDGage
+	pUIObject = CHUD_Gage::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDGage", pUIObject)))
+		return E_FAIL;
+
+	// UI_HUDNum
+	pUIObject = CHUD_Num::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDNum", pUIObject)))
+		return E_FAIL;
+
+	// UI_Rainbow
+	pUIObject = CUI_Rainbow::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Rainbow", pUIObject)))
+		return E_FAIL;
+
+	// UI_BoosterBG
+	pUIObject = CUI_BoosterBG::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBG", pUIObject)))
+		return E_FAIL;
+
+	// UI_BoosterBar
+	pUIObject = CUI_BoosterBar::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CCollisionTest::Ready_Collision_Matrix()
+{
+	Set_CollisionMatrix(CL_DEFAULT, CL_LAYER1, false);
+
 	return S_OK;
 }
 

@@ -72,10 +72,10 @@ HRESULT CItem::Ready_GameLogic_Layer()
 	if (pMissile == nullptr)
 		return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Missile", pMissile)))	// Ä«¸Þ¶ó°¡ ÇÃ·¹ÀÌ¾î¸¦ ¦i¾Æ°¡°Ô µÇ¾î ÀÖÀ¸´Ï L"Obj_Player" ·Î ¼³Á¤
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Missile", pMissile)))	// Ä«ï¿½Þ¶ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½iï¿½Æ°ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ L"Obj_Player" ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		return E_FAIL;
 
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pMissile)))	// Ä«¸Þ¶ó°¡ ÇÃ·¹ÀÌ¾î¸¦ ¦i¾Æ°¡°Ô µÇ¾î ÀÖÀ¸´Ï L"Obj_Player" ·Î ¼³Á¤
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Player", pMissile)))	// Ä«ï¿½Þ¶ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½iï¿½Æ°ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ L"Obj_Player" ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	//return E_FAIL;
 
 	CGameObject* pBox = CBox::Create(m_pGraphicDev);
@@ -86,7 +86,7 @@ HRESULT CItem::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Box", pBox)))	
 		return E_FAIL;
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// ´ÙÀÌ³ª¹Í Ä«¸Þ¶ó
+	// ï¿½ï¿½ï¿½Ì³ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½
 	_vec3 vEye = { 0.f, 30.f, -30.f };
 	_vec3 vAt = { 0.f, 0.f, 100.f };
 	_vec3 vUp = { 0.f, 1.f, 0.f };
@@ -99,7 +99,7 @@ HRESULT CItem::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_DynamicCamera", pDynamicCam)))
 		return E_FAIL;
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//// (Å×½ºÆ®¿ëÀ¸·Î ¾ÆÀÌÅÛ¿¡ Ä«¸Þ¶ó ¸¸µë)
+	//// (ï¿½×½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½)
 	//CGameObject* pTopViewCam = CTopViewCam::Create(m_pGraphicDev);
 
 	//if (pTopViewCam == nullptr)

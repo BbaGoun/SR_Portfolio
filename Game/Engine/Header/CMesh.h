@@ -7,7 +7,6 @@ class ENGINE_DLL CMesh :
 	public CComponent
 {
 protected:
-	explicit CMesh();
 	explicit CMesh(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CMesh(const CMesh& rhs);
 	virtual ~CMesh();

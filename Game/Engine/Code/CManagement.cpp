@@ -1,15 +1,33 @@
-#include "CManagement.h"
+﻿#include "CManagement.h"
 #include "CRenderer.h"
 
 IMPLEMENT_SINGLETON(CManagement)
 
-CManagement::CManagement() : m_pScene(nullptr)
+CManagement::CManagement() : m_pScene(nullptr), m_pNextScene(nullptr)
 {
 }
 
 CManagement::~CManagement()
 {
     Free();
+}
+
+CGameObject* CManagement::Find_GameObjectByTag(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+    if (nullptr == m_pScene)
+        return nullptr;
+
+    return m_pScene->Find_GameObjectByTag(pLayerTag, pObjTag);
+}
+
+const vector<CGameObject*>& CManagement::Find_GameObjectsByTag(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+    static vector<CGameObject*> s_empty;
+
+    if (nullptr == m_pScene)
+        return s_empty;
+
+    return m_pScene->Find_GameObjectsByTag(pLayerTag, pObjTag);
 }
 
 CComponent* CManagement::Get_Component(COMPONENTID eID, const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag)
@@ -32,13 +50,62 @@ void CManagement::Add_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag,
         MSG_BOX("Add_GameObject Fail");
 }
 
-void CManagement::Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag)
+const map<const _tchar*, vector<CGameObject*>>& CManagement::Get_GameObjects(const _tchar* pLayerTag)
 {
-    if (nullptr == m_pScene)
-        return;
+    static map<const _tchar*, vector<CGameObject*>> s_empty;
 
-    m_pScene->Delete_GameObject(pLayerTag, pObjTag);
+    if(nullptr == m_pScene)
+        return s_empty;
+
+    return m_pScene->Get_GameObjects(pLayerTag);
 }
+
+const vector<CGameObject*>& CManagement::Get_Roots(const _tchar* pLayerTag)
+{
+    static const vector<CGameObject*> s_empty;
+    if (!m_pScene)
+        return s_empty;
+    return m_pScene->Get_Roots(pLayerTag);
+}
+
+void CManagement::Attach_Root(CGameObject* _pObj)
+{
+    if (m_pScene)
+        m_pScene->Attach_Root(_pObj);
+}
+
+void CManagement::Detach_Root(CGameObject* _pObj)
+{
+    if (m_pScene)
+        m_pScene->Detach_Root(_pObj);
+}
+
+void CManagement::Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc)
+{
+    if (m_pScene)
+        m_pScene->Insert_Root_Before(_pDst, _pSrc);
+}
+
+void CManagement::Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc)
+{
+    if (m_pScene)
+        m_pScene->Insert_Root_After(_pDst, _pSrc);
+}
+
+void CManagement::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj)
+{
+    if (FAILED(m_pScene->Delete_GameObject(pLayerTag, _pObj)))
+    {
+        MSG_BOX("Delete Failed");
+    }
+}
+
+void CManagement::InvalidateDeviceObjects()
+{
+    if (m_pScene)
+        m_pScene->InvalidateDeviceObjects();
+}
+
 
 HRESULT CManagement::Set_Scene(CScene* pScene)
 {
@@ -48,8 +115,20 @@ HRESULT CManagement::Set_Scene(CScene* pScene)
     Safe_Release(m_pScene);
 
     m_pScene = pScene;
+    m_pNextScene = nullptr;
 
     return S_OK;
+}
+
+void CManagement::Request_Scene(CScene* pScene)
+{
+    m_pNextScene = pScene;
+}
+
+void CManagement::Change_NextScene()
+{
+    if (m_pNextScene && m_pNextScene != m_pScene)
+        Set_Scene(m_pNextScene);
 }
 
 void CManagement::FixedUpdate_Scene(const _float& fFixedDeltaTime)

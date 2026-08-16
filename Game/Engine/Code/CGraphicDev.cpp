@@ -16,18 +16,18 @@ HRESULT		CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode,
 	const _uint& iSizeY,
 	CGraphicDev** ppGraphicDev)
 {
-	// 1. ¼º´ÉÀ» Á¶»çÇÒ sdk ÄÄ °´Ã¼ »ý¼º
+	// 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ sdk ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 
 	m_pSDK = Direct3DCreate9(D3D_SDK_VERSION);
 
 	if (nullptr == m_pSDK)
 		return E_FAIL;
 
-	// 2. ±×·¡ÇÈ Ä«µå ¼º´É Á¶»ç
+	// 2. ï¿½×·ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	D3DCAPS9		DeviceCaps;
 	ZeroMemory(&DeviceCaps, sizeof(D3DCAPS9));
 
-	// D3DADAPTER_DEFAULT : ÇöÀç ÄÄÇ»ÅÍ¿¡ ÀåÂøµÈ ±âº» ±×·¡ÇÈ Ä«µå
+	// D3DADAPTER_DEFAULT : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç»ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½×·ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½
 
 	if (FAILED(m_pSDK->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &DeviceCaps)))
 		return E_FAIL;
@@ -52,9 +52,9 @@ HRESULT		CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode,
 	d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
 	d3dpp.MultiSampleQuality = 0;
 
-	// D3DSWAPEFFECT_DISCARD = ½º¿Ò Ã¼ÀÎ ¹æ½Ä,
-	// D3DSWAPEFFECT_FLIP = ¹öÆÛ¸¦ ÇÏ³ªµÎ°í ¹ø°¥¾Æ°¡¸ç ½ÇÇà,
-	// D3DSWAPEFFECT_COPY = ´õºí ¹öÆÛ¸µ°ú À¯»çÇÑ ¹æ½Ä,
+	// D3DSWAPEFFECT_DISCARD = ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½,
+	// D3DSWAPEFFECT_FLIP = ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½Ï³ï¿½ï¿½Î°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½,
+	// D3DSWAPEFFECT_COPY = ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½,
 
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 
@@ -65,12 +65,12 @@ HRESULT		CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode,
 	d3dpp.EnableAutoDepthStencil = TRUE;
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;
 
-	// ÀüÃ¼ È­¸é ¸ðµåÀÏ ¶§ ¹Ý¿µ
+	// ï¿½ï¿½Ã¼ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ý¿ï¿½
 	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
 
-	// 3. sdk ÄÄ °´Ã¼¸¦ ÀÌ¿ëÇÏ¿© ±×¸®±â ÄÄ °´Ã¼ »ý¼º
+	// 3. sdk ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ï¿ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 
 	if (FAILED(m_pSDK->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, dwFlag, &d3dpp, &m_pGraphicDev)))
 	{
@@ -83,15 +83,15 @@ HRESULT		CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode,
 	return S_OK;
 }
 
-// ÈÄ¸é ¹öÆÛ
+// ï¿½Ä¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-// 1. Áö¿ì±â
-// 2. ´ÙÀ½ È­¸é¿¡ Ãâ·ÂÇÒ °ÍÀ» ÁØºñ
+// 1. ï¿½ï¿½ï¿½ï¿½ï¿½
+// 2. ï¿½ï¿½ï¿½ï¿½ È­ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½
 
 void	CGraphicDev::Render_Begin(D3DXCOLOR Color)
 {
-	// Clear´Â ÇöÀç Viewport ¿µ¿ª¸¸ Áö¿î´Ù.
-	// Á÷Àü ÇÁ·¹ÀÓÀÌ ¿À¸¥ÂÊ Viewport·Î ³¡³µÀ¸¸é ¿ÞÂÊÀÌ ClearµÇÁö ¾Ê¾Æ ÀÜ»óÀÌ ³²´Â´Ù.
+	// Clearï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Viewport ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Viewportï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Clearï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ ï¿½Ü»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½.
 	D3DVIEWPORT9 tFullView{};
 	tFullView.X = 0;
 	tFullView.Y = 0;
@@ -101,12 +101,12 @@ void	CGraphicDev::Render_Begin(D3DXCOLOR Color)
 	tFullView.MaxZ = 1.f;
 	m_pGraphicDev->SetViewport(&tFullView);
 
-	m_pGraphicDev->Clear(0,		// ·ºÆ®ÀÇ °³¼ö
-						NULL,	// ·ºÆ®ÀÇ ÁÖ¼Ò
+	m_pGraphicDev->Clear(0,		// ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						NULL,	// ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö¼ï¿½
 						D3DCLEAR_STENCIL | D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-						Color,		// ÈÄ¸é ¹öÆÛ ÅØ½ºÃ³ »ö»ó
-						1.f,		// "z¹öÆÛ ÃÊ±âÈ­ °ª"
-						0);			// ½ºÅÙ½Ç ¹öÆÛ ÃÊ±âÈ­ °ª
+						Color,		// ï¿½Ä¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½
+						1.f,		// "zï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½"
+						0);			// ï¿½ï¿½ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½
 
 	m_pGraphicDev->BeginScene();
 }
@@ -115,12 +115,12 @@ void	CGraphicDev::Render_End(HWND hWnd)
 {
 	m_pGraphicDev->EndScene();
 
-	// 1. ·ºÆ®ÀÇ ÁÖ¼Ò
-	// 2. ·ºÆ®ÀÇ ÁÖ¼Ò
-	// 3. Ã¢ ÇÚµé(±â¾ïÇØ¾ß ÇÔ) : null ÀÎ °æ¿ì ÀåÄ¡ ÃÊ±âÈ­ ½Ã, ´ëÀÔÇÑ ÇÚµé·Î ÀÚµ¿ ÁöÁ¤
-	// 4. ¸ô¶ó
+	// 1. ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö¼ï¿½
+	// 2. ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö¼ï¿½
+	// 3. Ã¢ ï¿½Úµï¿½(ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½) : null ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½Ê±ï¿½È­ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
+	// 4. ï¿½ï¿½ï¿½ï¿½
 
-	// 1, 2, 4 ¸Å°³ º¯¼ö¸¦ »ç¿ëÇÏ·Á¸é SwapEffect °ªÀÌ D3DSWAPEFFECT_COPY ÀÏ ¶§¸¸ »ç¿ë °¡´É
+	// 1, 2, 4 ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ SwapEffect ï¿½ï¿½ï¿½ï¿½ D3DSWAPEFFECT_COPY ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	m_pGraphicDev->Present(NULL, NULL, hWnd, NULL);
 }
 

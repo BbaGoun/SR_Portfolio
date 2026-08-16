@@ -46,28 +46,10 @@
     <Filter Include="소스 파일\02. GameObject\SkyBox">
       <UniqueIdentifier>{859f3918-5c4b-4bf1-8123-8e96160970aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\02. GameObject\Enemy">
-      <UniqueIdentifier>{2abdddf8-d6c9-4e51-ac7c-39bdb81140fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\02. GameObject\Jet">
-      <UniqueIdentifier>{5cbc5a26-f72f-4f9f-a707-07e4199c6a01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\02. GameObject\Land">
-      <UniqueIdentifier>{e078520d-f092-48a0-9725-02e48e842cd7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\02. GameObject\GOCody">
+    <Filter Include="02. GameObject\GOCody">
       <UniqueIdentifier>{bcc5ba6d-131a-4e42-a2d6-3f1a1ab100cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\02. GameObject\GOCody\HeadPivot">
-      <UniqueIdentifier>{c5999d27-5689-41b8-838a-61e5fbc2650c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\02. GameObject\GOCody\Body">
-      <UniqueIdentifier>{6a04b310-393d-424f-b556-b980405fd106}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\02. GameObject\GOMay">
-      <UniqueIdentifier>{9348a796-3561-4fac-acb1-d33004229715}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\02. GameObject\Camera">
+    <Filter Include="02. GameObject\Camera">
       <UniqueIdentifier>{3c825b67-dcc3-4053-ba3a-63cb123f4e1d}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\02. GameObject\Camera\FirstPersonCamera">
@@ -112,6 +94,57 @@
     <Filter Include="소스 파일\02. GameObject\Camera\FrontThirdPersonCamera">
       <UniqueIdentifier>{fec12351-5443-45eb-98c0-29438785992c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\CollisionBox">
+      <UniqueIdentifier>{2d007e2e-4859-437b-8792-e22af7780408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\BoostEffect">
+      <UniqueIdentifier>{c7a8c4f7-5a87-4e8b-a638-0d2f080dbd57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\BoostEffect\BoostJet">
+      <UniqueIdentifier>{0d1931e9-6d11-46c4-b1e6-d66294ec4643}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\BoostEffect\BoostWind">
+      <UniqueIdentifier>{4d4021d3-2776-418b-b6db-ffcdf124c2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI">
+      <UniqueIdentifier>{77b0e0b9-78db-4975-b5b9-26be286bd1d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD">
+      <UniqueIdentifier>{06fcef9e-f0e4-4a30-8852-d43fa436b7e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\HUD_Main">
+      <UniqueIdentifier>{f78c48f2-c807-400d-b397-3d86306486d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Land3">
+      <UniqueIdentifier>{f65dd40c-8e32-476d-91b0-4980159e909b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item">
+      <UniqueIdentifier>{10b4db78-0a63-465f-aba5-774dba1b97d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Rainbow_Cloud">
+      <UniqueIdentifier>{1ba4c8fa-a3e4-42eb-bccc-a638b73312b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Rainbow">
+      <UniqueIdentifier>{92fd2f23-c461-4387-ab50-bac95f3c8e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\HUD_Num">
+      <UniqueIdentifier>{45e4ae89-db24-459f-bb4c-d03f0ddbf99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\HUD_Gage">
+      <UniqueIdentifier>{bd8bd500-6a9a-4ffc-a739-75f687414e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Banana">
+      <UniqueIdentifier>{4de29079-460b-4184-99c7-5fa447048b9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Booster">
+      <UniqueIdentifier>{0036db55-c776-4fad-9fbb-1da8a991da44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Booster\UI_BoosterBar">
+      <UniqueIdentifier>{8ef9adcb-37b7-43f5-b4f7-a8e0edc7010b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Booster\UI_BoosterBG">
+      <UniqueIdentifier>{6a0eba07-e98e-47f8-a58a-a5d842776ca0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -144,23 +177,11 @@
     <ClInclude Include="..\Header\CBackGround.h">
       <Filter>소스 파일\02. GameObject\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CEnemy.h">
-      <Filter>소스 파일\02. GameObject\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CJet.h">
-      <Filter>소스 파일\02. GameObject\Jet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CLand.h">
-      <Filter>소스 파일\02. GameObject\Land</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CSkyBox.h">
       <Filter>소스 파일\02. GameObject\SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CGOCody.h">
       <Filter>소스 파일\02. GameObject\GOCody</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CGOMay.h">
-      <Filter>소스 파일\02. GameObject\GOMay</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Client_Define.h">
       <Filter>헤더 파일</Filter>
@@ -225,6 +246,45 @@
     <ClInclude Include="..\Header\CDynamicCamera.h">
       <Filter>소스 파일\02. GameObject\Camera\DynamicCamera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CiTem.h">
+      <Filter>01. Scene\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCollisionBox.h">
+      <Filter>02. GameObject\CollisionBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoostJet.h">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoostWind.h">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Main.h">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Gage.h">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Gage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Num.h">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Num</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLand3.h">
+      <Filter>02. GameObject\Land3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRainBow_Cloud.h">
+      <Filter>02. GameObject\Item\Rainbow_Cloud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Rainbow.h">
+      <Filter>02. GameObject\UI\UI_Rainbow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBanana.h">
+      <Filter>02. GameObject\Item\Banana</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_BoosterBar.h">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_BoosterBG.h">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -245,23 +305,11 @@
     <ClCompile Include="..\Code\CBackGround.cpp">
       <Filter>소스 파일\02. GameObject\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CEnemy.cpp">
-      <Filter>소스 파일\02. GameObject\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CJet.cpp">
-      <Filter>소스 파일\02. GameObject\Jet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CLand.cpp">
-      <Filter>소스 파일\02. GameObject\Land</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CSkyBox.cpp">
       <Filter>소스 파일\02. GameObject\SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CGOCody.cpp">
       <Filter>소스 파일\02. GameObject\GOCody</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CGOMay.cpp">
-      <Filter>소스 파일\02. GameObject\GOMay</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Client_Define.cpp">
       <Filter>소스 파일</Filter>
@@ -322,6 +370,47 @@
     </ClCompile>
     <ClCompile Include="..\Code\CItem.cpp">
       <Filter>01. Scene\Item</Filter>
+    </ClCompile>
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollisionBox.cpp">
+      <Filter>02. GameObject\CollisionBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoostJet.cpp">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoostWind.cpp">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Main.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Gage.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Gage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Num.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Num</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLand3.cpp">
+      <Filter>02. GameObject\Land3</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRainbow_Cloud.cpp">
+      <Filter>02. GameObject\Item\Rainbow_Cloud</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Rainbow.cpp">
+      <Filter>02. GameObject\UI\UI_Rainbow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBanana.cpp">
+      <Filter>02. GameObject\Item\Banana</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_BoosterBar.cpp">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_BoosterBG.cpp">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDynamicCamera.cpp">
       <Filter>소스 파일\02. GameObject\Camera\DynamicCamera</Filter>

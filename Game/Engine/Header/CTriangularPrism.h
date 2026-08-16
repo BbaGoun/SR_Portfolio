@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CVIBuffer.h"
 
 BEGIN(Engine)
@@ -6,7 +6,6 @@ BEGIN(Engine)
 class ENGINE_DLL CTriangularPrism : public CVIBuffer
 {
 protected:
-    explicit CTriangularPrism();
     explicit CTriangularPrism(LPDIRECT3DDEVICE9 pGraphicDev);
     explicit CTriangularPrism(const CTriangularPrism& rhs);
     virtual ~CTriangularPrism() override;

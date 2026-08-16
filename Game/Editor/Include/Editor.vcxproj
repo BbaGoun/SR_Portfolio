@@ -106,6 +106,9 @@
       <AdditionalLibraryDirectories>../../Reference/Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -125,6 +128,9 @@
       <AdditionalLibraryDirectories>../../Reference/Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -142,6 +148,9 @@
       <AdditionalLibraryDirectories>../../Reference/Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -161,9 +170,23 @@
       <AdditionalLibraryDirectories>../../Reference/Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CEditorScene.h" />
+    <ClInclude Include="..\Header\CGameWindow.h" />
+    <ClInclude Include="..\Header\CHierarchy.h" />
+    <ClInclude Include="..\Header\CInspector.h" />
+    <ClInclude Include="..\Header\CLoading.h" />
+    <ClInclude Include="..\Header\CLoadingThread.h" />
     <ClInclude Include="..\Header\CMainEditor.h" />
+    <ClInclude Include="..\Header\CProject.h" />
+    <ClInclude Include="..\Header\CSceneWindow.h" />
+    <ClInclude Include="..\Header\CSequence.h" />
+    <ClInclude Include="..\Header\CWindow.h" />
+    <ClInclude Include="..\Header\Editor_Function.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="imgui-docking\backends\imgui_impl_dx9.h" />
@@ -177,12 +200,22 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CEditorScene.cpp" />
+    <ClCompile Include="..\Code\CGameWindow.cpp" />
+    <ClCompile Include="..\Code\CHierarchy.cpp" />
+    <ClCompile Include="..\Code\CInspector.cpp" />
+    <ClCompile Include="..\Code\CLoading.cpp" />
+    <ClCompile Include="..\Code\CLoadingThread.cpp" />
     <ClCompile Include="..\Code\CMainEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\Code\CProject.cpp" />
+    <ClCompile Include="..\Code\CSceneWindow.cpp" />
+    <ClCompile Include="..\Code\CSequence.cpp" />
+    <ClCompile Include="..\Code\CWindow.cpp" />
     <ClCompile Include="Editor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
