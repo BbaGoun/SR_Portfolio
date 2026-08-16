@@ -59,7 +59,7 @@ HRESULT CCart::Ready_GameObject()
 	m_pColliderCom->Set_Extents({ 2.5f,1.5f,5.f });
 	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 
-	m_mapComponent.insert({ L"Com_Collider", pComponent });
+	m_mapComponent.insert({L"Com_Collider", pComponent});
 
 
 	//pComponent = m_pSphereColliderCom = dynamic_cast<CSphere_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SphereCollider"));
@@ -126,6 +126,7 @@ void CCart::CollisionEnter(CCollider* pOtherCollider)
 	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
 	{
 		m_fGainGage = 0.f;
+		m_bDrift = false;
 	}
 }
 
@@ -145,7 +146,6 @@ void CCart::TriggerEnter(CCollider* pOtherCollider)
 		{
 			m_bBanana = true;
 			m_bBoost = false;
-			//D3DXVec3Normalize(&m_vForce, &m_vForce);
 			m_vBananaSpinStartLook = m_vForce;
 			D3DXVec3Normalize(&m_vBananaSpinStartLook, &m_vBananaSpinStartLook);
 			
@@ -382,7 +382,6 @@ void CCart::UpdateDrift()
 
 		m_fGainGage += m_fLookForceAngle * 0.5f;
 		m_fGainGage += D3DXVec3Length(&m_vForce) * m_fSpeed * 0.005f;
-
 
 		if (m_fLookForceAngle < 0.3f)
 		{
