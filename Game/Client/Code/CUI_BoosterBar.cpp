@@ -4,6 +4,8 @@
 #include "CProtoMgr.h"
 #include "CTexture.h"
 #include "CRenderer.h"
+#include "CManagement.h"
+#include "CCart.h"
 
 CUI_BoosterBar::CUI_BoosterBar(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -19,9 +21,10 @@ CUI_BoosterBar::~CUI_BoosterBar()
 
 HRESULT CUI_BoosterBar::Ready_GameObject()
 {
-	m_fCurGage = 0.f;
-	m_fGainGage = 0.f;
-	m_fSizeX = 209.f;
+	m_fCurGage		= 0.f;
+	m_fGainGage		= 0.f;
+	m_fResultGauge	= 0.f;
+	m_fSizeX		= 209.f;
 
 	CGameObject::Ready_GameObject();
 
@@ -47,10 +50,12 @@ HRESULT CUI_BoosterBar::Ready_GameObject()
 _int CUI_BoosterBar::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
-	
-	m_fCurGage += 10 * fDeltaTime;
-	if (m_fCurGage > 100)
-		m_fCurGage = 0;
+
+	CCart* pCart = dynamic_cast<CCart*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart"));
+	m_fCurGage = pCart->GetCurGage();
+	m_fGainGage = pCart->GetGainGage();
+	m_fResultGauge = m_fCurGage + m_fGainGage;
+	m_fResultGauge = clampT(m_fResultGauge, 0.f, 100.f);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -62,8 +67,8 @@ void CUI_BoosterBar::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CUI_BoosterBar::Render_GameObject()
 {
-	m_pTransformCom->Set_Scale({ m_fCurGage * 0.01f * m_fSizeX, 14, 1 });
-	m_pTransformCom->Set_Pos({ 0.5f * (-m_fSizeX + m_fCurGage * 0.01f * m_fSizeX), -250, 1 });
+	m_pTransformCom->Set_Scale({ m_fResultGauge * 0.01f * m_fSizeX, 14, 1 });
+	m_pTransformCom->Set_Pos({ 0.5f * (-m_fSizeX + m_fResultGauge * 0.01f * m_fSizeX), -250, 1 });
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pTextureCom->Set_Texture(0);

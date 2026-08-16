@@ -40,7 +40,12 @@ HRESULT CCart::Ready_GameObject()
 	m_bRainbowUI		= false;
 	m_bBanana			= false;
 
-	m_fBananaTimer		= 0;
+	m_fBananaTimer		= 0.f;
+
+	m_fCurGage			= 0.f;
+	m_fGainGage			= 0.f;
+
+	m_fBoostItemCnt		= 0.f;
 
 	m_vBananaSpinStartLook = { 0,0,0 };
 	Engine::CComponent* pComponent = nullptr;
@@ -54,7 +59,7 @@ HRESULT CCart::Ready_GameObject()
 	m_pColliderCom->Set_Extents({ 2.5f,1.5f,5.f });
 	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 
-	m_mapComponent.insert({ L"Com_Collider", pComponent });
+	m_mapComponent.insert({L"Com_Collider", pComponent});
 
 
 	//pComponent = m_pSphereColliderCom = dynamic_cast<CSphere_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SphereCollider"));
@@ -93,6 +98,7 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	KeyInput(fDeltaTime);
 	UpdateBoost();
+	UpdateDrift();
 	//BananaTimer(fDeltaTime);
 	//_vec3 vPos;
 	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -104,7 +110,6 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 void CCart::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
-	UpdateDrift();
 }
 
 void CCart::Render_GameObject()
@@ -116,6 +121,13 @@ void CCart::Render_GameObject()
 
 void CCart::CollisionEnter(CCollider* pOtherCollider)
 {
+	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
+
+	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
+	{
+		m_fGainGage = 0.f;
+		m_bDrift = false;
+	}
 }
 
 void CCart::TriggerEnter(CCollider* pOtherCollider)
@@ -134,7 +146,6 @@ void CCart::TriggerEnter(CCollider* pOtherCollider)
 		{
 			m_bBanana = true;
 			m_bBoost = false;
-			//D3DXVec3Normalize(&m_vForce, &m_vForce);
 			m_vBananaSpinStartLook = m_vForce;
 			D3DXVec3Normalize(&m_vBananaSpinStartLook, &m_vBananaSpinStartLook);
 			
@@ -174,8 +185,12 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))
 	{
-		m_bBoost = true;
-		m_fBoostCal = 1.05f;
+		if (m_fBoostItemCnt > 0)
+		{
+			--m_fBoostItemCnt;
+			m_bBoost = true;
+			m_fBoostCal = 1.05f;
+		}
 	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
@@ -365,8 +380,18 @@ void CCart::UpdateDrift()
 		m_vRotation.z *= 0.98;
 		m_vRotation.z = clampT(float(m_vRotation.z), -0.1f, 0.1f);
 
+		m_fGainGage += m_fLookForceAngle * 0.5f;
+		m_fGainGage += D3DXVec3Length(&m_vForce) * m_fSpeed * 0.005f;
+
 		if (m_fLookForceAngle < 0.3f)
 		{
+			m_fCurGage += m_fGainGage;
+			if (m_fCurGage >= 100.f)
+			{
+				m_fCurGage = 0;
+				++m_fBoostItemCnt;
+			}
+			m_fGainGage = 0;
 			m_vRotation.z = 0;
 			m_bDrift = false;
 		}
