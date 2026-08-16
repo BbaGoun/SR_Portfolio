@@ -133,6 +133,9 @@
     <Filter Include="04. Component\Shape\Prism\Triangular">
       <UniqueIdentifier>{0b2a77d0-f793-4545-93e3-5778d5715798}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\MissileTex">
+      <UniqueIdentifier>{f54a7928-d4e9-48c3-b251-d382526affc9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="04. Component\Shape\Terrain3">
       <UniqueIdentifier>{93dc6801-9724-4a44-8c78-82363190d9f4}</UniqueIdentifier>
     </Filter>
@@ -276,6 +279,9 @@
     <ClInclude Include="..\Header\CTriangularPrism.h">
       <Filter>04. Component\Shape\Prism\Triangular</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMissileTex.h">
+      <Filter>04. Component\Shape\MissileTex</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CTerrain3.h">
       <Filter>04. Component\Shape\Terrain3</Filter>
     </ClInclude>
@@ -400,6 +406,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTriangularPrism.cpp">
       <Filter>04. Component\Shape\Prism\Triangular</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMissileTex.cpp">
+      <Filter>04. Component\Shape\MissileTex</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTerrain3.cpp">
       <Filter>04. Component\Shape\Terrain3</Filter>

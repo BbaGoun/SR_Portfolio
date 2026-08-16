@@ -8,6 +8,7 @@
 #include "CManagement.h"
 #include "CRcTex.h"
 #include "CCollisionTest.h"
+#include "CItem.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
     : CScene(pGraphicDev), m_pLoadingThread(nullptr)
@@ -43,7 +44,8 @@ _int CLoading::Update_Scene(const _float& fDeltaTime)
         if (GetAsyncKeyState(VK_RETURN))
         {
             //Engine::CScene* pStage = CScene_Test::Create(m_pGraphicDev);
-            Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
+            //Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
+            Engine::CScene* pStage = CItem::Create(m_pGraphicDev);
 
             if (nullptr == pStage)
                 return E_FAIL;
@@ -106,9 +108,10 @@ HRESULT CLoading::Ready_Prototype()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create(m_pGraphicDev))))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Logo/sana.jpg", 1))))
-        return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/dog0.jpg", 1))))
+        return E_FAIL; 
+                                                                                                                              
     return S_OK;
 }
 

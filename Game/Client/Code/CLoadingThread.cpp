@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "CLoadingThread.h"
 #include "CProtoMgr.h"
+#include "CMissileTex.h"
 
 CLoadingThread::CLoadingThread(LPDIRECT3DDEVICE9 pGraphicDev)
     : m_pGraphicDev(pGraphicDev), m_bFinish(false), m_eLoadingID(LOADING_END)
@@ -36,9 +37,6 @@ _uint CLoadingThread::Loading_Stage()
     lstrcpy(m_szLoading, L"Buffer Loading.....................................");
     LeaveCriticalSection(Get_Crt());
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Cody", Engine::CCody::Create(m_pGraphicDev))))
-        return E_FAIL;
-
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_InnerBox", Engine::CInnerBox::Create(m_pGraphicDev))))
         return E_FAIL;
 
@@ -57,6 +55,9 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Terrain2", Engine::CTerrain2::Create(m_pGraphicDev))))
         return E_FAIL;
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Terrain3", Engine::CTerrain3::Create(m_pGraphicDev))))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype( L"Proto_MissileTex",Engine::CMissileTex::Create(m_pGraphicDev))))
         return E_FAIL;
 
     EnterCriticalSection(Get_Crt());

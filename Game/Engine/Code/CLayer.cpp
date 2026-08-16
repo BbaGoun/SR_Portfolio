@@ -216,6 +216,20 @@ HRESULT CLayer::PostProcess_Delete()
 	return S_OK;
 }
 
+HRESULT CLayer::Delete_GameObject(const _tchar* pObjTag)
+{
+	auto iter = find_if(m_mapObject.begin(), m_mapObject.end(), CTag_Finder(pObjTag));
+
+	if (iter == m_mapObject.end())
+		return E_FAIL;
+
+	Safe_Release(iter->second);
+
+	m_mapObject.erase(iter);
+
+	return S_OK;
+}
+
 HRESULT CLayer::Ready_Layer()
 {
 	return S_OK;

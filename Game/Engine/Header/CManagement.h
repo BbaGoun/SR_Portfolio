@@ -38,6 +38,8 @@ public:
 	uint64_t		GenerateGuid() { return m_pScene->GenerateGuid(); }
 	void			InvalidateDeviceObjects();
 
+	void		Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
+
 public:
 	HRESULT			Set_Scene(CScene* pScene);
 	void			Request_Scene(CScene* pScene);

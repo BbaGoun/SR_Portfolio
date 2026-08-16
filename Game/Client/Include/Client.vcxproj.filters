@@ -19,9 +19,6 @@
     <Filter Include="01. Scene">
       <UniqueIdentifier>{d8e1b22f-04db-4bdc-ac27-1707308ed746}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject">
-      <UniqueIdentifier>{b5a6e975-1ba4-438e-a1c9-4425cc22c495}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\Loading">
       <UniqueIdentifier>{0e293edf-66a2-4d1f-b2a3-3e9dc8f1deb5}</UniqueIdentifier>
     </Filter>
@@ -31,10 +28,22 @@
     <Filter Include="01. Scene\Test">
       <UniqueIdentifier>{4a0fedf5-0002-4576-8a9d-93ab4a1073a7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\BackGround">
+    <Filter Include="01. Scene\CollisionTest">
+      <UniqueIdentifier>{1d9596f4-f904-4f19-871e-a4c8158626b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\MapTest">
+      <UniqueIdentifier>{7f49cea8-a756-4797-a98f-c47c0ef0412f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Item">
+      <UniqueIdentifier>{8cfc90e9-be4b-467b-a9ea-b5f4e04dec79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. GameObject">
+      <UniqueIdentifier>{b5a6e975-1ba4-438e-a1c9-4425cc22c495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. GameObject\BackGround">
       <UniqueIdentifier>{82ca06a2-1d49-48df-9619-97fbd9172848}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\SkyBox">
+    <Filter Include="소스 파일\02. GameObject\SkyBox">
       <UniqueIdentifier>{859f3918-5c4b-4bf1-8123-8e96160970aa}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\GOCody">
@@ -43,56 +52,47 @@
     <Filter Include="02. GameObject\Camera">
       <UniqueIdentifier>{3c825b67-dcc3-4053-ba3a-63cb123f4e1d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Camera\FirstPersonCamera">
+    <Filter Include="소스 파일\02. GameObject\Camera\FirstPersonCamera">
       <UniqueIdentifier>{6358c447-5368-456b-8cf9-5e5691e92983}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\GOCody\HeadPivot">
-      <UniqueIdentifier>{c5999d27-5689-41b8-838a-61e5fbc2650c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\GOCody\Body">
-      <UniqueIdentifier>{6a04b310-393d-424f-b556-b980405fd106}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Camera\BackThirdPersonCamera">
+    <Filter Include="소스 파일\02. GameObject\Camera\BackThirdPersonCamera">
       <UniqueIdentifier>{023176fa-6807-4182-a302-7da613fae6b9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Camera\FrontThirdPersonCamera">
-      <UniqueIdentifier>{fec12351-5443-45eb-98c0-29438785992c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Land2">
-      <UniqueIdentifier>{abc5ec96-6112-4f26-a7f4-31f2a42cd918}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Camera\TopViewCamera">
+    <Filter Include="소스 파일\02. GameObject\Camera\TopViewCamera">
       <UniqueIdentifier>{fea974b1-0821-4c2a-93c7-30822e6f7f09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\CollisionTest">
-      <UniqueIdentifier>{1d9596f4-f904-4f19-871e-a4c8158626b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Cart">
-      <UniqueIdentifier>{9b57413b-c72d-4546-b362-b5ed99bdabb9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Cart\Wheel">
-      <UniqueIdentifier>{14d11323-8b15-4ff0-849c-b889a1c6e54d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Cart\CartBody">
-      <UniqueIdentifier>{2d915fa9-4695-4bd0-82a0-0afb0c2a78cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Box">
-      <UniqueIdentifier>{1eadff65-5287-4a7f-bed1-9074bae16f02}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Camera\FollowSmoothCamera">
+    <Filter Include="소스 파일\02. GameObject\Camera\FollowSmoothCamera">
       <UniqueIdentifier>{ff88f6cc-acfd-45ab-bb08-64ffd162aa80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Cart\CartBody\CartBody1">
+    <Filter Include="소스 파일\02. GameObject\Land2">
+      <UniqueIdentifier>{abc5ec96-6112-4f26-a7f4-31f2a42cd918}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. GameObject\Cart">
+      <UniqueIdentifier>{9b57413b-c72d-4546-b362-b5ed99bdabb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. GameObject\Cart\Wheel">
+      <UniqueIdentifier>{14d11323-8b15-4ff0-849c-b889a1c6e54d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. GameObject\Cart\CartBody">
+      <UniqueIdentifier>{2d915fa9-4695-4bd0-82a0-0afb0c2a78cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. GameObject\Cart\CartBody\CartBody1">
       <UniqueIdentifier>{8385e4f3-0adf-4ec9-8edc-a5933d7ec8fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Cart\CartBody\CartBody2">
+    <Filter Include="소스 파일\02. GameObject\Cart\CartBody\CartBody2">
       <UniqueIdentifier>{8b9571f1-d76e-464a-bab7-d7b17e618d3f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\MapTest">
-      <UniqueIdentifier>{7f49cea8-a756-4797-a98f-c47c0ef0412f}</UniqueIdentifier>
+    <Filter Include="소스 파일\02. GameObject\Box">
+      <UniqueIdentifier>{1eadff65-5287-4a7f-bed1-9074bae16f02}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\Item">
-      <UniqueIdentifier>{8cfc90e9-be4b-467b-a9ea-b5f4e04dec79}</UniqueIdentifier>
+    <Filter Include="소스 파일\02. GameObject\Missile">
+      <UniqueIdentifier>{d8fdb4e9-6eb8-4892-ae3c-55e3d09b8c64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. GameObject\Camera\DynamicCamera">
+      <UniqueIdentifier>{9c7827e9-db63-4244-acaf-0d75724d183d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. GameObject\Camera\FrontThirdPersonCamera">
+      <UniqueIdentifier>{fec12351-5443-45eb-98c0-29438785992c}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\CollisionBox">
       <UniqueIdentifier>{2d007e2e-4859-437b-8792-e22af7780408}</UniqueIdentifier>
@@ -175,13 +175,13 @@
       <Filter>01. Scene\Test</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBackGround.h">
-      <Filter>02. GameObject\BackGround</Filter>
+      <Filter>소스 파일\02. GameObject\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSkyBox.h">
-      <Filter>02. GameObject\SkyBox</Filter>
+      <Filter>소스 파일\02. GameObject\SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CGOCody.h">
-      <Filter>02. GameObject\GOCody</Filter>
+      <Filter>소스 파일\02. GameObject\GOCody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Client_Define.h">
       <Filter>헤더 파일</Filter>
@@ -190,52 +190,61 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTopViewCam.h">
-      <Filter>02. GameObject\Camera\TopViewCamera</Filter>
+      <Filter>소스 파일\02. GameObject\Camera\TopViewCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CHeadPivot.h">
-      <Filter>02. GameObject\GOCody\HeadPivot</Filter>
+      <Filter>소스 파일\02. GameObject\GOCody\HeadPivot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CFirstPerCam.h">
-      <Filter>02. GameObject\Camera\FirstPersonCamera</Filter>
+      <Filter>소스 파일\02. GameObject\Camera\FirstPersonCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBackThirdPerCam.h">
-      <Filter>02. GameObject\Camera\BackThirdPersonCamera</Filter>
+      <Filter>소스 파일\02. GameObject\Camera\BackThirdPersonCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCodyBody.h">
-      <Filter>02. GameObject\GOCody\Body</Filter>
+      <Filter>소스 파일\02. GameObject\GOCody\Body</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CFrontThirdPerCam.h">
-      <Filter>02. GameObject\Camera\FrontThirdPersonCamera</Filter>
+      <Filter>소스 파일\02. GameObject\Camera\FrontThirdPersonCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CLand2.h">
-      <Filter>02. GameObject\Land2</Filter>
+      <Filter>소스 파일\02. GameObject\Land2</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCart.h">
-      <Filter>02. GameObject\Cart</Filter>
+      <Filter>소스 파일\02. GameObject\Cart</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCollisionTest.h">
       <Filter>01. Scene\CollisionTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CWheel.h">
-      <Filter>02. GameObject\Cart\Wheel</Filter>
+      <Filter>소스 파일\02. GameObject\Cart\Wheel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCartBody.h">
-      <Filter>02. GameObject\Cart\CartBody</Filter>
+      <Filter>소스 파일\02. GameObject\Cart\CartBody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBox.h">
-      <Filter>02. GameObject\Box</Filter>
+      <Filter>소스 파일\02. GameObject\Box</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CFollowSmoothCam.h">
-      <Filter>02. GameObject\Camera\FollowSmoothCamera</Filter>
+      <Filter>소스 파일\02. GameObject\Camera\FollowSmoothCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCartBody1.h">
-      <Filter>02. GameObject\Cart\CartBody\CartBody1</Filter>
+      <Filter>소스 파일\02. GameObject\Cart\CartBody\CartBody1</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCartBody2.h">
-      <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
+      <Filter>소스 파일\02. GameObject\Cart\CartBody\CartBody2</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMapTest.h">
       <Filter>01. Scene\MapTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMissile.h">
+      <Filter>소스 파일\02. GameObject\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItem.h">
+      <Filter>01. Scene\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDynamicCamera.h">
+      <Filter>소스 파일\02. GameObject\Camera\DynamicCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CiTem.h">
       <Filter>01. Scene\Item</Filter>
@@ -294,69 +303,74 @@
       <Filter>01. Scene\Test</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBackGround.cpp">
-      <Filter>02. GameObject\BackGround</Filter>
+      <Filter>소스 파일\02. GameObject\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSkyBox.cpp">
-      <Filter>02. GameObject\SkyBox</Filter>
+      <Filter>소스 파일\02. GameObject\SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CGOCody.cpp">
-      <Filter>02. GameObject\GOCody</Filter>
+      <Filter>소스 파일\02. GameObject\GOCody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Client_Define.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTopViewCam.cpp">
-      <Filter>02. GameObject\Camera\TopViewCamera</Filter>
+      <Filter>소스 파일\02. GameObject\Camera\TopViewCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CHeadPivot.cpp">
-      <Filter>02. GameObject\GOCody\HeadPivot</Filter>
+      <Filter>소스 파일\02. GameObject\GOCody\HeadPivot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CFirstPerCam.cpp">
-      <Filter>02. GameObject\Camera\FirstPersonCamera</Filter>
+      <Filter>소스 파일\02. GameObject\Camera\FirstPersonCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBackThirdPerCam.cpp">
-      <Filter>02. GameObject\Camera\BackThirdPersonCamera</Filter>
+      <Filter>소스 파일\02. GameObject\Camera\BackThirdPersonCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCodyBody.cpp">
-      <Filter>02. GameObject\GOCody\Body</Filter>
+      <Filter>소스 파일\02. GameObject\GOCody\Body</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CFrontThirdPerCam.cpp">
-      <Filter>02. GameObject\Camera\FrontThirdPersonCamera</Filter>
+      <Filter>소스 파일\02. GameObject\Camera\FrontThirdPersonCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CLand2.cpp">
-      <Filter>02. GameObject\Land2</Filter>
+      <Filter>소스 파일\02. GameObject\Land2</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCart.cpp">
-      <Filter>02. GameObject\Cart</Filter>
+      <Filter>소스 파일\02. GameObject\Cart</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCollisionTest.cpp">
       <Filter>01. Scene\CollisionTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CWheel.cpp">
-      <Filter>02. GameObject\Cart\Wheel</Filter>
+      <Filter>소스 파일\02. GameObject\Cart\Wheel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCartBody.cpp">
-      <Filter>02. GameObject\Cart\CartBody</Filter>
+      <Filter>소스 파일\02. GameObject\Cart\CartBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBox.cpp">
-      <Filter>02. GameObject\Box</Filter>
+      <Filter>소스 파일\02. GameObject\Box</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CFollowSmoothCam.cpp">
-      <Filter>02. GameObject\Camera\FollowSmoothCamera</Filter>
+      <Filter>소스 파일\02. GameObject\Camera\FollowSmoothCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCartBody1.cpp">
-      <Filter>02. GameObject\Cart\CartBody\CartBody1</Filter>
+      <Filter>소스 파일\02. GameObject\Cart\CartBody\CartBody1</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCartBody2.cpp">
-      <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
+      <Filter>소스 파일\02. GameObject\Cart\CartBody\CartBody2</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMapTest.cpp">
       <Filter>01. Scene\MapTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CiTem.cpp">
+    <ClCompile Include="Client.cpp">
+      <Filter>01. Scene\MapTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMissile.cpp">
+      <Filter>소스 파일\02. GameObject\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItem.cpp">
       <Filter>01. Scene\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Client.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCollisionBox.cpp">
@@ -397,6 +411,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_BoosterBG.cpp">
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDynamicCamera.cpp">
+      <Filter>소스 파일\02. GameObject\Camera\DynamicCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

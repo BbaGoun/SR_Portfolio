@@ -186,6 +186,10 @@
     <ClInclude Include="..\Header\CCartBody2.h" />
     <ClInclude Include="..\Header\CCodyBody.h" />
     <ClInclude Include="..\Header\CCollisionTest.h" />
+    <ClInclude Include="..\Header\CDynamicCamera.h" />
+    <ClInclude Include="..\Header\CItem.h" />
+    <ClInclude Include="..\Header\CMapTest.h" />
+    <ClInclude Include="..\Header\CMissile.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
     <ClInclude Include="..\Header\CRainBow_Cloud.h" />
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
@@ -231,6 +235,10 @@
     <ClCompile Include="..\Code\CCartBody2.cpp" />
     <ClCompile Include="..\Code\CCodyBody.cpp" />
     <ClCompile Include="..\Code\CCollisionTest.cpp" />
+    <ClCompile Include="..\Code\CDynamicCamera.cpp" />
+    <ClCompile Include="..\Code\CItem.cpp" />
+    <ClCompile Include="..\Code\CMapTest.cpp" />
+    <ClCompile Include="..\Code\CMissile.cpp" />
     <ClCompile Include="..\Code\CCollisionBox.cpp" />
     <ClCompile Include="..\Code\CRainbow_Cloud.cpp" />
     <ClCompile Include="..\Code\CFollowSmoothCam.cpp" />
