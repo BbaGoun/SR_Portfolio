@@ -4,7 +4,10 @@
 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
     : m_pGraphicDev(pGraphicDev)
-    , m_pParent(nullptr), m_pTransformCom(nullptr), m_iCullDistance(210'000'000)
+    , m_pParent(nullptr), m_pTransformCom(nullptr)
+    , m_eCollisionLayer(CL_DEFAULT)
+    , m_uCollisionLayerBit(1u)
+    , m_iCullDistance(210'000'000)
     , m_fSpeed(0), m_vForce({ 0, 0, 0 }), m_vRotation({ 0, 0, 0 })
     , m_pLayer(nullptr)
 {
@@ -13,6 +16,8 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CGameObject::CGameObject(const CGameObject& rhs)
     : m_pGraphicDev(rhs.m_pGraphicDev)
+    , m_eCollisionLayer(rhs.m_eCollisionLayer)
+    , m_uCollisionLayerBit(rhs.m_uCollisionLayerBit)
     , m_iCullDistance(rhs.m_iCullDistance)
     , m_fSpeed(rhs.m_fSpeed), m_vForce(rhs.m_vForce), m_vRotation(rhs.m_vRotation)
     , m_pLayer(rhs.m_pLayer)
@@ -202,8 +207,8 @@ void CGameObject::Render_GameObject()
 
 void CGameObject::Set_CollisionLayer(COLLISION_LAYER eID)
 {
-    m_iCollisionLayer = 1;
-    m_iCollisionLayer << eID;
+    m_eCollisionLayer = eID;
+    m_uCollisionLayerBit = 1 << eID;
 }
 
 void CGameObject::Compute_ViewZ(const _vec3* pPos)

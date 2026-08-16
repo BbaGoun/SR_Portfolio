@@ -48,12 +48,12 @@ public:
 	virtual			void		LateUpdate_Scene(const _float& fDeltaTime);
 	virtual			void		Render_Scene();
 
-
 	void			Set_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer, bool bCollision);
+	bool			Get_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer);
 
 protected:
 	map<const _tchar*, CLayer*>			m_mapLayer;
-	bitset<528>							m_CollisionMatrix;
+	uint32_t							m_CollisionMatrix[32];
 	LPDIRECT3DDEVICE9					m_pGraphicDev;
 	uint64_t							m_uNextGuid = 1;
 

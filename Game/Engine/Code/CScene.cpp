@@ -3,7 +3,8 @@
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
     : m_pGraphicDev(pGraphicDev)
 {
-    m_CollisionMatrix.set();
+    for (auto& u : m_CollisionMatrix)
+        u |= ~0u;
     m_pGraphicDev->AddRef();
 }
 
@@ -149,11 +150,19 @@ void CScene::Render_Scene()
 
 void CScene::Set_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer, bool bCollision)
 {
-    if (srcLayer > dstLayer)
-        swap(srcLayer, dstLayer);
+    if (bCollision) {
+        m_CollisionMatrix[srcLayer] |= (1u << dstLayer);
+        m_CollisionMatrix[dstLayer] |= (1u << dstLayer);
+    }
+    else {
+        m_CollisionMatrix[srcLayer] &= ~(1u << dstLayer);
+        m_CollisionMatrix[dstLayer] &= ~(1u << dstLayer);
+    }
+}
 
-    int index = (31 - srcLayer + 1) * (31 - srcLayer) * 0.5f + (31 - dstLayer);
-    m_CollisionMatrix.set(index, bCollision);
+bool CScene::Get_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer)
+{
+    return (m_CollisionMatrix[srcLayer] & (1u << dstLayer)) != 0;
 }
 
 void CScene::Free()

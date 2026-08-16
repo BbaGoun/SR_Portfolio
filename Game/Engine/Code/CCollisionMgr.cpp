@@ -1,4 +1,4 @@
-#include "CCollisionMgr.h"
+Ôªø#include "CCollisionMgr.h"
 #include "CManagement.h"
 
 #include <io.h>
@@ -38,7 +38,6 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 			}
 			else
 			{
-				PysicalCubevsCube(pDstCubeCollider, pSrcCubeCollider);
 				pDstCubeCollider->Get_Owner()->CollisionEnter(pSrcCollider);
 				pSrcCubeCollider->Get_Owner()->CollisionEnter(pDstCollider);
 			}
@@ -51,13 +50,13 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 	//		MSG_BOX("Collision!");
 	//		if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
 	//		{
-	//			//pDstCollider->OnTrigger »£√‚
-	//			//pSrcCollider->OnTrigger »£√‚
+	//			//pDstCollider->OnTrigger Ìò∏Ï∂ú
+	//			//pSrcCollider->OnTrigger Ìò∏Ï∂ú
 	//		}
 	//		else
 	//		{
-	//			//pDstCollider->OnCollision »£√‚
-	//			//pSrcCollider->OnCollision »£√‚
+	//			//pDstCollider->OnCollision Ìò∏Ï∂ú
+	//			//pSrcCollider->OnCollision Ìò∏Ï∂ú
 	//		}
 	//	}
 	//}
@@ -68,13 +67,13 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 	//		MSG_BOX("Collision!");
 	//		if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
 	//		{
-	//			//pDstCollider->OnTrigger »£√‚
-	//			//pSrcCollider->OnTrigger »£√‚
+	//			//pDstCollider->OnTrigger Ìò∏Ï∂ú
+	//			//pSrcCollider->OnTrigger Ìò∏Ï∂ú
 	//		}
 	//		else
 	//		{
-	//			//pDstCollider->OnCollision »£√‚
-	//			//pSrcCollider->OnCollision »£√‚
+	//			//pDstCollider->OnCollision Ìò∏Ï∂ú
+	//			//pSrcCollider->OnCollision Ìò∏Ï∂ú
 	//		}
 	//	}
 	//}
@@ -85,13 +84,13 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 	//		MSG_BOX("Collision!");
 	//		if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
 	//		{
-	//			//pDstCollider->OnTrigger »£√‚
-	//			//pSrcCollider->OnTrigger »£√‚
+	//			//pDstCollider->OnTrigger Ìò∏Ï∂ú
+	//			//pSrcCollider->OnTrigger Ìò∏Ï∂ú
 	//		}
 	//		else
 	//		{
-	//			//pDstCollider->OnCollision »£√‚
-	//			//pSrcCollider->OnCollision »£√‚
+	//			//pDstCollider->OnCollision Ìò∏Ï∂ú
+	//			//pSrcCollider->OnCollision Ìò∏Ï∂ú
 	//		}
 	//	}
 	//}
@@ -142,7 +141,7 @@ void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 	}
 	else
 	{
-		// 1. √‡ ¡§∏Æ
+		// 1. Ï∂ï Ï†ïÎ¶¨
 		vector<_vec3> vAxis;
 		_vec3 vDstAxis, vSrcAxis;
 
@@ -153,7 +152,7 @@ void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 		vAxis.push_back(*D3DXVec3Normalize(&vSrcAxis, &vSrcAxis));
 
 
-		// 2. ≈ıøµ
+		// 2. Ìà¨ÏòÅ
 		_vec3 vDstPos = ToVec3(dynamic_cast<CCube_Collider*>(pDst)->Get_Info().Center);
 		_vec3 vSrcPos = ToVec3(dynamic_cast<CCube_Collider*>(pSrc)->Get_Info().Center);
 
@@ -166,12 +165,12 @@ void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 		float fMin = 123456789;
 		for (auto Axis : vAxis)
 		{
-			// ¡ﬂΩ…¡¬«• ≈ıøµ
+			// Ï§ëÏã¨Ï¢åÌëú Ìà¨ÏòÅ
 			float fDstCenter = D3DXVec3Dot(&vDstPos, &Axis);
 			float fSrcCenter = D3DXVec3Dot(&vSrcPos, &Axis);
 			float fDistance	 = fabsf(fDstCenter - fSrcCenter);
 
-			// π›¡ˆ∏ß ≈ıøµ
+			// Î∞òÏßÄÎ¶Ñ Ìà¨ÏòÅ
 			matDstWorld = *(pDstTransform->Get_World());
 
 			memcpy(&vRight, &matDstWorld.m[0][0], sizeof(_vec3));
@@ -220,7 +219,7 @@ void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 		}
 		vPos += MTV;
 
-		// ªÏ¬¶ µ⁄∑Œ ∆®±‚±‚
+		// ÏÇ¥Ïßù Îí§Î°ú ÌäïÍ∏∞Í∏∞
 		_vec3 vNewForce = pSrcObj->Get_Force();
 		vNewForce = MTV * D3DXVec3Length(&vNewForce) * 1.5f;
 		float fForceLength = D3DXVec3Length(&vNewForce);
@@ -269,12 +268,12 @@ void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 //	vSrcScale = dynamic_cast<CCube_Collider*>(pSrcCollider)->GetSize();
 //	for (auto Axis : vAxis)
 //	{
-//		// ¡ﬂΩ…¡¬«• ≈ıøµ
+//		// Ï§ëÏã¨Ï¢åÌëú Ìà¨ÏòÅ
 //		float fDstCenter = D3DXVec3Dot(&vDstPos, &Axis);
 //		float fSrcCenter = D3DXVec3Dot(&vSrcPos, &Axis);
 //		float fDistance = fabsf(fDstCenter - fSrcCenter);
 //
-//		// π›¡ˆ∏ß ≈ıøµ
+//		// Î∞òÏßÄÎ¶Ñ Ìà¨ÏòÅ
 //		matDstWorld = *(pDstTransform->Get_World());
 //		memcpy(&vRight, &matDstWorld.m[0][0], sizeof(_vec3));
 //		memcpy(&vUp,	&matDstWorld.m[1][0], sizeof(_vec3));

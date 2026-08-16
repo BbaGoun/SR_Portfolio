@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CScene.h"
 
 class CCollisionTest : public CScene
@@ -22,6 +22,8 @@ private:
 	HRESULT Ready_GameLogic_Layer();
 	HRESULT Ready_Environment_Layer();
 	HRESULT Ready_UI_Layer();
+	HRESULT Ready_Collision_Matrix();
+
 
 protected:
 	virtual void			Free() override;
