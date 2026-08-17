@@ -53,6 +53,8 @@ public:
 	void			UpdateGravity();
 	void			UpdateCartState();
 
+	void			OutputCarState();
+
 private:
 	_float		m_fMaxSpeed;
 	bool		m_bDrift;

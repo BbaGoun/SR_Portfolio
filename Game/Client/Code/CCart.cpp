@@ -114,7 +114,7 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	KeyInput(fDeltaTime);
 	UpdateBoost();
 	UpdateDrift();
-
+	OutputCarState();
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -511,35 +511,43 @@ void CCart::AdjustPosY_Slope(_vec3 pos)
 		m_vTerrainNormal = { plane.a ,plane.b ,plane.c };
 		//m_pTransformCom->Set_Pos({ pos.x,y,pos.z });
 
-		if (pos.y <= y)
+		if (fabsf(pos.y - y )<= 2.f)
 		{
 			m_pTransformCom->Set_Pos({ pos.x,y,pos.z });
 			m_eCartState = CART_STATE_GROUND;
+			// 경사면에 맞게 카트 몸체 회전
+			_vec3 vPlaneNormal = { plane.a,plane.b,plane.c };
+			D3DXVec3Normalize(&vPlaneNormal, &vPlaneNormal);
+
+			_vec3 vCartUp, vCartRight;
+			m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+			m_pTransformCom->Get_Info(INFO_RIGHT, &vCartRight);
+			float fRadian = acosf(D3DXVec3Dot(&vCartUp, &vPlaneNormal));
+
+			_vec3 vAxis;
+			D3DXVec3Cross(&vAxis, &vCartUp, &vPlaneNormal);
+
+			D3DXQUATERNION q;
+			D3DXQuaternionRotationAxis(&q, &vAxis, (fRadian));
+			m_pTransformCom->Multiple_Quaternion(&q);
 		}
 		else
 		{
-			m_eCartState = CART_STATE_AIRBORNE;
+			m_eCartState = CART_STATE_AIR;
 		}
-
-		_vec3 vPlaneNormal = { plane.a,plane.b,plane.c };
-		D3DXVec3Normalize(&vPlaneNormal, &vPlaneNormal);
-		
-		_vec3 vCartUp, vCartRight;
-		m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
-		m_pTransformCom->Get_Info(INFO_RIGHT, &vCartRight);
-		float fRadian = acosf(D3DXVec3Dot(&vCartUp, &vPlaneNormal));
-		
-		_vec3 vAxis;
-		D3DXVec3Cross(&vAxis, &vCartUp, &vPlaneNormal);
-		
-		D3DXQUATERNION q;
-		D3DXQuaternionRotationAxis(&q, &vAxis, (fRadian));
-		m_pTransformCom->Multiple_Quaternion(&q);
 	}
 	else
 	{
-		m_pTransformCom->Set_Pos({ pos.x,0,pos.z });
-		m_vTerrainNormal = { 0,1,0 };
+		if (pos.y  <= 0.f)
+		{
+			m_eCartState = CART_STATE_GROUND;
+			m_pTransformCom->Set_Pos({ pos.x,0,pos.z });
+			m_vTerrainNormal = { 0,1,0 };
+		}
+		else
+		{
+			m_eCartState = CART_STATE_AIR;
+		}
 	}
 }
 
@@ -551,22 +559,36 @@ void CCart::UpdateGravity()
               지면의 - Up    = -Normal
 	*/
 
-	_vec3 vGravity = { 0,-9.8f,0 };
-
-	if (m_vTerrainNormal != _vec3({ 0,1,0 }))
-	{
-		// 1. 평면의 Right벡터
-		_vec3 vCartUp, vPlaneRight, vPlaneLook;
-		m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
-		D3DXVec3Cross(&vPlaneRight, &vCartUp, &m_vTerrainNormal);
-		
-	}
+	_vec3 vGravity = { 0,-0.98f,0 };
+	_vec3 vCartUp, vPlaneRight, vPlaneLook;
+	float fSize;
+	
 	switch (m_eCartState)
 	{
 	case Engine::CART_STATE_GROUND:
+		if (m_vTerrainNormal != _vec3({ 0,1,0 }))
+		{
+			// 평면의 Right벡터
+			m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+			D3DXVec3Cross(&vPlaneRight, &m_vTerrainNormal, &vCartUp);
+
+			// 평면의 Look
+			D3DXVec3Cross(&vPlaneLook, &vPlaneRight, &m_vTerrainNormal);
+
+			// 중력의 성분 중에 -Look 방향의 성분만 받기
+			// -Look벡터에 Gravity 투영해서 -Look 방향의 크기 구하기
+			D3DXVec3Normalize(&vPlaneLook, &vPlaneLook);
+			vPlaneLook *= -1;
+			fSize = D3DXVec3Dot(&vPlaneLook, &vGravity);
+
+			// 구한 크기에 -Look 방향벡터 곱해서 vForce에 적용
+			m_vForce += fSize * vPlaneLook;
+		}
 
 		break;
-	case Engine::CART_STATE_AIRBORNE:
+	case Engine::CART_STATE_AIR:
+		// 중력 전부 다 받기
+		m_vForce += vGravity;
 		break;
 	case Engine::CART_STATE_LANDING:
 		break;
@@ -587,6 +609,27 @@ void CCart::UpdateCartState()
 		m_eCartState = CART_STATE_GROUND;
 	}
 	
+}
+
+void CCart::OutputCarState()
+{
+	switch (m_eCartState)
+	{
+	case Engine::CART_STATE_GROUND:
+		cout << "CART_STATE_GROUND" << endl;
+		break;
+	case Engine::CART_STATE_AIR:
+		cout << "CART_STATE_AIR" << endl;
+		break;
+	case Engine::CART_STATE_LANDING:
+		cout << "CART_STATE_LANDING" << endl;
+		break;
+	case Engine::CART_STATE_END:
+		cout << "CART_STATE_GROUND" << endl;
+		break;
+	default:
+		break;
+	}
 }
 
 
