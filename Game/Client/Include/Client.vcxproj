@@ -184,9 +184,12 @@
     <ClInclude Include="..\Header\CCodyBody.h" />
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
+    <ClInclude Include="..\Header\CItemicon.h" />
+    <ClInclude Include="..\Header\CItemUI.h" />
     <ClInclude Include="..\Header\CScene_Test.h" />
     <ClInclude Include="..\Header\CSpeedBar.h" />
     <ClInclude Include="..\Header\CSpeedGauge.h" />
+    <ClInclude Include="..\Header\CTimer.h" />
     <ClInclude Include="..\Header\CTopViewCam.h" />
     <ClInclude Include="..\Header\CEnemy.h" />
     <ClInclude Include="..\Header\CFirstPerCam.h" />
@@ -221,9 +224,12 @@
     <ClCompile Include="..\Code\CCodyBody.cpp" />
     <ClCompile Include="..\Code\CCollisionTest.cpp" />
     <ClCompile Include="..\Code\CFollowSmoothCam.cpp" />
+    <ClCompile Include="..\Code\CItemicon.cpp" />
+    <ClCompile Include="..\Code\CItemUI.cpp" />
     <ClCompile Include="..\Code\CScene_Test.cpp" />
     <ClCompile Include="..\Code\CSpeedBar.cpp" />
     <ClCompile Include="..\Code\CSpeedGauge.cpp" />
+    <ClCompile Include="..\Code\CTimer.cpp" />
     <ClCompile Include="..\Code\CTopViewCam.cpp" />
     <ClCompile Include="..\Code\CEnemy.cpp" />
     <ClCompile Include="..\Code\CFirstPerCam.cpp" />

@@ -1,17 +1,19 @@
 #pragma once
 #include "CGameObject.h"
+
+
 namespace Engine
 {
 	class CRcTex;
 	class CTexture;
 }
-class CSpeedGauge :
+class CTimer :
 	public CGameObject
 {
 private:
-	explicit CSpeedGauge(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CSpeedGauge(const CSpeedGauge& rhs);
-	virtual ~CSpeedGauge();
+	explicit CTimer(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CTimer(const CTimer& rhs);
+	virtual ~CTimer();
 
 private:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -24,16 +26,17 @@ private:
 	Engine::CRcTex* m_pVIBufferCom;
 	Engine::CTexture* m_pTextureCom;
 
+	_float		m_fFrame_1;
+	_float		m_fFrame_10;
+	_float		m_fFrame_100;
 
-	_float	m_fFrame;
 
 public:
-	static CSpeedGauge* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTimer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-
+	
 
 protected:
 	virtual		void		Free() override;
 
 };
-

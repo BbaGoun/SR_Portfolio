@@ -1,17 +1,23 @@
 #pragma once
 #include "CGameObject.h"
+
+enum ITEM_TYPE
+{ITEM_BOOSTER, ITEM_THUNDER, ITEM_CLOUD, ITEM_UFO, ITEM_WATERFLY, ITEM_MAGNET, ITEM_BARRICADE, ITEM_ROCKET,ITEM_BANANA,ITEM_WATERBOMB, ITEM_END
+
+};
+
 namespace Engine
 {
 	class CRcTex;
 	class CTexture;
 }
-class CSpeedGauge :
+class CItemUI :
 	public CGameObject
 {
 private:
-	explicit CSpeedGauge(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CSpeedGauge(const CSpeedGauge& rhs);
-	virtual ~CSpeedGauge();
+	explicit CItemUI(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CItemUI(const CItemUI& rhs);
+	virtual ~CItemUI();
 
 private:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -20,15 +26,16 @@ private:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+
 private:
 	Engine::CRcTex* m_pVIBufferCom;
 	Engine::CTexture* m_pTextureCom;
 
-
-	_float	m_fFrame;
+	_float	m_fFirstSlot;
+	_float	m_fSecondSlot;
 
 public:
-	static CSpeedGauge* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CItemUI* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 
 
@@ -36,4 +43,3 @@ protected:
 	virtual		void		Free() override;
 
 };
-

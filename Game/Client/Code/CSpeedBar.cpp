@@ -22,20 +22,19 @@ CSpeedBar::~CSpeedBar()
 HRESULT CSpeedBar::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	
-	Engine::CComponent* pComponent = nullptr;
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
-	if (nullptr == pComponent)
-		return E_FAIL;
+
 	m_pTransformCom->Set_Pos({ 0, -200, 10 });
 	m_pTransformCom->Set_Scale({ 170.f,170.f,0.f });
-	m_pTransformCom->Set_Owner(this);
+
+	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pVIBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
+	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
 	if (nullptr == pComponent)
 		return E_FAIL;
-	
+
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SpeedBarTexture"));
+	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
 	if (nullptr == pComponent)
 		return E_FAIL;
 

@@ -106,7 +106,10 @@
     <Filter Include="02. GameObject\UI\SpeedBar">
       <UniqueIdentifier>{dc8e1cbf-e7ac-4f5c-955e-70d377d8fb9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI\ItemIcon">
+    <Filter Include="02. GameObject\UI\CTimer">
+      <UniqueIdentifier>{1dba873c-d6a2-4859-aa63-81e2712fe6ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\Item">
       <UniqueIdentifier>{82085e98-f089-408d-9abc-2b34b51c409e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -216,6 +219,15 @@
     <ClInclude Include="..\Header\CSpeedGauge.h">
       <Filter>02. GameObject\UI\SpeedBar</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTimer.h">
+      <Filter>02. GameObject\UI\CTimer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemicon.h">
+      <Filter>02. GameObject\UI\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemUI.h">
+      <Filter>02. GameObject\UI\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -310,6 +322,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSpeedGauge.cpp">
       <Filter>02. GameObject\UI\SpeedBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTimer.cpp">
+      <Filter>02. GameObject\UI\CTimer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemicon.cpp">
+      <Filter>02. GameObject\UI\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemUI.cpp">
+      <Filter>02. GameObject\UI\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -17,6 +17,10 @@
 #include "CCartBody2.h"
 #include "CFollowSmoothCam.h"
 #include "CSpeedBar.h"
+#include "CSpeedGauge.h"
+#include "CItemicon.h"
+#include "CItemUI.h"
+#include "CTimer.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -241,6 +245,29 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"UI_SpeedBar", pSpeedBar)))
 		return E_FAIL;
 
+	CGameObject* pSpeedGauge = CSpeedGauge::Create(m_pGraphicDev);
+	if (pSpeedGauge == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"UI_SpeedGauge", pSpeedGauge)))
+		return E_FAIL;
+
+	CGameObject* pItemicon = CItemicon::Create(m_pGraphicDev);
+	if (pItemicon == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"UI_Itemicon", pItemicon)))
+		return E_FAIL;
+
+	CGameObject* pItemUI = CItemUI::Create(m_pGraphicDev);
+	if (pItemUI == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"UI_Timer", pItemUI)))
+		return E_FAIL;
+	
+	CGameObject* pTimer = CTimer::Create(m_pGraphicDev);
+	if (pTimer == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"UI_Timer", pTimer)))
+		return E_FAIL;
 	return S_OK;
 }
 
