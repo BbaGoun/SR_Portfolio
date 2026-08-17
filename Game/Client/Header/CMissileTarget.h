@@ -9,7 +9,6 @@ class CMissileTarget : public CGameObject
 {
 private:
 	explicit CMissileTarget(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CMissileTarget(const CGameObject& rhs);
 	virtual ~CMissileTarget() override;
 
 public:
@@ -18,16 +17,14 @@ public:
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
-	void		Missile_Somersault();
 
-	void		KeyInput(const _float& fDeltaTime);
 public:
 	static CMissileTarget* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	Engine::CCartBodyCol* m_pBufferCom;
-	Engine::CCube_Collider* m_pColliderCom;
-	_float				m_fMaxSpeed;
+	Engine::CCartBodyCol*		m_pBufferCom;
+	Engine::CCube_Collider*		m_pColliderCom;
+	_float						m_fMaxSpeed;
 
 protected:
 	virtual		void		Free() override;

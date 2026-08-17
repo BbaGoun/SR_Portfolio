@@ -20,24 +20,21 @@ HRESULT CMissile::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_fSpeed = 120.f;
+	m_fSpeed = 180.f;
 	m_fAngle = 0.f;
 
 	Engine::CComponent* pComponent = nullptr;
-	Engine::CCube_Collider* pCollider = nullptr;
 
-	// 미사일 충돌
-	//pCollider = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	//if (nullptr == pCollider)
-	//	return E_FAIL;
+	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
+	if (nullptr == pComponent)
+		return E_FAIL;
 
-	//pCollider->Set_Owner(this);
+	m_pColliderCom->Set_Owner(this);
+	m_pColliderCom->SetIsTrigger(true);
+	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
+	m_pColliderCom->Set_Extents({ 1.f, 1.f, 1.f });
 
-	//pCollider->Set_Center({ 0,0,100.f });
-	//pCollider->Set_Extents({ 2.5f,1.f,5.f });
-	//pCollider->SetColliderType(CUBE_COLLIDER);
-	//m_mapComponent.insert({ L"Com_Collider", pCollider });
-
+	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
 	return S_OK;
 }
@@ -82,6 +79,7 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		_vec3 vMoveDir = vBoxOrbit - vMissilePos;
 		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
+		vMoveDir += vDir * 0.01f;
 
 		_vec3 vLookDir = vBoxPos - vMissilePos;
 		vLookDir.y = 0;
@@ -94,7 +92,7 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		D3DXQuaternionRotationMatrix(&qRot, &matRot);
 
 		m_pTransformCom->Multiple_Quaternion(&qRot);
-		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
+		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed ,fFixedDeltaTime);
 	}
 	else if(fDistance > 1.f)
 	{
@@ -131,8 +129,23 @@ void CMissile::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CMissile::Render_GameObject()
 {
+	m_pColliderCom->Render_Component(D3DXCOLOR({ 1,0,0,1 }));
 }
 
+void CMissile::CollisionEnter(CCollider* pOtherCollider)
+{
+}
+
+void CMissile::TriggerEnter(CCollider* pOtherCollider)
+{
+	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
+
+	if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)
+	{
+
+		m_pLayer->Delete_GameObject(this);
+	}
+}
 
 CMissile* CMissile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
