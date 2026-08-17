@@ -51,7 +51,6 @@ public:
 
 	void			AdjustPosY_Slope(_vec3 pos);
 	void			UpdateGravity();
-	void			UpdateCartState();
 
 	void			OutputCarState();
 

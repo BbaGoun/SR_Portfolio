@@ -55,7 +55,7 @@ HRESULT CTerrain3::Ready_Buffer()
 			int index = i * m_iVTXCNTX + j;
 			vertices[index].vPosition = {
 				(float)j * VTXITV,
-				i < m_iVTXCNTZ * 0.5f ? i * 0.5f: (m_iVTXCNTZ - i) * 0.5f ,
+				j < m_iVTXCNTZ * 0.5f ? j * 0.5f: (m_iVTXCNTZ - j) * 0.5f ,
 				(float)i * VTXITV };
 			vertices[index].vTexUV = { (float)j / (float)(m_iVTXCNTX - 1) ,
 										(float)(m_iVTXCNTZ - 1 - i) / (float)(m_iVTXCNTZ - 1) * 5 };

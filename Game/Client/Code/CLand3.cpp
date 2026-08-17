@@ -21,7 +21,7 @@ CLand3::~CLand3()
 HRESULT CLand3::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	//m_pTransformCom->Set_Scale({ 4, 1, 4 });
+	m_pTransformCom->Set_Scale({ 1, 1, 1 });
 	m_pTransformCom->Set_Pos({ 0,-2,0 });
 
 	CComponent* pComponent = nullptr;
@@ -64,13 +64,13 @@ bool CLand3::CheckInTerrain(_vec3 vPos)
 	int iLenX = m_pBufferCom->GetVTXCNTX() - 1;
 	int iLenZ = m_pBufferCom->GetVTXCNTZ() - 1;
 
-	_vec3 vMyPos,vMyScale;
-	m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
-	vMyScale = m_pTransformCom->Get_Scale();
+	_vec3 vLandStartPos,vLandScale;
+	m_pTransformCom->Get_Info(INFO_POS, &vLandStartPos);
+	vLandScale = m_pTransformCom->Get_Scale();
 
-	if (vPos.x < vMyPos.x || vPos.x > vMyPos.x + iLenX * vMyScale.x) 
+	if (vPos.x < vLandStartPos.x || vPos.x > vLandStartPos.x + iLenX * vLandScale.x)
 		return false;
-	if (vPos.z < vMyPos.z || vPos.z > vMyPos.z + iLenZ * vMyScale.z)
+	if (vPos.z < vLandStartPos.z || vPos.z > vLandStartPos.z + iLenZ * vLandScale.z)
 		return false;
 	return true;
 }
