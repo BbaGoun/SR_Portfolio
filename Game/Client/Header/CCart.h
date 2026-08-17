@@ -45,12 +45,13 @@ public:
 
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
-	void			BananaTimer(const _float& fDeltaTime );
 
 	float			GetCurGage() { return m_fCurGage; }
 	float			GetGainGage() { return m_fGainGage; }
 
-	void			AdjustPosY(_vec3 pos);
+	void			AdjustPosY_Slope(_vec3 pos);
+	void			UpdateGravity();
+	void			UpdateCartState();
 
 private:
 	_float		m_fMaxSpeed;
@@ -74,10 +75,10 @@ private:
 
 	float		m_fBoostItemCnt;
 
+	CART_STATE	m_eCartState;
+	_vec3		m_vTerrainNormal;
 
 	Engine::CCube_Collider* m_pColliderCom;
-
-
 
 protected:
 	virtual		void		Free() override;

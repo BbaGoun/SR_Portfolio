@@ -24,6 +24,7 @@ public:
     void        Set_SkidMark(_vec3 vPos);
     int         GetVTXCNTX() { return m_iVTXCNTX; }
     int         GetVTXCNTZ() { return m_iVTXCNTZ; }
+    D3DXPLANE   GetPlane(_vec3 vPos);
 
 private:
     _float ComputeShade(_vec3* normal, _vec3* dirToLight);

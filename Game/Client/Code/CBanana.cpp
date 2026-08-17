@@ -21,7 +21,6 @@ CBanana::~CBanana()
 HRESULT CBanana::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	//cout << "Banana" << endl;
 	CComponent* pComponent = nullptr;
 	pComponent = m_pBufferCom = static_cast<CInnerBox*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_InnerBox"));
 	pComponent->Set_Owner(this);

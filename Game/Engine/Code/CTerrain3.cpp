@@ -157,6 +157,31 @@ void CTerrain3::Set_SkidMark(_vec3 vPos)
 	m_pVB->Unlock();
 }
 
+D3DXPLANE CTerrain3::GetPlane(_vec3 vPos)
+{
+	int col = vPos.x / VTXITV;
+	int row = vPos.z / VTXITV;
+
+	float xInPlane = float(vPos.x - col * VTXITV) / VTXITV;
+	float zInPlane = float(vPos.z - row * VTXITV) / VTXITV;
+
+	_vec3 p0, p1, p2;
+	// 왼쪽 위 삼각형
+	if (zInPlane - xInPlane > 0) {
+		p0 = m_vecVertices[(row + 1) * VTXCNTX + col].vPosition;		// 왼쪽 위
+		p1 = m_vecVertices[(row + 1) * VTXCNTX + col + 1].vPosition;	// 오른쪽 위
+		p2 = m_vecVertices[row * VTXCNTX + col].vPosition;			// 왼쪽 아래
+	}
+	else { // 오른쪽 아래 삼각형
+		p0 = m_vecVertices[row * VTXCNTX + col + 1].vPosition;		// 오른쪽 아래
+		p1 = m_vecVertices[row * VTXCNTX + col].vPosition;			// 왼쪽 아래
+		p2 = m_vecVertices[(row + 1) * VTXCNTX + col + 1].vPosition; // 오른쪽 위
+	}
+	D3DXPLANE plane;
+	D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
+	return plane;
+}
+
 _float CTerrain3::ComputeShade(_vec3* normal, _vec3* dirToLight)
 {
 	float cosine = D3DXVec3Dot(normal, dirToLight);

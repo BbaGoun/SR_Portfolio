@@ -4,6 +4,8 @@
 #include "CRenderer.h"
 #include "CDInputMgr.h"
 #include "CCart.h"
+#include "CLand3.h"
+#include "CManagement.h"
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -33,6 +35,8 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(m_vRotation.y), D3DXToRadian(m_vRotation.x), D3DXToRadian(m_vRotation.z));
 	m_pTransformCom->Set_Quaternion(&q);
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 }
 
 _int CCartBody::Update_GameObject(const _float& fDeltaTime)
@@ -63,7 +67,6 @@ void CCartBody::BananaSpin(const _float& fDeltaTime)
 		m_fSpinSpeed = pCart->Get_Speed() * D3DXVec3Length(&vCartForce);
 		m_fSpinSpeed = m_fSpinSpeed / 50 + 2;
 		if (m_fSpinSpeed <= 1)m_fSpinSpeed++;
-		cout << m_fSpinSpeed << endl;
 	}
 	m_fSpinSpeed *= 0.98;
 	m_bBananaSpinState = true;

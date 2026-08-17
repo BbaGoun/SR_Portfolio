@@ -88,7 +88,6 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			// Land3의 로컬로 내림
 			_matrix* pMatWorld = pLand3->Get_Transform()->Get_World();
 			_matrix matInvWorld;
-			_vec3 originPos = vPos;
 			D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
 			D3DXVec3TransformCoord(&vPos, &vPos, &matInvWorld);
 
