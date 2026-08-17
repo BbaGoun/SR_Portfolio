@@ -89,35 +89,7 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 	/*for (auto& p : map2)
 		objects.insert(objects.end(), p.second.begin(), p.second.end());*/
 
-	// GameLogic에서 오브젝트 A, B 꺼내기
-	for (auto it1 = objects.begin(); it1 != objects.end(); ++it1) {
-		CGameObject* pObj1 = *it1;
-		for (auto it2 = it1 + 1; it2 != objects.end(); ++it2) {
-			CGameObject* pObj2 = *it2;
-
-			// nullptr 무시
-			if (!pObj1 || !pObj2)
-				continue;
-			// 같은 오브젝트 무시
-			if (pObj1 == pObj2)
-				continue;
-			// 충돌 레이어 검사
-			COLLISION_LAYER CL1, CL2;
-			CL1 = pObj1->Get_CollisionLayer();
-			CL2 = pObj2->Get_CollisionLayer();
-			if (Get_CollisionMatrix(CL1, CL2)) {
-				// 모든 종류의 Collider 검사
-				vector<CCollider*> colliders1 = pObj1->Get_Components<CCollider>();
-				vector<CCollider*> colliders2 = pObj2->Get_Components<CCollider>();
-
-				for (auto& col1 : colliders1) {
-					for (auto& col2 : colliders2) {
-						CCollisionMgr::GetInstance()->Collision(col1, col2);
-					}
-				}
-			}
-		}
-	}
+	Process_Collision(objects);
 }
 
 _int CCollisionTest::Update_Scene(const _float& fDeltaTime)

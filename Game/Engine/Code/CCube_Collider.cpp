@@ -6,11 +6,13 @@
 CCube_Collider::CCube_Collider(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CCollider(pGraphicDev)
 {
+	m_eColliderType = CUBE_COLLIDER;
 }
 
 CCube_Collider::CCube_Collider(const CCollider& rhs)
 	:CCollider(rhs)
 {
+	m_eColliderType = CUBE_COLLIDER;
 }
 
 CCube_Collider::~CCube_Collider()
@@ -38,7 +40,7 @@ void CCube_Collider::LateUpdate_Component(const _float& fTimeDelta)
 	m_tBoundingBox.Center = ToXMFLOAT3(vOwnerPos);
 }
 
-void CCube_Collider::Render_Component(D3DCOLOR color)
+void CCube_Collider::Render_Component(D3DXCOLOR color)
 {
 	DirectX::XMFLOAT3 vCorners[8];
 

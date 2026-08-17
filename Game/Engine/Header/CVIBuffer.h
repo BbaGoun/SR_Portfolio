@@ -20,7 +20,7 @@ public:
 
 
     DirectX::BoundingBox* GetBoundingBox(DirectX::BoundingBox* pBoundingBox) {
-        pBoundingBox = &m_boundingBox;
+        *pBoundingBox = m_boundingBox;
         return pBoundingBox;
     }
 

@@ -28,19 +28,25 @@ public:
 		CGameObject*  pGameObject
 	);
 	const map<const _tchar*, vector<CGameObject*>>& Get_GameObjects(const _tchar* pLayerTag);
+	void			Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj);
+
+	// 에디터 용
 	const vector<CGameObject*>& Get_Roots(const _tchar* pLayerTag);
 	void			Attach_Root(CGameObject* _pObj);
 	void			Detach_Root(CGameObject* _pObj);
 	void			Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc);
 	void			Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc);
-	void			Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj);
-
 	uint64_t		GenerateGuid() { return m_pScene->GenerateGuid(); }
 	void			InvalidateDeviceObjects();
 
-	void		Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
+	void			Set_ScenePath(const _tchar* _path) { m_pScene->Set_Path(_path); }
+	const _tchar*	Get_ScenePath() { return m_pScene->Get_Path(); }
+	void			Set_SceneDirty(bool _b) { m_pScene->Set_Dirty(_b); }
+	bool			Get_SceneDirty() { return m_pScene->Get_Dirty(); }
+
 
 public:
+	HRESULT			Load_Scene(const wchar_t* path);
 	HRESULT			Set_Scene(CScene* pScene);
 	void			Request_Scene(CScene* pScene);
 	void			Change_NextScene();

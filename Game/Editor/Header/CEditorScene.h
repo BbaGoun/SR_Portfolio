@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CScene.h"
 #include "CWindow.h"
 
@@ -25,11 +25,25 @@ private:
 	HRESULT Ready_Windows();
 	HRESULT Ready_Layers();
 
+	void OnNewScene();
+
+	bool OpenLoadSceneDialog(_tchar* outPath, DWORD outChars);
+	void OnLoad();
+	
+	bool OpenSaveSceneDialog(_tchar* outPath, DWORD outChars);
+	void SaveSceneFile(const wchar_t* path);
+	void OnSave(bool bSaveAs);
+
+	void InputShortCut();
+	void DoUndo();
+	void DoRedo();
+
+	void SetupDockLayout();
+
 private:
 	list<CWindow*>			m_windowList;
 
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
 protected:
 	virtual void			Free() override;
 };

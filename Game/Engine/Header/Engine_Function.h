@@ -1,4 +1,4 @@
-#ifndef Engine_Function_h__
+﻿#ifndef Engine_Function_h__
 #define Engine_Function_h__
 
 #include "Engine_Typedef.h"
@@ -145,6 +145,50 @@ namespace Engine
 		MultiByteToWideChar(CP_UTF8, 0, utf8, -1, &w[0], n);
 		if (!w.empty() && w.back() == L'\0') w.pop_back();
 		return w;
+	}
+
+	inline vector<int> MakeFailure(const string& pattern) {
+		int m = pattern.size();
+		vector<int> fail(m, 0);
+
+		int j = 0;
+
+		for (int i = 1; i < m; ++i) {
+			while (j > 0 && pattern[i] != pattern[j]) {
+				j = fail[j - 1];
+			}
+
+			if (pattern[i] == pattern[j]) {
+				fail[i] = ++j;
+			}
+		}
+
+		return fail;
+	}
+
+	inline bool KMPContain(const string& text, const string& pattern)
+	{
+		if (pattern.empty())
+			return false;
+
+		vector<int> fail = MakeFailure(pattern);
+
+		int j = 0;
+
+		for (int i = 0; i < text.size(); ++i) {
+			while (j > 0 && text[i] != pattern[j]) {
+				j = fail[j - 1];
+			}
+
+			if (text[i] == pattern[j]) {
+				++j;
+
+				if (j == pattern.size())
+					return true;
+			}
+		}
+
+		return false;
 	}
 }
 

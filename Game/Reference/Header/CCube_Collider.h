@@ -14,7 +14,7 @@ private:
 public:
 	virtual _int Update_Component(const _float& fTimeDelta); 
 	virtual void LateUpdate_Component(const _float& fTimeDelta) override;
-	virtual void Render_Component(D3DCOLOR color);
+	virtual void Render_Component(D3DXCOLOR color) override;
 
 public:
 	HRESULT		Ready_CCube_Collider();
@@ -27,6 +27,7 @@ public:
 	void							Set_Extents(_vec3 vExtents)			{ m_tBoundingBox.Extents = ToXMFLOAT3(vExtents); }
 	void							Set_Orientation(D3DXQUATERNION q)	{ m_tBoundingBox.Orientation = ToXMFLOAT4(q); }
 	void							Set_Offset(_vec3 vOffset)			{ m_vOffset = vOffset; }
+	_vec3							Get_Offset()						{ return m_vOffset; }
 
 	virtual		CComponent* Clone();
 

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CEditorScene.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -9,6 +9,11 @@
 #include "CInspector.h"
 #include "CProject.h"
 #include "CSequence.h"
+#include "imgui_internal.h"  // DockBuilder* API
+#include "CEmpty.h"
+#include "CGameObject.h"
+#include "CManagement.h"
+
 
 CEditorScene::CEditorScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -36,7 +41,7 @@ void CEditorScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 {
 	CScene::FixedUpdate_Scene(fFixedDeltaTime);
 
-	// �浹 ó��
+	// 충돌 처리
 }
 
 _int CEditorScene::Update_Scene(const _float& fDeltaTime)
@@ -59,6 +64,45 @@ void CEditorScene::Render_Scene()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	ImGuizmo::BeginFrame();
+
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::MenuItem("New Scene")) { OnNewScene(); }
+			if (ImGui::MenuItem("Open Scene")) { OnLoad(); }
+			ImGui::Separator();
+			if (ImGui::MenuItem("Save")) { OnSave(false); }
+			if (ImGui::MenuItem("Save As")) { OnSave(true); }
+			ImGui::Separator();
+			if (ImGui::MenuItem("Exit")) {}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Edit"))
+		{
+			ImGui::MenuItem("Undo", "Ctrl+Z");
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("GameObject")) {
+			if (ImGui::MenuItem("Create Empty")) {
+				CGameObject* obj = CEmpty::Create(m_pGraphicDev);
+				obj->SetName(L"Empty");
+				uint64_t guid = CManagement::GetInstance()->GenerateGuid();
+				obj->SetGuid(guid);
+
+				wstring s = std::to_wstring(guid);
+				CManagement::GetInstance()->Add_GameObject(L"Default", s.c_str(), obj);
+				g_bSelected = true;
+				g_uSelected = guid;
+			}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+
+	InputShortCut();
+
+	SetupDockLayout();
 
 	static bool show_demo_window = false;
 	static bool show_another_window = false;
@@ -156,23 +200,24 @@ HRESULT CEditorScene::Ready_Prototype()
 HRESULT CEditorScene::Ready_Windows()
 {    
 	CWindow* pWindow = nullptr;
-	pWindow = CGameWindow::Create(m_pGraphicDev);
-	m_windowList.push_back(pWindow);
-
 	pWindow = CHierarchy::Create(m_pGraphicDev);
-	m_windowList.push_back(pWindow);
-
-	pWindow = CInspector::Create(m_pGraphicDev);
-	m_windowList.push_back(pWindow);
-
-	pWindow = CProject::Create(m_pGraphicDev);
 	m_windowList.push_back(pWindow);
 
 	pWindow = CSceneWindow::Create(m_pGraphicDev);
 	m_windowList.push_back(pWindow);
 
+	pWindow = CGameWindow::Create(m_pGraphicDev);
+	m_windowList.push_back(pWindow);
+
+	pWindow = CInspector::Create(m_pGraphicDev);
+	m_windowList.push_back(pWindow);
+
 	pWindow = CSequence::Create(m_pGraphicDev);
 	m_windowList.push_back(pWindow);
+
+	pWindow = CProject::Create(m_pGraphicDev);
+	m_windowList.push_back(pWindow);
+
 	return S_OK;
 }
 
@@ -183,6 +228,155 @@ HRESULT CEditorScene::Ready_Layers()
 	m_mapLayer.insert({ L"Default", pLayer });
 
 	return S_OK;
+}
+
+void CEditorScene::OnNewScene()
+{
+	Engine::CScene* pStage = CEditorScene::Create(m_pGraphicDev);
+
+	CManagement::GetInstance()->Request_Scene(pStage);
+}
+
+bool CEditorScene::OpenLoadSceneDialog(_tchar* outPath, DWORD outChars)
+{
+	wchar_t fileBuf[MAX_PATH] = {};
+	if (outPath[0] != L'\0')
+		wcscpy_s(fileBuf, outPath);
+
+	OPENFILENAMEW ofn = {};
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = g_hWnd;
+	ofn.lpstrFile = fileBuf;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrFilter = L"Scene (*.scene)\0*.scene\0All Files (*.*)\0*.*\0";
+	ofn.nFilterIndex = 1;
+	ofn.lpstrDefExt = L"scene";
+	ofn.lpstrTitle = L"Open Scene";
+	ofn.Flags = OFN_FILEMUSTEXIST   // 없는 파일은 선택 불가
+		| OFN_PATHMUSTEXIST
+		| OFN_NOCHANGEDIR;
+
+	if (!GetOpenFileNameW(&ofn))
+		return false;
+
+	wcscpy_s(outPath, outChars, fileBuf);
+	return true;
+}
+
+void CEditorScene::OnLoad()
+{
+	if (!OpenLoadSceneDialog(m_scenePath, MAX_PATH))
+		return;  // 취소
+
+	CManagement::GetInstance()->Load_Scene(m_scenePath);
+}
+
+bool CEditorScene::OpenSaveSceneDialog(_tchar* outPath, DWORD outChars)
+{
+	wchar_t fileBuf[MAX_PATH] = {};
+	if (outPath[0] != L'\0')
+		wcscpy_s(fileBuf, outPath);  // 이전 이름을 기본값으로
+
+	OPENFILENAMEW ofn = {};
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = g_hWnd;        // 에디터 창을 부모로
+	ofn.lpstrFile = fileBuf;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrFilter = L"Scene (*.scene)\0*.scene\0All Files (*.*)\0*.*\0";
+	ofn.nFilterIndex = 1;
+	ofn.lpstrDefExt = L"scene";      // 확장자 안 붙이면 .scene 자동
+	ofn.lpstrTitle = L"Save Scene";
+	ofn.Flags = OFN_OVERWRITEPROMPT  // 같은 이름이면 "덮어쓸까요?"
+		| OFN_PATHMUSTEXIST
+		| OFN_NOCHANGEDIR;     // 작업 디렉터리 안 바뀌게 (리소스 경로 보호)
+	if (!GetSaveFileNameW(&ofn))
+		return false;                // 취소 또는 에러
+	wcscpy_s(outPath, outChars, fileBuf);
+	return true;
+}
+
+void CEditorScene::SaveSceneFile(const wchar_t* path)
+{
+	// 연습 단계: 이름만 기록
+	FILE* fp = nullptr;
+	if (_wfopen_s(&fp, path, L"w, ccs=UTF-8") != 0 || !fp)
+		return;
+
+	// 파일명만 추출해서 내용에 넣어도 됨
+	fwprintf(fp, L"scene_name=%s\n", path);
+	fclose(fp);
+}
+
+void CEditorScene::OnSave(bool bSaveAs)
+{
+	if (bSaveAs || m_scenePath[0] == L'\0')
+	{
+		if (!OpenSaveSceneDialog(m_scenePath, MAX_PATH))
+			return;  // 취소 → 여기서 끝, 파일 없음
+	}
+
+	SaveSceneFile(m_scenePath);  // 대화상자가 닫힌 직후
+	CManagement::GetInstance()->Set_SceneDirty(false);
+}
+
+void CEditorScene::InputShortCut()
+{
+	if (!ImGui::IsAnyItemActive()) {
+		if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Z, ImGuiInputFlags_RouteGlobal))
+			DoUndo();
+		if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Y, ImGuiInputFlags_RouteGlobal))
+			DoRedo();
+	}
+}
+
+void CEditorScene::DoUndo()
+{
+}
+
+void CEditorScene::DoRedo()
+{
+}
+
+void CEditorScene::SetupDockLayout()
+{
+	ImGuiID dockspace_id = ImGui::DockSpaceOverViewport(
+		0, ImGui::GetMainViewport());
+
+	static bool bFirst = true;
+	if (!bFirst)
+		return;
+	bFirst = false;
+
+	//if (ImGui::DockBuilderGetNode(dockspace_id) != nullptr)
+	//	return;
+
+	ImGui::DockBuilderRemoveNode(dockspace_id);
+	ImGui::DockBuilderAddNode(dockspace_id, ImGuiDockNodeFlags_DockSpace);
+	ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->WorkSize);
+
+	ImGuiID dock_main = dockspace_id;
+	ImGuiID dock_top, dock_bottom;
+	ImGuiID dock_top_left, dock_top_center, dock_top_right;
+	ImGuiID dock_bottom_left, dock_bottom_right;
+
+	// 위 아래 분단 : 75% / 25%
+	ImGui::DockBuilderSplitNode(dock_main, ImGuiDir_Up, 0.75f, &dock_top, &dock_bottom);
+
+	// 위 분단 : 20%(Hierarchy) / 60%(Scene/Game) / 24%(Inspector) 
+	ImGui::DockBuilderSplitNode(dock_top, ImGuiDir_Left, 0.20f, &dock_top_left, &dock_top_center);
+	ImGui::DockBuilderSplitNode(dock_top_center, ImGuiDir_Right, 0.30f, &dock_top_right, &dock_top_center);
+
+	// 아래 분단 : 50%(Sequence) / 50%(Project)	
+	ImGui::DockBuilderSplitNode(dock_bottom, ImGuiDir_Left, 0.50f, &dock_bottom_left, &dock_bottom_right);
+
+	ImGui::DockBuilderDockWindow("Hierarchy", dock_top_left);
+	ImGui::DockBuilderDockWindow("Game", dock_top_center);
+	ImGui::DockBuilderDockWindow("Scene", dock_top_center); // 같은 노드 = 탭
+	ImGui::DockBuilderDockWindow("Inspector", dock_top_right);
+	ImGui::DockBuilderDockWindow("Sequence", dock_bottom_left); 
+	ImGui::DockBuilderDockWindow("Project", dock_bottom_right);
+
+	ImGui::DockBuilderFinish(dockspace_id);
 }
 
 void CEditorScene::Free()

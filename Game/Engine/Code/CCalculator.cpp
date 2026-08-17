@@ -1,10 +1,10 @@
-#include "CCalculator.h"
+ï»¿#include "CCalculator.h"
 
 _matrix* CCalculator::CustomLookAtLH(_matrix* pOut, _vec3* pEye, _vec3* pAt, _vec3* pUp)
 {
-	// 1. pEye¸¦ ¿øÁ¡À¸·Î º¸³»´Â Çà·Ä
+	// 1. pEyeë¥¼ ì›ì ìœ¼ë¡œ ë³´ë‚´ëŠ” í–‰ë ¬
 	_matrix matTrans;
-	// Ç×µî Çà·Ä ¸¸µé±â
+	// í•­ë“± í–‰ë ¬ ë§Œë“¤ê¸°
 	for (int i = 0; i < 4; ++i) {
 		for (int j = 0; j < 4; ++j) {
 			if (i == j)
@@ -17,7 +17,7 @@ _matrix* CCalculator::CustomLookAtLH(_matrix* pOut, _vec3* pEye, _vec3* pAt, _ve
 	_vec3 vInvEye = -(*pEye);
 	memcpy(&matTrans.m[3][0], &vInvEye, sizeof(vInvEye));
 
-	// 2. Eye -> AtÀÌ +z ¹æÇâÀÎ ·ÎÄÃ ÃàÀ» ¿ùµå ÃàÀ¸·Î µ¹·Á³õ±â À§ÇÑ Çà·Ä
+	// 2. Eye -> Atì´ +z ë°©í–¥ì¸ ë¡œì»¬ ì¶•ì„ ì›”ë“œ ì¶•ìœ¼ë¡œ ëŒë ¤ë†“ê¸° ìœ„í•œ í–‰ë ¬
 	_matrix matRot;
 	for (int i = 0; i < 4; ++i) {
 		for (int j = 0; j < 4; ++j) {
@@ -29,7 +29,7 @@ _matrix* CCalculator::CustomLookAtLH(_matrix* pOut, _vec3* pEye, _vec3* pAt, _ve
 	}
 
 	_vec3 vLook = *(pAt)-*(pEye);
-	// ¿ÜÀûÀ» ÇÒ °ÍÀÌ¹Ç·Î Á¤±ÔÈ­
+	// ì™¸ì ì„ í•  ê²ƒì´ë¯€ë¡œ ì •ê·œí™”
 	_float length = sqrtf(
 		vLook.x * vLook.x +
 		vLook.y * vLook.y +
@@ -37,13 +37,13 @@ _matrix* CCalculator::CustomLookAtLH(_matrix* pOut, _vec3* pEye, _vec3* pAt, _ve
 	);
 	vLook /= length;
 
-	// 2-1. vToAt°ú UpÀ» ¿ÜÀûÇÏ¿© ·ÎÄÃ right ÃàÀ» ¾ò±â
-	/*	¿ÜÀû ½Ä
+	// 2-1. vToAtê³¼ Upì„ ì™¸ì í•˜ì—¬ ë¡œì»¬ right ì¶•ì„ ì–»ê¸°
+	/*	ì™¸ì  ì‹
 		x1	y1	z1	x1
 		x2	y2	z2	x2
 		y1z2 - z1y2, z1x2 - x1z2, x1y2 - y1x2
 	*/
-	// ¿À¸¥ÂÊÀÌ ³ª¿Àµµ·Ï up¿¡ vToAtÀ» ¿ÜÀû
+	// ì˜¤ë¥¸ìª½ì´ ë‚˜ì˜¤ë„ë¡ upì— vToAtì„ ì™¸ì 
 	_vec3 vUp = *(pUp);
 	_vec3 vRight = {
 		vUp.y * vLook.z - vUp.z * vLook.y,
@@ -57,7 +57,7 @@ _matrix* CCalculator::CustomLookAtLH(_matrix* pOut, _vec3* pEye, _vec3* pAt, _ve
 	);
 	vRight /= length;
 
-	// 2-2. vToAt¿¡ right¸¦ ¿ÜÀûÇÏ¿© ÁøÂ¥ upÀ» ±¸ÇÔ
+	// 2-2. vToAtì— rightë¥¼ ì™¸ì í•˜ì—¬ ì§„ì§œ upì„ êµ¬í•¨
 	vUp = {
 		vLook.y * vRight.z - vLook.z * vRight.y,
 		vLook.z * vRight.x - vLook.x * vRight.z,
@@ -70,8 +70,8 @@ _matrix* CCalculator::CustomLookAtLH(_matrix* pOut, _vec3* pEye, _vec3* pAt, _ve
 	);
 	vUp /= length;
 
-	// 2-3. ·ÎÄÃ ÃàÀÇ Right, Up, LookÀ» ºÙÀÎ Çà·Ä A¶ó ÇØº¸ÀÚ.
-	// Çà·Ä A´Â Á÷±³Çà·ÄÀÌ¹Ç·Î Çà·Ä AÀÇ ÀüÄ¡Çà·ÄÀÌ Çà·Ä AÀÇ ¿ªÇà·ÄÀÌ´Ù.
+	// 2-3. ë¡œì»¬ ì¶•ì˜ Right, Up, Lookì„ ë¶™ì¸ í–‰ë ¬ Aë¼ í•´ë³´ì.
+	// í–‰ë ¬ AëŠ” ì§êµí–‰ë ¬ì´ë¯€ë¡œ í–‰ë ¬ Aì˜ ì „ì¹˜í–‰ë ¬ì´ í–‰ë ¬ Aì˜ ì—­í–‰ë ¬ì´ë‹¤.
 	matRot.m[0][0] = vRight.x;
 	matRot.m[0][1] = vUp.x;
 	matRot.m[0][2] = vLook.x;
@@ -84,7 +84,7 @@ _matrix* CCalculator::CustomLookAtLH(_matrix* pOut, _vec3* pEye, _vec3* pAt, _ve
 	matRot.m[2][1] = vUp.z;
 	matRot.m[2][2] = vLook.z;
 
-	// 3. µÎ Çà·ÄÀ» °áÇÕ.
+	// 3. ë‘ í–‰ë ¬ì„ ê²°í•©.
 	_matrix matView = matTrans * matRot;
 
 	memcpy(pOut->m, &matView.m, sizeof(float) * 4 * 4);
@@ -118,7 +118,7 @@ _matrix* CCalculator::CustomPerspectiveFovLH(_matrix* pOut, _float FOV, _float f
 	return pOut;
 }
 
-void CCalculator::DrawRayLine(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vStart, _vec3 vEnd, D3DCOLOR color)
+void CCalculator::DrawRayLine(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vStart, _vec3 vEnd, D3DXCOLOR color)
 {
 	VTXLINE vertices[]{
 		{vStart, color},
