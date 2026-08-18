@@ -16,7 +16,7 @@ private:
 
 public:
 	static	void	Collision(CCollider* pDst, CCollider* pSrc);
-	static	void	PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc);
+	static	_vec3	GetMTVCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc);
 	//static	bool	CubeVsCube(CCollider* pDst, CCollider* pSrc);
 	//static	bool	SphereVsSphere(CCollider* pDst, CCollider* pSrc);
 	//static	bool	CubeVsSphere(CCollider* pDst, CCollider* pSrc);

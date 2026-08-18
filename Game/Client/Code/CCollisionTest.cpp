@@ -27,6 +27,8 @@
 #include "CUI_Rainbow.h"
 #include "CUI_BoosterBar.h"
 #include "CUI_BoosterBG.h"
+#include "CThunder.h"
+#include "CThunderCloud.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -369,6 +371,22 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
 		return E_FAIL;
+
+	//// ThunderCloud
+	//pGameObject = CThunderCloud::Create(m_pGraphicDev);
+	//
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_ThunderCloud", pGameObject)))
+	//	return E_FAIL;
+	//
+	//// Thunder
+	//pGameObject = CThunder::Create(m_pGraphicDev);
+	//
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Thunder", pGameObject)))
+	//	return E_FAIL;
   
 	return S_OK;
 }

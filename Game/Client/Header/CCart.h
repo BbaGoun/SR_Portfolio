@@ -27,30 +27,34 @@ public:
 	void			KeyInput(const _float& fDeltaTime);
 	void			UpdateDrift();
 	void			UpdateBoost();
-	bool			GetBoost() { return m_bBoost; }
-	void			SetBoost(bool bBoost) { m_bBoost = bBoost; }
+	void			UpdateThunder();
 
-	bool			GetDrift() { return m_bDrift; }
-	void			SetDrift(bool bDrift) { m_bDrift = bDrift; }
+	bool			GetBoost()							{ return m_bBoost; }
+	void			SetBoost(bool bBoost)				{ m_bBoost = bBoost; }
 
-	bool			GetRainbowUI() { return m_bRainbowUI; }
-	void			SetRainbowUI(bool bRainbowState) { m_bRainbowUI = bRainbowState; }
+	bool			GetDrift()							{ return m_bDrift; }
+	void			SetDrift(bool bDrift)				{ m_bDrift = bDrift; }
 
-	void			SetBanana(bool bBanana) { m_bBanana = bBanana; }
-	bool			GetBanana() { return m_bBanana; }
+	bool			GetRainbowUI()						{ return m_bRainbowUI; }
+	void			SetRainbowUI(bool bRainbowState)	{ m_bRainbowUI = bRainbowState; }
 
-	void			CreateRainbowObject();
-	void			CreateBananaObject();
+	void			SetBanana(bool bBanana)				{ m_bBanana = bBanana; }
+	bool			GetBanana()							{ return m_bBanana; }
 
-	float			GetCurGage() { return m_fCurGage; }
-	float			GetGainGage() { return m_fGainGage; }
-	
-	void			SetGainGage(float fGage) { m_fGainGage = fGage; }
+	float			GetCurGage()						{ return m_fCurGage; }
+
+	float			GetGainGage()						{ return m_fGainGage; }
+	void			SetGainGage(float fGage)			{ m_fGainGage = fGage; }
 
 	void			AdjustPosY_Slope(_vec3 pos);
 	void			UpdateGravity();
 
 	void			OutputCarState();
+
+	void			CreateRainbowObject();
+	void			CreateBananaObject();
+	void			CreateThunderCloudObject();
+
 
 private:
 	_float		m_fMaxSpeed;
@@ -74,8 +78,11 @@ private:
 
 	float		m_fBoostItemCnt;
 
+	float		m_bThunder;
+
 	CART_STATE	m_eCartState;
 	_vec3		m_vTerrainNormal;
+
 
 
 protected:

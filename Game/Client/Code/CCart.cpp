@@ -8,6 +8,8 @@
 #include "CBanana.h"
 #include "CCollisionMgr.h"
 #include "CLand3.h"
+#include <CThunderCloud.h>
+#include <CCartBody.h>
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -41,6 +43,7 @@ HRESULT CCart::Ready_GameObject()
 	m_bBoost			= false;
 	m_bRainbowUI		= false;
 	m_bBanana			= false;
+	m_bThunder			= false;
 
 	m_fBananaTimer		= 0.f;
 
@@ -66,7 +69,6 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pTransformCom->Set_Quaternion(&q);
 
 	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
-	
 	m_vForce *= 0.98;
 	if (D3DXVec3Length(&m_vForce) < 1.f)
 		m_vForce *= 0;
@@ -85,7 +87,9 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	KeyInput(fDeltaTime);
 	UpdateBoost();
 	UpdateDrift();
-	OutputCarState();
+	UpdateThunder();
+
+	//OutputCarState();
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -125,9 +129,13 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateBananaObject();
 	}
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_R))
+	{
+		CreateThunderCloudObject();
+	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))
 	{
-		if (m_fBoostItemCnt > 0)
+		if (m_fBoostItemCnt > 0 && m_bThunder == false)
 		{
 			--m_fBoostItemCnt;
 			m_bBoost = true;
@@ -155,6 +163,9 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		else
 			m_vForce -= vLook * 0.8f;
 	}
+
+	if (m_eCartState != CART_STATE_GROUND)
+		return;
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) && m_eCartState == CART_STATE_GROUND)
 	{
@@ -418,6 +429,54 @@ void CCart::CreateBananaObject()
 	pGameObject->Get_Transform()->Set_Pos(vPos);
 
 	pGameObject->SetLayer(m_pLayer);
+}
+
+void CCart::CreateThunderCloudObject()
+{
+	CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev);
+
+	if (nullptr == pGameObject)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_ThunderCloud", pGameObject)))
+		return;
+
+	_vec3 vRight, vLook, vPos;
+	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	vPos += +vRight * 10 + _vec3({ 0,13,0 }) - vLook * 10;
+	pGameObject->Get_Transform()->Set_Pos(vPos);
+
+	pGameObject->SetLayer(m_pLayer);
+}
+
+void CCart::UpdateThunder()
+{
+	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+	m_bThunder = pCartBody->GetThunderTimerOnOff();
+
+	if (m_bThunder == true)
+	{
+		// 부스터 끄기
+		m_bBoost = false;
+		m_fSpeed = 1;
+		// 드리트프 종료 + 게이지 계산
+		m_fCurGage += m_fGainGage;
+		if (m_fCurGage >= 100.f)
+		{
+			m_fCurGage = 0;
+			++m_fBoostItemCnt;
+		}
+		m_fGainGage = 0;
+		m_vRotation.z = 0;
+		m_bDrift = false;
+		// 속도 감소
+		m_vForce *= 0.98;
+	}
+	else
+	{
+	}
 }
 
 void CCart::AdjustPosY_Slope(_vec3 pos)

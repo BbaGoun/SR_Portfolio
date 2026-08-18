@@ -157,6 +157,21 @@
     <Filter Include="02. GameObject\MissileTarget">
       <UniqueIdentifier>{6793bbfd-9138-49d7-911d-2accc8786996}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\Thunder">
+      <UniqueIdentifier>{eb12a771-8e46-4219-8069-abad9f11e50a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\Thunder">
+      <UniqueIdentifier>{2251848a-f520-4c9e-9daa-39e030cc56eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\ThunderCloud">
+      <UniqueIdentifier>{26b95c7f-a495-466b-8f44-1ff35e47540e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\ThunderPlayerEffect">
+      <UniqueIdentifier>{a82f95ec-66ee-4d24-a2b6-130a08431dd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\ThunderFloorEffect">
+      <UniqueIdentifier>{41ae0adc-97a2-4d4d-885a-2e87a586b530}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -300,6 +315,18 @@
     <ClInclude Include="..\Header\CMissileTarget.h">
       <Filter>02. GameObject\MissileTarget</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CThunder.h">
+      <Filter>02. GameObject\Item\Thunder\Thunder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CThunderCloud.h">
+      <Filter>02. GameObject\Item\Thunder\ThunderCloud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CThunderPlayerEffect.h">
+      <Filter>02. GameObject\Item\Thunder\ThunderPlayerEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CThunderFloorEffect.h">
+      <Filter>02. GameObject\Item\Thunder\ThunderFloorEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -433,6 +460,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMissileTarget.cpp">
       <Filter>02. GameObject\MissileTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunder.cpp">
+      <Filter>02. GameObject\Item\Thunder\Thunder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunderCloud.cpp">
+      <Filter>02. GameObject\Item\Thunder\ThunderCloud</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunderPlayerEffect.cpp">
+      <Filter>02. GameObject\Item\Thunder\ThunderPlayerEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunderFloorEffect.cpp">
+      <Filter>02. GameObject\Item\Thunder\ThunderFloorEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
