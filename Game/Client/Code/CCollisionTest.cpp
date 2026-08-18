@@ -401,30 +401,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
 		return E_FAIL;
   ////////////////////////////////////////////////////////////////////////////////////////////
-
-	CGameObject* pMissile = CMissile::Create(m_pGraphicDev);
-
-	if (pMissile == nullptr)
-		return E_FAIL;
-
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Missile", pMissile)))
-		return E_FAIL;
-
-	pMissile->SetLayer(pGameObjectLayer);
-
-
-
-	CGameObject* pMissileBody = CMissileBody::Create(m_pGraphicDev);
-
-	if (pMissileBody == nullptr)
-		return E_FAIL;
-
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileBody", pMissileBody)))
-		return E_FAIL;
-
-	pMissile->Set_Child(pMissileBody);
-
-
 	CGameObject* pMissileTarget = CMissileTarget::Create(m_pGraphicDev);
 
 	if (pMissileTarget == nullptr)

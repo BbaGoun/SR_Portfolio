@@ -7,6 +7,8 @@
 #include "CManagement.h"
 #include "CBanana.h"
 #include "CCollisionMgr.h"
+#include "CMissile.h"
+#include "CMissileBody.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -186,6 +188,16 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateBananaObject();
 	}
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_E))	// ++++++++++++++++++++++++
+	{
+		CGameObject* pMissile = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Missile");
+
+		if (nullptr == pMissile)
+		{
+			CreateMissileObject();
+		}
+	}
+
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))
 	{
 		if (m_fBoostItemCnt > 0)
@@ -492,6 +504,42 @@ void CCart::BananaTimer(const _float& fDeltaTime)
 	}
 }
 
+void CCart::CreateMissileObject()	// ++++++++++++++++++++++++
+{
+	CGameObject* pMissile = CMissile::Create(m_pGraphicDev);
+
+	if (pMissile == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Missile", pMissile)))
+		return;
+
+	pMissile->SetLayer(m_pLayer);
+
+	CGameObject* pMissileBody = CMissileBody::Create(m_pGraphicDev);
+
+	if (pMissileBody == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_MissileBody", pMissileBody)))
+		return;
+
+	pMissileBody->SetLayer(m_pLayer);
+	pMissile->Set_Child(pMissileBody);
+
+	_vec3 vPos, vLook;
+
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	vPos += vLook * 5.f;
+
+	pMissile->Get_Transform()->Set_Pos(vPos);
+
+	//pMissile->SetLayer(m_pLayer);
+	//pMissileBody->SetLayer(m_pLayer);
+	//pMissile->Set_Child(pMissileBody);
+}
 
 void CCart::Free()
 {
