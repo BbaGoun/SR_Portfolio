@@ -23,7 +23,6 @@ public:
 	void			SetIsTrigger(bool bTrigger)				{ m_bIsTrigger = bTrigger; }
 	bool			GetIsTrigger()							{ return m_bIsTrigger; }
 
-	void			SetColliderType(COLLIDER_TYPE eType)	{ m_eColliderType = eType; }
 	COLLIDER_TYPE	GetColliderType()						{ return m_eColliderType; }
 
 	virtual			CComponent* Clone(); //PURE로 설정

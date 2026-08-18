@@ -338,7 +338,7 @@ void CInspector::TextureCom(CGameObject* _pObj)
             const ProtoRecord& rec = proto.second;
             if (rec.kind != ProtoKind::Texture || rec.proto == nullptr)
                 continue;
-            if (pTex && typeid(*pTex) == typeid(*rec.proto)) {
+            if (pTex && !lstrcmp(pTex->Get_ProtoTag(), rec.tag)) {
                 preview = ToUtf8(rec.name);
                 break;
             }
@@ -359,7 +359,7 @@ void CInspector::TextureCom(CGameObject* _pObj)
                 std::string label = ToUtf8(labelW);
 
                 bool selected = pTex && rec.proto &&
-                    pTex->Get_ProtoTag() == rec.tag;
+                    !lstrcmp(pTex->Get_ProtoTag(), rec.tag);
 
                 // 같은 표시 이름이 있을 수 있으니 태그를 id로
                 ImGui::PushID(ToUtf8(rec.tag).c_str());
