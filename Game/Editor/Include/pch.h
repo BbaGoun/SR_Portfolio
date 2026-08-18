@@ -12,6 +12,8 @@
 
 #define _EDITOR
 
+#include <functional>
+
 #include "Engine_Define.h"
 #include "Editor_Function.h"
 

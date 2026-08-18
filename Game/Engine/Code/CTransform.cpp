@@ -8,6 +8,8 @@ CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev) : CComponent(pGraphicDev)
 , m_bDirty(true)
 {
 	m_eID = ID_STATIC;
+	m_eKind = CK_TRANSFORM;
+
 	ZeroMemory(&m_vInfo, sizeof(_vec3) * INFO_END);
 	D3DXMatrixIdentity(&m_matWorld);
 	D3DXMatrixIdentity(&m_matLocalWorld);
@@ -20,6 +22,8 @@ CTransform::CTransform(const CTransform& rhs):CComponent(rhs)
 , m_bDirty(rhs.m_bDirty)
 {
 	m_eID = ID_STATIC;
+	m_eKind = CK_TRANSFORM;
+
 	for (int i = 0; i < INFO_END; ++i)
 		m_vInfo[i] = rhs.m_vInfo[i];
 

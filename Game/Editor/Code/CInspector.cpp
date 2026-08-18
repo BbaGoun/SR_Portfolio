@@ -205,7 +205,7 @@ void CInspector::MeshCom(CGameObject* _pObj)
         std::string preview = "(None)";
         for (auto& proto : prototypes) {
             const ProtoRecord& rec = proto.second;
-            if (rec.kind != ProtoKind::Mesh || rec.proto == nullptr)
+            if (rec.proto->Get_Kind() != CK_MESH || rec.proto == nullptr)
                 continue;
             if (pBuf && typeid(*pBuf) == typeid(*rec.proto)) {
                 preview = ToUtf8(rec.name);
@@ -222,7 +222,7 @@ void CInspector::MeshCom(CGameObject* _pObj)
             for (auto& proto : prototypes)
             {
                 const ProtoRecord& rec = proto.second;
-                if (rec.kind != ProtoKind::Mesh)
+                if (rec.proto->Get_Kind() != CK_MESH)
                     continue;
                 const WCHAR* labelW = rec.name;
                 std::string label = ToUtf8(labelW);
@@ -396,7 +396,7 @@ void CInspector::TextureCom(CGameObject* _pObj)
         std::string preview = "(None)";
         for (auto& proto : prototypes) {
             const ProtoRecord& rec = proto.second;
-            if (rec.kind != ProtoKind::Texture || rec.proto == nullptr)
+            if (rec.proto->Get_Kind() != CK_TEXTURE || rec.proto == nullptr)
                 continue;
             if (pTex && !lstrcmp(pTex->Get_ProtoTag(), rec.tag)) {
                 preview = ToUtf8(rec.name);
@@ -413,7 +413,7 @@ void CInspector::TextureCom(CGameObject* _pObj)
             for (auto& proto : prototypes)
             {
                 const ProtoRecord& rec = proto.second;
-                if (rec.kind != ProtoKind::Texture)
+                if (rec.proto->Get_Kind() != CK_TEXTURE)
                     continue;
                 const WCHAR* labelW = rec.name;
                 std::string label = ToUtf8(labelW);
@@ -473,11 +473,11 @@ void CInspector::Add_Component_Button(CGameObject* _pObj)
     auto& prototypes = CProtoMgr::GetInstance()->Get_Prototypes();
 
     // 람다 함수
-    auto kindName = [](ProtoKind k) -> const char* {
+    auto kindName = [](COMPONENTKIND k) -> const char* {
         switch (k) {
-        case ProtoKind::Mesh:     return "Mesh";
-        case ProtoKind::Collider: return "Collider";
-        case ProtoKind::Texture:  return "Texture";
+        case CK_MESH:     return "Mesh";
+        case CK_COLLIDER: return "Collider";
+        case CK_TEXTURE:  return "Texture";
         default:                  return "Other";
         }
         };
@@ -516,11 +516,11 @@ void CInspector::Add_Component_Button(CGameObject* _pObj)
     else
     {
         // 카테고리(1단) → 프로토타입(2단)
-        const ProtoKind kinds[] = {
-            ProtoKind::Mesh, ProtoKind::Collider, ProtoKind::Texture
+        const COMPONENTKIND kinds[] = {
+            CK_MESH, CK_COLLIDER, CK_TEXTURE
         };
 
-        for (ProtoKind kind : kinds)
+        for (COMPONENTKIND kind : kinds)
         {
             if (!ImGui::BeginMenu(kindName(kind)))
                 continue;
@@ -528,7 +528,7 @@ void CInspector::Add_Component_Button(CGameObject* _pObj)
             for (auto& proto : prototypes)
             {
                 const ProtoRecord& rec = proto.second;
-                if (!rec.addable || rec.kind != kind)
+                if (!rec.addable || rec.proto->Get_Kind() != kind)
                     continue;
 
                 std::string label = ToUtf8(rec.name[0] ? rec.name : rec.tag);

@@ -218,6 +218,7 @@ HRESULT CGameObject::Ready_GameObject()
     m_pTransformCom = static_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
     m_pTransformCom->Set_Owner(this);
     m_mapComponent.insert({ L"Com_Transform", m_pTransformCom });
+    m_pTransformCom->Set_ProtoTag(L"Proto_Transform");
 
     return S_OK;
 }

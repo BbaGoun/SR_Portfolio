@@ -212,6 +212,24 @@ namespace Engine
 		case CL_LAYER29: return "Layer29"; case CL_LAYER30: return "Layer30";
 		}
 	}
+
+	inline bool ToAbsPath(const wchar_t* in, wchar_t* out, DWORD outChars)
+	{
+		return GetFullPathNameW(in, outChars, out, nullptr) != 0;
+	}
+
+	inline bool ToRelFromCwd(const wchar_t* absPath, wchar_t* out, DWORD outChars)
+	{
+		wchar_t cwd[MAX_PATH] = {};
+		GetCurrentDirectoryW(MAX_PATH, cwd);
+		PathAddBackslashW(cwd);  // 디렉터리로 인식시키려면 필수
+		wchar_t rel[MAX_PATH] = {};
+		if (!PathRelativePathToW(rel, cwd, FILE_ATTRIBUTE_DIRECTORY,
+			absPath, FILE_ATTRIBUTE_NORMAL))
+			return false;
+		wcscpy_s(out, outChars, rel);
+		return true;
+	}
 }
 
 #endif // Engine_Function_h__

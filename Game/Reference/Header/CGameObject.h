@@ -20,6 +20,8 @@ public:
 	template<typename T, typename = std::enable_if_t<std::is_base_of_v<CComponent, T>>>
 	vector<T*> Get_Components();
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
+	const map<const _tchar*, CComponent*>& Get_ComponentMap() { return m_mapComponent; }
+
 	CTransform* Get_Transform() { return m_pTransformCom; }
 	void	Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
 	void	Remove_Component(CComponent* _pCom);
@@ -70,8 +72,14 @@ public:
 	_float			Get_ViewZ() { return m_fViewZ; }
 	void			Compute_ViewZ(const _vec3* pPos);
 
-	void			SetGuid(uint64_t _guid) { m_uGuid = _guid; }
-	uint64_t		GetGuid() { return m_uGuid; }
+
+	void			Set_PrefabPath(const _tchar* _path) { wcscpy_s(m_prefabPath, MAX_PATH, _path); }
+	const _tchar*	Get_PrefabPath() { return m_prefabPath; }
+	void			Set_Belong(bool _b) { m_bBelongPrefab = _b; }
+	bool			Get_Belong() { return m_bBelongPrefab; }
+
+	void			SetGuid(uint32_t _guid) { m_uGuid = _guid; }
+	uint32_t		GetGuid() { return m_uGuid; }
 	void			SetType(const WCHAR* _type) { wcscpy_s(m_wType, 256, _type); }
 	const WCHAR*	GetType() { return m_wType; }
 	void			SetName(const WCHAR* _name) { wcscpy_s(m_wName, 256, _name); }
@@ -86,10 +94,13 @@ public:
 	CLayer*			GetLayer() { return m_pLayer; }
 
 protected:
-	uint64_t								m_uGuid;
-	WCHAR									m_wType[256];
-	WCHAR									m_wName[256];
-	WCHAR									m_wTag[256];
+	_tchar									m_prefabPath[MAX_PATH] = L"\0";
+	bool									m_bBelongPrefab = false;
+
+	uint32_t								m_uGuid;
+	WCHAR									m_wType[256] = L"\0";
+	WCHAR									m_wName[256] = L"\0";
+	WCHAR									m_wTag[256] = L"\0";
 
 	map<const _tchar*, CComponent*>			m_mapComponent;
 	LPDIRECT3DDEVICE9						m_pGraphicDev;

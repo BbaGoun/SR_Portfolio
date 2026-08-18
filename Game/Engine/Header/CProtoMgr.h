@@ -24,12 +24,11 @@
 
 BEGIN(Engine)
 
-enum class ProtoKind { Mesh, Texture, Collider, Other };
+
 
 struct ProtoRecord {
 	WCHAR		tag[256];
 	WCHAR		name[256];
-	ProtoKind	kind;
 	bool		addable;
 	CComponent* proto;
 };
@@ -43,12 +42,13 @@ private:
 	virtual		~CProtoMgr();
 
 public:
-	HRESULT		Ready_Prototype(const WCHAR* tag, CComponent* comp, ProtoKind ePK = ProtoKind::Other, bool addable = false, const WCHAR* displayName = L"");
+	HRESULT		Ready_Prototype(const WCHAR* tag, CComponent* comp, bool addable = false, const WCHAR* displayName = L"");
 	map<const WCHAR*, ProtoRecord>& Get_Prototypes() { return m_mapComponent; }
 	CComponent* Get_CloneComponent(const WCHAR* pComponentTag);
 
 private:
 	map<const WCHAR*, ProtoRecord>  m_mapComponent;
+
 
 	// CBase을(를) 통해 상속됨
 	void Free() override;

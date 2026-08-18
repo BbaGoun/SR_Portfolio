@@ -179,6 +179,10 @@ HRESULT CMainEditor::Ready_IMGUI()
 
 	//g_pFontBold = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", 16.0f);
 
+	ImFont* font = io.Fonts->AddFontFromFileTTF(
+		"C:\\Windows\\Fonts\\malgun.ttf", 16.0f);
+	IM_ASSERT(font != nullptr);
+
 	return S_OK;
 }
 

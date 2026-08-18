@@ -36,7 +36,7 @@ public:
 	void			Detach_Root(CGameObject* _pObj);
 	void			Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc);
 	void			Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc);
-	uint64_t		GenerateGuid() { return m_pScene->GenerateGuid(); }
+	uint32_t		GenerateGuid() { return m_pScene->GenerateGuid(); }
 	void			OnLostDevice();
 	void			OnResetDevice();
 

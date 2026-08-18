@@ -1,0 +1,23 @@
+﻿OBJECT
+  GUID=1
+  parent=0
+  belong=1
+  type=
+  name=Empty
+  tag=1
+  layer=0
+  prefabPath=..\..\..\Resource\Editor\Prefab\123.prefab
+  Component_Count=4
+  COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+  COMP kind=Texture proto=Proto_Sana mapTag=Proto_Sana
+  COMP kind=CubeCollider proto=Proto_CubeCollider mapTag=Proto_CubeCollider
+    trigger=0
+    offset=0.000000 0.000000 0.000000
+    extents=1.000000 1.000000 1.000000
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+  Child_Count=0
+ENDOBJECT
