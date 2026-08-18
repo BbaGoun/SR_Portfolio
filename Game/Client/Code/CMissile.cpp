@@ -142,7 +142,13 @@ void CMissile::TriggerEnter(CCollider* pOtherCollider)
 
 	if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)
 	{
+		vector<CGameObject*> vecChildren = Get_Children();
 
+		for (auto& pChild : vecChildren)
+		{
+			pChild->To_Root();
+			m_pLayer->Delete_GameObject(pChild);
+		}
 		m_pLayer->Delete_GameObject(this);
 	}
 }
