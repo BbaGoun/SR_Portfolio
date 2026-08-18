@@ -100,10 +100,16 @@ void CManagement::Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc)
         m_pScene->Insert_Root_After(_pDst, _pSrc);
 }
 
-void CManagement::InvalidateDeviceObjects()
+void CManagement::OnLostDevice()
 {
     if (m_pScene)
-        m_pScene->InvalidateDeviceObjects();
+        m_pScene->OnLostDevice();
+}
+
+void CManagement::OnResetDevice()
+{
+    if (m_pScene)
+        m_pScene->OnResetDevice();
 }
 
 

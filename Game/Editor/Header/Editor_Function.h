@@ -1,5 +1,9 @@
 ﻿#pragma once
 #include "CGameObject.h"
+#include "imgui.h"
+#include "imgui_impl_dx9.h"
+#include "imgui_impl_win32.h"
+#include "ImGuizmo.h"
 
 inline CGameObject* FindByGuid(uint64_t guid, const map<const _tchar*, vector<CGameObject*>>& objMap)
 {
@@ -28,4 +32,11 @@ inline std::wstring GetSceneName(const wchar_t* path)
     if (dot && dot != file)
         return std::wstring(file, dot); // Forest
     return file;                         // 확장자 없음
+}
+
+inline void ImGuiLabel(const char* pLabel) {
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text(pLabel);
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(-1.0f);
 }

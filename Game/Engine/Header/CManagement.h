@@ -37,7 +37,8 @@ public:
 	void			Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc);
 	void			Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc);
 	uint64_t		GenerateGuid() { return m_pScene->GenerateGuid(); }
-	void			InvalidateDeviceObjects();
+	void			OnLostDevice();
+	void			OnResetDevice();
 
 	void			Set_ScenePath(const _tchar* _path) { m_pScene->Set_Path(_path); }
 	const _tchar*	Get_ScenePath() { return m_pScene->Get_Path(); }

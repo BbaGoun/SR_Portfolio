@@ -17,7 +17,7 @@ public:
     virtual void LateUpdate_Window() {};
 
 private:
-    void    Header(CGameObject* _pObj);
+    void    GameObjectInfo(CGameObject* _pObj);
     void    TransformCom(CGameObject* _pObj);
     void    MeshCom(CGameObject* _pObj);
     void    ColliderComs(CGameObject* _pObj);

@@ -15,7 +15,7 @@ public:
 	virtual			_int		Update_Scene(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_Scene(const _float& fDeltaTime) override;
 	virtual			void		Render_Scene() override;
-	virtual			void		InvalidateDeviceObjects() override;
+	virtual			void		OnLostDevice() override;
 
 public:
 	static CEditorScene* Create(LPDIRECT3DDEVICE9 pGraphicDev);

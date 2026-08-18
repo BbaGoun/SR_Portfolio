@@ -52,7 +52,7 @@ void CInspector::Update_Window()
     CGameObject* pObj = FindByGuid(g_uSelected, map);
     if (!pObj) { ImGui::End(); return; }
 
-    Header(pObj);
+    GameObjectInfo(pObj);
     TransformCom(pObj);
     if (pObj->Get_Component<CVIBuffer>())
         MeshCom(pObj);
@@ -66,21 +66,81 @@ void CInspector::Update_Window()
     ImGui::End();
 }
 
-void CInspector::Header(CGameObject* _pObj)
+void CInspector::GameObjectInfo(CGameObject* _pObj)
 {
-    static char s_nameBuf[128];
-    strcpy_s(s_nameBuf, ToUtf8(_pObj->GetName()).c_str());
+    if (ImGui::CollapsingHeader("GameObject", ImGuiTreeNodeFlags_DefaultOpen)) {
+        static char s_nameBuf[128];
+        static char s_tagBuf[128];
+        static char s_typeBuf[128];
+        strcpy_s(s_nameBuf, ToUtf8(_pObj->GetName()).c_str());
+        strcpy_s(s_tagBuf, ToUtf8(_pObj->GetTag()).c_str());
 
-    ImGui::AlignTextToFramePadding();
-    ImGui::Text("Name");
-    ImGui::SameLine();
-    ImGui::SetNextItemWidth(-1.0f);  // 남은 가로를 입력칸이 채움
-    if (ImGui::InputText("##Name", s_nameBuf, sizeof(s_nameBuf),
-        ImGuiInputTextFlags_EnterReturnsTrue))
-    {
-        _pObj->SetName(FromUtf8(s_nameBuf).c_str());
+        // Name
+        ImGuiLabel("Name        ");
+        if (ImGui::InputText("##Name", s_nameBuf, sizeof(s_nameBuf),
+            ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            _pObj->SetName(FromUtf8(s_nameBuf).c_str());
+        }
+
+        // Type
+        ImGuiLabel("Type        ");
+        if (ImGui::InputText("##Type", s_typeBuf, sizeof(s_typeBuf))) {
+            _pObj->SetType(FromUtf8(s_typeBuf).c_str());
+        }
+
+        // GUID
+        ImGui::Text("GUID: %llu", _pObj->GetGuid());
+
+        // Tag
+        ImGuiLabel("Tag         ");
+        if (ImGui::InputText("##Tag", s_tagBuf, sizeof(s_tagBuf))) {
+            _pObj->SetTag(FromUtf8(s_tagBuf).c_str());
+        }
+
+        // Layer
+        ImGuiLabel("Layer       ");
+
+        std::string preview = "";
+        for (int i = 0; i < CL_END; ++i) {
+            if (_pObj->Get_CollisionLayer() == i)
+                preview += string(GetLayerName((COLLISION_LAYER)i));
+        }
+
+        if (ImGui::BeginCombo("##Layer", preview.c_str()))
+        {
+            for (int i = 0; i < CL_END; ++i)
+            {
+                bool selected = _pObj->Get_CollisionLayer() == i;
+
+                // 같은 표시 이름이 있을 수 있으니 태그를 id로
+                ImGui::PushID(i);
+                if (ImGui::Selectable(GetLayerName((COLLISION_LAYER)i), selected))
+                {
+                    // 이미 선택됐을 때는 교체할 필요 없음
+                    if (!selected)
+                    {
+                        // 레이어 교체
+                        _pObj->Set_CollisionLayer((COLLISION_LAYER)i);
+                        ImGui::PopID();
+                        break;
+                    }
+                }
+                if (selected)
+                    ImGui::SetItemDefaultFocus(); // 열었을 때 현재 항목으로 스크롤
+                ImGui::PopID();
+            }
+            ImGui::EndCombo();
+        }
+
+        // CullDistance
+        static float s_cullDistance;
+        s_cullDistance = _pObj->Get_CullDistance();
+        ImGuiLabel("Cull Distance");
+
+        if (ImGui::DragFloat("##Cull Distance", &s_cullDistance, 1.f, 0, FLT_MAX))
+            _pObj->Set_CullDistance(s_cullDistance);
     }
-    ImGui::Text("GUID: %llu", _pObj->GetGuid());
 }
 
 void CInspector::TransformCom(CGameObject* _pObj)

@@ -38,7 +38,8 @@ public:
 	uint64_t		GenerateGuid() {
 		return m_uNextGuid++;
 	}
-	virtual			void		InvalidateDeviceObjects() {};
+	virtual			void		OnLostDevice() {};
+	virtual			void		OnResetDevice() {};
 
 	void			Set_Path(const _tchar* _path) { wcscpy_s(m_scenePath, 128, _path); }
 	const _tchar*	Get_Path() { return m_scenePath; }

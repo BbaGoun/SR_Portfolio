@@ -18,6 +18,8 @@ CBackGround::~CBackGround()
 
 HRESULT CBackGround::Ready_GameObject()
 {
+	CGameObject::Ready_GameObject();
+
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
@@ -45,6 +47,8 @@ void CBackGround::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CBackGround::Render_GameObject()
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+
 	m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();

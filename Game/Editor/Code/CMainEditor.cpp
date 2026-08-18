@@ -95,7 +95,7 @@ void CMainEditor::Render_MainEditor()
 
 void CMainEditor::InvalidateDeviceObjects()
 {
-	m_pManagementClass->InvalidateDeviceObjects();
+	m_pManagementClass->OnLostDevice();
 }
 
 HRESULT CMainEditor::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)

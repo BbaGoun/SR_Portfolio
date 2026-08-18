@@ -79,6 +79,9 @@ public:
 	void			SetTag(const WCHAR* _tag) { wcscpy_s(m_wTag, 256, _tag); }
 	const WCHAR*	GetTag() { return m_wTag; }
 
+	void			Set_CullDistance(uint32_t _uCullDistance) {m_uCullDistance = _uCullDistance;}
+	uint32_t		Get_CullDistance() {return m_uCullDistance;}
+
 	void			SetLayer(CLayer* pLayer) { m_pLayer = pLayer; }
 	CLayer*			GetLayer() { return m_pLayer; }
 
@@ -98,7 +101,7 @@ protected:
 	COLLISION_LAYER							m_eCollisionLayer;
 	uint32_t								m_uCollisionLayerBit;
 
-	uint32_t								m_iCullDistance;
+	uint32_t								m_uCullDistance;
 
 	_float									m_fSpeed;
 	_vec3									m_vForce;

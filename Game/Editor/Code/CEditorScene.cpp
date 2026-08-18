@@ -173,7 +173,7 @@ void CEditorScene::Render_Scene()
 		g_DeviceLost = true;
 }
 
-void CEditorScene::InvalidateDeviceObjects()
+void CEditorScene::OnLostDevice()
 {
 	for (auto& wnd : m_windowList)
 		wnd->InvalidateDeviceObjects();
