@@ -198,6 +198,7 @@
     <ClInclude Include="..\Header\CMapTest.h" />
     <ClInclude Include="..\Header\CITem.h" />
     <ClInclude Include="..\Header\CLand3.h" />
+    <ClInclude Include="..\Header\CTargetAim.h" />
     <ClInclude Include="..\Header\CTopViewCam.h" />
     <ClInclude Include="..\Header\CFirstPerCam.h" />
     <ClInclude Include="..\Header\CBackThirdPerCam.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="..\Code\CMapTest.cpp" />
     <ClCompile Include="..\Code\CITem.cpp" />
     <ClCompile Include="..\Code\CLand3.cpp" />
+    <ClCompile Include="..\Code\CTargetAim.cpp" />
     <ClCompile Include="..\Code\CTopViewCam.cpp" />
     <ClCompile Include="..\Code\CFirstPerCam.cpp" />
     <ClCompile Include="..\Code\CBackThirdPerCam.cpp" />

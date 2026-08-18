@@ -409,7 +409,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget", pMissileTarget)))
 		return E_FAIL;
 
-
 	return S_OK;
 }
 

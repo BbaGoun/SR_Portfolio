@@ -157,6 +157,9 @@
     <Filter Include="02. GameObject\MissileTarget">
       <UniqueIdentifier>{6793bbfd-9138-49d7-911d-2accc8786996}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\TargetAim">
+      <UniqueIdentifier>{10b72a72-eb2f-4fae-8a95-32c5d743f643}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -300,6 +303,9 @@
     <ClInclude Include="..\Header\CMissileTarget.h">
       <Filter>02. GameObject\MissileTarget</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTargetAim.h">
+      <Filter>02. GameObject\TargetAim</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -433,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMissileTarget.cpp">
       <Filter>02. GameObject\MissileTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTargetAim.cpp">
+      <Filter>02. GameObject\TargetAim</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

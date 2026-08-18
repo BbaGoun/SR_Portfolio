@@ -9,6 +9,7 @@
 #include "CCollisionMgr.h"
 #include "CMissile.h"
 #include "CMissileBody.h"
+#include "CTargetAim.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -188,13 +189,34 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateBananaObject();
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_E))	// ++++++++++++++++++++++++
-	{
-		CGameObject* pMissile = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Missile");
 
-		if (nullptr == pMissile)
+	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_E))	// ++++++++++++++++++++++++
+	//{
+	//	CGameObject* pMissile = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Missile");
+
+	//	if (nullptr == pMissile)
+	//	{
+	//		CreateMissileObject();
+	//	}
+	//}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))	// ++++++++++++++++++++++++
+	{
+		CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
+
+		if (nullptr == pTargetAim)
 		{
-			CreateMissileObject();
+			CreateTargetAimObject();
+		}
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E))
+	{
+		CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
+
+		if (nullptr != pTargetAim)
+		{
+			m_pLayer->Delete_GameObject(pTargetAim);
 		}
 	}
 
@@ -535,10 +557,27 @@ void CCart::CreateMissileObject()	// ++++++++++++++++++++++++
 	vPos += vLook * 5.f;
 
 	pMissile->Get_Transform()->Set_Pos(vPos);
+}
 
-	//pMissile->SetLayer(m_pLayer);
-	//pMissileBody->SetLayer(m_pLayer);
-	//pMissile->Set_Child(pMissileBody);
+void CCart::CreateTargetAimObject()	// ++++++++++++++++++++++++
+{
+	CGameObject* pTargetAim = CTargetAim::Create(m_pGraphicDev);
+
+	if (nullptr == pTargetAim)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_TargetAim", pTargetAim)))
+		return;
+
+	_vec3 vPos, vLook;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	vPos += vLook * 20.f;
+
+	pTargetAim->Get_Transform()->Set_Pos(vPos);
+
+	pTargetAim->SetLayer(m_pLayer);
 }
 
 void CCart::Free()
