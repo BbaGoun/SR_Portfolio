@@ -37,7 +37,6 @@ HRESULT CBanana::Ready_GameObject()
 		return E_FAIL;
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 	m_pColliderCom->Set_Extents({ 1,1,1 });
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 

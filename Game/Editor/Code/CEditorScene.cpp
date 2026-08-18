@@ -176,7 +176,7 @@ void CEditorScene::Render_Scene()
 void CEditorScene::InvalidateDeviceObjects()
 {
 	for (auto& wnd : m_windowList)
-    wnd->InvalidateDeviceObjects();
+		wnd->InvalidateDeviceObjects();
 }
 
 CEditorScene* CEditorScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

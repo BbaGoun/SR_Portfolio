@@ -37,7 +37,6 @@ HRESULT CCartBody::Ready_GameObject()
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(false);
 	m_pColliderCom->Set_Extents({ 2.5f,1.5f,5.f });
-	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 	return S_OK;

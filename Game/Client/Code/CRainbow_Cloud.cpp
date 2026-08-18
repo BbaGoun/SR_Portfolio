@@ -40,7 +40,6 @@ HRESULT CRainbow_Cloud::Ready_GameObject()
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
 	m_pColliderCom->Set_Extents({ 30,15,1 });
-	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
 	m_fTimer = 0;
