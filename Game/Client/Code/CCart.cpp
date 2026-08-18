@@ -208,7 +208,25 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		{
 			CreateTargetAimObject();
 		}
+		
+		else
+		{
+			_vec3 vPos, vLook;
+
+			m_pTransformCom->Get_Info(INFO_POS, &vPos);
+			m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+			vPos += vLook * 20.f;
+
+			pTargetAim->Get_Transform()->Set_Pos(vPos);
+
+			_quaternion q;
+			D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+
+			pTargetAim->Get_Transform()->Set_Quaternion(&q);
+		}
 	}
+
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E))
 	{
