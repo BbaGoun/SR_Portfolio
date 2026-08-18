@@ -7,6 +7,7 @@
 #include "CManagement.h"
 #include "CBanana.h"
 #include "CCollisionMgr.h"
+#include "CLand3.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -48,39 +49,20 @@ HRESULT CCart::Ready_GameObject()
 
 	m_fBoostItemCnt		= 0.f;
 
+	
 	m_vBananaSpinStartLook = { 0,0,0 };
-	Engine::CComponent* pComponent = nullptr;
 
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-
-	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetIsTrigger(false);
-	m_pColliderCom->Set_Extents({ 2.5f,1.5f,5.f });
-	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
-
-	m_mapComponent.insert({L"Com_Collider", pComponent});
-
-
-	//pComponent = m_pSphereColliderCom = dynamic_cast<CSphere_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SphereCollider"));
-	//if (nullptr == pComponent)
-	//	return E_FAIL;
-	//pComponent->Set_Owner(this);
-	//
-	//m_pSphereColliderCom->SetCenter({ 0.f,-0.5f,3.f });
-	//m_pSphereColliderCom->SetRadius(6.f);
-	//m_pSphereColliderCom->SetColliderType(SPHERE_COLLIDER);
-	//
-	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_SphereCollider", pComponent });
-
+	m_eCartState = CART_STATE_GROUND;
+	m_vTerrainNormal = { 0,1,0 };
 	return S_OK;
 }
 
 void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	UpdateGravity();
+
 	D3DXQUATERNION q;
-	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, m_vRotation.z);
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, m_vRotation.z);
 	m_pTransformCom->Set_Quaternion(&q);
 
 	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
@@ -91,7 +73,10 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	m_pColliderCom->Set_Offset(vLook*3);
+
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	AdjustPosY_Slope(vPos);
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
@@ -100,11 +85,7 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	KeyInput(fDeltaTime);
 	UpdateBoost();
 	UpdateDrift();
-	//BananaTimer(fDeltaTime);
-	//_vec3 vPos;
-	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	//cout << "x: " << vPos.x << "\ty: " << vPos.y << "\tz: " << vPos.z << endl;
-
+	OutputCarState();
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -113,48 +94,6 @@ void CCart::LateUpdate_GameObject(const _float& fDeltaTime)
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
-void CCart::Render_GameObject()
-{
-#ifdef _DEBUG
-	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
-#endif
-}
-
-void CCart::CollisionEnter(CCollider* pOtherCollider)
-{
-	const _tchar* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-
-	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
-	{
-		CCollisionMgr::GetInstance()->PysicalCubevsCube(
-			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
-    m_fGainGage = 0.f;
-    m_bDrift = false;
-  }
-}
-
-void CCart::TriggerEnter(CCollider* pOtherCollider)
-{
-	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-
-	if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
-	{
-		if (m_bRainbowUI == false)
-			m_bRainbowUI = true;
-	}
-
-	if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
-	{
-		if (m_bBanana == false)
-		{
-			m_bBanana = true;
-			m_bBoost = false;
-			m_vBananaSpinStartLook = m_vForce;
-			D3DXVec3Normalize(&m_vBananaSpinStartLook, &m_vBananaSpinStartLook);
-			
-		}
-	}
-}
 
 
 CCart* CCart::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -217,7 +156,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			m_vForce -= vLook * 0.8f;
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT))
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) && m_eCartState == CART_STATE_GROUND)
 	{
 		m_bDrift = true;
 	}
@@ -383,10 +322,7 @@ void CCart::UpdateDrift()
 		m_vRotation.z *= 0.98;
 		m_vRotation.z = clampT(float(m_vRotation.z), -0.1f, 0.1f);
 
-		m_fGainGage += m_fLookForceAngle * 0.5f;
-		m_fGainGage += D3DXVec3Length(&m_vForce) * m_fSpeed * 0.005f;
-
-		if (m_fLookForceAngle < 0.3f)
+		if (m_fLookForceAngle < 0.3f || m_eCartState != CART_STATE_GROUND)
 		{
 			m_fCurGage += m_fGainGage;
 			if (m_fCurGage >= 100.f)
@@ -397,6 +333,11 @@ void CCart::UpdateDrift()
 			m_fGainGage = 0;
 			m_vRotation.z = 0;
 			m_bDrift = false;
+		}
+		else
+		{
+			m_fGainGage += m_fLookForceAngle * 0.5f;
+			m_fGainGage += D3DXVec3Length(&m_vForce) * m_fSpeed * 0.005f;
 		}
 	}
 }
@@ -426,7 +367,6 @@ void CCart::UpdateBoost()
 	//
 	//	m_fSpeed += 2; 
 	//
-	//	cout << "Shoort Boost" << endl;
 	//}
 
 	if (m_fSpeed > 3)
@@ -480,15 +420,170 @@ void CCart::CreateBananaObject()
 	pGameObject->SetLayer(m_pLayer);
 }
 
-void CCart::BananaTimer(const _float& fDeltaTime)
+void CCart::AdjustPosY_Slope(_vec3 pos)
 {
-	if (m_bBanana == false)
-		return;
-	m_fBananaTimer += fDeltaTime;
+	CLand3* pLand3 = dynamic_cast<CLand3*>(CManagement::GetInstance()->Find_GameObjectByTag(L"Environment", L"Env_Land3"));
+	CTerrain3* pTerrain3 = pLand3->Get_Component<CTerrain3>();
 
-	if (m_fBananaTimer > 4)
+	_vec3 originPos = pos;
+	if (pLand3->CheckInTerrain(pos))
 	{
-		m_bBanana = false;
+		// Land3의 로컬로 내림
+		_matrix* pMatWorld = pLand3->Get_Component<CTransform>()->Get_World();
+		_matrix matInvWorld;
+		D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
+		D3DXVec3TransformCoord(&pos, &pos, &matInvWorld);
+
+		// 평면 구하기
+		D3DXPLANE plane = pTerrain3->GetPlane(pos);
+		float fLocalPlaneY = -(plane.a * pos.x + plane.c * pos.z + plane.d) / plane.b;
+
+		// 법선 구하기
+		m_vTerrainNormal = { plane.a ,plane.b ,plane.c };
+		_matrix matNormal;
+		D3DXMatrixTranspose(&matNormal, &matInvWorld);
+		D3DXVec3TransformNormal(&m_vTerrainNormal, &m_vTerrainNormal, &matNormal);
+		D3DXVec3Normalize(&m_vTerrainNormal, &m_vTerrainNormal);
+
+		// Local에서의 CartPosition
+		_vec3 vLocalPos = { pos.x,fLocalPlaneY,pos.z };
+
+		// World에서의 CartPosition
+		_vec3 vWorldPos;
+		D3DXVec3TransformCoord(&vWorldPos, &vLocalPos, pMatWorld);
+
+		float fDeltaY = originPos.y - vWorldPos.y;
+		// m_eCart_State 업데이트
+		if (m_eCartState == CART_STATE_GROUND)
+		{
+			if (fDeltaY <= 0.1f)
+			{
+				m_eCartState = CART_STATE_GROUND;
+				m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
+
+				// 경사면에 맞게 카트 몸체 회전
+				_vec3 vCartUp;
+				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+
+				_vec3 vAxis;
+				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
+
+				D3DXQUATERNION q;
+				D3DXQuaternionRotationAxis(&q, &vAxis, (fRadian));
+				m_pTransformCom->Multiple_Quaternion(&q);
+			}
+			else
+			{
+				m_eCartState = CART_STATE_AIR;
+			}
+		}
+		else if(m_eCartState == CART_STATE_AIR)
+		{
+			if (fDeltaY <= 0.1f)
+			{
+				m_eCartState = CART_STATE_GROUND;
+				m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
+
+				// 경사면에 맞게 카트 몸체 회전
+				_vec3 vCartUp;
+				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+
+				_vec3 vAxis;
+				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
+
+				D3DXQUATERNION q;
+				D3DXQuaternionRotationAxis(&q, &vAxis, (fRadian));
+				m_pTransformCom->Multiple_Quaternion(&q);
+			}
+			else
+			{
+				m_eCartState = CART_STATE_AIR;
+			}
+		}
+	}
+	else //맵 전체를 지형으로 덮으면 이 부분은 필요 없을듯?
+	{
+		if (originPos.y  <= 0.f)
+		{
+			m_eCartState = CART_STATE_GROUND;
+			m_pTransformCom->Set_Pos({ originPos.x,0,originPos.z });
+			m_vTerrainNormal = { 0,1,0 };
+		}
+		else
+		{
+			m_eCartState = CART_STATE_AIR;
+		}
+	}
+}
+
+void CCart::UpdateGravity()
+{
+	/*
+	중력 -> 지면의 -Look , -Up 성분으로 분해(투영으로 분해)
+              지면의  -Look = (지면 법선 x 지면의 Right)
+              지면의 - Up    = -Normal
+	*/
+
+	_vec3 vGravity = { 0,-0.98f,0 };
+	_vec3 vCartUp, vPlaneRight, vPlaneLook;
+	float fSize;
+	
+	switch (m_eCartState)
+	{
+	case Engine::CART_STATE_GROUND:
+		if (m_vTerrainNormal != _vec3({ 0,1,0 }))
+		{
+			// 평면의 Right벡터
+			m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+			D3DXVec3Cross(&vPlaneRight, &m_vTerrainNormal, &vCartUp);
+
+			// 평면의 Look
+			D3DXVec3Cross(&vPlaneLook, &vPlaneRight, &m_vTerrainNormal);
+
+			// 중력의 성분 중에 -Look 방향의 성분만 받기
+			// -Look벡터에 Gravity 투영해서 -Look 방향의 크기 구하기
+			D3DXVec3Normalize(&vPlaneLook, &vPlaneLook);
+			vPlaneLook *= -1;
+			fSize = D3DXVec3Dot(&vPlaneLook, &vGravity);
+
+			// 구한 크기에 -Look 방향벡터 곱해서 vForce에 적용
+			m_vForce += fSize * vPlaneLook;
+		}
+
+		break;
+	case Engine::CART_STATE_AIR:
+		// 중력 전부 다 받기
+		m_vForce += vGravity;
+		break;
+	case Engine::CART_STATE_LANDING:
+		break;
+	case Engine::CART_STATE_END:
+		break;
+	default:
+		break;
+	}
+}
+
+void CCart::OutputCarState()
+{
+	switch (m_eCartState)
+	{
+	case Engine::CART_STATE_GROUND:
+		cout << "CART_STATE_GROUND" << endl;
+		break;
+	case Engine::CART_STATE_AIR:
+		cout << "CART_STATE_AIR" << endl;
+		break;
+	case Engine::CART_STATE_LANDING:
+		cout << "CART_STATE_LANDING" << endl;
+		break;
+	case Engine::CART_STATE_END:
+		cout << "CART_STATE_GROUND" << endl;
+		break;
+	default:
+		break;
 	}
 }
 

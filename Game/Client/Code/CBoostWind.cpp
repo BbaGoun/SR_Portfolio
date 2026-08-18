@@ -37,7 +37,7 @@ HRESULT CBoostWind::Ready_GameObject()
 	case Engine::WIND_L1:
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(-60), 0, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
-		m_pTransformCom->Set_Pos({ -4,0,6 });
+		m_pTransformCom->Set_Pos({ -4,2,6 });
 		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterWindL"));
 		if (nullptr == pComponent)
 			return E_FAIL;
@@ -45,7 +45,7 @@ HRESULT CBoostWind::Ready_GameObject()
 	case Engine::WIND_L2:
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(-30), 0, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
-		m_pTransformCom->Set_Pos({ -6,0,6 });
+		m_pTransformCom->Set_Pos({ -6,2,6 });
 		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterWindL"));
 		if (nullptr == pComponent)
 			return E_FAIL;
@@ -53,7 +53,7 @@ HRESULT CBoostWind::Ready_GameObject()
 	case Engine::WIND_R1:
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(60), 0, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
-		m_pTransformCom->Set_Pos({ 4,0,6 });
+		m_pTransformCom->Set_Pos({ 4,2,6 });
 		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterWindR"));
 		if (nullptr == pComponent)
 			return E_FAIL;
@@ -61,7 +61,7 @@ HRESULT CBoostWind::Ready_GameObject()
 	case Engine::WIND_R2:
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(30), 0, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
-		m_pTransformCom->Set_Pos({ 6,0,6 });
+		m_pTransformCom->Set_Pos({ 6,2,6 });
 		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterWindR"));
 		if (nullptr == pComponent)
 			return E_FAIL;
