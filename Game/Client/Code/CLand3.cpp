@@ -21,8 +21,7 @@ CLand3::~CLand3()
 HRESULT CLand3::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Scale({ 1, 1, 1 });
-	m_pTransformCom->Set_Pos({ 0,-2,0 });
+	m_pTransformCom->Set_Scale({ 1, 1, 2 });
 
 	CComponent* pComponent = nullptr;
 

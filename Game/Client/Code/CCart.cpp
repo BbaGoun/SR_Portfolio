@@ -77,7 +77,6 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	AdjustPosY_Slope(vPos);
-
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
@@ -446,8 +445,6 @@ void CCart::AdjustPosY_Slope(_vec3 pos)
 		D3DXVec3TransformNormal(&m_vTerrainNormal, &m_vTerrainNormal, &matNormal);
 		D3DXVec3Normalize(&m_vTerrainNormal, &m_vTerrainNormal);
 
-
-
 		// Local에서의 CartPosition
 		_vec3 vLocalPos = { pos.x,fLocalPlaneY,pos.z };
 
@@ -462,7 +459,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos)
 			if (fDeltaY <= 0.1f)
 			{
 				m_eCartState = CART_STATE_GROUND;
-				m_pTransformCom->Set_Pos({ originPos.x,vWorldPos.y,originPos.z });
+				m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
 
 				// 경사면에 맞게 카트 몸체 회전
 				_vec3 vCartUp;
@@ -486,7 +483,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos)
 			if (fDeltaY <= 0.1f)
 			{
 				m_eCartState = CART_STATE_GROUND;
-				m_pTransformCom->Set_Pos({ originPos.x,vWorldPos.y,originPos.z });
+				m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
 
 				// 경사면에 맞게 카트 몸체 회전
 				_vec3 vCartUp;
