@@ -21,6 +21,9 @@ public:
 	vector<T*> Get_Components();
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	CTransform* Get_Transform() { return m_pTransformCom; }
+	void	Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
+	void	Remove_Component(CComponent* _pCom);
+
 	void	Set_Child(CGameObject* _pGO);
 	void	Insert_Child(CGameObject* _pGO, int _iIndex);
 	void	Insert_Before(CGameObject* _pGO);
@@ -66,11 +69,14 @@ public:
 
 	_float			Get_ViewZ() { return m_fViewZ; }
 	void			Compute_ViewZ(const _vec3* pPos);
+
 	void			SetGuid(uint64_t _guid) { m_uGuid = _guid; }
 	uint64_t		GetGuid() { return m_uGuid; }
-	void			SetName(const WCHAR* _name) { wcscpy_s(m_wName, 128, _name); }
+	void			SetType(const WCHAR* _type) { wcscpy_s(m_wType, 256, _type); }
+	const WCHAR*	GetType() { return m_wType; }
+	void			SetName(const WCHAR* _name) { wcscpy_s(m_wName, 256, _name); }
 	const WCHAR*	GetName() { return m_wName; }
-	void			SetTag(const WCHAR* _tag) { wcscpy_s(m_wTag, 128, _tag); }
+	void			SetTag(const WCHAR* _tag) { wcscpy_s(m_wTag, 256, _tag); }
 	const WCHAR*	GetTag() { return m_wTag; }
 
 	void			SetLayer(CLayer* pLayer) { m_pLayer = pLayer; }
@@ -78,8 +84,9 @@ public:
 
 protected:
 	uint64_t								m_uGuid;
-	WCHAR									m_wName[128];
-	WCHAR									m_wTag[128];
+	WCHAR									m_wType[256];
+	WCHAR									m_wName[256];
+	WCHAR									m_wTag[256];
 
 	map<const _tchar*, CComponent*>			m_mapComponent;
 	LPDIRECT3DDEVICE9						m_pGraphicDev;

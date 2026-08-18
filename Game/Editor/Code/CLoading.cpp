@@ -56,7 +56,6 @@ void CLoading::Render_Scene()
     {
         if (ImGui::Button("Loading Done!"))
         {
-            //Engine::CScene* pStage = CScene_Test::Create(m_pGraphicDev);
             Engine::CScene* pStage = CEditorScene::Create(m_pGraphicDev);
 
             CManagement::GetInstance()->Request_Scene(pStage);

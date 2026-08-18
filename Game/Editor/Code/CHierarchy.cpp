@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CHierarchy.h"
 #include "CEmpty.h"
 #include "CManagement.h"
@@ -25,28 +25,29 @@ void CHierarchy::Update_Window()
 
     ImGui::SetNextWindowSizeConstraints(ImVec2(250.0f, 250.0f), ImVec2(FLT_MAX, FLT_MAX));
 
-    ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;
+    ImGui::Begin("Hierarchy");
 
-    ImGui::Begin("Hierarchy", NULL, window_flags);
+    // Hierarchy에 씬 이름 표기
+    ImGuiStyle& st = ImGui::GetStyle();
+    ImVec2 winPos = ImGui::GetWindowPos();
+    float  winW = ImGui::GetWindowSize().x;
+    ImVec2 p0 = ImVec2(winPos.x, ImGui::GetCursorScreenPos().y - st.WindowPadding.y);
+    float  h = ImGui::GetFrameHeight();
 
-    if (ImGui::BeginMenuBar())
-    {
-        if (ImGui::BeginMenu("Menu")) {
-            if (ImGui::MenuItem("Create Empty")) {
-                CGameObject* obj = CEmpty::Create(m_pGraphicDev);
-                obj->SetName(L"Empty");
-                uint64_t guid = CManagement::GetInstance()->GenerateGuid();
-                obj->SetGuid(guid);
+    ImGui::GetWindowDrawList()->AddRectFilled(
+        p0,
+        ImVec2(p0.x + winW, p0.y + h),
+        IM_COL32(50, 50, 50, 255));   // WindowBg보다 어둡게
 
-                wstring s = std::to_wstring(guid);
-                CManagement::GetInstance()->Add_GameObject(L"Default", s.c_str(), obj);
-                g_bSelected = true;
-                g_uSelected = guid;
-            }
-            ImGui::EndMenu();
-        }
-        ImGui::EndMenuBar();
-    }
+    ImGui::SetCursorScreenPos(ImVec2(p0.x + ImGui::GetStyle().FramePadding.x, p0.y));
+    ImGui::AlignTextToFramePadding();
+    
+    std::wstring sceneName = GetSceneName(CManagement::GetInstance()->Get_ScenePath());
+    if (!sceneName.compare(L""))
+        sceneName = L"untitled";
+    if (CManagement::GetInstance()->Get_SceneDirty())
+        sceneName += L"*";
+    ImGui::TextUnformatted(ToUtf8(sceneName.c_str()).c_str());
 
     bool sceneFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_None);
 
@@ -95,7 +96,7 @@ void CHierarchy::Update_Window()
 
     // 오른쪽 클릭을 하면 팝업을 연다.
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Right) && viewHovered)
-        ImGui::OpenPopup("hierarchy_popup");
+        ImGui::OpenPopup("Hierarchy_popup");
 
     // 팝업이 열려있나 여부와 관계없이 팝업 if문은 매 프레임 실행
     RightClick_PopUp();
@@ -119,7 +120,6 @@ void CHierarchy::Draw_TreeNode(CGameObject* pObj)
     const bool hasChild = !children.empty();
     
     // 화살표를 클릭했을 때만 노드가 열린다 
-    // 노드의 히트박스를 콘텐츠 영역의 전체 가로 너비로 확장
     ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow
         | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 
@@ -129,6 +129,7 @@ void CHierarchy::Draw_TreeNode(CGameObject* pObj)
     const bool bRenaming = m_bRenaming && (m_uRenameGuid == pObj->GetGuid());
 
     // Input Text가 있을 때 너비를 전부 먹어버리면 입력 칸을 위한 공간이 없어짐.
+    // 노드의 히트박스를 콘텐츠 영역의 전체 가로 너비로 확장
     if (!bRenaming)
         flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
     // 자식이 없으면 잎 노드, 열 수 있는 하위가 없다.
@@ -315,7 +316,7 @@ void CHierarchy::Draw_TreeNode(CGameObject* pObj)
 
 void CHierarchy::RightClick_PopUp()
 {
-    if (ImGui::BeginPopup("hierarchy_popup"))
+    if (ImGui::BeginPopup("Hierarchy_popup"))
     {
         if (ImGui::Selectable("Create Empty"))
         {

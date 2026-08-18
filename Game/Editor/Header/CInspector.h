@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CWindow.h"
 #include "CGraphicDev.h"
 #include "CCube.h"
@@ -17,10 +17,15 @@ public:
     virtual void LateUpdate_Window() {};
 
 private:
-    Engine::CCube* m_pCubeBuffer = nullptr;
-    LPDIRECT3DTEXTURE9 m_pSceneTex;
-    LPDIRECT3DSURFACE9 m_pSceneDepth;
-    UINT m_rtW, m_rtH;
+    void    Header(CGameObject* _pObj);
+    void    TransformCom(CGameObject* _pObj);
+    void    MeshCom(CGameObject* _pObj);
+    void    ColliderComs(CGameObject* _pObj);
+    void    TextureCom(CGameObject* _pObj);
+
+    void    Add_Component_Button(CGameObject* pObj);
+
+private:
 
 public:
     virtual void InvalidateDeviceObjects() override;
