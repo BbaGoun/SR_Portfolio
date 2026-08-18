@@ -23,7 +23,7 @@ HRESULT CBoostJet::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 	m_pTransformCom->Set_Scale({ 2,10,1 });
-	m_pTransformCom->Set_Pos({ 1,-1,-6 });
+	m_pTransformCom->Set_Pos({ 1,1,-6 });
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, 0.f, D3DXToRadian(90), 0.f);
 	m_pTransformCom->Set_Quaternion(&q);
@@ -50,7 +50,7 @@ void CBoostJet::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CBoostJet::Update_GameObject(const _float& fDeltaTime)
 {
-	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
+	if (dynamic_cast<CCart*>(m_pParent->Get_Parent())->GetBoost())
 	{
 		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -63,18 +63,18 @@ _int CBoostJet::Update_GameObject(const _float& fDeltaTime)
 
 void CBoostJet::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
+	if (dynamic_cast<CCart*>(m_pParent->Get_Parent())->GetBoost())
 		CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 void CBoostJet::Render_GameObject()
 {
-	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
+	if (dynamic_cast<CCart*>(m_pParent->Get_Parent())->GetBoost())
 	{
 		_matrix	matBill, matWorld, matView, matParent;
 
 		matWorld = *m_pTransformCom->Get_World();
-		matParent = *m_pParent->Get_Transform()->Get_World();
+		matParent = *(m_pParent->Get_Parent())->Get_Transform()->Get_World();
 		matView = CCameraMgr::GetInstance()->GetCameraInfo().matView;
 
 		// 부모의 y축 회전 반영X

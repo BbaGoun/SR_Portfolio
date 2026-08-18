@@ -74,7 +74,7 @@ void CBanana::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 
-	if (wcscmp(wOtherTag, L"Obj_Cart") == 0)
+	if (wcscmp(wOtherTag, L"Obj_CartBody") == 0)
 	{
 		m_pLayer->Delete_GameObject(this);
 	}

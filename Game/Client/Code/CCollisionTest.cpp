@@ -312,7 +312,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostJet", pGameObject)))
 		return E_FAIL;
-	pCart->Set_Child(pGameObject);
+	pCartBody->Set_Child(pGameObject);
 
 	//// # 플레이어 따라다니는 3인칭 카메라
 	_vec3 vEye, vAt, vUp, vLook;

@@ -19,15 +19,8 @@ public:
 	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) override;
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
-	virtual			void		Render_GameObject() override;
+	virtual			void		Render_GameObject() override {};
 
-	virtual			void		CollisionEnter(CCollider* pOtherCollider) override;
-	virtual			void		CollisionExit(CCollider* pOtherCollider) {};
-	virtual			void		CollisionStay(CCollider* pOtherCollider) {};
-
-	virtual			void		TriggerEnter(CCollider* pOtherCollider) override;
-	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
-	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
 
 public:
 	static CCart*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -35,7 +28,10 @@ public:
 	void			UpdateDrift();
 	void			UpdateBoost();
 	bool			GetBoost() { return m_bBoost; }
+	void			SetBoost(bool bBoost) { m_bBoost = bBoost; }
+
 	bool			GetDrift() { return m_bDrift; }
+	void			SetDrift(bool bDrift) { m_bDrift = bDrift; }
 
 	bool			GetRainbowUI() { return m_bRainbowUI; }
 	void			SetRainbowUI(bool bRainbowState) { m_bRainbowUI = bRainbowState; }
@@ -48,6 +44,8 @@ public:
 
 	float			GetCurGage() { return m_fCurGage; }
 	float			GetGainGage() { return m_fGainGage; }
+	
+	void			SetGainGage(float fGage) { m_fGainGage = fGage; }
 
 	void			AdjustPosY_Slope(_vec3 pos);
 	void			UpdateGravity();
@@ -79,7 +77,6 @@ private:
 	CART_STATE	m_eCartState;
 	_vec3		m_vTerrainNormal;
 
-	Engine::CCube_Collider* m_pColliderCom;
 
 protected:
 	virtual		void		Free() override;

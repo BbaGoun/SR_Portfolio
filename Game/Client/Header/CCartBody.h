@@ -20,12 +20,24 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+	
+	virtual			void		CollisionEnter(CCollider* pOtherCollider) override;
+	virtual			void		CollisionExit(CCollider* pOtherCollider) {};
+	virtual			void		CollisionStay(CCollider* pOtherCollider) {};
+
+	virtual			void		TriggerEnter(CCollider* pOtherCollider) override;
+	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
+	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
+
 	void			BananaSpin(const _float& fDeltaTime);
 	bool			m_bBananaSpinState;
 	float			m_fSpinSpeed;
 
 public:
 	static CCartBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
+	Engine::CCube_Collider* m_pColliderCom;
 
 protected:
 	virtual		void		Free() override;

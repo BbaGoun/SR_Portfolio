@@ -28,16 +28,16 @@ HRESULT CWheel::Ready_GameObject()
 	switch (m_eWheelType)
 	{
 	case Engine::WHEEL_FL:
-		m_pTransformCom->Set_Pos({-2.5f ,-1, 6 });
+		m_pTransformCom->Set_Pos({-2.5f ,1, 6 });
 		break;
 	case Engine::WHEEL_FR:
-		m_pTransformCom->Set_Pos({ 2.5f,-1, 6 });
+		m_pTransformCom->Set_Pos({ 2.5f,1, 6 });
 		break;
 	case Engine::WHEEL_BL:
-		m_pTransformCom->Set_Pos({ -2.5f,-1,0 });
+		m_pTransformCom->Set_Pos({ -2.5f,1,0 });
 		break;								
 	case Engine::WHEEL_BR:					
-		m_pTransformCom->Set_Pos({ 2.5f ,-1,0 });
+		m_pTransformCom->Set_Pos({ 2.5f ,1,0 });
 		break;
 	case Engine::WHEEL_END:
 		break;

@@ -54,32 +54,6 @@ HRESULT CCart::Ready_GameObject()
 
 	m_eCartState = CART_STATE_GROUND;
 	m_vTerrainNormal = { 0,1,0 };
-	
-	Engine::CComponent* pComponent = nullptr;
-
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-
-	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetIsTrigger(false);
-	m_pColliderCom->Set_Extents({ 2.5f,1.5f,5.f });
-	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
-
-	m_mapComponent.insert({L"Com_Collider", pComponent});
-
-
-	//pComponent = m_pSphereColliderCom = dynamic_cast<CSphere_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SphereCollider"));
-	//if (nullptr == pComponent)
-	//	return E_FAIL;
-	//pComponent->Set_Owner(this);
-	//
-	//m_pSphereColliderCom->SetCenter({ 0.f,-0.5f,3.f });
-	//m_pSphereColliderCom->SetRadius(6.f);
-	//m_pSphereColliderCom->SetColliderType(SPHERE_COLLIDER);
-	//
-	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_SphereCollider", pComponent });
-
 	return S_OK;
 }
 
@@ -99,7 +73,6 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	m_pColliderCom->Set_Offset(vLook*3);
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -122,48 +95,6 @@ void CCart::LateUpdate_GameObject(const _float& fDeltaTime)
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
-void CCart::Render_GameObject()
-{
-#ifdef _DEBUG
-	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
-#endif
-}
-
-void CCart::CollisionEnter(CCollider* pOtherCollider)
-{
-	const _tchar* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-
-	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
-	{
-		CCollisionMgr::GetInstance()->PysicalCubevsCube(
-			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
-		m_fGainGage = 0.f;
-		m_bDrift = false;
-  }
-}
-
-void CCart::TriggerEnter(CCollider* pOtherCollider)
-{
-	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-
-	if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
-	{
-		if (m_bRainbowUI == false)
-			m_bRainbowUI = true;
-	}
-
-	if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
-	{
-		if (m_bBanana == false)
-		{
-			m_bBanana = true;
-			m_bBoost = false;
-			m_vBananaSpinStartLook = m_vForce;
-			D3DXVec3Normalize(&m_vBananaSpinStartLook, &m_vBananaSpinStartLook);
-			
-		}
-	}
-}
 
 
 CCart* CCart::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -6,6 +6,7 @@
 #include "CCart.h"
 #include "CLand3.h"
 #include "CManagement.h"
+#include "CCollisionMgr.h"
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -23,9 +24,22 @@ CCartBody::~CCartBody()
 HRESULT CCartBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Pos({ 0,0,3 });
+	m_pTransformCom->Set_Pos({ 0,2,3 });
 	m_bBananaSpinState = false;
 
+
+	Engine::CComponent* pComponent = nullptr;
+
+	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
+	if (nullptr == pComponent)
+		return E_FAIL;
+
+	m_pColliderCom->Set_Owner(this);
+	m_pColliderCom->SetIsTrigger(false);
+	m_pColliderCom->Set_Extents({ 2.5f,1.5f,5.f });
+	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
+
+	m_mapComponent.insert({ L"Com_Collider", pComponent });
 	return S_OK;
 }
 
@@ -53,8 +67,42 @@ void CCartBody::LateUpdate_GameObject(const _float& fDeltaTime)
 void CCartBody::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 }
 
+void CCartBody::CollisionEnter(CCollider* pOtherCollider)
+{
+	const _tchar* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
+
+	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
+	{
+		CCollisionMgr::GetInstance()->PysicalCubevsCube(
+			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
+		CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+		pCart->SetGainGage(0.f);	// m_fGainGage = 0.f;
+		pCart->SetDrift(false);		// m_bDrift = false;
+	}
+}
+
+void CCartBody::TriggerEnter(CCollider* pOtherCollider)
+{
+	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
+	CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+	if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
+	{
+		if (pCart->GetRainbowUI() == false)
+			pCart->SetRainbowUI(true);
+	}
+
+	if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
+	{
+		if (pCart->GetBanana() == false)
+		{
+			pCart->SetBanana(true);
+			pCart->SetBoost(false);
+		}
+	}
+}
 void CCartBody::BananaSpin(const _float& fDeltaTime)
 {
 	CCart* pCart = dynamic_cast<CCart*>(m_pParent);

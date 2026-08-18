@@ -51,9 +51,7 @@ void CCartBody1::LateUpdate_GameObject(const _float& fDeltaTime)
 void CCartBody1::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pBufferCom->Render_Buffer();
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 CCartBody1* CCartBody1::Create(LPDIRECT3DDEVICE9 pGraphicDev)
