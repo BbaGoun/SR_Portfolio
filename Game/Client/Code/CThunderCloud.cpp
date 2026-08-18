@@ -38,7 +38,7 @@ HRESULT CThunderCloud::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
-	m_fTimer				= 0;
+	m_fThunderDelayTimer	= 0;
 	m_fFrame				= 0;
 	m_bClosed				= false;
 	m_bCreateThunder		= false;
@@ -52,66 +52,55 @@ HRESULT CThunderCloud::Ready_GameObject()
 
 _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 {
-	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
 	_vec3 vCartPos, vPos, vDir;
-	pCart->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
+	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 	m_pTransformCom->Get_Info(INFO_POS,&vPos);
+	m_pTransformCom->Set_Pos({ vCartPos.x,vCartPos.y + 10,vCartPos.z });
 
-	if (m_bClosed == false)
+	m_fThunderDelayTimer += fDeltaTime;
+	
+	if (m_bCreateThunder == false && m_fThunderDelayTimer > 2.f)
 	{
-		m_pTransformCom->Set_Pos({ vPos.x,vCartPos.y + 13,vPos.z });
-		vDir = vCartPos - vPos;
-		vDir.y = 0;
-		if (D3DXVec3Length(&vDir) > 20.f)
-			m_pTransformCom->Move_Pos(&vDir, 15.f, fDeltaTime);
-		else
-			m_bClosed = true;
-	}
-	else
-	{
-		CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
-		CCart* pCart = dynamic_cast<CCart*> (pCartBody->Get_Parent());
-		if (m_bCreateThunder == false)
+		if (pCartBody->GetThunderTimerOnOff() == false)
 		{
-			if (pCartBody->GetThunderTimerOnOff() == false)
-			{
-				pCartBody->SetThunderTimerOnOff(true);
-				cout << "pCartSetThunderTrue" << endl;
-			}
-			CreateThunder();
-			CreateThunderPlayerEffect();
-			CreateThunderFloorEffect();
+			pCartBody->SetThunderTimerOnOff(true);
+			cout << "pCartSetThunderTrue" << endl;
+		}
+		CreateThunder();
+		CreateThunderPlayerEffect();
+		CreateThunderFloorEffect();
+	}
+	else if(m_bCreateThunder == true)
+	{
+		if (m_fFrame < 1)
+		{
+			m_fFrame += 2 * fDeltaTime;
+		}
+		else if (m_fFrame < 2)
+		{
+			m_fFrame += 10 * fDeltaTime;
 		}
 		else
 		{
-			if (pCartBody->GetThunderSpinState() == false)
-			{
-				m_pLayer->Delete_GameObject(this);
-				m_pLayer->Delete_GameObject(m_pThunder);
-				m_pLayer->Delete_GameObject(m_pThunderFloorEffect);
-				m_pLayer->Delete_GameObject(m_pThunderPlayerEffect);
-			}
+			m_fFrame = 0;
 		}
-		m_pTransformCom->Set_Pos({ vCartPos.x,vCartPos.y + 13,vCartPos.z });
+		if (pCartBody->GetThunderSpinState() == false)
+		{
+			m_pLayer->Delete_GameObject(this);
+			m_pLayer->Delete_GameObject(m_pThunder);
+			m_pLayer->Delete_GameObject(m_pThunderFloorEffect);
+			m_pLayer->Delete_GameObject(m_pThunderPlayerEffect);
+		}
 	}
+	
 
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	CGameObject::Compute_ViewZ(&vPos);
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
 
-	if (m_fFrame < 1)
-	{
-		m_fFrame += 2 * fDeltaTime;
-	}
-	else if (m_fFrame < 2)
-	{
-		m_fFrame += 10 * fDeltaTime;
-	}
-	else 
-	{
-		m_fFrame = 0;
-	}
+	
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

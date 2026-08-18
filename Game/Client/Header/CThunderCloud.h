@@ -19,7 +19,7 @@ private:
 	CRcTex* m_pBufferCom;
 	CTexture* m_pTextureCom;
 
-	float	m_fTimer;
+	float	m_fThunderDelayTimer;
 	float	m_fFrame;
 	bool	m_bClosed;
 	bool	m_bCreateThunder;
