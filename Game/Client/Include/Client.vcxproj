@@ -219,6 +219,7 @@
     <ClInclude Include="..\Header\CUI_BoosterBar.h" />
     <ClInclude Include="..\Header\CHUD_Gage.h" />
     <ClInclude Include="..\Header\CUI_BoosterBG.h" />
+    <ClInclude Include="..\Header\CUI_Button.h" />
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
     <ClInclude Include="..\Header\CWheel.h" />
     <ClInclude Include="Client.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="..\Code\CUI_BoosterBar.cpp" />
     <ClCompile Include="..\Code\CHUD_Gage.cpp" />
     <ClCompile Include="..\Code\CUI_BoosterBG.cpp" />
+    <ClCompile Include="..\Code\CUI_Button.cpp" />
     <ClCompile Include="..\Code\CUI_Rainbow.cpp" />
     <ClCompile Include="..\Code\CWheel.cpp" />
     <ClCompile Include="Client.cpp" />

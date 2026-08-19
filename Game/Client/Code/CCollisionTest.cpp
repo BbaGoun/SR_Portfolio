@@ -29,6 +29,7 @@
 #include "CUI_BoosterBG.h"
 #include "CThunder.h"
 #include "CThunderCloud.h"
+#include "CUI_Button.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -485,6 +486,13 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
+		return E_FAIL;
+
+	// UI_BoosterBar
+	pUIObject = CUI_Button::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Button", pUIObject)))
 		return E_FAIL;
 
 	return S_OK;

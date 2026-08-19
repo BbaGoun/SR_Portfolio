@@ -172,6 +172,9 @@
     <Filter Include="02. GameObject\Item\Thunder\ThunderFloorEffect">
       <UniqueIdentifier>{41ae0adc-97a2-4d4d-885a-2e87a586b530}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI\UI_Button">
+      <UniqueIdentifier>{52732eb2-24e9-49ce-bed4-df41bda21639}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -327,6 +330,9 @@
     <ClInclude Include="..\Header\CThunderFloorEffect.h">
       <Filter>02. GameObject\Item\Thunder\ThunderFloorEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI_Button.h">
+      <Filter>02. GameObject\UI\UI_Button</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -472,6 +478,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CThunderFloorEffect.cpp">
       <Filter>02. GameObject\Item\Thunder\ThunderFloorEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Button.cpp">
+      <Filter>02. GameObject\UI\UI_Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
