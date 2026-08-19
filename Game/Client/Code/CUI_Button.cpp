@@ -51,7 +51,7 @@ void CUI_Button::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		m_fFrame += 10 * fFixedDeltaTime;
 		if (m_fFrame > 4)
-			m_fFrame = 0;
+			m_fFrame = 1;
 		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
 		{
 			cout << "1" << endl;
