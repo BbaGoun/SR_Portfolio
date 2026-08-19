@@ -135,7 +135,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))
 	{
-		if (m_fBoostItemCnt > 0 && m_bThunder == false)
+		if (m_fBoostItemCnt > 0)
 		{
 			--m_fBoostItemCnt;
 			m_bBoost = true;
@@ -454,7 +454,7 @@ void CCart::CreateThunderCloudObject()
 void CCart::UpdateThunder()
 {
 	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
-	m_bThunder = pCartBody->GetThunderTimerOnOff();
+	m_bThunder = pCartBody->GetThunderSpinState();
 
 	if (m_bThunder == true)
 	{
@@ -462,6 +462,7 @@ void CCart::UpdateThunder()
 		m_bBoost = false;
 		m_fSpeed = 1;
 		// 드리트프 종료 + 게이지 계산
+		m_bDrift = false;
 		m_fCurGage += m_fGainGage;
 		if (m_fCurGage >= 100.f)
 		{
@@ -470,12 +471,8 @@ void CCart::UpdateThunder()
 		}
 		m_fGainGage = 0;
 		m_vRotation.z = 0;
-		m_bDrift = false;
 		// 속도 감소
 		m_vForce *= 0.98;
-	}
-	else
-	{
 	}
 }
 

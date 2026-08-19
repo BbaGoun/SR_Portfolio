@@ -60,7 +60,7 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 
 	m_fThunderDelayTimer += fDeltaTime;
 	
-	if (m_bCreateThunder == false && m_fThunderDelayTimer > 2.f)
+	if (m_bCreateThunder == false && m_fThunderDelayTimer > 1.5f)
 	{
 		if (pCartBody->GetThunderTimerOnOff() == false)
 		{

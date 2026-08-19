@@ -78,7 +78,7 @@ private:
 
 	float		m_fBoostItemCnt;
 
-	float		m_bThunder;
+	bool		m_bThunder;
 
 	CART_STATE	m_eCartState;
 	_vec3		m_vTerrainNormal;
