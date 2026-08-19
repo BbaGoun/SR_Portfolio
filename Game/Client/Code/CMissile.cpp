@@ -65,18 +65,24 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	D3DXMATRIX matRot;
 	D3DXMATRIX matCenter;
 
-	_vec3 vTargetLook;
-	pTransform->Get_Info(INFO_LOOK, &vTargetLook);
-	D3DXVec3Normalize(&vTargetLook, &vTargetLook);
+	_vec3 vAxis = vDir;
+	D3DXVec3Normalize(&vAxis, &vAxis);
 
-	D3DXMatrixTranslation(&matOffset, radius, 0.f, 0.f);
-	D3DXMatrixRotationAxis(&matRot, &vTargetLook, m_fAngle);
+	_vec3 vUp = { 0.f, 1.f, 0.f };
+	_vec3 vRight;
+
+	D3DXVec3Cross(&vRight, &vUp, &vAxis);
+	D3DXVec3Normalize(&vRight, &vRight);
+
+	D3DXMatrixTranslation(&matOffset, vRight.x * radius, vRight.y * radius, vRight.z * radius);
+	D3DXMatrixRotationAxis(&matRot, &vAxis, m_fAngle);
 	D3DXMatrixTranslation(&matCenter, vBoxPos.x, vBoxPos.y, vBoxPos.z);
 
 	_matrix matOrbit = matOffset * matRot * matCenter;
 
 	_vec3 vBoxOrbit;
 	_vec3 vOriginPos = { 0.f, 0.f, 0.f };
+
 	D3DXVec3TransformCoord(&vBoxOrbit, &vOriginPos, &matOrbit);
 
 	if (fDistance > 8.f)
