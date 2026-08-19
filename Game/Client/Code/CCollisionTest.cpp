@@ -30,6 +30,9 @@
 #include "CThunder.h"
 #include "CThunderCloud.h"
 #include "CUI_Button.h"
+#include "CUI_Timer.h"
+#include "CUI_ItemSlot.h"
+#include "CUI_ItemIcon.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -493,6 +496,27 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_Button", pUIObject)))
+		return E_FAIL;
+
+	// UI_Timer
+	pUIObject = CUI_Timer::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
+		return E_FAIL;
+
+	// UI_ItemSlot
+	pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemSlot", pUIObject)))
+		return E_FAIL;
+
+	// UI_ItemIcon
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
 		return E_FAIL;
 
 	return S_OK;

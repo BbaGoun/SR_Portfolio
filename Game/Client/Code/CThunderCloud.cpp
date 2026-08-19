@@ -65,6 +65,7 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 		if (pCartBody->GetThunderTimerOnOff() == false)
 		{
 			pCartBody->SetThunderTimerOnOff(true);
+			m_fFrame = 1;
 		}
 		CreateThunder();
 		CreateThunderPlayerEffect();
@@ -74,11 +75,11 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 	{
 		if (m_fFrame < 1)
 		{
-			m_fFrame += 2 * fDeltaTime;
+			m_fFrame += 5 * fDeltaTime;
 		}
 		else if (m_fFrame < 2)
 		{
-			m_fFrame += 10 * fDeltaTime;
+			m_fFrame += 5 * fDeltaTime;
 		}
 		else
 		{

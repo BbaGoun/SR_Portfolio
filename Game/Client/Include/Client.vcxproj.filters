@@ -175,6 +175,18 @@
     <Filter Include="02. GameObject\UI\UI_Button">
       <UniqueIdentifier>{52732eb2-24e9-49ce-bed4-df41bda21639}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\StartMenu">
+      <UniqueIdentifier>{d27c7ebd-8c53-4c6c-99f8-e7b7ce78148a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_ItemSlot">
+      <UniqueIdentifier>{295445ca-386c-46dd-9acb-6ad8d4877595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_ItemIcon">
+      <UniqueIdentifier>{0911f93a-c818-456f-8a9b-423b77b4ada3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Timer">
+      <UniqueIdentifier>{406ce618-cfd9-400f-ba28-75c87ea2370b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -333,6 +345,18 @@
     <ClInclude Include="..\Header\CUI_Button.h">
       <Filter>02. GameObject\UI\UI_Button</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CStartMenu.h">
+      <Filter>01. Scene\StartMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Timer.h">
+      <Filter>02. GameObject\UI\UI_Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_ItemIcon.h">
+      <Filter>02. GameObject\UI\UI_ItemIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_ItemSlot.h">
+      <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -481,6 +505,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_Button.cpp">
       <Filter>02. GameObject\UI\UI_Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CStartMenu.cpp">
+      <Filter>01. Scene\StartMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Timer.cpp">
+      <Filter>02. GameObject\UI\UI_Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_ItemIcon.cpp">
+      <Filter>02. GameObject\UI\UI_ItemIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_ItemSlot.cpp">
+      <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

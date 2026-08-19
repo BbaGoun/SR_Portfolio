@@ -198,6 +198,7 @@
     <ClInclude Include="..\Header\CMapTest.h" />
     <ClInclude Include="..\Header\CITem.h" />
     <ClInclude Include="..\Header\CLand3.h" />
+    <ClInclude Include="..\Header\CStartMenu.h" />
     <ClInclude Include="..\Header\CThunder.h" />
     <ClInclude Include="..\Header\CThunderCloud.h" />
     <ClInclude Include="..\Header\CThunderFloorEffect.h" />
@@ -220,7 +221,10 @@
     <ClInclude Include="..\Header\CHUD_Gage.h" />
     <ClInclude Include="..\Header\CUI_BoosterBG.h" />
     <ClInclude Include="..\Header\CUI_Button.h" />
+    <ClInclude Include="..\Header\CUI_ItemIcon.h" />
+    <ClInclude Include="..\Header\CUI_ItemSlot.h" />
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
+    <ClInclude Include="..\Header\CUI_Timer.h" />
     <ClInclude Include="..\Header\CWheel.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
@@ -252,6 +256,7 @@
     <ClCompile Include="..\Code\CMapTest.cpp" />
     <ClCompile Include="..\Code\CITem.cpp" />
     <ClCompile Include="..\Code\CLand3.cpp" />
+    <ClCompile Include="..\Code\CStartMenu.cpp" />
     <ClCompile Include="..\Code\CThunder.cpp" />
     <ClCompile Include="..\Code\CThunderCloud.cpp" />
     <ClCompile Include="..\Code\CThunderFloorEffect.cpp" />
@@ -273,7 +278,10 @@
     <ClCompile Include="..\Code\CHUD_Gage.cpp" />
     <ClCompile Include="..\Code\CUI_BoosterBG.cpp" />
     <ClCompile Include="..\Code\CUI_Button.cpp" />
+    <ClCompile Include="..\Code\CUI_ItemIcon.cpp" />
+    <ClCompile Include="..\Code\CUI_ItemSlot.cpp" />
     <ClCompile Include="..\Code\CUI_Rainbow.cpp" />
+    <ClCompile Include="..\Code\CUI_Timer.cpp" />
     <ClCompile Include="..\Code\CWheel.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
