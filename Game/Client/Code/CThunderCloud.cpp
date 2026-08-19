@@ -65,7 +65,6 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 		if (pCartBody->GetThunderTimerOnOff() == false)
 		{
 			pCartBody->SetThunderTimerOnOff(true);
-			cout << "pCartSetThunderTrue" << endl;
 		}
 		CreateThunder();
 		CreateThunderPlayerEffect();

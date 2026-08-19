@@ -26,11 +26,11 @@ public:
 	static CCart*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void			KeyInput(const _float& fDeltaTime);
 	void			UpdateDrift();
-	void			UpdateBoost();
+	void			UpdateBoost(const _float& fDeltaTime);
 	void			UpdateThunder();
 
-	bool			GetBoost()							{ return m_bBoost; }
-	void			SetBoost(bool bBoost)				{ m_bBoost = bBoost; }
+	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
+	void			SetBoost(BOOST_STATE eID)			{ m_eBoostState = eID; }
 
 	bool			GetDrift()							{ return m_bDrift; }
 	void			SetDrift(bool bDrift)				{ m_bDrift = bDrift; }
@@ -59,7 +59,6 @@ public:
 private:
 	_float		m_fMaxSpeed;
 	bool		m_bDrift;
-	bool		m_bBoost;
 	bool		m_bBanana;
 	bool		m_bRainbowUI;
 
@@ -80,7 +79,12 @@ private:
 
 	bool		m_bThunder;
 
+	bool		m_bShortBoosterOnOff;
+	float		m_fShortBoosterTimer;
+
 	CART_STATE	m_eCartState;
+	BOOST_STATE	m_eBoostState;
+
 	_vec3		m_vTerrainNormal;
 
 

@@ -28,35 +28,38 @@ CCart::~CCart()
 HRESULT CCart::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_vForce			= { 0,0,0 };
+	m_vForce				= { 0,0,0 };
 
-	m_fSpeed			= 1.f;
-	m_fMaxSpeed			= 3.f;
+	m_fSpeed				= 1.f;
+	m_fMaxSpeed				= 3.f;
 	
-	m_bDrift			= false;
-	m_fLookForceAngle	= 0.f;
+	m_bDrift				= false;
+	m_fLookForceAngle		= 0.f;
 
-	m_fBoostTurnAngle	= 0.5f;
-	m_fNormalTurnAngle	= 0.8f;
-	m_fDriftTurnAngle	= 1.5f;
+	m_fBoostTurnAngle		= 0.5f;
+	m_fNormalTurnAngle		= 0.8f;
+	m_fDriftTurnAngle		= 1.5f;
 
-	m_bBoost			= false;
-	m_bRainbowUI		= false;
-	m_bBanana			= false;
-	m_bThunder			= false;
+	m_bRainbowUI			= false;
+	m_bBanana				= false;
+	m_bThunder				= false;
 
-	m_fBananaTimer		= 0.f;
+	m_fBananaTimer			= 0.f;
 
-	m_fCurGage			= 0.f;
-	m_fGainGage			= 0.f;
+	m_fCurGage				= 0.f;
+	m_fGainGage				= 0.f;
 
-	m_fBoostItemCnt		= 0.f;
+	m_fBoostItemCnt			= 0.f;
 
-	
+	m_fShortBoosterTimer	= 0.f;
+	m_bShortBoosterOnOff	= false;
+
+	m_eCartState		= CART_STATE_GROUND;
+	m_eBoostState		= BOOST_STATE_NORMAL;
+	m_vTerrainNormal	= { 0,1,0 };
+
+
 	m_vBananaSpinStartLook = { 0,0,0 };
-
-	m_eCartState = CART_STATE_GROUND;
-	m_vTerrainNormal = { 0,1,0 };
 	return S_OK;
 }
 
@@ -85,7 +88,7 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	KeyInput(fDeltaTime);
-	UpdateBoost();
+	UpdateBoost(fDeltaTime);
 	UpdateDrift();
 	UpdateThunder();
 
@@ -133,12 +136,22 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateThunderCloudObject();
 	}
+	// ShortBooster
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_UP))
+	{
+		if (m_bShortBoosterOnOff == true)
+		{
+			m_eBoostState = BOOST_STATE_SHORT_BOOST;
+			m_fBoostCal = 1.05f;
+		}
+	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))
 	{
+		// LongBooster
 		if (m_fBoostItemCnt > 0)
 		{
 			--m_fBoostItemCnt;
-			m_bBoost = true;
+			m_eBoostState = BOOST_STATE_LONG_BOOST;
 			m_fBoostCal = 1.05f;
 		}
 	}
@@ -153,7 +166,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	else
 	{
 		m_fSpeed = 1.f;
-		m_bBoost = false;
+		m_eBoostState = BOOST_STATE_NORMAL;
 	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
 	{
@@ -172,6 +185,8 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		m_bDrift = true;
 	}
 
+	if (m_bThunder == true )
+		return;
 
 	float fForceLength = D3DXVec3Length(&m_vForce);
 	if (fForceLength < 1.0f)
@@ -221,7 +236,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 				}
 			}
 		}
-		else if (m_bBoost == true)
+		else if (m_eBoostState >= BOOST_STATE_SHORT_BOOST)
 		{
 			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 				m_vRotation.y += D3DXToRadian(-m_fBoostTurnAngle);
@@ -283,7 +298,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 				}
 			}
 		}
-		else if (m_bBoost == true)
+		else if (m_eBoostState >= BOOST_STATE_SHORT_BOOST)
 		{
 			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 				m_vRotation.y += D3DXToRadian(m_fBoostTurnAngle);
@@ -328,13 +343,14 @@ void CCart::UpdateDrift()
 		_vec3 vCross;
 		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
 
-		m_fLookForceAngle = acosf(D3DXVec3Dot(&vLook, &vTempForce));
-
+		m_fLookForceAngle = D3DXToDegree(acosf(D3DXVec3Dot(&vLook, &vTempForce)));
+		cout << m_fLookForceAngle << endl;
 		m_vRotation.z *= 0.98;
 		m_vRotation.z = clampT(float(m_vRotation.z), -0.1f, 0.1f);
 
-		if (m_fLookForceAngle < 0.3f || m_eCartState != CART_STATE_GROUND)
+		if (m_fLookForceAngle < 30.f || m_eCartState != CART_STATE_GROUND)
 		{
+			m_bShortBoosterOnOff = true;
 			m_fCurGage += m_fGainGage;
 			if (m_fCurGage >= 100.f)
 			{
@@ -347,45 +363,41 @@ void CCart::UpdateDrift()
 		}
 		else
 		{
-			m_fGainGage += m_fLookForceAngle * 0.5f;
+			m_fGainGage += m_fLookForceAngle * 0.01f;
 			m_fGainGage += D3DXVec3Length(&m_vForce) * m_fSpeed * 0.005f;
 		}
 	}
 }
 
-void CCart::UpdateBoost()
+void CCart::UpdateBoost(const _float& fDeltaTime)
 {
-	if (m_bBoost == false)
-		return;
-	//if (m_fSpeed == 1)
-	//{
-	//	//_vec3 vLook, vTempForce;
-	//	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	//	//vTempForce = m_vForce;
-	//	//
-	//	//vLook.y = 0;
-	//	//vTempForce.y = 0;
-	//	//
-	//	//D3DXVec3Normalize(&vLook, &vLook);
-	//	//D3DXVec3Normalize(&vTempForce, &vTempForce);
-	//	//
-	//	//float fAngle;
-	//	//fAngle = D3DXVec3Dot(&vTempForce, &vLook);
-	//	//
-	//	//_matrix matRot;
-	//	//D3DXMatrixRotationY(&matRot, D3DXToRadian(fAngle));
-	//	//D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
-	//
-	//	m_fSpeed += 2; 
-	//
-	//}
+	if (m_bShortBoosterOnOff == true)
+	{
+		m_fShortBoosterTimer += fDeltaTime;
+		if (m_fShortBoosterTimer > 0.5f)
+		{
+			m_fShortBoosterTimer = 0.f;
+			m_bShortBoosterOnOff = false;
+		}
+	}
 
-	if (m_fSpeed > 3)
-		m_fBoostCal = 0.995;
+	if (m_eBoostState == BOOST_STATE_NORMAL)
+		return;
 	m_fSpeed *= m_fBoostCal;
+	if (m_eBoostState == BOOST_STATE_SHORT_BOOST)
+	{
+		if (m_fSpeed > 2)
+			m_fBoostCal = 0.98;
+	}
+	else if (m_eBoostState == BOOST_STATE_LONG_BOOST)
+	{
+		if (m_fSpeed > 3)
+			m_fBoostCal = 0.995;
+	}
+
 	if (m_fSpeed < 1)
 	{
-		m_bBoost = false;
+		m_eBoostState = BOOST_STATE_NORMAL;
 		m_fSpeed = 1;
 	}
 }
@@ -459,7 +471,7 @@ void CCart::UpdateThunder()
 	if (m_bThunder == true)
 	{
 		// 부스터 끄기
-		m_bBoost = false;
+		m_eBoostState = BOOST_STATE_NORMAL;
 		m_fSpeed = 1;
 		// 드리트프 종료 + 게이지 계산
 		m_bDrift = false;

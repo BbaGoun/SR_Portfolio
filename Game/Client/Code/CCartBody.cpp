@@ -120,7 +120,7 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 		if (pCart->GetBanana() == false)
 		{
 			pCart->SetBanana(true);
-			pCart->SetBoost(false);
+			pCart->SetBoost(BOOST_STATE_NORMAL);
 		}
 	}
 }
@@ -162,7 +162,6 @@ void CCartBody::ThunderSpin(const _float& fDeltaTime)
 
 void CCartBody::ThunderTimerUpdate(const _float& fDeltaTime)
 {
-	cout << m_bThunderTimerOnOff << endl;
 	if (m_bThunderTimerOnOff == false)
 	{
 		if (m_fScale < 1.f)
