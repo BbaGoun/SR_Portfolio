@@ -30,6 +30,8 @@ void CEmpty::Render_GameObject()
 	CVIBuffer* pBuf = Get_Component<CVIBuffer>();
 	if (pBuf)
 		pBuf->Render_Buffer();
+	if (pTex)
+		m_pGraphicDev->SetTexture(0, nullptr);
 }
 
 CEmpty* CEmpty::Create(LPDIRECT3DDEVICE9 pGraphicDev)

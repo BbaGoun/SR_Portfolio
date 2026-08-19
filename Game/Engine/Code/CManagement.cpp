@@ -1,5 +1,6 @@
 ﻿#include "CManagement.h"
 #include "CRenderer.h"
+#include "CEditorLoader.h"
 
 IMPLEMENT_SINGLETON(CManagement)
 
@@ -112,16 +113,6 @@ void CManagement::OnResetDevice()
         m_pScene->OnResetDevice();
 }
 
-
-HRESULT CManagement::Load_Scene(const wchar_t* path)
-{
-    // 씬 타입에 따라 실제 구현 씬 만들기
-    // 파일을 파싱하여 해당 씬에 오브젝트 및 설정 넣기
-    // 오브젝트도 오브젝트 타입으로 실제 구현 오브젝트 만들기
-    // 파일을 파싱하여 해당 오브젝트에 컴포넌트 및 설정 넣기
-
-    return S_OK;
-}
 
 HRESULT CManagement::Set_Scene(CScene* pScene)
 {

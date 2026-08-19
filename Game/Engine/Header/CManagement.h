@@ -47,7 +47,6 @@ public:
 
 
 public:
-	HRESULT			Load_Scene(const wchar_t* path);
 	HRESULT			Set_Scene(CScene* pScene);
 	void			Request_Scene(CScene* pScene);
 	void			Change_NextScene();

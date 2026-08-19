@@ -361,6 +361,16 @@ void CHierarchy::RightClick_PopUp()
     }
 }
 
+void CHierarchy::OnLoad()
+{
+    _tchar prefabPath[MAX_PATH] = L"\0";
+
+    if (!OpenLoadPrefabDialog(prefabPath, MAX_PATH))
+        return;  // 취소
+
+    CreatePrefabFromFile(prefabPath);
+}
+
 bool CHierarchy::OpenLoadPrefabDialog(_tchar* outPath, DWORD outChars)
 {
     wchar_t fileBuf[MAX_PATH] = {};
@@ -393,228 +403,6 @@ bool CHierarchy::OpenLoadPrefabDialog(_tchar* outPath, DWORD outChars)
     return true;
 }
 
-void CHierarchy::OnLoad()
-{
-    _tchar prefabPath[MAX_PATH] = L"\0";
-
-    if (!OpenLoadPrefabDialog(prefabPath, MAX_PATH))
-        return;  // 취소
-
-    CreatePrefabFromFile(prefabPath);
-}
-
-namespace
-{
-    wchar_t* TrimPrefabLine(wchar_t* s)
-    {
-        if (s == nullptr)
-            return s;
-        if (s[0] == 0xFEFF)
-            ++s;
-        while (*s == L' ' || *s == L'\t')
-            ++s;
-        size_t n = wcslen(s);
-        while (n > 0 && (s[n - 1] == L'\n' || s[n - 1] == L'\r' || s[n - 1] == L' ' || s[n - 1] == L'\t'))
-            s[--n] = 0;
-        return s;
-    }
-
-    struct PrefabReadState
-    {
-        FILE*   fp = nullptr;
-        wchar_t buf[1024] = {};
-        bool    pending = false;
-
-        bool Next(wchar_t*& out)
-        {
-            if (!pending)
-            {
-                if (!fgetws(buf, 1024, fp))
-                    return false;
-            }
-            pending = false;
-            out = TrimPrefabLine(buf);
-            return true;
-        }
-
-        void Unget() { pending = true; }
-    };
-
-    const WCHAR* InternProtoTag(const WCHAR* tag)
-    {
-        if (tag == nullptr || tag[0] == L'\0')
-            return nullptr;
-
-        for (auto& proto : CProtoMgr::GetInstance()->Get_Prototypes())
-        {
-            if (!lstrcmp(proto.second.tag, tag))
-                return proto.second.tag;
-        }
-        return nullptr;
-    }
-
-    void ExtractCompField(const wchar_t* line, const wchar_t* key, wchar_t* out, int outChars)
-    {
-        out[0] = 0;
-        wchar_t pat[64] = {};
-        swprintf_s(pat, L"%s=", key);
-        const wchar_t* p = wcsstr(line, pat);
-        if (p == nullptr)
-            return;
-        p += wcslen(pat);
-        int i = 0;
-        while (p[i] && p[i] != L' ' && p[i] != L'\t' && i < outChars - 1)
-        {
-            out[i] = p[i];
-            ++i;
-        }
-        out[i] = 0;
-    }
-
-    bool StartsWith(const wchar_t* line, const wchar_t* prefix)
-    {
-        return wcsncmp(line, prefix, wcslen(prefix)) == 0;
-    }
-
-    void ApplyCompProperties(PrefabReadState& st, CGameObject* pObj, CComponent* pCom)
-    {
-        wchar_t* t = nullptr;
-        while (st.Next(t))
-        {
-            float x = 0.f, y = 0.f, z = 0.f, w = 0.f;
-            int   trig = 0;
-
-            if (swscanf_s(t, L"pos=%f %f %f", &x, &y, &z) == 3)
-            {
-                if (CTransform* pTF = pObj->Get_Transform())
-                    pTF->Set_Pos(_vec3(x, y, z));
-            }
-            else if (swscanf_s(t, L"rot=%f %f %f", &x, &y, &z) == 3)
-            {
-                // 런타임 회전은 quat가 기준. rot는 저장용 미리보기.
-            }
-            else if (swscanf_s(t, L"quat=%f %f %f %f", &x, &y, &z, &w) == 4)
-            {
-                D3DXQUATERNION q(x, y, z, w);
-                if (CTransform* pTF = pObj->Get_Transform())
-                    pTF->Set_Quaternion(&q);
-            }
-            else if (swscanf_s(t, L"scale=%f %f %f", &x, &y, &z) == 3)
-            {
-                if (CTransform* pTF = pObj->Get_Transform())
-                    pTF->Set_Scale(_vec3(x, y, z));
-            }
-            else if (swscanf_s(t, L"trigger=%d", &trig) == 1)
-            {
-                if (CCollider* pCol = dynamic_cast<CCollider*>(pCom))
-                    pCol->SetIsTrigger(trig != 0);
-            }
-            else if (swscanf_s(t, L"offset=%f %f %f", &x, &y, &z) == 3)
-            {
-                if (CCube_Collider* pBox = dynamic_cast<CCube_Collider*>(pCom))
-                    pBox->Set_Offset(_vec3(x, y, z));
-                else if (CSphere_Collider* pSphere = dynamic_cast<CSphere_Collider*>(pCom))
-                    pSphere->Set_Offset(_vec3(x, y, z));
-            }
-            else if (swscanf_s(t, L"extents=%f %f %f", &x, &y, &z) == 3)
-            {
-                if (CCube_Collider* pBox = dynamic_cast<CCube_Collider*>(pCom))
-                    pBox->Set_Extents(_vec3(x, y, z));
-            }
-            else if (swscanf_s(t, L"radius=%f", &x) == 1)
-            {
-                if (CSphere_Collider* pSphere = dynamic_cast<CSphere_Collider*>(pCom))
-                    pSphere->Set_Radius(x);
-            }
-            else
-            {
-                st.Unget();
-                break;
-            }
-        }
-    }
-
-    CGameObject* LoadPrefabObject(PrefabReadState& st, LPDIRECT3DDEVICE9 pGraphicDev,
-        CGameObject* pParent, bool bRoot, const wchar_t* prefabPath)
-    {
-        CGameObject* pObj = CEmpty::Create(pGraphicDev);
-        if (pObj == nullptr)
-            return nullptr;
-
-        const uint32_t guid = CManagement::GetInstance()->GenerateGuid();
-        pObj->SetGuid(guid);
-
-        wstring key = to_wstring(guid);
-        CManagement::GetInstance()->Add_GameObject(L"Default", key.c_str(), pObj);
-        if (pParent)
-            pParent->Set_Child(pObj);
-
-        wchar_t* t = nullptr;
-        while (st.Next(t))
-        {
-            if (!wcscmp(t, L"ENDOBJECT"))
-                break;
-
-            if (!wcscmp(t, L"OBJECT"))
-            {
-                LoadPrefabObject(st, pGraphicDev, pObj, false, prefabPath);
-                continue;
-            }
-
-            if (StartsWith(t, L"name="))
-                pObj->SetName(t + 5);
-            else if (StartsWith(t, L"type="))
-                pObj->SetType(t + 5);
-            else if (StartsWith(t, L"tag="))
-                pObj->SetTag(t + 4);
-            else if (StartsWith(t, L"belong="))
-                pObj->Set_Belong(_wtoi(t + 7) != 0);
-            else if (StartsWith(t, L"layer="))
-                pObj->Set_CollisionLayer((COLLISION_LAYER)_wtoi(t + 6));
-            else if (StartsWith(t, L"COMP "))
-            {
-                wchar_t kind[64] = {};
-                wchar_t proto[256] = {};
-                wchar_t mapTag[256] = {};
-                ExtractCompField(t, L"kind", kind, 64);
-                ExtractCompField(t, L"proto", proto, 256);
-                ExtractCompField(t, L"mapTag", mapTag, 256);
-
-                CComponent* pCom = nullptr;
-                if (!wcscmp(kind, L"Transform"))
-                {
-                    pCom = pObj->Get_Transform();
-                }
-                else
-                {
-                    const WCHAR* interned = InternProtoTag(proto);
-                    if (interned == nullptr)
-                        interned = InternProtoTag(mapTag);
-                    if (interned)
-                    {
-                        pObj->Add_Component(interned, interned);
-                        for (auto& pairCom : pObj->Get_ComponentMap())
-                        {
-                            if (!lstrcmp(pairCom.first, interned))
-                            {
-                                pCom = pairCom.second;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                ApplyCompProperties(st, pObj, pCom);
-            }
-        }
-
-        if (bRoot && prefabPath && prefabPath[0] != L'\0')
-            pObj->Set_PrefabPath(prefabPath);
-
-        return pObj;
-    }
-}
-
 void CHierarchy::CreatePrefabFromFile(const wchar_t* path)
 {
     if (path == nullptr || path[0] == L'\0')
@@ -624,7 +412,7 @@ void CHierarchy::CreatePrefabFromFile(const wchar_t* path)
     if (_wfopen_s(&fp, path, L"r, ccs=UTF-8") != 0 || !fp)
         return;
 
-    PrefabReadState st;
+    FileReadState st;
     st.fp = fp;
 
     wchar_t* t = nullptr;
@@ -640,6 +428,88 @@ void CHierarchy::CreatePrefabFromFile(const wchar_t* path)
     g_bSelected = true;
     g_uSelected = pRoot->GetGuid();
     CManagement::GetInstance()->Set_SceneDirty(true);
+}
+
+CGameObject* CHierarchy::LoadPrefabObject(FileReadState& st, LPDIRECT3DDEVICE9 pGraphicDev,
+    CGameObject* pParent, bool bRoot, const wchar_t* prefabPath)
+{
+    CGameObject* pObj = CEmpty::Create(pGraphicDev);
+    if (pObj == nullptr)
+        return nullptr;
+
+    const uint32_t guid = CManagement::GetInstance()->GenerateGuid();
+    pObj->SetGuid(guid);
+
+    wstring key = to_wstring(guid);
+    CManagement::GetInstance()->Add_GameObject(L"Default", key.c_str(), pObj);
+    if (pParent)
+        pParent->Set_Child(pObj);
+
+    wchar_t* t = nullptr;
+    while (st.Next(t))
+    {
+        if (!wcscmp(t, L"ENDOBJECT"))
+            break;
+
+        if (!wcscmp(t, L"OBJECT"))
+        {
+            LoadPrefabObject(st, pGraphicDev, pObj, false, prefabPath);
+            continue;
+        }
+
+        if (StartsWith(t, L"name="))
+            pObj->SetName(t + 5);
+        else if (StartsWith(t, L"type="))
+            pObj->SetType(t + 5);
+        else if (StartsWith(t, L"tag="))
+            pObj->SetTag(t + 4);
+        else if (StartsWith(t, L"belong="))
+            pObj->Set_Belong(_wtoi(t + 7) != 0);
+        else if (StartsWith(t, L"collisionLayer="))
+            pObj->Set_CollisionLayer((COLLISION_LAYER)_wtoi(t + 15));
+        else if (StartsWith(t, L"cullDistance="))
+            pObj->Set_CullDistance(_wtoi(t + 13));
+        else if (StartsWith(t, L"COMP "))
+        {
+            wchar_t kind[64] = {};
+            wchar_t proto[256] = {};
+            wchar_t mapTag[256] = {};
+            ExtractCompField(t, L"kind", kind, 64);
+            ExtractCompField(t, L"proto", proto, 256);
+            ExtractCompField(t, L"mapTag", mapTag, 256);
+
+            CComponent* pCom = nullptr;
+            if (!wcscmp(kind, L"Transform"))
+            {
+                pCom = pObj->Get_Transform();
+            }
+            else
+            {
+                const WCHAR* interned = InternProtoTag(proto);
+                if (interned == nullptr)
+                    interned = InternProtoTag(mapTag);
+                if (interned)
+                {
+                    pObj->Add_Component(interned, interned);
+                    for (auto& pairCom : pObj->Get_ComponentMap())
+                    {
+                        if (!lstrcmp(pairCom.first, interned))
+                        {
+                            pCom = pairCom.second;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            ApplyCompProperties(st, pObj, pCom);
+        }
+    }
+
+    if (bRoot && prefabPath && prefabPath[0] != L'\0')
+        pObj->Set_PrefabPath(prefabPath);
+
+    return pObj;
 }
 
 void CHierarchy::OnSave(CGameObject* pObj, bool bSaveAs)
@@ -717,10 +587,6 @@ void CHierarchy::SaveGameObject(FILE* pf, CGameObject* pObj, int depth, bool bRo
     fwprintf(pf, L"OBJECT\n");
 
     writeIndent(pf, depth + 1);
-    fwprintf(pf, L"GUID=%u\n", (UINT)pObj->GetGuid());
-    writeIndent(pf, depth + 1);
-    fwprintf(pf, L"parent=%u\n", pObj->Get_Parent() ? (UINT)pObj->Get_Parent()->GetGuid() : 0u);
-    writeIndent(pf, depth + 1);
     fwprintf(pf, L"belong=%d\n", pObj->Get_Belong() ? 1 : 0);
     writeIndent(pf, depth + 1);
     fwprintf(pf, L"type=%s\n", pObj->GetType());
@@ -729,17 +595,9 @@ void CHierarchy::SaveGameObject(FILE* pf, CGameObject* pObj, int depth, bool bRo
     writeIndent(pf, depth + 1);
     fwprintf(pf, L"tag=%s\n", pObj->GetTag());
     writeIndent(pf, depth + 1);
-    fwprintf(pf, L"layer=%d\n", (int)pObj->Get_CollisionLayer());
-
-    if (bRoot)
-    {
-        writeIndent(pf, depth + 1);
-        fwprintf(pf, L"prefabPath=%s\n", pObj->Get_PrefabPath());
-    }
-
-    auto comMap = pObj->Get_ComponentMap();
+    fwprintf(pf, L"collisionLayer=%d\n", (int)pObj->Get_CollisionLayer());
     writeIndent(pf, depth + 1);
-    fwprintf(pf, L"Component_Count=%u\n", (UINT)comMap.size());
+    fwprintf(pf, L"cullDistance=%d\n", pObj->Get_CullDistance());
 
     for (auto& pairCom : pObj->Get_ComponentMap())
     {
@@ -833,10 +691,6 @@ void CHierarchy::SaveGameObject(FILE* pf, CGameObject* pObj, int depth, bool bRo
             break;
         }
     }
-
-    auto vecChildren = pObj->Get_Children();
-    writeIndent(pf, depth + 1);
-    fwprintf(pf, L"Child_Count=%u\n", (UINT)vecChildren.size());
 
     for (CGameObject* pChild : pObj->Get_Children())
     {

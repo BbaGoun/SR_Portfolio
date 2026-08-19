@@ -37,7 +37,7 @@ public:
 private:
 	map<const _tchar*, vector<CGameObject*>>		m_mapObject;
 	vector<CGameObject*>							m_vecRoots;
-	vector<pair<const _tchar*, CGameObject*>>		m_vecDelete;
+	vector<pair<wstring, CGameObject*>>			m_vecDelete;
 
 public:
 	static CLayer* Create();

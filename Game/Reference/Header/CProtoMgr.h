@@ -2,6 +2,9 @@
 #include "CComponent.h"
 #include "CBase.h"
 
+// 오브젝트
+#include "CEmpty.h"
+
 // 콜라이더
 #include "CCube_Collider.h"
 #include "CSphere_Collider.h"
