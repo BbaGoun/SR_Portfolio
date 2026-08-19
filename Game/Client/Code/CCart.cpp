@@ -238,7 +238,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		}
 	}
 	
-	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E))
+	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E)) //////
 	{
 		CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
 		CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
