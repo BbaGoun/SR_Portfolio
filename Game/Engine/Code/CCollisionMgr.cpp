@@ -28,6 +28,7 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 	{
 		CCube_Collider* pDstCubeCollider = dynamic_cast<CCube_Collider*>(pDstCollider);
 		CCube_Collider* pSrcCubeCollider = dynamic_cast<CCube_Collider*>(pSrcCollider);
+
 		if (pDstCubeCollider->Get_Info().Intersects(pSrcCubeCollider->Get_Info()))
 		{
 			//MSG_BOX("Collision!");

@@ -573,7 +573,7 @@ void CCart::BananaTimer(const _float& fDeltaTime)
 	}
 }
 
-void CCart::CreateMissileObject()	// ++++++++++++++++++++++++
+void CCart::CreateMissileObject()	
 {
 	CGameObject* pMissile = CMissile::Create(m_pGraphicDev);
 
@@ -596,17 +596,36 @@ void CCart::CreateMissileObject()	// ++++++++++++++++++++++++
 	pMissileBody->SetLayer(m_pLayer);
 	pMissile->Set_Child(pMissileBody);
 
-	_vec3 vPos, vLook;
+	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic",L"Obj_MissileTarget");
 
+	_vec3 vPos, vLook, vTargetPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	pMissile->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
 
-	vPos += vLook * 5.f;
+	_vec3 vDir = vTargetPos - vPos;
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	vPos += vDir * 5.f;
+
+	_vec3 vAxis;
+	D3DXVec3Cross(&vAxis, &vLook, &vDir);
+	D3DXVec3Normalize(&vAxis, &vAxis);
+
+	_float fDot = D3DXVec3Dot(&vLook, &vDir);
+	_float fAngle = acosf(fDot);
+
+	D3DXMATRIX matRot;
+	D3DXMatrixRotationAxis(&matRot, &vAxis, fAngle);
+
+	_quaternion qRot;
+	D3DXQuaternionRotationMatrix(&qRot, &matRot);
 
 	pMissile->Get_Transform()->Set_Pos(vPos);
+	pMissile->Get_Transform()->Set_Quaternion(&qRot);
 }
 
-void CCart::CreateTargetAimObject()	// ++++++++++++++++++++++++
+void CCart::CreateTargetAimObject()	
 {
 	CGameObject* pTargetAim = CTargetAim::Create(m_pGraphicDev);
 

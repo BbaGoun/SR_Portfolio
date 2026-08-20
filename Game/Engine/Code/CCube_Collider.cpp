@@ -6,6 +6,7 @@
 CCube_Collider::CCube_Collider(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CCollider(pGraphicDev)
 {
+	// m_tBoundingBox.Orientation = { 0.f, 0.f, 0.f, 1.f };
 }
 
 CCube_Collider::CCube_Collider(const CCollider& rhs)

@@ -95,13 +95,18 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		vLookDir.y = 0;
 		D3DXVec3Normalize(&vLookDir, &vLookDir);
 
-		_matrix matRot;
-		m_pTransformCom->GetFollowRotation(&vLookDir, &matRot);
+		_matrix matRot2;
+		m_pTransformCom->GetFollowRotation(&vLookDir, &matRot2);
 
 		_quaternion qRot;
-		D3DXQuaternionRotationMatrix(&qRot, &matRot);
+		D3DXQuaternionRotationMatrix(&qRot, &matRot2);
 
 		m_pTransformCom->Multiple_Quaternion(&qRot);
+
+		_quaternion qRot2 = m_pTransformCom->Get_WorldQuaternion();
+		if (qRot2.x == 0 && qRot2.y == 0 && qRot2.z == 0 && qRot2.w == 0)
+			m_pTransformCom->GetFollowRotation(&vLookDir, &matRot2);		
+
 		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed ,fFixedDeltaTime);
 	}
 	else if(fDistance > 1.f)
@@ -113,13 +118,18 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		vLookDir.y = 0;
 		D3DXVec3Normalize(&vLookDir, &vLookDir);
 
-		_matrix matRot;
-		m_pTransformCom->GetFollowRotation(&vLookDir, &matRot);
+		_matrix matRot2;
+		m_pTransformCom->GetFollowRotation(&vLookDir, &matRot2);
 
 		_quaternion qRot;
-		D3DXQuaternionRotationMatrix(&qRot, &matRot);
+		D3DXQuaternionRotationMatrix(&qRot, &matRot2);
 
 		m_pTransformCom->Multiple_Quaternion(&qRot);
+		
+		_quaternion qRot2 = m_pTransformCom->Get_WorldQuaternion();
+		if (qRot2.x == 0 && qRot2.y == 0 && qRot2.z == 0 && qRot2.w == 0)
+			m_pTransformCom->GetFollowRotation(&vLookDir, &matRot2);		
+
 		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
 	}
 }
