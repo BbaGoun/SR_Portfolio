@@ -32,6 +32,16 @@ namespace Engine
 		BYTE		aBoneIndices[4];
 	}VTXMESH;
 
+	typedef struct tagVertexTextureColor
+	{
+		_vec3		vPosition;
+		_ulong		dwColor;
+		_vec2		vTexUV;
+		_vec3		vNormal;
+	}VTXTC;
+	const _ulong	FVF_TC = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1;
+
+
 	const D3DVERTEXELEMENT9 MeshVertexElements[] =
 	{
 		// Stream, Offset, Type, Method, Usage, UsageIndex

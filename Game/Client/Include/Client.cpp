@@ -14,12 +14,8 @@ HINSTANCE g_hInst;                                // 현재 인스턴스입니�
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND    g_hWnd;
+UINT    g_ResizeWidth = 0, g_ResizeHeight;
 
-D3DVIEWPORT9 g_FullView = { 0, 0, WINCX, WINCY, 0, 1 };
-D3DVIEWPORT9 g_LeftView = { 0, 0, (WINCX / 2) - 1, WINCY, 0, 1 };
-D3DVIEWPORT9 g_RightView = { (WINCX / 2) + 1, 0, WINCX / 2, WINCY, 0, 1 };
-D3DVIEWPORT9 g_TopView = { 0, 0, WINCX, (WINCY / 2) - 1, 0, 1 };
-D3DVIEWPORT9 g_BottomView = { 0, (WINCY / 2) + 1, WINCX, WINCY / 2, 0, 1 };
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -90,12 +86,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     if (FAILED(CFrameMgr::GetInstance()->Ready_Frame(L"Frame60", 60.f)))
         return E_FAIL;
 
-    if (FAILED(CTimerMgr::GetInstance()->Ready_Timer(L"Timer_Debug")))
-        return E_FAIL;
-
-    if (FAILED(CFrameMgr::GetInstance()->Ready_Frame(L"Frame2", 2.f)))
-        return E_FAIL;
-
     // 기본 메시지 루프입니다
     while (true)
     {
@@ -110,29 +100,39 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 DispatchMessage(&msg);
             }
         }
-        else
+
+        if (pMainApp->IsLost_Device()) {
+            if (pMainApp->ResetTest())
+                continue;
+        }
+
+        if (g_ResizeWidth != 0 && g_ResizeHeight != 0)
         {
-            CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_Global");
-            _float fGlobal_TimeDelta = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_Global");
+            pMainApp->Resize_MainApp(g_ResizeWidth, g_ResizeHeight);
+            g_ResizeWidth = g_ResizeHeight = 0;
+            pMainApp->Reset_MainApp();
+        }
 
-            if (CFrameMgr::GetInstance()->IsPermit_Call(L"Frame60", fGlobal_TimeDelta))
-            {
-                CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_FPS60");
-                _float fFPS60_DeltaTime = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
-                _float fFixed_DeltaTime;
-                int fixedStep = CTimerMgr::GetInstance()->Get_FixedStep(L"Timer_FPS60", &fFixed_DeltaTime);
+        CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_Global");
+        _float fGlobal_TimeDelta = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_Global");
 
-                for(int i=0; i<fixedStep; ++i)
-                    pMainApp->FixedUpdate_MainApp(fFixed_DeltaTime);
+        if (CFrameMgr::GetInstance()->IsPermit_Call(L"Frame60", fGlobal_TimeDelta))
+        {
+            CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_FPS60");
+            _float fFPS60_DeltaTime = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
+            _float fFixed_DeltaTime;
+            int fixedStep = CTimerMgr::GetInstance()->Get_FixedStep(L"Timer_FPS60", &fFixed_DeltaTime);
 
-                // 이 부분이 FixedUpdate 말한대로 이번 프레임에 FixedUpdate를 몇번 호출해야하나 횟수를 얻어서 여러번
-                // 실행한다.
 
-                pMainApp->Update_MainApp(fFPS60_DeltaTime);
-                pMainApp->LateUpdate_MainApp(fFPS60_DeltaTime);
-                pMainApp->Render_MainApp();
-            }
+            for(int i=0; i<fixedStep; ++i)
+                pMainApp->FixedUpdate_MainApp(fFixed_DeltaTime);
 
+            // 이 부분이 FixedUpdate 말한대로 이번 프레임에 FixedUpdate를 몇번 호출해야하나 횟수를 얻어서 여러번
+            // 실행한다.
+
+            pMainApp->Update_MainApp(fFPS60_DeltaTime);
+            pMainApp->LateUpdate_MainApp(fFPS60_DeltaTime);
+            pMainApp->Render_MainApp();
         }
     }
 
@@ -225,6 +225,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    case WM_SIZE:
+        if (wParam == SIZE_MINIMIZED)
+            return 0;
+        g_ResizeWidth = (UINT)LOWORD(lParam); // Queue resize
+        g_ResizeHeight = (UINT)HIWORD(lParam);
+        return 0;
+    case WM_SYSCOMMAND:
+        if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
+            return 0;
+        break;
     case WM_COMMAND:
     {
         int wmId = LOWORD(wParam);
@@ -242,15 +252,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
     }
     break;
-    case WM_PAINT:
-    {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
-        // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-        EndPaint(hWnd, &ps);
-    }
-    break;
-
     case WM_KEYDOWN:
 
         switch (wParam)
@@ -260,14 +261,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             break;
         }
         break;
-
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
     }
-    return 0;
+    return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 // 정보 대화 상자의 메시지 처리기입니다.

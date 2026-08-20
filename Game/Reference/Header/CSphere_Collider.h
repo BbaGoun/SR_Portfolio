@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CCollider.h"
 
 BEGIN(Engine)
@@ -6,30 +6,31 @@ class CGameObject;
 class ENGINE_DLL CSphere_Collider : public CCollider
 {
 private:
-	explicit CSphere_Collider();
 	explicit CSphere_Collider(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CSphere_Collider(const CCollider& rhs);
 	virtual ~CSphere_Collider();
 
 public:
 	virtual _int Update_Component(const _float& fTimeDelta);
-	virtual void LateUpdate_Component(const _float& fTimeDelta);
+	virtual void LateUpdate_Component(const _float& fTimeDelta) override;
+	virtual void Render_Component(D3DXCOLOR color) override;
 
 public:
 	HRESULT		Ready_CSphere_Collider();
 	static		CSphere_Collider* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-	void		SetCenter(_vec3 vCenter) { m_vCenter = vCenter; }
-	_vec3		GetCenter() { return m_vCenter; }
+	DirectX::BoundingSphere& Get_Info()		{ return m_tBoundingSphere; }
 
-	void		SetRadius(float fRadius) { m_fRadius = fRadius; }
-	float		GetRadius() { return m_fRadius; }
+	void		Set_Center(_vec3 vPos)		{ m_tBoundingSphere.Center = ToXMFLOAT3(vPos); }
+	void		Set_Radius(float fRadius)	{ m_tBoundingSphere.Radius = max(0.01f, fRadius); }
+	void		Set_Offset(_vec3 vOffset)	{ m_vOffset = vOffset; }
+	_vec3		Get_Offset()				{ return m_vOffset; }
 
 	virtual		CComponent* Clone();
 
 private:
-	_vec3		m_vCenter;
-	float		m_fRadius;
+	DirectX::BoundingSphere	m_tBoundingSphere;
+	_vec3					m_vOffset = { 0, 0, 0 };
 
 private:
 	virtual		void		Free();

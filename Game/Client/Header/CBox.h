@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CGameObject.h"
 namespace Engine
 {
@@ -18,14 +18,12 @@ public:
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override ;
-
 public:
 	static CBox* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	Engine::CCartBodyCol*		m_pBufferCom;
 	Engine::CCube_Collider*		m_pColliderCom;
-
 
 protected:
 	virtual		void		Free() override;

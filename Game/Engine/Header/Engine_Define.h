@@ -1,4 +1,4 @@
-#ifndef Engine_Define_h__
+ï»¿#ifndef Engine_Define_h__
 #define Engine_Define_h__
 
 #include <d3d9.h>
@@ -13,7 +13,8 @@
 #include <string>
 #include <unordered_map>
 #include <ctime>
-#include <bitset>
+#include <Shlwapi.h>
+#pragma comment(lib, "Shlwapi.lib")
 
 #include <io.h>
 #include <iostream>
@@ -25,13 +26,14 @@ using namespace std;
 #include "Engine_Typedef.h"
 #include "Engine_Function.h"
 
-// dinput »ç¿ë
+// dinput ì‚¬ìš©
 #define DIRECTINPUT_VERSION	0x0800
 #include <dinput.h>
 
-// °æ°í Ã³¸® ¹«½Ã
+// ê²½ê³  ì²˜ë¦¬ ë¬´ì‹œ
 #pragma warning(disable : 4251)
 
+#ifndef _EDITOR
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC
@@ -43,6 +45,7 @@ using namespace std;
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
 #define new DBG_NEW 
 
+#endif
 #endif
 #endif
 

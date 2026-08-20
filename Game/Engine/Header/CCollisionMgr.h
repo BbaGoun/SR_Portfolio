@@ -4,6 +4,8 @@
 #include "CGameObject.h"
 
 BEGIN(Engine)
+class CCube_Collider;
+class CSphere_Collider;
 
 class ENGINE_DLL CCollisionMgr
 {
@@ -13,16 +15,12 @@ private:
 	virtual ~CCollisionMgr();
 
 public:
-	virtual void FixedUpdate_Component();
-	virtual _int Update_Component(const _float& fTimeDelta);
-	virtual void LateUpdate_Component();
-
-public:
 	static	void	Collision(CCollider* pDst, CCollider* pSrc);
-	static	bool	CubeVsCube(CCollider* pDst, CCollider* pSrc);
-	static	bool	SphereVsSphere(CCollider* pDst, CCollider* pSrc);
-	static	bool	CubeVsSphere(CCollider* pDst, CCollider* pSrc);
-	static	bool	SphereVsCube(CCollider* pDst, CCollider* pSrc);
+	static	_vec3	GetMTVCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc);
+	//static	bool	CubeVsCube(CCollider* pDst, CCollider* pSrc);
+	//static	bool	SphereVsSphere(CCollider* pDst, CCollider* pSrc);
+	//static	bool	CubeVsSphere(CCollider* pDst, CCollider* pSrc);
+	//static	bool	SphereVsCube(CCollider* pDst, CCollider* pSrc);
 
 //void	AddCollider(OBJID eID, CCollider* pCollider);
 //private:

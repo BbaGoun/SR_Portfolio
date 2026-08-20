@@ -1,8 +1,4 @@
-#include "CCartWheelCol.h"
-
-CCartWheelCol::CCartWheelCol() : CVIBuffer()
-{
-}
+ï»¿#include "CCartWheelCol.h"
 
 CCartWheelCol::CCartWheelCol(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {
@@ -61,7 +57,7 @@ HRESULT CCartWheelCol::Ready_Buffer()
 
 	m_pIB->Lock(0, 0, (void**)&indices, 0);
 
-	// -x ¹æÇâ ¿ø: »ï°¢Çü 16°³
+	// -x ë°©í–¥ ì›: ì‚¼ê°í˜• 16ê°œ
 	for (int i = 0; i < 16; ++i)
 	{
 		indices[i]._0 = 32;
@@ -69,7 +65,7 @@ HRESULT CCartWheelCol::Ready_Buffer()
 		indices[i]._2 = (i + 1) % 16;
 	}
 
-	// +x ¹æÇâ ¿ø: »ï°¢Çü 16°³
+	// +x ë°©í–¥ ì›: ì‚¼ê°í˜• 16ê°œ
 	for (int i = 16; i < 32; ++i)
 	{
 		indices[i]._0 = i;
@@ -78,7 +74,7 @@ HRESULT CCartWheelCol::Ready_Buffer()
 	}
 	indices[31]._2 = 16;
 
-	// ¿·¸é
+	// ì˜†ë©´
 	int index = 32;
 	for (int i = 0; i < 16; ++i)
 	{

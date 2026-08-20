@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CVIBuffer.h"
 
 BEGIN(Engine)
@@ -6,7 +6,6 @@ BEGIN(Engine)
 class ENGINE_DLL CCartWheelCol :  public CVIBuffer
 {
 protected:
-    explicit CCartWheelCol();
     explicit CCartWheelCol(LPDIRECT3DDEVICE9 pGraphicDev);
     explicit CCartWheelCol(const CCartWheelCol& rhs);
     virtual ~CCartWheelCol() override;

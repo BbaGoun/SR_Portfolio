@@ -1,8 +1,4 @@
-#include "CCartBodyCol.h"
-
-CCartBodyCol::CCartBodyCol() : CVIBuffer()
-{
-}
+﻿#include "CCartBodyCol.h"
 
 CCartBodyCol::CCartBodyCol(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {

@@ -41,10 +41,6 @@ namespace
 	}
 }
 
-CPskFile::CPskFile() : CVIBuffer()
-{
-}
-
 CPskFile::CPskFile(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {
 }

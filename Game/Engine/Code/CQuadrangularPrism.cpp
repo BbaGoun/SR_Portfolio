@@ -1,8 +1,4 @@
-#include "CQuadrangularPrism.h"
-
-CQuadrangularPrism::CQuadrangularPrism() : CVIBuffer()
-{
-}
+﻿#include "CQuadrangularPrism.h"
 
 CQuadrangularPrism::CQuadrangularPrism(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {

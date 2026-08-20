@@ -1,19 +1,18 @@
-#include "CCube_Collider.h"
+﻿#include "CCube_Collider.h"
 #include "CTransform.h"
 #include "CGameObject.h"
-
-CCube_Collider::CCube_Collider()
-{
-}
+#include "CCalculator.h"
 
 CCube_Collider::CCube_Collider(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CCollider(pGraphicDev)
 {
+	m_eColliderType = CUBE_COLLIDER;
 }
 
 CCube_Collider::CCube_Collider(const CCollider& rhs)
 	:CCollider(rhs)
 {
+	m_eColliderType = CUBE_COLLIDER;
 }
 
 CCube_Collider::~CCube_Collider()
@@ -34,8 +33,35 @@ void CCube_Collider::LateUpdate_Component(const _float& fTimeDelta)
 	CTransform* pOwnerTransfrom = (m_pOwner->Get_Transform());
 	_vec3 vOwnerPos;
 	pOwnerTransfrom->Get_Info(INFO_POS, &vOwnerPos);
-	m_vCenter = vOwnerPos;
+	vOwnerPos += m_vOffset;
+
+	D3DXQUATERNION q = pOwnerTransfrom->Get_WorldQuaternion();
+	m_tBoundingBox.Orientation = ToXMFLOAT4(q);
+	m_tBoundingBox.Center = ToXMFLOAT3(vOwnerPos);
 }
+
+void CCube_Collider::Render_Component(D3DXCOLOR color)
+{
+	DirectX::XMFLOAT3 vCorners[8];
+
+	m_tBoundingBox.GetCorners(vCorners);
+
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[0]), ToVec3(vCorners[1]), color);
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[1]), ToVec3(vCorners[2]), color);
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[2]), ToVec3(vCorners[3]), color);
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[3]), ToVec3(vCorners[0]), color);
+
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[4]), ToVec3(vCorners[5]), color);
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[5]), ToVec3(vCorners[6]), color);
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[6]), ToVec3(vCorners[7]), color);
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[7]), ToVec3(vCorners[4]), color);
+	
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[0]), ToVec3(vCorners[4]), color);
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[1]), ToVec3(vCorners[5]), color);
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[2]), ToVec3(vCorners[6]), color);
+	CCalculator::DrawRayLine(m_pGraphicDev, ToVec3(vCorners[3]), ToVec3(vCorners[7]), color);
+}
+
 CCube_Collider* CCube_Collider::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CCube_Collider* pCube_Collider = new CCube_Collider(pGraphicDev);
@@ -50,6 +76,7 @@ CCube_Collider* CCube_Collider::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pCube_Collider;
 
 }
+
 CComponent* CCube_Collider::Clone()
 {
 	CCube_Collider* pCube_Collider = new CCube_Collider(*this);

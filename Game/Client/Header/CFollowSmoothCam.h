@@ -26,6 +26,7 @@ public:
 private:
 	_float m_fYaw;
 	_float m_fDistScale;
+	_float m_fBackDistance;
 
 public:
 	static CFollowSmoothCam* Create(LPDIRECT3DDEVICE9 pGraphicDev,

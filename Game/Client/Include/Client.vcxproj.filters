@@ -37,20 +37,8 @@
     <Filter Include="02. GameObject\SkyBox">
       <UniqueIdentifier>{859f3918-5c4b-4bf1-8123-8e96160970aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Enemy">
-      <UniqueIdentifier>{2abdddf8-d6c9-4e51-ac7c-39bdb81140fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Jet">
-      <UniqueIdentifier>{5cbc5a26-f72f-4f9f-a707-07e4199c6a01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Land">
-      <UniqueIdentifier>{e078520d-f092-48a0-9725-02e48e842cd7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\GOCody">
       <UniqueIdentifier>{bcc5ba6d-131a-4e42-a2d6-3f1a1ab100cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\GOMay">
-      <UniqueIdentifier>{9348a796-3561-4fac-acb1-d33004229715}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\Camera">
       <UniqueIdentifier>{3c825b67-dcc3-4053-ba3a-63cb123f4e1d}</UniqueIdentifier>
@@ -100,17 +88,104 @@
     <Filter Include="02. GameObject\Cart\CartBody\CartBody2">
       <UniqueIdentifier>{8b9571f1-d76e-464a-bab7-d7b17e618d3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\MapTest">
+      <UniqueIdentifier>{7f49cea8-a756-4797-a98f-c47c0ef0412f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Item">
+      <UniqueIdentifier>{8cfc90e9-be4b-467b-a9ea-b5f4e04dec79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\CollisionBox">
+      <UniqueIdentifier>{2d007e2e-4859-437b-8792-e22af7780408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\BoostEffect">
+      <UniqueIdentifier>{c7a8c4f7-5a87-4e8b-a638-0d2f080dbd57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\BoostEffect\BoostJet">
+      <UniqueIdentifier>{0d1931e9-6d11-46c4-b1e6-d66294ec4643}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\BoostEffect\BoostWind">
+      <UniqueIdentifier>{4d4021d3-2776-418b-b6db-ffcdf124c2dd}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\UI">
-      <UniqueIdentifier>{4a3cd350-7e47-4f0b-a579-790c098cea88}</UniqueIdentifier>
+      <UniqueIdentifier>{77b0e0b9-78db-4975-b5b9-26be286bd1d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI\SpeedBar">
-      <UniqueIdentifier>{dc8e1cbf-e7ac-4f5c-955e-70d377d8fb9c}</UniqueIdentifier>
+    <Filter Include="02. GameObject\UI\UI_HUD">
+      <UniqueIdentifier>{06fcef9e-f0e4-4a30-8852-d43fa436b7e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI\CTimer">
-      <UniqueIdentifier>{1dba873c-d6a2-4859-aa63-81e2712fe6ef}</UniqueIdentifier>
+    <Filter Include="02. GameObject\UI\UI_HUD\HUD_Main">
+      <UniqueIdentifier>{f78c48f2-c807-400d-b397-3d86306486d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI\Item">
-      <UniqueIdentifier>{82085e98-f089-408d-9abc-2b34b51c409e}</UniqueIdentifier>
+    <Filter Include="02. GameObject\Land3">
+      <UniqueIdentifier>{f65dd40c-8e32-476d-91b0-4980159e909b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item">
+      <UniqueIdentifier>{10b4db78-0a63-465f-aba5-774dba1b97d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Rainbow_Cloud">
+      <UniqueIdentifier>{1ba4c8fa-a3e4-42eb-bccc-a638b73312b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Rainbow">
+      <UniqueIdentifier>{92fd2f23-c461-4387-ab50-bac95f3c8e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\HUD_Num">
+      <UniqueIdentifier>{45e4ae89-db24-459f-bb4c-d03f0ddbf99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_HUD\HUD_Gage">
+      <UniqueIdentifier>{bd8bd500-6a9a-4ffc-a739-75f687414e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Banana">
+      <UniqueIdentifier>{4de29079-460b-4184-99c7-5fa447048b9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Booster">
+      <UniqueIdentifier>{0036db55-c776-4fad-9fbb-1da8a991da44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Booster\UI_BoosterBar">
+      <UniqueIdentifier>{8ef9adcb-37b7-43f5-b4f7-a8e0edc7010b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Booster\UI_BoosterBG">
+      <UniqueIdentifier>{6a0eba07-e98e-47f8-a58a-a5d842776ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Missile">
+      <UniqueIdentifier>{d6b85c0f-4e58-4131-bf43-13d6294f242c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Camera\DynamicCamera">
+      <UniqueIdentifier>{7a349e1f-d29d-4c80-a6b0-e6d3a52b8d23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Missile\MissileBody">
+      <UniqueIdentifier>{2a2d957b-27e8-4f80-959d-7f7f3eedceb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\MissileTarget">
+      <UniqueIdentifier>{6793bbfd-9138-49d7-911d-2accc8786996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder">
+      <UniqueIdentifier>{eb12a771-8e46-4219-8069-abad9f11e50a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\Thunder">
+      <UniqueIdentifier>{2251848a-f520-4c9e-9daa-39e030cc56eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\ThunderCloud">
+      <UniqueIdentifier>{26b95c7f-a495-466b-8f44-1ff35e47540e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\ThunderPlayerEffect">
+      <UniqueIdentifier>{a82f95ec-66ee-4d24-a2b6-130a08431dd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\ThunderFloorEffect">
+      <UniqueIdentifier>{41ae0adc-97a2-4d4d-885a-2e87a586b530}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Button">
+      <UniqueIdentifier>{52732eb2-24e9-49ce-bed4-df41bda21639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\StartMenu">
+      <UniqueIdentifier>{d27c7ebd-8c53-4c6c-99f8-e7b7ce78148a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_ItemSlot">
+      <UniqueIdentifier>{295445ca-386c-46dd-9acb-6ad8d4877595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_ItemIcon">
+      <UniqueIdentifier>{0911f93a-c818-456f-8a9b-423b77b4ada3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Timer">
+      <UniqueIdentifier>{406ce618-cfd9-400f-ba28-75c87ea2370b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,26 +213,17 @@
     <ClInclude Include="..\Header\CLoadingThread.h">
       <Filter>01. Scene\Loading\LoadingThread</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CScene_Test.h">
+      <Filter>01. Scene\Test</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CBackGround.h">
       <Filter>02. GameObject\BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CEnemy.h">
-      <Filter>02. GameObject\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CJet.h">
-      <Filter>02. GameObject\Jet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CLand.h">
-      <Filter>02. GameObject\Land</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSkyBox.h">
       <Filter>02. GameObject\SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CGOCody.h">
       <Filter>02. GameObject\GOCody</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CGOMay.h">
-      <Filter>02. GameObject\GOMay</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Client_Define.h">
       <Filter>헤더 파일</Filter>
@@ -210,29 +276,89 @@
     <ClInclude Include="..\Header\CCartBody2.h">
       <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CScene_Test.h">
-      <Filter>01. Scene\Test</Filter>
+    <ClInclude Include="..\Header\CMapTest.h">
+      <Filter>01. Scene\MapTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CSpeedBar.h">
-      <Filter>02. GameObject\UI\SpeedBar</Filter>
+    <ClInclude Include="..\Header\CITem.h">
+      <Filter>01. Scene\Item</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CSpeedGauge.h">
-      <Filter>02. GameObject\UI\SpeedBar</Filter>
+    <ClInclude Include="..\Header\CCollisionBox.h">
+      <Filter>02. GameObject\CollisionBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CTimer.h">
-      <Filter>02. GameObject\UI\CTimer</Filter>
+    <ClInclude Include="..\Header\CBoostJet.h">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CItemicon.h">
-      <Filter>02. GameObject\UI\Item</Filter>
+    <ClInclude Include="..\Header\CBoostWind.h">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CItemUI.h">
-      <Filter>02. GameObject\UI\Item</Filter>
+    <ClInclude Include="..\Header\CHUD_Main.h">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Gage.h">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Gage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHUD_Num.h">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Num</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLand3.h">
+      <Filter>02. GameObject\Land3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRainBow_Cloud.h">
+      <Filter>02. GameObject\Item\Rainbow_Cloud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Rainbow.h">
+      <Filter>02. GameObject\UI\UI_Rainbow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBanana.h">
+      <Filter>02. GameObject\Item\Banana</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_BoosterBar.h">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMissile.h">
+      <Filter>02. GameObject\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDynamicCamera.h">
+      <Filter>02. GameObject\Camera\DynamicCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_BoosterBG.h">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMissileBody.h">
+      <Filter>02. GameObject\Missile\MissileBody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMissileTarget.h">
+      <Filter>02. GameObject\MissileTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CThunder.h">
+      <Filter>02. GameObject\Item\Thunder\Thunder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CThunderCloud.h">
+      <Filter>02. GameObject\Item\Thunder\ThunderCloud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CThunderPlayerEffect.h">
+      <Filter>02. GameObject\Item\Thunder\ThunderPlayerEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CThunderFloorEffect.h">
+      <Filter>02. GameObject\Item\Thunder\ThunderFloorEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Button.h">
+      <Filter>02. GameObject\UI\UI_Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CStartMenu.h">
+      <Filter>01. Scene\StartMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Timer.h">
+      <Filter>02. GameObject\UI\UI_Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_ItemIcon.h">
+      <Filter>02. GameObject\UI\UI_ItemIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_ItemSlot.h">
+      <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Client.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -245,26 +371,17 @@
     <ClCompile Include="..\Code\CLoadingThread.cpp">
       <Filter>01. Scene\Loading\LoadingThread</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CScene_Test.cpp">
+      <Filter>01. Scene\Test</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CBackGround.cpp">
       <Filter>02. GameObject\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CEnemy.cpp">
-      <Filter>02. GameObject\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CJet.cpp">
-      <Filter>02. GameObject\Jet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CLand.cpp">
-      <Filter>02. GameObject\Land</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSkyBox.cpp">
       <Filter>02. GameObject\SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CGOCody.cpp">
       <Filter>02. GameObject\GOCody</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CGOMay.cpp">
-      <Filter>02. GameObject\GOMay</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Client_Define.cpp">
       <Filter>소스 파일</Filter>
@@ -314,23 +431,92 @@
     <ClCompile Include="..\Code\CCartBody2.cpp">
       <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CScene_Test.cpp">
-      <Filter>01. Scene\Test</Filter>
+    <ClCompile Include="..\Code\CMapTest.cpp">
+      <Filter>01. Scene\MapTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CSpeedBar.cpp">
-      <Filter>02. GameObject\UI\SpeedBar</Filter>
+    <ClCompile Include="..\Code\CITem.cpp">
+      <Filter>01. Scene\Item</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CSpeedGauge.cpp">
-      <Filter>02. GameObject\UI\SpeedBar</Filter>
+    <ClCompile Include="Client.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CTimer.cpp">
-      <Filter>02. GameObject\UI\CTimer</Filter>
+    <ClCompile Include="..\Code\CCollisionBox.cpp">
+      <Filter>02. GameObject\CollisionBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CItemicon.cpp">
-      <Filter>02. GameObject\UI\Item</Filter>
+    <ClCompile Include="..\Code\CBoostJet.cpp">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CItemUI.cpp">
-      <Filter>02. GameObject\UI\Item</Filter>
+    <ClCompile Include="..\Code\CBoostWind.cpp">
+      <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Main.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Gage.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Gage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHUD_Num.cpp">
+      <Filter>02. GameObject\UI\UI_HUD\HUD_Num</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLand3.cpp">
+      <Filter>02. GameObject\Land3</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRainbow_Cloud.cpp">
+      <Filter>02. GameObject\Item\Rainbow_Cloud</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Rainbow.cpp">
+      <Filter>02. GameObject\UI\UI_Rainbow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBanana.cpp">
+      <Filter>02. GameObject\Item\Banana</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_BoosterBar.cpp">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMissile.cpp">
+      <Filter>02. GameObject\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDynamicCamera.cpp">
+      <Filter>02. GameObject\Camera\DynamicCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_BoosterBG.cpp">
+      <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMissileBody.cpp">
+      <Filter>02. GameObject\Missile\MissileBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMissileTarget.cpp">
+      <Filter>02. GameObject\MissileTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunder.cpp">
+      <Filter>02. GameObject\Item\Thunder\Thunder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunderCloud.cpp">
+      <Filter>02. GameObject\Item\Thunder\ThunderCloud</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunderPlayerEffect.cpp">
+      <Filter>02. GameObject\Item\Thunder\ThunderPlayerEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunderFloorEffect.cpp">
+      <Filter>02. GameObject\Item\Thunder\ThunderFloorEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Button.cpp">
+      <Filter>02. GameObject\UI\UI_Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CStartMenu.cpp">
+      <Filter>01. Scene\StartMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Timer.cpp">
+      <Filter>02. GameObject\UI\UI_Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_ItemIcon.cpp">
+      <Filter>02. GameObject\UI\UI_ItemIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_ItemSlot.cpp">
+      <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

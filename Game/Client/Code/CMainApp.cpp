@@ -66,7 +66,6 @@ void CMainApp::Render_MainApp()
 {
 	m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 
-	m_pGraphicDev->SetViewport(&g_FullView);
 	if (CCameraMgr::GetInstance()->GetCamerState() != CAMERA_END) {
 		CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo();
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
@@ -75,7 +74,45 @@ void CMainApp::Render_MainApp()
 
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
 
-	m_pDeviceClass->Render_End();
+	HRESULT result = m_pDeviceClass->Render_End();
+	if (result == D3DERR_DEVICELOST)
+		m_bDeviceLost = true;
+}
+
+bool CMainApp::ResetTest()
+{
+	HRESULT hr = m_pGraphicDev->TestCooperativeLevel();
+	if (hr == D3DERR_DEVICELOST)
+	{
+		cout << "Lost" << "\n";
+		::Sleep(10);
+		return true;
+	}
+	if (hr == D3DERR_DEVICENOTRESET)
+	{
+		Reset_MainApp();
+		return false;
+	}
+	m_bDeviceLost = false;
+	return false;
+}
+
+void CMainApp::Reset_MainApp()
+{
+	cout << "Reset" << "\n";
+	CFontMgr::GetInstance()->OnLostDevice();
+	m_pManagementClass->OnLostDevice();
+
+	m_pDeviceClass->Reset_GraphicDev();
+
+	OnResetDevice();
+	CFontMgr::GetInstance()->OnResetDevice();
+	m_pManagementClass->OnResetDevice();
+}
+
+void CMainApp::Resize_MainApp(UINT uWidth, UINT uHeight)
+{
+	m_pDeviceClass->Resize_GraphicDev(uWidth, uHeight);
 }
 
 HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
@@ -118,6 +155,14 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 
 	return S_OK;
+}
+
+void CMainApp::OnResetDevice()
+{
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 }
 
 CMainApp* CMainApp::Create()

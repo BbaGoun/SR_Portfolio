@@ -18,17 +18,19 @@ CBackGround::~CBackGround()
 
 HRESULT CBackGround::Ready_GameObject()
 {
+	CGameObject::Ready_GameObject();
+
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_LogoTexture"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	return S_OK;
 }
@@ -45,9 +47,15 @@ void CBackGround::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CBackGround::Render_GameObject()
 {
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(m_eCurrentBackground);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	m_pBufferCom->Render_Buffer();
+}
+
+void CBackGround::Change_BackgroundTexture(BACKGROUND eID)
+{
+	m_eCurrentBackground = eID;
 }
 
 CBackGround* CBackGround::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CCartBody1.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -27,7 +27,7 @@ HRESULT CCartBody1::Ready_GameObject()
 	if (nullptr == pComponent)
 		return E_FAIL;
 	pComponent->Set_Owner(this);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 
 	return S_OK;
@@ -51,9 +51,7 @@ void CCartBody1::LateUpdate_GameObject(const _float& fDeltaTime)
 void CCartBody1::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pBufferCom->Render_Buffer();
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 CCartBody1* CCartBody1::Create(LPDIRECT3DDEVICE9 pGraphicDev)

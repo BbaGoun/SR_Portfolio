@@ -1,8 +1,4 @@
-#include "CCube.h"
-
-CCube::CCube() : CVIBuffer()
-{
-}
+ï»¿#include "CCube.h"
 
 CCube::CCube(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {
@@ -18,10 +14,10 @@ CCube::~CCube()
 
 HRESULT CCube::Ready_Buffer()
 {
-	m_dwVtxSize = sizeof(VTXCOL);
+	m_dwVtxSize = sizeof(VTXTEX);
 	m_dwVtxCnt = 8;
 	m_dwTriCnt = 12;
-	m_dwFVF = FVF_COL;
+	m_dwFVF = FVF_TEX;
 
 	m_dwIdxCnt = 36;
 	m_IdxFmt = D3DFMT_INDEX32;
@@ -29,37 +25,47 @@ HRESULT CCube::Ready_Buffer()
 	if (FAILED(CVIBuffer::Ready_Buffer()))
 		return E_FAIL;
 
-	VTXCOL* vertices = nullptr;
+	VTXTEX* vertices = nullptr;
 
 	m_pVB->Lock(0, 0, (void**)&vertices, 0);
 
-	vertices[0].vPosition = { -1, 1, 1 };
-	vertices[0].dwColor = 0xff0000ff;
+	vertices[0].vPosition = { -0.5f, 0.5f, 0.5f };
+	//vertices[0].dwColor = 0xff0000ff;
+	vertices[0].vTexUV = { 0.f, 0.f };
 
-	vertices[1].vPosition = { 1, 1, 1 };
-	vertices[1].dwColor = 0xff0000ff;
+	vertices[1].vPosition = { 0.5f, 0.5f, 0.5f };
+	//vertices[1].dwColor = 0xff0000ff;
+	vertices[1].vTexUV = { 1.f, 0.f };
 
-	vertices[2].vPosition = { 1, -1, 1 };
-	vertices[2].dwColor = 0xff0000ff;
+	vertices[2].vPosition = { 0.5f, -0.5f, 0.5f };
+	//vertices[2].dwColor = 0xff0000ff;
+	vertices[2].vTexUV = { 1.f, 1.f };
 
-	vertices[3].vPosition = { -1, -1, 1 };
-	vertices[3].dwColor = 0xff0000ff;
+	vertices[3].vPosition = { -0.5f, -0.5f, 0.5f };
+	//vertices[3].dwColor = 0xff0000ff;
+	vertices[3].vTexUV = { 0.f, 1.f };
 
-	vertices[4].vPosition = { -1, 1, -1 };
-	vertices[4].dwColor = 0xffff0000;
+	vertices[4].vPosition = { -0.5f, 0.5f, -0.5f };
+	//vertices[4].dwColor = 0xffff0000;
+	vertices[4].vTexUV = { 0.f, 0.f };
 
-	vertices[5].vPosition = { 1, 1, -1 };
-	vertices[5].dwColor = 0xffff0000;
+	vertices[5].vPosition = { 0.5f, 0.5f, -0.5f };
+	//vertices[5].dwColor = 0xffff0000;
+	vertices[5].vTexUV = { 1.f, 0.f };
 
-	vertices[6].vPosition = { 1, -1, -1 };
-	vertices[6].dwColor = 0xffff0000;
+	vertices[6].vPosition = { 0.5f, -0.5f, -0.5f };
+	//vertices[6].dwColor = 0xffff0000;
+	vertices[6].vTexUV = { 1.f, 1.f };
 
-	vertices[7].vPosition = { -1, -1, -1 };
-	vertices[7].dwColor = 0xffff0000;
+	vertices[7].vPosition = { -0.5f, -0.5f, -0.5f };
+	//vertices[7].dwColor = 0xffff0000;
+	vertices[7].vTexUV = { 0.f, 1.f };
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(vertices[i].vPosition);
 	}
+
+	SetBoundingBox();
 
 	m_pVB->Unlock();
 
@@ -67,7 +73,7 @@ HRESULT CCube::Ready_Buffer()
 
 	m_pIB->Lock(0, 0, (void**)&indices, 0);
 
-	// µÞ ¸é
+	// ë’· ë©´
 	indices[0]._0 = 2;
 	indices[0]._1 = 1;
 	indices[0]._2 = 0;
@@ -76,7 +82,7 @@ HRESULT CCube::Ready_Buffer()
 	indices[1]._1 = 2;
 	indices[1]._2 = 0;
 
-	// À­ ¸é
+	// ìœ— ë©´
 	indices[2]._0 = 1;
 	indices[2]._1 = 5;
 	indices[2]._2 = 4;
@@ -85,7 +91,7 @@ HRESULT CCube::Ready_Buffer()
 	indices[3]._1 = 1;
 	indices[3]._2 = 4;
 
-	// ¾Õ ¸é
+	// ì•ž ë©´
 	indices[4]._0 = 7;
 	indices[4]._1 = 4;
 	indices[4]._2 = 5;
@@ -94,7 +100,7 @@ HRESULT CCube::Ready_Buffer()
 	indices[5]._1 = 7;
 	indices[5]._2 = 5;
 
-	// ¾Æ·§ ¸é
+	// ì•„ëž« ë©´
 	indices[6]._0 = 6;
 	indices[6]._1 = 2;
 	indices[6]._2 = 3;
@@ -103,7 +109,7 @@ HRESULT CCube::Ready_Buffer()
 	indices[7]._1 = 6;
 	indices[7]._2 = 3;
 
-	// ¿ÞÂÊ ¸é
+	// ì™¼ìª½ ë©´
 	indices[8]._0 = 3;
 	indices[8]._1 = 0;
 	indices[8]._2 = 4;
@@ -112,7 +118,7 @@ HRESULT CCube::Ready_Buffer()
 	indices[9]._1 = 3;
 	indices[9]._2 = 4;
 
-	// ¿À¸¥ÂÊ ¸é
+	// ì˜¤ë¥¸ìª½ ë©´
 	indices[10]._0 = 6;
 	indices[10]._1 = 5;
 	indices[10]._2 = 1;
