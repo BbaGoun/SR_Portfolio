@@ -28,29 +28,17 @@
     <Filter Include="01. Scene\Loading\LoadingThread">
       <UniqueIdentifier>{a5460c36-fe13-40c6-91aa-5e752b79692a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\Test">
-      <UniqueIdentifier>{4a0fedf5-0002-4576-8a9d-93ab4a1073a7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\BackGround">
       <UniqueIdentifier>{82ca06a2-1d49-48df-9619-97fbd9172848}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\SkyBox">
       <UniqueIdentifier>{859f3918-5c4b-4bf1-8123-8e96160970aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\GOCody">
-      <UniqueIdentifier>{bcc5ba6d-131a-4e42-a2d6-3f1a1ab100cb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Camera">
       <UniqueIdentifier>{3c825b67-dcc3-4053-ba3a-63cb123f4e1d}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\Camera\FirstPersonCamera">
       <UniqueIdentifier>{6358c447-5368-456b-8cf9-5e5691e92983}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\GOCody\HeadPivot">
-      <UniqueIdentifier>{c5999d27-5689-41b8-838a-61e5fbc2650c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\GOCody\Body">
-      <UniqueIdentifier>{6a04b310-393d-424f-b556-b980405fd106}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\Camera\BackThirdPersonCamera">
       <UniqueIdentifier>{023176fa-6807-4182-a302-7da613fae6b9}</UniqueIdentifier>
@@ -213,17 +201,11 @@
     <ClInclude Include="..\Header\CLoadingThread.h">
       <Filter>01. Scene\Loading\LoadingThread</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CScene_Test.h">
-      <Filter>01. Scene\Test</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CBackGround.h">
       <Filter>02. GameObject\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSkyBox.h">
       <Filter>02. GameObject\SkyBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CGOCody.h">
-      <Filter>02. GameObject\GOCody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Client_Define.h">
       <Filter>헤더 파일</Filter>
@@ -234,17 +216,11 @@
     <ClInclude Include="..\Header\CTopViewCam.h">
       <Filter>02. GameObject\Camera\TopViewCamera</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CHeadPivot.h">
-      <Filter>02. GameObject\GOCody\HeadPivot</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CFirstPerCam.h">
       <Filter>02. GameObject\Camera\FirstPersonCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBackThirdPerCam.h">
       <Filter>02. GameObject\Camera\BackThirdPersonCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CCodyBody.h">
-      <Filter>02. GameObject\GOCody\Body</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CFrontThirdPerCam.h">
       <Filter>02. GameObject\Camera\FrontThirdPersonCamera</Filter>
@@ -371,17 +347,11 @@
     <ClCompile Include="..\Code\CLoadingThread.cpp">
       <Filter>01. Scene\Loading\LoadingThread</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CScene_Test.cpp">
-      <Filter>01. Scene\Test</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CBackGround.cpp">
       <Filter>02. GameObject\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSkyBox.cpp">
       <Filter>02. GameObject\SkyBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CGOCody.cpp">
-      <Filter>02. GameObject\GOCody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Client_Define.cpp">
       <Filter>소스 파일</Filter>
@@ -389,17 +359,11 @@
     <ClCompile Include="..\Code\CTopViewCam.cpp">
       <Filter>02. GameObject\Camera\TopViewCamera</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CHeadPivot.cpp">
-      <Filter>02. GameObject\GOCody\HeadPivot</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CFirstPerCam.cpp">
       <Filter>02. GameObject\Camera\FirstPersonCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBackThirdPerCam.cpp">
       <Filter>02. GameObject\Camera\BackThirdPersonCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CCodyBody.cpp">
-      <Filter>02. GameObject\GOCody\Body</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CFrontThirdPerCam.cpp">
       <Filter>02. GameObject\Camera\FrontThirdPersonCamera</Filter>

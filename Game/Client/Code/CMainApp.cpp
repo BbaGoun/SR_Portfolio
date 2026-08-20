@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "CMainApp.h"
-#include "CScene_Test.h"
 #include "CProtoMgr.h"
 #include "CDInputMgr.h"
 #include "CLoading.h"
