@@ -11,7 +11,7 @@ CProtoMgr::~CProtoMgr()
     Free();
 }
 
-HRESULT CProtoMgr::Ready_Prototype(const WCHAR* tag, CComponent* comp, ProtoKind ePK, bool addable, const WCHAR* displayName)
+HRESULT CProtoMgr::Ready_Prototype(const WCHAR* tag, CComponent* comp, bool addable, const WCHAR* displayName)
 {
     auto iter = find_if(m_mapComponent.begin(),
         m_mapComponent.end(),
@@ -23,7 +23,6 @@ HRESULT CProtoMgr::Ready_Prototype(const WCHAR* tag, CComponent* comp, ProtoKind
     ProtoRecord pr = {};
     wcsncpy_s(pr.tag, tag, 256);
     wcsncpy_s(pr.name, displayName, 256);
-    pr.kind = ePK;
     pr.addable = addable;
     pr.proto = comp;
 

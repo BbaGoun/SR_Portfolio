@@ -13,6 +13,8 @@
 #include <string>
 #include <unordered_map>
 #include <ctime>
+#include <Shlwapi.h>
+#pragma comment(lib, "Shlwapi.lib")
 
 #include <io.h>
 #include <iostream>

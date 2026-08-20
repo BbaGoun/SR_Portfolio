@@ -154,13 +154,24 @@ HRESULT CLayer::Delete_GameObject(CGameObject* _pObj)
 {
 	if (!_pObj)
 		return E_FAIL;
+
+	_tchar key[256];
+	wcscpy_s(key, 256, _pObj->GetTag());
 	auto it = find_if(m_mapObject.begin(), m_mapObject.end(),
-		CTag_Finder(_pObj->GetTag()));
-	if (it == m_mapObject.end())
-		return E_FAIL;
+		CTag_Finder(key));
+
+	if (it == m_mapObject.end()) {
+		wcscpy_s(key, 256, to_wstring(_pObj->GetGuid()).c_str());
+		it = find_if(m_mapObject.begin(), m_mapObject.end(), [&](pair<const _tchar*, vector<CGameObject*>> p)->bool {
+			return !wcscmp(p.first, key);
+			});
+		
+		if(it == m_mapObject.end())
+			return E_FAIL;
+	}
 
 	// 자신 삭제 등록
-	m_vecDelete.push_back({ _pObj->GetTag(), _pObj });
+	m_vecDelete.push_back({ wstring(key), _pObj });
 
 	// 자식 삭제 등록
 	Delete_Children(_pObj);
@@ -177,11 +188,21 @@ void CLayer::Delete_Children(CGameObject* _pObj)
 {
 	auto& children = _pObj->Get_Children();
 	for (auto& pObj : children) {
+		_tchar key[256];
+		wcscpy_s(key, 256, pObj->GetTag());
 		auto it = find_if(m_mapObject.begin(), m_mapObject.end(),
-			CTag_Finder(pObj->GetTag()));
-		if (it == m_mapObject.end())
-			continue;
-		m_vecDelete.push_back({pObj->GetTag(), pObj});
+			CTag_Finder(key));
+
+		if (it == m_mapObject.end()) {
+			wcscpy_s(key, 256, to_wstring(pObj->GetGuid()).c_str());
+			it = find_if(m_mapObject.begin(), m_mapObject.end(), [&](pair<const _tchar*, vector<CGameObject*>> p)->bool {
+				return !wcscmp(p.first, key);
+				});
+
+			if (it == m_mapObject.end())
+				return;
+		}
+		m_vecDelete.push_back({wstring(key), pObj});
 		Delete_Children(pObj);
 	}
 }
@@ -190,7 +211,7 @@ HRESULT CLayer::PostProcess_Delete()
 {
 	for (auto& p : m_vecDelete) {
 		auto it = find_if(m_mapObject.begin(), m_mapObject.end(),
-			CTag_Finder(p.first));
+			CTag_Finder(p.first.c_str()));
 		if (it == m_mapObject.end())
 			continue;
 

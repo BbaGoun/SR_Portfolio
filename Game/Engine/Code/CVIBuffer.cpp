@@ -11,6 +11,7 @@ CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev):CComponent(pGraphicDev)
 , m_maxVtx({ FLT_MIN, FLT_MIN, FLT_MIN })
 {
 	m_eID = ID_STATIC;
+	m_eKind = CK_MESH;
 }
 
 CVIBuffer::CVIBuffer(const CVIBuffer& rhs) : CComponent(rhs)
@@ -24,6 +25,7 @@ CVIBuffer::CVIBuffer(const CVIBuffer& rhs) : CComponent(rhs)
 , m_boundingBox(rhs.m_boundingBox)
 {
 	m_eID = ID_STATIC;
+	m_eKind = CK_MESH;
 
 	if (m_pVB)			m_pVB->AddRef();
 	if (m_pIB)			m_pIB->AddRef();

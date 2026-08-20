@@ -95,7 +95,7 @@ void CMainEditor::Render_MainEditor()
 
 void CMainEditor::InvalidateDeviceObjects()
 {
-	m_pManagementClass->InvalidateDeviceObjects();
+	m_pManagementClass->OnLostDevice();
 }
 
 HRESULT CMainEditor::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
@@ -178,6 +178,10 @@ HRESULT CMainEditor::Ready_IMGUI()
 	//IM_ASSERT(font != nullptr);
 
 	//g_pFontBold = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", 16.0f);
+
+	ImFont* font = io.Fonts->AddFontFromFileTTF(
+		"C:\\Windows\\Fonts\\malgun.ttf", 16.0f);
+	IM_ASSERT(font != nullptr);
 
 	return S_OK;
 }

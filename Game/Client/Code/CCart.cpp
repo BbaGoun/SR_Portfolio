@@ -639,16 +639,16 @@ void CCart::OutputCarState()
 	switch (m_eCartState)
 	{
 	case Engine::CART_STATE_GROUND:
-		cout << "CART_STATE_GROUND" << endl;
+		//cout << "CART_STATE_GROUND" << endl;
 		break;
 	case Engine::CART_STATE_AIR:
-		cout << "CART_STATE_AIR" << endl;
+		//cout << "CART_STATE_AIR" << endl;
 		break;
 	case Engine::CART_STATE_LANDING:
-		cout << "CART_STATE_LANDING" << endl;
+		//cout << "CART_STATE_LANDING" << endl;
 		break;
 	case Engine::CART_STATE_END:
-		cout << "CART_STATE_GROUND" << endl;
+		//cout << "CART_STATE_GROUND" << endl;
 		break;
 	default:
 		break;

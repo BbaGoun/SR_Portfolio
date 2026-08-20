@@ -207,6 +207,28 @@ namespace Engine
 			return false;
 
 		return true;
+  }
+  
+	inline const char* GetLayerName(COLLISION_LAYER cl) {
+		switch (cl) {
+		case CL_DEFAULT: return "Default";
+		case IGNORE_RAYCAST: return "Ignore Raycast";
+		case CL_LAYER1: return "Layer1"; case CL_LAYER2: return "Layer2";
+		case CL_LAYER3: return "Layer3"; case CL_LAYER4: return "Layer4";
+		case CL_LAYER5: return "Layer5"; case CL_LAYER6: return "Layer6";
+		case CL_LAYER7: return "Layer7"; case CL_LAYER8: return "Layer8";
+		case CL_LAYER9: return "Layer9"; case CL_LAYER10: return "Layer10";
+		case CL_LAYER11: return "Layer11"; case CL_LAYER12: return "Layer12";
+		case CL_LAYER13: return "Layer13"; case CL_LAYER14: return "Layer14";
+		case CL_LAYER15: return "Layer15"; case CL_LAYER16: return "Layer16";
+		case CL_LAYER17: return "Layer17"; case CL_LAYER18: return "Layer18";
+		case CL_LAYER19: return "Layer19"; case CL_LAYER20: return "Layer20";
+		case CL_LAYER21: return "Layer21"; case CL_LAYER22: return "Layer22";
+		case CL_LAYER23: return "Layer23"; case CL_LAYER24: return "Layer24";
+		case CL_LAYER25: return "Layer25"; case CL_LAYER26: return "Layer26";
+		case CL_LAYER27: return "Layer27"; case CL_LAYER28: return "Layer28";
+		case CL_LAYER29: return "Layer29"; case CL_LAYER30: return "Layer30";
+		}
 	}
 }
 

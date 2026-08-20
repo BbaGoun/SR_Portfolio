@@ -142,6 +142,9 @@
     <Filter Include="03. Management\GameObject\CEmpty">
       <UniqueIdentifier>{390fe467-04bc-4dbe-a81b-8521d6eac13a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97. Utility\EditorLoader">
+      <UniqueIdentifier>{70cc0f1a-3659-4586-848c-8c15a15adac7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -288,6 +291,12 @@
     <ClInclude Include="..\Header\CEmpty.h">
       <Filter>03. Management\GameObject\CEmpty</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Engine_Parsing.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CEditorLoader.h">
+      <Filter>97. Utility\EditorLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -415,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEmpty.cpp">
       <Filter>03. Management\GameObject\CEmpty</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEditorLoader.cpp">
+      <Filter>97. Utility\EditorLoader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

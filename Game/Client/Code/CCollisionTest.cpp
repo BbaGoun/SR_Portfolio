@@ -114,6 +114,10 @@ void CCollisionTest::Render_Scene()
 	//CScene::Render_Scene();
 }
 
+void CCollisionTest::OnLostDevice()
+{
+}
+
 CCollisionTest* CCollisionTest::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CCollisionTest* pScene = new CCollisionTest(pGraphicDev);
