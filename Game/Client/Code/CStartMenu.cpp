@@ -71,6 +71,21 @@ void CStartMenu::LateUpdate_Scene(const _float& fDeltaTime)
 
 void CStartMenu::Render_Scene()
 {
+	_matrix matView, matProj;
+	_vec3 vEye, vAt, vUp;
+	vEye = { 0, 0, -2 };
+	vAt = { 0, 0, 1 };
+	vUp = { 0, 1, 0 };
+	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
+	D3DVIEWPORT9 vp;
+
+	m_pGraphicDev->GetViewport(&vp);
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), float(vp.Width) / vp.Height,
+		1.f, 1000.f);
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+
 	CScene::Render_Scene();
 }
 
@@ -92,6 +107,8 @@ HRESULT CStartMenu::Ready_Environment_Layer(const _tchar* pLayerTag)
 
 	if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
 		return E_FAIL;
+
+	pGameObject->Get_Transform()->Set_Scale({ 2 * 16.f / 9.f, 2, 1 });
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

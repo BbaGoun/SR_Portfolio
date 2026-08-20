@@ -72,7 +72,7 @@ void CLoading::Render_Scene()
 {
     _matrix matView, matProj;
     _vec3 vEye, vAt, vUp;
-    vEye = { 0, 0, -1 };
+    vEye = { 0, 0, -2 };
     vAt = { 0, 0, 1 };
     vUp = { 0, 1, 0 };
     D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
@@ -114,7 +114,6 @@ HRESULT CLoading::Ready_Environment_Layer(const _tchar* pLayerTag)
     if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
         return E_FAIL;    
  
-    pGameObject->Get_Transform()->Set_Pos({ 0, 0, 1 });
     pGameObject->Get_Transform()->Set_Scale({ 2 * 16.f/9.f, 2, 1 });
 
     return S_OK;

@@ -49,5 +49,7 @@ namespace Engine
 		CL_LAYER28, CL_LAYER29, CL_LAYER30,
 		CL_END
 	};
+
+	enum BACKGROUND { BACKGROUND_LOADING, BACKGROUND_STARTMENU, BACKGROUND_END };
 }
 #endif // Engine_Enum_h__
