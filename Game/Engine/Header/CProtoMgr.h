@@ -25,6 +25,7 @@
 #include "CQuadrangularPrism.h"
 #include "CTriangularPrism.h"
 #include "CArrowTex.h"
+#include "CSpline.h"
 
 BEGIN(Engine)
 

@@ -96,97 +96,19 @@ namespace Engine
 	}FACE32;
 
 
-
-#pragma pack(push, 1)
-	// PSK 파일의 각 청크 헤더 (ACTRHEAD)
-	struct VChunkHeader {
-		char		ChunkID[20];    // 청크 식별자
-		int32_t		TypeFlag;       // 타입 플래그
-		uint32_t	DataSize;       // 각 데이터 항목의 크기
-		uint32_t	DataCount;      // 데이터 항목 수
-	};
-
-	// 버텍스 위치 (PNTS0000)
-	// _vec3 사용
-
-	// 웨지 - 버텍스 + UV (VTXW0000)
-	// The format of this structure depends on the edge count.
-	// 65536d보다 작거나 같으면
-	struct PSKWedgeL {
-		uint16_t	PointIndex;
-		uint16_t	Padding1;
-		float		U, V;
-		uint8_t		MatIndex;
-		uint8_t		Reserved;
-		uint16_t	Padding2;
-	};
-	
-	// 65536d보다 크면
-	struct PSKWedgeG {
-		uint32_t	PointIndex;  // VPoint 배열의 인덱스
-		float		U, V;        // UV 좌표
-		uint32_t	MatIndex;
-	};
-
-	// 삼각형 면 (FACE0000) - Unreal Engine format
-	struct PSKTriangle00 {
-		uint16_t	WedgeIndex[3];   // VVertex 배열의 인덱스 3개
-		uint8_t		MatIndex;
-		uint8_t		AuxMatIndex;
-		int32_t		SmoothingGroups;
-	};
-
-	// 삼각형 면 (FACE0032) - Umodel PSK extension
-	struct PSKTriangle32 {
-		uint32_t	WedgeIndex[3];   // VVertex 배열의 인덱스 3개
-		uint8_t		MatIndex;
-		uint8_t		AuxMatIndex;
-		int32_t		SmoothingGroups;
-	};
-
-	// Material (MATT0000)
-	struct PSKMaterial {
-		char		Name[64];
-		uint32_t	TexIndex;
-		int32_t		PolyFlags;
-		int32_t		AuxMat;
-		int32_t		AuxFlags;
-		int32_t		LODBias;
-		int32_t		LODStyle;
-	};
-
-	// 본 구조 (REFSKELT)
-	struct PSKBone {
-		char		Name[64];
-		int32_t		Flags;
-		int32_t		NumChildren;
-		int32_t		ParentIndex;		// -1 또는 0이면 루트
-		float		Orientation[4];		// Quaternion (x,y,z,w)
-		float		Position[3];		// 본 위치
-		float		Length;
-		float		XSize, YSize, ZSize;
-	};
-
-	// 스키닝 웨이트 (RAWWEIGHTS)
-	struct PSKRawBoneWeight {
-		float    Weight;		// 가중치 (0.0 ~ 1.0)
-		uint32_t  PointIndex;	// 버텍스 인덱스
-		uint32_t  BoneIndex;	// 본 인덱스
-	};
-
-	struct PSKSubset
-	{
-		DWORD					dwStartIndex;	// 인덱스 버퍼 내 시작 위치
-		DWORD					dwPrimCount;	// 이 서브셋의 삼각형 수
-		uint8_t					MatIndex;		// 이 서브셋에 사용할 텍스처
-	};
-#pragma pack(pop)
-
 	typedef struct _tagCameraInfo
 	{
 		_matrix matView;
 		_matrix matProj;
 	}CameraInfo;
+
+	typedef struct _tagControlPoint
+	{
+		_vec3	position;
+		_float	bank;
+		_float	width;
+		_float	depth;
+	}ControlPoint;
 }
 
 
