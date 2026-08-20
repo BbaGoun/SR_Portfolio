@@ -157,6 +157,36 @@
     <Filter Include="02. GameObject\MissileTarget">
       <UniqueIdentifier>{6793bbfd-9138-49d7-911d-2accc8786996}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\Thunder">
+      <UniqueIdentifier>{eb12a771-8e46-4219-8069-abad9f11e50a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\Thunder">
+      <UniqueIdentifier>{2251848a-f520-4c9e-9daa-39e030cc56eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\ThunderCloud">
+      <UniqueIdentifier>{26b95c7f-a495-466b-8f44-1ff35e47540e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\ThunderPlayerEffect">
+      <UniqueIdentifier>{a82f95ec-66ee-4d24-a2b6-130a08431dd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Thunder\ThunderFloorEffect">
+      <UniqueIdentifier>{41ae0adc-97a2-4d4d-885a-2e87a586b530}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Button">
+      <UniqueIdentifier>{52732eb2-24e9-49ce-bed4-df41bda21639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\StartMenu">
+      <UniqueIdentifier>{d27c7ebd-8c53-4c6c-99f8-e7b7ce78148a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_ItemSlot">
+      <UniqueIdentifier>{295445ca-386c-46dd-9acb-6ad8d4877595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_ItemIcon">
+      <UniqueIdentifier>{0911f93a-c818-456f-8a9b-423b77b4ada3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Timer">
+      <UniqueIdentifier>{406ce618-cfd9-400f-ba28-75c87ea2370b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -300,6 +330,33 @@
     <ClInclude Include="..\Header\CMissileTarget.h">
       <Filter>02. GameObject\MissileTarget</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CThunder.h">
+      <Filter>02. GameObject\Item\Thunder\Thunder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CThunderCloud.h">
+      <Filter>02. GameObject\Item\Thunder\ThunderCloud</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CThunderPlayerEffect.h">
+      <Filter>02. GameObject\Item\Thunder\ThunderPlayerEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CThunderFloorEffect.h">
+      <Filter>02. GameObject\Item\Thunder\ThunderFloorEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Button.h">
+      <Filter>02. GameObject\UI\UI_Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CStartMenu.h">
+      <Filter>01. Scene\StartMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Timer.h">
+      <Filter>02. GameObject\UI\UI_Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_ItemIcon.h">
+      <Filter>02. GameObject\UI\UI_ItemIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_ItemSlot.h">
+      <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -433,6 +490,33 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMissileTarget.cpp">
       <Filter>02. GameObject\MissileTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunder.cpp">
+      <Filter>02. GameObject\Item\Thunder\Thunder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunderCloud.cpp">
+      <Filter>02. GameObject\Item\Thunder\ThunderCloud</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunderPlayerEffect.cpp">
+      <Filter>02. GameObject\Item\Thunder\ThunderPlayerEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CThunderFloorEffect.cpp">
+      <Filter>02. GameObject\Item\Thunder\ThunderFloorEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Button.cpp">
+      <Filter>02. GameObject\UI\UI_Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CStartMenu.cpp">
+      <Filter>01. Scene\StartMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Timer.cpp">
+      <Filter>02. GameObject\UI\UI_Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_ItemIcon.cpp">
+      <Filter>02. GameObject\UI\UI_ItemIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_ItemSlot.cpp">
+      <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

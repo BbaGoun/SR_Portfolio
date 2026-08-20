@@ -13,6 +13,7 @@ CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev) : CComponent(pGraphicDev)
 	ZeroMemory(&m_vInfo, sizeof(_vec3) * INFO_END);
 	D3DXMatrixIdentity(&m_matWorld);
 	D3DXMatrixIdentity(&m_matLocalWorld);
+	D3DXMatrixIdentity(&m_matBillboard);	
 }
 
 CTransform::CTransform(const CTransform& rhs):CComponent(rhs)
@@ -29,6 +30,7 @@ CTransform::CTransform(const CTransform& rhs):CComponent(rhs)
 
 	m_matWorld = rhs.m_matWorld;
 	m_matLocalWorld = rhs.m_matLocalWorld;
+	m_matBillboard = rhs.m_matBillboard;
 }
 
 CTransform::~CTransform()
@@ -103,6 +105,11 @@ _matrix* CTransform::Get_World()
 
 	for (int i = 0; i < INFO_POS; ++i) {
 		D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &matRotQ);
+	}
+
+	// 4-1. 빌보드 행렬 적용(Set_Billboard()함수를 호출하지 않은 경우 빌보드 행렬은 항등행렬)
+	for (int i = 0; i < INFO_POS; ++i) {
+		D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &m_matBillboard);
 	}
 
 	// 5. 월드 행렬 생성
@@ -239,6 +246,20 @@ void CTransform::Set_Dirty()
 		}
 	}
 }
+
+void CTransform::Set_Billboard(_matrix* pMatView)
+{
+	D3DXMatrixIdentity(&m_matBillboard);
+
+	m_matBillboard._11 = pMatView->_11;
+	m_matBillboard._13 = pMatView->_13;
+	m_matBillboard._31 = pMatView->_31;
+	m_matBillboard._33 = pMatView->_33;
+
+	D3DXMatrixInverse(&m_matBillboard, nullptr, &m_matBillboard); 
+	Set_Dirty();
+}
+
 
 CTransform* CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

@@ -27,6 +27,12 @@
 #include "CUI_Rainbow.h"
 #include "CUI_BoosterBar.h"
 #include "CUI_BoosterBG.h"
+#include "CThunder.h"
+#include "CThunderCloud.h"
+#include "CUI_Button.h"
+#include "CUI_Timer.h"
+#include "CUI_ItemSlot.h"
+#include "CUI_ItemIcon.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -373,6 +379,22 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
 		return E_FAIL;
+
+	//// ThunderCloud
+	//pGameObject = CThunderCloud::Create(m_pGraphicDev);
+	//
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_ThunderCloud", pGameObject)))
+	//	return E_FAIL;
+	//
+	//// Thunder
+	//pGameObject = CThunder::Create(m_pGraphicDev);
+	//
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Thunder", pGameObject)))
+	//	return E_FAIL;
   
 	return S_OK;
 }
@@ -471,6 +493,34 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
+		return E_FAIL;
+
+	// UI_BoosterBar
+	pUIObject = CUI_Button::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Button", pUIObject)))
+		return E_FAIL;
+
+	// UI_Timer
+	pUIObject = CUI_Timer::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
+		return E_FAIL;
+
+	// UI_ItemSlot
+	pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemSlot", pUIObject)))
+		return E_FAIL;
+
+	// UI_ItemIcon
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
 		return E_FAIL;
 
 	return S_OK;

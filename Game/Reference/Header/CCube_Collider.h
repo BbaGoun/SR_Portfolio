@@ -28,6 +28,7 @@ public:
 	void							Set_Orientation(D3DXQUATERNION q)	{ m_tBoundingBox.Orientation = ToXMFLOAT4(q); }
 	void							Set_Offset(_vec3 vOffset)			{ m_vOffset = vOffset; }
 	_vec3							Get_Offset()						{ return m_vOffset; }
+	_vec3							Get_Extents()						{ return ToVec3(m_tBoundingBox.Extents); }
 
 	virtual		CComponent* Clone();
 

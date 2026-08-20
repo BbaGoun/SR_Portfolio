@@ -105,42 +105,8 @@ void CBoostWind::LateUpdate_GameObject(const _float& fDeltaTime)
 void CBoostWind::Render_GameObject()
 {
 	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
-	{
-		_matrix	matBill, matWorld, matView, matParent;
-		_vec3 vParent_Rotaiton;
-		matWorld = *m_pTransformCom->Get_World();
-		
-		vParent_Rotaiton = m_pParent->Get_Rotation();
-		D3DXMatrixRotationY(&matParent, vParent_Rotaiton.y);
-		
-		matView = CCameraMgr::GetInstance()->GetCameraInfo().matView;
-		
-		// 부모
-		D3DXMatrixIdentity(&matBill);
-		
-		matBill._11 = matParent._11;
-		matBill._13 = matParent._13;
-		matBill._31 = matParent._31;
-		matBill._33 = matParent._33;
-
-		D3DXMatrixInverse(&matBill, 0, &matBill);
-		matWorld = matBill * matWorld; 
-		
-		// 카메라
-		D3DXMatrixIdentity(&matBill);
-		
-		matBill._11 = matView._11;
-		matBill._13 = matView._13;
-		matBill._31 = matView._31;
-		matBill._33 = matView._33;
-		
-		D3DXMatrixInverse(&matBill, 0, &matBill);
-		matWorld = matBill * matWorld;
-		
-		// 빌보드 적용(크기가 달라질 경우 계산식 변경)
-		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-		
-		//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	{		
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 		m_pTextureCom->Set_Texture((_uint)m_fFrame);
 		m_pBufferCom->Render_Buffer();
 	}

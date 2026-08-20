@@ -25,8 +25,13 @@ HRESULT CCartBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 	m_pTransformCom->Set_Pos({ 0,2,3 });
-	m_bBananaSpinState = false;
 
+	m_bBananaSpinState		= false;
+	m_bThunderSpinState		= false;
+	m_bThunderTimerOnOff	= false;
+
+	m_fScale				= 1.f;
+	m_fThunderTimer			= 0.f;
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -34,10 +39,10 @@ HRESULT CCartBody::Ready_GameObject()
 	if (nullptr == pComponent)
 		return E_FAIL;
 
+	m_vColliderSize = { 2.5f,1.5f,5.f };
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(false);
-	m_pColliderCom->Set_Extents({ 2.5f,1.5f,5.f });
-
+	m_pColliderCom->Set_Extents(m_vColliderSize);
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 	return S_OK;
 }
@@ -45,11 +50,16 @@ HRESULT CCartBody::Ready_GameObject()
 void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	BananaSpin(fFixedDeltaTime); 
+	ThunderSpin(fFixedDeltaTime);
+	ThunderTimerUpdate(fFixedDeltaTime);
+
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(m_vRotation.y), D3DXToRadian(m_vRotation.x), D3DXToRadian(m_vRotation.z));
 	m_pTransformCom->Set_Quaternion(&q);
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	
+	m_pTransformCom->Set_Scale({ m_fScale,m_fScale,m_fScale });
+	m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
+	m_pTransformCom->Set_Pos({ 0,2*m_fScale,3 });
 }
 
 _int CCartBody::Update_GameObject(const _float& fDeltaTime)
@@ -75,9 +85,22 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 
 	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
 	{
-		CCollisionMgr::GetInstance()->PysicalCubevsCube(
+		_vec3 MTV =  CCollisionMgr::GetInstance()->GetMTVCubevsCube(
 			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
 		CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+
+		// »ìÂ¦ µÚ·Î Æ¨±â±â
+		_vec3 vNewForce = pCart->Get_Force();
+		vNewForce = MTV * D3DXVec3Length(&vNewForce) * 1.5f;
+		float fForceLength = D3DXVec3Length(&vNewForce);
+		if (fForceLength >= 30)
+			vNewForce = vNewForce * 30 / fForceLength;
+	
+		_vec3 vPos;
+		pCart->Get_Transform()->Get_Info(INFO_POS, &vPos);
+
+		pCart->Add_Force(vNewForce);
+		pCart->Get_Transform()->Set_Pos(vPos+MTV);
 		pCart->SetGainGage(0.f);	// m_fGainGage = 0.f;
 		pCart->SetDrift(false);		// m_bDrift = false;
 	}
@@ -92,13 +115,12 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 		if (pCart->GetRainbowUI() == false)
 			pCart->SetRainbowUI(true);
 	}
-
 	if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
 	{
 		if (pCart->GetBanana() == false)
 		{
 			pCart->SetBanana(true);
-			pCart->SetBoost(false);
+			pCart->SetBoost(BOOST_STATE_NORMAL);
 		}
 	}
 }
@@ -117,12 +139,49 @@ void CCartBody::BananaSpin(const _float& fDeltaTime)
 	}
 	m_fSpinSpeed *= 0.98;
 	m_bBananaSpinState = true;
-	m_vRotation.y += 300* m_fSpinSpeed * fDeltaTime;
+	m_vRotation.y += 300 * m_fSpinSpeed * fDeltaTime;
 	if (m_vRotation.y > 1080 * m_fSpinSpeed)
 	{
 		m_vRotation.y = 0;
 		pCart->SetBanana(false);
 		m_bBananaSpinState = false;
+	}
+}
+
+void CCartBody::ThunderSpin(const _float& fDeltaTime)
+{
+	if (m_bThunderSpinState == false)
+		return;
+	m_vRotation.y += 720 * fDeltaTime;
+	if (m_vRotation.y > 720)
+	{
+		m_vRotation.y = 0;
+		m_bThunderSpinState = false;
+	}
+}
+
+void CCartBody::ThunderTimerUpdate(const _float& fDeltaTime)
+{
+	if (m_bThunderTimerOnOff == false)
+	{
+		if (m_fScale < 1.f)
+			m_fScale += fDeltaTime * 0.3f;
+		else
+			m_fScale = 1.f;
+		return;
+	}
+
+	m_fThunderTimer += fDeltaTime;
+
+	if (m_fScale > 0.5)
+		m_fScale -= fDeltaTime;
+	else
+		m_fScale = 0.5f;
+
+	if (m_fThunderTimer > 5.f)
+	{
+		m_bThunderTimerOnOff = false;
+		m_fThunderTimer = 0.f;
 	}
 }
 
