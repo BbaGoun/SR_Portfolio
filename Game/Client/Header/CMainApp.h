@@ -19,15 +19,22 @@ public:
 	void		LateUpdate_MainApp(const float& fDeltaTime);
 	void		Render_MainApp();
 
+	bool		ResetTest();
+	void		Reset_MainApp();
+	bool		IsLost_Device() { return m_bDeviceLost; }
+	void		Resize_MainApp(UINT uWidth, UINT uHeight);
+
 private:
 	HRESULT		Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
 	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
+
+	void		OnResetDevice();
 
 private:
 	Engine::CGraphicDev*	m_pDeviceClass;
 	Engine::CManagement*	m_pManagementClass;
 	LPDIRECT3DDEVICE9		m_pGraphicDev;
-
+	bool					m_bDeviceLost;
 
 public:		// 생성 함수
 	static CMainApp* Create();

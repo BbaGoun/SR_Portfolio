@@ -36,8 +36,9 @@ public:
 	void			Detach_Root(CGameObject* _pObj);
 	void			Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc);
 	void			Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc);
-	uint64_t		GenerateGuid() { return m_pScene->GenerateGuid(); }
-	void			InvalidateDeviceObjects();
+	uint32_t		GenerateGuid() { return m_pScene->GenerateGuid(); }
+	void			OnLostDevice();
+	void			OnResetDevice();
 
 	void			Set_ScenePath(const _tchar* _path) { m_pScene->Set_Path(_path); }
 	const _tchar*	Get_ScenePath() { return m_pScene->Get_Path(); }
@@ -46,7 +47,6 @@ public:
 
 
 public:
-	HRESULT			Load_Scene(const wchar_t* path);
 	HRESULT			Set_Scene(CScene* pScene);
 	void			Request_Scene(CScene* pScene);
 	void			Change_NextScene();

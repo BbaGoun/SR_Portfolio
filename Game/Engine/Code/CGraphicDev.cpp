@@ -32,47 +32,46 @@ HRESULT		CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode,
 	if (FAILED(m_pSDK->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &DeviceCaps)))
 		return E_FAIL;
 
-	_ulong	dwFlag(0);
+	m_dwFlag = 0;
 
 	if (DeviceCaps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT)
-		dwFlag |= D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED;
+		m_dwFlag |= D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED;
 
 	else
-		dwFlag |= D3DCREATE_SOFTWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED;
+		m_dwFlag |= D3DCREATE_SOFTWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED;
 
-	D3DPRESENT_PARAMETERS		d3dpp;
-	ZeroMemory(&d3dpp, sizeof(D3DPRESENT_PARAMETERS));
+	ZeroMemory(&m_d3dpp, sizeof(D3DPRESENT_PARAMETERS));
 
-	d3dpp.BackBufferWidth = iSizeX;
-	d3dpp.BackBufferHeight = iSizeY;
+	m_d3dpp.BackBufferWidth = iSizeX;
+	m_d3dpp.BackBufferHeight = iSizeY;
 
-	d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;
-	d3dpp.BackBufferCount = 1;
+	m_d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;
+	m_d3dpp.BackBufferCount = 1;
 
-	d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
-	d3dpp.MultiSampleQuality = 0;
+	m_d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
+	m_d3dpp.MultiSampleQuality = 0;
 
 	// D3DSWAPEFFECT_DISCARD = ���� ü�� ���,
 	// D3DSWAPEFFECT_FLIP = ���۸� �ϳ��ΰ� �����ư��� ����,
 	// D3DSWAPEFFECT_COPY = ���� ���۸��� ������ ���,
 
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	m_d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 
-	d3dpp.hDeviceWindow = hWnd;
+	m_d3dpp.hDeviceWindow = hWnd;
 
-	d3dpp.Windowed = eMode;
+	m_d3dpp.Windowed = eMode;
 
-	d3dpp.EnableAutoDepthStencil = TRUE;
-	d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;
+	m_d3dpp.EnableAutoDepthStencil = TRUE;
+	m_d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;
 
 	// ��ü ȭ�� ����� �� �ݿ�
-	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
-	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+	m_d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
+	m_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
 
 	// 3. sdk �� ��ü�� �̿��Ͽ� �׸��� �� ��ü ����
 
-	if (FAILED(m_pSDK->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, dwFlag, &d3dpp, &m_pGraphicDev)))
+	if (FAILED(m_pSDK->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, m_dwFlag, &m_d3dpp, &m_pGraphicDev)))
 	{
 		MSG_BOX("GraphicDev Create Failed");
 		return E_FAIL;
@@ -81,6 +80,19 @@ HRESULT		CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode,
 	*ppGraphicDev = this;
 
 	return S_OK;
+}
+
+void CGraphicDev::Reset_GraphicDev()
+{
+	HRESULT hr = m_pGraphicDev->Reset(&m_d3dpp);
+	if (hr == D3DERR_INVALIDCALL)
+		assert(0);
+}
+
+void CGraphicDev::Resize_GraphicDev(UINT uWidth, UINT uHeight)
+{
+	m_d3dpp.BackBufferWidth = uWidth;
+	m_d3dpp.BackBufferHeight = uHeight;
 }
 
 // �ĸ� ����
@@ -95,8 +107,8 @@ void	CGraphicDev::Render_Begin(D3DXCOLOR Color)
 	D3DVIEWPORT9 tFullView{};
 	tFullView.X = 0;
 	tFullView.Y = 0;
-	tFullView.Width = WINCX;
-	tFullView.Height = WINCY;
+	tFullView.Width = m_d3dpp.BackBufferWidth;
+	tFullView.Height = m_d3dpp.BackBufferHeight;
 	tFullView.MinZ = 0.f;
 	tFullView.MaxZ = 1.f;
 	m_pGraphicDev->SetViewport(&tFullView);
@@ -111,7 +123,7 @@ void	CGraphicDev::Render_Begin(D3DXCOLOR Color)
 	m_pGraphicDev->BeginScene();
 }
 
-void	CGraphicDev::Render_End(HWND hWnd)
+HRESULT	CGraphicDev::Render_End(HWND hWnd)
 {
 	m_pGraphicDev->EndScene();
 
@@ -121,7 +133,7 @@ void	CGraphicDev::Render_End(HWND hWnd)
 	// 4. ����
 
 	// 1, 2, 4 �Ű� ������ ����Ϸ��� SwapEffect ���� D3DSWAPEFFECT_COPY �� ���� ��� ����
-	m_pGraphicDev->Present(NULL, NULL, hWnd, NULL);
+	return m_pGraphicDev->Present(NULL, NULL, hWnd, NULL);
 }
 
 void	CGraphicDev::Free()

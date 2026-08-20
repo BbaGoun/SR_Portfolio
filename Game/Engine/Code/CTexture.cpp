@@ -4,12 +4,14 @@ CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
     :CComponent(pGraphicDev)
 {
     m_eID = ID_STATIC;
+    m_eKind = CK_TEXTURE;
 }
 
 CTexture::CTexture(const CTexture& rhs)
     :CComponent(rhs)
 {
     m_eID = ID_STATIC;
+    m_eKind = CK_TEXTURE;
 
     size_t iSize = rhs.m_vecTexture.size();
 
