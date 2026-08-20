@@ -24,6 +24,7 @@
 #include "CCube.h"
 #include "CQuadrangularPrism.h"
 #include "CTriangularPrism.h"
+#include "CArrowTex.h"
 
 BEGIN(Engine)
 

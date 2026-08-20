@@ -145,6 +145,9 @@
     <Filter Include="97. Utility\EditorLoader">
       <UniqueIdentifier>{70cc0f1a-3659-4586-848c-8c15a15adac7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\ArrowCol">
+      <UniqueIdentifier>{60a1ea73-0664-4071-ac79-4d5e68c4a8fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -297,6 +300,9 @@
     <ClInclude Include="..\Header\CEditorLoader.h">
       <Filter>97. Utility\EditorLoader</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CArrowTex.h">
+      <Filter>04. Component\Shape\ArrowCol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -427,6 +433,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEditorLoader.cpp">
       <Filter>97. Utility\EditorLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CArrowTex.cpp">
+      <Filter>04. Component\Shape\ArrowCol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

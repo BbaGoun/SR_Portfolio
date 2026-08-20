@@ -30,19 +30,19 @@ HRESULT CTriangularPrism::Ready_Buffer()
     m_pVB->Lock(0, 0, (void**)&vertices, 0);
 
     vertices[0].vPosition = { -1.f, -1.f, 1.f };
-    vertices[0].dwColor = m_Color;
+    vertices[0].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
 
     vertices[1].vPosition = { 1.f, -1.f, 1.f };
-    vertices[1].dwColor = m_Color;
+    vertices[1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
 
     vertices[2].vPosition = { -1.f, 1.f, -1.f };
-    vertices[2].dwColor = m_Color;
+    vertices[2].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
     vertices[3].vPosition = { 1.f, 1.f, -1.f };
-    vertices[3].dwColor = m_Color;
+    vertices[3].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
     vertices[4].vPosition = { 1.f, -1.f, -1.f };
-    vertices[4].dwColor = m_Color;
+    vertices[4].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
     vertices[5].vPosition = { -1.f, -1.f, -1.f };
-    vertices[5].dwColor = m_Color;
+    vertices[5].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
 
     m_pVB->Unlock();
 

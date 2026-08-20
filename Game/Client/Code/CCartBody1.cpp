@@ -29,7 +29,6 @@ HRESULT CCartBody1::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
-
 	return S_OK;
 }
 

@@ -187,6 +187,18 @@
     <Filter Include="02. GameObject\UI\UI_Timer">
       <UniqueIdentifier>{406ce618-cfd9-400f-ba28-75c87ea2370b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\MiniMap">
+      <UniqueIdentifier>{74eccf66-a30f-4fe4-a48a-852f81daf64d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\MiniMap\MinimapGround">
+      <UniqueIdentifier>{7f5f812d-6fa5-44c7-aebf-d73fe4a315b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\MiniMap\MinimapCart">
+      <UniqueIdentifier>{0a3a9472-fbc7-42cb-b1cc-31580d48a991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Minimap">
+      <UniqueIdentifier>{f920298e-7e71-481a-b829-383f64e13829}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -357,6 +369,15 @@
     <ClInclude Include="..\Header\CUI_ItemSlot.h">
       <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI_Minimap.h">
+      <Filter>02. GameObject\UI\UI_Minimap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMinimapGround.h">
+      <Filter>02. GameObject\MiniMap\MinimapGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMinimapCart.h">
+      <Filter>02. GameObject\MiniMap\MinimapCart</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -517,6 +538,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_ItemSlot.cpp">
       <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Minimap.cpp">
+      <Filter>02. GameObject\UI\UI_Minimap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMinimapGround.cpp">
+      <Filter>02. GameObject\MiniMap\MinimapGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMinimapCart.cpp">
+      <Filter>02. GameObject\MiniMap\MinimapCart</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

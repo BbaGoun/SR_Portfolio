@@ -188,9 +188,12 @@
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
     <ClInclude Include="..\Header\CDynamicCamera.h" />
+    <ClInclude Include="..\Header\CMinimapCart.h" />
+    <ClInclude Include="..\Header\CMinimapGround.h" />
     <ClInclude Include="..\Header\CMissile.h" />
     <ClInclude Include="..\Header\CMissileBody.h" />
     <ClInclude Include="..\Header\CMissileTarget.h" />
+    <ClInclude Include="..\Header\CUI_Minimap.h" />
     <ClInclude Include="..\Header\CRainBow_Cloud.h" />
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
     <ClInclude Include="..\Header\CHUD_Main.h" />
@@ -246,9 +249,12 @@
     <ClCompile Include="..\Code\CCollisionTest.cpp" />
     <ClCompile Include="..\Code\CCollisionBox.cpp" />
     <ClCompile Include="..\Code\CDynamicCamera.cpp" />
+    <ClCompile Include="..\Code\CMinimapCart.cpp" />
+    <ClCompile Include="..\Code\CMinimapGround.cpp" />
     <ClCompile Include="..\Code\CMissile.cpp" />
     <ClCompile Include="..\Code\CMissileBody.cpp" />
     <ClCompile Include="..\Code\CMissileTarget.cpp" />
+    <ClCompile Include="..\Code\CUI_Minimap.cpp" />
     <ClCompile Include="..\Code\CRainbow_Cloud.cpp" />
     <ClCompile Include="..\Code\CFollowSmoothCam.cpp" />
     <ClCompile Include="..\Code\CHUD_Main.cpp" />
