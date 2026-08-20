@@ -6,11 +6,20 @@
 CCube_Collider::CCube_Collider(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CCollider(pGraphicDev)
 {
-	// m_tBoundingBox.Orientation = { 0.f, 0.f, 0.f, 1.f };
+	m_tBoundingBox.Orientation = { 0.f, 0.f, 0.f, 1.f }; // 테스트용
 }
 
-CCube_Collider::CCube_Collider(const CCollider& rhs)
-	:CCollider(rhs)
+// 원본
+//CCube_Collider::CCube_Collider(const CCollider& rhs)
+//	:CCollider(rhs)
+//{
+//}
+
+// 테스트
+CCube_Collider::CCube_Collider(const CCube_Collider& rhs)
+	: CCollider(rhs)
+	, m_tBoundingBox(rhs.m_tBoundingBox)
+	, m_vOffset(rhs.m_vOffset)
 {
 }
 

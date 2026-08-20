@@ -33,6 +33,7 @@ HRESULT CMissile::Ready_GameObject()
 	m_pColliderCom->SetIsTrigger(true);
 	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 	m_pColliderCom->Set_Extents({ 1.f, 1.f, 1.f });
+	m_pColliderCom->Set_Orientation({ 0.f, 0.f, 0.f, 1.f }); //
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
@@ -132,6 +133,7 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
 	}
+	m_pColliderCom->LateUpdate_Component(fFixedDeltaTime);	// 테스트용
 }
 
 _int CMissile::Update_GameObject(const _float& fTimeDelta)
