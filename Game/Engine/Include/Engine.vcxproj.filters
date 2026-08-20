@@ -133,6 +133,9 @@
     <Filter Include="97. Utility\EditorLoader">
       <UniqueIdentifier>{70cc0f1a-3659-4586-848c-8c15a15adac7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\ArrowCol">
+      <UniqueIdentifier>{60a1ea73-0664-4071-ac79-4d5e68c4a8fc}</UniqueIdentifier>
+    </Filter>
     <Filter Include="04. Component\Shape\Spline">
       <UniqueIdentifier>{b7c8adf4-29d0-43ea-8d3a-3b2372e9b116}</UniqueIdentifier>
     </Filter>
@@ -276,6 +279,9 @@
     <ClInclude Include="..\Header\CEditorLoader.h">
       <Filter>97. Utility\EditorLoader</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CArrowTex.h">
+      <Filter>04. Component\Shape\ArrowCol</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CSpline.h">
       <Filter>04. Component\Shape\Spline</Filter>
     </ClInclude>
@@ -397,6 +403,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEditorLoader.cpp">
       <Filter>97. Utility\EditorLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CArrowTex.cpp">
+      <Filter>04. Component\Shape\ArrowCol</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSpline.cpp">
       <Filter>04. Component\Shape\Spline</Filter>

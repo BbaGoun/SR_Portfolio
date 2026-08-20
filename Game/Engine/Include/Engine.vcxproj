@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CArrowTex.h" />
     <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCameraMgr.h" />
     <ClInclude Include="..\Header\CCartBodyCol.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="..\Header\CProtoMgr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CArrowTex.cpp" />
     <ClCompile Include="..\Code\CCalculator.cpp" />
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
     <ClCompile Include="..\Code\CCartBodyCol.cpp" />

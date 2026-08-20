@@ -15,7 +15,9 @@ WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND    g_hWnd;
 UINT    g_ResizeWidth = 0, g_ResizeHeight;
-
+IDirect3DTexture9* g_pMinimapTexture = nullptr;
+IDirect3DSurface9* g_pMinimapSurface = nullptr;
+IDirect3DSurface9* g_pMinimapDepthStencil = nullptr;
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
