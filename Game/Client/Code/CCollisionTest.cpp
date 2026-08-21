@@ -410,7 +410,12 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
 		return E_FAIL;
-  ////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
 	CGameObject* pMissileTarget = CMissileTarget::Create(m_pGraphicDev);
 
 	if (pMissileTarget == nullptr)
@@ -418,6 +423,22 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget", pMissileTarget)))
 		return E_FAIL;
+
+
+
+
+
+	// 마그넷 타겟 만들겨?
+	//CGameObject* pMagnetTarget = CMagnetTarget::Create(m_pGraphicDev);
+
+	//if (pMagnetTarget == nullptr)
+	//	return E_FAIL;
+
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MagnetTarget", pMagnetTarget)))
+	//	return E_FAIL;
+
+
+
 
 
 	//// ThunderCloud

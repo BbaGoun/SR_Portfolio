@@ -187,6 +187,8 @@
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
     <ClInclude Include="..\Header\CDynamicCamera.h" />
+    <ClInclude Include="..\Header\CMagnet.h" />
+    <ClInclude Include="..\Header\CMagnetBody.h" />
     <ClInclude Include="..\Header\CMinimapCart.h" />
     <ClInclude Include="..\Header\CMinimapGround.h" />
     <ClInclude Include="..\Header\CMissile.h" />
@@ -234,6 +236,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CMagnet.cpp" />
+    <ClCompile Include="..\Code\CMagnetBody.cpp" />
     <ClCompile Include="CUI_Menu.cpp" />
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CBanana.cpp" />
