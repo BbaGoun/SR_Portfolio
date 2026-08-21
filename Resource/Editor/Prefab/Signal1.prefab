@@ -1,0 +1,73 @@
+﻿OBJECT
+  belong=1
+  type=
+  name=Empty
+  tag=1
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 -0.000000
+    quat=0.000000 -0.000000 -0.000000 1.000000
+    scale=0.999999 0.999966 0.999998
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=2
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_SignalFlagTexture3 mapTag=Proto_SignalFlagTexture3
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.000000 0.000000
+      rot=0.000000 0.000000 -0.000000
+      quat=0.000000 0.000000 -0.000000 1.000000
+      scale=0.999998 2.000021 1.000004
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=3
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_SignalFlagTexture2 mapTag=Proto_SignalFlagTexture2
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 3.000000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.400000 4.000000 0.400000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=4
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_SignalFlagTexture2 mapTag=Proto_SignalFlagTexture2
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 5.000000 -1.200000
+      rot=0.000000 89.999817 0.000000
+      quat=0.000000 0.707106 0.000000 0.707108
+      scale=2.800000 0.400000 0.399999
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_SignalFlagTexture1 mapTag=Proto_SignalFlagTexture1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 3.800000 -2.000000
+      rot=89.999962 -0.000012 90.000008
+      quat=0.500000 0.500000 0.500000 0.500000
+      scale=2.000051 0.999950 1.000001
+  ENDOBJECT
+ENDOBJECT

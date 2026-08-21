@@ -1,0 +1,28 @@
+﻿OBJECT
+  belong=1
+  type=
+  name=Empty
+  tag=1
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=2
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_WoodenBoxTexture mapTag=Proto_WoodenBoxTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.000000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+ENDOBJECT
