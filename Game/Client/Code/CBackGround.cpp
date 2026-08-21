@@ -3,6 +3,8 @@
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
 #include "CTexture.h"
+#include "CCameraMgr.h"
+
 
 CBackGround::CBackGround(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -38,6 +40,7 @@ HRESULT CBackGround::Ready_GameObject()
 _int CBackGround::Update_GameObject(const _float& fDeltaTime)
 {
 	return CGameObject::Update_GameObject(fDeltaTime);
+
 }
 
 void CBackGround::LateUpdate_GameObject(const _float& fDeltaTime)

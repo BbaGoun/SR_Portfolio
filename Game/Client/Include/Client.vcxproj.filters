@@ -187,6 +187,9 @@
     <Filter Include="02. GameObject\UI\UI_Timer">
       <UniqueIdentifier>{406ce618-cfd9-400f-ba28-75c87ea2370b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI\UI_Menu">
+      <UniqueIdentifier>{abf231ea-de2d-413c-96d2-ca1bb0124865}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -357,6 +360,9 @@
     <ClInclude Include="..\Header\CUI_ItemSlot.h">
       <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI_Menu.h">
+      <Filter>02. GameObject\UI\UI_Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -517,6 +523,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_ItemSlot.cpp">
       <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI_Menu.cpp">
+      <Filter>02. GameObject\UI\UI_Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
