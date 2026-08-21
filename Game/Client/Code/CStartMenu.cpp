@@ -3,7 +3,6 @@
 #include "CLoadingThread.h"
 #include "CBackGround.h"
 #include "CProtoMgr.h"
-#include "CScene_Test.h"
 #include "CRenderer.h"
 
 #include "CManagement.h"

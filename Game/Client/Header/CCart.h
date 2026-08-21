@@ -53,13 +53,9 @@ public:
 
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
-	void			BananaTimer(const _float& fDeltaTime );
+	void			CreateThunderCloudObject();
 	void			CreateMissileObject();					
 	void			CreateTargetAimObject();				
-	float			GetCurGage() { return m_fCurGage; }
-	float			GetGainGage() { return m_fGainGage; }
-	void			CreateThunderCloudObject();
-
 
 private:
 	_float		m_fMaxSpeed;

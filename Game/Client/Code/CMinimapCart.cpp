@@ -64,6 +64,7 @@ void CMinimapCart::LateUpdate_GameObject(const _float& fDeltaTime)
 void CMinimapCart::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	m_pGraphicDev->SetTexture(0, nullptr);
 	m_pVIBufferCom->Render_Buffer();
 }
 

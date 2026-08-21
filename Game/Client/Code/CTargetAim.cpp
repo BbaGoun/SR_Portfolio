@@ -56,7 +56,6 @@ HRESULT CTargetAim::Ready_GameObject()
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
 	m_pColliderCom->Set_Extents({ 5.f, 5.f, 0.f });
-	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 

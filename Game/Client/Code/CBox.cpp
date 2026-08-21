@@ -32,7 +32,6 @@ HRESULT CBox::Ready_GameObject()
 		return E_FAIL;
 
 	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 	m_pColliderCom->Set_Extents({ 2.5f, 1.f, 5.f });
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
