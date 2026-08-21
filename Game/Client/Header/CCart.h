@@ -24,11 +24,16 @@ public:
 
 public:
 	static CCart*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	// KeyInput
 	void			KeyInput(const _float& fDeltaTime);
+
+	// Update
 	void			UpdateDrift();
 	void			UpdateBoost(const _float& fDeltaTime);
 	void			UpdateThunder();
+	void			UpdateGravity();
 
+	// Get, Set
 	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
 	void			SetBoost(BOOST_STATE eID)			{ m_eBoostState = eID; }
 
@@ -46,49 +51,65 @@ public:
 	float			GetGainGage()						{ return m_fGainGage; }
 	void			SetGainGage(float fGage)			{ m_fGainGage = fGage; }
 
-	void			AdjustPosY_Slope(_vec3 pos);
-	void			UpdateGravity();
+	ITEM_TYPE		GetFirstSlot()						{ return m_eFirstSlot; }
+	void			SetFirstSlot(ITEM_TYPE eID)			{ m_eFirstSlot = eID; }
 
-	void			OutputCarState();
+	ITEM_TYPE		GetSecondSlot()						{ return m_eSecondSlot; }
+	void			SetSecondSlot(ITEM_TYPE eID)		{ m_eSecondSlot = eID; }
 
+	// AdjustState
+	void			AdjustPosY_Slope(_vec3 pos, const float fDeltaTime);
+
+	// CreateObject
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
 	void			CreateMissileObject();					
 	void			CreateTargetAimObject();				
 
+	// Item
+	void			GainItem();
+	void			UseItem();
+
+	// OutputState
+	void			OutputCarState();
+
 private:
-	_float		m_fMaxSpeed;
-	bool		m_bDrift;
-	bool		m_bBanana;
-	bool		m_bRainbowUI;
+	_float			m_fMaxSpeed;
+	bool			m_bDrift;
+	bool			m_bBanana;
+	bool			m_bRainbowUI;
 
-	float		m_fNormalTurnAngle;
-	float		m_fBoostTurnAngle;
-	float		m_fDriftTurnAngle;
+	float			m_fNormalTurnAngle;
+	float			m_fBoostTurnAngle;
+	float			m_fDriftTurnAngle;
 
-	float		m_fLookForceAngle;
-	float		m_fBoostCal;
+	float			m_fLookForceAngle;
+	float			m_fBoostCal;
 
-	float		m_fBananaTimer;
-	_vec3		m_vBananaSpinStartLook;
+	float			m_fBananaTimer;
+	_vec3			m_vBananaSpinStartLook;
 
-	float		m_fCurGage;
-	float		m_fGainGage;
+	float			m_fCurGage;
+	float			m_fGainGage;
 
-	float		m_fBoostItemCnt;
+	float			m_fBoostItemCnt;
 
-	bool		m_bThunder;
+	bool			m_bThunder;
 
-	bool		m_bShortBoosterOnOff;
-	float		m_fShortBoosterTimer;
+	bool			m_bShortBoosterOnOff;
+	float			m_fShortBoosterTimer;
 
-	CART_STATE	m_eCartState;
-	BOOST_STATE	m_eBoostState;
+	CART_STATE		m_eCartState;
+	BOOST_STATE		m_eBoostState;
 
-	_vec3		m_vTerrainNormal;
+	_vec3			m_vTerrainNormal;
 
+	float			m_fAirTime;
+	D3DXQUATERNION	m_PreQuaternion;
 
+	ITEM_TYPE		m_eFirstSlot;
+	ITEM_TYPE		m_eSecondSlot;
 
 protected:
 	virtual		void		Free() override;

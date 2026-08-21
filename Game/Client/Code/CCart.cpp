@@ -58,10 +58,13 @@ HRESULT CCart::Ready_GameObject()
 	m_fShortBoosterTimer	= 0.f;
 	m_bShortBoosterOnOff	= false;
 
-	m_eCartState		= CART_STATE_GROUND;
-	m_eBoostState		= BOOST_STATE_NORMAL;
-	m_vTerrainNormal	= { 0,1,0 };
+	m_eCartState			= CART_STATE_GROUND;
+	m_eBoostState			= BOOST_STATE_NORMAL;
+	m_vTerrainNormal		= { 0,1,0 };
+	m_fAirTime				= 0.f;
 
+	m_eFirstSlot			= ITEM_END;
+	m_eSecondSlot			= ITEM_END;
 
 	m_vBananaSpinStartLook = { 0,0,0 };
 	return S_OK;
@@ -85,7 +88,7 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	AdjustPosY_Slope(vPos);
+	AdjustPosY_Slope(vPos, fFixedDeltaTime);
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
@@ -127,6 +130,27 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_I))
+	{
+		if (m_eFirstSlot == ITEM_END)
+		{
+			m_eFirstSlot = ITEM_TYPE(rand() % ITEM_END);
+		}
+
+		else if (m_eFirstSlot != ITEM_END)
+		{
+			m_eSecondSlot = ITEM_TYPE(rand() % ITEM_END);
+		}
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Z))
+	{
+		m_eFirstSlot = m_eSecondSlot;
+
+		m_eSecondSlot = ITEM_END;
+	}
+
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Q))
 	{
@@ -226,15 +250,16 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			m_fBoostCal = 1.05f;
 		}
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))
 	{
-		// LongBooster
-		if (m_fBoostItemCnt > 0)
-		{
-			--m_fBoostItemCnt;
-			m_eBoostState = BOOST_STATE_LONG_BOOST;
-			m_fBoostCal = 1.05f;
-		}
+		UseItem();
+		//// LongBooster
+		//if (m_fBoostItemCnt > 0)
+		//{
+		//	--m_fBoostItemCnt;
+		//	m_eBoostState = BOOST_STATE_LONG_BOOST;
+		//	m_fBoostCal = 1.05f;
+		//}
 	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
@@ -425,12 +450,13 @@ void CCart::UpdateDrift()
 		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
 
 		m_fLookForceAngle = D3DXToDegree(acosf(D3DXVec3Dot(&vLook, &vTempForce)));
-		cout << m_fLookForceAngle << endl;
 		m_vRotation.z *= 0.98;
 		m_vRotation.z = clampT(float(m_vRotation.z), -0.1f, 0.1f);
 
-		if (m_fLookForceAngle < 30.f || m_eCartState != CART_STATE_GROUND)
+		if ((!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) && m_fLookForceAngle < 30.f )
+			|| m_eCartState != CART_STATE_GROUND)
 		{
+			cout << "EndDrift" << endl;
 			m_bShortBoosterOnOff = true;
 			m_fCurGage += m_fGainGage;
 			if (m_fCurGage >= 100.f)
@@ -569,7 +595,7 @@ void CCart::UpdateThunder()
 	}
 }
 
-void CCart::AdjustPosY_Slope(_vec3 pos)
+void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 {
 	CLand3* pLand3 = dynamic_cast<CLand3*>(CManagement::GetInstance()->Find_GameObjectByTag(L"Environment", L"Env_Land3"));
 	CTerrain3* pTerrain3 = pLand3->Get_Component<CTerrain3>();
@@ -603,10 +629,11 @@ void CCart::AdjustPosY_Slope(_vec3 pos)
 
 		float fDeltaY = originPos.y - vWorldPos.y;
 		// m_eCart_State 업데이트
-		if (m_eCartState == CART_STATE_GROUND)
+		if (m_eCartState == CART_STATE_GROUND) // Ground 유지
 		{
 			if (fDeltaY <= 0.1f)
 			{
+				m_fAirTime = 0.f;
 				m_eCartState = CART_STATE_GROUND;
 				m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
 
@@ -619,18 +646,22 @@ void CCart::AdjustPosY_Slope(_vec3 pos)
 				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
 
 				D3DXQUATERNION q;
-				D3DXQuaternionRotationAxis(&q, &vAxis, (fRadian));
-				m_pTransformCom->Multiple_Quaternion(&q);
+				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+
+				if (m_vTerrainNormal != _vec3({ 0,1,0 }))
+					m_PreQuaternion = q;
 			}
-			else
+			else // 점프 시작 
 			{
 				m_eCartState = CART_STATE_AIR;
+				m_fAirTime += fDeltaTime;
 			}
 		}
-		else if(m_eCartState == CART_STATE_AIR)
+		else if(m_eCartState == CART_STATE_AIR) // 착지
 		{
 			if (fDeltaY <= 0.1f)
 			{
+				m_fAirTime = 0.f;
 				m_eCartState = CART_STATE_GROUND;
 				m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
 
@@ -643,12 +674,15 @@ void CCart::AdjustPosY_Slope(_vec3 pos)
 				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
 
 				D3DXQUATERNION q;
-				D3DXQuaternionRotationAxis(&q, &vAxis, (fRadian));
-				m_pTransformCom->Multiple_Quaternion(&q);
+				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+
+				if (m_vTerrainNormal == _vec3({ 0,1,0 }))
+					m_PreQuaternion = {0,0,0,1};
 			}
-			else
+			else // 점프 유지
 			{
 				m_eCartState = CART_STATE_AIR;
+				m_fAirTime += fDeltaTime;
 			}
 		}
 	}
@@ -659,11 +693,28 @@ void CCart::AdjustPosY_Slope(_vec3 pos)
 			m_eCartState = CART_STATE_GROUND;
 			m_pTransformCom->Set_Pos({ originPos.x,0,originPos.z });
 			m_vTerrainNormal = { 0,1,0 };
+			m_PreQuaternion = { 0,0,0,1 };
 		}
 		else
 		{
 			m_eCartState = CART_STATE_AIR;
+			m_fAirTime += fDeltaTime;
 		}
+	}
+
+	m_pTransformCom->Multiple_Quaternion(&m_PreQuaternion);
+	if (m_eCartState == CART_STATE_AIR)
+	{
+		_vec3 vCartUp, vUp = { 0,1,0 };
+		m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+		float fRadian = acosf(D3DXVec3Dot(&vCartUp, &vUp));
+	
+		_vec3 vAxis;
+		D3DXVec3Cross(&vAxis, &vCartUp, &vUp);
+	
+		D3DXQUATERNION q;
+		D3DXQuaternionRotationAxis(&q, &vAxis, fRadian* m_fAirTime);
+		m_pTransformCom->Multiple_Quaternion(&q);
 	}
 }
 
@@ -700,7 +751,6 @@ void CCart::UpdateGravity()
 			// 구한 크기에 -Look 방향벡터 곱해서 vForce에 적용
 			m_vForce += fSize * vPlaneLook;
 		}
-
 		break;
 	case Engine::CART_STATE_AIR:
 		// 중력 전부 다 받기
@@ -720,16 +770,16 @@ void CCart::OutputCarState()
 	switch (m_eCartState)
 	{
 	case Engine::CART_STATE_GROUND:
-		//cout << "CART_STATE_GROUND" << endl;
+		cout << "CART_STATE_GROUND" << endl;
 		break;
 	case Engine::CART_STATE_AIR:
-		//cout << "CART_STATE_AIR" << endl;
+		cout << "CART_STATE_AIR" << endl;
 		break;
 	case Engine::CART_STATE_LANDING:
-		//cout << "CART_STATE_LANDING" << endl;
+		cout << "CART_STATE_LANDING" << endl;
 		break;
 	case Engine::CART_STATE_END:
-		//cout << "CART_STATE_GROUND" << endl;
+		cout << "CART_STATE_GROUND" << endl;
 		break;
 	default:
 		break;
@@ -839,6 +889,58 @@ void CCart::CreateTargetAimObject()
 	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
 
 	pTargetAim->Get_Transform()->Set_Quaternion(&qRot);
+}
+
+void CCart::GainItem()
+{
+	cout << "GainItem" << endl;
+	if (m_eFirstSlot == ITEM_END)
+	{
+		m_eFirstSlot = ITEM_TYPE(rand() % ITEM_END);
+	}
+
+	else if (m_eFirstSlot != ITEM_END)
+	{
+		m_eSecondSlot = ITEM_TYPE(rand() % ITEM_END);
+	}
+}
+
+void CCart::UseItem()
+{
+	switch (m_eFirstSlot)
+	{
+	case Engine::ITEM_BOOSTER:
+		m_eBoostState = BOOST_STATE_LONG_BOOST;
+		m_fBoostCal = 1.05f;
+		break;
+	case Engine::ITEM_THUNDER:
+		CreateThunderCloudObject();
+		break;
+	case Engine::ITEM_CLOUD:
+		CreateRainbowObject();
+		break;
+	case Engine::ITEM_UFO:
+		break;
+	case Engine::ITEM_WATERFLY:
+		break;
+	case Engine::ITEM_MAGNET:
+		break;
+	case Engine::ITEM_BARRICADE:
+		break;
+	case Engine::ITEM_ROCKET:		
+		break;
+	case Engine::ITEM_BANANA:
+		CreateBananaObject();
+		break;
+	case Engine::ITEM_WATERBOMB:
+		break;
+	case Engine::ITEM_END:
+		break;
+	default:
+		break;
+	}
+	m_eFirstSlot = m_eSecondSlot;
+	m_eSecondSlot = ITEM_END;
 }
 
 void CCart::Free()
