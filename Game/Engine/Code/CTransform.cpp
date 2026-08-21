@@ -196,6 +196,13 @@ _matrix* CTransform::GetFollowRotation(_vec3* pFollowDir, _matrix* _pRot)
 	if (vCross.x == 0 && vCross.y == 0 && vCross.z == 0)
 		return D3DXMatrixIdentity(_pRot);
 
+	//if (D3DXVec3Length(&vCross) <= 0.001f)	// 테스트
+	//	return D3DXMatrixIdentity(_pRot);	 
+
+
+
+
+
 	// 현재 삼각형이 향하는 방향에서 플레이어를 향하는 방향으로 회전할 때, 사잇각을 알아낸다.
 	float theta = acosf(D3DXVec3Dot(&m_vInfo[INFO_LOOK], pFollowDir));
 
