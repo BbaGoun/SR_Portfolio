@@ -46,18 +46,20 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 	}
 	//else if (pDstType == SPHERE_COLLIDER && pSrcType == SPHERE_COLLIDER)
 	//{
-	//	if (SphereVsSphere(pDstCollider, pSrcCollider))
+	//	CSphere_Collider* pDstSphereCollider = dynamic_cast<CSphere_Collider*>(pDstCollider);
+	//	CSphere_Collider* pSrcSphereCollider = dynamic_cast<CSphere_Collider*>(pSrcCollider);
+	//	if (pDstSphereCollider->Get_Info().Intersects(pSrcSphereCollider->Get_Info()))
 	//	{
 	//		MSG_BOX("Collision!");
 	//		if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
 	//		{
-	//			//pDstCollider->OnTrigger 호출
-	//			//pSrcCollider->OnTrigger 호출
+	//			pDstSphereCollider->Get_Owner()->TriggerEnter(pSrcCollider);
+	//			pSrcSphereCollider->Get_Owner()->TriggerEnter(pDstCollider);
 	//		}
 	//		else
 	//		{
-	//			//pDstCollider->OnCollision 호출
-	//			//pSrcCollider->OnCollision 호출
+	//			pDstSphereCollider->Get_Owner()->CollisionEnter(pSrcCollider);
+	//			pSrcSphereCollider->Get_Owner()->CollisionEnter(pDstCollider);
 	//		}
 	//	}
 	//}

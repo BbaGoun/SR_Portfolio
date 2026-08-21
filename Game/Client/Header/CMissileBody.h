@@ -22,8 +22,6 @@ public:
 
 private:
 	Engine::CMissileTex* m_pBufferCom;
-	_float			m_fSpeed;
-	_float			m_fAngle;
 
 public:
 	static CMissileBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);

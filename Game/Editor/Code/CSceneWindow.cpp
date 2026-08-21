@@ -3,6 +3,7 @@
 #include "CManagement.h"
 #include "CCalculator.h"
 #include "CCollider.h"
+#include "CSpline.h"
 
 CSceneWindow::CSceneWindow() : CWindow()
 , m_pSceneTex(nullptr)
@@ -137,8 +138,11 @@ void CSceneWindow::Update_Window()
                 pObj->Render_GameObject();
 
                 if (g_bSelected && (pObj->GetGuid() == g_uSelected)) {
-                    Draw_Outline(pObj, D3DXCOLOR{ 0.5f, 0.5f, 0.5f, 1.f });
-                    Draw_Collider(pObj);
+                    if (!g_bEdit) {
+                        Draw_Outline(pObj, D3DXCOLOR{ 0.5f, 0.5f, 0.5f, 1.f });
+                        Draw_Collider(pObj);
+                    }
+                    Control_Spline(pObj);
                 }
             }
         }
@@ -165,7 +169,7 @@ void CSceneWindow::Update_Window()
     // 오브젝트의 guid로 선택
     if (g_bSelected) {
         CGameObject* pSel = FindByGuid(g_uSelected, map);
-        if (pSel) {
+        if (pSel && !g_bEdit) {
 
             // 조작용 복사본 (Get_World()가 돌려주는 버퍼를 직접 깨지 않게)
             _matrix matWorld = *pSel->Get_Transform()->Get_World();
@@ -194,6 +198,27 @@ void CSceneWindow::Update_Window()
 
                 CTransform* pTF = pSel->Get_Transform();
                 pTF->Set_LocalWorld(&matLocal);
+            }
+        }
+        else if (pSel && g_bEdit) {
+            if (g_bPointSelected) {
+                // 조작용 위치 복사본
+                CSpline* pSpline = pSel->Get_Component<CSpline>();
+
+                ControlPoint* cp = pSpline->Get_ControlPoint(g_uPointSelected);
+                _matrix matWorld;
+                D3DXMatrixIdentity(&matWorld);
+                memcpy(&matWorld.m[3], &cp->position, sizeof(_vec3));
+
+                ImGuizmo::SetGizmoSizeClipSpace(gizmoSize);
+                ImGuizmo::Manipulate(
+                    (float*)matView, (float*)matProj,
+                    g_GizmoOp, g_GizmoMode, (float*)&matWorld);
+
+                if (ImGuizmo::IsUsing())
+                {
+                    memcpy(&cp->position, &matWorld.m[3], sizeof(_vec3));
+                }
             }
         }
     }
@@ -232,50 +257,80 @@ void CSceneWindow::Update_Window()
             // ray를 뷰 -> 월드
             D3DXVec3TransformCoord(&rayOrigin, &rayOrigin, &matInvView);
             D3DXVec3TransformNormal(&rayDir, &rayDir, &matInvView);
+            D3DXVec3Normalize(&rayDir, &rayDir);
 
-            // for문으로 모든 오브젝트 탐색
             float bestDist = FLT_MAX;
-            uint64_t bestGuid = 0;
+            uint32_t bestId = 0;
             bool hit = false;
-            DirectX::BoundingBox box;
 
-            for (auto& p : map)
-            {
-                for (auto& pObj : p.second)
+            if (!g_bEdit) {
+                // for문으로 모든 오브젝트 탐색
+                DirectX::BoundingBox box;
+
+                for (auto& p : map)
                 {
-                    if (!pObj)
-                        continue;
-
-                    _matrix matWorld = *pObj->Get_Transform()->Get_World();
-                    _matrix matInv;
-                    D3DXMatrixInverse(&matInv, 0, &matWorld);
-                    _vec3 oLocal, dLocal;
-                    D3DXVec3TransformCoord(&oLocal, &rayOrigin, &matInv);
-                    D3DXVec3TransformNormal(&dLocal, &rayDir, &matInv);
-                    D3DXVec3Normalize(&dLocal, &dLocal);
-
-                    CVIBuffer* pBuf = pObj->Get_Component<CVIBuffer>();
-                    if (pBuf == nullptr)
-                        continue;
-                        
-                    pBuf->GetBoundingBox(&box);
-
-                    float dist;
-                    if (box.Intersects(ToXMVec(oLocal), ToXMVec(dLocal), dist) && dist < bestDist)
+                    for (auto& pObj : p.second)
                     {
-                        bestDist = dist;
-                        bestGuid = pObj->GetGuid();
-                        hit = true;
+                        if (!pObj)
+                            continue;
+
+                        CVIBuffer* pBuf = pObj->Get_Component<CVIBuffer>();
+                        if (pBuf == nullptr)
+                            continue;
+                        pBuf->GetBoundingBox(&box);
+
+                        _matrix matWorld = *pObj->Get_Transform()->Get_World();
+                        _matrix matInv;
+                        D3DXMatrixInverse(&matInv, 0, &matWorld);
+                        _vec3 oLocal, dLocal;
+                        D3DXVec3TransformCoord(&oLocal, &rayOrigin, &matInv);
+                        D3DXVec3TransformNormal(&dLocal, &rayDir, &matInv);
+                        D3DXVec3Normalize(&dLocal, &dLocal);
+
+                        float dist;
+                        if (box.Intersects(ToXMVec(oLocal), ToXMVec(dLocal), dist) && dist < bestDist)
+                        {
+                            bestDist = dist;
+                            bestId = pObj->GetGuid();
+                            hit = true;
+                        }
                     }
                 }
-            }
-            if (hit) {
-                g_bSelected = true;
-                g_uSelected = bestGuid;
+                if (hit) {
+                    ::Set_ObjSelected(bestId);
+                }
+                else {
+                    ::Free_ObjSelected();
+                }
             }
             else {
-                g_bSelected = false;
-                g_uSelected = 0;
+                // Spline의 점을 순회
+                CGameObject* pSel = FindByGuid(g_uSelected, map);
+                if (pSel != nullptr) {
+                    CSpline* pSpline = pSel->Get_Component<CSpline>();
+
+                    DirectX::BoundingSphere sphere;
+                    sphere.Radius = 0.1f;
+
+                    auto& vecP = pSpline->Get_ControlPoints();
+                    for (int i = 0; i < vecP.size(); ++i) {
+                        ControlPoint& cp = vecP[i];
+                        sphere.Center = ToXMFLOAT3(cp.position);
+
+                        float dist;
+                        if (sphere.Intersects(ToXMVec(rayOrigin), ToXMVec(rayDir), dist)) {
+                            bestDist = dist;
+                            bestId = cp.id;
+                            hit = true;
+                        }
+                    }
+                    if (hit) {
+                        ::Set_PointSelected(bestId);
+                    }
+                    else {
+                        ::Free_PointSelected();
+                    }
+                }
             }
         }
 
@@ -353,6 +408,15 @@ void CSceneWindow::Draw_Collider(CGameObject* pObj)
     for (auto& col : colliders) {
         col->Render_Component(D3DXCOLOR(0, 1, 0, 1));
     }
+}
+
+void CSceneWindow::Control_Spline(CGameObject* pObj)
+{
+    CSpline* pSpline = pObj->Get_Component<CSpline>();
+    if (!pSpline)
+        return;
+
+    pSpline->Render_Points();
 }
 
 void CSceneWindow::InvalidateDeviceObjects()
