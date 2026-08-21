@@ -3,12 +3,13 @@
 #include "CLoadingThread.h"
 #include "CBackGround.h"
 #include "CProtoMgr.h"
-#include "CScene_Test.h"
+#include "CRenderer.h"
 
 #include "CManagement.h"
 #include "CRcTex.h"
 #include "CCollisionTest.h"
 #include "CLoading.h"
+#include "CUI_Menu.h"
 
 CStartMenu::CStartMenu(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -27,7 +28,8 @@ HRESULT CStartMenu::Ready_Scene()
 	if (FAILED(Ready_Environment_Layer(L"Environment_Layer")))
 		return E_FAIL;
 
-
+	if (FAILED(Ready_UI_Layer()))
+		return E_FAIL;
 
 
 
@@ -38,9 +40,8 @@ HRESULT CStartMenu::Ready_Scene()
 
 _int CStartMenu::Update_Scene(const _float& fDeltaTime)
 {
+	
 	_int iExit = CScene::Update_Scene(fDeltaTime);
-
-
 
 	if (GetAsyncKeyState('M'))
 	{
@@ -80,11 +81,11 @@ void CStartMenu::Render_Scene()
 	D3DVIEWPORT9 vp;
 
 	m_pGraphicDev->GetViewport(&vp);
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), float(vp.Width) / vp.Height,
-		1.f, 1000.f);
+	D3DXMatrixOrthoLH(&matProj, float(vp.Width), float(vp.Height), 1.f, 1000.f);
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+
 
 	CScene::Render_Scene();
 }
@@ -108,7 +109,7 @@ HRESULT CStartMenu::Ready_Environment_Layer(const _tchar* pLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
 		return E_FAIL;
 
-	pGameObject->Get_Transform()->Set_Scale({ 2 * 16.f / 9.f, 2, 1 });
+	pGameObject->Get_Transform()->Set_Scale({ WINCX, WINCY, 1 });
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -118,6 +119,26 @@ HRESULT CStartMenu::Ready_Environment_Layer(const _tchar* pLayerTag)
 HRESULT CStartMenu::Ready_Prototype()
 {
 	return S_OK;
+}
+
+HRESULT CStartMenu::Ready_UI_Layer()
+{
+	CLayer* pUILayer = CLayer::Create();
+	if (pUILayer == nullptr)
+		return E_FAIL;
+
+	m_mapLayer.insert({ L"UI", pUILayer });
+
+	CGameObject* pUIObject = nullptr;
+	pUIObject = CUI_Menu::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Menu", pUIObject)))
+		return E_FAIL;
+
+	return S_OK;
+
+
 }
 
 CStartMenu* CStartMenu::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -136,5 +157,6 @@ CStartMenu* CStartMenu::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStartMenu::Free()
 {
+
 	CScene::Free();
 }

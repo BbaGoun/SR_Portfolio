@@ -7,6 +7,10 @@
 #include "CManagement.h"
 #include "CBanana.h"
 #include "CCollisionMgr.h"
+#include "CMissile.h"
+#include "CMissileBody.h"
+#include "CTargetAim.h"
+#include "CCameraMgr.h"
 #include "CLand3.h"
 #include <CThunderCloud.h>
 #include <CCartBody.h>
@@ -132,6 +136,83 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateBananaObject();
 	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
+	{
+		CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
+
+		if (nullptr == pTargetAim)
+		{
+			CreateTargetAimObject();
+		}
+
+		else
+		{
+			CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+			_vec3 vPos, vLook, vTarget, vAimScreen, vTargetScreen;
+
+			m_pTransformCom->Get_Info(INFO_POS, &vPos);
+			m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+			pTarget->Get_Transform()->Get_Info(INFO_POS, &vTarget);
+
+			vPos += vLook * 20.f;
+
+			const CameraInfo& tCam = CCameraMgr::GetInstance()->GetCameraInfo();
+
+			_matrix matWorld;
+			D3DXMatrixIdentity(&matWorld);
+
+			D3DVIEWPORT9 vp = { 0.f, 0.f, WINCX, WINCY, 0.f, 1.f };
+
+			D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
+			D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj,  &tCam.matView, &matWorld);
+
+			if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
+			{
+				vPos = vTarget;
+			}
+
+			pTargetAim->Get_Transform()->Set_Pos(vPos);
+			
+			_quaternion q;
+			D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+
+			pTargetAim->Get_Transform()->Set_Quaternion(&q);
+
+		}
+	}
+	
+	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E)) 
+	{
+		CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
+		CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+		if (nullptr != pTargetAim && nullptr != pTarget)
+		{
+			_vec3 vAimPos, vTargetPos, vDir;
+
+			pTargetAim->Get_Transform()->Get_Info(INFO_POS, &vAimPos);
+			pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+
+			vDir = vTargetPos - vAimPos;
+
+			if (D3DXVec3Length(&vDir) < 0.1f)
+			{
+				CGameObject* pMissile = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Missile");
+
+				if (nullptr == pMissile)
+				{
+					CreateMissileObject();
+				}
+			}
+
+			m_pLayer->Delete_GameObject(pTargetAim);
+		}
+	}
+
+
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_R))
 	{
 		CreateThunderCloudObject();
@@ -655,6 +736,110 @@ void CCart::OutputCarState()
 	}
 }
 
+void CCart::CreateMissileObject()	
+{
+	CGameObject* pMissile = CMissile::Create(m_pGraphicDev);
+
+	if (pMissile == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Missile", pMissile)))
+		return;
+
+	pMissile->SetLayer(m_pLayer);
+
+	CGameObject* pMissileBody = CMissileBody::Create(m_pGraphicDev);
+
+	if (pMissileBody == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_MissileBody", pMissileBody)))
+		return;
+
+	pMissileBody->SetLayer(m_pLayer);
+	pMissile->Set_Child(pMissileBody);
+
+	//_vec3 vPos, vLook;
+
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	//vPos += vLook * 5.f;
+
+	//pMissile->Get_Transform()->Set_Pos(vPos);
+
+
+
+	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic",L"Obj_MissileTarget");
+
+	_vec3 vPos, vLook, vTargetPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	pMissile->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+
+	_vec3 vDir = vTargetPos - vPos;
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	vPos += vDir * 5.f;
+
+	if (D3DXVec3Length(&vDir) <= 0.001f)
+		return;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	_quaternion qRot;
+
+	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
+
+	pMissile->Get_Transform()->Set_Pos(vPos);
+	pMissile->Get_Transform()->Set_Quaternion(&qRot);
+}
+
+void CCart::CreateTargetAimObject()	
+{
+	CGameObject* pTargetAim = CTargetAim::Create(m_pGraphicDev);
+
+	if (nullptr == pTargetAim)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_TargetAim", pTargetAim)))
+		return;
+
+	//_vec3 vPos, vLook;
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	//vPos += vLook * 20.f;
+
+	//pTargetAim->Get_Transform()->Set_Pos(vPos);
+
+	//pTargetAim->SetLayer(m_pLayer);
+
+	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+	_vec3 vPos, vLook, vDir, vTargetPos;
+
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	vPos += vLook * 20.f;
+
+	pTargetAim->Get_Transform()->Set_Pos(vPos);
+	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+
+	vDir = vTargetPos - vPos;
+
+	if (D3DXVec3Length(&vDir) <= 0.001f)
+		return;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	_quaternion qRot;
+
+	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
+
+	pTargetAim->Get_Transform()->Set_Quaternion(&qRot);
+}
 
 void CCart::Free()
 {

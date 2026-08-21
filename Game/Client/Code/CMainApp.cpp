@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "CMainApp.h"
-#include "CScene_Test.h"
 #include "CProtoMgr.h"
 #include "CDInputMgr.h"
 #include "CLoading.h"
@@ -64,6 +63,8 @@ void CMainApp::LateUpdate_MainApp(const float& fDeltaTime)
 
 void CMainApp::Render_MainApp()
 {
+	CRenderer::GetInstance()->Render_TargetPass(m_pGraphicDev);
+
 	m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 
 	if (CCameraMgr::GetInstance()->GetCamerState() != CAMERA_END) {

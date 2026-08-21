@@ -60,6 +60,9 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype( L"Proto_MissileTex",Engine::CMissileTex::Create(m_pGraphicDev))))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ArrowCol", Engine::CArrowTex::Create(m_pGraphicDev))))
+        return E_FAIL;
+
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Texture Loading.....................................");
     LeaveCriticalSection(Get_Crt());
@@ -74,9 +77,6 @@ _uint CLoadingThread::Loading_Stage()
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_V_ItemBoxTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Cart/V_ItemBoxdds.dds", 1))))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EffectTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90))))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BoosterWindL", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Effect/BoosterWind/BoosterWindL%d.png", 2))))
@@ -119,6 +119,10 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ButtonEX", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Button/Button_Speed%d.png", 4))))
         return E_FAIL;
 
+    // TargetAim
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TargetAimTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/crosshaira.png", 1))))
+        return E_FAIL;
+
     // ItemTimer
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TimerTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Timer/playtime_%d.png", 10))))
         return E_FAIL;
@@ -131,6 +135,17 @@ _uint CLoadingThread::Loading_Stage()
 
     // ItemSlot
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ItemSlotTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/ItemSlot/slot0.png", 1))))
+        return E_FAIL;
+
+    //MinimapGround
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MinimapGround", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/ThumbNail/xt_minimap.png", 1))))
+        return E_FAIL;
+
+    //MinimapCart
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MinimapCart", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/MinimapCart.png", 1))))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MenuBG", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Menu/MenuBG.png", 1))))
         return E_FAIL;
 
     //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BoosterIcon", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item_Boost.png", 1))))
@@ -165,6 +180,10 @@ unsigned int CLoadingThread::Thread_Main(void* pArg)
     {
     case LOADING_STAGE:
         iFlag = pLoading->Loading_Stage();
+        if (FAILED(iFlag))
+        {
+            MSG_BOX("Loading Fail");
+        }
         break;
 
     case LOADING_BOSS:

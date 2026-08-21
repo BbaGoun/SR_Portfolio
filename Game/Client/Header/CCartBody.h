@@ -5,6 +5,7 @@ namespace Engine
 {
 	class CCube_Collider;
 	class CSphere_Collider;
+	class CArrowCol;
 }
 class CCartBody : public CGameObject
 {
@@ -50,6 +51,7 @@ public:
 
 private:
 	Engine::CCube_Collider* m_pColliderCom;
+	Engine::CArrowCol* m_pBufferCom;
 
 	bool			m_bBananaSpinState;
 	bool			m_bThunderSpinState;

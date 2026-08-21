@@ -189,7 +189,7 @@ void CInspector::MeshCom(CGameObject* _pObj)
 
     bool open = ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen);
 
-    if (ImGui::BeginPopupContextItem("remove"))  // 직전 아이템 = 이 헤더
+    if (ImGui::BeginPopupContextItem("remove"))  // 직전 아이템 = 헤더
     {
         if (ImGui::MenuItem("Remove Component")) {
             _pObj->Remove_Component(pBuf);
@@ -249,6 +249,29 @@ void CInspector::MeshCom(CGameObject* _pObj)
                 ImGui::PopID();
             }
             ImGui::EndCombo();
+        }
+        CSpline* pSpline = dynamic_cast<CSpline*>(pBuf);
+        if (pSpline) {
+            if (ImGui::Button("Edit"))
+            {
+
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Add")) {
+
+            }
+            float fSampleUnit = pSpline->Get_SampleUnit();
+            ImGuiLabel("Sample Unit");
+            if (ImGui::DragFloat("##Sample Unit", &fSampleUnit, 0.25f, 1.f, FLT_MAX))
+            {
+                pSpline->Set_SampleUnit(fSampleUnit);
+            }
+            float fTextureUnit = pSpline->Get_TextureUnit();
+            ImGuiLabel("Texture Unit");
+            if (ImGui::DragFloat("##Texture Unit", &fTextureUnit, 0.25f, 1.f, FLT_MAX))
+            {
+                pSpline->Set_TextureUnit(fTextureUnit);
+            }
         }
     }
 

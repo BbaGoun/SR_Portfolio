@@ -18,12 +18,12 @@ public:
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
-
 public:
 	static CCartBody1* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	Engine::CQuadrangularPrism* m_pBufferCom;
+
 
 protected:
 	virtual		void		Free() override;

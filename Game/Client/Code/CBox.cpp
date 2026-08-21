@@ -5,6 +5,7 @@
 #include "CDInputMgr.h"
 #include "CCollisionMgr.h"
 #include "CManagement.h"
+#include "CCube_Collider.h"
 
 CBox::CBox(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -26,21 +27,13 @@ HRESULT CBox::Ready_GameObject()
 
 	Engine::CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CCartBodyCol*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CartBodyCol"));
+	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
 	if (nullptr == pComponent)
 		return E_FAIL;
-	pComponent->Set_Owner(this);
-	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
-	//pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	//if (nullptr == pComponent)
-	//	return E_FAIL;
-	//pComponent->Set_Owner(this);
-	//
-	//m_pColliderCom->SetCenter({ 0,0,100.f });
-	//m_pColliderCom->SetSize({ 2.5f,1.f,5.f });
-	//m_pColliderCom->SetColliderType(CUBE_COLLIDER);
-	//m_mapComponent[ID_DYNAMIC].insert({ L"Com_Collider", pComponent });
+	m_pColliderCom->Set_Owner(this);
+	m_pColliderCom->Set_Extents({ 2.5f, 1.f, 5.f });
+	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
 	return S_OK;
 }
@@ -63,7 +56,7 @@ void CBox::LateUpdate_GameObject(const _float& fDeltaTime)
 void CBox::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pBufferCom->Render_Buffer();
+
 }
 
 CBox* CBox::Create(LPDIRECT3DDEVICE9 pGraphicDev)
