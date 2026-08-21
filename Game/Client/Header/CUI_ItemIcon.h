@@ -1,10 +1,6 @@
 #pragma once
 #include "CGameObject.h"
 
-enum ITEM_TYPE
-{ITEM_BOOSTER, ITEM_THUNDER, ITEM_CLOUD, ITEM_UFO, ITEM_WATERFLY, ITEM_MAGNET, ITEM_BARRICADE, ITEM_ROCKET,ITEM_BANANA,ITEM_WATERBOMB, ITEM_END
-
-};
 
 namespace Engine
 {
@@ -28,11 +24,11 @@ private:
 
 
 private:
-	Engine::CRcTex* m_pVIBufferCom;
-	Engine::CTexture* m_pTextureCom;
+	Engine::CRcTex*		m_pVIBufferCom;
+	Engine::CTexture*	m_pTextureCom;
 
-	_float	m_fFirstSlot;
-	_float	m_fSecondSlot;
+	ITEM_TYPE			m_eFirstSlot;
+	ITEM_TYPE			m_eSecondSlot;
 
 public:
 	static CUI_ItemIcon* Create(LPDIRECT3DDEVICE9 pGraphicDev);

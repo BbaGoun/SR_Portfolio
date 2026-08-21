@@ -6,6 +6,7 @@
 #include "CManagement.h"
 #include "CCart.h"
 #include "CLand3.h"
+#include "CSkidMark.h"
 
 CWheel::CWheel(LPDIRECT3DDEVICE9 pGraphicDev, WHEEL_TYPE eType)
 	:CGameObject(pGraphicDev),m_eWheelType(eType)
@@ -80,6 +81,7 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	if (pCart->GetDrift())
 	{
+		//CreateSkidMark();
 		CLand3* pLand3 = dynamic_cast<CLand3*>(pCom->Get_Owner());
 		_vec3 vPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -90,7 +92,7 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			_matrix matInvWorld;
 			D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
 			D3DXVec3TransformCoord(&vPos, &vPos, &matInvWorld);
-
+		
 			pTerrain3->Set_SkidMark(vPos);
 		}
 	}
@@ -135,6 +137,29 @@ void CWheel::KeyInput(const _float& fDeltaTime)
 	{
 		m_vRotation.y = 0;
 	}
+}
+
+void CWheel::CreateSkidMark()
+{
+	CGameObject* pGameObject = CSkidMark::Create(m_pGraphicDev);
+	
+	if (nullptr == pGameObject)
+		return;
+	
+	if (FAILED(m_pLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
+		return;
+	
+	_vec3 vRot = m_pParent->Get_Parent()->Get_Rotation();
+
+	_vec3 vPos, vLook;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	pGameObject->Get_Transform()->Set_Pos(vPos);
+	
+	D3DXQUATERNION q;
+	D3DXQuaternionRotationYawPitchRoll(&q, vRot.y, vRot.x, vRot.z);
+	pGameObject->Get_Transform()->Set_Quaternion(&q);
+	pGameObject->SetLayer(m_pLayer);
 }
 
 CWheel* CWheel::Create(LPDIRECT3DDEVICE9 pGraphicDev,WHEEL_TYPE eType)

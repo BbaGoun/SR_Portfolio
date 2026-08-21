@@ -103,6 +103,8 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 	for (auto& pObj : m_RenderGroup[RENDER_TARGET])
 		pObj->Render_GameObject();
 
+	pGraphicDev->EndScene();
+
 	pGraphicDev->SetRenderTarget(0, pOldRT);
 	pGraphicDev->SetDepthStencilSurface(pOldDS);
 	pOldRT->Release();

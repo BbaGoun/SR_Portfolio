@@ -186,11 +186,11 @@ void CScene::Set_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLa
 {
     if (bCollision) {
         m_CollisionMatrix[srcLayer] |= (1u << dstLayer);
-        m_CollisionMatrix[dstLayer] |= (1u << dstLayer);
+        m_CollisionMatrix[dstLayer] |= (1u << srcLayer);
     }
     else {
         m_CollisionMatrix[srcLayer] &= ~(1u << dstLayer);
-        m_CollisionMatrix[dstLayer] &= ~(1u << dstLayer);
+        m_CollisionMatrix[dstLayer] &= ~(1u << srcLayer);
     }
 }
 
