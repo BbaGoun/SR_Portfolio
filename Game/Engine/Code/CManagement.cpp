@@ -61,9 +61,9 @@ const map<const _tchar*, vector<CGameObject*>>& CManagement::Get_GameObjects(con
     return m_pScene->Get_GameObjects(pLayerTag);
 }
 
-void CManagement::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj)
+void CManagement::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj, bool bEditor)
 {
-    if (FAILED(m_pScene->Delete_GameObject(pLayerTag, _pObj)))
+    if (FAILED(m_pScene->Delete_GameObject(pLayerTag, _pObj, bEditor)))
     {
         MSG_BOX("Delete Failed");
     }

@@ -230,6 +230,10 @@ namespace Engine
 		case CL_LAYER29: return "Layer29"; case CL_LAYER30: return "Layer30";
 		}
 	}
+
+	inline DWORD FtoDw(float f) {
+		return *(DWORD*)&f;
+	}
 }
 
 #endif // Engine_Function_h__

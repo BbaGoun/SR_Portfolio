@@ -41,10 +41,41 @@ extern ImFont*					g_pFontBold;
 
 
 extern bool						g_bSelected;
-extern uint64_t					g_uSelected;
+extern uint32_t					g_uSelected;
+
+extern bool						g_bEdit;
+extern bool                     g_bPointSelected;
+extern uint32_t                 g_uPointSelected;
 
 extern ImGuizmo::OPERATION		g_GizmoOp;
 extern ImGuizmo::MODE			g_GizmoMode;
+
+inline void Set_ObjSelected(uint32_t id) {
+    if (!g_bEdit) {
+        g_bSelected = true;
+        g_uSelected = id;
+    }
+}
+
+inline void Free_ObjSelected() {
+    if (!g_bEdit) {
+        g_bSelected = false;
+        g_uSelected = 0;
+    }
+}
+inline void Set_PointSelected(uint32_t id) {
+    if (g_bEdit) {
+        g_bPointSelected = true;
+        g_uPointSelected = id;
+    }
+}
+
+inline void Free_PointSelected() {
+    if (g_bEdit) {
+        g_bPointSelected = false;
+        g_uPointSelected = 0;
+    }
+}
 
 using namespace std;
 
