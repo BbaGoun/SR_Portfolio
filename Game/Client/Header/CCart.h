@@ -19,29 +19,37 @@ public:
 	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) override;
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
-	virtual			void		Render_GameObject() override;
+	virtual			void		Render_GameObject() override {};
 
-	virtual			void		CollisionEnter(CCollider* pOtherCollider) override;
-	virtual			void		CollisionExit(CCollider* pOtherCollider) {};
-	virtual			void		CollisionStay(CCollider* pOtherCollider) {};
-
-	virtual			void		TriggerEnter(CCollider* pOtherCollider) override;
-	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
-	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
 
 public:
 	static CCart*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void			KeyInput(const _float& fDeltaTime);
 	void			UpdateDrift();
-	void			UpdateBoost();
-	bool			GetBoost() { return m_bBoost; }
-	bool			GetDrift() { return m_bDrift; }
+	void			UpdateBoost(const _float& fDeltaTime);
+	void			UpdateThunder();
 
-	bool			GetRainbowUI() { return m_bRainbowUI; }
-	void			SetRainbowUI(bool bRainbowState) { m_bRainbowUI = bRainbowState; }
+	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
+	void			SetBoost(BOOST_STATE eID)			{ m_eBoostState = eID; }
 
-	void			SetBanana(bool bBanana) { m_bBanana = bBanana; }
-	bool			GetBanana() { return m_bBanana; }
+	bool			GetDrift()							{ return m_bDrift; }
+	void			SetDrift(bool bDrift)				{ m_bDrift = bDrift; }
+
+	bool			GetRainbowUI()						{ return m_bRainbowUI; }
+	void			SetRainbowUI(bool bRainbowState)	{ m_bRainbowUI = bRainbowState; }
+
+	void			SetBanana(bool bBanana)				{ m_bBanana = bBanana; }
+	bool			GetBanana()							{ return m_bBanana; }
+
+	float			GetCurGage()						{ return m_fCurGage; }
+
+	float			GetGainGage()						{ return m_fGainGage; }
+	void			SetGainGage(float fGage)			{ m_fGainGage = fGage; }
+
+	void			AdjustPosY_Slope(_vec3 pos);
+	void			UpdateGravity();
+
+	void			OutputCarState();
 
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
@@ -50,11 +58,12 @@ public:
 	void			CreateTargetAimObject();				
 	float			GetCurGage() { return m_fCurGage; }
 	float			GetGainGage() { return m_fGainGage; }
+	void			CreateThunderCloudObject();
+
 
 private:
 	_float		m_fMaxSpeed;
 	bool		m_bDrift;
-	bool		m_bBoost;
 	bool		m_bBanana;
 	bool		m_bRainbowUI;
 
@@ -73,8 +82,15 @@ private:
 
 	float		m_fBoostItemCnt;
 
+	bool		m_bThunder;
 
-	Engine::CCube_Collider* m_pColliderCom;
+	bool		m_bShortBoosterOnOff;
+	float		m_fShortBoosterTimer;
+
+	CART_STATE	m_eCartState;
+	BOOST_STATE	m_eBoostState;
+
+	_vec3		m_vTerrainNormal;
 
 
 

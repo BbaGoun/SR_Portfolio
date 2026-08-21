@@ -95,6 +95,7 @@ public:
 	void Set_Dirty();
 
 	_vec3		Get_Scale() { return m_vScale; }
+	void		Set_Billboard(_matrix* matView);
 	
 public:
 	void FollowObj(_vec3* _pPos, _float _fSpeed, _float _fDeltaTime);
@@ -114,6 +115,7 @@ private:
 	D3DXQUATERNION	m_localQuaternion;
 	_vec3			m_vScale;
 
+	_matrix			m_matBillboard;
 	_matrix			m_matWorld;
 	_matrix			m_matLocalWorld;
 	_bool			m_bDirty;

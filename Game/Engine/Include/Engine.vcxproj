@@ -19,17 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CArrowTex.h" />
     <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCameraMgr.h" />
     <ClInclude Include="..\Header\CCartBodyCol.h" />
     <ClInclude Include="..\Header\CCartWheelCol.h" />
-    <ClInclude Include="..\Header\CCody.h" />
     <ClInclude Include="..\Header\CCollider.h" />
     <ClInclude Include="..\Header\CCollisionMgr.h" />
     <ClInclude Include="..\Header\CComponent.h" />
     <ClInclude Include="..\Header\CCube.h" />
     <ClInclude Include="..\Header\CCube_Collider.h" />
     <ClInclude Include="..\Header\CDInputMgr.h" />
+    <ClInclude Include="..\Header\CEditorLoader.h" />
     <ClInclude Include="..\Header\CEmpty.h" />
     <ClInclude Include="..\Header\CFont.h" />
     <ClInclude Include="..\Header\CFontMgr.h" />
@@ -41,16 +42,14 @@
     <ClInclude Include="..\Header\CInnerBox.h" />
     <ClInclude Include="..\Header\CLayer.h" />
     <ClInclude Include="..\Header\CManagement.h" />
-    <ClInclude Include="..\Header\CMesh.h" />
     <ClInclude Include="..\Header\CMissileTex.h" />
-    <ClInclude Include="..\Header\CObj.h" />
-    <ClInclude Include="..\Header\CPskFile.h" />
     <ClInclude Include="..\Header\CPyramid.h" />
     <ClInclude Include="..\Header\CQuadrangularPrism.h" />
     <ClInclude Include="..\Header\CRcTex.h" />
     <ClInclude Include="..\Header\CRenderer.h" />
     <ClInclude Include="..\Header\CScene.h" />
     <ClInclude Include="..\Header\CSphere_Collider.h" />
+    <ClInclude Include="..\Header\CSpline.h" />
     <ClInclude Include="..\Header\CTerrain2.h" />
     <ClInclude Include="..\Header\CTerrain3.h" />
     <ClInclude Include="..\Header\CTexture.h" />
@@ -63,23 +62,25 @@
     <ClInclude Include="..\Header\Engine_Enum.h" />
     <ClInclude Include="..\Header\Engine_Function.h" />
     <ClInclude Include="..\Header\Engine_Macro.h" />
+    <ClInclude Include="..\Header\Engine_Parsing.h" />
     <ClInclude Include="..\Header\Engine_Struct.h" />
     <ClInclude Include="..\Header\Engine_Typedef.h" />
     <ClInclude Include="..\Header\CHeightMapLoader.h" />
     <ClInclude Include="..\Header\CProtoMgr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CArrowTex.cpp" />
     <ClCompile Include="..\Code\CCalculator.cpp" />
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
     <ClCompile Include="..\Code\CCartBodyCol.cpp" />
     <ClCompile Include="..\Code\CCartWheelCol.cpp" />
-    <ClCompile Include="..\Code\CCody.cpp" />
     <ClCompile Include="..\Code\CCollider.cpp" />
     <ClCompile Include="..\Code\CCollisionMgr.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
     <ClCompile Include="..\Code\CCube.cpp" />
     <ClCompile Include="..\Code\CCube_Collider.cpp" />
     <ClCompile Include="..\Code\CDInputMgr.cpp" />
+    <ClCompile Include="..\Code\CEditorLoader.cpp" />
     <ClCompile Include="..\Code\CEmpty.cpp" />
     <ClCompile Include="..\Code\CFont.cpp" />
     <ClCompile Include="..\Code\CFontMgr.cpp" />
@@ -91,16 +92,14 @@
     <ClCompile Include="..\Code\CInnerBox.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />
     <ClCompile Include="..\Code\CManagement.cpp" />
-    <ClCompile Include="..\Code\CMesh.cpp" />
     <ClCompile Include="..\Code\CMissileTex.cpp" />
-    <ClCompile Include="..\Code\CObj.cpp" />
-    <ClCompile Include="..\Code\CPskFile.cpp" />
     <ClCompile Include="..\Code\CPyramid.cpp" />
     <ClCompile Include="..\Code\CQuadrangularPrism.cpp" />
     <ClCompile Include="..\Code\CRcTex.cpp" />
     <ClCompile Include="..\Code\CRenderer.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
     <ClCompile Include="..\Code\CSphere_Collider.cpp" />
+    <ClCompile Include="..\Code\CSpline.cpp" />
     <ClCompile Include="..\Code\CTerrain2.cpp" />
     <ClCompile Include="..\Code\CTerrain3.cpp" />
     <ClCompile Include="..\Code\CTexture.cpp" />

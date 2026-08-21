@@ -52,12 +52,6 @@
     <Filter Include="04. Component\Shape\RcTex">
       <UniqueIdentifier>{63ff1988-3cdf-41f1-a9fa-b8b0bcde1687}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Component\Shape\ObjFile">
-      <UniqueIdentifier>{0466a01c-b2aa-4080-9762-b14a0a0253d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\Shape\AssetBinary">
-      <UniqueIdentifier>{97e480d0-1c03-4e11-9c82-98788dafce15}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Component\Shape\InnerBox">
       <UniqueIdentifier>{2922acc3-7d20-47d4-b105-76da1e133923}</UniqueIdentifier>
     </Filter>
@@ -72,12 +66,6 @@
     </Filter>
     <Filter Include="03. Management\Scene">
       <UniqueIdentifier>{e3cfa153-da2e-4e25-b9bc-c155f4c6f2bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\Shape\PskFile">
-      <UniqueIdentifier>{c4b8b783-385a-4c3b-a99d-84e6e69ec7fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\Shape\PskFile\Cody">
-      <UniqueIdentifier>{5a3e480d-9f66-472a-8f36-d4ff4d4e23d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="95. CameraMgr">
       <UniqueIdentifier>{6090026c-70e9-40bf-a59e-4be142215198}</UniqueIdentifier>
@@ -141,6 +129,15 @@
     </Filter>
     <Filter Include="03. Management\GameObject\CEmpty">
       <UniqueIdentifier>{390fe467-04bc-4dbe-a81b-8521d6eac13a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Utility\EditorLoader">
+      <UniqueIdentifier>{70cc0f1a-3659-4586-848c-8c15a15adac7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\ArrowCol">
+      <UniqueIdentifier>{60a1ea73-0664-4071-ac79-4d5e68c4a8fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\Shape\Spline">
+      <UniqueIdentifier>{b7c8adf4-29d0-43ea-8d3a-3b2372e9b116}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -207,12 +204,6 @@
     <ClInclude Include="..\Header\CRcTex.h">
       <Filter>04. Component\Shape\RcTex</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CObj.h">
-      <Filter>04. Component\Shape\ObjFile</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CMesh.h">
-      <Filter>04. Component\Shape\AssetBinary</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CInnerBox.h">
       <Filter>04. Component\Shape\InnerBox</Filter>
     </ClInclude>
@@ -227,12 +218,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\CScene.h">
       <Filter>03. Management\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CPskFile.h">
-      <Filter>04. Component\Shape\PskFile</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CCody.h">
-      <Filter>04. Component\Shape\PskFile\Cody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCameraMgr.h">
       <Filter>95. CameraMgr</Filter>
@@ -288,6 +273,18 @@
     <ClInclude Include="..\Header\CEmpty.h">
       <Filter>03. Management\GameObject\CEmpty</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Engine_Parsing.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CEditorLoader.h">
+      <Filter>97. Utility\EditorLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CArrowTex.h">
+      <Filter>04. Component\Shape\ArrowCol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSpline.h">
+      <Filter>04. Component\Shape\Spline</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -326,17 +323,11 @@
     <ClCompile Include="..\Code\CTransform.cpp">
       <Filter>04. Component\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CMesh.cpp">
-      <Filter>04. Component\Shape\AssetBinary</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CInnerBox.cpp">
       <Filter>04. Component\Shape\InnerBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CPyramid.cpp">
       <Filter>04. Component\Shape\Pyramid</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CObj.cpp">
-      <Filter>04. Component\Shape\ObjFile</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CVIBuffer.cpp">
       <Filter>04. Component\Shape\VIBuffer</Filter>
@@ -355,12 +346,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CScene.cpp">
       <Filter>03. Management\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CPskFile.cpp">
-      <Filter>04. Component\Shape\PskFile</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CCody.cpp">
-      <Filter>04. Component\Shape\PskFile\Cody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCameraMgr.cpp">
       <Filter>95. CameraMgr</Filter>
@@ -415,6 +400,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEmpty.cpp">
       <Filter>03. Management\GameObject\CEmpty</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEditorLoader.cpp">
+      <Filter>97. Utility\EditorLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CArrowTex.cpp">
+      <Filter>04. Component\Shape\ArrowCol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSpline.cpp">
+      <Filter>04. Component\Shape\Spline</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -30,6 +30,16 @@
 #include "CMissile.h"
 #include "CMissileBody.h"
 #include "CMissileTarget.h"
+#include "CThunder.h"
+#include "CThunderCloud.h"
+#include "CUI_Button.h"
+#include "CUI_Timer.h"
+#include "CUI_ItemSlot.h"
+#include "CUI_ItemIcon.h"
+#include "CUI_Minimap.h"
+#include "CRenderer.h"
+#include "CMinimapGround.h"
+#include "CMinimapCart.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -42,6 +52,9 @@ CCollisionTest::~CCollisionTest()
 HRESULT CCollisionTest::Ready_Scene()
 {
 	if (FAILED(Ready_Prototype()))
+		return E_FAIL;
+
+	if (FAILED(Ready_RenderTarget()))
 		return E_FAIL;
 
 	if (FAILED(Ready_GameLogic_Layer()))
@@ -92,35 +105,7 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 	/*for (auto& p : map2)
 		objects.insert(objects.end(), p.second.begin(), p.second.end());*/
 
-	// GameLogic에서 오브젝트 A, B 꺼내기
-	for (auto it1 = objects.begin(); it1 != objects.end(); ++it1) {
-		CGameObject* pObj1 = *it1;
-		for (auto it2 = it1 + 1; it2 != objects.end(); ++it2) {
-			CGameObject* pObj2 = *it2;
-
-			// nullptr 무시
-			if (!pObj1 || !pObj2)
-				continue;
-			// 같은 오브젝트 무시
-			if (pObj1 == pObj2)
-				continue;
-			// 충돌 레이어 검사
-			COLLISION_LAYER CL1, CL2;
-			CL1 = pObj1->Get_CollisionLayer();
-			CL2 = pObj2->Get_CollisionLayer();
-			if (Get_CollisionMatrix(CL1, CL2)) {
-				// 모든 종류의 Collider 검사
-				vector<CCollider*> colliders1 = pObj1->Get_Components<CCollider>();
-				vector<CCollider*> colliders2 = pObj2->Get_Components<CCollider>();
-
-				for (auto& col1 : colliders1) {
-					for (auto& col2 : colliders2) {
-						CCollisionMgr::GetInstance()->Collision(col1, col2);
-					}
-				}
-			}
-		}
-	}
+	Process_Collision(objects);
 }
 
 _int CCollisionTest::Update_Scene(const _float& fDeltaTime)
@@ -139,6 +124,16 @@ void CCollisionTest::Render_Scene()
 	//CScene::Render_Scene();
 }
 
+void CCollisionTest::OnLostDevice()
+{
+	CRenderer::GetInstance()->OnLostDevice();
+}
+
+void CCollisionTest::OnResetDevice()
+{
+	CRenderer::GetInstance()->OnResetDevice(m_pGraphicDev);
+}
+
 CCollisionTest* CCollisionTest::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CCollisionTest* pScene = new CCollisionTest(pGraphicDev);
@@ -154,6 +149,12 @@ CCollisionTest* CCollisionTest::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 HRESULT CCollisionTest::Ready_Prototype()
 {
+	return S_OK;
+}
+
+HRESULT CCollisionTest::Ready_RenderTarget()
+{
+	CRenderer::GetInstance()->Ready_RenderTarget(m_pGraphicDev, 250, 400);
 	return S_OK;
 }
 
@@ -315,7 +316,16 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostJet", pGameObject)))
 		return E_FAIL;
-	pCart->Set_Child(pGameObject);
+	pCartBody->Set_Child(pGameObject);
+
+
+	// 미니맵 Cart
+	pGameObject = CMinimapCart::Create(m_pGraphicDev);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MinimapCart", pGameObject)))
+		return E_FAIL;
 
 	//// # 플레이어 따라다니는 3인칭 카메라
 	_vec3 vEye, vAt, vUp, vLook;
@@ -409,6 +419,23 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget", pMissileTarget)))
 		return E_FAIL;
 
+
+	//// ThunderCloud
+	//pGameObject = CThunderCloud::Create(m_pGraphicDev);
+	//
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_ThunderCloud", pGameObject)))
+	//	return E_FAIL;
+	//
+	//// Thunder
+	//pGameObject = CThunder::Create(m_pGraphicDev);
+	//
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Thunder", pGameObject)))
+	//	return E_FAIL;
+  
 	return S_OK;
 }
 
@@ -427,6 +454,13 @@ HRESULT CCollisionTest::Ready_Environment_Layer()
 	if (pEnvObject == nullptr)
 		return E_FAIL;
 	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_SkyBox", pEnvObject)))
+		return E_FAIL;
+
+	pEnvObject = CMinimapGround::Create(m_pGraphicDev);
+
+	if (pEnvObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_MinimapGround", pEnvObject)))
 		return E_FAIL;
 
 	//pEnvObject = CLand::Create(m_pGraphicDev);
@@ -507,6 +541,44 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
 		return E_FAIL;
+
+	// UI_BoosterBar
+	pUIObject = CUI_Button::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Button", pUIObject)))
+		return E_FAIL;
+
+	// UI_Timer
+	pUIObject = CUI_Timer::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
+		return E_FAIL;
+
+	// UI_ItemSlot
+	pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemSlot", pUIObject)))
+		return E_FAIL;
+
+	// UI_ItemIcon
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
+
+	// CUI_Minimap
+	pUIObject = CUI_Minimap::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"PreviewCart", pUIObject)))
+		return E_FAIL;
+
+
+	
 
 	return S_OK;
 }

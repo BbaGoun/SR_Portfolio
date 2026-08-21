@@ -1,4 +1,5 @@
 ﻿#include "CScene.h"
+#include "CCollisionMgr.h"
 
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
     : m_pGraphicDev(pGraphicDev)
@@ -62,6 +63,13 @@ const map<const _tchar*, vector<CGameObject*>>& CScene::Get_GameObjects(const _t
     return it->second->Get_GameObjects();
 }
 
+HRESULT CScene::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj)
+{
+    m_mapLayer.find(pLayerTag)->second->Delete_GameObject(_pObj);
+
+    return S_OK;
+}
+
 const vector<CGameObject*>& CScene::Get_Roots(const _tchar* pLayerTag)
 {
     static const vector<CGameObject*> s_empty;
@@ -96,13 +104,6 @@ void CScene::Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc)
 {
     if (CLayer* pLayer = Find_Layer_Of(_pDst))
         pLayer->Insert_Root_After(_pDst, _pSrc);
-}
-
-HRESULT CScene::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj)
-{
-    m_mapLayer.find(pLayerTag)->second->Delete_GameObject(_pObj);
-
-    return S_OK;
 }
 
 CLayer* CScene::Find_Layer_Of(CGameObject* pObj)
@@ -146,6 +147,39 @@ void CScene::Render_Scene()
 {
     for (auto& pLayer : m_mapLayer)
         pLayer.second->Render_Layer();
+}
+
+void CScene::Process_Collision(const vector<CGameObject*>& vecObjects)
+{
+    // GameLogic에서 오브젝트 A, B 꺼내기
+    for (auto it1 = vecObjects.begin(); it1 != vecObjects.end(); ++it1) {
+        CGameObject* pObj1 = *it1;
+        for (auto it2 = it1 + 1; it2 != vecObjects.end(); ++it2) {
+            CGameObject* pObj2 = *it2;
+
+            // nullptr 무시
+            if (!pObj1 || !pObj2)
+                continue;
+            // 같은 오브젝트 무시
+            if (pObj1 == pObj2)
+                continue;
+            // 충돌 레이어 검사
+            COLLISION_LAYER CL1, CL2;
+            CL1 = pObj1->Get_CollisionLayer();
+            CL2 = pObj2->Get_CollisionLayer();
+            if (Get_CollisionMatrix(CL1, CL2)) {
+                // 모든 종류의 Collider 검사
+                vector<CCollider*> colliders1 = pObj1->Get_Components<CCollider>();
+                vector<CCollider*> colliders2 = pObj2->Get_Components<CCollider>();
+
+                for (auto& col1 : colliders1) {
+                    for (auto& col2 : colliders2) {
+                        CCollisionMgr::GetInstance()->Collision(col1, col2);
+                    }
+                }
+            }
+        }
+    }
 }
 
 void CScene::Set_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer, bool bCollision)

@@ -23,7 +23,7 @@ HRESULT CBoostJet::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 	m_pTransformCom->Set_Scale({ 2,10,1 });
-	m_pTransformCom->Set_Pos({ 1,-1,-6 });
+	m_pTransformCom->Set_Pos({ 1,1,-6 });
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, 0.f, D3DXToRadian(90), 0.f);
 	m_pTransformCom->Set_Quaternion(&q);
@@ -50,7 +50,7 @@ void CBoostJet::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CBoostJet::Update_GameObject(const _float& fDeltaTime)
 {
-	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
+	if (dynamic_cast<CCart*>(m_pParent->Get_Parent())->GetBoost())
 	{
 		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -63,45 +63,15 @@ _int CBoostJet::Update_GameObject(const _float& fDeltaTime)
 
 void CBoostJet::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
+	if (dynamic_cast<CCart*>(m_pParent->Get_Parent())->GetBoost())
 		CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 void CBoostJet::Render_GameObject()
 {
-	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
+	if (dynamic_cast<CCart*>(m_pParent->Get_Parent())->GetBoost())
 	{
-		_matrix	matBill, matWorld, matView, matParent;
-
-		matWorld = *m_pTransformCom->Get_World();
-		matParent = *m_pParent->Get_Transform()->Get_World();
-		matView = CCameraMgr::GetInstance()->GetCameraInfo().matView;
-
-		// 부모의 y축 회전 반영X
-		D3DXMatrixIdentity(&matBill);
-
-		matBill._11 = matParent._11;
-		matBill._13 = matParent._13;
-		matBill._31 = matParent._31;
-		matBill._33 = matParent._33;
-
-		D3DXMatrixInverse(&matBill, 0, &matBill);
-		matWorld = matBill * matWorld;
-
-		// 카메라의 y축 회전 반영X
-		D3DXMatrixIdentity(&matBill);
-
-		matBill._11 = matView._11;
-		matBill._13 = matView._13;
-		matBill._31 = matView._31;
-		matBill._33 = matView._33;
-
-		D3DXMatrixInverse(&matBill, 0, &matBill);
-		matWorld = matBill * matWorld;
-
-		// 빌보드 적용(크기가 달라질 경우 계산식 변경)
-		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-		//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 		m_pTextureCom->Set_Texture(0);

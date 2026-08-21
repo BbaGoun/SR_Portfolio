@@ -12,6 +12,8 @@
 
 #define _EDITOR
 
+#include <functional>
+
 #include "Engine_Define.h"
 #include "Editor_Function.h"
 
@@ -20,6 +22,8 @@
 #include "imgui_impl_win32.h"
 #include "ImGuizmo.h"
 #include <cmath>
+#include <commdlg.h>
+#pragma comment(lib, "Comdlg32.lib")
 
 #pragma warning(disable : 4005)
 
@@ -33,6 +37,8 @@ extern UINT						g_ResizeHeight;
 extern D3DPRESENT_PARAMETERS	g_d3dpp;
 extern float					main_scale;
 extern HWND						g_hWnd;
+extern ImFont*					g_pFontBold;
+
 
 extern bool						g_bSelected;
 extern uint64_t					g_uSelected;

@@ -19,6 +19,7 @@ UINT                    g_ResizeWidth = 0, g_ResizeHeight = 0;
 D3DPRESENT_PARAMETERS   g_d3dpp = {};
 float                   main_scale = 1;
 HWND                    g_hWnd = nullptr;
+ImFont*                 g_pFontBold = nullptr;
 
 // 선택된 오브젝트에 대한 설정
 bool                    g_bSelected = false;
@@ -65,7 +66,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         L"Editor Window", nullptr };
     ::RegisterClassExW(&wc);
 
-    RECT rc{ 0, 0, 1280, 720 };
+    RECT rc{ 0, 0, 1920, 1080 };
 
     AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 
@@ -186,7 +187,7 @@ bool CreateDeviceD3D(HWND hWnd)
     g_d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;
     g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;           // Present with vsync
     //g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;   // Present without vsync, maximum unthrottled framerate
-    if (g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice) < 0)
+    if (g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED, &g_d3dpp, &g_pd3dDevice) < 0)
         return false;
 
     return true;

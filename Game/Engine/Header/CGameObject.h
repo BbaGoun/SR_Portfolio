@@ -20,7 +20,12 @@ public:
 	template<typename T, typename = std::enable_if_t<std::is_base_of_v<CComponent, T>>>
 	vector<T*> Get_Components();
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
+	const map<const _tchar*, CComponent*>& Get_ComponentMap() { return m_mapComponent; }
+
 	CTransform* Get_Transform() { return m_pTransformCom; }
+	void	Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
+	void	Remove_Component(CComponent* _pCom);
+
 	void	Set_Child(CGameObject* _pGO);
 	void	Insert_Child(CGameObject* _pGO, int _iIndex);
 	void	Insert_Before(CGameObject* _pGO);
@@ -66,20 +71,36 @@ public:
 
 	_float			Get_ViewZ() { return m_fViewZ; }
 	void			Compute_ViewZ(const _vec3* pPos);
-	void			SetGuid(uint64_t _guid) { m_uGuid = _guid; }
-	uint64_t		GetGuid() { return m_uGuid; }
-	void			SetName(const WCHAR* _name) { wcscpy_s(m_wName, 128, _name); }
+
+
+	void			Set_PrefabPath(const _tchar* _path) { wcscpy_s(m_prefabPath, MAX_PATH, _path); }
+	const _tchar*	Get_PrefabPath() { return m_prefabPath; }
+	void			Set_Belong(bool _b) { m_bBelongPrefab = _b; }
+	bool			Get_Belong() { return m_bBelongPrefab; }
+
+	void			SetGuid(uint32_t _guid) { m_uGuid = _guid; }
+	uint32_t		GetGuid() { return m_uGuid; }
+	void			SetType(const WCHAR* _type) { wcscpy_s(m_wType, 256, _type); }
+	const WCHAR*	GetType() { return m_wType; }
+	void			SetName(const WCHAR* _name) { wcscpy_s(m_wName, 256, _name); }
 	const WCHAR*	GetName() { return m_wName; }
-	void			SetTag(const WCHAR* _tag) { wcscpy_s(m_wTag, 128, _tag); }
+	void			SetTag(const WCHAR* _tag) { wcscpy_s(m_wTag, 256, _tag); }
 	const WCHAR*	GetTag() { return m_wTag; }
+
+	void			Set_CullDistance(uint32_t _uCullDistance) {m_uCullDistance = _uCullDistance;}
+	uint32_t		Get_CullDistance() {return m_uCullDistance;}
 
 	void			SetLayer(CLayer* pLayer) { m_pLayer = pLayer; }
 	CLayer*			GetLayer() { return m_pLayer; }
 
 protected:
-	uint64_t								m_uGuid;
-	WCHAR									m_wName[128];
-	WCHAR									m_wTag[128];
+	_tchar									m_prefabPath[MAX_PATH] = L"\0";
+	bool									m_bBelongPrefab = false;
+
+	uint32_t								m_uGuid;
+	WCHAR									m_wType[256] = L"\0";
+	WCHAR									m_wName[256] = L"\0";
+	WCHAR									m_wTag[256] = L"\0";
 
 	map<const _tchar*, CComponent*>			m_mapComponent;
 	LPDIRECT3DDEVICE9						m_pGraphicDev;
@@ -91,7 +112,7 @@ protected:
 	COLLISION_LAYER							m_eCollisionLayer;
 	uint32_t								m_uCollisionLayerBit;
 
-	uint32_t								m_iCullDistance;
+	uint32_t								m_uCullDistance;
 
 	_float									m_fSpeed;
 	_vec3									m_vForce;

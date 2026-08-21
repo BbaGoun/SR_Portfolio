@@ -55,7 +55,7 @@ HRESULT CTerrain3::Ready_Buffer()
 			int index = i * m_iVTXCNTX + j;
 			vertices[index].vPosition = {
 				(float)j * VTXITV,
-				0,
+				j < m_iVTXCNTZ * 0.5f ? j * 0.5f: (m_iVTXCNTZ - j) * 0.5f ,
 				(float)i * VTXITV };
 			vertices[index].vTexUV = { (float)j / (float)(m_iVTXCNTX - 1) ,
 										(float)(m_iVTXCNTZ - 1 - i) / (float)(m_iVTXCNTZ - 1) * 5 };
@@ -155,6 +155,31 @@ void CTerrain3::Set_SkidMark(_vec3 vPos)
 		//pVertex[(row + 1) * m_iVTXCNTX + col + 1].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);	// 오른쪽 위
 	}
 	m_pVB->Unlock();
+}
+
+D3DXPLANE CTerrain3::GetPlane(_vec3 vPos)
+{
+	int col = vPos.x / VTXITV;
+	int row = vPos.z / VTXITV;
+
+	float xInPlane = float(vPos.x - col * VTXITV) / VTXITV;
+	float zInPlane = float(vPos.z - row * VTXITV) / VTXITV;
+
+	_vec3 p0, p1, p2;
+	// 왼쪽 위 삼각형
+	if (zInPlane - xInPlane > 0) {
+		p0 = m_vecVertices[(row + 1) * VTXCNTX + col].vPosition;		// 왼쪽 위
+		p1 = m_vecVertices[(row + 1) * VTXCNTX + col + 1].vPosition;	// 오른쪽 위
+		p2 = m_vecVertices[row * VTXCNTX + col].vPosition;			// 왼쪽 아래
+	}
+	else { // 오른쪽 아래 삼각형
+		p0 = m_vecVertices[row * VTXCNTX + col + 1].vPosition;		// 오른쪽 아래
+		p1 = m_vecVertices[row * VTXCNTX + col].vPosition;			// 왼쪽 아래
+		p2 = m_vecVertices[(row + 1) * VTXCNTX + col + 1].vPosition; // 오른쪽 위
+	}
+	D3DXPLANE plane;
+	D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
+	return plane;
 }
 
 _float CTerrain3::ComputeShade(_vec3* normal, _vec3* dirToLight)

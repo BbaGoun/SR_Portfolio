@@ -21,7 +21,6 @@ CBanana::~CBanana()
 HRESULT CBanana::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	//cout << "Banana" << endl;
 	CComponent* pComponent = nullptr;
 	pComponent = m_pBufferCom = static_cast<CInnerBox*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_InnerBox"));
 	pComponent->Set_Owner(this);
@@ -38,7 +37,6 @@ HRESULT CBanana::Ready_GameObject()
 		return E_FAIL;
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->SetColliderType(CUBE_COLLIDER);
 	m_pColliderCom->Set_Extents({ 1,1,1 });
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
@@ -75,7 +73,7 @@ void CBanana::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 
-	if (wcscmp(wOtherTag, L"Obj_Cart") == 0)
+	if (wcscmp(wOtherTag, L"Obj_CartBody") == 0)
 	{
 		m_pLayer->Delete_GameObject(this);
 	}

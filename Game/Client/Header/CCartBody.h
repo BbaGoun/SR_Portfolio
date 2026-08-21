@@ -5,6 +5,7 @@ namespace Engine
 {
 	class CCube_Collider;
 	class CSphere_Collider;
+	class CArrowCol;
 }
 class CCartBody : public CGameObject
 {
@@ -20,12 +21,46 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+	
+	virtual			void		CollisionEnter(CCollider* pOtherCollider) override;
+	virtual			void		CollisionExit(CCollider* pOtherCollider) {};
+	virtual			void		CollisionStay(CCollider* pOtherCollider) {};
+
+	virtual			void		TriggerEnter(CCollider* pOtherCollider) override;
+	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
+	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
+
 	void			BananaSpin(const _float& fDeltaTime);
-	bool			m_bBananaSpinState;
-	float			m_fSpinSpeed;
+	void			ThunderSpin(const _float& fDeltaTime);
+	void			ThunderTimerUpdate(const _float& fDeltaTime);
+
+	void			SetThunderSpinState(bool bThunderSpinState) { m_bThunderSpinState = bThunderSpinState; }
+	bool			GetThunderSpinState()						{ return m_bThunderSpinState; }
+
+	void			SetThunderTimer(bool fThunderTimer) { m_fThunderTimer = fThunderTimer; }
+	float			GetThunderTimer() { return m_fThunderTimer; }
+
+	void			SetThunderTimerOnOff(bool bThunderTimerOnOff) { 
+		m_bThunderTimerOnOff = bThunderTimerOnOff; 
+		m_bThunderSpinState = bThunderTimerOnOff;
+	}
+	float			GetThunderTimerOnOff() { return m_bThunderTimerOnOff; }
 
 public:
 	static CCartBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
+	Engine::CCube_Collider* m_pColliderCom;
+	Engine::CArrowCol* m_pBufferCom;
+
+	bool			m_bBananaSpinState;
+	bool			m_bThunderSpinState;
+	float			m_fSpinSpeed;
+
+	float			m_fScale;
+	float			m_fThunderTimer;
+	float			m_bThunderTimerOnOff;
+	_vec3			m_vColliderSize;
 
 protected:
 	virtual		void		Free() override;

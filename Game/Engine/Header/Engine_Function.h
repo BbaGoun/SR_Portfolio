@@ -1,4 +1,4 @@
-#ifndef Engine_Function_h__
+﻿#ifndef Engine_Function_h__
 #define Engine_Function_h__
 
 #include "Engine_Typedef.h"
@@ -145,6 +145,90 @@ namespace Engine
 		MultiByteToWideChar(CP_UTF8, 0, utf8, -1, &w[0], n);
 		if (!w.empty() && w.back() == L'\0') w.pop_back();
 		return w;
+	}
+
+	inline vector<int> MakeFailure(const string& pattern) {
+		int m = pattern.size();
+		vector<int> fail(m, 0);
+
+		int j = 0;
+
+		for (int i = 1; i < m; ++i) {
+			while (j > 0 && pattern[i] != pattern[j]) {
+				j = fail[j - 1];
+			}
+
+			if (pattern[i] == pattern[j]) {
+				fail[i] = ++j;
+			}
+		}
+
+		return fail;
+	}
+
+	inline bool KMPContain(const string& text, const string& pattern)
+	{
+		if (pattern.empty())
+			return false;
+
+		vector<int> fail = MakeFailure(pattern);
+
+		int j = 0;
+
+		for (int i = 0; i < text.size(); ++i) {
+			while (j > 0 && text[i] != pattern[j]) {
+				j = fail[j - 1];
+			}
+
+			if (text[i] == pattern[j]) {
+				++j;
+
+				if (j == pattern.size())
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	inline bool CheckCollisionUI(HWND hWnd, _vec3 vCenter, _vec3 vScale)
+	{
+		POINT		pt{};
+
+		GetCursorPos(&pt);
+		ScreenToClient(hWnd, &pt);
+
+		pt.x -= WINCX * 0.5f;
+		pt.y = -pt.y + WINCY * 0.5f;
+		//cout << pt.y << endl;
+		if (pt.x < vCenter.x - vScale.x / 2 || pt.x > vCenter.x + vScale.x / 2)
+			return false;
+		if (pt.y < vCenter.y - vScale.y / 2 || pt.y > vCenter.y + vScale.y / 2)
+			return false;
+
+		return true;
+  }
+  
+	inline const char* GetLayerName(COLLISION_LAYER cl) {
+		switch (cl) {
+		case CL_DEFAULT: return "Default";
+		case IGNORE_RAYCAST: return "Ignore Raycast";
+		case CL_LAYER1: return "Layer1"; case CL_LAYER2: return "Layer2";
+		case CL_LAYER3: return "Layer3"; case CL_LAYER4: return "Layer4";
+		case CL_LAYER5: return "Layer5"; case CL_LAYER6: return "Layer6";
+		case CL_LAYER7: return "Layer7"; case CL_LAYER8: return "Layer8";
+		case CL_LAYER9: return "Layer9"; case CL_LAYER10: return "Layer10";
+		case CL_LAYER11: return "Layer11"; case CL_LAYER12: return "Layer12";
+		case CL_LAYER13: return "Layer13"; case CL_LAYER14: return "Layer14";
+		case CL_LAYER15: return "Layer15"; case CL_LAYER16: return "Layer16";
+		case CL_LAYER17: return "Layer17"; case CL_LAYER18: return "Layer18";
+		case CL_LAYER19: return "Layer19"; case CL_LAYER20: return "Layer20";
+		case CL_LAYER21: return "Layer21"; case CL_LAYER22: return "Layer22";
+		case CL_LAYER23: return "Layer23"; case CL_LAYER24: return "Layer24";
+		case CL_LAYER25: return "Layer25"; case CL_LAYER26: return "Layer26";
+		case CL_LAYER27: return "Layer27"; case CL_LAYER28: return "Layer28";
+		case CL_LAYER29: return "Layer29"; case CL_LAYER30: return "Layer30";
+		}
 	}
 }
 

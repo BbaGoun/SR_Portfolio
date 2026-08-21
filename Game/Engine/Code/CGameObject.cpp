@@ -7,7 +7,7 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
     , m_pParent(nullptr), m_pTransformCom(nullptr)
     , m_eCollisionLayer(CL_DEFAULT)
     , m_uCollisionLayerBit(1u)
-    , m_iCullDistance(210'000'000)
+    , m_uCullDistance(0)
     , m_fSpeed(0), m_vForce({ 0, 0, 0 }), m_vRotation({ 0, 0, 0 })
     , m_pLayer(nullptr)
 {
@@ -18,7 +18,7 @@ CGameObject::CGameObject(const CGameObject& rhs)
     : m_pGraphicDev(rhs.m_pGraphicDev)
     , m_eCollisionLayer(rhs.m_eCollisionLayer)
     , m_uCollisionLayerBit(rhs.m_uCollisionLayerBit)
-    , m_iCullDistance(rhs.m_iCullDistance)
+    , m_uCullDistance(rhs.m_uCullDistance)
     , m_fSpeed(rhs.m_fSpeed), m_vForce(rhs.m_vForce), m_vRotation(rhs.m_vRotation)
     , m_pLayer(rhs.m_pLayer)
 {
@@ -38,6 +38,43 @@ CComponent* CGameObject::Get_Component(COMPONENTID eID, const _tchar* pComponent
         return nullptr;
 
     return pComponent;
+}
+
+void CGameObject::Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag)
+{
+    auto iter = find_if(m_mapComponent.begin(),
+                    m_mapComponent.end(),
+                    CTag_Finder(pComponentTag));
+
+    if (iter != m_mapComponent.end())
+        return;
+
+    CComponent* pCom = CProtoMgr::GetInstance()->Get_CloneComponent(pProtoTag);
+    if (!pCom) {
+        MSG_BOX("Add Component Fail");
+        return;
+    }
+
+    m_mapComponent.insert({ pComponentTag, pCom });
+    pCom->Set_Owner(this);
+    pCom->Set_ProtoTag(pProtoTag);
+
+    return;
+}
+
+void CGameObject::Remove_Component(CComponent* _pCom)
+{
+    auto iter = find_if(m_mapComponent.begin(), m_mapComponent.end(),
+        [&_pCom](pair<const _tchar*, CComponent*> p)->bool {
+            return p.second == _pCom;
+        });
+
+    if (iter == m_mapComponent.end())
+        return;
+
+    m_mapComponent.erase(iter);
+
+    return;
 }
 
 void CGameObject::Set_Child(CGameObject* _pGO)
@@ -181,6 +218,7 @@ HRESULT CGameObject::Ready_GameObject()
     m_pTransformCom = static_cast<CTransform*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Transform"));
     m_pTransformCom->Set_Owner(this);
     m_mapComponent.insert({ L"Com_Transform", m_pTransformCom });
+    m_pTransformCom->Set_ProtoTag(L"Proto_Transform");
 
     return S_OK;
 }

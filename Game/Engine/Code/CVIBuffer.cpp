@@ -11,6 +11,7 @@ CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev):CComponent(pGraphicDev)
 , m_maxVtx({ FLT_MIN, FLT_MIN, FLT_MIN })
 {
 	m_eID = ID_STATIC;
+	m_eKind = CK_MESH;
 }
 
 CVIBuffer::CVIBuffer(const CVIBuffer& rhs) : CComponent(rhs)
@@ -21,8 +22,10 @@ CVIBuffer::CVIBuffer(const CVIBuffer& rhs) : CComponent(rhs)
 , m_dwIdxCnt(rhs.m_dwIdxCnt), m_IdxFmt(rhs.m_IdxFmt)
 , m_minVtx(rhs.m_minVtx)
 , m_maxVtx(rhs.m_maxVtx)
+, m_boundingBox(rhs.m_boundingBox)
 {
 	m_eID = ID_STATIC;
+	m_eKind = CK_MESH;
 
 	if (m_pVB)			m_pVB->AddRef();
 	if (m_pIB)			m_pIB->AddRef();
@@ -61,8 +64,6 @@ HRESULT CVIBuffer::Ready_Buffer()
 
 void CVIBuffer::Render_Buffer()
 {
-	//m_pGraphicDev->SetTexture(0, m_pBaseColorMap);
-
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
 	if (m_dwFVF != 0)
 		m_pGraphicDev->SetFVF(m_dwFVF);

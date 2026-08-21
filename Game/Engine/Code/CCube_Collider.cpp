@@ -6,13 +6,14 @@
 CCube_Collider::CCube_Collider(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CCollider(pGraphicDev)
 {
-	// m_tBoundingBox.Orientation = { 0.f, 0.f, 0.f, 1.f }; // 테스트용
+	m_eColliderType = CUBE_COLLIDER;
 }
 
  // 원본
 CCube_Collider::CCube_Collider(const CCollider& rhs)
 	:CCollider(rhs)
 {
+	m_eColliderType = CUBE_COLLIDER;
 }
 
 //// 테스트
@@ -48,7 +49,7 @@ void CCube_Collider::LateUpdate_Component(const _float& fTimeDelta)
 	m_tBoundingBox.Center = ToXMFLOAT3(vOwnerPos);
 }
 
-void CCube_Collider::Render_Component(D3DCOLOR color)
+void CCube_Collider::Render_Component(D3DXCOLOR color)
 {
 	DirectX::XMFLOAT3 vCorners[8];
 

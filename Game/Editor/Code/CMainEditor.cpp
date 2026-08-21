@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CMainEditor.h"
 #include "CFontMgr.h"
 #include "CLoading.h"
@@ -32,8 +32,8 @@ void CMainEditor::GameLoop()
 		for (int i = 0; i < fixedStep; ++i)
 			Update_MainEditor(fFixed_DeltaTime);
 
-		// ÀÌ ºÎºÐÀÌ FixedUpdate ¸»ÇÑ´ë·Î ÀÌ¹ø ÇÁ·¹ÀÓ¿¡ FixedUpdate¸¦ ¸î¹ø È£ÃâÇØ¾ßÇÏ³ª È½¼ö¸¦ ¾ò¾î¼­ ¿©·¯¹ø
-		// ½ÇÇàÇÑ´Ù.
+		// ì´ ë¶€ë¶„ì´ FixedUpdate ë§í•œëŒ€ë¡œ ì´ë²ˆ í”„ë ˆìž„ì— FixedUpdateë¥¼ ëª‡ë²ˆ í˜¸ì¶œí•´ì•¼í•˜ë‚˜ íšŸìˆ˜ë¥¼ ì–»ì–´ì„œ ì—¬ëŸ¬ë²ˆ
+		// ì‹¤í–‰í•œë‹¤.
 
 		Update_MainEditor(fFPS60_DeltaTime);
 		LateUpdate_MainEditor(fFPS60_DeltaTime);
@@ -95,7 +95,7 @@ void CMainEditor::Render_MainEditor()
 
 void CMainEditor::InvalidateDeviceObjects()
 {
-	m_pManagementClass->InvalidateDeviceObjects();
+	m_pManagementClass->OnLostDevice();
 }
 
 HRESULT CMainEditor::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
@@ -176,6 +176,12 @@ HRESULT CMainEditor::Ready_IMGUI()
 	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf");
 	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf");
 	//IM_ASSERT(font != nullptr);
+
+	//g_pFontBold = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeuib.ttf", 16.0f);
+
+	ImFont* font = io.Fonts->AddFontFromFileTTF(
+		"C:\\Windows\\Fonts\\malgun.ttf", 16.0f);
+	IM_ASSERT(font != nullptr);
 
 	return S_OK;
 }

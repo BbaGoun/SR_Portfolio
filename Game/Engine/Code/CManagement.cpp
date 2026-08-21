@@ -1,5 +1,6 @@
 ﻿#include "CManagement.h"
 #include "CRenderer.h"
+#include "CEditorLoader.h"
 
 IMPLEMENT_SINGLETON(CManagement)
 
@@ -60,6 +61,14 @@ const map<const _tchar*, vector<CGameObject*>>& CManagement::Get_GameObjects(con
     return m_pScene->Get_GameObjects(pLayerTag);
 }
 
+void CManagement::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj)
+{
+    if (FAILED(m_pScene->Delete_GameObject(pLayerTag, _pObj)))
+    {
+        MSG_BOX("Delete Failed");
+    }
+}
+
 const vector<CGameObject*>& CManagement::Get_Roots(const _tchar* pLayerTag)
 {
     static const vector<CGameObject*> s_empty;
@@ -92,18 +101,16 @@ void CManagement::Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc)
         m_pScene->Insert_Root_After(_pDst, _pSrc);
 }
 
-void CManagement::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj)
-{
-    if (FAILED(m_pScene->Delete_GameObject(pLayerTag, _pObj)))
-    {
-        MSG_BOX("Delete Failed");
-    }
-}
-
-void CManagement::InvalidateDeviceObjects()
+void CManagement::OnLostDevice()
 {
     if (m_pScene)
-        m_pScene->InvalidateDeviceObjects();
+        m_pScene->OnLostDevice();
+}
+
+void CManagement::OnResetDevice()
+{
+    if (m_pScene)
+        m_pScene->OnResetDevice();
 }
 
 

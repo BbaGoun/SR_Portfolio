@@ -15,7 +15,7 @@ protected:
 public:
 	virtual _int Update_Component(const _float& fTimeDelta);	
 	virtual void LateUpdate_Component();		
-	virtual void Render_Component() {}
+	virtual void Render_Component(D3DXCOLOR color) {}
 
 public:
 	HRESULT			Ready_CColliderCom();
@@ -23,7 +23,6 @@ public:
 	void			SetIsTrigger(bool bTrigger)				{ m_bIsTrigger = bTrigger; }
 	bool			GetIsTrigger()							{ return m_bIsTrigger; }
 
-	void			SetColliderType(COLLIDER_TYPE eType)	{ m_eColliderType = eType; }
 	COLLIDER_TYPE	GetColliderType()						{ return m_eColliderType; }
 
 	virtual			CComponent* Clone(); //PURE로 설정

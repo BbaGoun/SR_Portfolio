@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CWindow.h"
 #include "CGraphicDev.h"
 #include "CCube.h"
@@ -17,7 +17,8 @@ public:
     virtual void LateUpdate_Window() {};
 
 private:
-
+    void Draw_Outline(CGameObject* pObj, D3DXCOLOR color);
+    void Draw_Collider(CGameObject* pObj);
 
 private:
     Engine::CCube* m_pCubeBuffer = nullptr;

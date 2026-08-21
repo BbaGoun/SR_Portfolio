@@ -111,7 +111,7 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 	return;
 }
 
-void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc)
+_vec3 CCollisionMgr::GetMTVCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc)
 {
 	_vec3 DstCenter = ToVec3(pDst->Get_Info().Center);
 	_vec3 SrcCenter = ToVec3(pSrc->Get_Info().Center);
@@ -218,17 +218,8 @@ void CCollisionMgr::PysicalCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 				MTV = Axis * fMin;
 			}
 		}
-		vPos += MTV;
-
-		// 살짝 뒤로 튕기기
-		_vec3 vNewForce = pSrcObj->Get_Force();
-		vNewForce = MTV * D3DXVec3Length(&vNewForce) * 1.5f;
-		float fForceLength = D3DXVec3Length(&vNewForce);
-		if (fForceLength >= 30)
-			vNewForce = vNewForce * 30 / fForceLength;
-		pSrcObj->Add_Force(vNewForce);
 	}
-	pSrcTransform->Set_Pos(vPos);
+	return MTV;
 
 }
 

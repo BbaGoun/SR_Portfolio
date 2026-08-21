@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "CSceneWindow.h"
 #include "CManagement.h"
+#include "CCalculator.h"
+#include "CCollider.h"
 
 CSceneWindow::CSceneWindow() : CWindow()
 , m_pSceneTex(nullptr)
@@ -36,8 +38,8 @@ void CSceneWindow::Update_Window()
     const auto& map = CManagement::GetInstance()->Get_GameObjects(L"Default");
 
     // 뷰 행렬 세팅
-    static _vec3 vEye = { 0, 5.f, -5.f };
-    static float yaw = 0.f, pitch = -0.7f;
+    static _vec3 vEye = { -4.5f, 6.f, -5.f };
+    static float yaw = 0.74f, pitch = -0.74f;
     _vec3 vLook = { cosf(pitch) * sinf(yaw), sinf(pitch), cosf(pitch) * cosf(yaw) };
     _vec3 vAt = vEye + vLook;
     static _vec3 vUp = { 0.f, 1.f, 0.f };
@@ -132,13 +134,13 @@ void CSceneWindow::Update_Window()
                 if (pObj == nullptr)
                     continue;
 
-                m_pGraphicDev->SetTransform(D3DTS_WORLD, pObj->Get_Transform()->Get_World());
-                if (pObj->Get_Component(ID_STATIC, L"Com_Buffer") != nullptr)
-                    pObj->Render_GameObject();
-                else
-                    m_pCubeBuffer->Render_Buffer();
-            }
+                pObj->Render_GameObject();
 
+                if (g_bSelected && (pObj->GetGuid() == g_uSelected)) {
+                    Draw_Outline(pObj, D3DXCOLOR{ 0.5f, 0.5f, 0.5f, 1.f });
+                    Draw_Collider(pObj);
+                }
+            }
         }
 
         // 복구
@@ -164,6 +166,7 @@ void CSceneWindow::Update_Window()
     if (g_bSelected) {
         CGameObject* pSel = FindByGuid(g_uSelected, map);
         if (pSel) {
+
             // 조작용 복사본 (Get_World()가 돌려주는 버퍼를 직접 깨지 않게)
             _matrix matWorld = *pSel->Get_Transform()->Get_World();
 
@@ -251,12 +254,11 @@ void CSceneWindow::Update_Window()
                     D3DXVec3TransformNormal(&dLocal, &rayDir, &matInv);
                     D3DXVec3Normalize(&dLocal, &dLocal);
 
-                    CComponent* pBuf = pObj->Get_Component(ID_STATIC, L"Com_Buffer");
+                    CVIBuffer* pBuf = pObj->Get_Component<CVIBuffer>();
                     if (pBuf == nullptr)
-                        m_pCubeBuffer->GetBoundingBox(&box);
-                    else {
-                        static_cast<CVIBuffer*>(pBuf)->GetBoundingBox(&box);
-                    }
+                        continue;
+                        
+                    pBuf->GetBoundingBox(&box);
 
                     float dist;
                     if (box.Intersects(ToXMVec(oLocal), ToXMVec(dLocal), dist) && dist < bestDist)
@@ -305,6 +307,52 @@ void CSceneWindow::Update_Window()
     }
 
     ImGui::End();
+}
+
+void CSceneWindow::Draw_Outline(CGameObject* pObj, D3DXCOLOR color)
+{
+    CVIBuffer* buffer = pObj->Get_Component<CVIBuffer>();
+    DirectX::BoundingBox bbox;
+    if (buffer != nullptr)
+        buffer->GetBoundingBox(&bbox);
+    else
+        m_pCubeBuffer->GetBoundingBox(&bbox);
+    
+    _matrix* matWorld = pObj->Get_Transform()->Get_World();
+
+    DirectX::XMFLOAT3 xmfCorners[8];
+
+    bbox.GetCorners(xmfCorners);
+    _vec3 vCorners[8];
+
+    for (int i = 0; i < 8; ++i) {
+        vCorners[i] = ToVec3(xmfCorners[i]);
+        D3DXVec3TransformCoord(&vCorners[i], &vCorners[i], matWorld);
+    }
+
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[0], vCorners[1], color);
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[1], vCorners[2], color);
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[2], vCorners[3], color);
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[3], vCorners[0], color);
+
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[4], vCorners[5], color);
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[5], vCorners[6], color);
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[6], vCorners[7], color);
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[7], vCorners[4], color);
+
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[0], vCorners[4], color);
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[1], vCorners[5], color);
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[2], vCorners[6], color);
+    CCalculator::DrawRayLine(m_pGraphicDev, vCorners[3], vCorners[7], color);
+}
+
+void CSceneWindow::Draw_Collider(CGameObject* pObj)
+{
+    auto colliders = pObj->Get_Components<CCollider>();
+
+    for (auto& col : colliders) {
+        col->Render_Component(D3DXCOLOR(0, 1, 0, 1));
+    }
 }
 
 void CSceneWindow::InvalidateDeviceObjects()
