@@ -37,6 +37,7 @@
 #include "CUI_ItemSlot.h"
 #include "CUI_ItemIcon.h"
 #include "CUI_Minimap.h"
+#include "CScene1_Item.h"
 #include "CRenderer.h"
 #include "CMinimapGround.h"
 #include "CMinimapCart.h"
@@ -576,8 +577,6 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"PreviewCart", pUIObject)))
 		return E_FAIL;
-
-
 	
 
 	return S_OK;

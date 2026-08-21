@@ -187,11 +187,16 @@
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
     <ClInclude Include="..\Header\CDynamicCamera.h" />
+    <ClInclude Include="..\Header\CMenu_Item.h" />
     <ClInclude Include="..\Header\CMinimapCart.h" />
     <ClInclude Include="..\Header\CMinimapGround.h" />
     <ClInclude Include="..\Header\CMissile.h" />
     <ClInclude Include="..\Header\CMissileBody.h" />
     <ClInclude Include="..\Header\CMissileTarget.h" />
+    <ClInclude Include="..\Header\CScene1_Speed.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\CUI_Minimap.h" />
     <ClInclude Include="..\Header\CRainBow_Cloud.h" />
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
@@ -223,9 +228,10 @@
     <ClInclude Include="..\Header\CUI_Button.h" />
     <ClInclude Include="..\Header\CUI_ItemIcon.h" />
     <ClInclude Include="..\Header\CUI_ItemSlot.h" />
-    <ClInclude Include="..\Header\CUI_Menu.h" />
+    <ClInclude Include="..\Header\CScene1_Item.h" />
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
     <ClInclude Include="..\Header\CUI_Timer.h" />
+    <ClInclude Include="..\Header\CUI_XButton.h" />
     <ClInclude Include="..\Header\CWheel.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
@@ -234,7 +240,13 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CUI_Menu.cpp" />
+    <ClCompile Include="..\Code\CMenu_Item.cpp" />
+    <ClCompile Include="..\Code\CScene1_Speed.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_XButton.cpp" />
+    <ClCompile Include="CScene1_Item.cpp" />
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CBanana.cpp" />
     <ClCompile Include="..\Code\CBoostWind.cpp" />

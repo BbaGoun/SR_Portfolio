@@ -157,10 +157,14 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 		pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 	}
 
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	//pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+	//pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_RenderGroup[RENDER_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
 		{
@@ -171,6 +175,7 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 		pObj->Render_GameObject();
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
 void CRenderer::PreCull(LPDIRECT3DDEVICE9& pGraphicDev)
