@@ -9,11 +9,20 @@ CCube_Collider::CCube_Collider(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_eColliderType = CUBE_COLLIDER;
 }
 
+ // 원본
 CCube_Collider::CCube_Collider(const CCollider& rhs)
 	:CCollider(rhs)
 {
 	m_eColliderType = CUBE_COLLIDER;
 }
+
+//// 테스트
+//CCube_Collider::CCube_Collider(const CCube_Collider& rhs)
+//	: CCollider(rhs)
+//	, m_tBoundingBox(rhs.m_tBoundingBox)
+//	, m_vOffset(rhs.m_vOffset)
+//{
+//}
 
 CCube_Collider::~CCube_Collider()
 {

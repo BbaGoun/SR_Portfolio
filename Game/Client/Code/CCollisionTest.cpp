@@ -27,6 +27,9 @@
 #include "CUI_Rainbow.h"
 #include "CUI_BoosterBar.h"
 #include "CUI_BoosterBG.h"
+#include "CMissile.h"
+#include "CMissileBody.h"
+#include "CMissileTarget.h"
 #include "CThunder.h"
 #include "CThunderCloud.h"
 #include "CUI_Button.h"
@@ -407,6 +410,15 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
 		return E_FAIL;
+  ////////////////////////////////////////////////////////////////////////////////////////////
+	CGameObject* pMissileTarget = CMissileTarget::Create(m_pGraphicDev);
+
+	if (pMissileTarget == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget", pMissileTarget)))
+		return E_FAIL;
+
 
 	//// ThunderCloud
 	//pGameObject = CThunderCloud::Create(m_pGraphicDev);

@@ -200,6 +200,7 @@
     <ClInclude Include="..\Header\CMapTest.h" />
     <ClInclude Include="..\Header\CITem.h" />
     <ClInclude Include="..\Header\CLand3.h" />
+    <ClInclude Include="..\Header\CTargetAim.h" />
     <ClInclude Include="..\Header\CStartMenu.h" />
     <ClInclude Include="..\Header\CThunder.h" />
     <ClInclude Include="..\Header\CThunderCloud.h" />
@@ -257,6 +258,7 @@
     <ClCompile Include="..\Code\CMapTest.cpp" />
     <ClCompile Include="..\Code\CITem.cpp" />
     <ClCompile Include="..\Code\CLand3.cpp" />
+    <ClCompile Include="..\Code\CTargetAim.cpp" />
     <ClCompile Include="..\Code\CStartMenu.cpp" />
     <ClCompile Include="..\Code\CThunder.cpp" />
     <ClCompile Include="..\Code\CThunderCloud.cpp" />

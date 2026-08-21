@@ -145,6 +145,9 @@
     <Filter Include="02. GameObject\MissileTarget">
       <UniqueIdentifier>{6793bbfd-9138-49d7-911d-2accc8786996}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\TargetAim">
+      <UniqueIdentifier>{10b72a72-eb2f-4fae-8a95-32c5d743f643}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\Item\Thunder">
       <UniqueIdentifier>{eb12a771-8e46-4219-8069-abad9f11e50a}</UniqueIdentifier>
     </Filter>
@@ -318,6 +321,9 @@
     <ClInclude Include="..\Header\CMissileTarget.h">
       <Filter>02. GameObject\MissileTarget</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTargetAim.h">
+      <Filter>02. GameObject\TargetAim</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CThunder.h">
       <Filter>02. GameObject\Item\Thunder\Thunder</Filter>
     </ClInclude>
@@ -475,6 +481,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMissileTarget.cpp">
       <Filter>02. GameObject\MissileTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTargetAim.cpp">
+      <Filter>02. GameObject\TargetAim</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CThunder.cpp">
       <Filter>02. GameObject\Item\Thunder\Thunder</Filter>
