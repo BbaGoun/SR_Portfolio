@@ -133,14 +133,8 @@
     <Filter Include="02. GameObject\UI\UI_Booster\UI_BoosterBG">
       <UniqueIdentifier>{6a0eba07-e98e-47f8-a58a-a5d842776ca0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Missile">
-      <UniqueIdentifier>{d6b85c0f-4e58-4131-bf43-13d6294f242c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Camera\DynamicCamera">
       <UniqueIdentifier>{7a349e1f-d29d-4c80-a6b0-e6d3a52b8d23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Missile\MissileBody">
-      <UniqueIdentifier>{2a2d957b-27e8-4f80-959d-7f7f3eedceb8}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\MissileTarget">
       <UniqueIdentifier>{6793bbfd-9138-49d7-911d-2accc8786996}</UniqueIdentifier>
@@ -192,6 +186,15 @@
     </Filter>
     <Filter Include="02. GameObject\UI\UI_Minimap">
       <UniqueIdentifier>{f920298e-7e71-481a-b829-383f64e13829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Missile">
+      <UniqueIdentifier>{d6b85c0f-4e58-4131-bf43-13d6294f242c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Missile\MissileBody">
+      <UniqueIdentifier>{2a2d957b-27e8-4f80-959d-7f7f3eedceb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\MagnetBody">
+      <UniqueIdentifier>{2cf3dfe9-2af6-4e54-8ee4-a5e1ade645d5}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\ItemBox">
       <UniqueIdentifier>{7271d6f9-d894-4471-b51b-cbad0c24150d}</UniqueIdentifier>
@@ -316,7 +319,7 @@
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMissile.h">
-      <Filter>02. GameObject\Missile</Filter>
+      <Filter>02. GameObject\Item\Missile</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDynamicCamera.h">
       <Filter>02. GameObject\Camera\DynamicCamera</Filter>
@@ -325,7 +328,7 @@
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMissileBody.h">
-      <Filter>02. GameObject\Missile\MissileBody</Filter>
+      <Filter>02. GameObject\Item\Missile\MissileBody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMissileTarget.h">
       <Filter>02. GameObject\MissileTarget</Filter>
@@ -371,6 +374,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CMinimapCart.h">
       <Filter>02. GameObject\MiniMap\MinimapCart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMagnetBody.h">
+      <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CItemBox.h">
       <Filter>02. GameObject\ItemBox</Filter>
@@ -486,7 +492,7 @@
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMissile.cpp">
-      <Filter>02. GameObject\Missile</Filter>
+      <Filter>02. GameObject\Item\Missile</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDynamicCamera.cpp">
       <Filter>02. GameObject\Camera\DynamicCamera</Filter>
@@ -495,7 +501,7 @@
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMissileBody.cpp">
-      <Filter>02. GameObject\Missile\MissileBody</Filter>
+      <Filter>02. GameObject\Item\Missile\MissileBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMissileTarget.cpp">
       <Filter>02. GameObject\MissileTarget</Filter>
@@ -541,6 +547,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMinimapCart.cpp">
       <Filter>02. GameObject\MiniMap\MinimapCart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMagnetBody.cpp">
+      <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CItemBox.cpp">
       <Filter>02. GameObject\ItemBox</Filter>

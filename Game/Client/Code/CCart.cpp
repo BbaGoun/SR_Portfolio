@@ -14,6 +14,7 @@
 #include "CLand3.h"
 #include <CThunderCloud.h>
 #include <CCartBody.h>
+#include "CMagnetBody.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -160,6 +161,19 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateBananaObject();
 	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_T))	// 테스트용 
+	{
+		CGameObject* pMagnet = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MagnetBody");
+
+		if (nullptr == pMagnet)
+		{
+			CreateMagnetObject();
+		}
+
+
+	}
+
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
 	{
@@ -889,6 +903,51 @@ void CCart::CreateTargetAimObject()
 	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
 
 	pTargetAim->Get_Transform()->Set_Quaternion(&qRot);
+}
+
+void CCart::CreateMagnetObject()
+{
+	CGameObject* pMagnetBody = CMagnetBody::Create(m_pGraphicDev);
+
+	if (nullptr == pMagnetBody)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_MagnetBody", pMagnetBody)))
+		return;
+
+	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+	_vec3 vPos, vMagnetPos, vLook, vDir, vUp, vTargetPos;
+
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	m_pTransformCom->Get_Info(INFO_UP, &vUp);
+
+	// vPos += vLook * 2.f;
+	// vPos += vUp * 7.f;
+
+	pMagnetBody->Get_Transform()->Set_Pos(vPos);
+	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+
+	vDir = vTargetPos - vPos;
+
+	if (D3DXVec3Length(&vDir) <= 0.001f)
+		return;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	_quaternion qRot;
+
+	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
+
+	pMagnetBody->Get_Transform()->Set_Quaternion(&qRot);
+
+	if (nullptr != pMagnetBody)
+	{
+		vMagnetPos = vPos;
+	}
+
+	pMagnetBody->Get_Transform()->Set_Pos(vPos);
 }
 
 void CCart::GainItem()

@@ -139,6 +139,9 @@
     <Filter Include="04. Component\Shape\Spline">
       <UniqueIdentifier>{b7c8adf4-29d0-43ea-8d3a-3b2372e9b116}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\MagnetTex">
+      <UniqueIdentifier>{14140801-3ac3-4446-adc8-11e58e106f11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -285,6 +288,10 @@
     <ClInclude Include="..\Header\CSpline.h">
       <Filter>04. Component\Shape\Spline</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CGameUI.h" />
+    <ClInclude Include="..\Header\CMagnetTex.h">
+      <Filter>04. Component\Shape\MagnetTex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -409,6 +416,10 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSpline.cpp">
       <Filter>04. Component\Shape\Spline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGameUI.cpp" />
+    <ClCompile Include="..\Code\CMagnetTex.cpp">
+      <Filter>04. Component\Shape\MagnetTex</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

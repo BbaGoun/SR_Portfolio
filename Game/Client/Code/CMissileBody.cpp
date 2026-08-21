@@ -20,7 +20,7 @@ HRESULT CMissileBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.5f });
+	m_pTransformCom->Set_Scale({ 4.5f, 4.5f, 3.5f });
 
 	Engine::CComponent* pComponent = nullptr;
 

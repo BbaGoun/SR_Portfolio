@@ -40,6 +40,7 @@
 #include "CRenderer.h"
 #include "CMinimapGround.h"
 #include "CMinimapCart.h"
+#include "CMagnetBody.h"
 #include "CItemBox.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
@@ -421,6 +422,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
 		return E_FAIL;
+
 	////////////////////////////////////////////////////////////////////////////////////////
 	CGameObject* pMissileTarget = CMissileTarget::Create(m_pGraphicDev);
 	
