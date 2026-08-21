@@ -55,7 +55,8 @@ public:
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
 	void			CreateMissileObject();					
-	void			CreateTargetAimObject();				
+	void			CreateTargetAimObject();	
+	void			CreateMagnetObject();
 
 private:
 	_float		m_fMaxSpeed;

@@ -5,6 +5,7 @@
 #include "CMagnetTex.h"
 #include "CRenderer.h"
 #include "CManagement.h"
+#include <CCartBody.h>
 
 CMagnetBody::CMagnetBody(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -19,8 +20,8 @@ HRESULT CMagnetBody::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Scale({ 3.5f, 3.5f, 3.5f });
-	m_pTransformCom->Set_Pos({ 0.f, 5.f, 20.f });
+	m_pTransformCom->Set_Scale({ 8.f, 8.f, 7.f });
+	
 
 	pComponent = m_pBufferCom = dynamic_cast<CMagnetTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_MagnetTex"));
 	if (nullptr == pComponent)
@@ -47,6 +48,51 @@ HRESULT CMagnetBody::Ready_GameObject()
 _int CMagnetBody::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
+	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+	_vec3 vPos, vCartPos, vLook, vDir, vTargetPos;
+	
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+
+	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
+	m_pTransformCom->Set_Pos({ vCartPos.x, vCartPos.y + 5.f, vCartPos.z + 2.f });	//m_pTransformCom->Set_Pos(vCartPos);
+	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+
+	vDir = vTargetPos - vCartPos;
+
+	if (D3DXVec3Length(&vDir) <= 0.001f)
+		return 0;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	_vec3 vCross;
+	D3DXVec3Cross(&vCross, &vLook, &vDir);
+
+	if (D3DXVec3Length(&vCross) <= 0.001f)
+		return 0;
+
+	D3DXVec3Normalize(&vCross, &vCross);
+
+	
+	_float fDot = D3DXVec3Dot(&vLook, &vDir);
+
+	if (fDot > 1.f)
+		fDot = 1.f;
+
+	else if (fDot < -1.f)
+		fDot = -1.f;
+
+	_float fAngle = acosf(fDot);
+
+	_quaternion qRot;
+	D3DXQuaternionRotationAxis(&qRot, &vCross, fAngle);
+
+	m_pTransformCom->Multiple_Quaternion(&qRot);
+
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
