@@ -1,0 +1,118 @@
+﻿OBJECT
+  belong=1
+  type=
+  name=Empty
+  tag=7
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=2
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_ClockTowerTexture1 mapTag=Proto_ClockTowerTexture1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 1.050000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=1.000000 0.800000 1.000000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=3
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_ClockTowerTexture3 mapTag=Proto_ClockTowerTexture3
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.400000 -0.200000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.200000 0.500000 1.000000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=4
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_ClockTowerTexture3 mapTag=Proto_ClockTowerTexture3
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.400000 -0.200000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.200000 0.500000 1.000000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_ClockTowerTexture3 mapTag=Proto_ClockTowerTexture3
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 -0.500000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=1.000000 0.100000 1.000000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=6
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_ClockTowerTexture3 mapTag=Proto_ClockTowerTexture3
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.100000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=1.000000 0.100000 1.000000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=7
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_ClockTowerTexture3 mapTag=Proto_ClockTowerTexture3
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.400000 0.400000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.200000 0.500000 1.000000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=8
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_ClockTowerTexture3 mapTag=Proto_ClockTowerTexture3
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.400000 0.400000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.200000 0.500000 1.000000
+  ENDOBJECT
+ENDOBJECT

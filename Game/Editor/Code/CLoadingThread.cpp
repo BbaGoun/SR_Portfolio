@@ -112,6 +112,36 @@ _uint CLoadingThread::Loading_Stage()
         true, L"Signal3")))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ClockTowerTexture1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/dds/ClockTowerTest1.dds", 1),
+        true, L"ClockTower1")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ClockTowerTexture2", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/dds/ClockTowerTest2.dds", 1),
+        true, L"ClockTower2")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ClockTowerTexture3", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/dds/ClockTowerTest3.dds", 1),
+        true, L"ClockTower3")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LampTexture1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_clockTower/Edited/LampTest1.png", 1),
+        true, L"Lamp1")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LampTexture2", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_clockTower/Edited/LampTest2.png", 1),
+        true, L"Lamp2")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LampTexture3", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_clockTower/Edited/LampTest3.png", 1),
+        true, L"Lamp3")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LampTexture4", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_clockTower/Edited/LampTest4.png", 1),
+        true, L"Lamp4")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CurveSignTexture1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_clockTower/Edited/CurveSign1.png", 1),
+        true, L"CurveSign")))
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SplinePointNormal", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Editor/PointSprite/SplinePointNormal.png", 1),
         true, L"SplinePointNormal")))
         return E_FAIL;
