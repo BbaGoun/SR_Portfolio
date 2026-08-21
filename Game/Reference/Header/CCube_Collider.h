@@ -8,8 +8,8 @@ class ENGINE_DLL CCube_Collider : public CCollider
 {
 private:
 	explicit CCube_Collider(LPDIRECT3DDEVICE9 pGraphicDev);
-	//explicit CCube_Collider(const CCollider& rhs);	// 원본
-	explicit CCube_Collider(const CCube_Collider& rhs);	// 테스트
+	explicit CCube_Collider(const CCollider& rhs);	// 원본
+	// explicit CCube_Collider(const CCube_Collider& rhs);	// 테스트
 	virtual ~CCube_Collider();
 
 public:

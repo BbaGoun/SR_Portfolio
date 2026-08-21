@@ -181,7 +181,7 @@ _matrix* CTransform::GetFollowRotation(_vec3* pFollowDir, _matrix* _pRot)
 	_vec3 vLook;
 	Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Cross(&vCross, &vLook, pFollowDir);
-
+	
 	if (vCross.x == 0 && vCross.y == 0 && vCross.z == 0)
 		return D3DXMatrixIdentity(_pRot);
 

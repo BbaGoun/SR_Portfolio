@@ -29,7 +29,7 @@ HRESULT CTargetAim::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Scale({ 5.f, 5.f, 0.f });
+	m_pTransformCom->Set_Scale({ 15.f, 15.f, 0.f });
 
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 
@@ -40,13 +40,13 @@ HRESULT CTargetAim::Ready_GameObject()
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 
-	//pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RainBow_Alpha"));
-	// 
-	// 	if (nullptr == pComponent)
-	//	    return E_FAIL;
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_TargetAimTexture"));
+	 
+	 	if (nullptr == pComponent)
+		    return E_FAIL;
 
-	//pComponent->Set_Owner(this);
-	//m_mapComponent.insert({ L"Com_Texture", pComponent });
+	pComponent->Set_Owner(this);
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
 
@@ -81,7 +81,7 @@ void CTargetAim::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-	// m_pTextureCom->Set_Texture(0);
+    m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
 	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 

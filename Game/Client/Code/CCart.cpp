@@ -223,7 +223,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 			D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj,  &tCam.matView, &matWorld);
 
-			if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y))
+			if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
 			{
 				vPos = vTarget;
 			}
@@ -596,6 +596,17 @@ void CCart::CreateMissileObject()
 	pMissileBody->SetLayer(m_pLayer);
 	pMissile->Set_Child(pMissileBody);
 
+	//_vec3 vPos, vLook;
+
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	//vPos += vLook * 5.f;
+
+	//pMissile->Get_Transform()->Set_Pos(vPos);
+
+
+
 	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic",L"Obj_MissileTarget");
 
 	_vec3 vPos, vLook, vTargetPos;
@@ -608,18 +619,14 @@ void CCart::CreateMissileObject()
 
 	vPos += vDir * 5.f;
 
-	_vec3 vAxis;
-	D3DXVec3Cross(&vAxis, &vLook, &vDir);
-	D3DXVec3Normalize(&vAxis, &vAxis);
+	if (D3DXVec3Length(&vDir) <= 0.001f)
+		return;
 
-	_float fDot = D3DXVec3Dot(&vLook, &vDir);
-	_float fAngle = acosf(fDot);
-
-	D3DXMATRIX matRot;
-	D3DXMatrixRotationAxis(&matRot, &vAxis, fAngle);
+	D3DXVec3Normalize(&vDir, &vDir);
 
 	_quaternion qRot;
-	D3DXQuaternionRotationMatrix(&qRot, &matRot);
+
+	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
 
 	pMissile->Get_Transform()->Set_Pos(vPos);
 	pMissile->Get_Transform()->Set_Quaternion(&qRot);
@@ -635,15 +642,40 @@ void CCart::CreateTargetAimObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_TargetAim", pTargetAim)))
 		return;
 
-	_vec3 vPos, vLook;
+	//_vec3 vPos, vLook;
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	//vPos += vLook * 20.f;
+
+	//pTargetAim->Get_Transform()->Set_Pos(vPos);
+
+	//pTargetAim->SetLayer(m_pLayer);
+
+	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+	_vec3 vPos, vLook, vDir, vTargetPos;
+
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
 	vPos += vLook * 20.f;
 
 	pTargetAim->Get_Transform()->Set_Pos(vPos);
+	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
 
-	pTargetAim->SetLayer(m_pLayer);
+	vDir = vTargetPos - vPos;
+
+	if (D3DXVec3Length(&vDir) <= 0.001f)
+		return;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	_quaternion qRot;
+
+	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
+
+	pTargetAim->Get_Transform()->Set_Quaternion(&qRot);
 }
 
 void CCart::Free()
