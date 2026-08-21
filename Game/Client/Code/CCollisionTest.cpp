@@ -40,6 +40,7 @@
 #include "CRenderer.h"
 #include "CMinimapGround.h"
 #include "CMinimapCart.h"
+#include "CMagnetBody.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -427,15 +428,13 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 
 
+	CGameObject* pMagnetBody = CMagnetBody::Create(m_pGraphicDev);
 
-	// 마그넷 타겟 만들겨?
-	//CGameObject* pMagnetTarget = CMagnetTarget::Create(m_pGraphicDev);
+	if (pMagnetBody == nullptr)
+		return E_FAIL;
 
-	//if (pMagnetTarget == nullptr)
-	//	return E_FAIL;
-
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MagnetTarget", pMagnetTarget)))
-	//	return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MagnetBody", pMagnetBody)))
+		return E_FAIL;
 
 
 

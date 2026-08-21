@@ -19,6 +19,8 @@ HRESULT CMagnetBody::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 	CComponent* pComponent = nullptr;
 
+	m_pTransformCom->Set_Scale({ 3.5f, 3.5f, 3.5f });
+	m_pTransformCom->Set_Pos({ 0.f, 5.f, 20.f });
 
 	pComponent = m_pBufferCom = dynamic_cast<CMagnetTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_MagnetTex"));
 	if (nullptr == pComponent)
