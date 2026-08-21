@@ -38,6 +38,7 @@
     <ClInclude Include="..\Header\CFrameMgr.h" />
     <ClInclude Include="..\Header\CGameObject.h" />
     <ClInclude Include="..\Header\CCamera.h" />
+    <ClInclude Include="..\Header\CGameUI.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
     <ClInclude Include="..\Header\CInnerBox.h" />
     <ClInclude Include="..\Header\CLayer.h" />
@@ -88,6 +89,7 @@
     <ClCompile Include="..\Code\CFrameMgr.cpp" />
     <ClCompile Include="..\Code\CGameObject.cpp" />
     <ClCompile Include="..\Code\CCamera.cpp" />
+    <ClCompile Include="..\Code\CGameUI.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
     <ClCompile Include="..\Code\CInnerBox.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />

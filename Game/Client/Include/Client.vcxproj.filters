@@ -178,6 +178,9 @@
     <Filter Include="02. GameObject\UI\UI_Timer">
       <UniqueIdentifier>{406ce618-cfd9-400f-ba28-75c87ea2370b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI\UI_Menu">
+      <UniqueIdentifier>{abf231ea-de2d-413c-96d2-ca1bb0124865}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\MiniMap">
       <UniqueIdentifier>{74eccf66-a30f-4fe4-a48a-852f81daf64d}</UniqueIdentifier>
     </Filter>
@@ -351,6 +354,9 @@
     <ClInclude Include="..\Header\CUI_ItemSlot.h">
       <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI_Menu.h">
+      <Filter>02. GameObject\UI\UI_Menu</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CUI_Minimap.h">
       <Filter>02. GameObject\UI\UI_Minimap</Filter>
     </ClInclude>
@@ -511,6 +517,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_ItemSlot.cpp">
       <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI_Menu.cpp">
+      <Filter>02. GameObject\UI\UI_Menu</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUI_Minimap.cpp">
       <Filter>02. GameObject\UI\UI_Minimap</Filter>

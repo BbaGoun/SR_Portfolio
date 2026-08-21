@@ -81,6 +81,14 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EffectTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90))))
         return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SpeedBarTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Tacometer1.png", 1))))
+        return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SpeedGaugeTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/GaugeBar/Gauge%d.png", 2))))
+        return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ItemiconTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Itemicon/slot0.png", 1))))
+        return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ItemUITexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/ItemUI/item%d.png", 11))))
+        return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BoosterWindL", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Effect/BoosterWind/BoosterWindL%d.png", 2))))
         return E_FAIL;
@@ -116,6 +124,12 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ThunderPlayerEffectTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item/ThunderPlayerEffect/ThunderPlayerEffect.png", 1))))
         return E_FAIL;
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ThunderFloorEffectTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item/ThunderFloorEffect/ThunderFloorEffect.png", 1))))
+        return E_FAIL;
+
+
+
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MenuBG", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Menu/MenuBG.png", 1))))
         return E_FAIL;
 
     // Button
@@ -180,6 +194,10 @@ unsigned int CLoadingThread::Thread_Main(void* pArg)
     {
     case LOADING_STAGE:
         iFlag = pLoading->Loading_Stage();
+        if (FAILED(iFlag))
+        {
+            MSG_BOX("Loading Fail");
+        }
         break;
 
     case LOADING_BOSS:

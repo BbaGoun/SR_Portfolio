@@ -223,6 +223,7 @@
     <ClInclude Include="..\Header\CUI_Button.h" />
     <ClInclude Include="..\Header\CUI_ItemIcon.h" />
     <ClInclude Include="..\Header\CUI_ItemSlot.h" />
+    <ClInclude Include="..\Header\CUI_Menu.h" />
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
     <ClInclude Include="..\Header\CUI_Timer.h" />
     <ClInclude Include="..\Header\CWheel.h" />
@@ -233,6 +234,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CUI_Menu.cpp" />
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CBanana.cpp" />
     <ClCompile Include="..\Code\CBoostWind.cpp" />
