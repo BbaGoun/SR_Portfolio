@@ -24,6 +24,7 @@ public:
 	WHEEL_TYPE		GetWheelType() { return m_eWheelType; }
 	void			KeyInput(const _float& fDeltaTime);
 
+	void			CreateSkidMark();
 public:
 	static CWheel* Create(LPDIRECT3DDEVICE9 pGraphicDev, WHEEL_TYPE eType);
 

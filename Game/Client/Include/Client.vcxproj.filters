@@ -196,6 +196,12 @@
     <Filter Include="02. GameObject\Item\MagnetBody">
       <UniqueIdentifier>{2cf3dfe9-2af6-4e54-8ee4-a5e1ade645d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\ItemBox">
+      <UniqueIdentifier>{7271d6f9-d894-4471-b51b-cbad0c24150d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\SkidMark">
+      <UniqueIdentifier>{a87ac38e-e6b8-4b56-9453-a1bf5df51239}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -372,6 +378,12 @@
     <ClInclude Include="..\Header\CMagnetBody.h">
       <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CItemBox.h">
+      <Filter>02. GameObject\ItemBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSkidMark.h">
+      <Filter>02. GameObject\Cart\SkidMark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -538,6 +550,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMagnetBody.cpp">
       <Filter>02. GameObject\Item\MagnetBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemBox.cpp">
+      <Filter>02. GameObject\ItemBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSkidMark.cpp">
+      <Filter>02. GameObject\Cart\SkidMark</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

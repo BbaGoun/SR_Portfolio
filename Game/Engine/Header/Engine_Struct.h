@@ -105,6 +105,7 @@ namespace Engine
 	typedef struct _tagControlPoint
 	{
 		_vec3	position;
+		uint32_t id;
 		_float	bank;
 		_float	width;
 		_float	depth;

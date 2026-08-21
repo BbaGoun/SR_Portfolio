@@ -6,6 +6,7 @@
 #include "CCart.h"
 #include "CLand3.h"
 #include "CManagement.h"
+#include "CItemBox.h"
 #include "CCollisionMgr.h"
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -123,6 +124,16 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 			pCart->SetBoost(BOOST_STATE_NORMAL);
 		}
 	}
+	if (wcsncmp(wOtherTag, L"Obj_ItemBox", 11) == 0)
+	{
+		CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
+		if (pItemBox->GetShow() == true)
+		{
+			pCart->GainItem();
+			pItemBox->SetShow(false);
+		}
+	}
+
 }
 void CCartBody::BananaSpin(const _float& fDeltaTime)
 {

@@ -212,11 +212,8 @@ void CInspector::MeshCom(CGameObject* _pObj)
                 break;
             }
         }
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Mesh");
-        ImGui::SameLine();
-        ImGui::SetNextItemWidth(-1.0f);
 
+        ImGuiLabel("Mesh");
         if (ImGui::BeginCombo("##Mesh", preview.c_str()))
         {
             for (auto& proto : prototypes)
@@ -250,32 +247,112 @@ void CInspector::MeshCom(CGameObject* _pObj)
             }
             ImGui::EndCombo();
         }
-        CSpline* pSpline = dynamic_cast<CSpline*>(pBuf);
-        if (pSpline) {
-            if (ImGui::Button("Edit"))
-            {
-
-            }
-            ImGui::SameLine();
-            if (ImGui::Button("Add")) {
-
-            }
-            float fSampleUnit = pSpline->Get_SampleUnit();
-            ImGuiLabel("Sample Unit");
-            if (ImGui::DragFloat("##Sample Unit", &fSampleUnit, 0.25f, 1.f, FLT_MAX))
-            {
-                pSpline->Set_SampleUnit(fSampleUnit);
-            }
-            float fTextureUnit = pSpline->Get_TextureUnit();
-            ImGuiLabel("Texture Unit");
-            if (ImGui::DragFloat("##Texture Unit", &fTextureUnit, 0.25f, 1.f, FLT_MAX))
-            {
-                pSpline->Set_TextureUnit(fTextureUnit);
-            }
-        }
+        SplineCom(_pObj);
     }
 
     ImGui::PopID();
+}
+
+void CInspector::SplineCom(CGameObject* _pObj)
+{
+    CSpline* pSpline = _pObj->Get_Component<CSpline>();
+    if (pSpline) {
+        float availX = ImGui::GetContentRegionAvail().x;
+        float btnW = availX * 0.4f;
+
+        const bool bEdit = pSpline->Get_Edit();
+       
+        if (bEdit)
+            ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
+        ImGui::SetCursorPosX((availX - btnW * 2) * 0.5f);
+        if (ImGui::Button("Edit", ImVec2(btnW, 0)))
+        {
+            pSpline->Set_Edit(!bEdit);
+            g_bEdit = !bEdit;
+        }
+        if (bEdit)
+            ImGui::PopStyleColor();
+
+        ImGui::SameLine();
+        ImGui::SetNextItemWidth(btnW);
+        if (ImGui::Button("Add", ImVec2(btnW, 0))) {
+            pSpline->Add_Point();
+        }
+        ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow
+            | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+        bool open = ImGui::TreeNodeEx(
+            (void*)(uintptr_t)pSpline,
+            flags,
+            "Control Points");
+        if (open) {
+            ImGui::Indent();
+            char buf[256];
+            auto& vecP = pSpline->Get_ControlPoints();
+            for(int i=0; i< vecP.size(); ++i){
+                ControlPoint& cp = vecP[i];
+                bool openPoint = ImGui::TreeNodeEx(
+                    (void*)cp.id, flags, "%d", i
+                );
+                ImGui::PushID(cp.id);
+                if (ImGui::BeginPopupContextItem("ControlPoint_Menu")) {
+                    if (ImGui::Selectable("Delete")) {
+                        pSpline->Del_Point(&cp);
+                        i -= 1;
+                        ImGui::EndPopup();
+                        ImGui::PopID();
+                        continue;
+                    }
+                    ImGui::EndPopup();
+                }
+                ImGui::PopID();
+
+                if (openPoint) {
+                    float tr[3];
+                    tr[0] = cp.position.x, tr[1] = cp.position.y, tr[2] = cp.position.z;
+                    float bank = cp.bank, width = cp.width, depth = cp.depth;
+                    
+                    sprintf_s(buf, sizeof(buf), "##pos%d", cp.id);
+                    ImGuiLabel("Pos");
+                    if (ImGui::DragFloat3(buf, tr, 0.1f)) {
+                        memcpy(&cp.position, tr, sizeof(_vec3));
+                    }
+                    
+                    sprintf_s(buf, sizeof(buf), "##bank%d", cp.id);
+                    ImGuiLabel("Bank");
+                    if (ImGui::DragFloat(buf, &bank, 0.5f, -90.f, 90.f)) {
+                        cp.bank = bank;
+                    }
+                    
+                    sprintf_s(buf, sizeof(buf), "##width%d", cp.id);
+                    ImGuiLabel("Width");
+                    if (ImGui::DragFloat(buf, &width, 0.1f, 0.f, FLT_MAX)) {
+                        cp.width = width;
+                    }
+                    
+                    sprintf_s(buf, sizeof(buf), "##depth%d", cp.id);
+                    ImGuiLabel("Depth");
+                    if (ImGui::DragFloat(buf, &depth, 0.1f, 0.f, FLT_MAX)) {
+                        cp.depth = depth;
+                    }
+                }
+                ImGui::Separator();
+            }
+            ImGui::Unindent();
+        }
+        ImGui::Separator();
+        float fSampleUnit = pSpline->Get_SampleUnit();
+        ImGuiLabel("Sample Unit");
+        if (ImGui::DragFloat("##Sample Unit", &fSampleUnit, 0.25f, 1.f, FLT_MAX))
+        {
+            pSpline->Set_SampleUnit(fSampleUnit);
+        }
+        float fTextureUnit = pSpline->Get_TextureUnit();
+        ImGuiLabel("Texture Unit");
+        if (ImGui::DragFloat("##Texture Unit", &fTextureUnit, 0.25f, 1.f, FLT_MAX))
+        {
+            pSpline->Set_TextureUnit(fTextureUnit);
+        }
+    }
 }
 
 void CInspector::ColliderComs(CGameObject* _pObj)
