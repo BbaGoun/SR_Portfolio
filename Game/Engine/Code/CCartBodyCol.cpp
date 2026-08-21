@@ -47,6 +47,12 @@ HRESULT CCartBodyCol::Ready_Buffer()
     vertices[7].vPosition = { -2.5f, -1.f, -5.f };
     vertices[7].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
+    for (int i = 0; i < m_dwVtxCnt; ++i) {
+        UpdateMinMaxVtx(vertices[i].vPosition);
+    }
+
+    SetBoundingBox();
+
     m_pVB->Unlock();
 
     INDEX32* indices = nullptr;

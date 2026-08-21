@@ -40,3 +40,4 @@ inline void ImGuiLabel(const char* pLabel) {
     ImGui::SameLine();
     ImGui::SetNextItemWidth(-1.0f);
 }
+

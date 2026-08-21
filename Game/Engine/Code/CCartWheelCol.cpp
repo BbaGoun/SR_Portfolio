@@ -51,6 +51,12 @@ HRESULT CCartWheelCol::Ready_Buffer()
 	vertices[33].vPosition = { 0.2, 0, 0 };
 	vertices[33].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
 
+	for (int i = 0; i < m_dwVtxCnt; ++i) {
+		UpdateMinMaxVtx(vertices[i].vPosition);
+	}
+
+	SetBoundingBox();
+
 	m_pVB->Unlock();
 
 	INDEX32* indices = nullptr;

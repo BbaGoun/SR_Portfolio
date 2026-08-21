@@ -27,7 +27,7 @@ public:
 	);
 
 	const map<const _tchar*, vector<CGameObject*>>& Get_GameObjects(const _tchar* pLayerTag);
-	HRESULT			Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj);
+	HRESULT			Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj, bool bEditor);
 
 	// 에디터 용
 	const vector<CGameObject*>& Get_Roots(const _tchar* pLayerTag);

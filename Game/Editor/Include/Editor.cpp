@@ -19,11 +19,15 @@ UINT                    g_ResizeWidth = 0, g_ResizeHeight = 0;
 D3DPRESENT_PARAMETERS   g_d3dpp = {};
 float                   main_scale = 1;
 HWND                    g_hWnd = nullptr;
-ImFont*                 g_pFontBold = nullptr;
 
 // 선택된 오브젝트에 대한 설정
 bool                    g_bSelected = false;
-uint64_t                g_uSelected = 0;
+uint32_t                g_uSelected = 0;
+
+bool                    g_bEdit = false;
+bool                     g_bPointSelected;
+uint32_t                 g_uPointSelected;
+
 // Transform 조작 창의 설정
 ImGuizmo::OPERATION g_GizmoOp = ImGuizmo::TRANSLATE;
 ImGuizmo::MODE g_GizmoMode = ImGuizmo::WORLD;

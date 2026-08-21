@@ -92,8 +92,7 @@ void CEditorScene::Render_Scene()
 
 				wstring s = std::to_wstring(guid);
 				CManagement::GetInstance()->Add_GameObject(L"Default", s.c_str(), obj);
-				g_bSelected = true;
-				g_uSelected = guid;
+				::Set_ObjSelected(guid);
 			}
 			ImGui::EndMenu();
 		}

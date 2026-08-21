@@ -74,8 +74,7 @@ void CHierarchy::Update_Window()
     ImGui::InvisibleButton("##dummy", viewSize);
 
     if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-        g_bSelected = false;
-        g_uSelected = 0;
+        ::Free_ObjSelected();
     }
 
     if (ImGui::BeginDragDropTarget())
@@ -172,8 +171,7 @@ void CHierarchy::Draw_TreeNode(CGameObject* pObj)
 
     if (!bRenaming && ImGui::IsItemClicked(ImGuiMouseButton_Left))
     {
-        g_bSelected = true;
-        g_uSelected = pObj->GetGuid();
+        ::Set_ObjSelected(pObj->GetGuid());
     }
 
     if (!bRenaming && ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
@@ -308,8 +306,7 @@ void CHierarchy::Draw_TreeNode(CGameObject* pObj)
 
                 wstring s = std::to_wstring(guid);
                 CManagement::GetInstance()->Add_GameObject(L"Default", s.c_str(), pChild);
-                g_bSelected = true;
-                g_uSelected = guid;
+                ::Set_ObjSelected(guid);
 
                 pObj->Set_Child(pChild);
                 m_uOpenGuid = pObj->GetGuid();
@@ -321,7 +318,7 @@ void CHierarchy::Draw_TreeNode(CGameObject* pObj)
                 m_bRenameFocus = true;
             }
             if (ImGui::Selectable("Delete")) {
-                CManagement::GetInstance()->Delete_GameObject(L"Default", pObj);
+                CManagement::GetInstance()->Delete_GameObject(L"Default", pObj, true);
             }
 
             ImGui::EndPopup();
@@ -351,8 +348,7 @@ void CHierarchy::RightClick_PopUp()
 
             wstring s = std::to_wstring(guid);
             CManagement::GetInstance()->Add_GameObject(L"Default", s.c_str(), obj);
-            g_bSelected = true;
-            g_uSelected = guid;
+            ::Set_ObjSelected(guid);
         }
         if (ImGui::Selectable("Load Prefab")) {
             OnLoad();
@@ -425,8 +421,7 @@ void CHierarchy::CreatePrefabFromFile(const wchar_t* path)
     if (pRoot == nullptr)
         return;
 
-    g_bSelected = true;
-    g_uSelected = pRoot->GetGuid();
+    ::Set_ObjSelected(pRoot->GetGuid());
     CManagement::GetInstance()->Set_SceneDirty(true);
 }
 
