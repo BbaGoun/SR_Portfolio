@@ -193,11 +193,8 @@
     <Filter Include="02. GameObject\Item\Missile\MissileBody">
       <UniqueIdentifier>{2a2d957b-27e8-4f80-959d-7f7f3eedceb8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\Magnet">
+    <Filter Include="02. GameObject\Item\MagnetBody">
       <UniqueIdentifier>{2cf3dfe9-2af6-4e54-8ee4-a5e1ade645d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Item\Magnet\MagnetBody">
-      <UniqueIdentifier>{8a04bfa8-7426-43f9-b147-d9774a83d346}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -372,11 +369,8 @@
     <ClInclude Include="..\Header\CMinimapCart.h">
       <Filter>02. GameObject\MiniMap\MinimapCart</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CMagnet.h">
-      <Filter>02. GameObject\Item\Magnet</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CMagnetBody.h">
-      <Filter>02. GameObject\Item\Magnet\MagnetBody</Filter>
+      <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -542,11 +536,8 @@
     <ClCompile Include="..\Code\CMinimapCart.cpp">
       <Filter>02. GameObject\MiniMap\MinimapCart</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CMagnet.cpp">
-      <Filter>02. GameObject\Item\Magnet</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CMagnetBody.cpp">
-      <Filter>02. GameObject\Item\Magnet\MagnetBody</Filter>
+      <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
