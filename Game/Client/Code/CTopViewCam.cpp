@@ -4,7 +4,6 @@
 #include "CManagement.h"
 #include "CDInputMgr.h"
 #include "CTerrain2.h"
-#include <CGOCody.h>
 
 CTopViewCam::CTopViewCam(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -196,7 +195,7 @@ void CTopViewCam::ClickTarget()
 		// 레이를 다시 월드로 올림
 		D3DXVec3TransformCoord(&vMinPos, &vMinPos, pMatWorld);
 		pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_Player", L"Com_Transform");
-		static_cast<CGOCody*>(pCom->Get_Owner())->Set_Target(vMinPos);
+		//static_cast<CGOCody*>(pCom->Get_Owner())->Set_Target(vMinPos);
 	}
 }
 

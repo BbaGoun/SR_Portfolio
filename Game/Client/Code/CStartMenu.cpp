@@ -82,8 +82,7 @@ void CStartMenu::Render_Scene()
 	D3DVIEWPORT9 vp;
 
 	m_pGraphicDev->GetViewport(&vp);
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), float(vp.Width) / vp.Height,
-		1.f, 1000.f);
+	D3DXMatrixOrthoLH(&matProj, float(vp.Width), float(vp.Height), 1.f, 1000.f);
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
@@ -111,7 +110,7 @@ HRESULT CStartMenu::Ready_Environment_Layer(const _tchar* pLayerTag)
 	if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
 		return E_FAIL;
 
-	pGameObject->Get_Transform()->Set_Scale({ 2 * 16.f / 9.f, 2, 1 });
+	pGameObject->Get_Transform()->Set_Scale({ WINCX, WINCY, 1 });
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
