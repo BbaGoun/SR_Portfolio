@@ -428,17 +428,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 
 
-	//CGameObject* pMagnetBody = CMagnetBody::Create(m_pGraphicDev);
-
-	//if (pMagnetBody == nullptr)
-	//	return E_FAIL;
-
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MagnetBody", pMagnetBody)))
-	//	return E_FAIL;
-
-
-
-
 
 	//// ThunderCloud
 	//pGameObject = CThunderCloud::Create(m_pGraphicDev);
