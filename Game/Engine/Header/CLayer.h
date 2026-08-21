@@ -23,8 +23,8 @@ public:
 	void			Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc);
 	void			Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc);
 	bool			Contains(CGameObject* _pObj) const;
-	HRESULT			Delete_GameObject(CGameObject* _pObj, bool bEditor);
-	void			Delete_Children(CGameObject* _pObj, bool bEditor);
+	HRESULT			Delete_GameObject(CGameObject* _pObj, bool bEditor=false);
+	void			Delete_Children(CGameObject* _pObj, bool bEditor=false);
 	HRESULT			PostProcess_Delete();
 
 public:
