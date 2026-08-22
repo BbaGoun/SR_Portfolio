@@ -52,14 +52,18 @@ _int CMagnetBody::Update_GameObject(const _float& fDeltaTime)
 	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
 	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 
-	_vec3 vPos, vCartPos, vLook, vDir, vTargetPos;
+	_vec3 vPos, vCartPos, vLook, vDir, vTargetPos, vCartLook, vCartUp;
 	
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
 
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
-	m_pTransformCom->Set_Pos({ vCartPos.x, vCartPos.y + 5.f, vCartPos.z + 2.f });	//m_pTransformCom->Set_Pos(vCartPos);
+	pCartBody->Get_Transform()->Get_Info(INFO_UP, &vCartUp);
+	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
+
+	m_pTransformCom->Set_Pos(vCartPos + vCartLook * 3.f + vCartUp * 5);
+	
 	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
 
 	vDir = vTargetPos - vCartPos;
@@ -69,29 +73,60 @@ _int CMagnetBody::Update_GameObject(const _float& fDeltaTime)
 
 	D3DXVec3Normalize(&vDir, &vDir);
 
-	_vec3 vCross;
-	D3DXVec3Cross(&vCross, &vLook, &vDir);
+	//_vec3 vCross;
+	//D3DXVec3Cross(&vCross, &vLook, &vDir);
 
-	if (D3DXVec3Length(&vCross) <= 0.001f)
-		return 0;
+	//if (D3DXVec3Length(&vCross) <= 0.001f)
+	//	return 0;
 
-	D3DXVec3Normalize(&vCross, &vCross);
+	//D3DXVec3Normalize(&vCross, &vCross);
 
-	
-	_float fDot = D3DXVec3Dot(&vLook, &vDir);
+	//
+	//_float fDot = D3DXVec3Dot(&vLook, &vDir);
 
-	if (fDot > 1.f)
-		fDot = 1.f;
+	//if (fDot > 1.f)
+	//	fDot = 1.f;
 
-	else if (fDot < -1.f)
-		fDot = -1.f;
+	//else if (fDot < -1.f)
+	//	fDot = -1.f;
 
-	_float fAngle = acosf(fDot);
+	//_float fAngle = acosf(fDot);
 
-	_quaternion qRot;
-	D3DXQuaternionRotationAxis(&qRot, &vCross, fAngle);
+	//_quaternion qRot;
+	//D3DXQuaternionRotationAxis(&qRot, &vCross, fAngle);
 
-	m_pTransformCom->Multiple_Quaternion(&qRot);
+	//m_pTransformCom->Multiple_Quaternion(&qRot);
+////////////////////////////////////////////////////////////////////// 잘돼면 트랜스폼에 함수생성해서 불러오는 식
+	_vec3 vFixUp, vFixRight, vFixLook;
+	vFixUp = { 0.f, 1.f, 0.f };			// 기준값
+
+	D3DXVec3Normalize(&vFixLook, &vDir);
+
+	D3DXVec3Cross(&vFixRight, &vFixUp, &vFixLook);
+	D3DXVec3Cross(&vFixUp, &vFixLook, &vFixRight);
+
+	D3DXVec3Normalize(&vFixUp, &vFixUp);
+	D3DXVec3Normalize(&vFixRight, &vFixRight);
+
+	_matrix matFixRot;
+	D3DXMatrixIdentity(&matFixRot);
+
+	matFixRot._11 = vFixRight.x;
+	matFixRot._12 = vFixRight.y;
+	matFixRot._13 = vFixRight.z;
+
+	matFixRot._21 = vFixUp.x;
+	matFixRot._22 = vFixUp.y;
+	matFixRot._23 = vFixUp.z;
+
+	matFixRot._31 = vFixLook.x;
+	matFixRot._32 = vFixLook.y;
+	matFixRot._33 = vFixLook.z;
+
+	_quaternion qFixRot;
+	D3DXQuaternionRotationMatrix(&qFixRot, &matFixRot);
+
+	m_pTransformCom->Set_Quaternion(&qFixRot);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
