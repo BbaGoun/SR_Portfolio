@@ -58,12 +58,5 @@ void CCollider::Free()
 CComponent* CCollider::Clone()
 {
 	CCollider* pCollider = new CCollider(*this);
-	if (FAILED(pCollider->Ready_CColliderCom()))
-	{
-		Safe_Release(pCollider);
-		MSG_BOX("pCollider Create Failed");
-		return nullptr;
-	}
-
 	return pCollider;
 }

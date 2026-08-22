@@ -24,6 +24,7 @@ public:
 	WHEEL_TYPE		GetWheelType() { return m_eWheelType; }
 	void			KeyInput(const _float& fDeltaTime);
 
+	void			ResetPrePos();
 	void			CreateSkidMark();
 public:
 	static CWheel* Create(LPDIRECT3DDEVICE9 pGraphicDev, WHEEL_TYPE eType);
@@ -31,6 +32,9 @@ public:
 private:
 	Engine::CCartWheelCol*	m_pBufferCom;
 	WHEEL_TYPE				m_eWheelType;
+
+	float					m_fDistSum;
+	_vec3					m_vPrePos;
 
 protected:
 	virtual		void		Free() override;

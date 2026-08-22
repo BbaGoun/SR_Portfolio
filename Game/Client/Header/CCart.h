@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "Engine_Enum.h"
 
 namespace Engine
 {
@@ -111,6 +112,8 @@ private:
 
 	ITEM_TYPE		m_eFirstSlot;
 	ITEM_TYPE		m_eSecondSlot;
+
+	DIRECTION_TYPE	m_eDirection;
 
 protected:
 	virtual		void		Free() override;

@@ -88,13 +88,6 @@ CSphere_Collider* CSphere_Collider::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 CComponent* CSphere_Collider::Clone()
 {
 	CSphere_Collider* pSphere_Collider = new CSphere_Collider(*this);
-
-	if (FAILED(pSphere_Collider->Ready_CColliderCom()))
-	{
-		Safe_Release(pSphere_Collider);
-		MSG_BOX("pSphere_Collider Create Failed");
-		return nullptr;
-	}
 	return pSphere_Collider;
 }
 
