@@ -235,10 +235,40 @@ namespace Engine
 		return *(DWORD*)&f;
 	}
 
-	//P(t) = s^2(1+2t)A +t^2(1+2s)D +s^2tU-st^2V
-	inline _vec3 Cubic_Hermite_Curve(float t, _vec3 A, _vec3 D, _vec3 U, _vec3 V) {
-		float s = (1 - t);
-		return s * s * (1 + 2 * t) * A + t * t * (1 + 2 * s) * D + s * s * t * U - s * t * t * V;
+	inline float Lerp(float t, float start, float end) {
+		float s = 1.f - t;
+		return start * s + end * t;
+	}
+
+	//P(t) = s^2(1+2t)A +t^2(1+2s)D + s^2t*vA - st^2*vD
+	inline _vec3 Cubic_Hermite_Curve(float t, _vec3 A, _vec3 D, _vec3 vA, _vec3 vD) {
+		float s = 1.f - t;
+		return s * s * (1 + 2 * t) * A
+			+ t * t * (1 + 2 * s) * D
+			+ s * s * t * vA
+			- s * t * t * vD;
+	}
+
+	// h00(t) = s^2(1+2t) = (t^2-2t+1)(1+2t)
+	// 2t³ - 3t² + 1, h00'(t) = 6t^2 - 6t = -6st
+	// 
+	// h10(t) = t^2(1+2s) = t^2(3-2t)
+	// -2t^3+3t^2,  h10'(t) = -6t^2+6t = 6t(1-t) = 6st 
+	// 
+	// h01(t) = s^2t = (1-t)^2t = t^3-2t^2+t
+	// h01'(t) = 3t^2-4t+1 = (3t-1)(t-1) = s(1-3t)
+	// 
+	// h11(t) = st^2 = (1-t)t^2 = -t^3 + t^2
+	// h11'(t) = -3t^2+2t = t(-3t + 2)
+	// P'(t) = h00'(t)·A + h10'(t)·D + h01'(t)·vA - h11'(t)·vD
+	// 나온 값을 정규화 할 필요가 있음
+	inline _vec3 Cubic_Hermite_Curve_Derivative(float t, _vec3 A, _vec3 D, _vec3 vA, _vec3 vD)
+	{
+		float s = 1.f - t;
+		return (-6 * s * t) * A
+			+ (6 * s * t) * D
+			+ (s * (1.f - 3 * t)) * vA
+			+ (t * (3.f * t - 2.f)) * vD;
 	}
 }
 

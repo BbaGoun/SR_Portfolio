@@ -148,6 +148,10 @@ _uint CLoadingThread::Loading_Stage()
         true, L"SplinePointEdit")))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_F_road00", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Terrain/F_road00.png", 1),
+        true, L"F_road00")))
+        return E_FAIL;
+
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Etc Loading.....................................");
     LeaveCriticalSection(Get_Crt());
@@ -186,7 +190,9 @@ unsigned int CLoadingThread::Thread_Main(void* pArg)
     switch (pLoading->Get_LoadingID())
     {
     case LOADING_STAGE:
-        iFlag = pLoading->Loading_Stage();
+        if (FAILED(pLoading->Loading_Stage())) {
+            MSG_BOX("Loading Fail");
+        }
         break;
 
     case LOADING_BOSS:

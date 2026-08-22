@@ -58,11 +58,11 @@ void CHierarchy::Update_Window()
     bool sceneFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_None);
 
     if (!m_bRenaming && sceneFocused) {
-        if (ImGui::IsKeyDown(ImGuiKey_Q))
+        if (ImGui::IsKeyDown(ImGuiKey_1))
             g_GizmoOp = ImGuizmo::TRANSLATE;
-        if (ImGui::IsKeyDown(ImGuiKey_W))
+        if (ImGui::IsKeyDown(ImGuiKey_2))
             g_GizmoOp = ImGuizmo::ROTATE;
-        if (ImGui::IsKeyDown(ImGuiKey_E))
+        if (ImGui::IsKeyDown(ImGuiKey_3))
             g_GizmoOp = ImGuizmo::SCALE;
     }
 
@@ -174,12 +174,10 @@ void CHierarchy::Draw_TreeNode(CGameObject* pObj)
         ::Set_ObjSelected(pObj->GetGuid());
     }
 
-    if (!bRenaming && ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
+    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
     {
-        m_bRenaming = true;
-        m_uRenameGuid = pObj->GetGuid();
-        strcpy_s(m_renameBuf, label.c_str());
-        m_bRenameFocus = true;
+        ::Set_ObjSelected(pObj->GetGuid());
+        g_bMoveTo = true;
     }
 
     if (bRenaming) {

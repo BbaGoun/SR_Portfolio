@@ -33,11 +33,11 @@ void CInspector::Update_Window()
     bool sceneFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_None);
 
     if (!ImGui::IsAnyItemActive() && sceneFocused) {
-        if (ImGui::IsKeyDown(ImGuiKey_Q))
+        if (ImGui::IsKeyDown(ImGuiKey_1))
             g_GizmoOp = ImGuizmo::TRANSLATE;
-        if (ImGui::IsKeyDown(ImGuiKey_W))
+        if (ImGui::IsKeyDown(ImGuiKey_2))
             g_GizmoOp = ImGuizmo::ROTATE;
-        if (ImGui::IsKeyDown(ImGuiKey_E))
+        if (ImGui::IsKeyDown(ImGuiKey_3))
             g_GizmoOp = ImGuizmo::SCALE;
     }
 
