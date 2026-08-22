@@ -234,6 +234,12 @@ namespace Engine
 	inline DWORD FtoDw(float f) {
 		return *(DWORD*)&f;
 	}
+
+	//P(t) = s^2(1+2t)A +t^2(1+2s)D +s^2tU-st^2V
+	inline _vec3 Cubic_Hermite_Curve(float t, _vec3 A, _vec3 D, _vec3 U, _vec3 V) {
+		float s = (1 - t);
+		return s * s * (1 + 2 * t) * A + t * t * (1 + 2 * s) * D + s * s * t * U - s * t * t * V;
+	}
 }
 
 #endif // Engine_Function_h__

@@ -9,7 +9,13 @@ CSpline::CSpline(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CSpline::CSpline(const CSpline& rhs)
 	:CVIBuffer(rhs)
+	, m_uGenerateId(rhs.m_uGenerateId)
+	, m_vecControlPoint(rhs.m_vecControlPoint)
+	, m_pTexNormal(rhs.m_pTexNormal)
+	, m_pTexEdit(rhs.m_pTexEdit)
 {
+	m_pTexNormal->AddRef();
+	m_pTexEdit->AddRef();
 	m_eKind = CK_MESH;
 }
 
@@ -21,18 +27,25 @@ CSpline::~CSpline()
 HRESULT CSpline::Ready_CSplineCom()
 {
 	m_vecControlPoint.reserve(100);
-	m_vecControlPoint.push_back({
-		{-2.5, 0, 0}, GenerateId(),
-		0, 10, 10
-		});
-	m_vecControlPoint.push_back({
-		{2.5, 0, 0}, GenerateId(),
-		0, 10, 10
-		});
+	ControlPoint cp;
+	cp.position = { 0, 0 ,-2.5f };
+	cp.id = GenerateId();
+	cp.bank = 0;
+	cp.width = 10;
+	cp.depth = 10;
+	cp.V = { 0, 0, 0 };
+
+	m_vecControlPoint.push_back(cp);
+
+	cp.position = { 0, 0, 2.5f };
+	cp.id = GenerateId();
+	m_vecControlPoint.push_back(cp);
 
 	m_pTexNormal = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SplinePointNormal"));
 	m_pTexEdit = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SplinePointEdit"));
 	
+	Compute_Spline();
+
 	return S_OK;
 }
 
@@ -59,6 +72,8 @@ void CSpline::Add_Point()
 	cp.depth = (m_vecControlPoint.end() - 1)->depth;
 
 	m_vecControlPoint.push_back(cp);
+
+	Compute_Spline();
 }
 
 void CSpline::Del_Point(ControlPoint* pCp)
@@ -71,6 +86,171 @@ void CSpline::Del_Point(ControlPoint* pCp)
 			return cp.id == pCp->id;
 			})
 		, m_vecControlPoint.end());
+
+	Compute_Spline();
+}
+
+void CSpline::Compute_Spline()
+{
+	ComputeV();
+	ComputeTRU();
+	Compute_Mesh();
+}
+
+void CSpline::ComputeV()
+{
+	// 초기화
+	for (auto& cp : m_vecControlPoint)
+		cp.V = { 0, 0, 0 };
+
+	// 각 Control Point의 V를 계산
+	for (auto it = m_vecControlPoint.begin(); it != m_vecControlPoint.end() - 2; ++it) {
+		_vec3 start, end, v;
+		start = it->position, end = (it + 2)->position;
+		v = (end - start) * 0.5f;
+		(it + 1)->V = v;
+	}
+}
+
+void CSpline::ComputeTRU()
+{
+	// Editor에서 보여주기 위하여 각 Control Point의 T, R, U를 계산
+	_vec3 A, D, vA, vD;
+	_vec3 R0, U0;
+	_vec3 dir;
+	float epsilon = 0.001f;
+
+	for (auto it = m_vecControlPoint.begin(); it != m_vecControlPoint.end() - 1; ++it) {
+		auto next = it + 1;
+		A = it->position, D = next->position;
+		vA = it->V, vD = next->V;
+		dir = Cubic_Hermite_Curve(epsilon, A, D, vA, vD)
+			- A;
+		D3DXVec3Normalize(&dir, &dir);
+		it->T = dir;
+		_vec3 worldUp = { 0, 1, 0 };
+
+		D3DXVec3Cross(&R0, &worldUp, &it->T);
+		D3DXVec3Normalize(&R0, &R0);
+
+		D3DXVec3Cross(&U0, &it->T, &it->R);
+		D3DXVec3Normalize(&U0, &U0);
+
+		float rad = D3DXToRadian(it->bank);
+		_matrix matRotBank;
+		D3DXMatrixRotationAxis(&matRotBank, &it->T, rad);
+
+		D3DXVec3TransformNormal(&it->R, &R0, &matRotBank);
+		D3DXVec3TransformNormal(&it->U, &U0, &matRotBank);
+	}
+
+	auto beforeLast = m_vecControlPoint.end() - 2;
+	auto last = m_vecControlPoint.end() - 1;
+	A = beforeLast->position, D = last->position;
+	vA = beforeLast->V, vD = last->V;
+	dir = Cubic_Hermite_Curve(1, A, D, vA, vD)
+		- Cubic_Hermite_Curve(1 - epsilon, A, D, vA, vD);
+	D3DXVec3Normalize(&dir, &dir);
+	last->T = dir;
+	_vec3 worldUp = { 0, 1, 0 };
+
+	D3DXVec3Cross(&R0, &worldUp, &last->T);
+	D3DXVec3Normalize(&R0, &R0);
+
+	D3DXVec3Cross(&U0, &last->T, &last->R);
+	D3DXVec3Normalize(&U0, &U0);
+
+	float rad = D3DXToRadian(last->bank);
+	_matrix matRotBank;
+	D3DXMatrixRotationAxis(&matRotBank, &last->T, rad);
+
+	D3DXVec3TransformNormal(&last->R, &R0, &matRotBank);
+	D3DXVec3TransformNormal(&last->U, &U0, &matRotBank);
+}
+
+void CSpline::Compute_Mesh()
+{
+}
+
+void CSpline::Set_Bank(ControlPoint* pCp, float fBank)
+{
+	auto it = find_if(m_vecControlPoint.begin(), m_vecControlPoint.end(), [&](ControlPoint cp)->bool {
+		return cp.id == pCp->id;
+		});
+
+	if (it == m_vecControlPoint.end())
+		return;
+
+	_vec3 T = it->T;
+	_vec3 worldUp = { 0.f, 1.f, 0.f };
+	_vec3 R0, U0;
+	D3DXVec3Cross(&R0, &worldUp, &T);
+	D3DXVec3Normalize(&R0, &R0);
+
+	D3DXVec3Cross(&U0, &T, &R0);
+	D3DXVec3Normalize(&U0, &U0);
+
+	it->bank = fBank;
+	float rad = D3DXToRadian(fBank);
+	_matrix matRotBank;
+	D3DXMatrixRotationAxis(&matRotBank, &it->T, rad);
+
+	D3DXVec3TransformNormal(&it->R, &R0, &matRotBank);
+	D3DXVec3TransformNormal(&it->U, &U0, &matRotBank);
+
+	Compute_Mesh();
+}
+
+void CSpline::Set_BankByRight(ControlPoint* pCp, _vec3 vRight)
+{
+	auto it = find_if(m_vecControlPoint.begin(), m_vecControlPoint.end(), [&](ControlPoint cp)->bool {
+		return cp.id == pCp->id;
+		});
+
+	if (it == m_vecControlPoint.end())
+		return;
+
+	_vec3 T = it->T;
+	_vec3 worldUp = { 0.f, 1.f, 0.f };
+	_vec3 R0, U0;
+	D3DXVec3Cross(&R0, &worldUp, &T);
+	D3DXVec3Normalize(&R0, &R0);
+
+	D3DXVec3Cross(&U0, &T, &R0);
+	D3DXVec3Normalize(&U0, &U0);
+
+	_vec3 R = vRight;
+	R = R - T * D3DXVec3Dot(&R, &T); // T에 수직인 성분만 남기기
+	D3DXVec3Normalize(&R, &R);
+
+	_vec3 U;
+	D3DXVec3Cross(&U, &T, &R);
+	D3DXVec3Normalize(&U, &U);
+
+	it->R = R;
+	it->U = U;
+
+	float bankRad = atan2f(D3DXVec3Dot(&U, &R0), D3DXVec3Dot(&U, &U0));
+	float bankDeg = D3DXToDegree(bankRad);
+
+	it->bank = bankDeg;
+
+	Compute_Mesh();
+}
+
+void CSpline::Set_WidthDepth(ControlPoint* pCp, _vec3 vRight, _vec3 vUp)
+{
+	auto it = find_if(m_vecControlPoint.begin(), m_vecControlPoint.end(), [&](ControlPoint cp)->bool {
+		return cp.id == pCp->id;
+		});
+
+	if (it == m_vecControlPoint.end())
+		return;
+
+	it->width = D3DXVec3Length(&vRight);
+	it->depth = D3DXVec3Length(&vUp);
+
+	Compute_Mesh();
 }
 
 void CSpline::Render_Points()
@@ -155,13 +335,6 @@ void CSpline::Free()
 CComponent* CSpline::Clone()
 {
 	CSpline* pCom = new CSpline(*this);
-
-	if (FAILED(pCom->Ready_CSplineCom()))
-	{
-		Safe_Release(pCom);
-		MSG_BOX("CSpline Create Failed");
-		return nullptr;
-	}
 
 	return pCom;
 }

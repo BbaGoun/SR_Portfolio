@@ -23,6 +23,14 @@ public:
 	void			Render_Buffer() override;
 	void			Add_Point();
 	void			Del_Point(ControlPoint* pCp);
+	void			Compute_Spline();
+	void			ComputeV();
+	void			ComputeTRU();
+	void			Compute_Mesh();
+	void			Set_Bank(ControlPoint* pCp, float fBank);
+	void			Set_BankByRight(ControlPoint* pCp, _vec3 vRight);
+	void			Set_WidthDepth(ControlPoint* pCp, _vec3 vRight, _vec3 vUp);
+
 	void			Render_Points();
 
 	ControlPoint*	Get_ControlPoint(uint32_t cpId);
@@ -39,10 +47,10 @@ public:
 
 	void	Set_Edit(bool _b) { m_bEdit = _b; }
 	bool	Get_Edit() { return m_bEdit; }
-	void	Set_AddDelDirty(bool _b) { m_bAddDelDirty = _b; }
-	bool	Get_AddDelDirty() { return m_bAddDelDirty; }
-	void	Set_PointDirty(bool _b) { m_bPointDirty = _b; }
-	bool	Get_PointDirty() { return m_bPointDirty; }
+	//void	Set_AddDelDirty(bool _b) { m_bAddDelDirty = _b; }
+	//bool	Get_AddDelDirty() { return m_bAddDelDirty; }
+	//void	Set_PointDirty(bool _b) { m_bPointDirty = _b; }
+	//bool	Get_PointDirty() { return m_bPointDirty; }
 
 	void	Set_SampleUnit(float _fSampleUnit) { m_fSampleUnit = _fSampleUnit; }
 	float	Get_SampleUnit() { return m_fSampleUnit; }
@@ -59,8 +67,8 @@ protected:
 	vector<ControlPoint> m_vecControlPoint;
 
 	bool	m_bEdit = false;
-	bool	m_bAddDelDirty = false;
-	bool	m_bPointDirty = false;
+	//bool	m_bAddDelDirty = false;
+	//bool	m_bPointDirty = false;
 	float	m_fSampleUnit = 10.f;
 	float	m_fTextureUnit = 10.f;
 

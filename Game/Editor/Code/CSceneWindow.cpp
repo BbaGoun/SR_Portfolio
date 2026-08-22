@@ -169,8 +169,9 @@ void CSceneWindow::Update_Window()
     // 오브젝트의 guid로 선택
     if (g_bSelected) {
         CGameObject* pSel = FindByGuid(g_uSelected, map);
+        static bool s_bWasUsingTranslate = false;
         if (pSel && !g_bEdit) {
-
+            s_bWasUsingTranslate = false;
             // 조작용 복사본 (Get_World()가 돌려주는 버퍼를 직접 깨지 않게)
             _matrix matWorld = *pSel->Get_Transform()->Get_World();
 
@@ -202,22 +203,65 @@ void CSceneWindow::Update_Window()
         }
         else if (pSel && g_bEdit) {
             if (g_bPointSelected) {
-                // 조작용 위치 복사본
                 CSpline* pSpline = pSel->Get_Component<CSpline>();
 
                 ControlPoint* cp = pSpline->Get_ControlPoint(g_uPointSelected);
+                
+                _vec3 R = cp->R;
+                _vec3 U = cp->U;
+                ImGuizmo::OPERATION op = g_GizmoOp;
+                if (g_GizmoOp == ImGuizmo::ROTATE) {
+                    op = ImGuizmo::ROTATE_Z;
+                }
+                else if (g_GizmoOp == ImGuizmo::SCALE) {
+                    op = ImGuizmo::SCALE_X | ImGuizmo::SCALE_Y;
+                    R *= cp->width;
+                    U *= cp->depth;
+                }
+
                 _matrix matWorld;
                 D3DXMatrixIdentity(&matWorld);
+                memcpy(&matWorld.m[0], &R, sizeof(_vec3));
+                memcpy(&matWorld.m[1], &U, sizeof(_vec3));
+                memcpy(&matWorld.m[2], &cp->T, sizeof(_vec3));
                 memcpy(&matWorld.m[3], &cp->position, sizeof(_vec3));
 
                 ImGuizmo::SetGizmoSizeClipSpace(gizmoSize);
+                
                 ImGuizmo::Manipulate(
                     (float*)matView, (float*)matProj,
-                    g_GizmoOp, g_GizmoMode, (float*)&matWorld);
+                    op, ImGuizmo::WORLD, (float*)&matWorld);
 
                 if (ImGuizmo::IsUsing())
                 {
-                    memcpy(&cp->position, &matWorld.m[3], sizeof(_vec3));
+                    if (op == ImGuizmo::TRANSLATE) {
+                        memcpy(&cp->position, &matWorld.m[3], sizeof(_vec3));
+                        s_bWasUsingTranslate = true;
+                    }
+                    else if (op == ImGuizmo::ROTATE_Z) {
+                        // 해당 cp의 right로 up과 bank 계산
+                        // R,U,bank만 바뀜 -> 메쉬 다시 생성
+                        // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
+                        _vec3 vRight;
+                        memcpy(&vRight, &matWorld.m[0], sizeof(_vec3));
+                        pSpline->Set_BankByRight(cp, vRight);
+                    }
+                    else if (op == (ImGuizmo::SCALE_X | ImGuizmo::SCALE_Y)) {
+                        // 해당 cp의 width/depth를 바꾼다
+                        // -> 매쉬 다시 생성
+                        // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
+                        _vec3 vRight, vUp;
+                        memcpy(&vRight, &matWorld.m[0], sizeof(_vec3));
+                        memcpy(&vUp, &matWorld.m[1], sizeof(_vec3));
+                        pSpline->Set_WidthDepth(cp, vRight, vUp);
+                    }
+                }
+                else if (s_bWasUsingTranslate) {
+                    s_bWasUsingTranslate = false;
+                    // CP의 위치가 바뀐다 -> 곡선의 형태가 바뀐다 
+                    // -> T,R,U가 바뀐다 -> 메쉬도 전부 다시 생성
+                    // 최적화 시에는 +- 2 범위의 곡선만 다시 계산
+                    pSpline->Compute_Spline();
                 }
             }
         }
@@ -310,7 +354,7 @@ void CSceneWindow::Update_Window()
                     CSpline* pSpline = pSel->Get_Component<CSpline>();
 
                     DirectX::BoundingSphere sphere;
-                    sphere.Radius = 0.1f;
+                    sphere.Radius = 0.15f;
 
                     auto& vecP = pSpline->Get_ControlPoints();
                     for (int i = 0; i < vecP.size(); ++i) {

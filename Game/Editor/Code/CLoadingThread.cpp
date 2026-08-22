@@ -64,10 +64,6 @@ _uint CLoadingThread::Loading_Stage()
         ,true, L"Cube")))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Spline", Engine::CSpline::Create(m_pGraphicDev)
-        ,true, L"Spline")))
-        return E_FAIL;
-
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Texture Loading.....................................");
     LeaveCriticalSection(Get_Crt());
@@ -142,6 +138,8 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CurveSignTexture1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_clockTower/Edited/CurveSign1.png", 1),
         true, L"CurveSign")))
+        return E_FAIL;
+
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SplinePointNormal", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Editor/PointSprite/SplinePointNormal.png", 1),
         true, L"SplinePointNormal")))
         return E_FAIL;
@@ -166,6 +164,9 @@ _uint CLoadingThread::Loading_Stage()
         ,true, L"Sphere Collider")))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Spline", Engine::CSpline::Create(m_pGraphicDev)
+        , true, L"Spline")))
+        return E_FAIL;
 
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Loading Complete !!!!");
