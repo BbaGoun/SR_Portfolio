@@ -210,6 +210,37 @@ _matrix* CTransform::GetFollowRotation(_vec3* pFollowDir, _matrix* _pRot)
 	return	D3DXMatrixRotationAxis(_pRot, &vCross, theta);
 }
 
+_quaternion* CTransform::GetFollowQuaternion(_vec3* _pFollowDir, _quaternion* _pQuater)
+{
+	_vec3 vFixUp, vFixRight, vFixLook;
+	vFixUp = { 0.f, 1.f, 0.f };			
+
+	D3DXVec3Normalize(&vFixLook, _pFollowDir);
+
+	D3DXVec3Cross(&vFixRight, &vFixUp, &vFixLook);
+	D3DXVec3Cross(&vFixUp, &vFixLook, &vFixRight);
+
+	D3DXVec3Normalize(&vFixUp, &vFixUp);
+	D3DXVec3Normalize(&vFixRight, &vFixRight);
+
+	_matrix matFixRot;
+	D3DXMatrixIdentity(&matFixRot);
+
+	matFixRot._11 = vFixRight.x;
+	matFixRot._12 = vFixRight.y;
+	matFixRot._13 = vFixRight.z;
+
+	matFixRot._21 = vFixUp.x;
+	matFixRot._22 = vFixUp.y;
+	matFixRot._23 = vFixUp.z;
+
+	matFixRot._31 = vFixLook.x;
+	matFixRot._32 = vFixLook.y;
+	matFixRot._33 = vFixLook.z;
+
+	return D3DXQuaternionRotationMatrix(_pQuater, &matFixRot);
+}
+
 void CTransform::Chase_Target(const _vec3* pPos, const _float& fSpeed, const _float& fTimeDelta)
 {
 	_vec3	vDir = *pPos - m_vInfo[INFO_POS];

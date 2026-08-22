@@ -97,36 +97,39 @@ _int CMagnetBody::Update_GameObject(const _float& fDeltaTime)
 
 	//m_pTransformCom->Multiple_Quaternion(&qRot);
 ////////////////////////////////////////////////////////////////////// 잘돼면 트랜스폼에 함수생성해서 불러오는 식
-	_vec3 vFixUp, vFixRight, vFixLook;
-	vFixUp = { 0.f, 1.f, 0.f };			// 기준값
+	//_vec3 vFixUp, vFixRight, vFixLook;
+	//vFixUp = { 0.f, 1.f, 0.f };			// 기준값
 
-	D3DXVec3Normalize(&vFixLook, &vDir);
+	//D3DXVec3Normalize(&vFixLook, &vDir);
 
-	D3DXVec3Cross(&vFixRight, &vFixUp, &vFixLook);
-	D3DXVec3Cross(&vFixUp, &vFixLook, &vFixRight);
+	//D3DXVec3Cross(&vFixRight, &vFixUp, &vFixLook);
+	//D3DXVec3Cross(&vFixUp, &vFixLook, &vFixRight);
 
-	D3DXVec3Normalize(&vFixUp, &vFixUp);
-	D3DXVec3Normalize(&vFixRight, &vFixRight);
+	//D3DXVec3Normalize(&vFixUp, &vFixUp);
+	//D3DXVec3Normalize(&vFixRight, &vFixRight);
 
-	_matrix matFixRot;
-	D3DXMatrixIdentity(&matFixRot);
+	//_matrix matFixRot;
+	//D3DXMatrixIdentity(&matFixRot);
 
-	matFixRot._11 = vFixRight.x;
-	matFixRot._12 = vFixRight.y;
-	matFixRot._13 = vFixRight.z;
+	//matFixRot._11 = vFixRight.x;
+	//matFixRot._12 = vFixRight.y;
+	//matFixRot._13 = vFixRight.z;
 
-	matFixRot._21 = vFixUp.x;
-	matFixRot._22 = vFixUp.y;
-	matFixRot._23 = vFixUp.z;
+	//matFixRot._21 = vFixUp.x;
+	//matFixRot._22 = vFixUp.y;
+	//matFixRot._23 = vFixUp.z;
 
-	matFixRot._31 = vFixLook.x;
-	matFixRot._32 = vFixLook.y;
-	matFixRot._33 = vFixLook.z;
+	//matFixRot._31 = vFixLook.x;
+	//matFixRot._32 = vFixLook.y;
+	//matFixRot._33 = vFixLook.z;
 
-	_quaternion qFixRot;
-	D3DXQuaternionRotationMatrix(&qFixRot, &matFixRot);
+	//_quaternion qFixRot;
+	//D3DXQuaternionRotationMatrix(&qFixRot, &matFixRot);
 
-	m_pTransformCom->Set_Quaternion(&qFixRot);
+	_quaternion qRot;
+	
+	m_pTransformCom->GetFollowQuaternion(&vDir, &qRot);
+	m_pTransformCom->Set_Quaternion(&qRot);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
