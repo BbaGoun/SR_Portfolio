@@ -22,7 +22,8 @@ HRESULT CMissileTarget::Ready_GameObject()
 
 	m_fSpeed = 0.f;
 	m_fMaxSpeed = 3.f;
-	m_pTransformCom->Set_Pos({ 0,0,100.f });
+	m_pTransformCom->Set_Pos({ -10.f,0.f,100.f });
+	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
 
 	m_bMissileHit = false;
 
@@ -41,7 +42,7 @@ HRESULT CMissileTarget::Ready_GameObject()
 
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(false);
-	m_pColliderCom->Set_Extents({ 2.5f, 1.5f, 5.f });
+	m_pColliderCom->Set_Extents({ 2.5f, 1.5f, 3.f });
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 

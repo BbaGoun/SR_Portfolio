@@ -32,6 +32,7 @@ public:
 	void			UpdateBoost(const _float& fDeltaTime);
 	void			UpdateThunder();
 	void			UpdateGravity();
+	void			UpdateMagnet(const _float& fDeltaTime);
 
 	// Get, Set
 	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
@@ -80,6 +81,7 @@ private:
 	bool			m_bDrift;
 	bool			m_bBanana;
 	bool			m_bRainbowUI;
+	_bool			m_bMagnet;
 
 	float			m_fNormalTurnAngle;
 	float			m_fBoostTurnAngle;

@@ -21,7 +21,8 @@ HRESULT CMagnetBody::Ready_GameObject()
 	CComponent* pComponent = nullptr;
 
 	m_pTransformCom->Set_Scale({ 8.f, 8.f, 7.f });
-	
+
+	m_fTimer = 0;
 
 	pComponent = m_pBufferCom = dynamic_cast<CMagnetTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_MagnetTex"));
 	if (nullptr == pComponent)
@@ -130,6 +131,13 @@ _int CMagnetBody::Update_GameObject(const _float& fDeltaTime)
 	
 	m_pTransformCom->GetFollowQuaternion(&vDir, &qRot);
 	m_pTransformCom->Set_Quaternion(&qRot);
+
+	m_fTimer += fDeltaTime;
+
+	if (m_fTimer > 3.5f)
+	{
+		m_pLayer->Delete_GameObject(this);
+	}
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
