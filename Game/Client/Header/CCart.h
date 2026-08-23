@@ -66,14 +66,18 @@ public:
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
-	void			CreateMissileObject();					
-	void			CreateTargetAimObject();	
+	void			CreateMissileObject();	
 	void			CreateMagnetObject();
-	void			CreateMagnetAimObject();
+	void			CreateTargetAimObject();	
 	void			CreateMissileAimObject();
+	void			CreateMagnetAimObject();
+
 	// Item
 	void			GainItem();
 	void			UseItem();
+	void			UseAimItem();
+	void			UseMissileItem();
+	void			UseMagnetItem();
 
 	// OutputState
 	void			OutputCarState();

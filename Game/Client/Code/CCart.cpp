@@ -200,7 +200,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			m_fBoostCal = 1.05f;
 		}
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))	// 조준X 아이템
 	{
 		UseItem();
 		//// LongBooster
@@ -210,6 +210,26 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		//	m_eBoostState = BOOST_STATE_LONG_BOOST;
 		//	m_fBoostCal = 1.05f;
 		//}
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))	// 조준O 아이템
+	{
+		UseAimItem();
+
+		//if (m_eFirstSlot != ITEM_ROCKET && m_eFirstSlot != ITEM_MAGNET)
+		//{
+		//	m_eFirstSlot = m_eSecondSlot;
+		//	m_eSecondSlot = ITEM_END;
+		//}
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_LCONTROL))
+	{
+		if (m_eFirstSlot == ITEM_ROCKET)
+			UseMissileItem();
+
+		else if (m_eFirstSlot == ITEM_MAGNET)
+			UseMagnetItem();
 	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
@@ -1052,14 +1072,23 @@ void CCart::UseItem()
 		break;
 	case Engine::ITEM_WATERFLY:
 		break;
-	/*case Engine::ITEM_MAGNET:
-		m_bMagnet = true;
-		CreateMagnetObject();
-		break;*/
-	case Engine::ITEM_BARRICADE:
-		break;
-	case Engine::ITEM_ROCKET:		
-		break;
+		//case Engine::ITEM_MAGNET:
+		//	//m_bMagnet = true;
+		//	UseMagnetItem();
+		//	//CreateMagnetAimObject();
+		//	//CreateTargetAimObject();
+		//	//CreateMagnetAimObject();
+		//	//CreateMagnetObject();
+		//	break;
+		//case Engine::ITEM_BARRICADE:
+		//	break;
+		//case Engine::ITEM_ROCKET:
+		//	UseMissileItem();
+		//	//CreateMissileAimObject();
+		//	//CreateTargetAimObject();
+		//	//CreateMissileAimObject();
+		//	//CreateMissileObject();
+		//	break;
 	case Engine::ITEM_BANANA:
 		CreateBananaObject();
 		break;
@@ -1070,8 +1099,53 @@ void CCart::UseItem()
 	default:
 		break;
 	}
-	m_eFirstSlot = m_eSecondSlot;
-	m_eSecondSlot = ITEM_END;
+
+	if (m_eFirstSlot != ITEM_ROCKET && m_eFirstSlot != ITEM_MAGNET)
+	{
+		m_eFirstSlot = m_eSecondSlot;
+		m_eSecondSlot = ITEM_END;
+	}
+}
+
+void CCart::UseAimItem()
+{
+	switch (m_eFirstSlot)
+	{
+	case Engine::ITEM_ROCKET:
+		CreateTargetAimObject();
+		break;
+
+	case Engine::ITEM_MAGNET:
+		CreateTargetAimObject();
+		break;
+	}
+	// m_eFirstSlot = m_eSecondSlot;
+	// m_eSecondSlot = ITEM_END;
+}
+
+void CCart::UseMissileItem()
+{
+	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))
+	//{
+	//	CreateTargetAimObject();
+	//}
+		CreateMissileAimObject();
+
+		m_eFirstSlot = m_eSecondSlot;
+		m_eSecondSlot = ITEM_END;
+}
+
+void CCart::UseMagnetItem()
+{
+	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))
+	//{
+	//	CreateTargetAimObject();
+	//}
+		CreateMagnetAimObject();
+
+		m_eFirstSlot = m_eSecondSlot;
+		m_eSecondSlot = ITEM_END;
+
 }
 
 void CCart::Free()
