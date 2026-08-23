@@ -114,6 +114,7 @@ private:
 	ITEM_TYPE		m_eSecondSlot;
 
 	DIRECTION_TYPE	m_eDirection;
+	int				m_iFlatFrameCnt;
 
 protected:
 	virtual		void		Free() override;

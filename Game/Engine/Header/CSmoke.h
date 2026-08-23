@@ -18,6 +18,8 @@ public:
 public:
 	static CSmoke* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
+	virtual			void		OnLostDevice();
+	virtual			void		OnResetDevice();
 private:
 	_vec3 m_vBackDir;   // 카트 뒤 방향
 

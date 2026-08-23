@@ -133,11 +133,13 @@ void CCollisionTest::Render_Scene()
 
 void CCollisionTest::OnLostDevice()
 {
+	CScene::OnLostDevice();
 	CRenderer::GetInstance()->OnLostDevice();
 }
 
 void CCollisionTest::OnResetDevice()
 {
+	CScene::OnResetDevice();
 	CRenderer::GetInstance()->OnResetDevice(m_pGraphicDev);
 }
 
@@ -336,7 +338,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	// 연기 이펙트
 	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
-
+	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"SmokeEffect", pGameObject)))

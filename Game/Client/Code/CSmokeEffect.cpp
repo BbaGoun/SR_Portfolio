@@ -29,7 +29,6 @@ HRESULT CSmokeEffect::Ready_GameObject()
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	m_pSmoke = CSmoke::Create(m_pGraphicDev);
-	m_pSmoke->Ready_PSystem();
 
 	return S_OK;
 }
@@ -43,8 +42,7 @@ _int CSmokeEffect::Update_GameObject(const _float& fDeltaTime)
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vPos);
 	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
-	//vPos += _vec3({ 0, 1, 0 }) * -0.3;// +vLook * -6.f;
-	cout << vPos.x << "\t" << vPos.y << "\t" << vPos.z << endl;
+	vPos += _vec3({ 0, 1, 0 }) * -0.3 +vLook * -1.f;
 	vLook *= -1;
 	m_pSmoke->SetOrigin(vPos);
 	m_pSmoke->SetBackDir(vLook);
@@ -80,6 +78,17 @@ CSmokeEffect* CSmokeEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 	return pObj;
 }
+
+void CSmokeEffect::OnLostDevice() 
+{
+	m_pSmoke->OnLostDevice();
+}
+void CSmokeEffect::OnResetDevice() 
+{
+	m_pSmoke->OnResetDevice();
+}
+
+
 void CSmokeEffect::Free()
 {
 	CGameObject::Free(); 

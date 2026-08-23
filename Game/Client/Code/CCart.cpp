@@ -68,7 +68,7 @@ HRESULT CCart::Ready_GameObject()
 	m_eSecondSlot			= ITEM_END;
 
 	m_eDirection			= DIR_FORWARD;
-
+	m_iFlatFrameCnt			= 0;
 	m_vBananaSpinStartLook = { 0,0,0 };
 	return S_OK;
 }
@@ -558,21 +558,31 @@ void CCart::UpdateThunder()
 
 void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 {
-	CLand3* pLand3 = dynamic_cast<CLand3*>(CManagement::GetInstance()->Find_GameObjectByTag(L"Environment", L"Env_Land3"));
-	CTerrain3* pTerrain3 = pLand3->Get_Component<CTerrain3>();
+	CLand3* pLand = dynamic_cast<CLand3*>(CManagement::GetInstance()->Find_GameObjectByTag(L"Environment", L"Env_Land3"));
+	CTerrain3* pTerrain3 = pLand->Get_Component<CTerrain3>();
 
+	float fMaxLandY = -123456789;
 	_vec3 originPos = pos;
-	if (pLand3->CheckInTerrain(pos))
+	_vec3 vWorldPos;
+
+	// for(auto& pLand : vLands)
+	if (pLand->CheckInTerrain(pos))
 	{
 		// Land3의 로컬로 내림
-		_matrix* pMatWorld = pLand3->Get_Component<CTransform>()->Get_World();
+		_matrix* pMatWorld = pLand->Get_Component<CTransform>()->Get_World();
 		_matrix matInvWorld;
 		D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
-		D3DXVec3TransformCoord(&pos, &pos, &matInvWorld);
+		_vec3 vLocalPos;
+		D3DXVec3TransformCoord(&vLocalPos, &pos, &matInvWorld);
 
 		// 평면 구하기
-		D3DXPLANE plane = pTerrain3->GetPlane(pos);
-		float fLocalPlaneY = -(plane.a * pos.x + plane.c * pos.z + plane.d) / plane.b;
+		//D3DXPLANE plane = pTerrain3->GetPlane(pos);
+
+		D3DXPLANE plane;
+		float fMinDist = 123456789;
+		pTerrain3->GetPlane(vLocalPos, &plane, &fMinDist);
+
+		float fLocalPlaneY = -(plane.a * vLocalPos.x + plane.c * vLocalPos.z + plane.d) / plane.b;
 
 		// 법선 구하기
 		m_vTerrainNormal = { plane.a ,plane.b ,plane.c };
@@ -582,10 +592,9 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 		D3DXVec3Normalize(&m_vTerrainNormal, &m_vTerrainNormal);
 
 		// Local에서의 CartPosition
-		_vec3 vLocalPos = { pos.x,fLocalPlaneY,pos.z };
+		vLocalPos = { vLocalPos.x,fLocalPlaneY,vLocalPos.z };
 
 		// World에서의 CartPosition
-		_vec3 vWorldPos;
 		D3DXVec3TransformCoord(&vWorldPos, &vLocalPos, pMatWorld);
 
 		float fDeltaY = originPos.y - vWorldPos.y;
@@ -610,7 +619,16 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
 
 				if (m_vTerrainNormal != _vec3({ 0,1,0 }))
+				{
 					m_PreQuaternion = q;
+					m_iFlatFrameCnt = 0;
+				}
+				else
+				{
+					++m_iFlatFrameCnt;
+					if (m_iFlatFrameCnt > 3)
+						m_PreQuaternion = { 0,0,0,1 };
+				}
 			}
 			else // 점프 시작 
 			{
@@ -639,6 +657,8 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 
 				if (m_vTerrainNormal == _vec3({ 0,1,0 }))
 					m_PreQuaternion = {0,0,0,1};
+				else
+					m_PreQuaternion = q;
 			}
 			else // 점프 유지
 			{
@@ -660,6 +680,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 		{
 			m_eCartState = CART_STATE_AIR;
 			m_fAirTime += fDeltaTime;
+			m_iFlatFrameCnt = 0;
 		}
 	}
 

@@ -45,6 +45,9 @@ public:
 	// m_Particles에 들어있는 파티클들이 전부 죽었는지
 	bool IsDead();
 
+	virtual			void		OnLostDevice();
+	virtual			void		OnResetDevice();
+
 protected:
 	virtual void RemoveDeadParticles();
 	virtual void Free();

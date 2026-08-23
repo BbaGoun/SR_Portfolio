@@ -93,6 +93,10 @@ public:
 	void			SetLayer(CLayer* pLayer) { m_pLayer = pLayer; }
 	CLayer*			GetLayer() { return m_pLayer; }
 
+
+	virtual			void		OnLostDevice() {}
+	virtual			void		OnResetDevice() {}
+
 protected:
 	_tchar									m_prefabPath[MAX_PATH] = L"\0";
 	bool									m_bBelongPrefab = false;

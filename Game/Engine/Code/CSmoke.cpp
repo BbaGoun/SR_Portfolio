@@ -85,7 +85,15 @@ CSmoke* CSmoke::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 	return pParticle;
 }
+void CSmoke::OnLostDevice()
+{
+	PSystem::OnLostDevice();
+}
 
+void CSmoke::OnResetDevice()
+{
+	PSystem::OnResetDevice();
+}
 void CSmoke::Free()
 {
 	PSystem::Free();

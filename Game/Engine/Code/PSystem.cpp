@@ -188,6 +188,23 @@ void PSystem::RemoveDeadParticles()
 	}
 }
 
+void PSystem::OnLostDevice()
+{
+	Safe_Release(m_pVB);   
+}
+
+void PSystem::OnResetDevice()
+{
+	m_pGraphicDev->CreateVertexBuffer(
+		m_dwVbSize * sizeof(PARTICLE),
+		D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY,
+		FVF_PARTICLE,
+		D3DPOOL_DEFAULT,
+		&m_pVB,
+		nullptr);
+	m_dwVbOffset = 0;
+}
+
 void PSystem::Free()
 {
 	Safe_Release(m_pVB);

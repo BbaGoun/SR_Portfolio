@@ -334,6 +334,19 @@ CLayer* CLayer::Create()
 	return pLayer;
 }
 
+void CLayer::OnLostDevice()
+{
+	for (auto& vGameObject : m_mapObject)
+		for(auto& pGameObject : vGameObject.second)
+			pGameObject->OnLostDevice();
+}
+
+void CLayer::OnResetDevice()
+{
+	for (auto& vGameObject : m_mapObject)
+		for (auto& pGameObject : vGameObject.second)
+			pGameObject->OnResetDevice();
+}
 void CLayer::Free()
 {
 	// vector 안의 오브젝트를 모두 삭제

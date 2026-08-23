@@ -52,12 +52,10 @@ private:
 	void	PreRender(LPDIRECT3DDEVICE9& pGraphicDev);
 	void	PostRender(LPDIRECT3DDEVICE9& pGraphicDev);
 
-	void	PreParticleRender(LPDIRECT3DDEVICE9& pGraphicDev);
-	void	PostParticleRender(LPDIRECT3DDEVICE9& pGraphicDev);
-
 private:
-	list<CGameObject*>	m_RenderGroup[RENDER_END];
+	list<CGameObject*>		m_RenderGroup[RENDER_END];
 
+	// RenderTarget 텍스처 생성시 필요한 변수
 	LPDIRECT3DTEXTURE9      m_pRTTexture = nullptr;
 	LPDIRECT3DSURFACE9      m_pRTSurface = nullptr;
 	LPDIRECT3DSURFACE9      m_pRTDepthStencil = nullptr;

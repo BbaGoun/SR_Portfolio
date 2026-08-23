@@ -199,6 +199,17 @@ bool CScene::Get_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLa
     return (m_CollisionMatrix[srcLayer] & (1u << dstLayer)) != 0;
 }
 
+void CScene::OnLostDevice()
+{
+    for(auto& pLayer: m_mapLayer)
+        pLayer.second->OnLostDevice();
+}
+
+void CScene::OnResetDevice()
+{
+    for (auto& pLayer : m_mapLayer)
+        pLayer.second->OnResetDevice();
+}
 void CScene::Free()
 {
     for_each(m_mapLayer.begin(), m_mapLayer.end(), CDeleteMap());

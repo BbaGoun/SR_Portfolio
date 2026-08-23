@@ -16,6 +16,10 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+
+	virtual			void		OnLostDevice();
+	virtual			void		OnResetDevice();
+
 private:
 	CTexture*	m_pTextureCom;
 	CSmoke*		m_pSmoke;
