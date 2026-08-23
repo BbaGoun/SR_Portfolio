@@ -27,6 +27,7 @@ public:
 	// KeyInput
 	void			KeyInput(const _float& fDeltaTime);
 
+
 	// Update
 	void			UpdateDrift();
 	void			UpdateBoost(const _float& fDeltaTime);
@@ -68,7 +69,8 @@ public:
 	void			CreateMissileObject();					
 	void			CreateTargetAimObject();	
 	void			CreateMagnetObject();
-
+	void			CreateMagnetAimObject();
+	void			CreateMissileAimObject();
 	// Item
 	void			GainItem();
 	void			UseItem();
