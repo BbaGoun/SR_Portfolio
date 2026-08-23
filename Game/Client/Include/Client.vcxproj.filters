@@ -85,15 +85,6 @@
     <Filter Include="02. GameObject\CollisionBox">
       <UniqueIdentifier>{2d007e2e-4859-437b-8792-e22af7780408}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Cart\BoostEffect">
-      <UniqueIdentifier>{c7a8c4f7-5a87-4e8b-a638-0d2f080dbd57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Cart\BoostEffect\BoostJet">
-      <UniqueIdentifier>{0d1931e9-6d11-46c4-b1e6-d66294ec4643}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Cart\BoostEffect\BoostWind">
-      <UniqueIdentifier>{4d4021d3-2776-418b-b6db-ffcdf124c2dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\UI">
       <UniqueIdentifier>{77b0e0b9-78db-4975-b5b9-26be286bd1d9}</UniqueIdentifier>
     </Filter>
@@ -199,8 +190,23 @@
     <Filter Include="02. GameObject\ItemBox">
       <UniqueIdentifier>{7271d6f9-d894-4471-b51b-cbad0c24150d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Cart\SkidMark">
+    <Filter Include="02. GameObject\Cart\Effect">
+      <UniqueIdentifier>{e605a22a-591b-48eb-ac3e-28ed1aa79e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\BoostEffect">
+      <UniqueIdentifier>{c7a8c4f7-5a87-4e8b-a638-0d2f080dbd57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\BoostEffect\BoostJet">
+      <UniqueIdentifier>{0d1931e9-6d11-46c4-b1e6-d66294ec4643}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\BoostEffect\BoostWind">
+      <UniqueIdentifier>{4d4021d3-2776-418b-b6db-ffcdf124c2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\SkidMark">
       <UniqueIdentifier>{a87ac38e-e6b8-4b56-9453-a1bf5df51239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\SmokeEffect">
+      <UniqueIdentifier>{0e51cd6b-a3ef-4aa9-aa0f-1ecb58b27ae7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -289,10 +295,10 @@
       <Filter>02. GameObject\CollisionBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBoostJet.h">
-      <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostJet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBoostWind.h">
-      <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostWind</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CHUD_Main.h">
       <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
@@ -382,7 +388,10 @@
       <Filter>02. GameObject\ItemBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSkidMark.h">
-      <Filter>02. GameObject\Cart\SkidMark</Filter>
+      <Filter>02. GameObject\Cart\Effect\SkidMark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSmokeEffect.h">
+      <Filter>02. GameObject\Cart\Effect\SmokeEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -459,10 +468,10 @@
       <Filter>02. GameObject\CollisionBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBoostJet.cpp">
-      <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostJet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBoostWind.cpp">
-      <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostWind</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CHUD_Main.cpp">
       <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
@@ -555,7 +564,10 @@
       <Filter>02. GameObject\ItemBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSkidMark.cpp">
-      <Filter>02. GameObject\Cart\SkidMark</Filter>
+      <Filter>02. GameObject\Cart\Effect\SkidMark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSmokeEffect.cpp">
+      <Filter>02. GameObject\Cart\Effect\SmokeEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	Render_Priority(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
+	Render_Particle(pGraphicDev);
 	Render_UI(pGraphicDev);
 
 	PostRender(pGraphicDev);
@@ -144,6 +145,14 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CRenderer::Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	for (auto& pObj : m_RenderGroup[RENDER_PARTICLE])
+		pObj->Render_GameObject();
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 

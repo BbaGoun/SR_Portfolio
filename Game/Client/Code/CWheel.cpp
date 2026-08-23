@@ -83,7 +83,7 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		_vec3 vDeltaPos;
 		vDeltaPos = vPos - m_vPrePos;
 		m_fDistSum += D3DXVec3Length(&vDeltaPos);
-		if (m_fDistSum >= 0.05f)
+		if (m_fDistSum >= 0.01f)
 		{
 			CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"Environment", L"Env_Land3", L"Com_Buffer");
 			CTerrain3* pTerrain3 = dynamic_cast<CTerrain3*>(pCom);

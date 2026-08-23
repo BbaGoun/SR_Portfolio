@@ -195,6 +195,7 @@
     <ClInclude Include="..\Header\CMissileBody.h" />
     <ClInclude Include="..\Header\CMissileTarget.h" />
     <ClInclude Include="..\Header\CSkidMark.h" />
+    <ClInclude Include="..\Header\CSmokeEffect.h" />
     <ClInclude Include="..\Header\CUI_Minimap.h" />
     <ClInclude Include="..\Header\CRainBow_Cloud.h" />
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="..\Code\CMagnetBody.cpp" />
     <ClCompile Include="..\Code\CItemBox.cpp" />
     <ClCompile Include="..\Code\CSkidMark.cpp" />
+    <ClCompile Include="..\Code\CSmokeEffect.cpp" />
     <ClCompile Include="CUI_Menu.cpp" />
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CBanana.cpp" />

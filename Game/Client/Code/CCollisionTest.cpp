@@ -42,6 +42,7 @@
 #include "CMinimapCart.h"
 #include "CMagnetBody.h"
 #include "CItemBox.h"
+#include "CSmokeEffect.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -333,6 +334,13 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	pCartBody->Set_Child(pGameObject);
 
 
+	// 연기 이펙트
+	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
+
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"SmokeEffect", pGameObject)))
+		return E_FAIL;
 
 
 	// ItemBox

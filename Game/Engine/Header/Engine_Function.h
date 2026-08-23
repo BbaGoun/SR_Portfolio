@@ -234,6 +234,21 @@ namespace Engine
 	inline DWORD FtoDw(float f) {
 		return *(DWORD*)&f;
 	}
+
+	inline float GetRandomFloat(float LowBound, float HighBound)
+	{
+		if (LowBound >= HighBound)
+			return LowBound;
+		float f = (rand() % 10000) * 0.0001f;
+		return (f * (HighBound - LowBound)) + LowBound;
+	}
+
+	inline void GetRandomBector(_vec3* vOut, _vec3* vMin, _vec3* vMax)
+	{
+		vOut->x = GetRandomFloat(vMin->x, vMax->x);
+		vOut->y = GetRandomFloat(vMin->y, vMax->y);
+		vOut->z = GetRandomFloat(vMin->z, vMax->z);
+	}
 }
 
 #endif // Engine_Function_h__

@@ -89,13 +89,6 @@ CCube_Collider* CCube_Collider::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 CComponent* CCube_Collider::Clone()
 {
 	CCube_Collider* pCube_Collider = new CCube_Collider(*this);
-
-	if (FAILED(pCube_Collider->Ready_CColliderCom()))
-	{
-		Safe_Release(pCube_Collider);
-		MSG_BOX("pCube_Collider Create Failed");
-		return nullptr;
-	}
 	return pCube_Collider;
 }
 
