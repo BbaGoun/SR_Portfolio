@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CGameObject.h"
+#include "CProtoMgr.h"
 #include "imgui.h"
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
@@ -40,4 +41,3 @@ inline void ImGuiLabel(const char* pLabel) {
     ImGui::SameLine();
     ImGui::SetNextItemWidth(-1.0f);
 }
-

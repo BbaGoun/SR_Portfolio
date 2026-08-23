@@ -21,6 +21,9 @@ public:
 	HRESULT			Ready_CSplineCom();
 	HRESULT			Ready_Buffer() override;
 	void			Render_Buffer() override;
+
+	void			Create_New();
+
 	void			Add_Point();
 	void			Del_Point(ControlPoint* pCp);
 	void			Compute_Spline();
@@ -51,10 +54,6 @@ public:
 
 	void	Set_Edit(bool _b) { m_bEdit = _b; }
 	bool	Get_Edit() { return m_bEdit; }
-	//void	Set_AddDelDirty(bool _b) { m_bAddDelDirty = _b; }
-	//bool	Get_AddDelDirty() { return m_bAddDelDirty; }
-	//void	Set_PointDirty(bool _b) { m_bPointDirty = _b; }
-	//bool	Get_PointDirty() { return m_bPointDirty; }
 
 	void	Set_SampleUnit(float _fSampleUnit) { 
 		m_fSampleUnit = _fSampleUnit;
@@ -80,8 +79,6 @@ protected:
 	SPLINETYPE m_eSplineType;
 
 	bool	m_bEdit = false;
-	//bool	m_bAddDelDirty = false;
-	//bool	m_bPointDirty = false;
 	float	m_fSampleUnit = 1.f;
 	float	m_fTextureUnit = 1.f;
 

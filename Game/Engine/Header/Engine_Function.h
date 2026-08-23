@@ -270,6 +270,31 @@ namespace Engine
 			+ (s * (1.f - 3 * t)) * vA
 			+ (t * (3.f * t - 2.f)) * vD;
 	}
+
+	inline void DecomposeMatrixToComponents(_matrix* mat, float* translation, float* rotation, float* scale)
+	{
+		_vec3 vRight, vUp, vLook;
+		memcpy(&vRight, &mat->m[0], sizeof(_vec3));
+		memcpy(&vUp, &mat->m[1], sizeof(_vec3));
+		memcpy(&vLook, &mat->m[2], sizeof(_vec3));
+		scale[0] = D3DXVec3Length(&vRight);
+		scale[1] = D3DXVec3Length(&vUp);
+		scale[2] = D3DXVec3Length(&vLook);
+
+		D3DXVec3Normalize(&vRight, &vRight);
+		D3DXVec3Normalize(&vUp, &vUp);
+		D3DXVec3Normalize(&vLook, &vLook);
+
+		memcpy(&mat->m[0], &vRight, sizeof(_vec3));
+		memcpy(&mat->m[1], &vUp, sizeof(_vec3));
+		memcpy(&mat->m[2], &vLook, sizeof(_vec3));
+
+		rotation[0] = D3DXToDegree(atan2f(mat->m[1][2], mat->m[2][2]));
+		rotation[1] = D3DXToDegree(atan2f(-mat->m[0][2], sqrtf(mat->m[1][2] * mat->m[1][2] + mat->m[2][2] * mat->m[2][2])));
+		rotation[2] = D3DXToDegree(atan2f(mat->m[0][1], mat->m[0][0]));
+
+		memcpy(translation, &mat->m[3], sizeof(_vec3));
+	}
 }
 
 #endif // Engine_Function_h__

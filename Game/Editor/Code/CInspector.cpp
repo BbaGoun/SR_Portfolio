@@ -656,7 +656,9 @@ void CInspector::Add_Component_Button(CGameObject* _pObj)
                 std::string label = ToUtf8(rec.name[0] ? rec.name : rec.tag);
                 if (ImGui::MenuItem(label.c_str()))
                 {
-                    _pObj->Add_Component(rec.tag, rec.tag);
+                    CComponent* pCom = _pObj->Add_Component(rec.tag, rec.tag);
+                    if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom))
+                        pSpline->Create_New();
                     ImGui::CloseCurrentPopup();
                 }
             }

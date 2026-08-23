@@ -234,7 +234,7 @@ void CSceneWindow::Update_Window()
                 {
                     _matrix matParent = *pParent->Get_Transform()->Get_World();
                     _matrix matInvParent;
-                    D3DXMatrixInverse(&matInvParent, nullptr, &matParent);
+                    D3DXMatrixInverse(&matInvParent, 0, &matParent);
                     // local * parent = world  →  local = world * inverse(parent)
                     matLocal = matWorld * matInvParent;
                 }
@@ -261,23 +261,32 @@ void CSceneWindow::Update_Window()
                     U *= cp->depth;
                 }
 
-                _matrix matWorld;
-                D3DXMatrixIdentity(&matWorld);
-                memcpy(&matWorld.m[0], &R, sizeof(_vec3));
-                memcpy(&matWorld.m[1], &U, sizeof(_vec3));
-                memcpy(&matWorld.m[2], &cp->T, sizeof(_vec3));
-                memcpy(&matWorld.m[3], &cp->position, sizeof(_vec3));
+                _matrix matCP, matObj;
+                D3DXMatrixIdentity(&matCP);
+                memcpy(&matCP.m[0], &R, sizeof(_vec3));
+                memcpy(&matCP.m[1], &U, sizeof(_vec3));
+                memcpy(&matCP.m[2], &cp->T, sizeof(_vec3));
+                memcpy(&matCP.m[3], &cp->position, sizeof(_vec3));
+
+                matObj = *pSel->Get_Transform()->Get_World();
+                matCP *= matObj;
 
                 ImGuizmo::SetGizmoSizeClipSpace(s_gizmoSize);
                 
                 ImGuizmo::Manipulate(
                     (float*)matView, (float*)matProj,
-                    op, ImGuizmo::WORLD, (float*)&matWorld);
+                    op, ImGuizmo::WORLD, (float*)&matCP);
 
                 if (ImGuizmo::IsUsing())
                 {
+                    // 기즈모의 조작은 로컬에 적용되야 하므로 오브젝트의 영향을 다시 없앤다.
+       
+                    _matrix matInvObj;
+                    D3DXMatrixInverse(&matInvObj, 0, &matObj);
+                    matCP *= matInvObj;
+      
                     if (op == ImGuizmo::TRANSLATE) {
-                        memcpy(&cp->position, &matWorld.m[3], sizeof(_vec3));
+                        memcpy(&cp->position, &matCP.m[3], sizeof(_vec3));
                         s_bWasUsingTranslate = true;
                     }
                     else if (op == ImGuizmo::ROTATE_Z) {
@@ -285,7 +294,7 @@ void CSceneWindow::Update_Window()
                         // R,U,bank만 바뀜 -> 메쉬 다시 생성
                         // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
                         _vec3 vRight;
-                        memcpy(&vRight, &matWorld.m[0], sizeof(_vec3));
+                        memcpy(&vRight, &matCP.m[0], sizeof(_vec3));
                         pSpline->Set_BankByRight(cp, vRight);
                     }
                     else if (op == (ImGuizmo::SCALE_X | ImGuizmo::SCALE_Y)) {
@@ -293,8 +302,8 @@ void CSceneWindow::Update_Window()
                         // -> 매쉬 다시 생성
                         // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
                         _vec3 vRight, vUp;
-                        memcpy(&vRight, &matWorld.m[0], sizeof(_vec3));
-                        memcpy(&vUp, &matWorld.m[1], sizeof(_vec3));
+                        memcpy(&vRight, &matCP.m[0], sizeof(_vec3));
+                        memcpy(&vUp, &matCP.m[1], sizeof(_vec3));
                         pSpline->Set_WidthDepth(cp, vRight, vUp);
                     }
                 }
@@ -401,10 +410,12 @@ void CSceneWindow::Update_Window()
                     auto& vecP = pSpline->Get_ControlPoints();
                     for (int i = 0; i < vecP.size(); ++i) {
                         ControlPoint& cp = vecP[i];
-                        sphere.Center = ToXMFLOAT3(cp.position);
+                        _vec3 vPointPos = cp.position;
+                        D3DXVec3TransformCoord(&vPointPos, &vPointPos, pSel->Get_Transform()->Get_World());
+                        sphere.Center = ToXMFLOAT3(vPointPos);
 
                         float dist;
-                        if (sphere.Intersects(ToXMVec(rayOrigin), ToXMVec(rayDir), dist)) {
+                        if (sphere.Intersects(ToXMVec(rayOrigin), ToXMVec(rayDir), dist) && dist < bestDist) {
                             bestDist = dist;
                             bestId = cp.id;
                             hit = true;

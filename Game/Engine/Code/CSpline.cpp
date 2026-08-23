@@ -7,7 +7,6 @@ CSpline::CSpline(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pTexEdit(nullptr)
 	, m_eSplineType(SPLINE_FLAT)
 {
-	m_eKind = CK_MESH;
 }
 
 CSpline::CSpline(const CSpline& rhs)
@@ -21,7 +20,6 @@ CSpline::CSpline(const CSpline& rhs)
 {
 	m_pTexNormal->AddRef();
 	m_pTexEdit->AddRef();
-	m_eKind = CK_MESH;
 }
 
 CSpline::~CSpline()
@@ -32,25 +30,10 @@ HRESULT CSpline::Ready_CSplineCom()
 {
 	m_vecControlPoint.reserve(100);
 	m_vecTempVB.reserve(1000);
-	ControlPoint cp;
-	cp.position = { 0, 0 ,-2.5f };
-	cp.id = GenerateId();
-	cp.bank = 0;
-	cp.width = 10;
-	cp.depth = 10;
-	cp.V = { 0, 0, 0 };
-
-	m_vecControlPoint.push_back(cp);
-
-	cp.position = { 0, 0, 2.5f };
-	cp.id = GenerateId();
-	m_vecControlPoint.push_back(cp);
 
 	m_pTexNormal = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SplinePointNormal"));
 	m_pTexEdit = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SplinePointEdit"));
 	
-	Compute_Spline();
-
 	return S_OK;
 }
 
@@ -124,7 +107,29 @@ void CSpline::Render_Buffer()
 
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	CVIBuffer::Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	
+}
+
+void CSpline::Create_New()
+{
+	ControlPoint cp;
+	cp.position = { 0, 0 ,-2.5f };
+	cp.id = GenerateId();
+	cp.bank = 0;
+	cp.width = 10;
+	cp.depth = 10;
+	cp.V = { 0, 0, 0 };
+
+	m_vecControlPoint.push_back(cp);
+
+	cp.position = { 0, 0, 2.5f };
+	cp.id = GenerateId();
+	m_vecControlPoint.push_back(cp);
+
+	Compute_Spline();
 }
 
 void CSpline::Add_Point()
@@ -258,6 +263,9 @@ void CSpline::Render_Points()
 		m_pTexEdit->Set_Texture(0);
 	else
 		m_pTexNormal->Set_Texture(0);
+
+	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
+	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
 
 	LPDIRECT3DVERTEXBUFFER9 _pVB;
 	m_pGraphicDev->CreateVertexBuffer(
