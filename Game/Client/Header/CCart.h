@@ -82,6 +82,7 @@ private:
 	bool			m_bBanana;
 	bool			m_bRainbowUI;
 	_bool			m_bMagnet;
+	_float			m_fMagnetTimer;
 
 	float			m_fNormalTurnAngle;
 	float			m_fBoostTurnAngle;

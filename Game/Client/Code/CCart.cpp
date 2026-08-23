@@ -50,6 +50,7 @@ HRESULT CCart::Ready_GameObject()
 	m_bThunder				= false;
 	m_bMagnet				= false;
 
+	m_fMagnetTimer			= 0.f;
 	m_fBananaTimer			= 0.f;
 
 	m_fCurGage				= 0.f;
@@ -100,6 +101,7 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	UpdateBoost(fDeltaTime);
 	UpdateDrift();
 	UpdateThunder();
+	UpdateMagnet(fDeltaTime);
 
 	//OutputCarState();
 	return CGameObject::Update_GameObject(fDeltaTime);
@@ -230,6 +232,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 
 				if (nullptr == pMagnet)
 				{
+					m_bMagnet = true;
 					CreateMagnetObject();
 				}
 			}
@@ -862,12 +865,21 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 
 		D3DXVec3Normalize(&vDir, &vDir);
 
-		if ()// 그 방향이 카트 기준 앞/뒤 방향인지 확인
+		_float fDirection = D3DXVec3Dot(&vLook, &vDir);
+
+		if (fDirection < -0.5 || fDirection > 0.5)		// 그 방향이 카트 기준 앞/뒤 방향인지 확인
 		{
-			// 앞/뒤 방향이면 힘 적용
+			m_vForce += vDir * 2.f;
 		}
 
-		// 3.5초 지나면 m_bMagnet = false로 종료
+		m_fMagnetTimer += fDeltaTime;							// 3.5초 지나면 m_bMagnet = false로 종료
+
+		if (m_fMagnetTimer > 3.5f)
+		{
+			m_bMagnet = false;
+			m_fMagnetTimer = 0.f;
+
+		}
 	}
 }
 
@@ -1078,8 +1090,10 @@ void CCart::UseItem()
 		break;
 	case Engine::ITEM_WATERFLY:
 		break;
-	case Engine::ITEM_MAGNET:
-		break;
+	/*case Engine::ITEM_MAGNET:
+		m_bMagnet = true;
+		CreateMagnetObject();
+		break;*/
 	case Engine::ITEM_BARRICADE:
 		break;
 	case Engine::ITEM_ROCKET:		
