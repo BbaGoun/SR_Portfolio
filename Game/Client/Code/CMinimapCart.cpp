@@ -43,7 +43,8 @@ void CMinimapCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CMinimapCart::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_TARGET, this);
+	//CRenderer::GetInstance()->Add_RenderGroup(RENDER_TARGET, this);
+	CRenderer::GetInstance()->Add_RenderTargetGroup(L"Minimap", this);
 
 	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
 	_vec3 vPos;

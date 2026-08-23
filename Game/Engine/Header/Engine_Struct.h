@@ -5,6 +5,8 @@
 
 namespace Engine
 {
+	class CGameObject;
+
 	typedef struct tagVertexColor
 	{
 		_vec3		vPosition;			
@@ -137,6 +139,18 @@ namespace Engine
 		D3DXCOLOR   colorFade;    // how the color fades with respect to time
 		bool        bIsAlive;
 	}ATTRIBUTE;
+
+	typedef struct RenderTargetInfo
+	{
+		LPDIRECT3DTEXTURE9      pRTTexture = nullptr;
+		LPDIRECT3DSURFACE9      pRTSurface = nullptr;
+		LPDIRECT3DSURFACE9      pRTDepthStencil = nullptr;
+
+		float					fWidth;
+		float					fHeight;
+
+		list<CGameObject*>		RenderList;
+	}RTINFO;
 }
 
 

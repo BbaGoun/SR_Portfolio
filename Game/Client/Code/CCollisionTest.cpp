@@ -163,7 +163,9 @@ HRESULT CCollisionTest::Ready_Prototype()
 
 HRESULT CCollisionTest::Ready_RenderTarget()
 {
-	CRenderer::GetInstance()->Ready_RenderTarget(m_pGraphicDev, 250, 400);
+	//CRenderer::GetInstance()->Ready_RenderTarget(m_pGraphicDev, 250, 400);
+
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"Minimap", 250, 400);
 	return S_OK;
 }
 
@@ -615,5 +617,6 @@ HRESULT CCollisionTest::Ready_Collision_Matrix()
 
 void CCollisionTest::Free()
 {
+	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
 	CScene::Free();
 }
