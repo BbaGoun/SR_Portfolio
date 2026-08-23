@@ -165,82 +165,14 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateBananaObject();
 	}
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
 	{
 		CreateTargetAimObject();
-		/*CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
-
-		if (nullptr == pTargetAim)
-		{
-			CreateTargetAimObject();
-		}
-
-		else
-		{
-			CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
-			_vec3 vPos, vLook, vTarget, vAimScreen, vTargetScreen;
-
-			m_pTransformCom->Get_Info(INFO_POS, &vPos);
-			m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-
-			pTarget->Get_Transform()->Get_Info(INFO_POS, &vTarget);
-
-			vPos += vLook * 20.f;
-
-			const CameraInfo& tCam = CCameraMgr::GetInstance()->GetCameraInfo();
-
-			_matrix matWorld;
-			D3DXMatrixIdentity(&matWorld);
-
-			D3DVIEWPORT9 vp = { 0.f, 0.f, WINCX, WINCY, 0.f, 1.f };
-
-			D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
-			D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj,  &tCam.matView, &matWorld);
-
-			if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
-			{
-				vPos = vTarget;
-			}
-
-			pTargetAim->Get_Transform()->Set_Pos(vPos);
-			
-			_quaternion q;
-			D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
-
-			pTargetAim->Get_Transform()->Set_Quaternion(&q);
-
-		}*/
 	}
 	
 	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E)) 
 	{
 		CreateMissileAimObject();
-		/*CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
-		CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
-		if (nullptr != pTargetAim && nullptr != pTarget)
-		{
-			_vec3 vAimPos, vTargetPos, vDir;
-
-			pTargetAim->Get_Transform()->Get_Info(INFO_POS, &vAimPos);
-			pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-
-			vDir = vTargetPos - vAimPos;
-
-			if (D3DXVec3Length(&vDir) < 0.1f)
-			{
-				CGameObject* pMissile = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Missile");
-
-				if (nullptr == pMissile)
-				{
-					CreateMissileObject();
-				}
-			}
-
-			m_pLayer->Delete_GameObject(pTargetAim);
-		}*/
 	}
 
 
