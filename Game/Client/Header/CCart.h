@@ -90,6 +90,7 @@ private:
 	bool			m_bRainbowUI;
 	_bool			m_bMagnet;
 	_float			m_fMagnetTimer;
+	_bool			m_bUseItem;
 
 	float			m_fNormalTurnAngle;
 	float			m_fBoostTurnAngle;
