@@ -10,6 +10,7 @@
 #include "CCollisionTest.h"
 #include "CLoading.h"
 #include "CUI_Menu.h"
+#include "CInventoryScene.h"
 #include "CRacingScene.h"
 #include "CDInputMgr.h"
 
@@ -47,6 +48,8 @@ _int CStartMenu::Update_Scene(const _float& fDeltaTime)
 
 	if (GetAsyncKeyState('M'))
 	{
+
+		//Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
 		//Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
 		Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
 

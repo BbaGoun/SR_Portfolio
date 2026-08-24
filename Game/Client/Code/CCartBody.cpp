@@ -9,6 +9,7 @@
 #include "CItemBox.h"
 #include "CCollisionMgr.h"
 #include "CMissileTarget.h"
+#include "CCollisionStarEffect.h"
 
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -88,6 +89,16 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 
 	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
 	{
+		_vec3 vParentForce = m_pParent->Get_Force();
+		float vParentSpeed = m_pParent->Get_Speed();
+		// StarEffect
+		if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 30)
+		{
+			CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
+				(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
+			pStarParticle->ResetParticle();
+		}
+		// MTV Àû¿ë
 		_vec3 MTV =  CCollisionMgr::GetInstance()->GetMTVCubevsCube(
 			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
 		CCart* pCart = dynamic_cast<CCart*>(m_pParent);
