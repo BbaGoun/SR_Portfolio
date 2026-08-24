@@ -269,6 +269,8 @@ void CInspector::SplineCom(CGameObject* _pObj)
         {
             pSpline->Set_Edit(!bEdit);
             g_bEdit = !bEdit;
+            g_bPointSelected = false;
+            g_uPointSelected = 0;
         }
         if (bEdit)
             ImGui::PopStyleColor();

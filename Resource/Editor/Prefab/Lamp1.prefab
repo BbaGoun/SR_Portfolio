@@ -1,4 +1,5 @@
 ﻿OBJECT
+  prefabPath=..\..\..\Resource\Editor\Prefab\Lamp1.prefab
   belong=1
   type=
   name=Empty
