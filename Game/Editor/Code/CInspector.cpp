@@ -369,12 +369,14 @@ void CInspector::SplineCom(CGameObject* _pObj)
         if (ImGui::DragFloat("##Sample Unit", &fSampleUnit, 0.25f, 1.f, FLT_MAX))
         {
             pSpline->Set_SampleUnit(fSampleUnit);
+            pSpline->Compute_Mesh();
         }
         float fTextureUnit = pSpline->Get_TextureUnit();
         ImGuiLabel("Texture Unit");
         if (ImGui::DragFloat("##Texture Unit", &fTextureUnit, 0.25f, 1.f, FLT_MAX))
         {
             pSpline->Set_TextureUnit(fTextureUnit);
+            pSpline->Compute_Mesh();
         }
     }
 }

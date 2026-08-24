@@ -1,6 +1,7 @@
 ﻿#include "CEmpty.h"
 #include "CTexture.h"
 #include "CVIBuffer.h"
+#include "CRenderer.h"
 
 CEmpty::CEmpty(LPDIRECT3DDEVICE9 pGraphicDev):CGameObject(pGraphicDev)
 {
@@ -18,6 +19,12 @@ HRESULT CEmpty::Ready_GameObject()
 {
     CGameObject::Ready_GameObject();
     return S_OK;
+}
+
+int CEmpty::Update_GameObject(const _float& fDeltaTime)
+{
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
 void CEmpty::Render_GameObject()

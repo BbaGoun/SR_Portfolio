@@ -51,19 +51,15 @@ public:
 
 public:
 	vector<ControlPoint>& Get_ControlPoints() { return m_vecControlPoint; }
+	vector<VTXTEX>& GetVertices() { return m_vecVertices; }
+	vector<FACE32>& GetFaces() { return m_vecFaces; }
 
 	void	Set_Edit(bool _b) { m_bEdit = _b; }
 	bool	Get_Edit() { return m_bEdit; }
 
-	void	Set_SampleUnit(float _fSampleUnit) { 
-		m_fSampleUnit = _fSampleUnit;
-		Compute_Mesh();
-	}
+	void	Set_SampleUnit(float _fSampleUnit) {m_fSampleUnit = _fSampleUnit;}
 	float	Get_SampleUnit() { return m_fSampleUnit; }
-	void	Set_TextureUnit(float _fTextureUnit) { 
-		m_fTextureUnit = _fTextureUnit;
-		Compute_Mesh();
-	}
+	void	Set_TextureUnit(float _fTextureUnit) {m_fTextureUnit = _fTextureUnit;}
 	float	Get_TextureUnit() { return m_fTextureUnit; }
 
 	uint32_t GenerateId() { return m_uGenerateId++; }
@@ -73,8 +69,10 @@ protected:
 	CTexture* m_pTexNormal;
 	CTexture* m_pTexEdit;
 
-	vector<ControlPoint> m_vecControlPoint;
-	vector<VTXTEX>	m_vecTempVB;
+	vector<ControlPoint>	m_vecControlPoint;
+	vector<VTXTEX>			m_vecTempVB;
+	vector<VTXTEX>			m_vecVertices;
+	vector<FACE32>			m_vecFaces;
 
 	SPLINETYPE m_eSplineType;
 
