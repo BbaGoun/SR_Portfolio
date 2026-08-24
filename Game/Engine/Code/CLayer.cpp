@@ -150,31 +150,42 @@ void CLayer::Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc)
 }
 
 
-HRESULT CLayer::Delete_GameObject(CGameObject* _pObj)
+HRESULT CLayer::Delete_GameObject(CGameObject* _pObj, bool bEditor)
 {
 	if (!_pObj)
 		return E_FAIL;
 
 	_tchar key[256];
-	wcscpy_s(key, 256, _pObj->GetTag());
-	auto it = find_if(m_mapObject.begin(), m_mapObject.end(),
-		CTag_Finder(key));
-
-	if (it == m_mapObject.end()) {
+	if (bEditor) {
 		wcscpy_s(key, 256, to_wstring(_pObj->GetGuid()).c_str());
-		it = find_if(m_mapObject.begin(), m_mapObject.end(), [&](pair<const _tchar*, vector<CGameObject*>> p)->bool {
+		auto it = find_if(m_mapObject.begin(), m_mapObject.end(), [&](pair<const _tchar*, vector<CGameObject*>> p)->bool {
 			return !wcscmp(p.first, key);
 			});
-		
-		if(it == m_mapObject.end())
+
+		if (it == m_mapObject.end())
 			return E_FAIL;
+	}
+	else {
+		wcscpy_s(key, 256, _pObj->GetTag());
+		auto it = find_if(m_mapObject.begin(), m_mapObject.end(),
+			CTag_Finder(key));
+
+		if (it == m_mapObject.end()) {
+			wcscpy_s(key, 256, to_wstring(_pObj->GetGuid()).c_str());
+			it = find_if(m_mapObject.begin(), m_mapObject.end(), [&](pair<const _tchar*, vector<CGameObject*>> p)->bool {
+				return !wcscmp(p.first, key);
+				});
+
+			if (it == m_mapObject.end())
+				return E_FAIL;
+		}
 	}
 
 	// 자신 삭제 등록
 	m_vecDelete.push_back({ wstring(key), _pObj });
 
 	// 자식 삭제 등록
-	Delete_Children(_pObj);
+	Delete_Children(_pObj, bEditor);
 
 	// 부모의 자식 목록에서 자신을 삭제
 	if(_pObj->Get_Parent())
@@ -184,26 +195,39 @@ HRESULT CLayer::Delete_GameObject(CGameObject* _pObj)
 	return S_OK;
 }
 
-void CLayer::Delete_Children(CGameObject* _pObj)
+void CLayer::Delete_Children(CGameObject* _pParent, bool bEditor)
 {
-	auto& children = _pObj->Get_Children();
+	auto& children = _pParent->Get_Children();
 	for (auto& pObj : children) {
 		_tchar key[256];
-		wcscpy_s(key, 256, pObj->GetTag());
-		auto it = find_if(m_mapObject.begin(), m_mapObject.end(),
-			CTag_Finder(key));
 
-		if (it == m_mapObject.end()) {
+		if (bEditor) {
 			wcscpy_s(key, 256, to_wstring(pObj->GetGuid()).c_str());
-			it = find_if(m_mapObject.begin(), m_mapObject.end(), [&](pair<const _tchar*, vector<CGameObject*>> p)->bool {
+			auto it = find_if(m_mapObject.begin(), m_mapObject.end(), [&](pair<const _tchar*, vector<CGameObject*>> p)->bool {
 				return !wcscmp(p.first, key);
 				});
 
 			if (it == m_mapObject.end())
-				return;
+				continue;
 		}
+		else {
+			wcscpy_s(key, 256, pObj->GetTag());
+			auto it = find_if(m_mapObject.begin(), m_mapObject.end(),
+				CTag_Finder(key));
+
+			if (it == m_mapObject.end()) {
+				wcscpy_s(key, 256, to_wstring(pObj->GetGuid()).c_str());
+				it = find_if(m_mapObject.begin(), m_mapObject.end(), [&](pair<const _tchar*, vector<CGameObject*>> p)->bool {
+					return !wcscmp(p.first, key);
+					});
+
+				if (it == m_mapObject.end())
+					continue;
+			}
+		}
+
 		m_vecDelete.push_back({wstring(key), pObj});
-		Delete_Children(pObj);
+		Delete_Children(pObj, bEditor);
 	}
 }
 
@@ -310,6 +334,19 @@ CLayer* CLayer::Create()
 	return pLayer;
 }
 
+void CLayer::OnLostDevice()
+{
+	for (auto& vGameObject : m_mapObject)
+		for(auto& pGameObject : vGameObject.second)
+			pGameObject->OnLostDevice();
+}
+
+void CLayer::OnResetDevice()
+{
+	for (auto& vGameObject : m_mapObject)
+		for (auto& pGameObject : vGameObject.second)
+			pGameObject->OnResetDevice();
+}
 void CLayer::Free()
 {
 	// vector 안의 오브젝트를 모두 삭제

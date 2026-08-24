@@ -1,13 +1,14 @@
 ﻿OBJECT
+  prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
   belong=1
   type=
   name=Empty
-  tag=1
+  tag=5
   collisionLayer=0
   cullDistance=0
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
     pos=0.000000 0.000000 0.000000
-    rot=0.000000 -0.000000 -3.198604
+    rot=0.000000 -0.000000 -3.198550
     quat=0.000000 0.000000 -0.027909 0.999610
     scale=1.000000 0.999999 1.000000
   OBJECT
@@ -21,7 +22,7 @@
     COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=0.000000 0.000000 0.000000
-      rot=-0.000000 -0.000000 4.494585
+      rot=0.000000 -0.000000 4.494631
       quat=-0.000000 -0.000000 0.039213 0.999231
       scale=1.000000 2.000000 1.000008
   ENDOBJECT

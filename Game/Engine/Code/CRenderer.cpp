@@ -31,6 +31,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	Render_Priority(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
+	Render_Particle(pGraphicDev);
 	Render_UI(pGraphicDev);
 
 	PostRender(pGraphicDev);
@@ -45,6 +46,70 @@ void CRenderer::Clear_RenderGroup()
 		for_each(m_RenderGroup[i].begin(), m_RenderGroup[i].end(), CDeleteObj());
 		m_RenderGroup[i].clear();
 	}
+
+	for (auto& pair : m_mapRenderTarget)
+	{
+		for_each(pair.second->RenderList.begin(), pair.second->RenderList.end(), CDeleteObj());
+		pair.second->RenderList.clear();
+	}
+}
+
+HRESULT CRenderer::Add_RenderTarget(LPDIRECT3DDEVICE9& pGraphicDev, const _tchar* pName, float fWidth, float fHeight)
+{
+	for (auto& pair : m_mapRenderTarget)
+	{
+		if (wcscmp(pair.first, pName) == 0)
+		{
+			MSG_BOX("중복된 RT이름");
+			return E_FAIL;
+		}
+	}
+
+	RenderTargetInfo* pInfo = new RenderTargetInfo;
+	pInfo->fWidth = fWidth;
+	pInfo->fHeight = fHeight;
+
+
+	if (FAILED(pGraphicDev->CreateTexture(
+		fWidth, fHeight, 1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8,
+		D3DPOOL_DEFAULT,
+		&pInfo->pRTTexture,
+		nullptr)))
+	{
+		delete pInfo;
+		return E_FAIL;
+	}
+
+	pInfo->pRTTexture->GetSurfaceLevel(0, &pInfo->pRTSurface);
+
+	if (FAILED(pGraphicDev->CreateDepthStencilSurface(
+		fWidth, fHeight,
+		D3DFMT_D24S8,
+		D3DMULTISAMPLE_NONE, 0,
+		TRUE,
+		&pInfo->pRTDepthStencil,
+		nullptr)))
+	{
+		Safe_Release(pInfo->pRTTexture);
+		Safe_Release(pInfo->pRTSurface);
+		delete pInfo;
+		return E_FAIL;
+	}
+
+	m_mapRenderTarget.insert({ pName, pInfo });
+	return S_OK;
+}
+
+void CRenderer::Add_RenderTargetGroup(const _tchar* pName, CGameObject* pGameObject)
+{
+	RTINFO* pInfo = Find_RenderTarget(pName);
+	if (nullptr == pInfo || nullptr == pGameObject)
+		return;
+
+	pInfo->RenderList.push_back(pGameObject);
+	pGameObject->AddRef();
 }
 
 void CRenderer::Ready_RenderTarget(LPDIRECT3DDEVICE9& pGraphicDev, float fWidth ,float fHeight)
@@ -79,34 +144,41 @@ void CRenderer::Ready_RenderTarget(LPDIRECT3DDEVICE9& pGraphicDev, float fWidth 
 
 void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 {
-	
-	IDirect3DSurface9* pOldRT = nullptr;
-	IDirect3DSurface9* pOldDS = nullptr;
-	pGraphicDev->GetRenderTarget(0, &pOldRT);
-	pGraphicDev->GetDepthStencilSurface(&pOldDS);
 
-	pGraphicDev->SetRenderTarget(0, m_pRTSurface);          
-	pGraphicDev->SetDepthStencilSurface(m_pRTDepthStencil); 
+	for (auto& pair : m_mapRenderTarget)
+	{
+		IDirect3DSurface9* pOldRT = nullptr;
+		IDirect3DSurface9* pOldDS = nullptr;
+		pGraphicDev->GetRenderTarget(0, &pOldRT);
+		pGraphicDev->GetDepthStencilSurface(&pOldDS);
 
-	pGraphicDev->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-		D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0);
+		RTINFO* pInfo = pair.second;   
 
-	pGraphicDev->BeginScene();
+		pGraphicDev->SetRenderTarget(0, pInfo->pRTSurface);         
+		pGraphicDev->SetDepthStencilSurface(pInfo->pRTDepthStencil); 
 
-	// 카메라 설정
-	if (CCameraMgr::GetInstance()->GetCamerState() != CAMERA_END) {
-		CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo();
-		pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
-		pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
+		pGraphicDev->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+			D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0);
+
+		pGraphicDev->BeginScene();
+
+		if (CCameraMgr::GetInstance()->GetCamerState() != CAMERA_END) {
+			CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo();
+			pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
+			pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
+		}
+
+		for (auto& pObj : pInfo->RenderList)   
+			pObj->Render_GameObject();
+
+		pGraphicDev->EndScene();
+
+		pGraphicDev->SetRenderTarget(0, pOldRT);
+		pGraphicDev->SetDepthStencilSurface(pOldDS);
+		pOldRT->Release();
+		pOldDS->Release();
 	}
 
-	for (auto& pObj : m_RenderGroup[RENDER_TARGET])
-		pObj->Render_GameObject();
-
-	pGraphicDev->SetRenderTarget(0, pOldRT);
-	pGraphicDev->SetDepthStencilSurface(pOldDS);
-	pOldRT->Release();
-	pOldDS->Release();
 }
 
 void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -145,6 +217,14 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
+void CRenderer::Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	for (auto& pObj : m_RenderGroup[RENDER_PARTICLE])
+		pObj->Render_GameObject();
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
 void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	if (CCameraMgr::GetInstance()->GetMainCamera())
@@ -163,19 +243,43 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	//pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
-	//pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-
-	m_RenderGroup[RENDER_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
-		{
-			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
-		});
+	//m_RenderGroup[RENDER_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+	//	{
+	//		return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+	//	});
 
 	for (auto& pObj : m_RenderGroup[RENDER_UI])
 		pObj->Render_GameObject();
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+RTINFO* CRenderer::Find_RenderTarget(const _tchar* pName)
+{
+	for (auto& pair : m_mapRenderTarget)
+	{
+		if (wcscmp(pair.first, pName) == 0)
+			return pair.second;
+	}
+	return nullptr;
+}
+
+void CRenderer::Delete_RenderTarget(const _tchar* pName)
+{
+	for (auto iter = m_mapRenderTarget.begin(); iter != m_mapRenderTarget.end(); ++iter)
+	{
+		if (wcscmp(iter->first, pName) == 0)
+		{
+			Safe_Release(iter->second->pRTTexture);
+			Safe_Release(iter->second->pRTSurface);
+			Safe_Release(iter->second->pRTDepthStencil);
+			delete iter->second;
+
+			m_mapRenderTarget.erase(iter);
+			return;
+		}
+	}
 }
 
 void CRenderer::PreCull(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -204,6 +308,44 @@ void CRenderer::PostRender(LPDIRECT3DDEVICE9& pGraphicDev)
 			pObj->PostRender_GameObject();
 	}
 }
+
+
+void CRenderer::OnLostDevice()
+{
+	for (auto& pair : m_mapRenderTarget)
+	{
+		RTINFO* pInfo = pair.second;
+		Safe_Release(pInfo->pRTTexture);
+		Safe_Release(pInfo->pRTSurface);
+		Safe_Release(pInfo->pRTDepthStencil);
+	}
+}
+void CRenderer::OnResetDevice(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	for (auto& pair : m_mapRenderTarget)
+	{
+		RTINFO* pInfo = pair.second;
+
+		pGraphicDev->CreateTexture(
+			pInfo->fWidth, pInfo->fHeight, 1,
+			D3DUSAGE_RENDERTARGET,
+			D3DFMT_A8R8G8B8,
+			D3DPOOL_DEFAULT,
+			&pInfo->pRTTexture,
+			nullptr);
+
+		pInfo->pRTTexture->GetSurfaceLevel(0, &pInfo->pRTSurface);
+
+		pGraphicDev->CreateDepthStencilSurface(
+			pInfo->fWidth, pInfo->fHeight,
+			D3DFMT_D24S8,
+			D3DMULTISAMPLE_NONE, 0,
+			TRUE,
+			&pInfo->pRTDepthStencil,
+			nullptr);
+	}
+}
+
 
 void CRenderer::Free()
 {

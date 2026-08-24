@@ -63,9 +63,9 @@ const map<const _tchar*, vector<CGameObject*>>& CScene::Get_GameObjects(const _t
     return it->second->Get_GameObjects();
 }
 
-HRESULT CScene::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj)
+HRESULT CScene::Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj, bool bEditor)
 {
-    m_mapLayer.find(pLayerTag)->second->Delete_GameObject(_pObj);
+    m_mapLayer.find(pLayerTag)->second->Delete_GameObject(_pObj, bEditor);
 
     return S_OK;
 }
@@ -186,11 +186,11 @@ void CScene::Set_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLa
 {
     if (bCollision) {
         m_CollisionMatrix[srcLayer] |= (1u << dstLayer);
-        m_CollisionMatrix[dstLayer] |= (1u << dstLayer);
+        m_CollisionMatrix[dstLayer] |= (1u << srcLayer);
     }
     else {
         m_CollisionMatrix[srcLayer] &= ~(1u << dstLayer);
-        m_CollisionMatrix[dstLayer] &= ~(1u << dstLayer);
+        m_CollisionMatrix[dstLayer] &= ~(1u << srcLayer);
     }
 }
 
@@ -199,6 +199,17 @@ bool CScene::Get_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLa
     return (m_CollisionMatrix[srcLayer] & (1u << dstLayer)) != 0;
 }
 
+void CScene::OnLostDevice()
+{
+    for(auto& pLayer: m_mapLayer)
+        pLayer.second->OnLostDevice();
+}
+
+void CScene::OnResetDevice()
+{
+    for (auto& pLayer : m_mapLayer)
+        pLayer.second->OnResetDevice();
+}
 void CScene::Free()
 {
     for_each(m_mapLayer.begin(), m_mapLayer.end(), CDeleteMap());

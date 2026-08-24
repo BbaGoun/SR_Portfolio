@@ -28,7 +28,7 @@ public:
 		CGameObject*  pGameObject
 	);
 	const map<const _tchar*, vector<CGameObject*>>& Get_GameObjects(const _tchar* pLayerTag);
-	void			Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj);
+	void			Delete_GameObject(const _tchar* pLayerTag, CGameObject* _pObj, bool bEditor = false);
 
 	// 에디터 용
 	const vector<CGameObject*>& Get_Roots(const _tchar* pLayerTag);
@@ -54,7 +54,7 @@ public:
 	void			FixedUpdate_Scene(const _float& fFixedDeltaTime);
 	_int			Update_Scene(const _float& fDeltaTime);
 	void			LateUpdate_Scene(const _float& fDeltaTime);
-	void			Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
+	void			Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev, bool bEditor = false);
 
 private:
 	CScene*					m_pScene;

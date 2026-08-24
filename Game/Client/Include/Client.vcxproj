@@ -99,6 +99,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -107,7 +108,7 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,6 +122,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,7 +131,7 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -141,6 +143,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,7 +152,7 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,6 +166,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -171,7 +175,7 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -184,11 +188,17 @@
     <ClInclude Include="..\Header\CCartBody.h" />
     <ClInclude Include="..\Header\CCartBody1.h" />
     <ClInclude Include="..\Header\CCartBody2.h" />
+    <ClInclude Include="..\Header\CCollisionStarEffect.h" />
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
+    <ClInclude Include="..\Header\CDriftSpark.h" />
     <ClInclude Include="..\Header\CDynamicCamera.h" />
     <ClInclude Include="..\Header\CMenu_Item.h" />
     <ClInclude Include="..\Header\CMenu_Set.h" />
+    <ClInclude Include="..\Header\CInvenSlotBG.h" />
+    <ClInclude Include="..\Header\CInventoryScene.h" />
+    <ClInclude Include="..\Header\CMagnetBody.h" />
+    <ClInclude Include="..\Header\CItemBox.h" />
     <ClInclude Include="..\Header\CMinimapCart.h" />
     <ClInclude Include="..\Header\CMinimapGround.h" />
     <ClInclude Include="..\Header\CMissile.h" />
@@ -207,6 +217,11 @@
     <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_StartBtn.h" />
     <ClInclude Include="..\Header\CUI_Laps.h" />
+    <ClInclude Include="..\Header\CLoadMgr.h" />
+    <ClInclude Include="..\Header\CSkidMark.h" />
+    <ClInclude Include="..\Header\CSmokeEffect.h" />
+    <ClInclude Include="..\Header\CUI_InvenSlot.h" />
+    <ClInclude Include="..\Header\CInvenSlotCart.h" />
     <ClInclude Include="..\Header\CUI_Minimap.h" />
     <ClInclude Include="..\Header\CRainBow_Cloud.h" />
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
@@ -243,7 +258,11 @@
     <ClInclude Include="..\Header\CUI_Timer.h" />
     <ClInclude Include="..\Header\CUI_UnderBar.h" />
     <ClInclude Include="..\Header\CUI_XButton.h" />
+    <ClInclude Include="..\Header\CWaterBomb.h" />
+    <ClInclude Include="..\Header\CWaterBombBody.h" />
+    <ClInclude Include="..\Header\CWaterBombThrow.h" />
     <ClInclude Include="..\Header\CWheel.h" />
+    <ClInclude Include="..\Header\CRacingScene.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -277,6 +296,22 @@
     <ClCompile Include="..\Code\CUI_UnderBar.cpp" />
     <ClCompile Include="..\Code\CUI_XButton.cpp" />
     <ClCompile Include="CScene1_Item.cpp" />
+    <ClCompile Include="..\Code\CCollisionStarEffect.cpp" />
+    <ClCompile Include="..\Code\CDriftSpark.cpp" />
+    <ClCompile Include="..\Code\CInvenSlotBG.cpp" />
+    <ClCompile Include="..\Code\CInventoryScene.cpp" />
+    <ClCompile Include="..\Code\CMagnetBody.cpp" />
+    <ClCompile Include="..\Code\CItemBox.cpp" />
+    <ClCompile Include="..\Code\CLoadMgr.cpp" />
+    <ClCompile Include="..\Code\CSkidMark.cpp" />
+    <ClCompile Include="..\Code\CSmokeEffect.cpp" />
+    <ClCompile Include="..\Code\CWaterBomb.cpp" />
+    <ClCompile Include="..\Code\CWaterBombBody.cpp" />
+    <ClCompile Include="..\Code\CWaterBombThrow.cpp" />
+    <ClCompile Include="..\Code\CUI_InvenSlot.cpp" />
+    <ClCompile Include="..\Code\CInvenSlotCart.cpp" />
+    <ClCompile Include="..\Code\CRacingScene.cpp" />
+    <ClCompile Include="CUI_Menu.cpp" />
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CBanana.cpp" />
     <ClCompile Include="..\Code\CBoostWind.cpp" />

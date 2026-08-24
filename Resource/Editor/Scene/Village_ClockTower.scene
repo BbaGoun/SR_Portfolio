@@ -1,0 +1,942 @@
+﻿OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=1
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_StartFlag mapTag=Proto_StartFlag
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 9.968960
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=2
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 7.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 12.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement05 mapTag=Proto_cement05
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 14.934290
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=3
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=1.491631 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-1.371236 0.000000 2.500002
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-1.751115 0.000000 7.500002
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=1.744581 0.000000 10.789867
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement05 mapTag=Proto_cement05
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.141889 -0.006184 30.244328
+    rot=0.000000 33.836250 0.000000
+    quat=0.000000 0.291005 0.000000 0.956721
+    scale=0.999999 1.000000 0.999999
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=4
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 7.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 12.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 17.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 22.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 27.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 32.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 37.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 42.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 47.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 52.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement05 mapTag=Proto_cement05
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=9.985564 -0.083203 38.261749
+    rot=180.000000 89.999962 180.000000
+    quat=0.000000 0.707107 0.000000 0.707107
+    scale=0.999895 1.000000 0.999895
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=5
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.983833 -0.000000 -0.259323
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.422012 0.000000 3.612125
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-3.063766 0.000000 7.463413
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-9.305702 -0.068424 8.067509
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement05 mapTag=Proto_cement05
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=71.811417 0.000000 30.252789
+    rot=0.000000 -0.458597 0.000000
+    quat=0.000000 -0.004002 0.000000 0.999992
+    scale=0.999988 1.000000 0.999988
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=6
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 7.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 12.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 17.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 22.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 27.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 32.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 37.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 42.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement05 mapTag=Proto_cement05
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=72.798004 0.000000 27.705854
+    rot=180.000000 -0.000000 180.000000
+    quat=0.000000 1.000000 0.000000 -0.000000
+    scale=1.000000 1.000000 1.000000
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=7
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-0.488724 0.000000 2.940723
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-2.966278 0.000000 8.584524
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-6.896927 0.570887 13.641642
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-12.817390 1.141774 17.824724
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-19.404129 1.712661 19.733706
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-25.990868 2.283548 20.556273
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-32.577606 2.854435 21.378839
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-39.164345 3.425322 22.201406
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-45.751083 3.996208 22.764677
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-52.337822 4.567095 22.147612
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-58.924561 5.137982 20.099726
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-65.511292 5.708869 16.237020
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-72.098022 6.279757 10.121262
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-77.051178 6.850644 -0.434237
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-78.772049 7.421531 -10.989735
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-77.506622 7.992418 -21.015036
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-70.566513 8.563305 -22.788141
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=72.807037 0.000000 -17.281382
+    rot=180.000000 -0.000000 180.000000
+    quat=0.000000 1.000000 0.000000 -0.000000
+    scale=1.000000 1.000000 1.000000
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=8
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 1.432350 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 3.588394 7.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000041 6.259839 12.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000140 8.835795 17.497757
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000061 10.855124 22.247986
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000067 12.874780 27.498924
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=140.925201 8.579240 5.514888
+    rot=0.000000 -89.997437 0.000000
+    quat=0.000000 -0.707091 0.000000 0.707122
+    scale=0.999803 1.000000 0.999803
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=9
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 7.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 12.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_WoodenBridge mapTag=Proto_WoodenBridge
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=104.973984 17.570698 5.566031
+    rot=0.000000 -89.997437 0.000000
+    quat=0.000000 -0.707091 0.000000 0.707123
+    scale=0.999814 1.000000 0.999814
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=10
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 -0.000000 -2.500381
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 7.500381
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 12.500763
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000001 17.501144
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-2.317647 0.000001 22.500927
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-24.975582 0.000001 24.538422
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement01 mapTag=Proto_cement01
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=65.365013 0.039804 5.740350
+    rot=0.000000 -89.989822 0.000000
+    quat=0.000000 -0.707044 0.000000 0.707170
+    scale=0.999703 1.000000 0.999703
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=11
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 7.422785
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 -0.000000 10.192499
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 11.994389
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 -0.000000 13.900217
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 17.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 22.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 27.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 32.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=1.007874 0.000000 37.129913
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=7.692593 0.000000 37.833015
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement05 mapTag=Proto_cement05
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=40.772491 -0.000320 -11.561247
+    rot=180.000000 -0.000000 180.000000
+    quat=0.000000 1.000000 0.000000 0.000000
+    scale=1.000000 1.000000 1.000000
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=12
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 7.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 12.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 17.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=1.156708 0.000000 22.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=5.909653 0.000000 27.500031
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=18.426710 0.000000 29.042669
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement05 mapTag=Proto_cement05
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=30.645542 -0.029227 -49.410168
+    rot=180.000000 -89.999962 180.000000
+    quat=0.000000 -0.707107 0.000000 0.707107
+    scale=0.999963 1.000000 0.999963
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=13
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 7.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 12.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 17.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 22.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-1.189209 0.000000 27.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-1.384261 0.000000 29.069340
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=-1.525325 0.000000 36.107128
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement05 mapTag=Proto_cement05
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=1.569860 0.000000 -28.563276
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=14
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 7.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 12.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 17.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 22.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 27.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement01 mapTag=Proto_cement01
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=33.958939 -0.005901 -14.008696
+    rot=180.000000 -89.999962 180.000000
+    quat=0.000000 -0.707107 0.000000 0.707107
+    scale=0.999916 1.000000 0.999916
+ENDOBJECT
+OBJECT
+  prefabPath=
+  belong=0
+  type=
+  name=Empty
+  tag=15
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 -2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 2.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 7.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 12.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 17.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 22.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 27.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 32.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 37.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 42.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+    CONTROL_POINT
+      cp_pos=0.000000 0.000000 47.500000
+      cp_bank=0.000000
+      cp_width=10.000000
+      cp_depth=10.000000
+    END_CONTROL_POINT
+  COMP kind=Texture proto=Proto_cement01 mapTag=Proto_cement01
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=125.215340 -0.032552 5.651518
+    rot=0.000000 -89.991928 0.000000
+    quat=0.000000 -0.707057 0.000000 0.707156
+    scale=0.999763 1.000000 0.999763
+ENDOBJECT

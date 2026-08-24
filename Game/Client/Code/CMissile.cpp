@@ -32,7 +32,6 @@ HRESULT CMissile::Ready_GameObject()
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
 	m_pColliderCom->Set_Extents({ 1.f, 1.f, 1.f });
-	// m_pColliderCom->Set_Orientation({ 0.f, 0.f, 0.f, 1.f }); // 테스트용
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 

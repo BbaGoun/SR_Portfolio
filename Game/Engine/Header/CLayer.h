@@ -23,8 +23,8 @@ public:
 	void			Insert_Root_Before(CGameObject* _pDst, CGameObject* _pSrc);
 	void			Insert_Root_After(CGameObject* _pDst, CGameObject* _pSrc);
 	bool			Contains(CGameObject* _pObj) const;
-	HRESULT			Delete_GameObject(CGameObject* _pObj);
-	void			Delete_Children(CGameObject* _pObj);
+	HRESULT			Delete_GameObject(CGameObject* _pObj, bool bEditor=false);
+	void			Delete_Children(CGameObject* _pParent, bool bEditor=false);
 	HRESULT			PostProcess_Delete();
 
 public:
@@ -33,6 +33,12 @@ public:
 	_int			Update_Layer(const _float& fDeltaTime);
 	void			LateUpdate_Layer(const _float& fDeltaTime);
 	void			Render_Layer();
+
+
+
+	virtual			void		OnLostDevice();
+	virtual			void		OnResetDevice();
+
 
 private:
 	map<const _tchar*, vector<CGameObject*>>		m_mapObject;

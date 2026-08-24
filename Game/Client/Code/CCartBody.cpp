@@ -6,7 +6,11 @@
 #include "CCart.h"
 #include "CLand3.h"
 #include "CManagement.h"
+#include "CItemBox.h"
 #include "CCollisionMgr.h"
+#include "CMissileTarget.h"
+#include "CCollisionStarEffect.h"
+
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -85,6 +89,16 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 
 	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
 	{
+		_vec3 vParentForce = m_pParent->Get_Force();
+		float vParentSpeed = m_pParent->Get_Speed();
+		// StarEffect
+		if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 30)
+		{
+			CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
+				(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
+			pStarParticle->ResetParticle();
+		}
+		// MTV 적용
 		_vec3 MTV =  CCollisionMgr::GetInstance()->GetMTVCubevsCube(
 			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
 		CCart* pCart = dynamic_cast<CCart*>(m_pParent);
@@ -104,6 +118,19 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 		pCart->SetGainGage(0.f);	// m_fGainGage = 0.f;
 		pCart->SetDrift(false);		// m_bDrift = false;
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////// 테스트용  Obj_MissileTarget
+	if (wcsncmp(wOtherTag, L"Obj_MissileTarget", 17) == 0)
+	{
+		_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
+			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
+
+		CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+
+		_vec3 vPos;
+		pCart->Get_Transform()->Get_Info(INFO_POS, &vPos);
+		pCart->Get_Transform()->Set_Pos(vPos + MTV);
+	}
 }
 
 void CCartBody::TriggerEnter(CCollider* pOtherCollider)
@@ -121,6 +148,15 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 		{
 			pCart->SetBanana(true);
 			pCart->SetBoost(BOOST_STATE_NORMAL);
+		}
+	}
+	if (wcsncmp(wOtherTag, L"Obj_ItemBox", 11) == 0)
+	{
+		CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
+		if (pItemBox->GetShow() == true)
+		{
+			pCart->GainItem();
+			pItemBox->SetShow(false);
 		}
 	}
 }

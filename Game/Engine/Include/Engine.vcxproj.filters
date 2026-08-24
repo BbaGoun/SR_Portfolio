@@ -139,6 +139,18 @@
     <Filter Include="04. Component\Shape\Spline">
       <UniqueIdentifier>{b7c8adf4-29d0-43ea-8d3a-3b2372e9b116}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\MagnetTex">
+      <UniqueIdentifier>{14140801-3ac3-4446-adc8-11e58e106f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. PSystem">
+      <UniqueIdentifier>{c6af0370-a0cc-4af7-80ab-c1f8d2881d91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. PSystem\SmokeParticle">
+      <UniqueIdentifier>{fa5fe961-14e7-4abc-9ed8-90cf4d9a6e9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. PSystem\StarParticle">
+      <UniqueIdentifier>{4d1041b1-eb20-43c3-8efb-b03cb0d91e76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -285,6 +297,19 @@
     <ClInclude Include="..\Header\CSpline.h">
       <Filter>04. Component\Shape\Spline</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CGameUI.h" />
+    <ClInclude Include="..\Header\CMagnetTex.h">
+      <Filter>04. Component\Shape\MagnetTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PSystem.h">
+      <Filter>06. PSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSmoke.h">
+      <Filter>06. PSystem\SmokeParticle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CStarParticle.h">
+      <Filter>06. PSystem\StarParticle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -409,6 +434,19 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSpline.cpp">
       <Filter>04. Component\Shape\Spline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGameUI.cpp" />
+    <ClCompile Include="..\Code\CMagnetTex.cpp">
+      <Filter>04. Component\Shape\MagnetTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PSystem.cpp">
+      <Filter>06. PSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSmoke.cpp">
+      <Filter>06. PSystem\SmokeParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CStarParticle.cpp">
+      <Filter>06. PSystem\StarParticle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

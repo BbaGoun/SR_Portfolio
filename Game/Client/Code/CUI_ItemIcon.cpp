@@ -6,6 +6,8 @@
 #include "CRenderer.h"
 
 #include "CDInputMgr.h"
+#include "CCart.h"
+#include "CManagement.h"
 
 
 CUI_ItemIcon::CUI_ItemIcon(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -37,8 +39,8 @@ HRESULT CUI_ItemIcon::Ready_GameObject()
 	if (pComponent == nullptr)
 		return E_FAIL;
 	
-	m_fFirstSlot = ITEM_END;
-	m_fSecondSlot = ITEM_END;
+	m_eFirstSlot = ITEM_END;
+	m_eSecondSlot = ITEM_END;
 	
 
 	return S_OK;
@@ -54,25 +56,9 @@ _int CUI_ItemIcon::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_I))
-	{
-		if (m_fFirstSlot == ITEM_END)
-		{
-			m_fFirstSlot = rand() % ITEM_END;
-		}
-
-		else if (m_fFirstSlot != ITEM_END)
-		{
-			m_fSecondSlot = rand() % ITEM_END;
-		}
-	}
-
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Z))
-	{
-		m_fFirstSlot = m_fSecondSlot;
-
-		m_fSecondSlot = ITEM_END;
-	}
+	CCart* pCart = dynamic_cast<CCart*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart"));
+	m_eFirstSlot = pCart->GetFirstSlot();
+	m_eSecondSlot = pCart->GetSecondSlot();
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -84,20 +70,22 @@ void CUI_ItemIcon::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CUI_ItemIcon::Render_GameObject()
 {
-	if (m_fFirstSlot < ITEM_END)
+	if (m_eFirstSlot < ITEM_END)
 	{
+		m_pGraphicDev->SetTexture(0, nullptr);
 		m_pTransformCom->Set_Pos({ -505.f, 300.f, 1.f });
 		m_pTransformCom->Set_Scale({ 80.f,80.f,0.f });
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-		m_pTextureCom->Set_Texture(m_fFirstSlot);
+		m_pTextureCom->Set_Texture(m_eFirstSlot);
 		m_pVIBufferCom->Render_Buffer();
 	}
-	if (m_fSecondSlot < ITEM_END)
+	if (m_eSecondSlot < ITEM_END)
 	{
+		m_pGraphicDev->SetTexture(0, nullptr);
 		m_pTransformCom->Set_Pos({ -585.f, 310.f, 1.f });
 		m_pTransformCom->Set_Scale({ 60.f,60.f,0.f });
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-		m_pTextureCom->Set_Texture(m_fSecondSlot);
+		m_pTextureCom->Set_Texture(m_eSecondSlot);
 		m_pVIBufferCom->Render_Buffer();
 	}
 

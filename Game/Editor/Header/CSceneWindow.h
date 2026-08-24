@@ -19,6 +19,7 @@ public:
 private:
     void Draw_Outline(CGameObject* pObj, D3DXCOLOR color);
     void Draw_Collider(CGameObject* pObj);
+    void Control_Spline(CGameObject* pObj);
 
 private:
     Engine::CCube* m_pCubeBuffer = nullptr;

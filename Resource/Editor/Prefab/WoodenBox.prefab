@@ -1,8 +1,9 @@
 ﻿OBJECT
+  prefabPath=..\..\..\Resource\Editor\Prefab\WoodenBox.prefab
   belong=1
   type=
   name=Empty
-  tag=1
+  tag=2
   collisionLayer=0
   cullDistance=0
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform

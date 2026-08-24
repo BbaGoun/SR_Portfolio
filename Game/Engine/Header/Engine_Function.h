@@ -230,6 +230,86 @@ namespace Engine
 		case CL_LAYER29: return "Layer29"; case CL_LAYER30: return "Layer30";
 		}
 	}
+
+	inline DWORD FtoDw(float f) {
+		return *(DWORD*)&f;
+	}
+
+	inline float GetRandomFloat(float LowBound, float HighBound)
+	{
+		if (LowBound >= HighBound)
+			return LowBound;
+		float f = (rand() % 10000) * 0.0001f;
+		return (f * (HighBound - LowBound)) + LowBound;
+	}
+
+	inline void GetRandomVector(_vec3* vOut, _vec3* vMin, _vec3* vMax)
+	{
+		vOut->x = GetRandomFloat(vMin->x, vMax->x);
+		vOut->y = GetRandomFloat(vMin->y, vMax->y);
+		vOut->z = GetRandomFloat(vMin->z, vMax->z);
+	}
+
+	inline float Lerp(float t, float start, float end) {
+		float s = 1.f - t;
+		return start * s + end * t;
+	}
+
+	//P(t) = s^2(1+2t)A +t^2(1+2s)D + s^2t*vA - st^2*vD
+	inline _vec3 Cubic_Hermite_Curve(float t, _vec3 A, _vec3 D, _vec3 vA, _vec3 vD) {
+		float s = 1.f - t;
+		return s * s * (1 + 2 * t) * A
+			+ t * t * (1 + 2 * s) * D
+			+ s * s * t * vA
+			- s * t * t * vD;
+	}
+
+	// h00(t) = s^2(1+2t) = (t^2-2t+1)(1+2t)
+	// 2t³ - 3t² + 1, h00'(t) = 6t^2 - 6t = -6st
+	// 
+	// h10(t) = t^2(1+2s) = t^2(3-2t)
+	// -2t^3+3t^2,  h10'(t) = -6t^2+6t = 6t(1-t) = 6st 
+	// 
+	// h01(t) = s^2t = (1-t)^2t = t^3-2t^2+t
+	// h01'(t) = 3t^2-4t+1 = (3t-1)(t-1) = s(1-3t)
+	// 
+	// h11(t) = st^2 = (1-t)t^2 = -t^3 + t^2
+	// h11'(t) = -3t^2+2t = t(-3t + 2)
+	// P'(t) = h00'(t)·A + h10'(t)·D + h01'(t)·vA - h11'(t)·vD
+	// 나온 값을 정규화 할 필요가 있음
+	inline _vec3 Cubic_Hermite_Curve_Derivative(float t, _vec3 A, _vec3 D, _vec3 vA, _vec3 vD)
+	{
+		float s = 1.f - t;
+		return (-6 * s * t) * A
+			+ (6 * s * t) * D
+			+ (s * (1.f - 3 * t)) * vA
+			+ (t * (3.f * t - 2.f)) * vD;
+	}
+
+	inline void DecomposeMatrixToComponents(_matrix* mat, float* translation, float* rotation, float* scale)
+	{
+		_vec3 vRight, vUp, vLook;
+		memcpy(&vRight, &mat->m[0], sizeof(_vec3));
+		memcpy(&vUp, &mat->m[1], sizeof(_vec3));
+		memcpy(&vLook, &mat->m[2], sizeof(_vec3));
+		scale[0] = D3DXVec3Length(&vRight);
+		scale[1] = D3DXVec3Length(&vUp);
+		scale[2] = D3DXVec3Length(&vLook);
+
+		D3DXVec3Normalize(&vRight, &vRight);
+		D3DXVec3Normalize(&vUp, &vUp);
+		D3DXVec3Normalize(&vLook, &vLook);
+
+		memcpy(&mat->m[0], &vRight, sizeof(_vec3));
+		memcpy(&mat->m[1], &vUp, sizeof(_vec3));
+		memcpy(&mat->m[2], &vLook, sizeof(_vec3));
+
+		rotation[0] = D3DXToDegree(atan2f(mat->m[1][2], mat->m[2][2]));
+		rotation[1] = D3DXToDegree(atan2f(-mat->m[0][2], sqrtf(mat->m[1][2] * mat->m[1][2] + mat->m[2][2] * mat->m[2][2])));
+		rotation[2] = D3DXToDegree(atan2f(mat->m[0][1], mat->m[0][0]));
+
+		memcpy(translation, &mat->m[3], sizeof(_vec3));
+	}
 }
 
 #endif // Engine_Function_h__

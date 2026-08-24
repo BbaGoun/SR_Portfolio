@@ -196,11 +196,49 @@ _matrix* CTransform::GetFollowRotation(_vec3* pFollowDir, _matrix* _pRot)
 	if (vCross.x == 0 && vCross.y == 0 && vCross.z == 0)
 		return D3DXMatrixIdentity(_pRot);
 
+	//if (D3DXVec3Length(&vCross) <= 0.001f)	// 테스트
+	//	return D3DXMatrixIdentity(_pRot);	 
+
+
+
+
+
 	// 현재 삼각형이 향하는 방향에서 플레이어를 향하는 방향으로 회전할 때, 사잇각을 알아낸다.
 	float theta = acosf(D3DXVec3Dot(&m_vInfo[INFO_LOOK], pFollowDir));
 
 	// 해당 축으로 사잇각 만큼 회전하는 회전 행렬을 구함
 	return	D3DXMatrixRotationAxis(_pRot, &vCross, theta);
+}
+
+_quaternion* CTransform::GetFollowQuaternion(_vec3* _pFollowDir, _quaternion* _pQuater)
+{
+	_vec3 vFixUp, vFixRight, vFixLook;
+	vFixUp = { 0.f, 1.f, 0.f };			
+
+	D3DXVec3Normalize(&vFixLook, _pFollowDir);
+
+	D3DXVec3Cross(&vFixRight, &vFixUp, &vFixLook);
+	D3DXVec3Cross(&vFixUp, &vFixLook, &vFixRight);
+
+	D3DXVec3Normalize(&vFixUp, &vFixUp);
+	D3DXVec3Normalize(&vFixRight, &vFixRight);
+
+	_matrix matFixRot;
+	D3DXMatrixIdentity(&matFixRot);
+
+	matFixRot._11 = vFixRight.x;
+	matFixRot._12 = vFixRight.y;
+	matFixRot._13 = vFixRight.z;
+
+	matFixRot._21 = vFixUp.x;
+	matFixRot._22 = vFixUp.y;
+	matFixRot._23 = vFixUp.z;
+
+	matFixRot._31 = vFixLook.x;
+	matFixRot._32 = vFixLook.y;
+	matFixRot._33 = vFixLook.z;
+
+	return D3DXQuaternionRotationMatrix(_pQuater, &matFixRot);
 }
 
 void CTransform::Chase_Target(const _vec3* pPos, const _float& fSpeed, const _float& fTimeDelta)

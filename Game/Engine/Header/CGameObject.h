@@ -17,13 +17,18 @@ protected:
 public:
 	template<typename T, typename = std::enable_if_t<std::is_base_of_v<CComponent, T>>>
 	T* Get_Component();
+
+	template<typename T, typename = std::enable_if_t<std::is_base_of_v<CComponent, T>>>
+	T* Get_ComponentSpread();
+
 	template<typename T, typename = std::enable_if_t<std::is_base_of_v<CComponent, T>>>
 	vector<T*> Get_Components();
+
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	const map<const _tchar*, CComponent*>& Get_ComponentMap() { return m_mapComponent; }
 
 	CTransform* Get_Transform() { return m_pTransformCom; }
-	void	Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
+	CComponent* Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
 	void	Remove_Component(CComponent* _pCom);
 
 	void	Set_Child(CGameObject* _pGO);
@@ -93,6 +98,10 @@ public:
 	void			SetLayer(CLayer* pLayer) { m_pLayer = pLayer; }
 	CLayer*			GetLayer() { return m_pLayer; }
 
+
+	virtual			void		OnLostDevice();
+	virtual			void		OnResetDevice();
+
 protected:
 	_tchar									m_prefabPath[MAX_PATH] = L"\0";
 	bool									m_bBelongPrefab = false;
@@ -137,6 +146,21 @@ inline T* CGameObject::Get_Component()
 {
 	for (auto& p : m_mapComponent) {
 		if (T* pCom = dynamic_cast<T*>(p.second))
+			return pCom;
+	}
+	return nullptr;
+}
+
+template<typename T, typename>
+inline T* CGameObject::Get_ComponentSpread()
+{
+	for (auto& p : m_mapComponent) {
+		if (T* pCom = dynamic_cast<T*>(p.second))
+			return pCom;
+	}
+	for (auto& child : m_vecChildren) {
+		T* pCom = child->Get_ComponentSpread<T>();
+		if (pCom)
 			return pCom;
 	}
 	return nullptr;

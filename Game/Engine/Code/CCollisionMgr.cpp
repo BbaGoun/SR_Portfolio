@@ -44,57 +44,60 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 			}
 		}
 	}
-	//else if (pDstType == SPHERE_COLLIDER && pSrcType == SPHERE_COLLIDER)
-	//{
-	//	if (SphereVsSphere(pDstCollider, pSrcCollider))
-	//	{
-	//		MSG_BOX("Collision!");
-	//		if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
-	//		{
-	//			//pDstCollider->OnTrigger 호출
-	//			//pSrcCollider->OnTrigger 호출
-	//		}
-	//		else
-	//		{
-	//			//pDstCollider->OnCollision 호출
-	//			//pSrcCollider->OnCollision 호출
-	//		}
-	//	}
-	//}
-	//else if (pDstType == CUBE_COLLIDER && pSrcType == SPHERE_COLLIDER)
-	//{
-	//	if (CubeVsSphere(pDstCollider, pSrcCollider))
-	//	{
-	//		MSG_BOX("Collision!");
-	//		if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
-	//		{
-	//			//pDstCollider->OnTrigger 호출
-	//			//pSrcCollider->OnTrigger 호출
-	//		}
-	//		else
-	//		{
-	//			//pDstCollider->OnCollision 호출
-	//			//pSrcCollider->OnCollision 호출
-	//		}
-	//	}
-	//}
-	//else if (pDstType == SPHERE_COLLIDER && pSrcType == CUBE_COLLIDER)
-	//{
-	//	if (SphereVsCube(pDstCollider, pSrcCollider))
-	//	{
-	//		MSG_BOX("Collision!");
-	//		if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
-	//		{
-	//			//pDstCollider->OnTrigger 호출
-	//			//pSrcCollider->OnTrigger 호출
-	//		}
-	//		else
-	//		{
-	//			//pDstCollider->OnCollision 호출
-	//			//pSrcCollider->OnCollision 호출
-	//		}
-	//	}
-	//}
+	else if (pDstType == SPHERE_COLLIDER && pSrcType == SPHERE_COLLIDER)
+	{
+		CSphere_Collider* pDstSphereCollider = dynamic_cast<CSphere_Collider*>(pDstCollider);
+		CSphere_Collider* pSrcSphereCollider = dynamic_cast<CSphere_Collider*>(pSrcCollider);
+		if (pDstSphereCollider->Get_Info().Intersects(pSrcSphereCollider->Get_Info()))
+		{
+			if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
+			{
+				pDstSphereCollider->Get_Owner()->TriggerEnter(pSrcCollider);
+				pSrcSphereCollider->Get_Owner()->TriggerEnter(pDstCollider);
+			}
+			else
+			{
+				pDstSphereCollider->Get_Owner()->CollisionEnter(pSrcCollider);
+				pSrcSphereCollider->Get_Owner()->CollisionEnter(pDstCollider);
+			}
+		}
+	}
+	else if (pDstType == CUBE_COLLIDER && pSrcType == SPHERE_COLLIDER)
+	{
+		CCube_Collider* pDstCubeCollider = dynamic_cast<CCube_Collider*>(pDstCollider);
+		CSphere_Collider* pSrcSphereCollider = dynamic_cast<CSphere_Collider*>(pSrcCollider);
+		if (pDstCubeCollider->Get_Info().Intersects(pSrcSphereCollider->Get_Info()))
+		{
+			if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
+			{
+				pDstCubeCollider->Get_Owner()->TriggerEnter(pSrcCollider);
+				pSrcSphereCollider->Get_Owner()->TriggerEnter(pDstCollider);
+			}
+			else
+			{
+				pDstCubeCollider->Get_Owner()->CollisionEnter(pSrcCollider);
+				pSrcSphereCollider->Get_Owner()->CollisionEnter(pDstCollider);
+			}
+		}
+	}
+	else if (pDstType == SPHERE_COLLIDER && pSrcType == CUBE_COLLIDER)
+	{
+		CSphere_Collider* pDstSphereCollider = dynamic_cast<CSphere_Collider*>(pDstCollider);
+		CCube_Collider* pSrcCubeCollider = dynamic_cast<CCube_Collider*>(pSrcCollider);
+		if (pDstSphereCollider->Get_Info().Intersects(pSrcCubeCollider->Get_Info()))
+		{
+			if (pDstCollider->GetIsTrigger() || pSrcCollider->GetIsTrigger())
+			{
+				pDstSphereCollider->Get_Owner()->TriggerEnter(pSrcCollider);
+				pSrcCubeCollider->Get_Owner()->TriggerEnter(pDstCollider);
+			}
+			else
+			{
+				pDstSphereCollider->Get_Owner()->CollisionEnter(pSrcCollider);
+				pSrcCubeCollider->Get_Owner()->CollisionEnter(pDstCollider);
+			}
+		}
+	}
 	//else if (pDstType == CAPSULE_COLLIDER && pSrcType == CAPSULE_COLLIDER)
 	//{
 	//

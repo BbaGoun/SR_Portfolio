@@ -41,11 +41,8 @@ HRESULT CBackGround::Ready_GameObject()
 _int CBackGround::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	CGameObject::Compute_ViewZ(&vPos);
-	return CGameObject::Update_GameObject(fDeltaTime);
 
+	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
 void CBackGround::LateUpdate_GameObject(const _float& fDeltaTime)

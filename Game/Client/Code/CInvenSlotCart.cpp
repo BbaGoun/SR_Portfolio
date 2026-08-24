@@ -1,0 +1,105 @@
+#include "pch.h"
+#include "CInvenSlotCart.h"
+#include "CProtoMgr.h"
+#include "CRenderer.h"
+#include "CDInputMgr.h"
+CInvenSlotCart::CInvenSlotCart(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)
+	:CGameObject(pGraphicDev),m_eSlotNum(eID)
+{
+}
+
+CInvenSlotCart::CInvenSlotCart(const CGameObject& rhs)
+	:CGameObject(rhs)
+{
+}
+
+CInvenSlotCart::~CInvenSlotCart()
+{
+}
+
+HRESULT CInvenSlotCart::Ready_GameObject()
+{
+	CGameObject::Ready_GameObject();
+	m_pTransformCom->Set_Pos({ 0, 0, 2 });
+	m_pTransformCom->Set_Scale({ 3, 3, 3 });
+	Engine::CComponent* pComponent = nullptr;
+
+	pComponent = m_pBufferCom = dynamic_cast<CQuadrangularPrism*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_QuadrangularPrism"));
+	if (nullptr == pComponent)
+		return E_FAIL;
+	pComponent->Set_Owner(this);
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
+
+	m_bTurn = false;
+
+	return S_OK;
+}
+
+void CInvenSlotCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
+{
+	D3DXQUATERNION q;
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, m_vRotation.z);
+	m_pTransformCom->Set_Quaternion(&q);
+}
+
+_int CInvenSlotCart::Update_GameObject(const _float& fDeltaTime)
+{
+	TCHAR   szFileName[128] = L"";
+	wsprintf(szFileName, L"InvenSlot%d", m_eSlotNum);
+	CRenderer::GetInstance()->Add_RenderTargetGroup(szFileName, this);
+
+	if(m_bTurn)
+		m_vRotation.y += fDeltaTime;
+
+	return CGameObject::Update_GameObject(fDeltaTime);
+}
+
+void CInvenSlotCart::LateUpdate_GameObject(const _float& fDeltaTime)
+{
+	CGameObject::LateUpdate_GameObject(fDeltaTime);
+}
+
+void CInvenSlotCart::Render_GameObject()
+{
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	_matrix OldView, OldProj, matView, matProj;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProj);
+
+	_vec3 vEye, vAt, vUp;
+	vEye = { 0, 0, -5 };
+	vAt = { 0, 0, 0 };
+	vUp = { 0, 1, 0 };
+	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+
+	D3DXMatrixPerspectiveFovLH(&matProj, 60, (WINCX) / (WINCY), 1.f, 1000.f);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	m_pGraphicDev->SetTexture(0, nullptr);
+
+	m_pBufferCom->Render_Buffer();
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProj);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+}
+
+CInvenSlotCart* CInvenSlotCart::Create(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)
+{
+	CInvenSlotCart* pObj = new CInvenSlotCart(pGraphicDev, eID);
+
+	if (FAILED(pObj->Ready_GameObject()))
+	{
+		MSG_BOX("CInvenSlotCart Create Failed");
+		Safe_Release(pObj);
+		return nullptr;
+	}
+	return pObj;
+}
+
+void CInvenSlotCart::Free()
+{
+	CGameObject::Free();
+}

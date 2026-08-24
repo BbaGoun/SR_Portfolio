@@ -82,15 +82,6 @@
     <Filter Include="02. GameObject\CollisionBox">
       <UniqueIdentifier>{2d007e2e-4859-437b-8792-e22af7780408}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Cart\BoostEffect">
-      <UniqueIdentifier>{c7a8c4f7-5a87-4e8b-a638-0d2f080dbd57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Cart\BoostEffect\BoostJet">
-      <UniqueIdentifier>{0d1931e9-6d11-46c4-b1e6-d66294ec4643}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Cart\BoostEffect\BoostWind">
-      <UniqueIdentifier>{4d4021d3-2776-418b-b6db-ffcdf124c2dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\UI">
       <UniqueIdentifier>{77b0e0b9-78db-4975-b5b9-26be286bd1d9}</UniqueIdentifier>
     </Filter>
@@ -130,14 +121,8 @@
     <Filter Include="02. GameObject\UI\UI_Booster\UI_BoosterBG">
       <UniqueIdentifier>{6a0eba07-e98e-47f8-a58a-a5d842776ca0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Missile">
-      <UniqueIdentifier>{d6b85c0f-4e58-4131-bf43-13d6294f242c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Camera\DynamicCamera">
       <UniqueIdentifier>{7a349e1f-d29d-4c80-a6b0-e6d3a52b8d23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Missile\MissileBody">
-      <UniqueIdentifier>{2a2d957b-27e8-4f80-959d-7f7f3eedceb8}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\MissileTarget">
       <UniqueIdentifier>{6793bbfd-9138-49d7-911d-2accc8786996}</UniqueIdentifier>
@@ -213,6 +198,75 @@
     </Filter>
     <Filter Include="02. GameObject\UI\UI_Laps">
       <UniqueIdentifier>{42c1be04-11a9-46ca-8b61-5ea9a8a3db04}</UniqueIdentifier>
+	</Filter>
+    <Filter Include="02. GameObject\Item\Missile">
+      <UniqueIdentifier>{d6b85c0f-4e58-4131-bf43-13d6294f242c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Missile\MissileBody">
+      <UniqueIdentifier>{2a2d957b-27e8-4f80-959d-7f7f3eedceb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\MagnetBody">
+      <UniqueIdentifier>{2cf3dfe9-2af6-4e54-8ee4-a5e1ade645d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\ItemBox">
+      <UniqueIdentifier>{7271d6f9-d894-4471-b51b-cbad0c24150d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect">
+      <UniqueIdentifier>{e605a22a-591b-48eb-ac3e-28ed1aa79e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\BoostEffect">
+      <UniqueIdentifier>{c7a8c4f7-5a87-4e8b-a638-0d2f080dbd57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\BoostEffect\BoostJet">
+      <UniqueIdentifier>{0d1931e9-6d11-46c4-b1e6-d66294ec4643}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\BoostEffect\BoostWind">
+      <UniqueIdentifier>{4d4021d3-2776-418b-b6db-ffcdf124c2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\SkidMark">
+      <UniqueIdentifier>{a87ac38e-e6b8-4b56-9453-a1bf5df51239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\SmokeEffect">
+      <UniqueIdentifier>{0e51cd6b-a3ef-4aa9-aa0f-1ecb58b27ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\WaterBomb">
+      <UniqueIdentifier>{76cf2e06-aad4-4100-a3e2-d55344215ad5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\WaterBomb\WaterBombBody">
+      <UniqueIdentifier>{0395d4fa-385f-41b2-ba98-249f1f40dc51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\WaterBomb\WaterBombThrow">
+      <UniqueIdentifier>{0664c967-8660-4258-8be3-a4df2247592a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Inventory">
+      <UniqueIdentifier>{443dfc68-b0e8-4e29-992d-15e8ad0cae1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_InvenSlot">
+      <UniqueIdentifier>{b03628f0-522f-40e1-99cb-462e3618bc49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InvenSlot">
+      <UniqueIdentifier>{64d767c2-b491-4457-9c68-be2d9b09897f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InvenSlot\InvenSlotCart">
+      <UniqueIdentifier>{e00f7f40-4940-40b5-be88-a93a29336aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InvenSlot\InvneSlotBG">
+      <UniqueIdentifier>{5d05593f-d04c-45d4-942e-c94569cddeb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\CollisionStarEffect">
+      <UniqueIdentifier>{f12d7011-9ad7-42bc-b18f-19c89042af19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\DriftSpark">
+      <UniqueIdentifier>{8728e073-2a16-4a95-8b8c-bad6daf19700}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\RacingScene">
+      <UniqueIdentifier>{b5811a68-dba3-4a2f-8de3-36368e30bbef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager">
+      <UniqueIdentifier>{0562dd3f-34b6-4457-a331-193d2b502430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\CLoadMgr">
+      <UniqueIdentifier>{a6062789-bc8f-4b64-bb3d-4fa8fbaeae29}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -301,10 +355,10 @@
       <Filter>02. GameObject\CollisionBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBoostJet.h">
-      <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostJet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBoostWind.h">
-      <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostWind</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CHUD_Main.h">
       <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
@@ -331,7 +385,7 @@
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMissile.h">
-      <Filter>02. GameObject\Missile</Filter>
+      <Filter>02. GameObject\Item\Missile</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDynamicCamera.h">
       <Filter>02. GameObject\Camera\DynamicCamera</Filter>
@@ -340,7 +394,7 @@
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMissileBody.h">
-      <Filter>02. GameObject\Missile\MissileBody</Filter>
+      <Filter>02. GameObject\Item\Missile\MissileBody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMissileTarget.h">
       <Filter>02. GameObject\MissileTarget</Filter>
@@ -428,6 +482,51 @@
     </ClInclude>
     <ClInclude Include="..\Header\CUI_Laps.h">
       <Filter>02. GameObject\UI\UI_Laps</Filter>
+	</ClInclude>
+    <ClInclude Include="..\Header\CMagnetBody.h">
+      <Filter>02. GameObject\Item\MagnetBody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemBox.h">
+      <Filter>02. GameObject\ItemBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSkidMark.h">
+      <Filter>02. GameObject\Cart\Effect\SkidMark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSmokeEffect.h">
+      <Filter>02. GameObject\Cart\Effect\SmokeEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWaterBomb.h">
+      <Filter>02. GameObject\Item\WaterBomb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWaterBombThrow.h">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombThrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWaterBombBody.h">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombBody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInventoryScene.h">
+      <Filter>01. Scene\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_InvenSlot.h">
+      <Filter>02. GameObject\UI\UI_InvenSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInvenSlotCart.h">
+      <Filter>InvenSlot\InvenSlotCart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInvenSlotBG.h">
+      <Filter>InvenSlot\InvneSlotBG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCollisionStarEffect.h">
+      <Filter>02. GameObject\Cart\Effect\CollisionStarEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDriftSpark.h">
+      <Filter>02. GameObject\Cart\Effect\DriftSpark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRacingScene.h">
+      <Filter>01. Scene\RacingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLoadMgr.h">
+      <Filter>03. Manager\CLoadMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -504,10 +603,10 @@
       <Filter>02. GameObject\CollisionBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBoostJet.cpp">
-      <Filter>02. GameObject\Cart\BoostEffect\BoostJet</Filter>
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostJet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBoostWind.cpp">
-      <Filter>02. GameObject\Cart\BoostEffect\BoostWind</Filter>
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostWind</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CHUD_Main.cpp">
       <Filter>02. GameObject\UI\UI_HUD\HUD_Main</Filter>
@@ -537,7 +636,7 @@
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBar</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMissile.cpp">
-      <Filter>02. GameObject\Missile</Filter>
+      <Filter>02. GameObject\Item\Missile</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDynamicCamera.cpp">
       <Filter>02. GameObject\Camera\DynamicCamera</Filter>
@@ -546,7 +645,7 @@
       <Filter>02. GameObject\UI\UI_Booster\UI_BoosterBG</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMissileBody.cpp">
-      <Filter>02. GameObject\Missile\MissileBody</Filter>
+      <Filter>02. GameObject\Item\Missile\MissileBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMissileTarget.cpp">
       <Filter>02. GameObject\MissileTarget</Filter>
@@ -634,6 +733,51 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <Filter>02. GameObject\UI\UI_Laps</Filter>
+	</ClCompile>
+    <ClCompile Include="..\Code\CMagnetBody.cpp">
+      <Filter>02. GameObject\Item\MagnetBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemBox.cpp">
+      <Filter>02. GameObject\ItemBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSkidMark.cpp">
+      <Filter>02. GameObject\Cart\Effect\SkidMark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSmokeEffect.cpp">
+      <Filter>02. GameObject\Cart\Effect\SmokeEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterBomb.cpp">
+      <Filter>02. GameObject\Item\WaterBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterBombThrow.cpp">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombThrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterBombBody.cpp">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInventoryScene.cpp">
+      <Filter>01. Scene\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_InvenSlot.cpp">
+      <Filter>02. GameObject\UI\UI_InvenSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInvenSlotCart.cpp">
+      <Filter>InvenSlot\InvenSlotCart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInvenSlotBG.cpp">
+      <Filter>InvenSlot\InvneSlotBG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollisionStarEffect.cpp">
+      <Filter>02. GameObject\Cart\Effect\CollisionStarEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDriftSpark.cpp">
+      <Filter>02. GameObject\Cart\Effect\DriftSpark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRacingScene.cpp">
+      <Filter>01. Scene\RacingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLoadMgr.cpp">
+      <Filter>03. Manager\CLoadMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

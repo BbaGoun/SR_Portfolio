@@ -29,7 +29,6 @@ HRESULT CUI_Button::Ready_GameObject()
 	m_pTransformCom->Set_Pos(m_vPos);
 	m_pTransformCom->Set_Scale(m_vScale);
 
-
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 
