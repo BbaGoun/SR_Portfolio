@@ -20,10 +20,11 @@ HRESULT CWaterBomb::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_fSpeed = 0.f;
-	m_fAngle = 0.f;
+	m_fTimer	= 0.f;
+	m_fSpeed	= 0.f;
+	m_fAngle	= 0.f;
 
-	m_pTransformCom->Set_Pos({ -50.f,0.f,150.f });
+	// m_pTransformCom->Set_Pos({ -50.f,0.f,150.f });
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -43,7 +44,12 @@ HRESULT CWaterBomb::Ready_GameObject()
 
 void CWaterBomb::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	m_fTimer += fFixedDeltaTime;
 
+	if (m_fTimer > 3.f)
+	{
+		m_pLayer->Delete_GameObject(this);
+	}
 }
 
 _int CWaterBomb::Update_GameObject(const _float& fTimeDelta)
@@ -51,6 +57,8 @@ _int CWaterBomb::Update_GameObject(const _float& fTimeDelta)
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
+	//m_pLayer->Delete_GameObject(this);
 
 	return iExit;
 }
@@ -81,6 +89,7 @@ void CWaterBomb::CollisionEnter(CCollider* pOtherCollider)
 
 void CWaterBomb::TriggerEnter(CCollider* pOtherCollider)
 {
+	// 컨셉에 맞게 따로 삭제
 	//const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 
 	//if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)

@@ -1160,6 +1160,52 @@ void CCart::CreateMagnetObject()
 	pMagnetBody->Get_Transform()->Set_Pos(vPos);
 }
 
+//void CCart::CreateWaterBombObject()	// 순간이동 코드
+//{
+//	CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
+//
+//	if (pWaterBomb == nullptr)
+//		return;
+//
+//	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBomb", pWaterBomb)))
+//		return;
+//
+//	pWaterBomb->SetLayer(m_pLayer);
+//
+//	CGameObject* pWaterBombBody = CWaterBombBody::Create(m_pGraphicDev);
+//
+//	if (pWaterBombBody == nullptr)
+//		return;
+//
+//	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBody", pWaterBombBody)))
+//		return;
+//
+//	pWaterBombBody->SetLayer(m_pLayer);
+//	pWaterBomb->Set_Child(pWaterBombBody);
+//
+//	CGameObject* pWaterBombThrow = CWaterBombThrow::Create(m_pGraphicDev);
+//
+//	if (pWaterBombThrow == nullptr)
+//		return;
+//
+//	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombThrow", pWaterBombThrow)))
+//		return;
+//
+//	pWaterBombThrow->SetLayer(m_pLayer);
+//
+//	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
+//
+//	_vec3 vScale, vCartLook, vCartPos;
+//	vScale = m_pTransformCom->Get_Scale();
+//	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
+//	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
+//
+//	vCartPos += vCartLook * 500.f;
+//
+//	m_pTransformCom->Set_Pos(vCartPos);
+//
+//}
+
 void CCart::CreateWaterBombObject()
 {
 	CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
@@ -1181,7 +1227,7 @@ void CCart::CreateWaterBombObject()
 		return;
 
 	pWaterBombBody->SetLayer(m_pLayer);
-	pWaterBomb->Set_Child(pWaterBombBody);
+	//pWaterBomb->Set_Child(pWaterBombBody);
 
 	CGameObject* pWaterBombThrow = CWaterBombThrow::Create(m_pGraphicDev);
 
@@ -1193,19 +1239,23 @@ void CCart::CreateWaterBombObject()
 
 	pWaterBombThrow->SetLayer(m_pLayer);
 
-	_vec3 vPos, vWaterBombPos, vLook, vUp;
+	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
 
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	m_pTransformCom->Get_Info(INFO_UP, &vUp);
+	_vec3 vScale, vCartLook, vCartPos;
+	vScale = m_pTransformCom->Get_Scale();
+	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
+	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 
-	pWaterBomb->Get_Transform()->Get_Info(INFO_POS, &vWaterBombPos);
-	//->Get_Transform()->Set_Pos(vPos);
+	vCartPos += vCartLook * 300.f;
 
-	vPos += vUp * 5.f;
 
-	pWaterBombThrow->Get_Transform()->Set_Pos(vPos);
+	//pWaterBomb->Get_Transform()->Set_Pos(vCartPos);
+	//pWaterBombBody->Get_Transform()->Set_Pos(vCartPos);
+	//pWaterBomb->Set_Child(pWaterBombBody);
 
+	pWaterBomb->Get_Transform()->Set_Pos(vCartPos);
+	pWaterBomb->Set_Child(pWaterBombBody);
+	pWaterBombBody->Get_Transform()->Set_Pos({ 0.f, 0.f, 0.f });
 }
 
 void CCart::CreateMagnetAimObject()

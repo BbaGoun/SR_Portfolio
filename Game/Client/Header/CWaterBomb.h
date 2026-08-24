@@ -30,6 +30,7 @@ public:
 
 private:
 	Engine::CCube_Collider* m_pColliderCom;
+	_float			m_fTimer;
 	_float			m_fSpeed;
 	_float			m_fAngle;	// 풍선 최대치 크기 도달 후 회전 이거 말고 -> D3DXToRadian 이걸로?
 

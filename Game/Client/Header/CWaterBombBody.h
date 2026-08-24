@@ -22,6 +22,7 @@ public:
 
 private:
 	Engine::CCartBodyCol* m_pBufferCom;
+	_float	m_fTimer;
 
 public:
 	static CWaterBombBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);

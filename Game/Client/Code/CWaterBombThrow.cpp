@@ -48,30 +48,38 @@ HRESULT CWaterBombThrow::Ready_GameObject()
 
 void CWaterBombThrow::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	m_fThrowHeight += 0.6f;
-
 	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
 
-	_vec3 vPos, vUp, vCartPos, vCartUp;
+	_vec3 vPos, vUp, vCartPos, vCartUp, vCartLook;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_UP, &vUp);
 
 	pCartBody->Get_Transform()->Get_Info(INFO_UP, &vCartUp);
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 
-	//vPos += vUp * 0.2f;
-
-	 // vCartPos += vCartUp * 0.6f;
+	vCartPos += vCartUp * 3.f;
 
 	m_pTransformCom->Set_Pos(vCartPos + vCartUp * m_fThrowHeight);
 
 	m_fTimer += fFixedDeltaTime;
+
+	if (m_fTimer > 0.1f)
+	{
+		m_fThrowHeight += 2.6f;
+	}
 
 	if (m_fTimer > 3.5f)
 	{
 		m_pLayer->Delete_GameObject(this);
 	}
 
+	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
+
+
+	_quaternion q;
+	m_pTransformCom->GetFollowQuaternion(&vCartLook, &q);
+
+	m_pTransformCom->Set_Quaternion(&q);
 }
 
 _int CWaterBombThrow::Update_GameObject(const _float& fDeltaTime)

@@ -35,7 +35,8 @@ private:
 	Engine::CCartBodyCol*		m_pBufferCom;
 	Engine::CCube_Collider*		m_pColliderCom;
 			_float				m_fMaxSpeed;
-			bool				m_bMissileHit;
+			_bool				m_bMissileHit;
+			_bool				m_bWaterBombHit;
 
 protected:
 	virtual		void		Free() override;

@@ -215,7 +215,7 @@ _quaternion* CTransform::GetFollowQuaternion(_vec3* _pFollowDir, _quaternion* _p
 	_vec3 vFixUp, vFixRight, vFixLook;
 	vFixUp = { 0.f, 1.f, 0.f };			
 
-	D3DXVec3Normalize(&vFixLook, _pFollowDir);
+	D3DXVec3Normalize(&vFixLook, _pFollowDir);	// 전달 받은 것
 
 	D3DXVec3Cross(&vFixRight, &vFixUp, &vFixLook);
 	D3DXVec3Cross(&vFixUp, &vFixLook, &vFixRight);
