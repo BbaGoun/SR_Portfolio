@@ -300,6 +300,8 @@ void CInspector::SplineCom(CGameObject* _pObj)
                     if (ImGui::Selectable("Delete")) {
                         pSpline->Del_Point(&cp);
                         i -= 1;
+                        g_bPointSelected = false;
+                        g_uPointSelected = 0;
                         ImGui::EndPopup();
                         ImGui::PopID();
                         continue;
