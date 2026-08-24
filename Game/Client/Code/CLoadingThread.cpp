@@ -164,6 +164,18 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Smoke", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Effect/Smoke/exhaust.png", 1))))
         return E_FAIL;
 
+    // CollisionStarEffect
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CollisionStarEffect", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Effect/Star/CollisionStar.png", 1))))
+        return E_FAIL;
+
+    // InvenWindow
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_InvenWindow", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Inven/InvenWindow%d.png", 4))))
+        return E_FAIL;
+
+    // DriftSpark
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_DriftSpark", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Effect/DriftSpark/DriftSpark.png", 1))))
+        return E_FAIL;
+
     //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BoosterIcon", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item_Boost.png", 1))))
     //    return E_FAIL;
 

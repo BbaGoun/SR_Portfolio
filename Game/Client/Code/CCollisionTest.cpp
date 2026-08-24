@@ -43,6 +43,8 @@
 #include "CMagnetBody.h"
 #include "CItemBox.h"
 #include "CSmokeEffect.h"
+#include "CCollisionStarEffect.h"
+#include "CDriftSpark.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -346,6 +348,22 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"SmokeEffect", pGameObject)))
 		return E_FAIL;
 
+	// 충돌시 나오는 별 이펙트
+	pGameObject = CCollisionStarEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"CollisionStarEffect", pGameObject)))
+		return E_FAIL;
+	pCartBody->Set_Child(pGameObject);
+
+
+	//// DriftSpark
+	//pGameObject = CDriftSpark::Create(m_pGraphicDev);
+	//if (nullptr == pGameObject)
+	//	return E_FAIL;
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"DriftSpark", pGameObject)))
+	//	return E_FAIL;
+	//pCart->Set_Child(pGameObject);
 
 	// ItemBox
 	for (int i = 0; i < 5; ++i)
@@ -585,7 +603,7 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	pUIObject = CUI_Minimap::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"PreviewCart", pUIObject)))
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Minimap", pUIObject)))
 		return E_FAIL;
 
 
@@ -617,6 +635,7 @@ HRESULT CCollisionTest::Ready_Collision_Matrix()
 
 void CCollisionTest::Free()
 {
-	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
 	CScene::Free();
+	CRenderer::GetInstance()->Clear_RenderGroup();
+	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
 }

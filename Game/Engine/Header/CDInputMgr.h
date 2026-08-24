@@ -33,17 +33,32 @@ public:
 
 	_byte	Get_DIMouseState(MOUSEKEYSTATE eMouse)
 	{
+		cout << m_tMouseState.rgbButtons[eMouse] << endl;
 		return m_tMouseState.rgbButtons[eMouse];
 	}
 
 	_bool	Get_DIMouseKeyDown(MOUSEKEYSTATE eMouse) {
-		return !(m_tBeforeMouseState.rgbButtons[eMouse] & 0x80)
-			&& (m_tMouseState.rgbButtons[eMouse] & 0x80);
+		return !(
+			(m_tBeforeMouseState.rgbButtons[eMouse] & 0x80) ||
+			(m_tBeforeMouseState.rgbButtons[eMouse] & -0x80)
+			)
+			&&
+			(
+			(m_tMouseState.rgbButtons[eMouse] & 0x80) ||
+			(m_tMouseState.rgbButtons[eMouse] & -0x80)
+			);
 	}
 
 	_bool	Get_DIMouseKeyUp(MOUSEKEYSTATE eMouse) {
-		return (m_tBeforeMouseState.rgbButtons[eMouse] & 0x80)
-			&& !(m_tMouseState.rgbButtons[eMouse] & 0x80);
+		return (
+			(m_tBeforeMouseState.rgbButtons[eMouse] & 0x80) ||
+			(m_tBeforeMouseState.rgbButtons[eMouse] & -0x80)
+			)
+			&&
+			!(
+			(m_tMouseState.rgbButtons[eMouse] & 0x80) ||
+			(m_tMouseState.rgbButtons[eMouse] & -0x80)
+			);
 	}
 
 	// 현재 마우스의 특정 축 좌표를 반환
