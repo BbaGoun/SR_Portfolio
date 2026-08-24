@@ -374,11 +374,11 @@ namespace Engine
 
 		const uint32_t guid = CManagement::GetInstance()->GenerateGuid();
 		pObj->SetGuid(guid);
+		if (pParent)
+			pParent->Set_Child(pObj);
 
 		wstring key = to_wstring(guid);
 		CManagement::GetInstance()->Add_GameObject(L"Default", key.c_str(), pObj);
-		if (pParent)
-			pParent->Set_Child(pObj);
 
 		wchar_t* t = nullptr;
 		while (st.Next(t))
@@ -447,11 +447,11 @@ namespace Engine
 
 		const uint32_t guid = pScene->GenerateGuid();
 		pObj->SetGuid(guid);
+		if (pParent)
+			pParent->Set_Child(pObj);
 
 		wstring key = to_wstring(guid);
 		pScene->Add_GameObject(L"Default", key.c_str(), pObj);
-		if (pParent)
-			pParent->Set_Child(pObj);
 
 		wchar_t* t = nullptr;
 		while (st.Next(t))
