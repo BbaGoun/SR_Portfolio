@@ -39,27 +39,64 @@ void CSceneWindow::Update_Window()
     const auto& map = CManagement::GetInstance()->Get_GameObjects(L"Default");
 
     // 뷰 행렬 세팅
-    static _vec3 vEye = { -4.5f, 6.f, -5.f };
-    static float yaw = 0.74f, pitch = -0.74f;
-    _vec3 vLook = { cosf(pitch) * sinf(yaw), sinf(pitch), cosf(pitch) * cosf(yaw) };
-    _vec3 vAt = vEye + vLook;
-    static _vec3 vUp = { 0.f, 1.f, 0.f };
+    static _vec3 s_vEye = { -4.5f, 6.f, -5.f };
+    static float s_yaw = 0.74f, s_pitch = -0.74f;
+    static _vec3 s_vUp = { 0.f, 1.f, 0.f };
+    _vec3 vLook = { cosf(s_pitch) * sinf(s_yaw), sinf(s_pitch), cosf(s_pitch) * cosf(s_yaw) };
+    _vec3 vAt = s_vEye + vLook;
+
+    if (g_bMoveTo) {
+        CGameObject* pSel = FindByGuid(g_uSelected, map);
+        if (pSel) {
+            pSel->Get_Transform()->Get_Info(INFO_POS, &vAt);
+            s_vEye = vAt - 5 * vLook;
+        }
+        g_bMoveTo = false;
+    }
+
     _matrix matView, matInvView;
-    D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
+    D3DXMatrixLookAtLH(&matView, &s_vEye, &vAt, &s_vUp);
     D3DXMatrixInverse(&matInvView, 0, &matView);
 
     ImGui::SetNextWindowSize(ImVec2(640, 480), ImGuiCond_FirstUseEver);
     ImGui::Begin("Scene");
 
     bool sceneFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_None);
+   
+    static float s_gizmoSize = 0.1f;
+    static float s_moveSpeed = 0.2f;
 
     if (sceneFocused) {
-        if (ImGui::IsKeyDown(ImGuiKey_Q))
+        if (ImGui::IsKeyDown(ImGuiKey_1))
             g_GizmoOp = ImGuizmo::TRANSLATE;
-        if (ImGui::IsKeyDown(ImGuiKey_W))
+        if (ImGui::IsKeyDown(ImGuiKey_2))
             g_GizmoOp = ImGuizmo::ROTATE;
-        if (ImGui::IsKeyDown(ImGuiKey_E))
+        if (ImGui::IsKeyDown(ImGuiKey_3))
             g_GizmoOp = ImGuizmo::SCALE;
+
+        _vec3 vRight, vUp;
+        memcpy(&vRight, &matInvView.m[0], sizeof(_vec3));
+        memcpy(&vUp, &matInvView.m[1], sizeof(_vec3));
+        if (ImGui::IsKeyDown(ImGuiKey_W))
+        {
+            s_vEye += s_moveSpeed * vUp;
+        }
+        if (ImGui::IsKeyDown(ImGuiKey_A))
+        {
+            s_vEye -= s_moveSpeed * vRight;
+        }
+        if (ImGui::IsKeyDown(ImGuiKey_S)) {
+            s_vEye -= s_moveSpeed * vUp;
+        }
+        if (ImGui::IsKeyDown(ImGuiKey_D)) {
+            s_vEye += s_moveSpeed * vRight;
+        }
+        if (ImGui::IsKeyDown(ImGuiKey_Q)) {
+            s_vEye += s_moveSpeed * vLook;
+        }
+        if (ImGui::IsKeyDown(ImGuiKey_E)) {
+            s_vEye -= s_moveSpeed * vLook;
+        }
     }
 
     if (ImGui::RadioButton("Translate", g_GizmoOp == ImGuizmo::TRANSLATE))
@@ -70,11 +107,16 @@ void CSceneWindow::Update_Window()
     ImGui::SameLine();
     if (ImGui::RadioButton("Scale", g_GizmoOp == ImGuizmo::SCALE)) g_GizmoOp = ImGuizmo::SCALE;
     ImGui::SameLine();
-    static float gizmoSize = 0.1f;
+
     ImGui::Text("| Gizmo Size");
     ImGui::SameLine();
+    ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x * 0.3f);
+    ImGui::SliderFloat("##Gizmo Size", &s_gizmoSize, 0.1f, 0.25f);
+    ImGui::SameLine();
+    ImGui::Text("| Move Speed");
+    ImGui::SameLine();
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
-    ImGui::SliderFloat("##Gizmo Size", &gizmoSize, 0.1f, 0.25f);
+    ImGui::SliderFloat("##Move Speed", &s_moveSpeed, 0.1f, 1.f);
 
     ImVec2 viewPos = ImGui::GetCursorScreenPos(); // content 영역의 좌상단
     ImVec2 viewSize = ImGui::GetContentRegionAvail(); // content 영역의 크기
@@ -169,8 +211,9 @@ void CSceneWindow::Update_Window()
     // 오브젝트의 guid로 선택
     if (g_bSelected) {
         CGameObject* pSel = FindByGuid(g_uSelected, map);
+        static bool s_bWasUsingTranslate = false;
         if (pSel && !g_bEdit) {
-
+            s_bWasUsingTranslate = false;
             // 조작용 복사본 (Get_World()가 돌려주는 버퍼를 직접 깨지 않게)
             _matrix matWorld = *pSel->Get_Transform()->Get_World();
 
@@ -178,7 +221,7 @@ void CSceneWindow::Update_Window()
             // 기즈모의 조작으로 해당 월드 행렬을 바로 수정한다.
             // 기즈모의 위치는 부모까지 고려된 월드 행렬
 
-            ImGuizmo::SetGizmoSizeClipSpace(gizmoSize);
+            ImGuizmo::SetGizmoSizeClipSpace(s_gizmoSize);
             ImGuizmo::Manipulate(
                 (float*)matView, (float*)matProj,
                 g_GizmoOp, g_GizmoMode, (float*)&matWorld);
@@ -191,7 +234,7 @@ void CSceneWindow::Update_Window()
                 {
                     _matrix matParent = *pParent->Get_Transform()->Get_World();
                     _matrix matInvParent;
-                    D3DXMatrixInverse(&matInvParent, nullptr, &matParent);
+                    D3DXMatrixInverse(&matInvParent, 0, &matParent);
                     // local * parent = world  →  local = world * inverse(parent)
                     matLocal = matWorld * matInvParent;
                 }
@@ -202,22 +245,74 @@ void CSceneWindow::Update_Window()
         }
         else if (pSel && g_bEdit) {
             if (g_bPointSelected) {
-                // 조작용 위치 복사본
                 CSpline* pSpline = pSel->Get_Component<CSpline>();
 
                 ControlPoint* cp = pSpline->Get_ControlPoint(g_uPointSelected);
-                _matrix matWorld;
-                D3DXMatrixIdentity(&matWorld);
-                memcpy(&matWorld.m[3], &cp->position, sizeof(_vec3));
+                
+                _vec3 R = cp->R;
+                _vec3 U = cp->U;
+                ImGuizmo::OPERATION op = g_GizmoOp;
+                if (g_GizmoOp == ImGuizmo::ROTATE) {
+                    op = ImGuizmo::ROTATE_Z;
+                }
+                else if (g_GizmoOp == ImGuizmo::SCALE) {
+                    op = ImGuizmo::SCALE_X | ImGuizmo::SCALE_Y;
+                    R *= cp->width;
+                    U *= cp->depth;
+                }
 
-                ImGuizmo::SetGizmoSizeClipSpace(gizmoSize);
+                _matrix matCP, matObj;
+                D3DXMatrixIdentity(&matCP);
+                memcpy(&matCP.m[0], &R, sizeof(_vec3));
+                memcpy(&matCP.m[1], &U, sizeof(_vec3));
+                memcpy(&matCP.m[2], &cp->T, sizeof(_vec3));
+                memcpy(&matCP.m[3], &cp->position, sizeof(_vec3));
+
+                matObj = *pSel->Get_Transform()->Get_World();
+                matCP *= matObj;
+
+                ImGuizmo::SetGizmoSizeClipSpace(s_gizmoSize);
+                
                 ImGuizmo::Manipulate(
                     (float*)matView, (float*)matProj,
-                    g_GizmoOp, g_GizmoMode, (float*)&matWorld);
+                    op, ImGuizmo::WORLD, (float*)&matCP);
 
                 if (ImGuizmo::IsUsing())
                 {
-                    memcpy(&cp->position, &matWorld.m[3], sizeof(_vec3));
+                    // 기즈모의 조작은 로컬에 적용되야 하므로 오브젝트의 영향을 다시 없앤다.
+       
+                    _matrix matInvObj;
+                    D3DXMatrixInverse(&matInvObj, 0, &matObj);
+                    matCP *= matInvObj;
+      
+                    if (op == ImGuizmo::TRANSLATE) {
+                        memcpy(&cp->position, &matCP.m[3], sizeof(_vec3));
+                        s_bWasUsingTranslate = true;
+                    }
+                    else if (op == ImGuizmo::ROTATE_Z) {
+                        // 해당 cp의 right로 up과 bank 계산
+                        // R,U,bank만 바뀜 -> 메쉬 다시 생성
+                        // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
+                        _vec3 vRight;
+                        memcpy(&vRight, &matCP.m[0], sizeof(_vec3));
+                        pSpline->Set_BankByRight(cp, vRight);
+                    }
+                    else if (op == (ImGuizmo::SCALE_X | ImGuizmo::SCALE_Y)) {
+                        // 해당 cp의 width/depth를 바꾼다
+                        // -> 매쉬 다시 생성
+                        // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
+                        _vec3 vRight, vUp;
+                        memcpy(&vRight, &matCP.m[0], sizeof(_vec3));
+                        memcpy(&vUp, &matCP.m[1], sizeof(_vec3));
+                        pSpline->Set_WidthDepth(cp, vRight, vUp);
+                    }
+                }
+                else if (s_bWasUsingTranslate) {
+                    s_bWasUsingTranslate = false;
+                    // CP의 위치가 바뀐다 -> 곡선의 형태가 바뀐다 
+                    // -> T,R,U가 바뀐다 -> 메쉬도 전부 다시 생성
+                    // 최적화 시에는 +- 2 범위의 곡선만 다시 계산
+                    pSpline->Compute_Spline();
                 }
             }
         }
@@ -310,15 +405,17 @@ void CSceneWindow::Update_Window()
                     CSpline* pSpline = pSel->Get_Component<CSpline>();
 
                     DirectX::BoundingSphere sphere;
-                    sphere.Radius = 0.1f;
+                    sphere.Radius = 0.15f;
 
                     auto& vecP = pSpline->Get_ControlPoints();
                     for (int i = 0; i < vecP.size(); ++i) {
                         ControlPoint& cp = vecP[i];
-                        sphere.Center = ToXMFLOAT3(cp.position);
+                        _vec3 vPointPos = cp.position;
+                        D3DXVec3TransformCoord(&vPointPos, &vPointPos, pSel->Get_Transform()->Get_World());
+                        sphere.Center = ToXMFLOAT3(vPointPos);
 
                         float dist;
-                        if (sphere.Intersects(ToXMVec(rayOrigin), ToXMVec(rayDir), dist)) {
+                        if (sphere.Intersects(ToXMVec(rayOrigin), ToXMVec(rayDir), dist) && dist < bestDist) {
                             bestDist = dist;
                             bestId = cp.id;
                             hit = true;
@@ -337,9 +434,9 @@ void CSceneWindow::Update_Window()
         if (ImGui::IsMouseDragging(ImGuiMouseButton_Right))
         {
             // 카메라 회전 (세로 : Pitch, 가로 : Yaw)
-            yaw += io.MouseDelta.x / 150.f;
-            pitch += -io.MouseDelta.y / 150.f;
-            pitch = clampT(pitch, -1.5f, 1.5f);
+            s_yaw += io.MouseDelta.x / 150.f;
+            s_pitch += -io.MouseDelta.y / 150.f;
+            s_pitch = clampT(s_pitch, -1.5f, 1.5f);
         }
 
         if (ImGui::IsMouseDragging(ImGuiMouseButton_Middle))
@@ -348,8 +445,8 @@ void CSceneWindow::Update_Window()
             _vec3 vRight, vUp;
             memcpy(&vRight, &matInvView.m[0], sizeof(_vec3));
             memcpy(&vUp, &matInvView.m[1], sizeof(_vec3));
-            vEye += -io.MouseDelta.x / 100.f * vRight;
-            vEye += io.MouseDelta.y / 100.f * vUp;
+            s_vEye += -io.MouseDelta.x / 100.f * vRight;
+            s_vEye += io.MouseDelta.y / 100.f * vUp;
         }
 
         if (ImGui::GetIO().MouseWheel != 0.f)
@@ -357,7 +454,7 @@ void CSceneWindow::Update_Window()
             // 카메라 줌인 줌아웃 (Look으로 거리 조정)
             _vec3 vLook;
             memcpy(&vLook, &matInvView.m[2], sizeof(_vec3));
-            vEye += io.MouseWheel * vLook;
+            s_vEye += io.MouseWheel * vLook;
         }
     }
 

@@ -31,13 +31,10 @@ private:
 	void OnLoad();
 	bool OpenLoadSceneDialog(_tchar* outPath, DWORD outChars);
 	void LoadSceneFile(const _tchar* path, CScene* pScene);
-	CGameObject* LoadGameObject(FileReadState& st, LPDIRECT3DDEVICE9 pGraphicDev,
-		CGameObject* pParent, bool bRoot, CScene* pScene);
 	
 	void OnSave(bool bSaveAs);
 	bool OpenSaveSceneDialog(_tchar* outPath, DWORD outChars);
 	void SaveSceneFile(const _tchar* path);
-	void SaveGameObject(FILE* pf, CGameObject* pObj, int depth, bool bRoot);
 
 	void InputShortCut();
 	void DoUndo();

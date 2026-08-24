@@ -195,14 +195,14 @@ HRESULT CLayer::Delete_GameObject(CGameObject* _pObj, bool bEditor)
 	return S_OK;
 }
 
-void CLayer::Delete_Children(CGameObject* _pObj, bool bEditor)
+void CLayer::Delete_Children(CGameObject* _pParent, bool bEditor)
 {
-	auto& children = _pObj->Get_Children();
+	auto& children = _pParent->Get_Children();
 	for (auto& pObj : children) {
 		_tchar key[256];
 
 		if (bEditor) {
-			wcscpy_s(key, 256, to_wstring(_pObj->GetGuid()).c_str());
+			wcscpy_s(key, 256, to_wstring(pObj->GetGuid()).c_str());
 			auto it = find_if(m_mapObject.begin(), m_mapObject.end(), [&](pair<const _tchar*, vector<CGameObject*>> p)->bool {
 				return !wcscmp(p.first, key);
 				});
@@ -211,12 +211,12 @@ void CLayer::Delete_Children(CGameObject* _pObj, bool bEditor)
 				continue;
 		}
 		else {
-			wcscpy_s(key, 256, _pObj->GetTag());
+			wcscpy_s(key, 256, pObj->GetTag());
 			auto it = find_if(m_mapObject.begin(), m_mapObject.end(),
 				CTag_Finder(key));
 
 			if (it == m_mapObject.end()) {
-				wcscpy_s(key, 256, to_wstring(_pObj->GetGuid()).c_str());
+				wcscpy_s(key, 256, to_wstring(pObj->GetGuid()).c_str());
 				it = find_if(m_mapObject.begin(), m_mapObject.end(), [&](pair<const _tchar*, vector<CGameObject*>> p)->bool {
 					return !wcscmp(p.first, key);
 					});
