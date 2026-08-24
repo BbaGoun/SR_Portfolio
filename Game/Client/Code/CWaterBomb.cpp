@@ -24,7 +24,7 @@ HRESULT CWaterBomb::Ready_GameObject()
 	m_fSpeed	= 0.f;
 	m_fAngle	= 0.f;
 
-	// m_pTransformCom->Set_Pos({ -50.f,0.f,150.f });
+	m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -44,7 +44,21 @@ HRESULT CWaterBomb::Ready_GameObject()
 
 void CWaterBomb::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
+
+	_vec3 vCartLook, vCartPos;
+
+	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
+	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
+
+	vCartPos += vCartLook * 300.f;
+
 	m_fTimer += fFixedDeltaTime;
+
+	if (m_fTimer > 1.6f)
+	{
+		m_pTransformCom->Set_Pos(vCartPos);
+	}
 
 	if (m_fTimer > 3.f)
 	{
@@ -56,9 +70,10 @@ _int CWaterBomb::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
-
-	//m_pLayer->Delete_GameObject(this);
+	if (m_fTimer > 1.75f)
+	{
+		CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
+	}
 
 	return iExit;
 }

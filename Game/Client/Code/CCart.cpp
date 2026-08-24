@@ -1239,23 +1239,8 @@ void CCart::CreateWaterBombObject()
 
 	pWaterBombThrow->SetLayer(m_pLayer);
 
-	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
-
-	_vec3 vScale, vCartLook, vCartPos;
-	vScale = m_pTransformCom->Get_Scale();
-	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
-	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
-
-	vCartPos += vCartLook * 300.f;
-
-
-	//pWaterBomb->Get_Transform()->Set_Pos(vCartPos);
-	//pWaterBombBody->Get_Transform()->Set_Pos(vCartPos);
-	//pWaterBomb->Set_Child(pWaterBombBody);
-
-	pWaterBomb->Get_Transform()->Set_Pos(vCartPos);
 	pWaterBomb->Set_Child(pWaterBombBody);
-	pWaterBombBody->Get_Transform()->Set_Pos({ 0.f, 0.f, 0.f });
+	pWaterBomb->Get_Transform()->Set_Pos({ 0.f, 0.f, 0.f });
 }
 
 void CCart::CreateMagnetAimObject()
@@ -1367,7 +1352,7 @@ void CCart::UseItem()
 		CreateBananaObject();
 		break;
 	case Engine::ITEM_WATERBOMB:
-		//CreateWaterBombObject();
+		CreateWaterBombObject();
 		break;
 	case Engine::ITEM_END:
 		break;

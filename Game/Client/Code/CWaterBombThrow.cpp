@@ -57,7 +57,7 @@ void CWaterBombThrow::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	pCartBody->Get_Transform()->Get_Info(INFO_UP, &vCartUp);
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 
-	vCartPos += vCartUp * 3.f;
+	vCartPos += vCartUp * 4.f;
 
 	m_pTransformCom->Set_Pos(vCartPos + vCartUp * m_fThrowHeight);
 
