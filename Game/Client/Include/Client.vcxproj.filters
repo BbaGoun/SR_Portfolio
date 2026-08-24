@@ -217,6 +217,36 @@
     <Filter Include="02. GameObject\Item\WaterBomb\WaterBombThrow">
       <UniqueIdentifier>{0664c967-8660-4258-8be3-a4df2247592a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\Inventory">
+      <UniqueIdentifier>{443dfc68-b0e8-4e29-992d-15e8ad0cae1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_InvenSlot">
+      <UniqueIdentifier>{b03628f0-522f-40e1-99cb-462e3618bc49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InvenSlot">
+      <UniqueIdentifier>{64d767c2-b491-4457-9c68-be2d9b09897f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InvenSlot\InvenSlotCart">
+      <UniqueIdentifier>{e00f7f40-4940-40b5-be88-a93a29336aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InvenSlot\InvneSlotBG">
+      <UniqueIdentifier>{5d05593f-d04c-45d4-942e-c94569cddeb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\CollisionStarEffect">
+      <UniqueIdentifier>{f12d7011-9ad7-42bc-b18f-19c89042af19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\DriftSpark">
+      <UniqueIdentifier>{8728e073-2a16-4a95-8b8c-bad6daf19700}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\RacingScene">
+      <UniqueIdentifier>{b5811a68-dba3-4a2f-8de3-36368e30bbef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager">
+      <UniqueIdentifier>{0562dd3f-34b6-4457-a331-193d2b502430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\CLoadMgr">
+      <UniqueIdentifier>{a6062789-bc8f-4b64-bb3d-4fa8fbaeae29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -411,6 +441,30 @@
     <ClInclude Include="..\Header\CWaterBombBody.h">
       <Filter>02. GameObject\Item\WaterBomb\WaterBombBody</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CInventoryScene.h">
+      <Filter>01. Scene\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_InvenSlot.h">
+      <Filter>02. GameObject\UI\UI_InvenSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInvenSlotCart.h">
+      <Filter>InvenSlot\InvenSlotCart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInvenSlotBG.h">
+      <Filter>InvenSlot\InvneSlotBG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCollisionStarEffect.h">
+      <Filter>02. GameObject\Cart\Effect\CollisionStarEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDriftSpark.h">
+      <Filter>02. GameObject\Cart\Effect\DriftSpark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRacingScene.h">
+      <Filter>01. Scene\RacingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLoadMgr.h">
+      <Filter>03. Manager\CLoadMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -595,6 +649,30 @@
     </ClCompile>
     <ClCompile Include="..\Code\CWaterBombBody.cpp">
       <Filter>02. GameObject\Item\WaterBomb\WaterBombBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInventoryScene.cpp">
+      <Filter>01. Scene\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_InvenSlot.cpp">
+      <Filter>02. GameObject\UI\UI_InvenSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInvenSlotCart.cpp">
+      <Filter>InvenSlot\InvenSlotCart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInvenSlotBG.cpp">
+      <Filter>InvenSlot\InvneSlotBG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCollisionStarEffect.cpp">
+      <Filter>02. GameObject\Cart\Effect\CollisionStarEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDriftSpark.cpp">
+      <Filter>02. GameObject\Cart\Effect\DriftSpark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRacingScene.cpp">
+      <Filter>01. Scene\RacingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLoadMgr.cpp">
+      <Filter>03. Manager\CLoadMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

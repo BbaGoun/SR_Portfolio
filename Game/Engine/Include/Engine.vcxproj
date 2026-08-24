@@ -53,6 +53,7 @@
     <ClInclude Include="..\Header\CSmoke.h" />
     <ClInclude Include="..\Header\CSphere_Collider.h" />
     <ClInclude Include="..\Header\CSpline.h" />
+    <ClInclude Include="..\Header\CStarParticle.h" />
     <ClInclude Include="..\Header\CTerrain2.h" />
     <ClInclude Include="..\Header\CTerrain3.h" />
     <ClInclude Include="..\Header\CTexture.h" />
@@ -107,6 +108,7 @@
     <ClCompile Include="..\Code\CSmoke.cpp" />
     <ClCompile Include="..\Code\CSphere_Collider.cpp" />
     <ClCompile Include="..\Code\CSpline.cpp" />
+    <ClCompile Include="..\Code\CStarParticle.cpp" />
     <ClCompile Include="..\Code\CTerrain2.cpp" />
     <ClCompile Include="..\Code\CTerrain3.cpp" />
     <ClCompile Include="..\Code\CTexture.cpp" />

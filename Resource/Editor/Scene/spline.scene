@@ -15,13 +15,13 @@
       cp_depth=10.000000
     END_CONTROL_POINT
     CONTROL_POINT
-      cp_pos=0.000000 0.000000 2.500000
+      cp_pos=1.608702 0.638227 2.500000
       cp_bank=0.000000
       cp_width=10.000000
       cp_depth=10.000000
     END_CONTROL_POINT
     CONTROL_POINT
-      cp_pos=0.000000 0.000000 7.500000
+      cp_pos=1.925967 0.636252 7.500000
       cp_bank=0.000000
       cp_width=10.000000
       cp_depth=10.000000
@@ -33,24 +33,10 @@
       cp_depth=10.000000
     END_CONTROL_POINT
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-    pos=-9.998343 0.000000 0.000000
+    pos=0.000000 0.000000 0.000000
     rot=0.000000 -0.000000 0.000000
     quat=0.000000 0.000000 0.000000 1.000000
     scale=1.000000 1.000000 1.000000
-  OBJECT
-    prefabPath=
-    belong=0
-    type=
-    name=Empty
-    tag=3
-    collisionLayer=0
-    cullDistance=0
-    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-      pos=9.998343 0.000000 0.000000
-      rot=0.000000 -0.000000 0.000000
-      quat=0.000000 0.000000 0.000000 1.000000
-      scale=1.000000 1.000000 1.000000
-  ENDOBJECT
 ENDOBJECT
 OBJECT
   prefabPath=..\..\..\Resource\Editor\Prefab\spline.prefab
@@ -69,13 +55,13 @@ OBJECT
       cp_depth=10.000000
     END_CONTROL_POINT
     CONTROL_POINT
-      cp_pos=0.000000 0.000000 2.500000
+      cp_pos=1.608702 0.638227 2.500000
       cp_bank=0.000000
       cp_width=10.000000
       cp_depth=10.000000
     END_CONTROL_POINT
     CONTROL_POINT
-      cp_pos=0.000000 0.000000 7.500000
+      cp_pos=1.925967 0.636252 7.500000
       cp_bank=0.000000
       cp_width=10.000000
       cp_depth=10.000000
@@ -87,22 +73,8 @@ OBJECT
       cp_depth=10.000000
     END_CONTROL_POINT
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-    pos=-0.039582 0.000000 0.000000
-    rot=0.000000 -0.000000 0.000000
-    quat=0.000000 0.000000 0.000000 1.000000
-    scale=1.000000 1.000000 1.000000
-  OBJECT
-    prefabPath=
-    belong=0
-    type=
-    name=Empty
-    tag=4
-    collisionLayer=0
-    cullDistance=0
-    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-      pos=0.039582 0.000000 0.000000
-      rot=0.000000 -0.000000 0.000000
-      quat=0.000000 0.000000 0.000000 1.000000
-      scale=1.000000 1.000000 1.000000
-  ENDOBJECT
+    pos=-1.784333 0.000000 14.094604
+    rot=0.000000 -48.885193 0.000000
+    quat=0.000000 -0.413781 0.000000 0.910376
+    scale=0.999999 1.000000 0.999999
 ENDOBJECT

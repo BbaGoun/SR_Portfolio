@@ -13,6 +13,7 @@ protected:
 
 public:
 	virtual		HRESULT		Ready_GameObject() override;
+	virtual		int			Update_GameObject(const _float& fDeltaTime) override;
 	virtual		void		Render_GameObject() override;
 
 	static CEmpty* Create(LPDIRECT3DDEVICE9 pGraphicDev);

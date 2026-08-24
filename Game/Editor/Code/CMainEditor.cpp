@@ -90,7 +90,7 @@ void CMainEditor::LateUpdate_MainEditor(const float& fDeltaTime)
 
 void CMainEditor::Render_MainEditor()
 {
-	m_pManagementClass->Render_Scene(m_pGraphicDev);
+	m_pManagementClass->Render_Scene(m_pGraphicDev, true);
 }
 
 void CMainEditor::InvalidateDeviceObjects()

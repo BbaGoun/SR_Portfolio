@@ -170,6 +170,14 @@ namespace Engine
             }
 
             // Spline
+			else if (swscanf_s(t, L"SampleUnit=%f", &x) == 1) {
+				if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom))
+					pSpline->Set_SampleUnit(x);
+			}
+			else if (swscanf_s(t, L"TextureUnit=%f", &x) == 1) {
+				if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom))
+					pSpline->Set_TextureUnit(x);
+			}
             else if (!wcscmp(t, L"CONTROL_POINT"))
             {
                 cp = {};
@@ -229,13 +237,12 @@ namespace Engine
 		writeIndent(pf, depth);
 		fwprintf(pf, L"OBJECT\n");
 
-
+		writeIndent(pf, depth + 1);
+		fwprintf(pf, L"type=%s\n", pObj->GetType());
 		writeIndent(pf, depth + 1);
 		fwprintf(pf, L"prefabPath=%s\n", pObj->Get_PrefabPath());
 		writeIndent(pf, depth + 1);
 		fwprintf(pf, L"belong=%d\n", pObj->Get_Belong() ? 1 : 0);
-		writeIndent(pf, depth + 1);
-		fwprintf(pf, L"type=%s\n", pObj->GetType());
 		writeIndent(pf, depth + 1);
 		fwprintf(pf, L"name=%s\n", pObj->GetName());
 		writeIndent(pf, depth + 1);
@@ -298,6 +305,10 @@ namespace Engine
 				}
 				writeCompHead(L"Mesh");
 				if (CSpline* pSpline = dynamic_cast<CSpline*>(pBuf)) {
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"SampleUnit=%f\n", pSpline->Get_SampleUnit());
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"TextureUnit=%f\n", pSpline->Get_TextureUnit());
 					auto& vecPoints = pSpline->Get_ControlPoints();
 					for (auto& cp : vecPoints) {
 						writeIndent(pf, depth + 2);
@@ -374,11 +385,11 @@ namespace Engine
 
 		const uint32_t guid = CManagement::GetInstance()->GenerateGuid();
 		pObj->SetGuid(guid);
+		if (pParent)
+			pParent->Set_Child(pObj);
 
 		wstring key = to_wstring(guid);
 		CManagement::GetInstance()->Add_GameObject(L"Default", key.c_str(), pObj);
-		if (pParent)
-			pParent->Set_Child(pObj);
 
 		wchar_t* t = nullptr;
 		while (st.Next(t))
@@ -392,12 +403,12 @@ namespace Engine
 				continue;
 			}
 
-			if (StartsWith(t, L"prefabPath="))
+			if (StartsWith(t, L"type="))
+				pObj->SetType(t + 5);
+			else if (StartsWith(t, L"prefabPath="))
 				pObj->Set_PrefabPath(t + 11);
 			else if (StartsWith(t, L"belong="))
 				pObj->Set_Belong(_wtoi(t + 7) != 0);
-			else if (StartsWith(t, L"type="))
-				pObj->SetType(t + 5);
 			else if (StartsWith(t, L"name="))
 				pObj->SetName(t + 5);
 			else if (StartsWith(t, L"tag="))
@@ -447,11 +458,11 @@ namespace Engine
 
 		const uint32_t guid = pScene->GenerateGuid();
 		pObj->SetGuid(guid);
+		if (pParent)
+			pParent->Set_Child(pObj);
 
 		wstring key = to_wstring(guid);
 		pScene->Add_GameObject(L"Default", key.c_str(), pObj);
-		if (pParent)
-			pParent->Set_Child(pObj);
 
 		wchar_t* t = nullptr;
 		while (st.Next(t))
@@ -465,12 +476,12 @@ namespace Engine
 				continue;
 			}
 
-			if (StartsWith(t, L"prefabPath="))
+			if (StartsWith(t, L"type="))
+				pObj->SetType(t + 5);
+			else if (StartsWith(t, L"prefabPath="))
 				pObj->Set_PrefabPath(t + 11);
 			else if (StartsWith(t, L"belong="))
 				pObj->Set_Belong(_wtoi(t + 7) != 0);
-			else if (StartsWith(t, L"type="))
-				pObj->SetType(t + 5);
 			else if (StartsWith(t, L"name="))
 				pObj->SetName(t + 5);
 			else if (StartsWith(t, L"tag="))
@@ -510,7 +521,6 @@ namespace Engine
 
 		return pObj;
 	}
-
 }
 
 #endif

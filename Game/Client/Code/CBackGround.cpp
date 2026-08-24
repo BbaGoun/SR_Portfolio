@@ -4,6 +4,7 @@
 #include "CProtoMgr.h"
 #include "CTexture.h"
 #include "CCameraMgr.h"
+#include "CRenderer.h"
 
 
 CBackGround::CBackGround(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
@@ -39,6 +40,7 @@ HRESULT CBackGround::Ready_GameObject()
 
 _int CBackGround::Update_GameObject(const _float& fDeltaTime)
 {
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 
 }

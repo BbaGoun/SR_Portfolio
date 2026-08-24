@@ -18,8 +18,10 @@ CSpline::CSpline(const CSpline& rhs)
 	, m_pTexEdit(rhs.m_pTexEdit)
 	, m_eSplineType(rhs.m_eSplineType)
 {
-	m_pTexNormal->AddRef();
-	m_pTexEdit->AddRef();
+	if(m_pTexNormal)
+		m_pTexNormal->AddRef();
+	if (m_pTexEdit)
+		m_pTexEdit->AddRef();
 }
 
 CSpline::~CSpline()
@@ -39,6 +41,9 @@ HRESULT CSpline::Ready_CSplineCom()
 
 HRESULT CSpline::Ready_Buffer()
 {
+	m_vecVertices.clear();
+	m_vecFaces.clear();
+
 	m_dwVtxCnt = m_vecTempVB.size();
 	if (m_dwVtxCnt < 3)
 		return E_FAIL;
@@ -58,22 +63,27 @@ HRESULT CSpline::Ready_Buffer()
 		return E_FAIL;
 
 	VTXTEX* vertices = nullptr;
+	m_vecVertices.resize(m_dwVtxCnt);
 
 	m_pVB->Lock(0, 0, (void**)&vertices, 0);
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		vertices[i] = m_vecTempVB[i];
+		m_vecVertices[i] = m_vecTempVB[i];
 	}
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(vertices[i].vPosition);
 	}
+	m_minVtx.y -= 1.f;
+	m_maxVtx.y += 1.f;
 
 	SetBoundingBox();
 
 	m_pVB->Unlock();
 
 	INDEX32* indices = nullptr;
+	m_vecFaces.resize(m_dwTriCnt);
 
 	m_pIB->Lock(0, 0, (void**)&indices, 0);
 
@@ -85,11 +95,21 @@ HRESULT CSpline::Ready_Buffer()
 				indices[i]._0 = i;
 				indices[i]._1 = i + 2;
 				indices[i]._2 = i + 1;
+				m_vecFaces[i].indices = {
+					indices[i]._0,
+					indices[i]._1,
+					indices[i]._2
+				};
 			}
 			else {
 				indices[i]._0 = i;
 				indices[i]._1 = i + 1;
 				indices[i]._2 = i + 2;
+				m_vecFaces[i].indices = {
+					indices[i]._0,
+					indices[i]._1,
+					indices[i]._2
+				};
 			}
 		}
 		break;
@@ -270,9 +290,9 @@ void CSpline::Render_Points()
 	LPDIRECT3DVERTEXBUFFER9 _pVB;
 	m_pGraphicDev->CreateVertexBuffer(
 		m_vecControlPoint.size() * sizeof(VTXTEX),
-		D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY,
+		D3DUSAGE_POINTS,
 		FVF_TEX,
-		D3DPOOL_DEFAULT,
+		D3DPOOL_MANAGED,
 		&_pVB,
 		0);
 
@@ -546,7 +566,7 @@ CComponent* CSpline::Clone()
 
 void CSpline::Free()
 {
-	m_pTexNormal->Release();
-	m_pTexEdit->Release();
+	Safe_Release(m_pTexNormal);
+	Safe_Release(m_pTexEdit);
 	CVIBuffer::Free();
 }

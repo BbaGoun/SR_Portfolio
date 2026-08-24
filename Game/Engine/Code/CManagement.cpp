@@ -162,9 +162,10 @@ void CManagement::LateUpdate_Scene(const _float& fDeltaTime)
     m_pScene->LateUpdate_Scene(fDeltaTime);
 }
 
-void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
+void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev, bool bEditor)
 {
-    CRenderer::GetInstance()->Render_GameObject(pGraphicDev);
+    if(!bEditor)
+        CRenderer::GetInstance()->Render_GameObject(pGraphicDev);
 
     if (nullptr == m_pScene)
         return;

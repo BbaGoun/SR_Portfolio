@@ -144,13 +144,14 @@ void CRenderer::Ready_RenderTarget(LPDIRECT3DDEVICE9& pGraphicDev, float fWidth 
 
 void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 {
-	IDirect3DSurface9* pOldRT = nullptr;
-	IDirect3DSurface9* pOldDS = nullptr;
-	pGraphicDev->GetRenderTarget(0, &pOldRT);
-	pGraphicDev->GetDepthStencilSurface(&pOldDS);
 
 	for (auto& pair : m_mapRenderTarget)
 	{
+		IDirect3DSurface9* pOldRT = nullptr;
+		IDirect3DSurface9* pOldDS = nullptr;
+		pGraphicDev->GetRenderTarget(0, &pOldRT);
+		pGraphicDev->GetDepthStencilSurface(&pOldDS);
+
 		RTINFO* pInfo = pair.second;   
 
 		pGraphicDev->SetRenderTarget(0, pInfo->pRTSurface);         
@@ -171,12 +172,13 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 			pObj->Render_GameObject();
 
 		pGraphicDev->EndScene();
+
+		pGraphicDev->SetRenderTarget(0, pOldRT);
+		pGraphicDev->SetDepthStencilSurface(pOldDS);
+		pOldRT->Release();
+		pOldDS->Release();
 	}
 
-	pGraphicDev->SetRenderTarget(0, pOldRT);
-	pGraphicDev->SetDepthStencilSurface(pOldDS);
-	pOldRT->Release();
-	pOldDS->Release();
 }
 
 void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -240,10 +242,10 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	m_RenderGroup[RENDER_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
-		{
-			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
-		});
+	//m_RenderGroup[RENDER_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+	//	{
+	//		return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+	//	});
 
 	for (auto& pObj : m_RenderGroup[RENDER_UI])
 		pObj->Render_GameObject();

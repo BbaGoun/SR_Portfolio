@@ -109,7 +109,7 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	UpdateThunder();
 	UpdateMagnet(fDeltaTime);
 
-	//OutputCarState();
+	OutputCarState();
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -547,146 +547,321 @@ void CCart::UpdateThunder()
 
 void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 {
-	CLand3* pLand = dynamic_cast<CLand3*>(CManagement::GetInstance()->Find_GameObjectByTag(L"Environment", L"Env_Land3"));
-	CTerrain3* pTerrain3 = pLand->Get_Component<CTerrain3>();
+	auto& tracks = CManagement::GetInstance()->Find_GameObjectsByTag(L"Default", L"Track");
+	if (tracks.empty())
+		return;
 
-	float fMaxLandY = -123456789;
-	_vec3 originPos = pos;
-	_vec3 vWorldPos;
+	int a = 5;
 
-	// for(auto& pLand : vLands)
-	if (pLand->CheckInTerrain(pos))
-	{
-		// Land3의 로컬로 내림
-		_matrix* pMatWorld = pLand->Get_Component<CTransform>()->Get_World();
-		_matrix matInvWorld;
-		D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
-		_vec3 vLocalPos;
-		D3DXVec3TransformCoord(&vLocalPos, &pos, &matInvWorld);
+	CCube_Collider* pCol = Get_ComponentSpread<CCube_Collider>();
 
-		// 평면 구하기
-		//D3DXPLANE plane = pTerrain3->GetPlane(pos);
+	D3DXPLANE plane;
+	bool bFind = false;
 
-		D3DXPLANE plane;
-		float fMinDist = 123456789;
-		pTerrain3->GetPlane(vLocalPos, &plane, &fMinDist);
+	for (auto& track : tracks) {
+		CSpline* pSpline = track->Get_Component<CSpline>();
+		DirectX::BoundingBox box;
+		pSpline->GetBoundingBox(&box);
 
-		float fLocalPlaneY = -(plane.a * vLocalPos.x + plane.c * vLocalPos.z + plane.d) / plane.b;
+		// spline의 모델 스페이스로 보내기 위한 역행렬
+		_matrix matTrack, matInvTrack;
+		matTrack = *track->Get_Transform()->Get_World();
+		D3DXMatrixInverse(&matInvTrack, 0, &matTrack);
 
-		// 법선 구하기
-		m_vTerrainNormal = { plane.a ,plane.b ,plane.c };
-		_matrix matNormal;
-		D3DXMatrixTranspose(&matNormal, &matInvWorld);
-		D3DXVec3TransformNormal(&m_vTerrainNormal, &m_vTerrainNormal, &matNormal);
-		D3DXVec3Normalize(&m_vTerrainNormal, &m_vTerrainNormal);
+		// 플레이어의 박스 콜라이더를 spline의 모델 스페이스로 보낸다.
+		// 박스 콜라이더의 center를 변환해서 다시 넣는 방식
+		_vec3 vCartOldCenter = ToVec3(pCol->Get_Info().Center);
+		_vec3 vCartModelCenter;
+		D3DXVec3TransformCoord(&vCartModelCenter, &vCartOldCenter, &matInvTrack);
+		pCol->Set_Center(vCartModelCenter);
 
-		// Local에서의 CartPosition
-		vLocalPos = { vLocalPos.x,fLocalPlaneY,vLocalPos.z };
+		// 트랙의 boundingbox와 플레이어의 콜라이더가 닿는지 검사
+		if (box.Intersects(pCol->Get_Info())) {
+			// 닿으면 이제 spline이 갖고 있는 면에 대해서 raycast
+			vector<VTXTEX> vecVertices = pSpline->GetVertices();
+			vector<FACE32> vecFaces = pSpline->GetFaces();
 
-		// World에서의 CartPosition
-		D3DXVec3TransformCoord(&vWorldPos, &vLocalPos, pMatWorld);
+			D3DXVECTOR3 vRayPos = { vCartModelCenter.x, vCartModelCenter.y + 1.5f, vCartModelCenter.z };
+			D3DXVECTOR3 vRayDir = { 0.f, -1.f, 0.f };
 
-		float fDeltaY = originPos.y - vWorldPos.y;
-		// m_eCart_State 업데이트
-		if (m_eCartState == CART_STATE_GROUND) // Ground 유지
-		{
-			if (fDeltaY <= 0.1f)
+			for (int i = 0; i < vecFaces.size(); ++i)
 			{
-				m_fAirTime = 0.f;
-				m_eCartState = CART_STATE_GROUND;
-				m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
+				_vec3 p0 = vecVertices[vecFaces[i].indices._0].vPosition;
+				_vec3 p1 = vecVertices[vecFaces[i].indices._1].vPosition;
+				_vec3 p2 = vecVertices[vecFaces[i].indices._2].vPosition;
 
-				// 경사면에 맞게 카트 몸체 회전
-				_vec3 vCartUp;
-				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
-				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
-
-				_vec3 vAxis;
-				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
-
-				D3DXQUATERNION q;
-				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
-
-				if (m_vTerrainNormal != _vec3({ 0,1,0 }))
+				float u, v, fDist;
+				if (D3DXIntersectTri(&p0, &p1, &p2, &vRayPos, &vRayDir, &u, &v, &fDist))
 				{
-					m_PreQuaternion = q;
+					D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
+					bFind = true;
+					break;
+				}
+			}
+		}
+		pCol->Set_Center(vCartOldCenter);
+		if (bFind)
+		{
+			float fLocalPlaneY = -(plane.a * vCartModelCenter.x + plane.c * vCartModelCenter.z + plane.d) / plane.b;
+
+			// 법선 구하기
+			m_vTerrainNormal = { plane.a ,plane.b ,plane.c };
+			_matrix matNormal;
+			D3DXMatrixTranspose(&matNormal, &matInvTrack);
+			D3DXVec3TransformNormal(&m_vTerrainNormal, &m_vTerrainNormal, &matNormal);
+			D3DXVec3Normalize(&m_vTerrainNormal, &m_vTerrainNormal);
+
+			// Local에서의 CartPosition
+			vCartModelCenter = { vCartModelCenter.x,fLocalPlaneY,vCartModelCenter.z };
+
+			_vec3 vWorldPos;
+			// World에서의 CartPosition
+			D3DXVec3TransformCoord(&vWorldPos, &vCartModelCenter, &matTrack);
+
+			float fDeltaY = vCartOldCenter.y - vWorldPos.y;
+			// m_eCart_State 업데이트
+			if (m_eCartState == CART_STATE_GROUND) // Ground 유지
+			{
+				if (fDeltaY <= 0.1f)
+				{
+					m_fAirTime = 0.f;
+					m_eCartState = CART_STATE_GROUND;
+					m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
+
+					// 경사면에 맞게 카트 몸체 회전
+					_vec3 vCartUp;
+					m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+					float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+
+					_vec3 vAxis;
+					D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
+
+					D3DXQUATERNION q;
+					D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+
+					if (m_vTerrainNormal != _vec3({ 0,1,0 }))
+					{
+						m_PreQuaternion = q;
+						m_iFlatFrameCnt = 0;
+					}
+					else
+					{
+						++m_iFlatFrameCnt;
+						if (m_iFlatFrameCnt > 3)
+							m_PreQuaternion = { 0,0,0,1 };
+					}
+				}
+				else // 점프 시작 
+				{
+					m_eCartState = CART_STATE_AIR;
+					m_fAirTime += fDeltaTime;
+				}
+			}
+			else if (m_eCartState == CART_STATE_AIR) // 착지
+			{
+				if (fDeltaY <= 0.1f)
+				{
+					m_fAirTime = 0.f;
+					m_eCartState = CART_STATE_GROUND;
+					m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
+
+					// 경사면에 맞게 카트 몸체 회전
+					_vec3 vCartUp;
+					m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+					float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+
+					_vec3 vAxis;
+					D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
+
+					D3DXQUATERNION q;
+					D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+
+					if (m_vTerrainNormal == _vec3({ 0,1,0 }))
+						m_PreQuaternion = { 0,0,0,1 };
+					else
+						m_PreQuaternion = q;
+				}
+				else // 점프 유지
+				{
+					m_eCartState = CART_STATE_AIR;
+					m_fAirTime += fDeltaTime;
+				}
+			}
+
+			else //맵 전체를 지형으로 덮으면 else 부분은 필요 없을듯?
+			{
+				if (vCartOldCenter.y <= 0.f)
+				{
+					m_eCartState = CART_STATE_GROUND;
+					m_pTransformCom->Set_Pos({ vCartOldCenter.x,0,vCartOldCenter.z });
+					m_vTerrainNormal = { 0,1,0 };
+					m_PreQuaternion = { 0,0,0,1 };
+				}
+				else
+				{
+					m_eCartState = CART_STATE_AIR;
+					m_fAirTime += fDeltaTime;
 					m_iFlatFrameCnt = 0;
 				}
-				else
-				{
-					++m_iFlatFrameCnt;
-					if (m_iFlatFrameCnt > 3)
-						m_PreQuaternion = { 0,0,0,1 };
-				}
 			}
-			else // 점프 시작 
-			{
-				m_eCartState = CART_STATE_AIR;
-				m_fAirTime += fDeltaTime;
-			}
-		}
-		else if(m_eCartState == CART_STATE_AIR) // 착지
-		{
-			if (fDeltaY <= 0.1f)
-			{
-				m_fAirTime = 0.f;
-				m_eCartState = CART_STATE_GROUND;
-				m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
 
-				// 경사면에 맞게 카트 몸체 회전
-				_vec3 vCartUp;
+			m_pTransformCom->Multiple_Quaternion(&m_PreQuaternion);
+			if (m_eCartState == CART_STATE_AIR)
+			{
+				_vec3 vCartUp, vUp = { 0,1,0 };
 				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
-				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &vUp));
 
 				_vec3 vAxis;
-				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
+				D3DXVec3Cross(&vAxis, &vCartUp, &vUp);
 
 				D3DXQUATERNION q;
-				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
-
-				if (m_vTerrainNormal == _vec3({ 0,1,0 }))
-					m_PreQuaternion = {0,0,0,1};
-				else
-					m_PreQuaternion = q;
+				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian * m_fAirTime);
+				m_pTransformCom->Multiple_Quaternion(&q);
 			}
-			else // 점프 유지
-			{
-				m_eCartState = CART_STATE_AIR;
-				m_fAirTime += fDeltaTime;
-			}
+			break;
 		}
 	}
-	else //맵 전체를 지형으로 덮으면 else 부분은 필요 없을듯?
-	{
-		if (originPos.y  <= 0.f)
-		{
-			m_eCartState = CART_STATE_GROUND;
-			m_pTransformCom->Set_Pos({ originPos.x,0,originPos.z });
-			m_vTerrainNormal = { 0,1,0 };
-			m_PreQuaternion = { 0,0,0,1 };
-		}
-		else
-		{
-			m_eCartState = CART_STATE_AIR;
-			m_fAirTime += fDeltaTime;
-			m_iFlatFrameCnt = 0;
-		}
-	}
+	
 
-	m_pTransformCom->Multiple_Quaternion(&m_PreQuaternion);
-	if (m_eCartState == CART_STATE_AIR)
-	{
-		_vec3 vCartUp, vUp = { 0,1,0 };
-		m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
-		float fRadian = acosf(D3DXVec3Dot(&vCartUp, &vUp));
-	
-		_vec3 vAxis;
-		D3DXVec3Cross(&vAxis, &vCartUp, &vUp);
-	
-		D3DXQUATERNION q;
-		D3DXQuaternionRotationAxis(&q, &vAxis, fRadian* m_fAirTime);
-		m_pTransformCom->Multiple_Quaternion(&q);
-	}
+
+	//float fMaxLandY = -123456789;
+	//_vec3 originPos = pos;
+	//_vec3 vWorldPos;
+	//
+	//// for(auto& pLand : vLands)
+	//if (pLand->CheckInTerrain(pos))
+	//{
+	//	// Land3의 로컬로 내림
+	//	_matrix* pMatWorld = pLand->Get_Component<CTransform>()->Get_World();
+	//	_matrix matInvWorld;
+	//	D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
+	//	_vec3 vLocalPos;
+	//	D3DXVec3TransformCoord(&vLocalPos, &pos, &matInvWorld);
+	//
+	//	// 평면 구하기
+	//	//D3DXPLANE plane = pTerrain3->GetPlane(pos);
+	//
+	//	D3DXPLANE plane;
+	//	float fMinDist = 123456789;
+	//	pTerrain3->GetPlane(vLocalPos, &plane, &fMinDist);
+	//
+	//	float fLocalPlaneY = -(plane.a * vLocalPos.x + plane.c * vLocalPos.z + plane.d) / plane.b;
+	//
+	//	// 법선 구하기
+	//	m_vTerrainNormal = { plane.a ,plane.b ,plane.c };
+	//	_matrix matNormal;
+	//	D3DXMatrixTranspose(&matNormal, &matInvWorld);
+	//	D3DXVec3TransformNormal(&m_vTerrainNormal, &m_vTerrainNormal, &matNormal);
+	//	D3DXVec3Normalize(&m_vTerrainNormal, &m_vTerrainNormal);
+	//
+	//	// Local에서의 CartPosition
+	//	vLocalPos = { vLocalPos.x,fLocalPlaneY,vLocalPos.z };
+	//
+	//	// World에서의 CartPosition
+	//	D3DXVec3TransformCoord(&vWorldPos, &vLocalPos, pMatWorld);
+	//
+	//	float fDeltaY = originPos.y - vWorldPos.y;
+	//	// m_eCart_State 업데이트
+	//	if (m_eCartState == CART_STATE_GROUND) // Ground 유지
+	//	{
+	//		if (fDeltaY <= 0.1f)
+	//		{
+	//			m_fAirTime = 0.f;
+	//			m_eCartState = CART_STATE_GROUND;
+	//			m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
+	//
+	//			// 경사면에 맞게 카트 몸체 회전
+	//			_vec3 vCartUp;
+	//			m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+	//			float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+	//
+	//			_vec3 vAxis;
+	//			D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
+	//
+	//			D3DXQUATERNION q;
+	//			D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+	//
+	//			if (m_vTerrainNormal != _vec3({ 0,1,0 }))
+	//			{
+	//				m_PreQuaternion = q;
+	//				m_iFlatFrameCnt = 0;
+	//			}
+	//			else
+	//			{
+	//				++m_iFlatFrameCnt;
+	//				if (m_iFlatFrameCnt > 3)
+	//					m_PreQuaternion = { 0,0,0,1 };
+	//			}
+	//		}
+	//		else // 점프 시작 
+	//		{
+	//			m_eCartState = CART_STATE_AIR;
+	//			m_fAirTime += fDeltaTime;
+	//		}
+	//	}
+	//	else if(m_eCartState == CART_STATE_AIR) // 착지
+	//	{
+	//		if (fDeltaY <= 0.1f)
+	//		{
+	//			m_fAirTime = 0.f;
+	//			m_eCartState = CART_STATE_GROUND;
+	//			m_pTransformCom->Set_Pos({ vWorldPos.x,vWorldPos.y,vWorldPos.z });
+	//
+	//			// 경사면에 맞게 카트 몸체 회전
+	//			_vec3 vCartUp;
+	//			m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+	//			float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+	//
+	//			_vec3 vAxis;
+	//			D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
+	//
+	//			D3DXQUATERNION q;
+	//			D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+	//
+	//			if (m_vTerrainNormal == _vec3({ 0,1,0 }))
+	//				m_PreQuaternion = {0,0,0,1};
+	//			else
+	//				m_PreQuaternion = q;
+	//		}
+	//		else // 점프 유지
+	//		{
+	//			m_eCartState = CART_STATE_AIR;
+	//			m_fAirTime += fDeltaTime;
+	//		}
+	//	}
+	//}
+	//else //맵 전체를 지형으로 덮으면 else 부분은 필요 없을듯?
+	//{
+	//	if (originPos.y  <= 0.f)
+	//	{
+	//		m_eCartState = CART_STATE_GROUND;
+	//		m_pTransformCom->Set_Pos({ originPos.x,0,originPos.z });
+	//		m_vTerrainNormal = { 0,1,0 };
+	//		m_PreQuaternion = { 0,0,0,1 };
+	//	}
+	//	else
+	//	{
+	//		m_eCartState = CART_STATE_AIR;
+	//		m_fAirTime += fDeltaTime;
+	//		m_iFlatFrameCnt = 0;
+	//	}
+	//}
+	//
+	//m_pTransformCom->Multiple_Quaternion(&m_PreQuaternion);
+	//if (m_eCartState == CART_STATE_AIR)
+	//{
+	//	_vec3 vCartUp, vUp = { 0,1,0 };
+	//	m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+	//	float fRadian = acosf(D3DXVec3Dot(&vCartUp, &vUp));
+	//
+	//	_vec3 vAxis;
+	//	D3DXVec3Cross(&vAxis, &vCartUp, &vUp);
+	//
+	//	D3DXQUATERNION q;
+	//	D3DXQuaternionRotationAxis(&q, &vAxis, fRadian* m_fAirTime);
+	//	m_pTransformCom->Multiple_Quaternion(&q);
+	//}
 }
 
 void CCart::UpdateGravity()
