@@ -241,6 +241,9 @@
     <ClInclude Include="..\Header\CUI_Menu.h" />
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
     <ClInclude Include="..\Header\CUI_Timer.h" />
+    <ClInclude Include="..\Header\CWaterBomb.h" />
+    <ClInclude Include="..\Header\CWaterBombBody.h" />
+    <ClInclude Include="..\Header\CWaterBombThrow.h" />
     <ClInclude Include="..\Header\CWheel.h" />
     <ClInclude Include="..\Header\CRacingScene.h" />
     <ClInclude Include="Client.h" />
@@ -259,6 +262,9 @@
     <ClCompile Include="..\Code\CLoadMgr.cpp" />
     <ClCompile Include="..\Code\CSkidMark.cpp" />
     <ClCompile Include="..\Code\CSmokeEffect.cpp" />
+    <ClCompile Include="..\Code\CWaterBomb.cpp" />
+    <ClCompile Include="..\Code\CWaterBombBody.cpp" />
+    <ClCompile Include="..\Code\CWaterBombThrow.cpp" />
     <ClCompile Include="..\Code\CUI_InvenSlot.cpp" />
     <ClCompile Include="..\Code\CInvenSlotCart.cpp" />
     <ClCompile Include="..\Code\CRacingScene.cpp" />

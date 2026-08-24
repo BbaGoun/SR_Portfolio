@@ -69,6 +69,7 @@ public:
 	void			CreateThunderCloudObject();
 	void			CreateMissileObject();	
 	void			CreateMagnetObject();
+	void			CreateWaterBombObject();
 	void			CreateTargetAimObject();	
 	void			CreateMissileAimObject();
 	void			CreateMagnetAimObject();
@@ -90,6 +91,7 @@ private:
 	bool			m_bRainbowUI;
 	_bool			m_bMagnet;
 	_float			m_fMagnetTimer;
+	_bool			m_bUseItem;
 
 	float			m_fNormalTurnAngle;
 	float			m_fBoostTurnAngle;

@@ -208,6 +208,15 @@
     <Filter Include="02. GameObject\Cart\Effect\SmokeEffect">
       <UniqueIdentifier>{0e51cd6b-a3ef-4aa9-aa0f-1ecb58b27ae7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\WaterBomb">
+      <UniqueIdentifier>{76cf2e06-aad4-4100-a3e2-d55344215ad5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\WaterBomb\WaterBombBody">
+      <UniqueIdentifier>{0395d4fa-385f-41b2-ba98-249f1f40dc51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\WaterBomb\WaterBombThrow">
+      <UniqueIdentifier>{0664c967-8660-4258-8be3-a4df2247592a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="01. Scene\Inventory">
       <UniqueIdentifier>{443dfc68-b0e8-4e29-992d-15e8ad0cae1a}</UniqueIdentifier>
     </Filter>
@@ -423,6 +432,15 @@
     <ClInclude Include="..\Header\CSmokeEffect.h">
       <Filter>02. GameObject\Cart\Effect\SmokeEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWaterBomb.h">
+      <Filter>02. GameObject\Item\WaterBomb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWaterBombThrow.h">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombThrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWaterBombBody.h">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombBody</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CInventoryScene.h">
       <Filter>01. Scene\Inventory</Filter>
     </ClInclude>
@@ -622,6 +640,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSmokeEffect.cpp">
       <Filter>02. GameObject\Cart\Effect\SmokeEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterBomb.cpp">
+      <Filter>02. GameObject\Item\WaterBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterBombThrow.cpp">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombThrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterBombBody.cpp">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CInventoryScene.cpp">
       <Filter>01. Scene\Inventory</Filter>
