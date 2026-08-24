@@ -270,9 +270,9 @@ void CSpline::Render_Points()
 	LPDIRECT3DVERTEXBUFFER9 _pVB;
 	m_pGraphicDev->CreateVertexBuffer(
 		m_vecControlPoint.size() * sizeof(VTXTEX),
-		D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY,
+		D3DUSAGE_POINTS,
 		FVF_TEX,
-		D3DPOOL_DEFAULT,
+		D3DPOOL_MANAGED,
 		&_pVB,
 		0);
 
