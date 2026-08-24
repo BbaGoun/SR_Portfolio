@@ -11,6 +11,8 @@
 #include "CLoading.h"
 #include "CUI_Menu.h"
 #include "CInventoryScene.h"
+#include "CRacingScene.h"
+#include "CDInputMgr.h"
 
 CStartMenu::CStartMenu(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -47,7 +49,9 @@ _int CStartMenu::Update_Scene(const _float& fDeltaTime)
 	if (GetAsyncKeyState('M'))
 	{
 
-		Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
+		//Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
+		//Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
+		Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
 
 		if (nullptr == pStage)
 			return E_FAIL;

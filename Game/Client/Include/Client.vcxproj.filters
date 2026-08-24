@@ -229,6 +229,15 @@
     <Filter Include="02. GameObject\Cart\Effect\DriftSpark">
       <UniqueIdentifier>{8728e073-2a16-4a95-8b8c-bad6daf19700}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\RacingScene">
+      <UniqueIdentifier>{b5811a68-dba3-4a2f-8de3-36368e30bbef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager">
+      <UniqueIdentifier>{0562dd3f-34b6-4457-a331-193d2b502430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\CLoadMgr">
+      <UniqueIdentifier>{a6062789-bc8f-4b64-bb3d-4fa8fbaeae29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -432,6 +441,12 @@
     <ClInclude Include="..\Header\CDriftSpark.h">
       <Filter>02. GameObject\Cart\Effect\DriftSpark</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CRacingScene.h">
+      <Filter>01. Scene\RacingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLoadMgr.h">
+      <Filter>03. Manager\CLoadMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -625,6 +640,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDriftSpark.cpp">
       <Filter>02. GameObject\Cart\Effect\DriftSpark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRacingScene.cpp">
+      <Filter>01. Scene\RacingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLoadMgr.cpp">
+      <Filter>03. Manager\CLoadMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

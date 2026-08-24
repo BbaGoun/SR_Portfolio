@@ -108,7 +108,7 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,7 +131,7 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -152,7 +152,7 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -175,7 +175,7 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -202,6 +202,7 @@
     <ClInclude Include="..\Header\CMissile.h" />
     <ClInclude Include="..\Header\CMissileBody.h" />
     <ClInclude Include="..\Header\CMissileTarget.h" />
+    <ClInclude Include="..\Header\CLoadMgr.h" />
     <ClInclude Include="..\Header\CSkidMark.h" />
     <ClInclude Include="..\Header\CSmokeEffect.h" />
     <ClInclude Include="..\Header\CUI_InvenSlot.h" />
@@ -241,6 +242,7 @@
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
     <ClInclude Include="..\Header\CUI_Timer.h" />
     <ClInclude Include="..\Header\CWheel.h" />
+    <ClInclude Include="..\Header\CRacingScene.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -254,10 +256,12 @@
     <ClCompile Include="..\Code\CInventoryScene.cpp" />
     <ClCompile Include="..\Code\CMagnetBody.cpp" />
     <ClCompile Include="..\Code\CItemBox.cpp" />
+    <ClCompile Include="..\Code\CLoadMgr.cpp" />
     <ClCompile Include="..\Code\CSkidMark.cpp" />
     <ClCompile Include="..\Code\CSmokeEffect.cpp" />
     <ClCompile Include="..\Code\CUI_InvenSlot.cpp" />
     <ClCompile Include="..\Code\CInvenSlotCart.cpp" />
+    <ClCompile Include="..\Code\CRacingScene.cpp" />
     <ClCompile Include="CUI_Menu.cpp" />
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CBanana.cpp" />

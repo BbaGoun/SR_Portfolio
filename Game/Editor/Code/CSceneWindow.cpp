@@ -4,6 +4,7 @@
 #include "CCalculator.h"
 #include "CCollider.h"
 #include "CSpline.h"
+#include "CRenderer.h"
 
 CSceneWindow::CSceneWindow() : CWindow()
 , m_pSceneTex(nullptr)
@@ -171,13 +172,15 @@ void CSceneWindow::Update_Window()
         m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
         m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 
+        CRenderer::GetInstance()->Render_GameObject(m_pGraphicDev);
+
         // 오브젝트 목록을 그림.
         for (auto& p : map) {
             for (auto& pObj : p.second) {
                 if (pObj == nullptr)
                     continue;
 
-                pObj->Render_GameObject();
+                //pObj->Render_GameObject();
 
                 if (g_bSelected && (pObj->GetGuid() == g_uSelected)) {
                     if (!g_bEdit) {
@@ -244,7 +247,7 @@ void CSceneWindow::Update_Window()
             }
         }
         else if (pSel && g_bEdit) {
-            if (g_bPointSelected) {
+            if (g_bPointSelected && g_uPointSelected != 0) {
                 CSpline* pSpline = pSel->Get_Component<CSpline>();
 
                 ControlPoint* cp = pSpline->Get_ControlPoint(g_uPointSelected);
