@@ -51,15 +51,18 @@ _int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 
 void CDynamicCamera::LateUpdate_GameObject(const _float& fTimeDelta)
 {
-	Key_Input(fTimeDelta);
+	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
+		Key_Input(fTimeDelta);
 
-	if (m_bFix)
-	{
-		Mouse_Move();
-		Mouse_Fix();
+		if (m_bFix)
+		{
+			Mouse_Move();
+			Mouse_Fix();
+		}
+
+		CCamera::LateUpdate_GameObject(fTimeDelta);
+		CCameraMgr::GetInstance()->UpdateMainCameraInfo(&m_matView, &m_matProj);
 	}
-
-	CCamera::LateUpdate_GameObject(fTimeDelta);	
 }
 
 void CDynamicCamera::Key_Input(const _float& fTimeDelta)

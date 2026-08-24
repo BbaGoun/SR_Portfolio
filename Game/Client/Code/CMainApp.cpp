@@ -7,6 +7,8 @@
 #include "CCameraMgr.h"
 #include "CRenderer.h"
 #include "CCollisionMgr.h"
+#include "CLoadMgr.h"
+
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr)
 	, m_pManagementClass(CManagement::GetInstance())
@@ -31,6 +33,8 @@ HRESULT CMainApp::Ready_MainApp()
 	}
 
 #endif // _DEBUG
+
+	CLoadMgr::GetInstance()->ReadyCreateMap();
 
 	if (FAILED(Ready_DefaultSetting(&m_pGraphicDev)))
 		return E_FAIL;
@@ -195,4 +199,5 @@ void CMainApp::Free()
 	CFontMgr::DestroyInstance();
 	CCameraMgr::DestroyInstance();
 	CRenderer::DestroyInstance();
+	CLoadMgr::DestroyInstance();
 }

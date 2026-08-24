@@ -208,6 +208,15 @@
     <Filter Include="02. GameObject\Cart\Effect\SmokeEffect">
       <UniqueIdentifier>{0e51cd6b-a3ef-4aa9-aa0f-1ecb58b27ae7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\RacingScene">
+      <UniqueIdentifier>{b5811a68-dba3-4a2f-8de3-36368e30bbef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager">
+      <UniqueIdentifier>{0562dd3f-34b6-4457-a331-193d2b502430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\CLoadMgr">
+      <UniqueIdentifier>{a6062789-bc8f-4b64-bb3d-4fa8fbaeae29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -393,6 +402,12 @@
     <ClInclude Include="..\Header\CSmokeEffect.h">
       <Filter>02. GameObject\Cart\Effect\SmokeEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CRacingScene.h">
+      <Filter>01. Scene\RacingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLoadMgr.h">
+      <Filter>03. Manager\CLoadMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -568,6 +583,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSmokeEffect.cpp">
       <Filter>02. GameObject\Cart\Effect\SmokeEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRacingScene.cpp">
+      <Filter>01. Scene\RacingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLoadMgr.cpp">
+      <Filter>03. Manager\CLoadMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
