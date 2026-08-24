@@ -43,6 +43,8 @@
 #include "CMagnetBody.h"
 #include "CItemBox.h"
 #include "CSmokeEffect.h"
+#include "CWaterBombBody.h"
+#include "CWaterBomb.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -445,6 +447,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 
 	////////////////////////////////////////////////////////////////////////////////////////
+	// 미사일 타겟
 	CGameObject* pMissileTarget = CMissileTarget::Create(m_pGraphicDev);
 	
 	if (pMissileTarget == nullptr)
@@ -453,6 +456,26 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget", pMissileTarget)))
 		return E_FAIL;
   
+
+	// 워터밤 반구
+	CGameObject* pWaterBombBody = CWaterBombBody::Create(m_pGraphicDev);
+
+	if (pWaterBombBody == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_WaterBombBody", pWaterBombBody)))
+		return E_FAIL;
+	
+
+	// 워터밤 물리
+	CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
+
+	if (pWaterBomb == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_WaterBomb", pWaterBomb)))
+		return E_FAIL;
+
 	return S_OK;
 }
 

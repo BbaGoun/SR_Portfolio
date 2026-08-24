@@ -1086,6 +1086,7 @@ void CCart::UseItem()
 		CreateBananaObject();
 		break;
 	case Engine::ITEM_WATERBOMB:
+		//CreateWaterBombObject();
 		break;
 	case Engine::ITEM_END:
 		break;
