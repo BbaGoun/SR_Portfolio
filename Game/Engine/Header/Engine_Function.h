@@ -243,11 +243,13 @@ namespace Engine
 		return (f * (HighBound - LowBound)) + LowBound;
 	}
 
-	inline void GetRandomBector(_vec3* vOut, _vec3* vMin, _vec3* vMax)
+	inline void GetRandomVector(_vec3* vOut, _vec3* vMin, _vec3* vMax)
 	{
 		vOut->x = GetRandomFloat(vMin->x, vMax->x);
 		vOut->y = GetRandomFloat(vMin->y, vMax->y);
 		vOut->z = GetRandomFloat(vMin->z, vMax->z);
+	}
+
 	inline float Lerp(float t, float start, float end) {
 		float s = 1.f - t;
 		return start * s + end * t;
