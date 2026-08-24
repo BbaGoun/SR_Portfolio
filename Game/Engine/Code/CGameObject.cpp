@@ -253,7 +253,6 @@ void CGameObject::Compute_ViewZ(const _vec3* pPos)
 {
     _matrix matView;
     m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-
     _vec3 viewPos = *pPos;
     D3DXVec3TransformCoord(&viewPos, &viewPos, &matView);
     m_fViewZ = viewPos.z;

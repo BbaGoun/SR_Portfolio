@@ -60,11 +60,12 @@ _int CMagnetBody::Update_GameObject(const _float& fDeltaTime)
 
 
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
+
 	pCartBody->Get_Transform()->Get_Info(INFO_UP, &vCartUp);
 	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
 
 	m_pTransformCom->Set_Pos(vCartPos + vCartLook * 3.f + vCartUp * 5);
-	
+
 	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
 
 	vDir = vTargetPos - vCartPos;

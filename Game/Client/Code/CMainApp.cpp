@@ -53,6 +53,8 @@ void CMainApp::FixedUpdate_MainApp(const float& fFixedDeltaTime)
 
 int CMainApp::Update_MainApp(const float& fDeltaTime)
 {
+	m_pManagementClass->Change_NextScene();
+
 	CDInputMgr::GetInstance()->Update_InputDev();
 	m_pManagementClass->Update_Scene(fDeltaTime);
 

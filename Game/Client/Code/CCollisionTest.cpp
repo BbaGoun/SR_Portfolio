@@ -34,9 +34,11 @@
 #include "CThunderCloud.h"
 #include "CUI_Button.h"
 #include "CUI_Timer.h"
+#include "CUI_Laps.h"
 #include "CUI_ItemSlot.h"
 #include "CUI_ItemIcon.h"
 #include "CUI_Minimap.h"
+#include  "CScene3_StartBtn.h"
 #include "CRenderer.h"
 #include "CMinimapGround.h"
 #include "CMinimapCart.h"
@@ -123,6 +125,7 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 _int CCollisionTest::Update_Scene(const _float& fDeltaTime)
 {
 	_int iExit = CScene::Update_Scene(fDeltaTime);
+
 	return iExit;
 }
 
@@ -619,6 +622,14 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
 		return E_FAIL;
 
+	//UI_Laps
+
+	pUIObject = CUI_Laps::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Laps", pUIObject)))
+		return E_FAIL;
+
 	// UI_ItemSlot
 	pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
@@ -640,7 +651,6 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_Minimap", pUIObject)))
 		return E_FAIL;
 
-
 	// 미니맵 Cart
 	pUIObject = CMinimapCart::Create(m_pGraphicDev);
 
@@ -655,7 +665,6 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"Env_MinimapGround", pUIObject)))
 		return E_FAIL;
-	
 
 	return S_OK;
 }

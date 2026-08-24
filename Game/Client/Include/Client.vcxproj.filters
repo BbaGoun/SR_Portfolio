@@ -25,9 +25,6 @@
     <Filter Include="01. Scene\Loading">
       <UniqueIdentifier>{0e293edf-66a2-4d1f-b2a3-3e9dc8f1deb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\Loading\LoadingThread">
-      <UniqueIdentifier>{a5460c36-fe13-40c6-91aa-5e752b79692a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\BackGround">
       <UniqueIdentifier>{82ca06a2-1d49-48df-9619-97fbd9172848}</UniqueIdentifier>
     </Filter>
@@ -151,9 +148,6 @@
     <Filter Include="02. GameObject\UI\UI_Button">
       <UniqueIdentifier>{52732eb2-24e9-49ce-bed4-df41bda21639}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\StartMenu">
-      <UniqueIdentifier>{d27c7ebd-8c53-4c6c-99f8-e7b7ce78148a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\UI\UI_ItemSlot">
       <UniqueIdentifier>{295445ca-386c-46dd-9acb-6ad8d4877595}</UniqueIdentifier>
     </Filter>
@@ -162,9 +156,6 @@
     </Filter>
     <Filter Include="02. GameObject\UI\UI_Timer">
       <UniqueIdentifier>{406ce618-cfd9-400f-ba28-75c87ea2370b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\UI\UI_Menu">
-      <UniqueIdentifier>{abf231ea-de2d-413c-96d2-ca1bb0124865}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\MiniMap">
       <UniqueIdentifier>{74eccf66-a30f-4fe4-a48a-852f81daf64d}</UniqueIdentifier>
@@ -178,6 +169,36 @@
     <Filter Include="02. GameObject\UI\UI_Minimap">
       <UniqueIdentifier>{f920298e-7e71-481a-b829-383f64e13829}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI\UI_SceneButton">
+      <UniqueIdentifier>{abf231ea-de2d-413c-96d2-ca1bb0124865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\LoadingThread">
+      <UniqueIdentifier>{a5460c36-fe13-40c6-91aa-5e752b79692a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Menu">
+      <UniqueIdentifier>{48d7bc42-1d1e-45d4-bd3e-19d0a9b962a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Menu\Menu_Start">
+      <UniqueIdentifier>{d27c7ebd-8c53-4c6c-99f8-e7b7ce78148a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Menu\Menu_Item">
+      <UniqueIdentifier>{4979c460-bb70-46e6-8b91-826f7d26aee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_SceneButton\Scene1%28Menu_Start%29">
+      <UniqueIdentifier>{dd44d602-a118-422f-86ad-c1d49400581e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29">
+      <UniqueIdentifier>{a75f6da8-d0bf-4502-b5e7-9ff946fca7ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29">
+      <UniqueIdentifier>{53434fa0-a13e-4719-9c3a-8660d2066902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Menu\Menu_Set%28ForestValley%29">
+      <UniqueIdentifier>{0aea1f39-72e2-4646-825c-4af86c6bb944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Laps">
+      <UniqueIdentifier>{42c1be04-11a9-46ca-8b61-5ea9a8a3db04}</UniqueIdentifier>
+	</Filter>
     <Filter Include="02. GameObject\Item\Missile">
       <UniqueIdentifier>{d6b85c0f-4e58-4131-bf43-13d6294f242c}</UniqueIdentifier>
     </Filter>
@@ -271,7 +292,7 @@
       <Filter>01. Scene\Loading</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CLoadingThread.h">
-      <Filter>01. Scene\Loading\LoadingThread</Filter>
+      <Filter>01. Scene\LoadingThread</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBackGround.h">
       <Filter>02. GameObject\BackGround</Filter>
@@ -397,7 +418,7 @@
       <Filter>02. GameObject\UI\UI_Button</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CStartMenu.h">
-      <Filter>01. Scene\StartMenu</Filter>
+      <Filter>01. Scene\Menu\Menu_Start</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CUI_Timer.h">
       <Filter>02. GameObject\UI\UI_Timer</Filter>
@@ -408,9 +429,6 @@
     <ClInclude Include="..\Header\CUI_ItemSlot.h">
       <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CUI_Menu.h">
-      <Filter>02. GameObject\UI\UI_Menu</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUI_Minimap.h">
       <Filter>02. GameObject\UI\UI_Minimap</Filter>
     </ClInclude>
@@ -420,6 +438,51 @@
     <ClInclude Include="..\Header\CMinimapCart.h">
       <Filter>02. GameObject\MiniMap\MinimapCart</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMenu_Item.h">
+      <Filter>01. Scene\Menu\Menu_Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene1_Item.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene1%28Menu_Start%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene1_Replay.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene1%28Menu_Start%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene1_Speed.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene1%28Menu_Start%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_XButton.h">
+      <Filter>02. GameObject\UI\UI_SceneButton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_UnderBar.h">
+      <Filter>02. GameObject\UI\UI_SceneButton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene2_ForestValley.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene2_ClockTower.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMenu_Set.h">
+      <Filter>01. Scene\Menu\Menu_Set%28ForestValley%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_StartBtn.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_CharBtn.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_KartBtn.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_ColorBtn.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_Map_ForestValley.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Laps.h">
+      <Filter>02. GameObject\UI\UI_Laps</Filter>
+	</ClInclude>
     <ClInclude Include="..\Header\CMagnetBody.h">
       <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClInclude>
@@ -477,7 +540,7 @@
       <Filter>01. Scene\Loading</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CLoadingThread.cpp">
-      <Filter>01. Scene\Loading\LoadingThread</Filter>
+      <Filter>01. Scene\LoadingThread</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBackGround.cpp">
       <Filter>02. GameObject\BackGround</Filter>
@@ -606,7 +669,7 @@
       <Filter>02. GameObject\UI\UI_Button</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CStartMenu.cpp">
-      <Filter>01. Scene\StartMenu</Filter>
+      <Filter>01. Scene\Menu\Menu_Start</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUI_Timer.cpp">
       <Filter>02. GameObject\UI\UI_Timer</Filter>
@@ -617,9 +680,6 @@
     <ClCompile Include="..\Code\CUI_ItemSlot.cpp">
       <Filter>02. GameObject\UI\UI_ItemSlot</Filter>
     </ClCompile>
-    <ClCompile Include="CUI_Menu.cpp">
-      <Filter>02. GameObject\UI\UI_Menu</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CUI_Minimap.cpp">
       <Filter>02. GameObject\UI\UI_Minimap</Filter>
     </ClCompile>
@@ -629,6 +689,51 @@
     <ClCompile Include="..\Code\CMinimapCart.cpp">
       <Filter>02. GameObject\MiniMap\MinimapCart</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CMenu_Item.cpp">
+      <Filter>01. Scene\Menu\Menu_Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene1_Item.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene1%28Menu_Start%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene1_Replay.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene1%28Menu_Start%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene1_Speed.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene1%28Menu_Start%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_XButton.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_UnderBar.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene2_ForestValley.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene2_ClockTower.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMenu_Set.cpp">
+      <Filter>01. Scene\Menu\Menu_Set%28ForestValley%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_CharBtn.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_KartBtn.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_StartBtn.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_ColorBtn.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_Map_ForestValley.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Laps.cpp">
+      <Filter>02. GameObject\UI\UI_Laps</Filter>
+	</ClCompile>
     <ClCompile Include="..\Code\CMagnetBody.cpp">
       <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClCompile>

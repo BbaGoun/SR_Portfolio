@@ -53,7 +53,7 @@ void CUI_Button::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_fFrame = 1;
 		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
 			DestroyWindow(g_hWnd);
-	}
+	}	
 	else
 	{
 		m_fFrame = 0;

@@ -237,6 +237,7 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 		pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 	}
 
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
@@ -251,6 +252,7 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 		pObj->Render_GameObject();
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
 RTINFO* CRenderer::Find_RenderTarget(const _tchar* pName)

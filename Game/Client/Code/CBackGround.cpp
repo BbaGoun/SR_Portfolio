@@ -22,7 +22,7 @@ CBackGround::~CBackGround()
 HRESULT CBackGround::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-
+	m_pTransformCom->Set_Pos({ 0.f, 0.f, 100.f });
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
@@ -41,8 +41,8 @@ HRESULT CBackGround::Ready_GameObject()
 _int CBackGround::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
-	return CGameObject::Update_GameObject(fDeltaTime);
 
+	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
 void CBackGround::LateUpdate_GameObject(const _float& fDeltaTime)
@@ -54,7 +54,7 @@ void CBackGround::Render_GameObject()
 {
 	m_pTextureCom->Set_Texture(m_eCurrentBackground);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
+	
 	m_pBufferCom->Render_Buffer();
 }
 

@@ -4,11 +4,17 @@
 #include "CBackGround.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
+#include "CDInputMgr.h"
 
 #include "CManagement.h"
 #include "CRcTex.h"
-#include "CCollisionTest.h"
+#include "CMenu_Item.h"
 #include "CLoading.h"
+#include "CScene1_Item.h"
+#include "CScene1_Speed.h"
+#include "CScene1_Replay.h"
+#include "CUI_XButton.h"
+#include "CUI_UnderBar.h"
 #include "CUI_Menu.h"
 #include "CInventoryScene.h"
 #include "CRacingScene.h"
@@ -92,7 +98,7 @@ void CStartMenu::Render_Scene()
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 
 
-	CScene::Render_Scene();
+	//CScene::Render_Scene();
 }
 
 HRESULT CStartMenu::Ready_Environment_Layer(const _tchar* pLayerTag)
@@ -107,14 +113,15 @@ HRESULT CStartMenu::Ready_Environment_Layer(const _tchar* pLayerTag)
 	// BackGround
 	pGameObject = CBackGround::Create(m_pGraphicDev);
 	dynamic_cast<CBackGround*>(pGameObject)->Change_BackgroundTexture(BACKGROUND_STARTMENU);
-
+	
 	if (nullptr == pGameObject)
 		return E_FAIL;
-
+	
 	if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
 		return E_FAIL;
-
+	
 	pGameObject->Get_Transform()->Set_Scale({ WINCX, WINCY, 1 });
+	pGameObject->Get_Transform()->Set_Pos({ 0, 0, 15 });
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -131,15 +138,42 @@ HRESULT CStartMenu::Ready_UI_Layer()
 	CLayer* pUILayer = CLayer::Create();
 	if (pUILayer == nullptr)
 		return E_FAIL;
-
 	m_mapLayer.insert({ L"UI", pUILayer });
-
+	
 	CGameObject* pUIObject = nullptr;
-	pUIObject = CUI_Menu::Create(m_pGraphicDev);
+
+
+	pUIObject = CScene1_Item::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"UI_Menu", pUIObject)))
+	if (FAILED(pUILayer->Add_GameObject(L"Scene1_Item", pUIObject)))
 		return E_FAIL;
+
+	pUIObject = CScene1_Speed::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"Scene1_Speed", pUIObject)))
+		return E_FAIL;
+
+	pUIObject = CScene1_Replay::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"CScene1_Replay", pUIObject)))
+		return E_FAIL;
+
+	pUIObject = CUI_UnderBar::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_UnderBar", pUIObject)))
+		return E_FAIL;
+
+	pUIObject = CUI_XButton::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_XButton", pUIObject)))
+		return E_FAIL;
+
+	
 
 	return S_OK;
 

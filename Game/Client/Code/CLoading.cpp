@@ -84,7 +84,7 @@ void CLoading::Render_Scene()
     m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
     m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 
-    CScene::Render_Scene();
+    //CScene::Render_Scene();
 
     _vec2       vPos = { 100.f, 100.f };
 
@@ -130,7 +130,7 @@ HRESULT CLoading::Ready_Prototype()
     //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/dog0.jpg", 1))))
     //    return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/BackGround/scene%d.png", 2))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/BackGround/scene%d.png", 4))))
         return E_FAIL;
                                                                                                                               
     return S_OK;

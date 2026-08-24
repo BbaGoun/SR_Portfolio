@@ -24,6 +24,7 @@ HRESULT CSkidMark::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 
 	CComponent* pComponent = nullptr;
+
 	m_pTransformCom->Set_Scale({ 1,1,1 });
 
 	D3DXQUATERNION q;
@@ -47,6 +48,7 @@ HRESULT CSkidMark::Ready_GameObject()
 _int CSkidMark::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
 	m_fTimer += fDeltaTime;
 	if (m_fTimer > 15.f)
 		m_pLayer->Delete_GameObject(this);
@@ -62,6 +64,7 @@ void CSkidMark::LateUpdate_GameObject(const _float& fDeltaTime)
 void CSkidMark::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+
 	m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
 }
