@@ -8,6 +8,8 @@
 #include "CManagement.h"
 #include "CItemBox.h"
 #include "CCollisionMgr.h"
+#include "CMissileTarget.h"
+
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -105,6 +107,19 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 		pCart->SetGainGage(0.f);	// m_fGainGage = 0.f;
 		pCart->SetDrift(false);		// m_bDrift = false;
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////// 테스트용  Obj_MissileTarget
+	if (wcsncmp(wOtherTag, L"Obj_MissileTarget", 17) == 0)
+	{
+		_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
+			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
+
+		CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+
+		_vec3 vPos;
+		pCart->Get_Transform()->Get_Info(INFO_POS, &vPos);
+		pCart->Get_Transform()->Set_Pos(vPos + MTV);
+	}
 }
 
 void CCartBody::TriggerEnter(CCollider* pOtherCollider)
@@ -133,7 +148,6 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 			pItemBox->SetShow(false);
 		}
 	}
-
 }
 void CCartBody::BananaSpin(const _float& fDeltaTime)
 {

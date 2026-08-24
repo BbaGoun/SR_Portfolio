@@ -28,11 +28,13 @@ public:
 	// KeyInput
 	void			KeyInput(const _float& fDeltaTime);
 
+
 	// Update
 	void			UpdateDrift();
 	void			UpdateBoost(const _float& fDeltaTime);
 	void			UpdateThunder();
 	void			UpdateGravity();
+	void			UpdateMagnet(const _float& fDeltaTime);
 
 	// Get, Set
 	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
@@ -65,13 +67,18 @@ public:
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
-	void			CreateMissileObject();					
-	void			CreateTargetAimObject();	
+	void			CreateMissileObject();	
 	void			CreateMagnetObject();
+	void			CreateTargetAimObject();	
+	void			CreateMissileAimObject();
+	void			CreateMagnetAimObject();
 
 	// Item
 	void			GainItem();
 	void			UseItem();
+	void			UseAimItem();
+	void			UseMissileItem();
+	void			UseMagnetItem();
 
 	// OutputState
 	void			OutputCarState();
@@ -81,6 +88,8 @@ private:
 	bool			m_bDrift;
 	bool			m_bBanana;
 	bool			m_bRainbowUI;
+	_bool			m_bMagnet;
+	_float			m_fMagnetTimer;
 
 	float			m_fNormalTurnAngle;
 	float			m_fBoostTurnAngle;

@@ -48,7 +48,9 @@ HRESULT CCart::Ready_GameObject()
 	m_bRainbowUI			= false;
 	m_bBanana				= false;
 	m_bThunder				= false;
+	m_bMagnet				= false;
 
+	m_fMagnetTimer			= 0.f;
 	m_fBananaTimer			= 0.f;
 
 	m_fCurGage				= 0.f;
@@ -101,6 +103,7 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	UpdateBoost(fDeltaTime);
 	UpdateDrift();
 	UpdateThunder();
+	UpdateMagnet(fDeltaTime);
 
 	//OutputCarState();
 	return CGameObject::Update_GameObject(fDeltaTime);
@@ -164,92 +167,14 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateBananaObject();
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_T))	// 테스트용 
-	{
-		CGameObject* pMagnet = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MagnetBody");
-
-		if (nullptr == pMagnet)
-		{
-			CreateMagnetObject();
-		}
-
-
-	}
-
-
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
 	{
-		CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
-
-		if (nullptr == pTargetAim)
-		{
-			CreateTargetAimObject();
-		}
-
-		else
-		{
-			CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
-			_vec3 vPos, vLook, vTarget, vAimScreen, vTargetScreen;
-
-			m_pTransformCom->Get_Info(INFO_POS, &vPos);
-			m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-
-			pTarget->Get_Transform()->Get_Info(INFO_POS, &vTarget);
-
-			vPos += vLook * 20.f;
-
-			const CameraInfo& tCam = CCameraMgr::GetInstance()->GetCameraInfo();
-
-			_matrix matWorld;
-			D3DXMatrixIdentity(&matWorld);
-
-			D3DVIEWPORT9 vp = { 0.f, 0.f, WINCX, WINCY, 0.f, 1.f };
-
-			D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
-			D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj,  &tCam.matView, &matWorld);
-
-			if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
-			{
-				vPos = vTarget;
-			}
-
-			pTargetAim->Get_Transform()->Set_Pos(vPos);
-			
-			_quaternion q;
-			D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
-
-			pTargetAim->Get_Transform()->Set_Quaternion(&q);
-
-		}
+		CreateTargetAimObject();
 	}
 	
 	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E)) 
 	{
-		CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
-		CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
-		if (nullptr != pTargetAim && nullptr != pTarget)
-		{
-			_vec3 vAimPos, vTargetPos, vDir;
-
-			pTargetAim->Get_Transform()->Get_Info(INFO_POS, &vAimPos);
-			pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-
-			vDir = vTargetPos - vAimPos;
-
-			if (D3DXVec3Length(&vDir) < 0.1f)
-			{
-				CGameObject* pMissile = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Missile");
-
-				if (nullptr == pMissile)
-				{
-					CreateMissileObject();
-				}
-			}
-
-			m_pLayer->Delete_GameObject(pTargetAim);
-		}
+		CreateMissileAimObject();
 	}
 
 
@@ -257,6 +182,17 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateThunderCloudObject();
 	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_T))
+	{
+		CreateTargetAimObject();
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_T))
+	{
+		CreateMagnetAimObject();
+	}
+
 	// ShortBooster
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_UP))
 	{
@@ -266,7 +202,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			m_fBoostCal = 1.05f;
 		}
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))	// 조준X 아이템
 	{
 		UseItem();
 		//// LongBooster
@@ -276,6 +212,26 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		//	m_eBoostState = BOOST_STATE_LONG_BOOST;
 		//	m_fBoostCal = 1.05f;
 		//}
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))	// 조준O 아이템
+	{
+		UseAimItem();
+
+		//if (m_eFirstSlot != ITEM_ROCKET && m_eFirstSlot != ITEM_MAGNET)
+		//{
+		//	m_eFirstSlot = m_eSecondSlot;
+		//	m_eSecondSlot = ITEM_END;
+		//}
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_LCONTROL))
+	{
+		if (m_eFirstSlot == ITEM_ROCKET)
+			UseMissileItem();
+
+		else if (m_eFirstSlot == ITEM_MAGNET)
+			UseMagnetItem();
 	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
@@ -747,6 +703,43 @@ void CCart::UpdateGravity()
 	}
 }
 
+void CCart::UpdateMagnet(const _float& fDeltaTime)
+{
+	if (m_bMagnet == true)
+	{
+		CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+		_vec3 vPos, vLook, vTargetPos, vDir;
+
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+		pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+
+		vDir = vTargetPos - vPos;
+
+		if (D3DXVec3Length(&vDir) <= 0.001f)
+			return;
+
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		_float fDirection = D3DXVec3Dot(&vLook, &vDir);
+
+		if (fDirection < -0.5 || fDirection > 0.5)		// 그 방향이 카트 기준 앞/뒤 방향인지 확인
+		{
+			m_vForce += vDir * 2.f;
+		}
+
+		m_fMagnetTimer += fDeltaTime;							// 3.5초 지나면 m_bMagnet = false로 종료
+
+		if (m_fMagnetTimer > 3.5f)
+		{
+			m_bMagnet = false;
+			m_fMagnetTimer = 0.f;
+
+		}
+	}
+}
+
 void CCart::OutputCarState()
 {
 	switch (m_eCartState)
@@ -829,14 +822,20 @@ void CCart::CreateMissileObject()
 
 void CCart::CreateTargetAimObject()	
 {
-	CGameObject* pTargetAim = CTargetAim::Create(m_pGraphicDev);
+	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
 
-	if (nullptr == pTargetAim)
-		return;
+	if (nullptr == pTargetAim)		// 조준선 이 없을때 추가
+	{
+		pTargetAim = CTargetAim::Create(m_pGraphicDev);
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_TargetAim", pTargetAim)))
-		return;
+		if (nullptr == pTargetAim)	// Create 했는데 생성 실패 시 리턴
+			return;
 
+		if (FAILED(m_pLayer->Add_GameObject(L"Obj_TargetAim", pTargetAim)))
+			return;
+
+		pTargetAim->SetLayer(m_pLayer);
+	}
 	//_vec3 vPos, vLook;
 	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
@@ -847,7 +846,40 @@ void CCart::CreateTargetAimObject()
 
 	//pTargetAim->SetLayer(m_pLayer);
 
-	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+	_vec3 vPos, vLook, vTarget, vAimScreen, vTargetScreen;
+
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	pTarget->Get_Transform()->Get_Info(INFO_POS, &vTarget);
+
+	vPos += vLook * 20.f;
+
+	const CameraInfo& tCam = CCameraMgr::GetInstance()->GetCameraInfo();
+
+	_matrix matWorld;
+	D3DXMatrixIdentity(&matWorld);
+
+	D3DVIEWPORT9 vp = { 0.f, 0.f, WINCX, WINCY, 0.f, 1.f };
+
+	D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
+	D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj, &tCam.matView, &matWorld);
+
+	if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
+	{
+		vPos = vTarget;
+	}
+
+	pTargetAim->Get_Transform()->Set_Pos(vPos);
+
+	_quaternion q;
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+
+	pTargetAim->Get_Transform()->Set_Quaternion(&q);
+
+	/*CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 
 	_vec3 vPos, vLook, vDir, vTargetPos;
 
@@ -870,7 +902,7 @@ void CCart::CreateTargetAimObject()
 
 	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
 
-	pTargetAim->Get_Transform()->Set_Quaternion(&qRot);
+	pTargetAim->Get_Transform()->Set_Quaternion(&qRot);*/
 }
 
 void CCart::CreateMagnetObject()
@@ -882,6 +914,8 @@ void CCart::CreateMagnetObject()
 
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_MagnetBody", pMagnetBody)))
 		return;
+
+	pMagnetBody->SetLayer(m_pLayer);
 
 	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 
@@ -918,6 +952,62 @@ void CCart::CreateMagnetObject()
 	pMagnetBody->Get_Transform()->Set_Pos(vPos);
 }
 
+void CCart::CreateMagnetAimObject()
+{
+	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
+	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+	if (nullptr != pTargetAim && nullptr != pTarget)
+	{
+		_vec3 vAimPos, vTargetPos, vDir;
+
+		pTargetAim->Get_Transform()->Get_Info(INFO_POS, &vAimPos);
+		pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+
+		vDir = vTargetPos - vAimPos;
+
+		if (D3DXVec3Length(&vDir) < 0.1f)
+		{
+			CGameObject* pMagnet = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MagnetBody");
+
+			if (nullptr == pMagnet)
+			{
+				m_bMagnet = true;
+				CreateMagnetObject();
+			}
+		}
+
+		m_pLayer->Delete_GameObject(pTargetAim);
+	}
+}
+
+void CCart::CreateMissileAimObject()
+{
+	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
+	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+	if (nullptr != pTargetAim && nullptr != pTarget)
+	{
+		_vec3 vAimPos, vTargetPos, vDir;
+
+		pTargetAim->Get_Transform()->Get_Info(INFO_POS, &vAimPos);
+		pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+
+		vDir = vTargetPos - vAimPos;
+
+		if (D3DXVec3Length(&vDir) < 0.1f)
+		{
+			CGameObject* pMissile = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Missile");
+
+			if (nullptr == pMissile)
+			{
+				CreateMissileObject();
+			}
+		}
+
+		m_pLayer->Delete_GameObject(pTargetAim);
+	}
+}
 void CCart::GainItem()
 {
 	cout << "GainItem" << endl;
@@ -950,12 +1040,23 @@ void CCart::UseItem()
 		break;
 	case Engine::ITEM_WATERFLY:
 		break;
-	case Engine::ITEM_MAGNET:
-		break;
-	case Engine::ITEM_BARRICADE:
-		break;
-	case Engine::ITEM_ROCKET:		
-		break;
+		//case Engine::ITEM_MAGNET:
+		//	//m_bMagnet = true;
+		//	UseMagnetItem();
+		//	//CreateMagnetAimObject();
+		//	//CreateTargetAimObject();
+		//	//CreateMagnetAimObject();
+		//	//CreateMagnetObject();
+		//	break;
+		//case Engine::ITEM_BARRICADE:
+		//	break;
+		//case Engine::ITEM_ROCKET:
+		//	UseMissileItem();
+		//	//CreateMissileAimObject();
+		//	//CreateTargetAimObject();
+		//	//CreateMissileAimObject();
+		//	//CreateMissileObject();
+		//	break;
 	case Engine::ITEM_BANANA:
 		CreateBananaObject();
 		break;
@@ -966,8 +1067,53 @@ void CCart::UseItem()
 	default:
 		break;
 	}
-	m_eFirstSlot = m_eSecondSlot;
-	m_eSecondSlot = ITEM_END;
+
+	if (m_eFirstSlot != ITEM_ROCKET && m_eFirstSlot != ITEM_MAGNET)
+	{
+		m_eFirstSlot = m_eSecondSlot;
+		m_eSecondSlot = ITEM_END;
+	}
+}
+
+void CCart::UseAimItem()
+{
+	switch (m_eFirstSlot)
+	{
+	case Engine::ITEM_ROCKET:
+		CreateTargetAimObject();
+		break;
+
+	case Engine::ITEM_MAGNET:
+		CreateTargetAimObject();
+		break;
+	}
+	// m_eFirstSlot = m_eSecondSlot;
+	// m_eSecondSlot = ITEM_END;
+}
+
+void CCart::UseMissileItem()
+{
+	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))
+	//{
+	//	CreateTargetAimObject();
+	//}
+		CreateMissileAimObject();
+
+		m_eFirstSlot = m_eSecondSlot;
+		m_eSecondSlot = ITEM_END;
+}
+
+void CCart::UseMagnetItem()
+{
+	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))
+	//{
+	//	CreateTargetAimObject();
+	//}
+		CreateMagnetAimObject();
+
+		m_eFirstSlot = m_eSecondSlot;
+		m_eSecondSlot = ITEM_END;
+
 }
 
 void CCart::Free()

@@ -31,6 +31,7 @@ public:
 private:
 	Engine::CMagnetTex* m_pBufferCom;
 	CCube_Collider* m_pColliderCom;
+	_float			m_fTimer;
 
 public:
 	static CMagnetBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
