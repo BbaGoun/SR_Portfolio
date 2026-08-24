@@ -32,6 +32,7 @@ private:
 	CCube_Collider* m_pColliderCom;
 
 	_float	m_fTimer;
+	_float	m_fThrowHeight;
 
 public:
 	static CWaterBombThrow* Create(LPDIRECT3DDEVICE9 pGraphicDev);
