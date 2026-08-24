@@ -427,5 +427,8 @@ void CEditorScene::SetupDockLayout()
 
 void CEditorScene::Free()
 {
+	for (auto& wnd : m_windowList)
+		Safe_Release(wnd);
+	m_windowList.clear();
 	CScene::Free();
 }
