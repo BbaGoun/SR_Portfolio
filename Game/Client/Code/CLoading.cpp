@@ -130,7 +130,7 @@ HRESULT CLoading::Ready_Prototype()
     //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/dog0.jpg", 1))))
     //    return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/BackGround/scene%d.png", 3))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/BackGround/scene%d.png", 4))))
         return E_FAIL;
                                                                                                                               
     return S_OK;

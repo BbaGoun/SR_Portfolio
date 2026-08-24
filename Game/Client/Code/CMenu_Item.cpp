@@ -10,6 +10,11 @@
 #include "CCollisionTest.h"
 #include "CLoading.h"
 
+#include "CScene2_ForestValley.h"
+#include "CScene2_ClockTower.h"
+#include "CUI_UnderBar.h"
+#include "CUI_XButton.h"
+
 
 CMenu_Item::CMenu_Item(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -43,20 +48,6 @@ _int CMenu_Item::Update_Scene(const _float& fDeltaTime)
 
 	_int iExit = CScene::Update_Scene(fDeltaTime);
 
-	if (GetAsyncKeyState('M'))
-	{
-	
-		Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
-	
-		if (nullptr == pStage)
-			return E_FAIL;
-	
-		if (FAILED(CManagement::GetInstance()->Set_Scene(pStage)))
-		{
-			MSG_BOX("Stage Create Failed");
-			return -1;
-		}
-	}
 
 	return iExit;
 }
@@ -101,7 +92,7 @@ HRESULT CMenu_Item::Ready_Environment_Layer(const _tchar* pLayerTag)
 
 	// BackGround
 	pGameObject = CBackGround::Create(m_pGraphicDev);
-	dynamic_cast<CBackGround*>(pGameObject)->Change_BackgroundTexture(BACKGROUND_END);
+	dynamic_cast<CBackGround*>(pGameObject)->Change_BackgroundTexture(BACKGROUND_ITEMMENU);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -124,23 +115,37 @@ HRESULT CMenu_Item::Ready_Prototype()
 
 HRESULT CMenu_Item::Ready_UI_Layer()
 {
-	//CLayer* pUILayer = CLayer::Create();
-	//if (pUILayer == nullptr)
-	//	return E_FAIL;
-	//m_mapLayer.insert({ L"UI", pUILayer });
-	//
-	//CGameObject* pUIObject = nullptr;
-	//pUIObject = CScene1_Item::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"Scene1_Item", pUIObject)))
-	//	return E_FAIL;
-	//
-	//pUIObject = CScene1_Speed::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"Scene1_Speed", pUIObject)))
-	//	return E_FAIL;
+	CLayer* pUILayer = CLayer::Create();
+	if (pUILayer == nullptr)
+		return E_FAIL;
+	m_mapLayer.insert({ L"UI", pUILayer });
+	
+	CGameObject* pUIObject = nullptr;
+
+
+	pUIObject = CScene2_ForestValley::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"CScene2_ForestValley", pUIObject)))
+		return E_FAIL;
+
+	pUIObject = CScene2_ClockTower::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"CScene2_ClockTower", pUIObject)))
+		return E_FAIL;
+
+	pUIObject = CUI_UnderBar::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_UnderBar", pUIObject)))
+		return E_FAIL;
+
+	pUIObject = CUI_XButton::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_XButton", pUIObject)))
+		return E_FAIL;
 
 
 

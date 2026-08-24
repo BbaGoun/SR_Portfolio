@@ -1,6 +1,6 @@
 #pragma once
 #include "CScene.h"
-
+#include "CMenu_Item.h"
 #include "Engine_Enum.h"
 
 class CStartMenu : public CScene
@@ -19,13 +19,13 @@ private:
 	HRESULT		Ready_Prototype();
 	HRESULT		Ready_Environment_Layer(const _tchar* pLayerTag);
 	HRESULT		Ready_UI_Layer();
-	_int		Loading_MenuBg();
 
 
 private:
 
 	BACKGROUND		m_eBGTexture;
 	BACKGROUND		m_eNextBGTexture;
+
 
 public:
 	static CStartMenu* Create(LPDIRECT3DDEVICE9 pGraphicDev);

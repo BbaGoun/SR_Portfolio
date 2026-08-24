@@ -26,12 +26,14 @@ CScene1_Item::~CScene1_Item()
 HRESULT CScene1_Item::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_vPos = { 100,0,10 };
+
+	Engine::CComponent* pComponent = nullptr;
+
+
+	m_vPos = { 0,0,10 };
 	m_vScale = { 78, 88, 0 };
 	m_pTransformCom->Set_Pos(m_vPos);
 	m_pTransformCom->Set_Scale(m_vScale);
-
-	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pVIBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
@@ -70,7 +72,16 @@ _int CScene1_Item::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
+		{
+			Engine::CScene* pStage = CMenu_Item::Create(m_pGraphicDev);
 
+			if (nullptr == pStage)
+				return E_FAIL;
+
+			CManagement::GetInstance()->Request_Scene(pStage);
+		}
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -87,27 +98,6 @@ void CScene1_Item::Render_GameObject()
 	m_pTextureCom->Set_Texture(m_fFrame);
 	m_pVIBufferCom->Render_Buffer();
 }
-
-HRESULT CScene1_Item::Set_ClickIcon(const _float& fDeltaTime)
-{
-	
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
-		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
-		{
-			Engine::CScene* pStage = CMenu_Item::Create(m_pGraphicDev);
-
-			if (nullptr == pStage)
-				return E_FAIL;
-
-			if (FAILED(CManagement::GetInstance()->Set_Scene(pStage)))
-			{
-				MSG_BOX("CMenu_Item Create Failed");
-				return -1;
-			}
-		}
-			
-}
-
 	
 
 

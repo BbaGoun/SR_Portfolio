@@ -22,8 +22,11 @@ HRESULT CScene1_Speed::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_pTransformCom->Set_Pos({ -100.f, 0.f, 10.f });
-	m_pTransformCom->Set_Scale({ 78.f, 88.f, 0.f });
+	m_vPos = { -150.f, 0.f, 10.f };
+	m_vScale = { 78.f, 88.f, 0.f };
+
+	m_pTransformCom->Set_Pos(m_vPos);
+	m_pTransformCom->Set_Scale(m_vScale);
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -44,6 +47,23 @@ HRESULT CScene1_Speed::Ready_GameObject()
 
 }
 
+void CScene1_Speed::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
+{
+
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	{
+		m_fFrame = 1;
+
+	}
+
+	else
+	{
+		m_fFrame = 0;
+	}
+
+}
+
+
 _int CScene1_Speed::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
@@ -60,7 +80,7 @@ void CScene1_Speed::Render_GameObject()
 {
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(m_fFrame);
 	m_pVIBufferCom->Render_Buffer();
 }
 

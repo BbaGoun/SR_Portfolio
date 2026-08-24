@@ -12,7 +12,9 @@
 #include "CLoading.h"
 #include "CScene1_Item.h"
 #include "CScene1_Speed.h"
+#include "CScene1_Replay.h"
 #include "CUI_XButton.h"
+#include "CUI_UnderBar.h"
 
 
 CStartMenu::CStartMenu(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -46,27 +48,6 @@ _int CStartMenu::Update_Scene(const _float& fDeltaTime)
 {
 	
 	_int iExit = CScene::Update_Scene(fDeltaTime);
-
-	CGameObject* pGameObject = nullptr;
-	pGameObject = CScene1_Item::Create(m_pGraphicDev);
-	dynamic_cast<CScene1_Item*>(pGameObject)->Set_ClickIcon(fDeltaTime);
-
-	
-
-	//if (GetAsyncKeyState('M'))
-	//{
-	//
-	//	Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
-	//
-	//	if (nullptr == pStage)
-	//		return E_FAIL;
-	//
-	//	if (FAILED(CManagement::GetInstance()->Set_Scene(pStage)))
-	//	{
-	//		MSG_BOX("Stage Create Failed");
-	//		return -1;
-	//	}
-	//}
 
 	return iExit;
 }
@@ -140,6 +121,8 @@ HRESULT CStartMenu::Ready_UI_Layer()
 	m_mapLayer.insert({ L"UI", pUILayer });
 	
 	CGameObject* pUIObject = nullptr;
+
+
 	pUIObject = CScene1_Item::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
@@ -152,10 +135,22 @@ HRESULT CStartMenu::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"Scene1_Speed", pUIObject)))
 		return E_FAIL;
 
+	pUIObject = CScene1_Replay::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"CScene1_Replay", pUIObject)))
+		return E_FAIL;
+
+	pUIObject = CUI_UnderBar::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_UnderBar", pUIObject)))
+		return E_FAIL;
+
 	pUIObject = CUI_XButton::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"Scene1_Speed", pUIObject)))
+	if (FAILED(pUILayer->Add_GameObject(L"UI_XButton", pUIObject)))
 		return E_FAIL;
 
 	

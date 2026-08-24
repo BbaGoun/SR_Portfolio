@@ -1,0 +1,103 @@
+﻿OBJECT
+  belong=1
+  type=
+  name=Empty
+  tag=4
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=2
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_LampTexture1 mapTag=Proto_LampTexture1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.000000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.500000 1.500000 0.500000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=3
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_LampTexture3 mapTag=Proto_LampTexture3
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 2.200000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.200000 3.000000 0.200000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=4
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_LampTexture2 mapTag=Proto_LampTexture2
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 3.983000 -0.324000
+      rot=-44.999958 -0.000000 0.000000
+      quat=-0.382683 0.000000 0.000000 0.923880
+      scale=0.200000 1.000000 0.200000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_LampTexture2 mapTag=Proto_LampTexture2
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 4.306000 -1.005000
+      rot=89.999702 -0.000000 0.000000
+      quat=0.707105 0.000000 0.000000 0.707108
+      scale=0.200000 0.799998 0.199999
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=6
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_LampTexture3 mapTag=Proto_LampTexture3
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 4.100000 -1.300000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.400000 0.200000 0.400000
+  ENDOBJECT
+  OBJECT
+    belong=1
+    type=
+    name=Empty
+    tag=7
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_LampTexture4 mapTag=Proto_LampTexture4
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 3.850000 -1.300000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.380000 0.300000 0.380000
+  ENDOBJECT
+ENDOBJECT
