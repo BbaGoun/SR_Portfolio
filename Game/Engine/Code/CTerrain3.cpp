@@ -161,10 +161,10 @@ D3DXPLANE CTerrain3::GetPlane(_vec3 vPos)
 {
 	int col = vPos.x / VTXITV;
 	int row = vPos.z / VTXITV;
-
+	
 	float xInPlane = float(vPos.x - col * VTXITV) / VTXITV;
 	float zInPlane = float(vPos.z - row * VTXITV) / VTXITV;
-
+	
 	_vec3 p0, p1, p2;
 	// 왼쪽 위 삼각형
 	if (zInPlane - xInPlane > 0) {
@@ -180,6 +180,27 @@ D3DXPLANE CTerrain3::GetPlane(_vec3 vPos)
 	D3DXPLANE plane;
 	D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
 	return plane;
+}
+
+bool CTerrain3::GetPlane(_vec3 vPos, D3DXPLANE* pOutPlane, float* pOutDist)
+{
+	D3DXVECTOR3 vRayPos = { vPos.x, vPos.y + 1.5f, vPos.z };
+	D3DXVECTOR3 vRayDir = { 0.f, -1.f, 0.f };
+
+	for (int i = 0; i < m_vecFaces.size(); ++i)
+	{
+		_vec3 p0 = m_vecVertices[m_vecFaces[i].indices._0].vPosition;
+		_vec3 p1 = m_vecVertices[m_vecFaces[i].indices._1].vPosition;
+		_vec3 p2 = m_vecVertices[m_vecFaces[i].indices._2].vPosition;
+
+		float u, v;
+		if (D3DXIntersectTri(&p0, &p1, &p2, &vRayPos, &vRayDir, &u, &v, pOutDist))
+		{
+			D3DXPlaneFromPoints(pOutPlane, &p0, &p1, &p2);
+			return true;
+		}
+	}
+	return false;
 }
 
 _float CTerrain3::ComputeShade(_vec3* normal, _vec3* dirToLight)

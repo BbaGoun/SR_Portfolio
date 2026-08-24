@@ -75,27 +75,59 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
 	m_pTransformCom->Set_Quaternion(&q);
 
-	CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"Environment", L"Env_Land3", L"Com_Buffer");
-	CTerrain3* pTerrain3 = dynamic_cast<CTerrain3*>(pCom);
-
-
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	_vec3 originPos = vPos;
 	if (pCart->GetDrift())
 	{
-		//CreateSkidMark();
-		CLand3* pLand3 = dynamic_cast<CLand3*>(pCom->Get_Owner());
-		_vec3 vPos;
-		m_pTransformCom->Get_Info(INFO_POS, &vPos);
-		if (pLand3->CheckInTerrain(vPos))
+		_vec3 vDeltaPos;
+		vDeltaPos = vPos - m_vPrePos;
+		m_fDistSum += D3DXVec3Length(&vDeltaPos);
+		if (m_fDistSum >= 0.01f)
 		{
-			// Land3의 로컬로 내림
-			_matrix* pMatWorld = pLand3->Get_Transform()->Get_World();
-			_matrix matInvWorld;
-			D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
-			D3DXVec3TransformCoord(&vPos, &vPos, &matInvWorld);
-		
-			pTerrain3->Set_SkidMark(vPos);
+			CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"Environment", L"Env_Land3", L"Com_Buffer");
+			CTerrain3* pTerrain3 = dynamic_cast<CTerrain3*>(pCom);
+			CLand3* pLand3 = dynamic_cast<CLand3*>(pCom->Get_Owner());
+			if (pLand3->CheckInTerrain(vPos))
+			{
+				// Land3의 로컬로 내림
+				_matrix* pMatWorld = pLand3->Get_Component<CTransform>()->Get_World();
+				_matrix matInvWorld;
+				D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
+				D3DXVec3TransformCoord(&vPos, &vPos, &matInvWorld);
+
+				// 평면 구하기
+				D3DXPLANE plane = pTerrain3->GetPlane(vPos);
+				float fLocalPlaneY = -(plane.a * vPos.x + plane.c * vPos.z + plane.d) / plane.b;
+
+				// Local에서의 CartWheelPosition
+				_vec3 vLocalPos = { vPos.x,fLocalPlaneY,vPos.z };
+
+				// World에서의 CartWheelPosition
+				_vec3 vWorldPos;
+				D3DXVec3TransformCoord(&vWorldPos, &vLocalPos, pMatWorld);
+
+				float fDeltaY = originPos.y - vWorldPos.y;
+				if (m_eWheelType == WHEEL_FR)
+					cout << fDeltaY << endl;
+				if (fDeltaY <= 1.2f)
+				{
+					CreateSkidMark();
+					m_fDistSum = 0;
+				}
+			}
+			else
+			{
+				CreateSkidMark();
+				m_fDistSum = 0;
+			}
 		}
 	}
+	else
+	{
+		m_fDistSum = 0;
+	}
+	m_vPrePos = vPos;
 }
 
 _int CWheel::Update_GameObject(const _float& fDeltaTime)
@@ -139,27 +171,30 @@ void CWheel::KeyInput(const _float& fDeltaTime)
 	}
 }
 
+void CWheel::ResetPrePos()
+{
+	m_pTransformCom->Get_Info(INFO_POS, &m_vPrePos);
+}
+
 void CWheel::CreateSkidMark()
 {
 	CGameObject* pGameObject = CSkidMark::Create(m_pGraphicDev);
 	
 	if (nullptr == pGameObject)
 		return;
-	
-	if (FAILED(m_pLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
-		return;
-	
-	_vec3 vRot = m_pParent->Get_Parent()->Get_Rotation();
 
-	_vec3 vPos, vLook;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	pGameObject->Get_Transform()->Set_Pos(vPos);
-	
-	D3DXQUATERNION q;
-	D3DXQuaternionRotationYawPitchRoll(&q, vRot.y, vRot.x, vRot.z);
-	pGameObject->Get_Transform()->Set_Quaternion(&q);
+	if (FAILED(m_pLayer->Add_GameObject(L"Proto_SkidMark", pGameObject)))
+		return;
 	pGameObject->SetLayer(m_pLayer);
+
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	vPos.y -= 1;
+	pGameObject->Get_Transform()->Set_Pos(vPos);
+
+	//CCartBody의 WorldQuaternion을 가져옴
+	D3DXQUATERNION q = m_pParent->Get_Parent()->Get_Transform()->Get_WorldQuaternion();
+	pGameObject->Get_Transform()->Multiple_Quaternion(&q);
 }
 
 CWheel* CWheel::Create(LPDIRECT3DDEVICE9 pGraphicDev,WHEEL_TYPE eType)

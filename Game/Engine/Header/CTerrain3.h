@@ -25,6 +25,7 @@ public:
     int         GetVTXCNTX() { return m_iVTXCNTX; }
     int         GetVTXCNTZ() { return m_iVTXCNTZ; }
     D3DXPLANE   GetPlane(_vec3 vPos);
+    bool        GetPlane(_vec3 vPos,D3DXPLANE* pOutPlane, float* pOutDist);
 
 private:
     _float ComputeShade(_vec3* normal, _vec3* dirToLight);

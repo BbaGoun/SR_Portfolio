@@ -38,8 +38,8 @@ public:
 	uint32_t		GenerateGuid() {
 		return m_uNextGuid++;
 	}
-	virtual			void		OnLostDevice() {};
-	virtual			void		OnResetDevice() {};
+	virtual			void		OnLostDevice();
+	virtual			void		OnResetDevice();
 
 	void			Set_Path(const _tchar* _path) { wcscpy_s(m_scenePath, MAX_PATH, _path); }
 	const _tchar*	Get_Path() { return m_scenePath; }

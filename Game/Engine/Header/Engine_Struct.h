@@ -5,6 +5,8 @@
 
 namespace Engine
 {
+	class CGameObject;
+
 	typedef struct tagVertexColor
 	{
 		_vec3		vPosition;			
@@ -114,6 +116,45 @@ namespace Engine
 		_float		width;	// 지형의 너비
 		_float		depth;	// 지형의 깊이 (중심이 제일 바닥)
 	}ControlPoint;
+
+	typedef struct Particle
+	{
+		_vec3		vPosition;
+		_ulong		dwColor;
+	}PARTICLE; 
+	
+	const _ulong	FVF_PARTICLE = D3DFVF_XYZ | D3DFVF_DIFFUSE;
+
+	typedef struct Attribute
+	{
+		Attribute()
+		{
+			fLifeTime = 0.0f;
+			fAge = 0.0f;
+			bIsAlive = true;
+		}
+
+		_vec3		vPosition;
+		_vec3		vVelocity;
+		_vec3		vAcceleration;
+		float       fLifeTime;     // how long the particle lives for before dying  
+		float       fAge;          // current age of the particle  
+		D3DXCOLOR   color;        // current color of the particle   
+		D3DXCOLOR   colorFade;    // how the color fades with respect to time
+		bool        bIsAlive;
+	}ATTRIBUTE;
+
+	typedef struct RenderTargetInfo
+	{
+		LPDIRECT3DTEXTURE9      pRTTexture = nullptr;
+		LPDIRECT3DSURFACE9      pRTSurface = nullptr;
+		LPDIRECT3DSURFACE9      pRTDepthStencil = nullptr;
+
+		float					fWidth;
+		float					fHeight;
+
+		list<CGameObject*>		RenderList;
+	}RTINFO;
 }
 
 

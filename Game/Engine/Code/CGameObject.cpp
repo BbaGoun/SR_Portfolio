@@ -273,7 +273,17 @@ CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponen
 
     return iter->second;
 }
+void CGameObject::OnLostDevice()
+{
+    for (auto& pCom : m_mapComponent)
+        pCom.second->OnLostDevice();
+}
+void CGameObject::OnResetDevice()
+{
 
+    for (auto& pCom : m_mapComponent)
+        pCom.second->OnResetDevice();
+}
 void CGameObject::Free()
 {
     for_each(m_mapComponent.begin(), m_mapComponent.end(), CDeleteMap());

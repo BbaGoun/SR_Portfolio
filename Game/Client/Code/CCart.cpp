@@ -67,6 +67,8 @@ HRESULT CCart::Ready_GameObject()
 	m_eFirstSlot			= ITEM_END;
 	m_eSecondSlot			= ITEM_END;
 
+	m_eDirection			= DIR_FORWARD;
+	m_iFlatFrameCnt			= 0;
 	m_vBananaSpinStartLook = { 0,0,0 };
 	return S_OK;
 }
@@ -311,137 +313,80 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	float fForceLength = D3DXVec3Length(&m_vForce);
 	if (fForceLength < 1.0f)
 		return;
+
 	if (D3DXVec3Dot(&m_vForce, &vLook) > 0)	// m_vForce와 vLook의 내적값으로 전진후진 판단
+		m_eDirection = DIR_FORWARD;
+	else
+		m_eDirection = DIR_REVERSE;
+
+	if (m_bDrift == true)
 	{
-		if (m_bDrift == true)
+		_vec3 vTempForce, vCross;
+		vTempForce = m_vForce;
+		vLook.y = 0;
+		vTempForce.y = 0;
+		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
+		float fTurnAngle = min(m_fDriftTurnAngle, fForceLength * 0.04f);
+
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 		{
-			_vec3 vTempForce, vCross;
-			vTempForce = m_vForce;
-
-			vLook.y = 0;
-			vTempForce.y = 0;
-
-			D3DXVec3Cross(&vCross, &vTempForce, &vLook);
-
-			float fTurnAngle = min(m_fDriftTurnAngle, fForceLength * 0.04);
-			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+			if (vCross.y < 0)
 			{
-				if (vCross.y < 0)
-				{
-					m_vRotation.z += fDeltaTime * 0.5f;
-					m_vRotation.y += D3DXToRadian(-fTurnAngle);
-				}
-				else
-				{
-					m_vRotation.z += fDeltaTime * 0.5f;
-					if (m_vRotation.z > 0)
-						m_vRotation.z = 0;
-					m_vRotation.y += D3DXToRadian(-fTurnAngle * 0.5);
-				}
+				m_vRotation.y += D3DXToRadian(-fTurnAngle) * m_eDirection;
+				
+				m_vRotation.z += fDeltaTime * 0.5f * m_eDirection;
 			}
-			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+			else
 			{
-				if (vCross.y > 0)
-				{
-					m_vRotation.z += -fDeltaTime * 0.5f;
-					m_vRotation.y += D3DXToRadian(fTurnAngle);
-				}
-				else
-				{
-					m_vRotation.z += -fDeltaTime * 0.5f;
-					if (m_vRotation.z < 0)
-						m_vRotation.z = 0;
+				m_vRotation.y += D3DXToRadian(-fTurnAngle * 0.5f) * m_eDirection;
 
-					m_vRotation.y += D3DXToRadian(fTurnAngle * 0.5);
-				}
+				m_vRotation.z += fDeltaTime * 0.5f * m_eDirection;
+				if (m_vRotation.z > 0)
+					m_vRotation.z = 0;
 			}
 		}
-		else if (m_eBoostState >= BOOST_STATE_SHORT_BOOST)
+		else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 		{
-			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
-				m_vRotation.y += D3DXToRadian(-m_fBoostTurnAngle);
-			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
-				m_vRotation.y += D3DXToRadian(m_fBoostTurnAngle);
-		}
-		else
-		{
-			float fTurnAngle = min(m_fNormalTurnAngle, fForceLength * 0.013);
-			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+			if (vCross.y > 0)
 			{
-				m_vRotation.y += D3DXToRadian(-fTurnAngle);
-				_matrix matRot;
-				D3DXMatrixRotationY(&matRot, D3DXToRadian(-fTurnAngle));
-				D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
+				m_vRotation.y += D3DXToRadian(fTurnAngle) * m_eDirection;
+
+				m_vRotation.z += -fDeltaTime * 0.5f * m_eDirection;
 			}
-			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+			else
 			{
-				m_vRotation.y += D3DXToRadian(fTurnAngle);
-				_matrix matRot;
-				D3DXMatrixRotationY(&matRot, D3DXToRadian(fTurnAngle));
-				D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
+				m_vRotation.y += D3DXToRadian(fTurnAngle * 0.5f) * m_eDirection;
+
+				m_vRotation.z += -fDeltaTime * 0.5f * m_eDirection;
+				if (m_vRotation.z < 0)
+					m_vRotation.z = 0;
 			}
 		}
 	}
+	else if (m_eBoostState >= BOOST_STATE_SHORT_BOOST)
+	{
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+			m_vRotation.y += D3DXToRadian(-m_fBoostTurnAngle) * m_eDirection;
+		else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+			m_vRotation.y += D3DXToRadian(m_fBoostTurnAngle) * m_eDirection;
+	}
 	else
 	{
-		if (m_bDrift == true)
+		float fTurnAngle = min(m_fNormalTurnAngle, fForceLength * 0.013f) * m_eDirection;
+
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 		{
-			_vec3 vTempForce, vCross;
-			vTempForce = m_vForce;
-
-			vLook.y = 0;
-			vTempForce.y = 0;
-
-			D3DXVec3Cross(&vCross, &vTempForce, &vLook);
-
-			float fTurnAngle = min(m_fDriftTurnAngle, fForceLength * 0.04);
-			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
-			{
-				if (vCross.y < 0)
-				{
-					m_vRotation.y += D3DXToRadian(fTurnAngle);
-				}
-				else
-				{
-					m_vRotation.y += D3DXToRadian(fTurnAngle * 0.5);
-				}
-			}
-			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
-			{
-				if (vCross.y > 0)
-				{
-					m_vRotation.y += D3DXToRadian(-fTurnAngle);
-				}
-				else
-				{
-					m_vRotation.y += D3DXToRadian(-fTurnAngle * 0.5);
-				}
-			}
+			m_vRotation.y += D3DXToRadian(-fTurnAngle);
+			_matrix matRot;
+			D3DXMatrixRotationY(&matRot, D3DXToRadian(-fTurnAngle));
+			D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
 		}
-		else if (m_eBoostState >= BOOST_STATE_SHORT_BOOST)
+		else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 		{
-			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
-				m_vRotation.y += D3DXToRadian(m_fBoostTurnAngle);
-			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
-				m_vRotation.y += D3DXToRadian(-m_fBoostTurnAngle);
-		}
-		else
-		{
-			float fTurnAngle = min(m_fNormalTurnAngle, fForceLength * 0.013);
-			if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
-			{
-				m_vRotation.y += D3DXToRadian(fTurnAngle);
-				_matrix matRot;
-				D3DXMatrixRotationY(&matRot, D3DXToRadian(fTurnAngle));
-				D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
-			}
-			else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
-			{
-				m_vRotation.y += D3DXToRadian(-fTurnAngle);
-				_matrix matRot;
-				D3DXMatrixRotationY(&matRot, D3DXToRadian(-fTurnAngle));
-				D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
-			}
+			m_vRotation.y += D3DXToRadian(fTurnAngle);
+			_matrix matRot;
+			D3DXMatrixRotationY(&matRot, D3DXToRadian(fTurnAngle));
+			D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
 		}
 	}
 }
@@ -459,6 +404,8 @@ void CCart::UpdateDrift()
 
 		D3DXVec3Normalize(&vLook, &vLook);
 		D3DXVec3Normalize(&vTempForce, &vTempForce);
+
+		vLook *= m_eDirection;
 
 		_vec3 vCross;
 		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
@@ -611,21 +558,31 @@ void CCart::UpdateThunder()
 
 void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 {
-	CLand3* pLand3 = dynamic_cast<CLand3*>(CManagement::GetInstance()->Find_GameObjectByTag(L"Environment", L"Env_Land3"));
-	CTerrain3* pTerrain3 = pLand3->Get_Component<CTerrain3>();
+	CLand3* pLand = dynamic_cast<CLand3*>(CManagement::GetInstance()->Find_GameObjectByTag(L"Environment", L"Env_Land3"));
+	CTerrain3* pTerrain3 = pLand->Get_Component<CTerrain3>();
 
+	float fMaxLandY = -123456789;
 	_vec3 originPos = pos;
-	if (pLand3->CheckInTerrain(pos))
+	_vec3 vWorldPos;
+
+	// for(auto& pLand : vLands)
+	if (pLand->CheckInTerrain(pos))
 	{
 		// Land3의 로컬로 내림
-		_matrix* pMatWorld = pLand3->Get_Component<CTransform>()->Get_World();
+		_matrix* pMatWorld = pLand->Get_Component<CTransform>()->Get_World();
 		_matrix matInvWorld;
 		D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
-		D3DXVec3TransformCoord(&pos, &pos, &matInvWorld);
+		_vec3 vLocalPos;
+		D3DXVec3TransformCoord(&vLocalPos, &pos, &matInvWorld);
 
 		// 평면 구하기
-		D3DXPLANE plane = pTerrain3->GetPlane(pos);
-		float fLocalPlaneY = -(plane.a * pos.x + plane.c * pos.z + plane.d) / plane.b;
+		//D3DXPLANE plane = pTerrain3->GetPlane(pos);
+
+		D3DXPLANE plane;
+		float fMinDist = 123456789;
+		pTerrain3->GetPlane(vLocalPos, &plane, &fMinDist);
+
+		float fLocalPlaneY = -(plane.a * vLocalPos.x + plane.c * vLocalPos.z + plane.d) / plane.b;
 
 		// 법선 구하기
 		m_vTerrainNormal = { plane.a ,plane.b ,plane.c };
@@ -635,10 +592,9 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 		D3DXVec3Normalize(&m_vTerrainNormal, &m_vTerrainNormal);
 
 		// Local에서의 CartPosition
-		_vec3 vLocalPos = { pos.x,fLocalPlaneY,pos.z };
+		vLocalPos = { vLocalPos.x,fLocalPlaneY,vLocalPos.z };
 
 		// World에서의 CartPosition
-		_vec3 vWorldPos;
 		D3DXVec3TransformCoord(&vWorldPos, &vLocalPos, pMatWorld);
 
 		float fDeltaY = originPos.y - vWorldPos.y;
@@ -663,7 +619,16 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
 
 				if (m_vTerrainNormal != _vec3({ 0,1,0 }))
+				{
 					m_PreQuaternion = q;
+					m_iFlatFrameCnt = 0;
+				}
+				else
+				{
+					++m_iFlatFrameCnt;
+					if (m_iFlatFrameCnt > 3)
+						m_PreQuaternion = { 0,0,0,1 };
+				}
 			}
 			else // 점프 시작 
 			{
@@ -692,6 +657,8 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 
 				if (m_vTerrainNormal == _vec3({ 0,1,0 }))
 					m_PreQuaternion = {0,0,0,1};
+				else
+					m_PreQuaternion = q;
 			}
 			else // 점프 유지
 			{
@@ -700,7 +667,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 			}
 		}
 	}
-	else //맵 전체를 지형으로 덮으면 이 부분은 필요 없을듯?
+	else //맵 전체를 지형으로 덮으면 else 부분은 필요 없을듯?
 	{
 		if (originPos.y  <= 0.f)
 		{
@@ -713,6 +680,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 		{
 			m_eCartState = CART_STATE_AIR;
 			m_fAirTime += fDeltaTime;
+			m_iFlatFrameCnt = 0;
 		}
 	}
 

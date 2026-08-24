@@ -34,6 +34,12 @@ public:
 	void			LateUpdate_Layer(const _float& fDeltaTime);
 	void			Render_Layer();
 
+
+
+	virtual			void		OnLostDevice();
+	virtual			void		OnResetDevice();
+
+
 private:
 	map<const _tchar*, vector<CGameObject*>>		m_mapObject;
 	vector<CGameObject*>							m_vecRoots;

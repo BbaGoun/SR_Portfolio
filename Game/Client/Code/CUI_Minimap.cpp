@@ -54,7 +54,7 @@ void CUI_Minimap::LateUpdate_GameObject(const _float& fDeltaTime)
 void CUI_Minimap::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pGraphicDev->SetTexture(0, CRenderer::GetInstance()->GetRTTexture());
+	m_pGraphicDev->SetTexture(0, CRenderer::GetInstance()->Find_RenderTarget(L"Minimap")->pRTTexture);
 	m_pVIBufferCom->Render_Buffer();
 }
 

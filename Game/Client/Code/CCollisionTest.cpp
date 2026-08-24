@@ -42,6 +42,7 @@
 #include "CMinimapCart.h"
 #include "CMagnetBody.h"
 #include "CItemBox.h"
+#include "CSmokeEffect.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -103,7 +104,11 @@ void CCollisionTest::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 
 	vector<CGameObject*> objects;
 	for (auto& p : map)
-		objects.insert(objects.end(), p.second.begin(), p.second.end());
+	{
+		for (auto& pObj : p.second)
+			if (!pObj->Get_Components<CCollider>().empty())
+				objects.insert(objects.end(), p.second.begin(), p.second.end());
+	}
 	/*for (auto& p : map2)
 		objects.insert(objects.end(), p.second.begin(), p.second.end());*/
 
@@ -128,11 +133,13 @@ void CCollisionTest::Render_Scene()
 
 void CCollisionTest::OnLostDevice()
 {
+	CScene::OnLostDevice();
 	CRenderer::GetInstance()->OnLostDevice();
 }
 
 void CCollisionTest::OnResetDevice()
 {
+	CScene::OnResetDevice();
 	CRenderer::GetInstance()->OnResetDevice(m_pGraphicDev);
 }
 
@@ -156,7 +163,9 @@ HRESULT CCollisionTest::Ready_Prototype()
 
 HRESULT CCollisionTest::Ready_RenderTarget()
 {
-	CRenderer::GetInstance()->Ready_RenderTarget(m_pGraphicDev, 250, 400);
+	//CRenderer::GetInstance()->Ready_RenderTarget(m_pGraphicDev, 250, 400);
+
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"Minimap", 250, 400);
 	return S_OK;
 }
 
@@ -247,6 +256,8 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	pGameObject->SetLayer(pGameObjectLayer);
 	pCartBody->Set_Child(pGameObject);
+	dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
+
 	// ## 오른쪽 앞바퀴
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FR);
 	
@@ -257,6 +268,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	pGameObject->SetLayer(pGameObjectLayer);
 	pCartBody->Set_Child(pGameObject);
+	dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
 	
 	// ## 왼쪽 뒷바퀴
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BL);
@@ -268,6 +280,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	pGameObject->SetLayer(pGameObjectLayer);
 	pCartBody->Set_Child(pGameObject);
+	dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
 	
 	// ## 오른쪽 뒷바퀴
 	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BR);
@@ -278,6 +291,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	pGameObject->SetLayer(pGameObjectLayer);
 	pCartBody->Set_Child(pGameObject);
+	dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
 
 	// ## 부스터 왼쪽1 바람 이펙트
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
@@ -324,6 +338,13 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	pCartBody->Set_Child(pGameObject);
 
 
+	// 연기 이펙트
+	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"SmokeEffect", pGameObject)))
+		return E_FAIL;
 
 
 	// ItemBox
@@ -596,5 +617,6 @@ HRESULT CCollisionTest::Ready_Collision_Matrix()
 
 void CCollisionTest::Free()
 {
+	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
 	CScene::Free();
 }

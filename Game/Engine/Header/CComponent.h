@@ -37,6 +37,9 @@ protected:
 public:
 	virtual CComponent* Clone()	PURE;		// 프로토타입 디자인 패턴을 사용하는 예
 
+	virtual			void		OnLostDevice() {};
+	virtual			void		OnResetDevice() {};
+
 protected:
 	virtual void		Free();
 };
