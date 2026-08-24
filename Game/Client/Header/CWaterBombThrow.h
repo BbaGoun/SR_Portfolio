@@ -31,7 +31,7 @@ private:
 	CTexture* m_pTextureCom;
 	CCube_Collider* m_pColliderCom;
 
-	float	m_fTimer;
+	_float	m_fTimer;
 
 public:
 	static CWaterBombThrow* Create(LPDIRECT3DDEVICE9 pGraphicDev);

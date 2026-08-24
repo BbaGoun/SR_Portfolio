@@ -42,11 +42,11 @@ void CWaterBombBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	_vec3 vScale;
 	vScale = m_pTransformCom->Get_Scale();
 
-	if (vScale.x < 18.f && vScale.y < 18.f && vScale.z < 18.f)
+	if (vScale.x < 16.f && vScale.y < 16.f && vScale.z < 16.f)
 	{
-		vScale.x += 50.f * fFixedDeltaTime;
-		vScale.y += 50.f * fFixedDeltaTime;
-		vScale.z += 50.f * fFixedDeltaTime;
+		vScale.x += 40.f * fFixedDeltaTime;
+		vScale.y += 40.f * fFixedDeltaTime;
+		vScale.z += 40.f * fFixedDeltaTime;
 	}
 
 	// 디테일 나중에 반구 만들고

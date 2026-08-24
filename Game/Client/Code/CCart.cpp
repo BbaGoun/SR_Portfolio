@@ -15,6 +15,9 @@
 #include <CThunderCloud.h>
 #include <CCartBody.h>
 #include "CMagnetBody.h"
+#include "CWaterBomb.h"
+#include "CWaterBombBody.h"
+#include "CWaterBombThrow.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -192,6 +195,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_T))
 	{
 		CreateMagnetAimObject();
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Y))
+	{
+		CreateWaterBombObject();
 	}
 
 	// ShortBooster
@@ -975,6 +983,54 @@ void CCart::CreateMagnetObject()
 	}
 
 	pMagnetBody->Get_Transform()->Set_Pos(vPos);
+}
+
+void CCart::CreateWaterBombObject()
+{
+	CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
+
+	if (pWaterBomb == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBomb", pWaterBomb)))
+		return;
+
+	pWaterBomb->SetLayer(m_pLayer);
+
+	CGameObject* pWaterBombBody = CWaterBombBody::Create(m_pGraphicDev);
+
+	if (pWaterBombBody == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBody", pWaterBombBody)))
+		return;
+
+	pWaterBombBody->SetLayer(m_pLayer);
+	pWaterBomb->Set_Child(pWaterBombBody);
+
+	CGameObject* pWaterBombThrow = CWaterBombThrow::Create(m_pGraphicDev);
+
+	if (pWaterBombThrow == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombThrow", pWaterBombThrow)))
+		return;
+
+	pWaterBombThrow->SetLayer(m_pLayer);
+
+	_vec3 vPos, vWaterBombPos, vLook, vUp;
+
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	m_pTransformCom->Get_Info(INFO_UP, &vUp);
+
+	pWaterBomb->Get_Transform()->Get_Info(INFO_POS, &vWaterBombPos);
+	//->Get_Transform()->Set_Pos(vPos);
+
+	vPos += vUp * 5.f;
+
+	pWaterBombThrow->Get_Transform()->Set_Pos(vPos);
+
 }
 
 void CCart::CreateMagnetAimObject()

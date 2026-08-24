@@ -69,6 +69,7 @@ public:
 	void			CreateThunderCloudObject();
 	void			CreateMissileObject();	
 	void			CreateMagnetObject();
+	void			CreateWaterBombObject();
 	void			CreateTargetAimObject();	
 	void			CreateMissileAimObject();
 	void			CreateMagnetAimObject();
