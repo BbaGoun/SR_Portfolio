@@ -37,6 +37,11 @@ CVIBuffer::~CVIBuffer()
 
 HRESULT CVIBuffer::Ready_Buffer()
 {
+	if(m_pVB)
+		m_pVB->Release();
+	if(m_pIB)	
+		m_pIB->Release();
+
 	if (FAILED(m_pGraphicDev->CreateVertexBuffer(
 		m_dwVtxCnt * m_dwVtxSize,
 		D3DUSAGE_WRITEONLY,

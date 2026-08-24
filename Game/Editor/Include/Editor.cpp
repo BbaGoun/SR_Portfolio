@@ -25,8 +25,10 @@ bool                    g_bSelected = false;
 uint32_t                g_uSelected = 0;
 
 bool                    g_bEdit = false;
-bool                     g_bPointSelected;
-uint32_t                 g_uPointSelected;
+bool                    g_bPointSelected;
+uint32_t                g_uPointSelected;
+
+bool                    g_bMoveTo = false;
 
 // Transform 조작 창의 설정
 ImGuizmo::OPERATION g_GizmoOp = ImGuizmo::TRANSLATE;

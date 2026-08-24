@@ -64,10 +64,6 @@ _uint CLoadingThread::Loading_Stage()
         ,true, L"Cube")))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Spline", Engine::CSpline::Create(m_pGraphicDev)
-        ,true, L"Spline")))
-        return E_FAIL;
-
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Texture Loading.....................................");
     LeaveCriticalSection(Get_Crt());
@@ -142,12 +138,22 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CurveSignTexture1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_clockTower/Edited/CurveSign1.png", 1),
         true, L"CurveSign")))
+        return E_FAIL;
+
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SplinePointNormal", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Editor/PointSprite/SplinePointNormal.png", 1),
         true, L"SplinePointNormal")))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SplinePointEdit", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Editor/PointSprite/SplinePointEdit.png", 1),
         true, L"SplinePointEdit")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_F_road00", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Terrain/F_road00.png", 1),
+        true, L"F_road00")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BoosterWindL", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Effect/BoosterWind/BoosterWindL%d.png", 2),
+        true, L"BoosterWindL")))
         return E_FAIL;
 
     EnterCriticalSection(Get_Crt());
@@ -166,6 +172,9 @@ _uint CLoadingThread::Loading_Stage()
         ,true, L"Sphere Collider")))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Spline", Engine::CSpline::Create(m_pGraphicDev)
+        , true, L"Spline")))
+        return E_FAIL;
 
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Loading Complete !!!!");
@@ -185,7 +194,9 @@ unsigned int CLoadingThread::Thread_Main(void* pArg)
     switch (pLoading->Get_LoadingID())
     {
     case LOADING_STAGE:
-        iFlag = pLoading->Loading_Stage();
+        if (FAILED(pLoading->Loading_Stage())) {
+            MSG_BOX("Loading Fail");
+        }
         break;
 
     case LOADING_BOSS:

@@ -40,26 +40,26 @@ CComponent* CGameObject::Get_Component(COMPONENTID eID, const _tchar* pComponent
     return pComponent;
 }
 
-void CGameObject::Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag)
+CComponent* CGameObject::Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag)
 {
     auto iter = find_if(m_mapComponent.begin(),
                     m_mapComponent.end(),
                     CTag_Finder(pComponentTag));
 
     if (iter != m_mapComponent.end())
-        return;
+        return nullptr;
 
     CComponent* pCom = CProtoMgr::GetInstance()->Get_CloneComponent(pProtoTag);
     if (!pCom) {
         MSG_BOX("Add Component Fail");
-        return;
+        return nullptr;
     }
 
     m_mapComponent.insert({ pComponentTag, pCom });
     pCom->Set_Owner(this);
     pCom->Set_ProtoTag(pProtoTag);
 
-    return;
+    return pCom;
 }
 
 void CGameObject::Remove_Component(CComponent* _pCom)

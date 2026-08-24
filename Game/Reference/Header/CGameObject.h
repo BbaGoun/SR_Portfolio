@@ -23,7 +23,7 @@ public:
 	const map<const _tchar*, CComponent*>& Get_ComponentMap() { return m_mapComponent; }
 
 	CTransform* Get_Transform() { return m_pTransformCom; }
-	void	Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
+	CComponent* Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
 	void	Remove_Component(CComponent* _pCom);
 
 	void	Set_Child(CGameObject* _pGO);

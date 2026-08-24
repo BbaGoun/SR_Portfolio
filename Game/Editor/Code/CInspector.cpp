@@ -33,11 +33,11 @@ void CInspector::Update_Window()
     bool sceneFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_None);
 
     if (!ImGui::IsAnyItemActive() && sceneFocused) {
-        if (ImGui::IsKeyDown(ImGuiKey_Q))
+        if (ImGui::IsKeyDown(ImGuiKey_1))
             g_GizmoOp = ImGuizmo::TRANSLATE;
-        if (ImGui::IsKeyDown(ImGuiKey_W))
+        if (ImGui::IsKeyDown(ImGuiKey_2))
             g_GizmoOp = ImGuizmo::ROTATE;
-        if (ImGui::IsKeyDown(ImGuiKey_E))
+        if (ImGui::IsKeyDown(ImGuiKey_3))
             g_GizmoOp = ImGuizmo::SCALE;
     }
 
@@ -314,25 +314,47 @@ void CInspector::SplineCom(CGameObject* _pObj)
                     sprintf_s(buf, sizeof(buf), "##pos%d", cp.id);
                     ImGuiLabel("Pos");
                     if (ImGui::DragFloat3(buf, tr, 0.1f)) {
+                        // CP의 위치가 바뀐다 -> 곡선의 형태가 바뀐다 
+                        // -> T,R,U가 바뀐다 -> 메쉬도 전부 다시 생성
+                        // 최적화 시에는 +- 2 범위의 곡선만 다시 계산
                         memcpy(&cp.position, tr, sizeof(_vec3));
+                        pSpline->Compute_Spline();
                     }
                     
                     sprintf_s(buf, sizeof(buf), "##bank%d", cp.id);
                     ImGuiLabel("Bank");
-                    if (ImGui::DragFloat(buf, &bank, 0.5f, -90.f, 90.f)) {
-                        cp.bank = bank;
+                    if (ImGui::DragFloat(buf, &bank, 0.5f, -180.f, 180.f)) {
+                        // 해당 cp의 right로 up과 bank 계산
+                        // R,U,bank만 바뀜 -> 메쉬 다시 생성
+                        // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
+                        pSpline->Set_Bank(&cp, bank);
                     }
                     
+                    sprintf_s(buf, sizeof(buf), "T : %f, %f, %f", cp.T.x, cp.T.y, cp.T.z);
+                    ImGui::Text(buf);
+                    sprintf_s(buf, sizeof(buf), "R : %f, %f, %f", cp.R.x, cp.R.y, cp.R.z);
+                    ImGui::Text(buf);
+                    sprintf_s(buf, sizeof(buf), "U : %f, %f, %f", cp.U.x, cp.U.y, cp.U.z);
+                    ImGui::Text(buf);
+
                     sprintf_s(buf, sizeof(buf), "##width%d", cp.id);
                     ImGuiLabel("Width");
                     if (ImGui::DragFloat(buf, &width, 0.1f, 0.f, FLT_MAX)) {
+                        // 해당 cp의 width를 바꾼다
+                        // -> 매쉬 다시 생성
+                        // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
                         cp.width = width;
+                        pSpline->Compute_Mesh();
                     }
                     
                     sprintf_s(buf, sizeof(buf), "##depth%d", cp.id);
                     ImGuiLabel("Depth");
                     if (ImGui::DragFloat(buf, &depth, 0.1f, 0.f, FLT_MAX)) {
+                        // 해당 cp의 width를 바꾼다
+                        // -> 매쉬 다시 생성
+                        // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
                         cp.depth = depth;
+                        pSpline->Compute_Mesh();
                     }
                 }
                 ImGui::Separator();
@@ -634,7 +656,9 @@ void CInspector::Add_Component_Button(CGameObject* _pObj)
                 std::string label = ToUtf8(rec.name[0] ? rec.name : rec.tag);
                 if (ImGui::MenuItem(label.c_str()))
                 {
-                    _pObj->Add_Component(rec.tag, rec.tag);
+                    CComponent* pCom = _pObj->Add_Component(rec.tag, rec.tag);
+                    if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom))
+                        pSpline->Create_New();
                     ImGui::CloseCurrentPopup();
                 }
             }

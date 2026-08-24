@@ -50,6 +50,8 @@ extern uint32_t                 g_uPointSelected;
 extern ImGuizmo::OPERATION		g_GizmoOp;
 extern ImGuizmo::MODE			g_GizmoMode;
 
+extern bool                     g_bMoveTo;
+
 inline void Set_ObjSelected(uint32_t id) {
     if (!g_bEdit) {
         g_bSelected = true;

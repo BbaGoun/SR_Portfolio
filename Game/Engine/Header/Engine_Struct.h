@@ -104,11 +104,15 @@ namespace Engine
 
 	typedef struct _tagControlPoint
 	{
-		_vec3	position;
-		uint32_t id;
-		_float	bank;
-		_float	width;
-		_float	depth;
+		_vec3		position;
+		_vec3		V;		// 3차 허밋 곡선에서의 벡터
+		_vec3		T;		// 진행 방향
+		_vec3		R;		// 우측 방향
+		_vec3		U;		// 윗 방향
+		uint32_t	id;		// 식별 번호
+		_float		bank;	// 진행 방향을 축으로 회전하는 정도
+		_float		width;	// 지형의 너비
+		_float		depth;	// 지형의 깊이 (중심이 제일 바닥)
 	}ControlPoint;
 }
 
