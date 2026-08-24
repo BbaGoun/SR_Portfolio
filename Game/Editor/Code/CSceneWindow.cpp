@@ -244,7 +244,7 @@ void CSceneWindow::Update_Window()
             }
         }
         else if (pSel && g_bEdit) {
-            if (g_bPointSelected) {
+            if (g_bPointSelected && g_uPointSelected != 0) {
                 CSpline* pSpline = pSel->Get_Component<CSpline>();
 
                 ControlPoint* cp = pSpline->Get_ControlPoint(g_uPointSelected);
