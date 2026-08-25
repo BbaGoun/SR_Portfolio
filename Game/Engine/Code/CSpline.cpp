@@ -75,8 +75,8 @@ HRESULT CSpline::Ready_Buffer()
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(vertices[i].vPosition);
 	}
-	m_minVtx.y -= 1.f;
-	m_maxVtx.y += 1.f;
+	m_minVtx -= {1, 1, 1};
+	m_maxVtx += {1, 1, 1};
 
 	SetBoundingBox();
 
