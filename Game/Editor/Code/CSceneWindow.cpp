@@ -375,7 +375,7 @@ void CSceneWindow::Update_Window()
                         CVIBuffer* pBuf = pObj->Get_Component<CVIBuffer>();
                         if (pBuf == nullptr)
                             continue;
-                        pBuf->GetBoundingBox(&box);
+                        box = *pBuf->GetBoundingBox();
 
                         _matrix matWorld = *pObj->Get_Transform()->Get_World();
                         _matrix matInv;
@@ -469,9 +469,9 @@ void CSceneWindow::Draw_Outline(CGameObject* pObj, D3DXCOLOR color)
     CVIBuffer* buffer = pObj->Get_Component<CVIBuffer>();
     DirectX::BoundingBox bbox;
     if (buffer != nullptr)
-        buffer->GetBoundingBox(&bbox);
+        bbox = *buffer->GetBoundingBox();
     else
-        m_pCubeBuffer->GetBoundingBox(&bbox);
+        bbox = *m_pCubeBuffer->GetBoundingBox();
     
     _matrix* matWorld = pObj->Get_Transform()->Get_World();
 

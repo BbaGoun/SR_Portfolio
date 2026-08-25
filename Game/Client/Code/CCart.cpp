@@ -569,8 +569,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 	// 지형들 중 어떤 지형과 충돌했는지 확인 후 fGroundY, m_vTerrainNormal값이 구해짐
 	for (auto& track : tracks) {
 		CSpline* pSpline = track->Get_Component<CSpline>();
-		DirectX::BoundingBox box;
-		pSpline->GetBoundingBox(&box);
+		DirectX::BoundingBox box = *pSpline->GetBoundingBox();
 
 		// spline의 모델 스페이스로 보내기 위한 역행렬
 
@@ -743,52 +742,61 @@ void CCart::CollisionWall()
 	if (walls.empty())
 		return;
 	
-	CCube_Collider* pCol = Get_ComponentSpread<CCube_Collider>();
-
-	// for문 밖에 생성
-	_vec3 vCartOldCenter = ToVec3(pCol->Get_Info().Center);
-	_vec3 vCartModelCenter;
-
-	_vec3 extends = pCol->Get_Extents();
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	_vec3 vRight, vUp, vLook;
+	// 플레이어의 정보
+	_vec3 vRight, vUp, vLook, vPos;
 	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
 	m_pTransformCom->Get_Info(INFO_UP, &vUp);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	CCube_Collider* pCol = Get_ComponentSpread<CCube_Collider>();
+
+	// Reference가 아니라 값 복사 (변환을 하다보니 값 복사)
+	DirectX::BoundingOrientedBox OBB = pCol->Get_Info();
+
+	// 계산에 쓰기 위해 벡터 준비
+	_vec3 vCartOldCenter = ToVec3(OBB.Center);
+	_quaternion qCart = ToQuaternion(OBB.Orientation);
+	_vec3 extends = ToVec3(OBB.Extents);
+
+	// 변환될 결과를 담을 벡터
+	_vec3 vCartModelCenter;
+	_quaternion qCartModel;
 
 	// 벽들 중 어떤 벽과 충돌했는지 확인
 	for (auto& wall : walls) {
 		CSpline* pSpline = wall->Get_Component<CSpline>();
-		DirectX::BoundingBox box;
-		pSpline->GetBoundingBox(&box);
+		DirectX::BoundingBox box = *pSpline->GetBoundingBox();
 
-		// Cart를 spline의 모델 스페이스로 보내기 위한 역행렬
+		// OBB의 중심을 spline의 모델 스페이스로 보내기 위한 역행렬
 		_matrix matTrack, matInvTrack;
 		matTrack = *wall->Get_Transform()->Get_World();
 		D3DXMatrixInverse(&matInvTrack, 0, &matTrack);
 
+		// OBB의 회전을 spline의 모델 스페이스로 보내기 위한 역 쿼터니언
+		_quaternion qTrack, qInvTrack;
+		qTrack = wall->Get_Transform()->Get_WorldQuaternion();
+		D3DXQuaternionInverse(&qInvTrack, &qTrack);
+
 		// 플레이어의 박스 콜라이더를 spline의 모델 스페이스로 보낸다.
-		// 박스 콜라이더의 center를 변환해서 다시 넣는 방식
+		// 박스 콜라이더의 Center/Orientation를 변환해서 다시 넣는 방식
 		D3DXVec3TransformCoord(&vCartModelCenter, &vCartOldCenter, &matInvTrack);
-		pCol->Set_Center(vCartModelCenter);
+		qCartModel = qCart * qInvTrack;
+		OBB.Center = ToXMFLOAT3(vCartModelCenter);
+		OBB.Orientation = ToXMFLOAT4(qCartModel);
 
 		// 벽의 boundingbox와 플레이어의 콜라이더가 닿는지 검사
-		bool bCheckCollision = box.Intersects(pCol->Get_Info());
-		if (bCheckCollision == false) {
-			pCol->Set_Center(vCartOldCenter);
+		bool bCheckCollision = box.Intersects(OBB);
+		if (bCheckCollision == false)
 			continue;
-		}
 
 		// 충돌한 벽을 찾았다면 이제 spline이 갖고 있는 삼각형(면)에 대해서 intersect로 충돌한 평면 하나 찾기
 		vector<VTXTEX> vecVertices = pSpline->GetVertices();
 		vector<FACE32> vecFaces = pSpline->GetFaces();
 		
-		/*bool bCollision = false;
-		FACE32 closestFace;
+		bool bCollision = false;
+		_vec3 MTV;
 		float closestDist = FLT_MAX;
-		*/
-		
 
 		for (int i = 0; i < vecFaces.size(); ++i)
 		{
@@ -797,30 +805,24 @@ void CCart::CollisionWall()
 			_vec3 p1 = vecVertices[vecFaces[i].indices._1].vPosition;
 			_vec3 p2 = vecVertices[vecFaces[i].indices._2].vPosition;
 
-			//// 로컬 -> 월드로 변환
-			//D3DXVec3TransformCoord(&p0, &p0, &matTrack);
-			//D3DXVec3TransformCoord(&p1, &p1, &matTrack);
-			//D3DXVec3TransformCoord(&p1, &p1, &matTrack);
-
-			// distance검사 안해도 되나?
-			// center에서 해당 면 중앙?으로 ray발사해서 거리 구해가지고
-			// 최소 거리인 면에 대해서 충돌을 해야하는게 아닌강
-			// 이거는 닿으면 바로 인데, 닿은 얘들중에서 제일 가까운 으로 하지 않아도 되려나...
-			// 근데 그건 그냥 우연히 제일 먼저 검사된 얘잖아
-
-			if (!pCol->Get_Info().Intersects(ToXMVec(p0), ToXMVec(p1), ToXMVec(p2)))
+			// 지형의 양 끝의 경우, 삼각형이 너무 작아서 외적이 불가능한 경우가 생김
+			// 이러한 삼각형은 Intersects 시 에러가 발생하며, 법선을 계산할 수 없으므로 스킵
+			_vec3 e1 = p1 - p0;
+			_vec3 e2 = p2 - p0;
+			_vec3 n;
+			D3DXVec3Cross(&n, &e1, &e2);
+			if (D3DXVec3LengthSq(&n) < 1e-12f)
 				continue;
 
-			//cout << "Collision" << endl;
-			//pCol->Set_Center(vCartOldCenter);
-			
+			if (!OBB.Intersects(ToXMVec(p0), ToXMVec(p1), ToXMVec(p2)))
+				continue;
 
 			// 충돌시
 			// 1. 법선벡터 생성(카트를 바라보는 방향의 법선벡터)
 			// 로컬 -> 월드로 변환
 			D3DXVec3TransformCoord(&p0, &p0, &matTrack);
 			D3DXVec3TransformCoord(&p1, &p1, &matTrack);
-			D3DXVec3TransformCoord(&p1, &p1, &matTrack);
+			D3DXVec3TransformCoord(&p2, &p2, &matTrack);
 			D3DXPLANE plane;
 			D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
 			
@@ -834,21 +836,25 @@ void CCart::CollisionWall()
 				+ plane.b * vCartOldCenter.y
 				+ plane.c * vCartOldCenter.z + plane.d);
 
-			// 이 s는 순수 거리가 아니라 평면의 방향이냐 아니냐로 +/-가 될 수 있음
-			// +면 빼고, -면 더한다 -> 절대값
-
 			// 충돌을 하지 않음
 			if (s > r)
 				continue;
-			cout << (r - s) << endl;
-			_vec3 MTV = (r - s) * normal;
-			//법선벡터에 -1을 곱하냐 마냐를 결정함
-			if (plane.a * vPos.x + plane.b * vPos.y + plane.c * vPos.z + plane.d < 0)
-				MTV *= -1;
-			m_pTransformCom->Set_Pos(vPos + MTV*1.5f);
-			
 
-			
+			// 최단거리 평면과의 MTV를 구함
+			if (s < closestDist) {
+				bCollision = true;
+				MTV = (r - s) * normal;
+				//법선벡터에 -1을 곱하냐 마냐를 결정함
+				if (plane.a * vCartOldCenter.x 
+					+ plane.b * vCartOldCenter.y 
+					+ plane.c * vCartOldCenter.z 
+					+ plane.d < 0)
+					MTV *= -1;
+			}
+		}
+		if (bCollision) {
+			m_pTransformCom->Set_Pos(vPos + MTV);
+
 			// 2. 법선벡터만큼 밀어내기(들어간 만큼 이라는 것이 없어서 단위벡터만큼 밀어냄)
 
 			m_vForce += MTV;
@@ -860,20 +866,13 @@ void CCart::CollisionWall()
 
 			//m_pTransformCom->Set_Pos(vPos + MTV);
 
-
-			
 			// 3. 튕기기
 			//m_vForce += vNewForce;
-			
+
 			// 4. Gage, Drift 초기화
 			m_fGainGage = 0;
 			m_bDrift = false;
-			
-			//ColliderCenter 원래위치로 설정
-			pCol->Set_Center(vCartOldCenter);
-			return;
 		}
-		pCol->Set_Center(vCartOldCenter);
 	}
 }
 
