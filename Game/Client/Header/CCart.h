@@ -63,6 +63,9 @@ public:
 	// AdjustState
 	void			AdjustPosY_Slope(_vec3 pos, const float fDeltaTime);
 
+	// WallCollision
+	void			CollisionWall();
+
 	// CreateObject
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
@@ -126,6 +129,8 @@ private:
 
 	DIRECTION_TYPE	m_eDirection;
 	int				m_iFlatFrameCnt;
+
+	bool			m_bCanShortBoost;
 
 protected:
 	virtual		void		Free() override;

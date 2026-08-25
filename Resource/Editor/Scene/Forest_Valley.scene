@@ -1,12 +1,15 @@
-﻿OBJECT
+OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=15
   collisionLayer=0
   cullDistance=0
+  COMP kind=Texture proto=Proto_StartFlag mapTag=Proto_StartFlag
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=0.000000 0.000000 -2.500000
       cp_bank=0.000000
@@ -19,7 +22,6 @@
       cp_width=10.000000
       cp_depth=10.000000
     END_CONTROL_POINT
-  COMP kind=Texture proto=Proto_StartFlag mapTag=Proto_StartFlag
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
     pos=0.000000 0.000000 -5.000146
     rot=0.000000 -0.000000 0.000000
@@ -27,15 +29,17 @@
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=1
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=0.000000 0.000000 -2.500000
       cp_bank=0.000000
@@ -109,15 +113,17 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=2
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=6.588572 0.000000 -5.253738
       cp_bank=0.000000
@@ -149,14 +155,16 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=3
   collisionLayer=0
   cullDistance=0
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=2.000000
     CONTROL_POINT
       cp_pos=0.000000 0.000000 -2.500000
       cp_bank=0.000000
@@ -192,18 +200,20 @@ OBJECT
     pos=-9.105506 0.810000 52.972584
     rot=0.000000 -89.999870 0.000000
     quat=0.000000 -0.707106 0.000000 0.707107
-    scale=0.999866 1.000000 0.999866
+    scale=0.999865 1.000000 0.999865
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=4
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=-7.934284 0.000086 2.874325
       cp_bank=0.000000
@@ -229,15 +239,17 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=5
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=0.000000 0.000000 -2.500000
       cp_bank=0.000000
@@ -269,15 +281,17 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=6
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=1.041245 0.000000 -2.500000
       cp_bank=0.000000
@@ -309,15 +323,17 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=7
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=-9.814831 -0.225789 -4.216280
       cp_bank=0.000000
@@ -338,20 +354,22 @@ OBJECT
     END_CONTROL_POINT
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
     pos=-48.250607 1.892387 10.715998
-    rot=180.000000 11.819421 180.000000
+    rot=180.000000 11.819420 180.000000
     quat=0.000000 0.994685 0.000000 0.102961
-    scale=0.999989 1.000000 0.999989
+    scale=0.999987 1.000000 0.999987
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=8
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=0.000000 0.000000 -2.500000
       cp_bank=0.000000
@@ -407,15 +425,17 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=9
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=0.000000 0.000000 -2.500000
       cp_bank=0.000000
@@ -448,20 +468,22 @@ OBJECT
     END_CONTROL_POINT
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
     pos=-42.982918 1.584926 -32.725868
-    rot=180.000000 16.766035 180.000000
+    rot=180.000000 16.766037 180.000000
     quat=0.000000 0.989316 0.000000 0.145790
-    scale=1.000013 1.000000 1.000013
+    scale=1.000015 1.000000 1.000015
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=10
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=7.213828 0.000000 -0.515446
       cp_bank=0.000000
@@ -487,15 +509,17 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=11
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=1.434074 0.000000 -2.566544
       cp_bank=0.000000
@@ -516,20 +540,22 @@ OBJECT
     END_CONTROL_POINT
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
     pos=-13.132356 1.614252 -52.587860
-    rot=180.000000 -6.240180 180.000000
+    rot=180.000000 -6.240181 180.000000
     quat=0.000000 0.998518 0.000000 -0.054429
-    scale=1.000002 1.000000 1.000002
+    scale=1.000003 1.000000 1.000003
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=12
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=-4.138226 0.000000 1.519810
       cp_bank=0.000000
@@ -555,14 +581,16 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=17
   collisionLayer=0
   cullDistance=0
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=2.500000
     CONTROL_POINT
       cp_pos=-0.001076 0.032943 -2.626585
       cp_bank=0.000000
@@ -580,18 +608,20 @@ OBJECT
     pos=-7.357058 1.590675 -56.307316
     rot=180.000000 89.999962 180.000000
     quat=0.000000 0.707107 0.000000 0.707107
-    scale=0.999959 1.000000 0.999878
+    scale=0.999960 1.000000 0.999879
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=13
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=0.000000 0.445522 -2.500000
       cp_bank=0.000000
@@ -623,14 +653,16 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=18
   collisionLayer=0
   cullDistance=0
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=0.000000 -0.172590 -2.500000
       cp_bank=0.000000
@@ -651,15 +683,17 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=14
   collisionLayer=0
   cullDistance=0
   COMP kind=Texture proto=Proto_F_road00 mapTag=Proto_F_road00
   COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+    SampleUnit=1.000000
+    TextureUnit=5.000000
     CONTROL_POINT
       cp_pos=0.000000 0.000000 -2.500000
       cp_bank=0.000000
@@ -703,9 +737,9 @@ OBJECT
     scale=1.000000 1.000000 1.000000
 ENDOBJECT
 OBJECT
+  type=
   prefabPath=
   belong=0
-  type=
   name=Empty
   tag=16
   collisionLayer=0
