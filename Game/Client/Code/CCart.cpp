@@ -820,7 +820,7 @@ void CCart::CollisionWall()
 			// 로컬 -> 월드로 변환
 			D3DXVec3TransformCoord(&p0, &p0, &matTrack);
 			D3DXVec3TransformCoord(&p1, &p1, &matTrack);
-			D3DXVec3TransformCoord(&p1, &p1, &matTrack);
+			D3DXVec3TransformCoord(&p2, &p2, &matTrack);
 			D3DXPLANE plane;
 			D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
 			
@@ -851,19 +851,19 @@ void CCart::CollisionWall()
 			
 			// 2. 법선벡터만큼 밀어내기(들어간 만큼 이라는 것이 없어서 단위벡터만큼 밀어냄)
 
-			m_vForce += MTV;
-			//_vec3 vNewForce = m_vForce;
-			//vNewForce = MTV * D3DXVec3Length(&vNewForce);
-			//float fForceLength = D3DXVec3Length(&vNewForce);
-			//if (fForceLength >= 30)
-			//	vNewForce = vNewForce * 30 / fForceLength;
+			//m_vForce += MTV;
+			_vec3 vNewForce = m_vForce;
+			vNewForce = MTV * D3DXVec3Length(&vNewForce);
+			float fForceLength = D3DXVec3Length(&vNewForce);
+			if (fForceLength >= 30)
+				vNewForce = vNewForce * 30 / fForceLength;
 
 			//m_pTransformCom->Set_Pos(vPos + MTV);
 
 
 			
 			// 3. 튕기기
-			//m_vForce += vNewForce;
+			m_vForce += vNewForce;
 			
 			// 4. Gage, Drift 초기화
 			m_fGainGage = 0;
