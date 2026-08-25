@@ -21,8 +21,8 @@ HRESULT CWaterBomb::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 
 	m_fTimer	= 0.f;
-	m_fSpeed	= 0.f;
-	m_fAngle	= 0.f;
+	//m_fSpeed	= 0.f;
+	//m_fAngle	= 0.f;
 
 	m_bCreate	= false;
 
@@ -53,7 +53,7 @@ void CWaterBomb::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
 
-	vCartPos += vCartLook * 300.f;
+	vCartPos += vCartLook * 200.f;
 	// += vCartLook * 100.f;
 	m_fTimer += fFixedDeltaTime;
 

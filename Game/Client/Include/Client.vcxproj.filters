@@ -198,7 +198,7 @@
     </Filter>
     <Filter Include="02. GameObject\UI\UI_Laps">
       <UniqueIdentifier>{42c1be04-11a9-46ca-8b61-5ea9a8a3db04}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="02. GameObject\Item\Missile">
       <UniqueIdentifier>{d6b85c0f-4e58-4131-bf43-13d6294f242c}</UniqueIdentifier>
     </Filter>
@@ -267,6 +267,9 @@
     </Filter>
     <Filter Include="03. Manager\CLoadMgr">
       <UniqueIdentifier>{a6062789-bc8f-4b64-bb3d-4fa8fbaeae29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\WaterBomb\WaterBombBubble">
+      <UniqueIdentifier>{90d69fb1-89e6-4de2-a700-7baf6e471c8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -482,7 +485,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\CUI_Laps.h">
       <Filter>02. GameObject\UI\UI_Laps</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\CMagnetBody.h">
       <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClInclude>
@@ -527,6 +530,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CLoadMgr.h">
       <Filter>03. Manager\CLoadMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWaterBombBubble.h">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombBubble</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -733,7 +739,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <Filter>02. GameObject\UI\UI_Laps</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\CMagnetBody.cpp">
       <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClCompile>
@@ -778,6 +784,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CLoadMgr.cpp">
       <Filter>03. Manager\CLoadMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI_Menu.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterBombBubble.cpp">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombBubble</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
