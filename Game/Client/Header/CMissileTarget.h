@@ -37,6 +37,7 @@ private:
 			_float				m_fMaxSpeed;
 			_bool				m_bMissileHit;
 			_bool				m_bWaterBombHit;
+			_float				m_fTimer;
 
 protected:
 	virtual		void		Free() override;

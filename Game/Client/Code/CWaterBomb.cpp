@@ -51,8 +51,8 @@ void CWaterBomb::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
 
-	vCartPos += vCartLook * 300.f;
-
+	// vCartPos += vCartLook * 300.f;
+	 vCartPos += vCartLook * 100.f;
 	m_fTimer += fFixedDeltaTime;
 
 	if (m_fTimer > 1.6f)

@@ -25,6 +25,8 @@ HRESULT CMissileTarget::Ready_GameObject()
 	m_pTransformCom->Set_Pos({ -10.f,0.f,100.f });
 	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
 
+	m_fTimer			= 0.f;
+
 	m_bMissileHit		= false;
 	m_bWaterBombHit		= false;
 
@@ -91,21 +93,62 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	if (m_bWaterBombHit)
 	{
+		m_fTimer += fFixedDeltaTime;
+
 		_vec3 vPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
-		vPos.y += m_vForce.y * fFixedDeltaTime;
-		m_vForce.y -= 30.f * fFixedDeltaTime;
-
-		m_vRotation.x += D3DXToRadian(350.f) * fFixedDeltaTime;
-
-		if (m_vRotation.x >= D3DXToRadian(1080.f))
+		if (m_fTimer < 0.08f)
 		{
-			m_vRotation.x = D3DXToRadian(1080.f);
+			vPos.y += m_vForce.y * fFixedDeltaTime;
+		}	
+
+		else if (m_fTimer < 0.08f)
+		{
+			m_vForce.y = 0;
+		}
+
+		else if (m_fTimer > 0.15f && m_fTimer < 0.40f)
+		{
+			m_vRotation.x -= D3DXToRadian(100.f) * fFixedDeltaTime;
+			m_vRotation.y += D3DXToRadian(100.f) * fFixedDeltaTime;
+
+			if (m_vRotation.x <= D3DXToRadian(-25.f))
+			{
+				m_vRotation.x = D3DXToRadian(-25.f);
+			}
+
+			if (m_vRotation.y >= D3DXToRadian(25.f))
+			{
+				m_vRotation.y = D3DXToRadian(25.f);
+			}
+		}
+			
+		else if (m_fTimer > 1.0f && m_fTimer < 2.f)
+		{
+			m_vRotation.x += D3DXToRadian(5.f) * fFixedDeltaTime;
+			m_vRotation.y -= D3DXToRadian(5.f) * fFixedDeltaTime;
+
+			if (m_vRotation.x >= D3DXToRadian(-20.f))
+			{
+				m_vRotation.x = D3DXToRadian(-20.f);
+			}
+
+			if (m_vRotation.y <= D3DXToRadian(20.f))
+			{
+				m_vRotation.y = D3DXToRadian(20.f);
+			}
+
+		}
+
+		else if (m_fTimer >= 2.f)
+		{
+			vPos.y -= m_vForce.y * 0.45f * fFixedDeltaTime;
+			m_vForce.y -= 5.f * fFixedDeltaTime;
 		}
 
 		_quaternion q;
-		D3DXQuaternionRotationYawPitchRoll(&q, 0.f, m_vRotation.x, 0.f);
+		D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
 
 		if (vPos.y <= 0.f)
@@ -113,15 +156,18 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			vPos.y = 0.f;
 			m_vForce.y = 0.f;
 			m_vRotation.x = 0.f;
+			m_vRotation.y = 0.f;
 			m_bWaterBombHit = false;
+			m_fTimer = 0.f;
 
 			_quaternion qReset;
 			D3DXQuaternionRotationYawPitchRoll(&qReset, 0.f, 0.f, 0.f);
 			m_pTransformCom->Set_Quaternion(&qReset);
 		}
 
-		m_pTransformCom->Set_Pos(vPos);
+			m_pTransformCom->Set_Pos(vPos);	
 	}
+			
 }
 
 _int CMissileTarget::Update_GameObject(const _float& fDeltaTime)
@@ -165,8 +211,9 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 		if (m_bWaterBombHit == false)
 		{
 			m_bWaterBombHit = true;
-			m_vForce.y =  60.f;
+			m_vForce.y = 120.f;
 			m_vRotation.x += D3DXToRadian(0.f);
+			m_vRotation.y += D3DXToRadian(0.f);
 		}
 	}
 }
