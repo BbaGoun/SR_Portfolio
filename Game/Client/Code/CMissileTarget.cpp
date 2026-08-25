@@ -167,7 +167,6 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 			m_pTransformCom->Set_Pos(vPos);	
 	}
-			
 }
 
 _int CMissileTarget::Update_GameObject(const _float& fDeltaTime)

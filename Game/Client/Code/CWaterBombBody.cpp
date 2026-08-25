@@ -95,9 +95,9 @@ void CWaterBombBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		if (vScale.x < 16.f && vScale.y < 16.f && vScale.z < 16.f)
 		{
-			vScale.x += 60.f * fFixedDeltaTime;
-			vScale.y += 60.f * fFixedDeltaTime;
-			vScale.z += 60.f * fFixedDeltaTime;
+			vScale.x += 50.f * fFixedDeltaTime;
+			vScale.y += 50.f * fFixedDeltaTime;
+			vScale.z += 50.f * fFixedDeltaTime;
 		}
 	}
 	
@@ -113,10 +113,10 @@ _int CWaterBombBody::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	//if (m_fTimer > 1.75f)
-	//{
-	//	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
-	//}
+	if (m_fTimer > 1.75f)
+	{
+		CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
+	}
 	//CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
 
 	return iExit;

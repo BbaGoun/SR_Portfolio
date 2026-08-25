@@ -24,6 +24,8 @@ HRESULT CWaterBomb::Ready_GameObject()
 	m_fSpeed	= 0.f;
 	m_fAngle	= 0.f;
 
+	m_bCreate	= false;
+
 	m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
 
 	Engine::CComponent* pComponent = nullptr;
@@ -51,17 +53,25 @@ void CWaterBomb::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
 
-	// vCartPos += vCartLook * 300.f;
-	 vCartPos += vCartLook * 100.f;
+	vCartPos += vCartLook * 300.f;
+	// += vCartLook * 100.f;
 	m_fTimer += fFixedDeltaTime;
 
-	if (m_fTimer > 1.6f)
+	if (m_fTimer < 1.0f)
+	{
+		vCartPos += vCartLook * 300.f;
+	}
+
+	if (m_fTimer > 1.6f && m_bCreate == false)
 	{
 		m_pTransformCom->Set_Pos(vCartPos);
+
+		m_bCreate = true;
 	}
 
 	if (m_fTimer > 3.f)
 	{
+		m_bCreate = false;
 		m_pLayer->Delete_GameObject(this);
 	}
 }

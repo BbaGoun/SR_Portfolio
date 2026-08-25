@@ -33,6 +33,7 @@ private:
 	_float			m_fTimer;
 	_float			m_fSpeed;
 	_float			m_fAngle;	// 풍선 최대치 크기 도달 후 회전 이거 말고 -> D3DXToRadian 이걸로?
+	_bool			m_bCreate;
 
 public:
 	static CWaterBomb* Create(LPDIRECT3DDEVICE9 pGraphicDev);

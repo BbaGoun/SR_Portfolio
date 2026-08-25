@@ -935,6 +935,7 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 		if (fDirection < -0.5 || fDirection > 0.5)		// 그 방향이 카트 기준 앞/뒤 방향인지 확인
 		{
 			m_vForce += vDir * 2.f;
+			//vDir += m_vForce * 2.f;
 		}
 
 		m_fMagnetTimer += fDeltaTime;							// 3.5초 지나면 m_bMagnet = false로 종료
