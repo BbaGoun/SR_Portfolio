@@ -45,6 +45,9 @@ public:
 
 private:
 	void	PreCull(LPDIRECT3DDEVICE9& pGraphicDev);
+	void	DistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev);
+	void	FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev);
+
 	void	PreRender(LPDIRECT3DDEVICE9& pGraphicDev);
 	void	PostRender(LPDIRECT3DDEVICE9& pGraphicDev);
 

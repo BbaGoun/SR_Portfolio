@@ -1,5 +1,6 @@
 #include "CRenderer.h"
 #include "CCameraMgr.h"
+#include "CVIBuffer.h"
 IMPLEMENT_SINGLETON(CRenderer)
 
 CRenderer::CRenderer():m_fWidth(0), m_fHeight(0)
@@ -178,7 +179,6 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 		pOldRT->Release();
 		pOldDS->Release();
 	}
-
 }
 
 void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -284,10 +284,101 @@ void CRenderer::Delete_RenderTarget(const _tchar* pName)
 
 void CRenderer::PreCull(LPDIRECT3DDEVICE9& pGraphicDev)
 {
-	for (size_t i = 0; i < RENDER_END; ++i)
+	DistanceCulling(pGraphicDev);
+	FrustumCulling(pGraphicDev);
+}
+
+void CRenderer::DistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	_vec3 vCamPos;
+	_matrix matView;
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	memcpy(&vCamPos, &matView.m[3], sizeof(_vec3));
+	vCamPos *= -1;
+
+	float fCullDistance, dist;
+	_vec3 vObjPos;
+	for (size_t i = 0; i < RENDER_UI; ++i)
 	{
-		for (auto& pObj : m_RenderGroup[i])
-			pObj->PreCull_GameObject();
+		for (auto it = m_RenderGroup[i].begin(); it != m_RenderGroup[i].end();) {
+			if (*it == nullptr) {
+				(*it)->Release();
+				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+
+			fCullDistance = (*it)->Get_CullDistance();
+			if (fCullDistance == 0) {
+				++it;
+				continue;
+			}
+
+			(*it)->Get_Transform()->Get_Info(INFO_POS, &vObjPos);
+			_vec3 dir = vObjPos - vCamPos;
+			dist = D3DXVec3Length(&dir);
+			if (dist >= fCullDistance) {
+				(*it)->Release();
+				it = m_RenderGroup[i].erase(it);
+			}
+			else
+				++it;
+		}
+	}
+}
+
+void CRenderer::FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	_matrix matView, matInvView;
+	_matrix matProj;
+	_matrix matObjWorld;
+
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matInvView, 0, &matView);
+	pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	float m[16];
+	memcpy(m, &matProj.m, sizeof(float) * 16);
+	DirectX::XMMATRIX xmMatProj(m);
+	
+	DirectX::BoundingFrustum tFrustum;
+	DirectX::BoundingFrustum::CreateFromMatrix(tFrustum, xmMatProj);
+	
+	memcpy(m, &matInvView.m, sizeof(float) * 16);
+	DirectX::XMMATRIX xmMatInvView(m);
+
+	tFrustum.Transform(tFrustum, xmMatInvView);
+
+	DirectX::BoundingBox box;
+	for (size_t i = 0; i < RENDER_UI; ++i)
+	{
+		for (auto it = m_RenderGroup[i].begin(); it != m_RenderGroup[i].end();) {
+			if (*it == nullptr) {
+				(*it)->Release();
+				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+
+			CVIBuffer* pBuf = (*it)->Get_Component<CVIBuffer>();
+			if (pBuf == nullptr) {
+				(*it)->Release();
+				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+
+			matObjWorld = *(*it)->Get_Transform()->Get_World();
+			memcpy(m, &matObjWorld.m, sizeof(float) * 16);
+			DirectX::XMMATRIX xmMatWorld(m);
+
+			pBuf->GetBoundingBox(&box);
+			box.Transform(box, xmMatWorld);
+
+			if (!tFrustum.Intersects(box)) {
+				(*it)->Release();
+				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+			++it;
+		}
 	}
 }
 

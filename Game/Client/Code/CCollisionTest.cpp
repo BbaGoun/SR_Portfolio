@@ -363,13 +363,13 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	pCartBody->Set_Child(pGameObject);
 
 
-	//// DriftSpark
-	//pGameObject = CDriftSpark::Create(m_pGraphicDev);
-	//if (nullptr == pGameObject)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"DriftSpark", pGameObject)))
-	//	return E_FAIL;
-	//pCart->Set_Child(pGameObject);
+	// DriftSpark
+	pGameObject = CDriftSpark::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"DriftSpark", pGameObject)))
+		return E_FAIL;
+	pCart->Set_Child(pGameObject);
 
 	// ItemBox
 	for (int i = 0; i < 5; ++i)
@@ -678,7 +678,7 @@ HRESULT CCollisionTest::Ready_Collision_Matrix()
 
 void CCollisionTest::Free()
 {
-	CScene::Free();
 	CRenderer::GetInstance()->Clear_RenderGroup();
 	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
+	CScene::Free();
 }
