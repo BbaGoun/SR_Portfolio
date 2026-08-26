@@ -27,6 +27,10 @@ public:
 	virtual			void		TriggerEnter(CCollider* pOtherCollider) override;
 	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
 	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
+					void		Set_ThrowLook(const _vec3& vLook)
+					{
+						m_vThrowLook = vLook;
+					}
 
 private:
 	Engine::CCube_Collider* m_pColliderCom;
@@ -34,6 +38,7 @@ private:
 	// _float			m_fSpeed;
 	// _float			m_fAngle;	// 풍선 최대치 크기 도달 후 회전 이거 말고 -> D3DXToRadian 이걸로?
 	_bool			m_bCreate;
+	_vec3			m_vThrowLook;
 
 public:
 	static CWaterBomb* Create(LPDIRECT3DDEVICE9 pGraphicDev);

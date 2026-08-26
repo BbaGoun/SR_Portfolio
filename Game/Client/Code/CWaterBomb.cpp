@@ -26,6 +26,8 @@ HRESULT CWaterBomb::Ready_GameObject()
 
 	m_bCreate	= false;
 
+	m_vThrowLook = { 0.f, 0.f, 0.f };
+
 	m_pTransformCom->Set_Pos({ 0.f, -1000.f, 0.f });
 
 	Engine::CComponent* pComponent = nullptr;
@@ -48,22 +50,18 @@ void CWaterBomb::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
 
-	_vec3 vCartLook, vCartPos;
+	_vec3 vCartPos; // , vCartLook;
 
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
-	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
+	//pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
 
-	vCartPos += vCartLook * 200.f;
-	// += vCartLook * 100.f;
+	//vCartPos += vCartLook * 200.f;
+
 	m_fTimer += fFixedDeltaTime;
-
-	if (m_fTimer < 1.0f)
-	{
-		vCartPos += vCartLook * 300.f;
-	}
 
 	if (m_fTimer > 1.6f && m_bCreate == false)
 	{
+		vCartPos += m_vThrowLook * 200.f;
 		m_pTransformCom->Set_Pos(vCartPos);
 		m_bCreate = true;
 	}

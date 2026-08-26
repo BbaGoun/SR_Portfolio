@@ -1164,7 +1164,8 @@ void CCart::CreateMagnetObject()
 
 void CCart::CreateWaterBombObject()
 {
-	CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
+	// CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
+	CWaterBomb* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
 
 	if (pWaterBomb == nullptr)
 		return;
@@ -1172,6 +1173,9 @@ void CCart::CreateWaterBombObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBomb", pWaterBomb)))
 		return;
 
+	_vec3 vLook;
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	pWaterBomb->Set_ThrowLook(vLook);
 	pWaterBomb->SetLayer(m_pLayer);
 
 	CGameObject* pWaterBombBody = CWaterBombBody::Create(m_pGraphicDev);
