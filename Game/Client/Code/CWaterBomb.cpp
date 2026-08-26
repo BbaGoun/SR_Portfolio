@@ -26,7 +26,7 @@ HRESULT CWaterBomb::Ready_GameObject()
 
 	m_bCreate	= false;
 
-	m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
+	m_pTransformCom->Set_Pos({ 0.f, -1000.f, 0.f });
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -65,7 +65,6 @@ void CWaterBomb::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (m_fTimer > 1.6f && m_bCreate == false)
 	{
 		m_pTransformCom->Set_Pos(vCartPos);
-
 		m_bCreate = true;
 	}
 
