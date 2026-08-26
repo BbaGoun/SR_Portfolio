@@ -72,7 +72,6 @@ _int CDriftSpark::Update_GameObject(const _float& fDeltaTime)
 			m_vRotation.y += 180 * fDeltaTime;
 		if (GetAsyncKeyState('D'))
 			m_vRotation.y -= 180 * fDeltaTime;
-		cout << m_vRotation.y << endl;
 		return CGameObject::Update_GameObject(fDeltaTime);
 	//}
 }

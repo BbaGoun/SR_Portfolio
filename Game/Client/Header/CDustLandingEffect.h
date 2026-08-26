@@ -1,14 +1,14 @@
 #pragma once
 #include "CGameObject.h"
-#include "CSmoke.h"
+#include "CDustLandingParticle.h"
 #include "CTexture.h"
 
-class CSmokeEffect :  public CGameObject
+class CDustLandingEffect : public CGameObject
 {
 private:
-	explicit CSmokeEffect(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CSmokeEffect(const CGameObject& rhs);
-	~CSmokeEffect() override;
+	explicit CDustLandingEffect(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CDustLandingEffect(const CGameObject& rhs);
+	~CDustLandingEffect() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -16,19 +16,18 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
-
+	virtual			void		ResetParticle() { m_pParticleCom->ResetAll(); }
 	virtual			void		OnLostDevice();
 	virtual			void		OnResetDevice();
-	virtual			void		SetCart(CGameObject* pObj);
+
 
 private:
-	CTexture*		m_pTextureCom;
-	CSmoke*			m_pSmoke;
+	CTexture*				m_pTextureCom;
+	CDustLandingParticle*	m_pParticleCom;
 
-	CGameObject*	m_pCart;
 
 public:
-	static CSmokeEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CDustLandingEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
 	virtual		void		Free() override;

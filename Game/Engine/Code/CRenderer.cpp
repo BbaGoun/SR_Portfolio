@@ -169,9 +169,21 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 			pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
 		}
 
+		//if(wcsncmp(pair.first, L"InvenSlot", 9) == 0)
+		//	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+		pInfo->RenderList.sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+			{
+				_vec3 vDst, vSrc;
+				pDst->Get_Transform()->Get_Info(INFO_POS, &vDst);
+				pSrc->Get_Transform()->Get_Info(INFO_POS, &vSrc);
+				return vDst.z > vSrc.z;
+			});
+
 		for (auto& pObj : pInfo->RenderList)   
 			pObj->Render_GameObject();
 
+		pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 		pGraphicDev->EndScene();
 
 		pGraphicDev->SetRenderTarget(0, pOldRT);
@@ -243,10 +255,16 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	//m_RenderGroup[RENDER_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
-	//	{
-	//		return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
-	//	});
+	m_RenderGroup[RENDER_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			// z값이 먼 것 부터 그리겠다. 
+			// 알파블랜딩은 뒤에 있는 것이 이미 있다고 생각하고 그리는것이기 때문
+			// 다만 UI는 Render하는 시점에 카메라가 바뀌기 때문에 그냥 Transform의 z좌표 가져와서 정렬하는게 낫다
+			_vec3 vDstPos, vSrcPos;
+			pDst->Get_Transform()->Get_Info(INFO_POS, &vDstPos);
+			pSrc->Get_Transform()->Get_Info(INFO_POS, &vSrcPos);
+			return vDstPos.z > vSrcPos.z;
+		});
 
 	for (auto& pObj : m_RenderGroup[RENDER_UI])
 		pObj->Render_GameObject();
@@ -298,7 +316,7 @@ void CRenderer::DistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	float fCullDistance, dist;
 	_vec3 vObjPos;
-	for (size_t i = 0; i < RENDER_UI; ++i)
+	for (size_t i = 0; i < RENDER_PARTICLE; ++i)
 	{
 		for (auto it = m_RenderGroup[i].begin(); it != m_RenderGroup[i].end();) {
 			if (*it == nullptr) {
@@ -349,7 +367,7 @@ void CRenderer::FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 	tFrustum.Transform(tFrustum, xmMatInvView);
 
 	DirectX::BoundingBox box;
-	for (size_t i = 0; i < RENDER_UI; ++i)
+	for (size_t i = 0; i < RENDER_PARTICLE; ++i)
 	{
 		for (auto it = m_RenderGroup[i].begin(); it != m_RenderGroup[i].end();) {
 			if (*it == nullptr) {

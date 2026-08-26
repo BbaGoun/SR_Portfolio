@@ -162,9 +162,9 @@ HRESULT CInventoryScene::Ready_Environment_Layer()
 	
 	if (FAILED(pEnvironmentLayer->Add_GameObject(L"BackGround", pEnvObject)))
 		return E_FAIL;
-
+	
 	pEnvObject->Get_Transform()->Set_Scale({ WINCX, WINCY, 1 });
-	pEnvObject->Get_Transform()->Set_Pos({ 0, 0, 10 });
+	pEnvObject->Get_Transform()->Set_Pos({ 0, 0, 100 });
 	return S_OK;
 }
 

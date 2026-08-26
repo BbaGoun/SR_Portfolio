@@ -23,7 +23,7 @@ HRESULT CInvenSlotBG::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_pTransformCom->Set_Pos({ 0,0,900 });
+	m_pTransformCom->Set_Pos({ 0,0,990 });
 	m_pTransformCom->Set_Scale({ WINCX,WINCY,1 });
 
 	Engine::CComponent* pComponent = nullptr;

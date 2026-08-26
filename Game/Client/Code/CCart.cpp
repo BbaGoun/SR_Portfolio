@@ -18,6 +18,7 @@
 #include "CWaterBomb.h"
 #include "CWaterBombBody.h"
 #include "CWaterBombThrow.h"
+#include "CDustLandingEffect.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -411,7 +412,6 @@ void CCart::UpdateDrift()
 			|| (!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT) && !CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 			|| m_eCartState != CART_STATE_GROUND)
 		{
-			cout << "EndDrift" << endl;
 			m_bShortBoosterOnOff = true;
 			m_fCurGage += m_fGainGage;
 			if (m_fCurGage >= 100.f)
@@ -625,7 +625,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 			D3DXVec3TransformNormal(&vLocalNormal, &vLocalNormal, &matNormal);
 			D3DXVec3Normalize(&vLocalNormal, &vLocalNormal);
 			m_vTerrainNormal = vLocalNormal;
-
+			break;
 		}
 	}
 	// for문이 끝나면 fGroundY, m_vTerrainNormal값이 구해짐
@@ -676,6 +676,12 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 	{
 		if (fDeltaY <= 0.1f)
 		{
+			if (m_fAirTime > 0.3f)//공중에 떠있는 시간
+			{
+				CDustLandingEffect* pDustLandingEffect = dynamic_cast<CDustLandingEffect*>
+					(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"DustLandingEffect"));
+				pDustLandingEffect->ResetParticle();
+			}
 			m_fAirTime = 0.f;
 			m_eCartState = CART_STATE_GROUND;
 			m_pTransformCom->Set_Pos({ vCartPos.x, fGroundY, vCartPos.z });
@@ -1278,7 +1284,6 @@ void CCart::CreateMissileAimObject()
 }
 void CCart::GainItem()
 {
-	cout << "GainItem" << endl;
 	if (m_eFirstSlot == ITEM_END)
 	{
 		m_eFirstSlot = ITEM_TYPE(rand() % ITEM_END);

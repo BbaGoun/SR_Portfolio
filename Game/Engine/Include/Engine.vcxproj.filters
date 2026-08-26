@@ -151,6 +151,9 @@
     <Filter Include="06. PSystem\StarParticle">
       <UniqueIdentifier>{4d1041b1-eb20-43c3-8efb-b03cb0d91e76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. PSystem\DustLandingParticle">
+      <UniqueIdentifier>{0dfcbf83-43e5-4260-8a60-2d7bb3724c62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -310,6 +313,9 @@
     <ClInclude Include="..\Header\CStarParticle.h">
       <Filter>06. PSystem\StarParticle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDustLandingParticle.h">
+      <Filter>06. PSystem\DustLandingParticle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -447,6 +453,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CStarParticle.cpp">
       <Filter>06. PSystem\StarParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDustLandingParticle.cpp">
+      <Filter>06. PSystem\DustLandingParticle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

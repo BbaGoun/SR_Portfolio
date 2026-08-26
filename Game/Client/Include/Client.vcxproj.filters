@@ -198,7 +198,7 @@
     </Filter>
     <Filter Include="02. GameObject\UI\UI_Laps">
       <UniqueIdentifier>{42c1be04-11a9-46ca-8b61-5ea9a8a3db04}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="02. GameObject\Item\Missile">
       <UniqueIdentifier>{d6b85c0f-4e58-4131-bf43-13d6294f242c}</UniqueIdentifier>
     </Filter>
@@ -244,15 +244,6 @@
     <Filter Include="02. GameObject\UI\UI_InvenSlot">
       <UniqueIdentifier>{b03628f0-522f-40e1-99cb-462e3618bc49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InvenSlot">
-      <UniqueIdentifier>{64d767c2-b491-4457-9c68-be2d9b09897f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InvenSlot\InvenSlotCart">
-      <UniqueIdentifier>{e00f7f40-4940-40b5-be88-a93a29336aa9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InvenSlot\InvneSlotBG">
-      <UniqueIdentifier>{5d05593f-d04c-45d4-942e-c94569cddeb3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Cart\Effect\CollisionStarEffect">
       <UniqueIdentifier>{f12d7011-9ad7-42bc-b18f-19c89042af19}</UniqueIdentifier>
     </Filter>
@@ -267,6 +258,18 @@
     </Filter>
     <Filter Include="03. Manager\CLoadMgr">
       <UniqueIdentifier>{a6062789-bc8f-4b64-bb3d-4fa8fbaeae29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\DustLandingEffect">
+      <UniqueIdentifier>{66ed2f70-e704-43b7-8a62-f181bab9a3f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\InvenSlot">
+      <UniqueIdentifier>{64d767c2-b491-4457-9c68-be2d9b09897f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\InvenSlot\InvenSlotCart">
+      <UniqueIdentifier>{e00f7f40-4940-40b5-be88-a93a29336aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\InvenSlot\InvneSlotBG">
+      <UniqueIdentifier>{5d05593f-d04c-45d4-942e-c94569cddeb3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -482,7 +485,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\CUI_Laps.h">
       <Filter>02. GameObject\UI\UI_Laps</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\CMagnetBody.h">
       <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClInclude>
@@ -511,10 +514,10 @@
       <Filter>02. GameObject\UI\UI_InvenSlot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CInvenSlotCart.h">
-      <Filter>InvenSlot\InvenSlotCart</Filter>
+      <Filter>02. GameObject\InvenSlot\InvenSlotCart</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CInvenSlotBG.h">
-      <Filter>InvenSlot\InvneSlotBG</Filter>
+      <Filter>02. GameObject\InvenSlot\InvneSlotBG</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCollisionStarEffect.h">
       <Filter>02. GameObject\Cart\Effect\CollisionStarEffect</Filter>
@@ -527,6 +530,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CLoadMgr.h">
       <Filter>03. Manager\CLoadMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDustLandingEffect.h">
+      <Filter>02. GameObject\Cart\Effect\DustLandingEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -733,7 +739,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <Filter>02. GameObject\UI\UI_Laps</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\CMagnetBody.cpp">
       <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClCompile>
@@ -762,10 +768,10 @@
       <Filter>02. GameObject\UI\UI_InvenSlot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CInvenSlotCart.cpp">
-      <Filter>InvenSlot\InvenSlotCart</Filter>
+      <Filter>02. GameObject\InvenSlot\InvenSlotCart</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CInvenSlotBG.cpp">
-      <Filter>InvenSlot\InvneSlotBG</Filter>
+      <Filter>02. GameObject\InvenSlot\InvneSlotBG</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCollisionStarEffect.cpp">
       <Filter>02. GameObject\Cart\Effect\CollisionStarEffect</Filter>
@@ -778,6 +784,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CLoadMgr.cpp">
       <Filter>03. Manager\CLoadMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI_Menu.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDustLandingEffect.cpp">
+      <Filter>02. GameObject\Cart\Effect\DustLandingEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

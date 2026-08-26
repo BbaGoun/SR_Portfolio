@@ -50,6 +50,7 @@
 #include "CWaterBombThrow.h"
 #include "CCollisionStarEffect.h"
 #include "CDriftSpark.h"
+#include "CDustLandingEffect.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -353,6 +354,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"SmokeEffect", pGameObject)))
 		return E_FAIL;
+	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
 	// 충돌시 나오는 별 이펙트
 	pGameObject = CCollisionStarEffect::Create(m_pGraphicDev);
@@ -362,6 +364,12 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	pCartBody->Set_Child(pGameObject);
 
+	// 착지시 먼지 이펙트
+	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"DustLandingEffect", pGameObject)))
+		return E_FAIL;
 
 	// DriftSpark
 	pGameObject = CDriftSpark::Create(m_pGraphicDev);

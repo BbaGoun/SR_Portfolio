@@ -33,7 +33,6 @@ public:
 
 	_byte	Get_DIMouseState(MOUSEKEYSTATE eMouse)
 	{
-		cout << m_tMouseState.rgbButtons[eMouse] << endl;
 		return m_tMouseState.rgbButtons[eMouse];
 	}
 

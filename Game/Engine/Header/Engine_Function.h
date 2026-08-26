@@ -205,7 +205,6 @@ namespace Engine
 
 		pt.x -= WINCX * 0.5f;
 		pt.y = -pt.y + WINCY * 0.5f;
-		//cout << pt.y << endl;
 		if (pt.x < vCenter.x - vScale.x / 2 || pt.x > vCenter.x + vScale.x / 2)
 			return false;
 		if (pt.y < vCenter.y - vScale.y / 2 || pt.y > vCenter.y + vScale.y / 2)

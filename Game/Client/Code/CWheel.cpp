@@ -54,11 +54,26 @@ HRESULT CWheel::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
+	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
+	if (nullptr == pComponent)
+		return E_FAIL;
+	
+	m_vColliderSize = { 0.4f,1.f,1.f };
+	m_pColliderCom->Set_Owner(this);
+	m_pColliderCom->SetIsTrigger(false);
+	m_pColliderCom->Set_Extents(m_vColliderSize);
+	m_mapComponent.insert({ L"Com_Collider", pComponent });
+
+
+	m_fScale = 1.f;
+
 	return S_OK;
 }
 
 void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	m_pColliderCom->Set_Extents(m_vColliderSize * m_fScale);
+
 	CCart* pCart = dynamic_cast<CCart*>(m_pParent->Get_Parent());
 	_vec3 vParentForce = pCart->Get_Force();
 	float fParentForceLen = D3DXVec3Length(&vParentForce);
@@ -83,44 +98,10 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		_vec3 vDeltaPos;
 		vDeltaPos = vPos - m_vPrePos;
 		m_fDistSum += D3DXVec3Length(&vDeltaPos);
-		if (m_fDistSum >= 0.01f)
+		if (m_fDistSum >= 0.01f && CheckInTerrain())
 		{
-			CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"Environment", L"Env_Land3", L"Com_Buffer");
-			CTerrain3* pTerrain3 = dynamic_cast<CTerrain3*>(pCom);
-			CLand3* pLand3 = dynamic_cast<CLand3*>(pCom->Get_Owner());
-			if (pLand3->CheckInTerrain(vPos))
-			{
-				// Land3의 로컬로 내림
-				_matrix* pMatWorld = pLand3->Get_Component<CTransform>()->Get_World();
-				_matrix matInvWorld;
-				D3DXMatrixInverse(&matInvWorld, 0, pMatWorld);
-				D3DXVec3TransformCoord(&vPos, &vPos, &matInvWorld);
-
-				// 평면 구하기
-				D3DXPLANE plane = pTerrain3->GetPlane(vPos);
-				float fLocalPlaneY = -(plane.a * vPos.x + plane.c * vPos.z + plane.d) / plane.b;
-
-				// Local에서의 CartWheelPosition
-				_vec3 vLocalPos = { vPos.x,fLocalPlaneY,vPos.z };
-
-				// World에서의 CartWheelPosition
-				_vec3 vWorldPos;
-				D3DXVec3TransformCoord(&vWorldPos, &vLocalPos, pMatWorld);
-
-				float fDeltaY = originPos.y - vWorldPos.y;
-				if (m_eWheelType == WHEEL_FR)
-					cout << fDeltaY << endl;
-				if (fDeltaY <= 1.2f)
-				{
-					CreateSkidMark();
-					m_fDistSum = 0;
-				}
-			}
-			else
-			{
-				CreateSkidMark();
-				m_fDistSum = 0;
-			}
+			CreateSkidMark();
+			m_fDistSum = 0;
 		}
 	}
 	else
@@ -144,6 +125,7 @@ void CWheel::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CWheel::Render_GameObject()
 {
+	//m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pBufferCom->Render_Buffer();
 }
@@ -189,12 +171,64 @@ void CWheel::CreateSkidMark()
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	vPos.y -= 1;
+	vPos.y -=0.99f;
 	pGameObject->Get_Transform()->Set_Pos(vPos);
 
 	//CCartBody의 WorldQuaternion을 가져옴
 	D3DXQUATERNION q = m_pParent->Get_Parent()->Get_Transform()->Get_WorldQuaternion();
 	pGameObject->Get_Transform()->Multiple_Quaternion(&q);
+}
+
+bool CWheel::CheckInTerrain()
+{
+	auto& tracks = CManagement::GetInstance()->Find_GameObjectsByTag(L"Default", L"Track");
+	if (tracks.empty())
+		return false;
+
+	// for문 밖에 생성
+	_vec3 vWheelWorldCenter = ToVec3(m_pColliderCom->Get_Info().Center);
+	_vec3 vWheelModelCenter;
+
+	// 지형들 중 어떤 지형과 충돌했는지 확인 후 fGroundY, m_vTerrainNormal값이 구해짐
+	for (auto& track : tracks) {
+		CSpline* pSpline = track->Get_Component<CSpline>();
+		DirectX::BoundingBox box = *pSpline->GetBoundingBox();
+
+		// spline의 모델 스페이스로 보내기 위한 역행렬
+		_matrix matTrack, matInvTrack;
+		matTrack = *track->Get_Transform()->Get_World();
+		D3DXMatrixInverse(&matInvTrack, 0, &matTrack);
+
+		// 플레이어의 박스 콜라이더를 spline의 모델 스페이스로 보낸다.
+		// 박스 콜라이더의 center를 변환해서 다시 넣는 방식
+		D3DXVec3TransformCoord(&vWheelModelCenter, &vWheelWorldCenter, &matInvTrack);
+		m_pColliderCom->Set_Center(vWheelModelCenter);
+
+		// 트랙의 boundingbox와 플레이어의 콜라이더가 닿는지 검사
+		bool bCheckCollision = box.Intersects(m_pColliderCom->Get_Info());
+		m_pColliderCom->Set_Center(vWheelWorldCenter);
+		if (bCheckCollision == false)
+			continue;
+		// 충돌한 지형을 찾았다면 이제 spline이 갖고 있는 면에 대해서 raycast로 지형에있는 평면 하나 찾기
+		vector<VTXTEX> vecVertices = pSpline->GetVertices();
+		vector<FACE32> vecFaces = pSpline->GetFaces();
+
+		D3DXVECTOR3 vRayPos = { vWheelModelCenter.x, vWheelModelCenter.y, vWheelModelCenter.z };
+		D3DXVECTOR3 vRayDir = { 0.f, -1.f, 0.f };
+		for (int i = 0; i < vecFaces.size(); ++i)
+		{
+			_vec3 p0 = vecVertices[vecFaces[i].indices._0].vPosition;
+			_vec3 p1 = vecVertices[vecFaces[i].indices._1].vPosition;
+			_vec3 p2 = vecVertices[vecFaces[i].indices._2].vPosition;
+
+			float u, v, fDist;
+			if (D3DXIntersectTri(&p0, &p1, &p2, &vRayPos, &vRayDir, &u, &v, &fDist) && fDist <= 1.3f)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 CWheel* CWheel::Create(LPDIRECT3DDEVICE9 pGraphicDev,WHEEL_TYPE eType)

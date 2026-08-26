@@ -62,6 +62,7 @@
     <ClInclude Include="..\Header\CTransform.h" />
     <ClInclude Include="..\Header\CTriangularPrism.h" />
     <ClInclude Include="..\Header\CVIBuffer.h" />
+    <ClInclude Include="..\Header\CDustLandingParticle.h" />
     <ClInclude Include="..\Header\Engine_Define.h" />
     <ClInclude Include="..\Header\Engine_Enum.h" />
     <ClInclude Include="..\Header\Engine_Function.h" />
@@ -119,6 +120,7 @@
     <ClCompile Include="..\Code\CVIBuffer.cpp" />
     <ClCompile Include="..\Code\CHeightMapLoader.cpp" />
     <ClCompile Include="..\Code\CProtoMgr.cpp" />
+    <ClCompile Include="..\Code\CDustLandingParticle.cpp" />
     <ClCompile Include="..\Code\PSystem.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
