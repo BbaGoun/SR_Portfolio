@@ -481,13 +481,13 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
   
 
 	// 워터밤 물방울 - 테스트
-	CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
+	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
 
-	if (pWaterBombBubble == nullptr)
-		return E_FAIL;
+	//if (pWaterBombBubble == nullptr)
+	//	return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
-		return E_FAIL;
+	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+	//	return E_FAIL;
 	
 
 

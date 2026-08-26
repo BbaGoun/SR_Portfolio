@@ -30,6 +30,8 @@ HRESULT CMissileTarget::Ready_GameObject()
 
 	m_bMissileHit		= false;
 	m_bWaterBombHit		= false;
+	m_bWaterBubble		= false;
+
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -45,7 +47,7 @@ HRESULT CMissileTarget::Ready_GameObject()
 		return E_FAIL;
 
 	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetIsTrigger(false);
+	m_pColliderCom->SetIsTrigger(true);
 	m_pColliderCom->Set_Extents({ 2.5f, 1.5f, 3.f });
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
@@ -95,8 +97,9 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (m_bWaterBombHit)
 	{
 		m_fTimer += fFixedDeltaTime;
+		CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
 
-		_vec3 vPos;
+		_vec3 vPos, vBubblePos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
 		if (m_fTimer < 0.08f)
@@ -104,10 +107,10 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			vPos.y += m_vForce.y * fFixedDeltaTime;
 		}	
 
-		else if (m_fTimer < 0.08f)
-		{
-			m_vForce.y = 0;
-		}
+		//else if (m_fTimer < 0.08f)
+		//{
+		//	m_vForce.y = 0;
+		//}
 
 		else if (m_fTimer > 0.15f && m_fTimer < 0.40f)
 		{
@@ -159,6 +162,8 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_vRotation.x = 0.f;
 			m_vRotation.y = 0.f;
 			m_bWaterBombHit = false;
+			m_bWaterBubble	= false;
+			pBubble->GetLayer()->Delete_GameObject(pBubble);
 			m_fTimer = 0.f;
 
 			_quaternion qReset;
@@ -166,7 +171,9 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_pTransformCom->Set_Quaternion(&qReset);
 		}
 
-			m_pTransformCom->Set_Pos(vPos);	
+		m_pTransformCom->Set_Pos(vPos);	
+		pBubble->Get_Transform()->Set_Pos(vPos);
+		//pBubble->GetLayer()->Delete_GameObject(pBubble);
 	}
 }
 
@@ -206,11 +213,13 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 		}
 	}
 
-	if (wcsncmp(wOtherTag, L"Obj_WaterBomb", 13) == 0)
+	//if (wcsncmp(wOtherTag, L"Obj_WaterBomb", 13) == 0)
+	if (wcscmp(wOtherTag, L"Obj_WaterBomb") == 0)
 	{
-		if (m_bWaterBombHit == false)
+		if (m_bWaterBombHit == false && m_bWaterBubble == false)
 		{
 			m_bWaterBombHit = true;
+			m_bWaterBubble	= true;
 			m_vForce.y = 120.f;
 			m_vRotation.x += D3DXToRadian(0.f);
 			m_vRotation.y += D3DXToRadian(0.f);

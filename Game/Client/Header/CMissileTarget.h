@@ -37,6 +37,7 @@ private:
 			_float				m_fMaxSpeed;
 			_bool				m_bMissileHit;
 			_bool				m_bWaterBombHit;
+			_bool				m_bWaterBubble;
 			_float				m_fTimer;
 
 protected:

@@ -18,6 +18,7 @@
 #include "CWaterBomb.h"
 #include "CWaterBombBody.h"
 #include "CWaterBombThrow.h"
+#include "CWaterBombBubble.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -1193,6 +1194,16 @@ void CCart::CreateWaterBombObject()
 		return;
 
 	pWaterBombThrow->SetLayer(m_pLayer);
+
+	CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
+
+	if (pWaterBombBubble == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+		return;
+
+	pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateMagnetAimObject()

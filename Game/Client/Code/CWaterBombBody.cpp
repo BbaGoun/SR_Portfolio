@@ -51,7 +51,7 @@ void CWaterBombBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	_vec3 vScale = m_pTransformCom->Get_Scale();
 
-	m_pTransformCom->Set_Pos({ 0.f, 50.f, 0.f });
+	m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
 
 	m_fTimer += fFixedDeltaTime;	
 
@@ -59,9 +59,9 @@ void CWaterBombBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		if (vScale.x < 16.f && vScale.y < 16.f && vScale.z < 16.f)
 		{
-			vScale.x += 50.f * fFixedDeltaTime;
-			vScale.y += 50.f * fFixedDeltaTime;
-			vScale.z += 50.f * fFixedDeltaTime;
+			vScale.x += 45.f * fFixedDeltaTime;
+			vScale.y += 45.f * fFixedDeltaTime;
+			vScale.z += 45.f * fFixedDeltaTime;
 		}
 	}
 	
