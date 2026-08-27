@@ -47,7 +47,7 @@ HRESULT CUI_UnderBar::Ready_GameObject()
 
 void CUI_UnderBar::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 	{
 		m_fFrame = 1;
 		//if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))

@@ -52,7 +52,7 @@ HRESULT CScene1_Replay::Ready_GameObject()
 void CScene1_Replay::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale,m_pGraphicDev))
 	{
 		m_fFrame = 1;
 

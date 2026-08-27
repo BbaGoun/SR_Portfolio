@@ -24,7 +24,7 @@ HRESULT CHUD_Num::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Scale({ 34, 45, 1 });
+	m_pTransformCom->Set_Scale({ 34, 45, 2 });
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 

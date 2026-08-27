@@ -12,13 +12,14 @@
 #include "CTargetAim.h"
 #include "CCameraMgr.h"
 #include "CLand3.h"
-#include <CThunderCloud.h>
-#include <CCartBody.h>
+#include "CThunderCloud.h"
+#include "CCartBody.h"
 #include "CMagnetBody.h"
 #include "CWaterBomb.h"
 #include "CWaterBombBody.h"
 #include "CWaterBombThrow.h"
 #include "CDustLandingEffect.h"
+#include "SoundMgr.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -79,6 +80,10 @@ HRESULT CCart::Ready_GameObject()
 	m_vBananaSpinStartLook	= { 0,0,0 };
 
 	m_bCanShortBoost		= true;
+	m_bPlaying				= false;
+
+	m_fPlayTimer	= 0.f;
+	m_fPreTimer		= 0.f;
 	return S_OK;
 }
 
@@ -107,6 +112,10 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CCart::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+
+	StartCountDown(fDeltaTime);
+	EndCoundDown(fDeltaTime);
+
 	KeyInput(fDeltaTime);
 	UpdateBoost(fDeltaTime);
 	UpdateDrift();
@@ -272,8 +281,9 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		m_bUseItem = false;
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP))
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP) && m_bPlaying)
 	{
+		//SoundMgr::GetInstance().PlaySound(L"Effect/cart/motor.ogg", SOUND_MOTOR, 0.4f);
 		if (m_bDrift == false)
 			m_vForce += vLook;
 		else
@@ -283,9 +293,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		m_fSpeed = 1.f;
 		m_eBoostState = BOOST_STATE_NORMAL;
+		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN))
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_DOWN) && m_bPlaying)
 	{
+		//SoundMgr::GetInstance().PlaySound(L"Effect/cart/motor.ogg", SOUND_MOTOR, 0.4f);
 		m_fSpeed = 1.f;
 		if (m_bDrift == false)
 			m_vForce -= vLook;
@@ -296,7 +308,9 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	if (m_eCartState != CART_STATE_GROUND)
 		return;
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) && m_eCartState == CART_STATE_GROUND)
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) 
+		&& m_eCartState == CART_STATE_GROUND 
+		&& m_bPlaying == true)
 	{
 		m_bDrift = true;
 	}
@@ -387,8 +401,17 @@ void CCart::KeyInput(const _float& fDeltaTime)
 
 void CCart::UpdateDrift()
 {
+	if (m_bPlaying == false)
+	{
+		m_vRotation.z = 0;
+		m_bDrift = false;
+		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
+		return;
+	}
 	if (m_bDrift == true)
 	{
+		SoundMgr::GetInstance().PlaySound(L"Effect/cart/drift.ogg", SOUND_DRIFT, 0.4f);
+
 		_vec3 vLook, vTempForce;
 		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 		vTempForce = m_vForce;
@@ -408,6 +431,7 @@ void CCart::UpdateDrift()
 		m_vRotation.z *= 0.98;
 		m_vRotation.z = clampT(float(m_vRotation.z), -0.1f, 0.1f);
 
+
 		if ((!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) && m_fLookForceAngle < 30.f )
 			|| (!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT) && !CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 			|| m_eCartState != CART_STATE_GROUND)
@@ -422,6 +446,7 @@ void CCart::UpdateDrift()
 			m_fGainGage = 0;
 			m_vRotation.z = 0;
 			m_bDrift = false;
+			SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
 		}
 		else
 		{
@@ -447,6 +472,7 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 	if (m_eBoostState == BOOST_STATE_NORMAL)
 		return;
 	m_fSpeed *= m_fBoostCal;
+	SoundMgr::GetInstance().PlaySound(L"Effect/cart/booster.ogg", SOUND_BOOST, 0.4f);
 	if (m_eBoostState == BOOST_STATE_SHORT_BOOST)
 	{
 		if (m_fSpeed > 2)
@@ -455,18 +481,20 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 	else if (m_eBoostState == BOOST_STATE_LONG_BOOST)
 	{
 		if (m_fSpeed > 3)
-			m_fBoostCal = 0.995;
+			m_fBoostCal = 0.994;
 	}
 
 	if (m_fSpeed < 1)
 	{
 		m_eBoostState = BOOST_STATE_NORMAL;
 		m_fSpeed = 1;
+		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 	}
 }
 
 void CCart::CreateRainbowObject()
 {
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_cloud/born.ogg", SOUND_CLOUD, 0.4f);
 	CGameObject* pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
 
 	if (nullptr == pGameObject)
@@ -508,6 +536,7 @@ void CCart::CreateBananaObject()
 
 void CCart::CreateThunderCloudObject()
 {
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_thunderbolt/ThunderCloud.ogg", SOUND_THUNDERCLOUD, 0.4f);
 	CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev);
 
 	if (nullptr == pGameObject)
@@ -536,8 +565,10 @@ void CCart::UpdateThunder()
 		// 부스터 끄기
 		m_eBoostState = BOOST_STATE_NORMAL;
 		m_fSpeed = 1;
+		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 		// 드리트프 종료 + 게이지 계산
 		m_bDrift = false;
+		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
 		m_fCurGage += m_fGainGage;
 		if (m_fCurGage >= 100.f)
 		{
@@ -986,6 +1017,65 @@ void CCart::OutputCarState()
 		break;
 	}
 }
+
+void CCart::StartCountDown(const _float& fDeltaTime)
+{
+	m_fPlayTimer += fDeltaTime;
+
+	if (m_fPlayTimer > 4.f)
+		return;
+
+	if (m_fPlayTimer > 3.f)
+	{
+		m_bPlaying = true;
+		m_bCanShortBoost = true;
+		m_bShortBoosterOnOff = true;
+		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_go.flac", SOUND_EFFECT1, 0.4f);
+	}
+	else if (m_fPreTimer < 2.f && m_fPlayTimer > 2.f)
+	{
+		m_fPreTimer = m_fPlayTimer;
+		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT3, 0.4f);
+	}
+	else if (m_fPreTimer < 1.f && m_fPlayTimer > 1.f)
+	{
+		m_fPreTimer = m_fPlayTimer;
+		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT2, 0.4f);
+	}
+	else if (m_fPreTimer == 0.f && m_fPlayTimer > 0.f)
+	{
+		m_fPreTimer = m_fPlayTimer;
+		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT1, 0.4f);
+	}
+}
+
+void CCart::EndCoundDown(const _float& fDeltaTime)
+{
+	float fEndTime = 5;
+
+	if (m_fPlayTimer < fEndTime || m_bPlaying == false)
+		return;
+
+	if (m_fPlayTimer > fEndTime + 10.f && m_bPlaying == true)
+	{
+		m_bPlaying = false;
+		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
+		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
+		SoundMgr::GetInstance().PlaySound(L"Effect/lab/race_over.flac", SOUND_ENDCOUND, 0.4f);
+	}
+	else
+	{
+		for (int i = 0; i < 10; ++i)
+		{
+			if (m_fPreTimer < fEndTime + float(i) && m_fPlayTimer > fEndTime + float(i))
+			{
+				m_fPreTimer = m_fPlayTimer;
+				SoundMgr::GetInstance().PlaySound(L"Effect/lab/ro_count.flac", SOUND_ENDCOUND, 0.4f);
+			}
+		}
+	}	
+}
+
 
 void CCart::CreateMissileObject()	
 {

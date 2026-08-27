@@ -82,6 +82,7 @@ HRESULT CCollisionTest::Ready_Scene()
 	if (FAILED(Ready_Collision_Matrix()))
 		return E_FAIL;
 
+	SoundMgr::GetInstance().StopAll();
 	return S_OK;
 }
 

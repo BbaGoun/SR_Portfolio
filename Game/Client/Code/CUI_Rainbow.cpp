@@ -6,6 +6,7 @@
 #include "CRenderer.h"
 #include "CManagement.h"
 #include "CCart.h"
+#include "SoundMgr.h"
 
 CUI_Rainbow::CUI_Rainbow(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -61,7 +62,8 @@ _int CUI_Rainbow::Update_GameObject(const _float& fDeltaTime)
 	{
 		m_fTimer = 0;
 		m_bCurState = false;
-		pCart->SetRainbowUI(false);
+		pCart->SetRainbowUI(false); 
+		SoundMgr::GetInstance().PlaySound(L"Effect/Item_cloud/disappear.ogg", SOUND_CLOUD, 0.4f);
 	}
 
 	return CGameObject::Update_GameObject(fDeltaTime);

@@ -60,6 +60,9 @@ public:
 	ITEM_TYPE		GetSecondSlot()						{ return m_eSecondSlot; }
 	void			SetSecondSlot(ITEM_TYPE eID)		{ m_eSecondSlot = eID; }
 
+
+	bool			GetPlayingState()					{ return m_bPlaying; }
+
 	// AdjustState
 	void			AdjustPosY_Slope(_vec3 pos, const float fDeltaTime);
 
@@ -86,6 +89,10 @@ public:
 
 	// OutputState
 	void			OutputCarState();
+
+	// CountDown
+	void			StartCountDown(const _float& fDeltaTime);
+	void			EndCoundDown(const _float& fDeltaTime);
 
 private:
 	_float			m_fMaxSpeed;
@@ -131,6 +138,10 @@ private:
 	int				m_iFlatFrameCnt;
 
 	bool			m_bCanShortBoost;
+
+	float			m_fPlayTimer;
+	float			m_fPreTimer;
+	bool			m_bPlaying;
 
 protected:
 	virtual		void		Free() override;
