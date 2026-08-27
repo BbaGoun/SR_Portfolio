@@ -22,7 +22,9 @@ private:
 	virtual			void		Render_GameObject() override;
 
 public:
-	void			SetSelected();
+	//void			SetSelected();
+	void			SetSelected(bool bSelected);//{ bSelected = m_bSelected; };
+	bool	    	GetSelected() { return m_bSelected; }
 	void			SetMouseHover(bool bMouseHover) { m_bMouseHover = bMouseHover; }
 
 private:
@@ -30,7 +32,7 @@ private:
 	CTexture*		m_pTextureCom;
 
 	float			m_fFrame;
-	bool			m_fSelected;
+	bool			m_bSelected;
 	bool			m_bMouseHover;
 	INEN_SLOT_NUM	m_eSlotNum;
 	

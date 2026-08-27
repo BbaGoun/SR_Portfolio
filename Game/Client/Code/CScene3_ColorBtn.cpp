@@ -11,6 +11,8 @@
 #include "CDInputMgr.h"
 #include "CManagement.h"
 
+#include "CScene3_ColorSetBG.h"
+
 CScene3_ColorBtn::CScene3_ColorBtn(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
 }
@@ -50,28 +52,31 @@ HRESULT CScene3_ColorBtn::Ready_GameObject()
 	return S_OK;
 }
 
-//HRESULT CScene3_KartBtn::Set_ClickIcon(const _float& fDeltaTime)
-//{
-//
-//}
-
 void CScene3_ColorBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 	{
+		
 		m_fFrame = 1;
+		//CScene3_ColorSetBG* pSetBG = static_cast<CScene3_ColorSetBG*>(m_pSetBG);
+		//if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
+		//{
+		//	if (pSetBG->Get_Show() == false )
+		//	pSetBG->Set_Show(true);
+		//	else
+		//		pSetBG->Set_Show(false);
+		//}
+
 
 	}
-
 	else
-	{
-		m_fFrame = 0;
-	}
-}
+	m_fFrame = 0;
+	
+
 
 _int CScene3_ColorBtn::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

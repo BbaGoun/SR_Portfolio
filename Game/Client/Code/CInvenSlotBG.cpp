@@ -23,7 +23,7 @@ HRESULT CInvenSlotBG::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_pTransformCom->Set_Pos({ 0,0,900 });
+	m_pTransformCom->Set_Pos({ 0,0,990 });
 	m_pTransformCom->Set_Scale({ WINCX,WINCY,1 });
 
 	Engine::CComponent* pComponent = nullptr;
@@ -37,7 +37,7 @@ HRESULT CInvenSlotBG::Ready_GameObject()
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	m_bMouseHover	= false;
-	m_fSelected		= false;
+	m_bSelected		= false;
 	return S_OK;
 }
 
@@ -51,7 +51,7 @@ _int CInvenSlotBG::Update_GameObject(const _float& fDeltaTime)
 	TCHAR   szFileName[128] = L"";
 	wsprintf(szFileName, L"InvenSlot%d", m_eSlotNum);
 	CRenderer::GetInstance()->Add_RenderTargetGroup(szFileName, this);
-	//CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	//CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -63,7 +63,7 @@ void CInvenSlotBG::LateUpdate_GameObject(const _float& fDeltaTime)
 void CInvenSlotBG::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	if (m_fSelected == true)
+	if (m_bSelected == true)
 	{
 		m_fFrame = 2;
 		if (m_bMouseHover == true) m_fFrame += 1;
@@ -77,12 +77,15 @@ void CInvenSlotBG::Render_GameObject()
 	m_pVIBufferCom->Render_Buffer();
 }
 
-void CInvenSlotBG::SetSelected()
+void CInvenSlotBG::SetSelected(bool bSelected)
 {
-	if (m_fSelected == true)
-		m_fSelected = false;
+	
+	bSelected = m_bSelected;
+	if (m_bSelected == true)
+		m_bSelected = false;
 	else
-		m_fSelected = true;
+		m_bSelected = true;
+	
 }
 
 CInvenSlotBG* CInvenSlotBG::Create(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)

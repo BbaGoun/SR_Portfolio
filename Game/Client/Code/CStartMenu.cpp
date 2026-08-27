@@ -19,6 +19,7 @@
 #include "CInventoryScene.h"
 #include "CRacingScene.h"
 #include "CDInputMgr.h"
+#include "SoundMgr.h"
 
 CStartMenu::CStartMenu(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -40,7 +41,7 @@ HRESULT CStartMenu::Ready_Scene()
 	if (FAILED(Ready_UI_Layer()))
 		return E_FAIL;
 
-
+	SoundMgr::GetInstance().PlayBGM(L"BGM/Main/title.ogg", 0.4f);
 
 	return S_OK;
 }
@@ -54,19 +55,14 @@ _int CStartMenu::Update_Scene(const _float& fDeltaTime)
 
 	if (GetAsyncKeyState('M'))
 	{
-
 		//Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
 		//Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
-		Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
+		//Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
 
 		if (nullptr == pStage)
 			return E_FAIL;
 
-		if (FAILED(CManagement::GetInstance()->Set_Scene(pStage)))
-		{
-			MSG_BOX("Stage Create Failed");
-			return -1;
-		}
+		CManagement::GetInstance()->Request_Scene(pStage);
 	}
 
 	return iExit;
@@ -196,6 +192,5 @@ CStartMenu* CStartMenu::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStartMenu::Free()
 {
-
 	CScene::Free();
 }

@@ -21,6 +21,7 @@ private:
     void    TransformCom(CGameObject* _pObj);
     void    MeshCom(CGameObject* _pObj);
     void    SplineCom(CGameObject* _pObj);
+    void    HeightMapCom(CGameObject* _pObj);
     void    ColliderComs(CGameObject* _pObj);
     void    TextureCom(CGameObject* _pObj);
 

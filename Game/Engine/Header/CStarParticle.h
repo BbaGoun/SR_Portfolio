@@ -12,8 +12,8 @@ public:
 	virtual		void		ResetParticle(Attribute* attribute) override;
 	virtual		void		Update_PSystme(float timeDelta) override;
 
-	void SetOrigin(const _vec3& vOrigin) { m_vOrigin = vOrigin; }
-	void ResetAll();
+	virtual		void SetOrigin(const _vec3& vOrigin) { m_vOrigin = vOrigin; }
+	virtual		void ResetAll();
 public:
 	static CStarParticle* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

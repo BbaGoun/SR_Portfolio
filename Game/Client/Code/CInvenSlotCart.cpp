@@ -61,19 +61,22 @@ void CInvenSlotCart::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CInvenSlotCart::Render_GameObject()
 {
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	_matrix OldView, OldProj, matView, matProj;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldView);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProj);
 
 	_vec3 vEye, vAt, vUp;
-	vEye = { 0, 0, -5 };
+	vEye = { 0, 0, -15 };
 	vAt = { 0, 0, 0 };
 	vUp = { 0, 1, 0 };
 	D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 
-	D3DXMatrixPerspectiveFovLH(&matProj, 60, (WINCX) / (WINCY), 1.f, 1000.f);
+	D3DVIEWPORT9 vp;
+	m_pGraphicDev->GetViewport(&vp);
+	_float fAspect = (_float)vp.Width / (_float)vp.Height;
+
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60), fAspect, 1.f, 1000.f);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
@@ -83,7 +86,6 @@ void CInvenSlotCart::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProj);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 CInvenSlotCart* CInvenSlotCart::Create(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)

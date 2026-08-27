@@ -154,26 +154,19 @@ void CInspector::TransformCom(CGameObject* _pObj)
         // 위치, 회전, 스케일로 행렬을 분해한다.
         ImGuizmo::DecomposeMatrixToComponents((float*)&matLocal, t, r, s);
 
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Position");
-        ImGui::SameLine();
+        ImGuiLabel("Position    ");
         if (ImGui::DragFloat3("##Tr", t, 0.25f)) {
             ImGuizmo::RecomposeMatrixFromComponents(t, r, s, matLocal);
             pTF->Set_LocalWorld(&matLocal);
         }
 
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Rotation");
-        ImGui::SameLine();
+        ImGuiLabel("Rotation    ");
         if (ImGui::DragFloat3("##Rt", r)) {
             ImGuizmo::RecomposeMatrixFromComponents(t, r, s, matLocal);
             pTF->Set_LocalWorld(&matLocal);
         }
 
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Scale   ");
-
-        ImGui::SameLine();
+        ImGuiLabel("Scale       ");
         if (ImGui::DragFloat3("##Sc", s, 0.1f)) {
             ImGuizmo::RecomposeMatrixFromComponents(t, r, s, matLocal);
             pTF->Set_LocalWorld(&matLocal);
@@ -236,7 +229,11 @@ void CInspector::MeshCom(CGameObject* _pObj)
                     {
                         // 메시 교체
                         _pObj->Remove_Component(pBuf);
-                        _pObj->Add_Component(rec.tag, rec.tag);
+                        CComponent* pCom = _pObj->Add_Component(rec.tag, rec.tag);
+                        if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom))
+                            pSpline->Create_New();
+                        if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom))
+                            pHM->Ready_Buffer();
                         ImGui::PopID();
                         break;
                     }
@@ -248,6 +245,7 @@ void CInspector::MeshCom(CGameObject* _pObj)
             ImGui::EndCombo();
         }
         SplineCom(_pObj);
+        HeightMapCom(_pObj);
     }
 
     ImGui::PopID();
@@ -255,8 +253,7 @@ void CInspector::MeshCom(CGameObject* _pObj)
 
 void CInspector::SplineCom(CGameObject* _pObj)
 {
-    CSpline* pSpline = _pObj->Get_Component<CSpline>();
-    if (pSpline) {
+    if (CSpline* pSpline = _pObj->Get_Component<CSpline>()) {
         float availX = ImGui::GetContentRegionAvail().x;
         float btnW = availX * 0.4f;
 
@@ -269,8 +266,7 @@ void CInspector::SplineCom(CGameObject* _pObj)
         {
             pSpline->Set_Edit(!bEdit);
             g_bEdit = !bEdit;
-            g_bPointSelected = false;
-            g_uPointSelected = 0;
+            Free_PointSelected();
         }
         if (bEdit)
             ImGui::PopStyleColor();
@@ -379,6 +375,74 @@ void CInspector::SplineCom(CGameObject* _pObj)
         {
             pSpline->Set_TextureUnit(fTextureUnit);
             pSpline->Compute_Mesh();
+        }
+    }
+}
+
+void CInspector::HeightMapCom(CGameObject* _pObj)
+{
+    if (CHeightMap* pHM = _pObj->Get_Component<CHeightMap>()) {
+        float availX = ImGui::GetContentRegionAvail().x;
+        float btnW = availX * 0.4f;
+        float dragIntW = availX * 0.35f;
+
+        const bool bEdit = pHM->Get_Edit();
+
+        if (bEdit)
+            ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
+        ImGui::SetCursorPosX((availX - btnW * 2) * 0.5f);
+        if (ImGui::Button("Edit", ImVec2(btnW, 0)))
+        {
+            pHM->Set_Edit(!bEdit);
+            g_bEdit = !bEdit;
+            Free_HMPick();
+        }
+        if (bEdit)
+            ImGui::PopStyleColor();
+
+        ImGui::Separator();
+        float fEditRadius = pHM->Get_EditRadius();
+        ImGuiLabel("Edit Radius");
+        if (ImGui::DragFloat("##Edit Radius", &fEditRadius, 0.25f, 1.f, FLT_MAX))
+        {
+            pHM->Set_EditRadius(fEditRadius);
+        }
+        float fEditStrength = pHM->Get_EditStrength();
+        ImGuiLabel("Edit Strength");
+        if (ImGui::DragFloat("##Edit Strength", &fEditStrength, 0.25f, 1.f, FLT_MAX))
+        {
+            pHM->Set_EditStrength(fEditStrength);
+        }
+        ImGui::Separator();
+
+        int iCntX = pHM->Get_CntX();
+        ImGui::AlignTextToFramePadding();
+        ImGui::Text("CntX");
+        ImGui::SameLine();
+        ImGui::SetNextItemWidth(dragIntW);
+        if (ImGui::DragInt("##CntX", &iCntX, 1, 10, INT_MAX))
+        {
+            pHM->Set_CntX(iCntX);
+            pHM->Ready_Buffer();
+        }
+        ImGui::SameLine();
+        int iCntZ = pHM->Get_CntZ();
+        ImGui::AlignTextToFramePadding();
+        ImGui::Text("CntZ");
+        ImGui::SameLine();
+        ImGui::SetNextItemWidth(dragIntW);
+        if (ImGui::DragInt("##CntZ", &iCntZ, 1, 10, INT_MAX))
+        {
+            pHM->Set_CntZ(iCntZ);
+            pHM->Ready_Buffer();
+        }
+
+        int iItv = pHM->Get_Itv();
+        ImGuiLabel("Itv");
+        if (ImGui::DragInt("##ItvX", &iItv, 1, 1, INT_MAX))
+        {
+            pHM->Set_Itv(iItv);
+            pHM->Adjust_Itv();
         }
     }
 }
@@ -531,11 +595,8 @@ void CInspector::TextureCom(CGameObject* _pObj)
                 break;
             }
         }
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Texture");
-        ImGui::SameLine();
-        ImGui::SetNextItemWidth(-1.0f);
 
+        ImGuiLabel("Texture");
         if (ImGui::BeginCombo("##Texture", preview.c_str()))
         {
             for (auto& proto : prototypes)
@@ -665,6 +726,8 @@ void CInspector::Add_Component_Button(CGameObject* _pObj)
                     CComponent* pCom = _pObj->Add_Component(rec.tag, rec.tag);
                     if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom))
                         pSpline->Create_New();
+                    if(CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom))
+                        pHM->Ready_Buffer();
                     ImGui::CloseCurrentPopup();
                 }
             }

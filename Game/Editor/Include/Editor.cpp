@@ -25,8 +25,11 @@ bool                    g_bSelected = false;
 uint32_t                g_uSelected = 0;
 
 bool                    g_bEdit = false;
-bool                    g_bPointSelected;
+bool                    g_bPointSelected = false;
 uint32_t                g_uPointSelected;
+
+bool                    g_bHMPick = false;
+_vec3                   g_vHMPickPos;
 
 bool                    g_bMoveTo = false;
 
@@ -141,7 +144,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 continue;
             }
             if (hr == D3DERR_DEVICENOTRESET)
-                ResetDevice();
+                pMainEditor->Reset_MainEditor();
             g_DeviceLost = false;
         }
 
@@ -151,7 +154,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             g_d3dpp.BackBufferWidth = g_ResizeWidth;
             g_d3dpp.BackBufferHeight = g_ResizeHeight;
             g_ResizeWidth = g_ResizeHeight = 0;
-            ResetDevice();
+            pMainEditor->Reset_MainEditor();
         }
 
         pMainEditor->GameLoop();
@@ -203,18 +206,6 @@ void CleanupDeviceD3D()
 {
     if (g_pd3dDevice) { g_pd3dDevice->Release(); g_pd3dDevice = nullptr; }
     if (g_pD3D) { g_pD3D->Release(); g_pD3D = nullptr; }
-}
-
-void ResetDevice()
-{
-    // D3DPOOL_DEFAULT로 선언된 리소스 해제
-    pMainEditor->InvalidateDeviceObjects();
-
-    ImGui_ImplDX9_InvalidateDeviceObjects();
-    HRESULT hr = g_pd3dDevice->Reset(&g_d3dpp);
-    if (hr == D3DERR_INVALIDCALL)
-        IM_ASSERT(0);
-    ImGui_ImplDX9_CreateDeviceObjects();
 }
 
 // Forward declare message handler from imgui_impl_win32.cpp

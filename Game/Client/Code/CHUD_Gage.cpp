@@ -23,7 +23,7 @@ HRESULT CHUD_Gage::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Pos({ 0,-307.5,1 });
+	m_pTransformCom->Set_Pos({ 0,-307.5,2 });
 	m_pTransformCom->Set_Scale({ 282, 105, 1 });
 
 
@@ -44,7 +44,7 @@ HRESULT CHUD_Gage::Ready_GameObject()
 
 _int CHUD_Gage::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 	m_fFrame += 10 * fDeltaTime;
 	if (m_fFrame > 5)
 		m_fFrame = 0;

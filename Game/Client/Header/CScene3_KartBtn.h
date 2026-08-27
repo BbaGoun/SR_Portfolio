@@ -17,9 +17,7 @@ public:
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
-
-	//virtual			HRESULT		Set_ClickIcon(const _float& fDeltaTime);
-
+	
 private:
 	CRcTex* m_pBufferCom;
 	CTexture* m_pTextureCom;

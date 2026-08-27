@@ -58,8 +58,6 @@ _int CThunderFloorEffect::Update_GameObject(const _float& fDeltaTime)
 
 	vCartPos += vCarLook;
 	m_pTransformCom->Set_Pos(vCartPos);
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	CGameObject::Compute_ViewZ(&vPos);
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
 	return CGameObject::Update_GameObject(fDeltaTime);

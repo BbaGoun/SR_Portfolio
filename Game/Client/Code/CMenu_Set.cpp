@@ -14,9 +14,15 @@
 #include "CScene3_CharBtn.h"
 #include "CScene3_KartBtn.h"
 #include "CScene3_ColorBtn.h"
+#include "CScene3_ColorSetBG.h"
 #include "CUI_UnderBar.h"
 #include "CUI_XButton.h"
 #include "CScene3_Map_ForestValley.h"
+#include  "CInvenSlotBG.h"
+#include "CUI_InvenSlot.h"
+#include "CInvenSlotCart.h"
+#include "CInventoryScene.h"
+#include "CDinputMgr.h"
 
 
 
@@ -37,6 +43,9 @@ HRESULT CMenu_Set::Ready_Scene()
 	if (FAILED(Ready_Environment_Layer(L"Environment_Layer")))
 		return E_FAIL;
 
+	if (FAILED(Ready_RenderTarget()))
+		return E_FAIL;
+
 	if (FAILED(Ready_UI_Layer()))
 		return E_FAIL;
 
@@ -49,8 +58,10 @@ HRESULT CMenu_Set::Ready_Scene()
 
 _int CMenu_Set::Update_Scene(const _float& fDeltaTime)
 {
-
 	_int iExit = CScene::Update_Scene(fDeltaTime);
+
+
+
 
 	return iExit;
 }
@@ -116,63 +127,123 @@ HRESULT CMenu_Set::Ready_Prototype()
 	return S_OK;
 }
 
+HRESULT CMenu_Set::Ready_RenderTarget()
+{
+	
+		CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"InvenSlot0", 250, 400);
+		CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"InvenSlot1", 250, 400);
+		return S_OK;
+	
+}
+
 HRESULT CMenu_Set::Ready_UI_Layer()
 {
 	CLayer* pUILayer = CLayer::Create();
 	if (pUILayer == nullptr)
 		return E_FAIL;
 	m_mapLayer.insert({ L"UI", pUILayer });
-
+	
 	CGameObject* pUIObject = nullptr;
-
+	
 	pUIObject = CScene3_Map_ForestValley::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_Map_ForestValley", pUIObject)))
 		return E_FAIL;
-
-
-
+	
+	
+	
 	pUIObject = CScene3_StartBtn::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_StartBtn", pUIObject)))
 		return E_FAIL;
-
+	
 	pUIObject = CScene3_CharBtn::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_CharBtn", pUIObject)))
 		return E_FAIL;
-
+	
 	pUIObject = CScene3_KartBtn::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_KartBtn", pUIObject)))
 		return E_FAIL;
-
+	
 	pUIObject = CScene3_ColorBtn::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_ColorBtn", pUIObject)))
 		return E_FAIL;
 
+	pUIObject = CScene3_ColorSetBG::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ColorSetBG", pUIObject)))
+		return E_FAIL;
+	
+	
+	
+	CGameObject* pUIInvenSlot = CUI_InvenSlot::Create(m_pGraphicDev, INVEN_FIRST);
+	if (nullptr == pUIInvenSlot)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_InvenSlot", pUIInvenSlot)))
+		return E_FAIL;
+	pUIInvenSlot->Get_Transform()->Set_Pos({ -300, 0, 1 });
+	pUIInvenSlot->Get_Transform()->Set_Scale({ 100,150,1 });
+	
+	
+	pUIObject = CInvenSlotBG::Create(m_pGraphicDev, INVEN_FIRST);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"InvenSlotBG", pUIObject)))
+		return E_FAIL;
+	static_cast<CUI_InvenSlot*>(pUIInvenSlot)->SetBG(pUIObject);
+	
+	pUIObject = CInvenSlotCart::Create(m_pGraphicDev, INVEN_FIRST);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"InvenSlotCart", pUIObject)))
+		return E_FAIL;
+	static_cast<CUI_InvenSlot*>(pUIInvenSlot)->SetItem(pUIObject);
+
+	CGameObject* pUIInvenSlot2 = CUI_InvenSlot::Create(m_pGraphicDev, INVEN_SECOND);
+	if (nullptr == pUIInvenSlot2)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_InvenSlot2", pUIInvenSlot2)))
+		return E_FAIL;
+	pUIInvenSlot2->Get_Transform()->Set_Pos({ -220, 0, 1 });
+	pUIInvenSlot2->Get_Transform()->Set_Scale({ 100,150,1 });
 
 
+	pUIObject = CInvenSlotBG::Create(m_pGraphicDev, INVEN_SECOND);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"InvenSlotBG2", pUIObject)))
+		return E_FAIL;
+	static_cast<CUI_InvenSlot*>(pUIInvenSlot2)->SetBG(pUIObject);
 
+	pUIObject = CInvenSlotCart::Create(m_pGraphicDev, INVEN_SECOND);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"InvenSlotCart2", pUIObject)))
+		return E_FAIL;
+	static_cast<CUI_InvenSlot*>(pUIInvenSlot2)->SetItem(pUIObject);
+	
+	
+	
 	pUIObject = CUI_UnderBar::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_UnderBar", pUIObject)))
 		return E_FAIL;
-
+	
 	pUIObject = CUI_XButton::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_XButton", pUIObject)))
 		return E_FAIL;
-
-
 
 	return S_OK;
 
@@ -197,4 +268,7 @@ void CMenu_Set::Free()
 {
 
 	CScene::Free();
+	CRenderer::GetInstance()->Clear_RenderGroup();
+	CRenderer::GetInstance()->Delete_RenderTarget(L"InvenSlot0");
+	CRenderer::GetInstance()->Delete_RenderTarget(L"InvenSlot1");
 }

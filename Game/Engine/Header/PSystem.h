@@ -48,6 +48,8 @@ public:
 	virtual			void		OnLostDevice();
 	virtual			void		OnResetDevice();
 
+	virtual			void		ResetAll();
+
 protected:
 	virtual void RemoveDeadParticles();
 	virtual void Free();

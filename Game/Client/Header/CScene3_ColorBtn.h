@@ -27,8 +27,12 @@ private:
 	float	m_fFrame;
 	_vec3	m_vPos;
 	_vec3	m_vScale;
+
+
+
 public:
 	static CScene3_ColorBtn* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	CGameObject* m_pSetBG;
 
 protected:
 	virtual		void		Free() override;

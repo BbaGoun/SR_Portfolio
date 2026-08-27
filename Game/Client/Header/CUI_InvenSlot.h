@@ -23,6 +23,8 @@ private:
 public:
 	void SetItem(CGameObject* pItem) { m_pItem = pItem; }
 	void SetBG(CGameObject* pBG) { m_pBG = pBG; }
+	void	Set_Show(bool bShow) { m_bShow = bShow; };
+	bool	Get_Show() { return m_bShow; }
 
 private:
 	Engine::CRcTex* m_pVIBufferCom;
@@ -32,6 +34,8 @@ public:
 
 	_vec3			m_vPos;
 	_vec3			m_vScale;
+
+	bool			m_bShow;
 
 	CGameObject*	m_pItem;
 	CGameObject*	m_pBG;

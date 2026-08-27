@@ -1,5 +1,6 @@
-#include "CRenderer.h"
+﻿#include "CRenderer.h"
 #include "CCameraMgr.h"
+#include "CVIBuffer.h"
 IMPLEMENT_SINGLETON(CRenderer)
 
 CRenderer::CRenderer():m_fWidth(0), m_fHeight(0)
@@ -32,7 +33,8 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
 	Render_Particle(pGraphicDev);
-	Render_UI(pGraphicDev);
+	Render_NonAlphaUI(pGraphicDev);
+	Render_AlphaUI(pGraphicDev);
 
 	PostRender(pGraphicDev);
 
@@ -60,7 +62,7 @@ HRESULT CRenderer::Add_RenderTarget(LPDIRECT3DDEVICE9& pGraphicDev, const _tchar
 	{
 		if (wcscmp(pair.first, pName) == 0)
 		{
-			MSG_BOX("�ߺ��� RT�̸�");
+			MSG_BOX("중복된 RT이름");
 			return E_FAIL;
 		}
 	}
@@ -114,24 +116,24 @@ void CRenderer::Add_RenderTargetGroup(const _tchar* pName, CGameObject* pGameObj
 
 void CRenderer::Ready_RenderTarget(LPDIRECT3DDEVICE9& pGraphicDev, float fWidth ,float fHeight)
 {
-	// 1. �ؽ�ó ����
+	// 1. 텍스처 생성
 	m_fWidth = fWidth;
 	m_fHeight = fHeight;
 
 	pGraphicDev->CreateTexture(
-		fWidth, fHeight,		// �̴ϸ� �ػ�
-		1,						// �Ӹ� ���� (����Ÿ���� ���� 1)
+		fWidth, fHeight,		// 미니맵 해상도
+		1,						// 밉맵 레벨 (렌더타겟은 보통 1)
 		D3DUSAGE_RENDERTARGET,  
 		D3DFMT_A8R8G8B8,
-		D3DPOOL_DEFAULT,		// ����Ÿ���� �ݵ�� DEFAULT Ǯ
+		D3DPOOL_DEFAULT,		// 렌더타겟은 반드시 DEFAULT 풀
 		&m_pRTTexture,
 		nullptr
 	);
 
-	// 2. Surface �̾Ƴ���
+	// 2. Surface 뽑아내기
 	m_pRTTexture->GetSurfaceLevel(0, &m_pRTSurface);
 
-	// 3. ���ٽ� ���� �غ�
+	// 3. 스텐실 버퍼 준비
 	pGraphicDev->CreateDepthStencilSurface(
 		fWidth, fHeight,
 		D3DFMT_D24S8,
@@ -168,9 +170,21 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 			pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
 		}
 
+		//if(wcsncmp(pair.first, L"InvenSlot", 9) == 0)
+		//	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+		pInfo->RenderList.sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+			{
+				_vec3 vDst, vSrc;
+				pDst->Get_Transform()->Get_Info(INFO_POS, &vDst);
+				pSrc->Get_Transform()->Get_Info(INFO_POS, &vSrc);
+				return vDst.z > vSrc.z;
+			});
+
 		for (auto& pObj : pInfo->RenderList)   
 			pObj->Render_GameObject();
 
+		pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 		pGraphicDev->EndScene();
 
 		pGraphicDev->SetRenderTarget(0, pOldRT);
@@ -178,7 +192,6 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 		pOldRT->Release();
 		pOldDS->Release();
 	}
-
 }
 
 void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -189,8 +202,19 @@ void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev)
 
 void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev)
 {
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 254);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
 	for (auto& pObj : m_RenderGroup[RENDER_NONALPHA])
 		pObj->Render_GameObject();
+
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 
 void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -204,6 +228,14 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	//pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	//pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
+
+	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
+	{
+		_vec3 vPos;
+		pObj->Get_Transform()->Get_Info(INFO_POS, &vPos);
+		pObj->Compute_ViewZ(&vPos);
+	}
+
 	m_RenderGroup[RENDER_ALPHA].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
 		{
 			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
@@ -220,12 +252,14 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 void CRenderer::Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
 	for (auto& pObj : m_RenderGroup[RENDER_PARTICLE])
 		pObj->Render_GameObject();
+
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
-void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
+void CRenderer::Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	if (CCameraMgr::GetInstance()->GetMainCamera())
 	{
@@ -236,19 +270,42 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 
 		pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 	}
+	//pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+	//pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 254);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	for (auto& pObj : m_RenderGroup[RENDER_NONALPHAUI])
+		pObj->Render_GameObject();
+
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+}
+
+void CRenderer::Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
+{
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	//m_RenderGroup[RENDER_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
-	//	{
-	//		return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
-	//	});
+	m_RenderGroup[RENDER_ALPHAUI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			// z값이 먼 것 부터 그리겠다. 
+			// 알파블랜딩은 뒤에 있는 것이 이미 있다고 생각하고 그리는것이기 때문
+			// 다만 UI는 Render하는 시점에 카메라가 바뀌기 때문에 그냥 Transform의 z좌표 가져와서 정렬하는게 낫다
+			_vec3 vDstPos, vSrcPos;
+			pDst->Get_Transform()->Get_Info(INFO_POS, &vDstPos);
+			pSrc->Get_Transform()->Get_Info(INFO_POS, &vSrcPos);
+			return vDstPos.z > vSrcPos.z;
+		});
 
-	for (auto& pObj : m_RenderGroup[RENDER_UI])
+	for (auto& pObj : m_RenderGroup[RENDER_ALPHAUI])
 		pObj->Render_GameObject();
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -284,10 +341,101 @@ void CRenderer::Delete_RenderTarget(const _tchar* pName)
 
 void CRenderer::PreCull(LPDIRECT3DDEVICE9& pGraphicDev)
 {
-	for (size_t i = 0; i < RENDER_END; ++i)
+	DistanceCulling(pGraphicDev);
+	FrustumCulling(pGraphicDev);
+}
+
+void CRenderer::DistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	_vec3 vCamPos;
+	_matrix matView;
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	memcpy(&vCamPos, &matView.m[3], sizeof(_vec3));
+	vCamPos *= -1;
+
+	float fCullDistance, dist;
+	_vec3 vObjPos;
+	for (size_t i = 0; i < RENDER_PARTICLE; ++i)
 	{
-		for (auto& pObj : m_RenderGroup[i])
-			pObj->PreCull_GameObject();
+		for (auto it = m_RenderGroup[i].begin(); it != m_RenderGroup[i].end();) {
+			if (*it == nullptr) {
+				(*it)->Release();
+				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+
+			fCullDistance = (*it)->Get_CullDistance();
+			if (fCullDistance == 0) {
+				++it;
+				continue;
+			}
+
+			(*it)->Get_Transform()->Get_Info(INFO_POS, &vObjPos);
+			_vec3 dir = vObjPos - vCamPos;
+			dist = D3DXVec3Length(&dir);
+			if (dist >= fCullDistance) {
+				(*it)->Release();
+				it = m_RenderGroup[i].erase(it);
+			}
+			else
+				++it;
+		}
+	}
+}
+
+void CRenderer::FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	_matrix matView, matInvView;
+	_matrix matProj;
+	_matrix matObjWorld;
+
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matInvView, 0, &matView);
+	pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	float m[16];
+	memcpy(m, &matProj.m, sizeof(float) * 16);
+	DirectX::XMMATRIX xmMatProj(m);
+	
+	DirectX::BoundingFrustum tFrustum;
+	DirectX::BoundingFrustum::CreateFromMatrix(tFrustum, xmMatProj);
+	
+	memcpy(m, &matInvView.m, sizeof(float) * 16);
+	DirectX::XMMATRIX xmMatInvView(m);
+
+	tFrustum.Transform(tFrustum, xmMatInvView);
+
+	DirectX::BoundingBox box;
+	for (size_t i = 0; i < RENDER_PARTICLE; ++i)
+	{
+		for (auto it = m_RenderGroup[i].begin(); it != m_RenderGroup[i].end();) {
+			if (*it == nullptr) {
+				(*it)->Release();
+				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+
+			CVIBuffer* pBuf = (*it)->Get_Component<CVIBuffer>();
+			if (pBuf == nullptr) {
+				(*it)->Release();
+				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+
+			matObjWorld = *(*it)->Get_Transform()->Get_World();
+			memcpy(m, &matObjWorld.m, sizeof(float) * 16);
+			DirectX::XMMATRIX xmMatWorld(m);
+
+			box = *pBuf->GetBoundingBox();
+			box.Transform(box, xmMatWorld);
+
+			if (!tFrustum.Intersects(box)) {
+				(*it)->Release();
+				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+			++it;
+		}
 	}
 }
 

@@ -40,7 +40,7 @@ HRESULT CUI_Menu::Ready_GameObject()
 
 _int CUI_Menu::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

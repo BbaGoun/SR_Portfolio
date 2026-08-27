@@ -54,9 +54,6 @@ _int CBoostJet::Update_GameObject(const _float& fDeltaTime)
 	{
 		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
-		_vec3 vPos;
-		m_pTransformCom->Get_Info(INFO_POS, &vPos);
-		CGameObject::Compute_ViewZ(&vPos);
 		return CGameObject::Update_GameObject(fDeltaTime);
 	}
 }
