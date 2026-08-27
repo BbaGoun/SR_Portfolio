@@ -197,6 +197,5 @@ CStartMenu* CStartMenu::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStartMenu::Free()
 {
-	SoundMgr::GetInstance().StopSound(SOUND_BGM);
 	CScene::Free();
 }

@@ -50,6 +50,7 @@
 #include "CWaterBombThrow.h"
 #include "CCollisionStarEffect.h"
 #include "CDriftSpark.h"
+#include "SoundMgr.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
