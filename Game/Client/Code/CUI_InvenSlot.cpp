@@ -55,7 +55,7 @@ _int CUI_InvenSlot::Update_GameObject(const _float& fDeltaTime)
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	if (CheckCollisionUI(g_hWnd, vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, vPos, m_vScale, m_pGraphicDev))
 	{
 		if (pItem)
 		{

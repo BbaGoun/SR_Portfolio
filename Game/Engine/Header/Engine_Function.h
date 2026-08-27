@@ -196,15 +196,19 @@ namespace Engine
 		return false;
 	}
 
-	inline bool CheckCollisionUI(HWND hWnd, _vec3 vCenter, _vec3 vScale)
+	inline bool CheckCollisionUI(HWND hWnd, _vec3 vCenter, _vec3 vScale, LPDIRECT3DDEVICE9 pGraphicDev)
 	{
 		POINT		pt{};
 
 		GetCursorPos(&pt);
 		ScreenToClient(hWnd, &pt);
 
-		pt.x -= WINCX * 0.5f;
-		pt.y = -pt.y + WINCY * 0.5f;
+		D3DVIEWPORT9 vp;
+		pGraphicDev->GetViewport(&vp);
+
+		pt.x -= vp.Width * 0.5f;
+		pt.y = -pt.y + vp.Height * 0.5f;
+
 		if (pt.x < vCenter.x - vScale.x / 2 || pt.x > vCenter.x + vScale.x / 2)
 			return false;
 		if (pt.y < vCenter.y - vScale.y / 2 || pt.y > vCenter.y + vScale.y / 2)

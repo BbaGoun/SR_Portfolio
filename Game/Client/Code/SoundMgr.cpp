@@ -54,8 +54,12 @@ void SoundMgr::PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume)
 	if (iter == m_mapSound.end())
 		return;
 
-	if (m_pChannelArr[eID])
+	FMOD_BOOL bPlaying;
+	if (m_pChannelArr[eID] && FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlaying) == FMOD_OK)
+	{
+		return;
 		FMOD_Channel_Stop(m_pChannelArr[eID]);
+	}
 
 	FMOD_System_PlaySound(m_pSystem, iter->second, nullptr, FALSE, &m_pChannelArr[eID]);
 	FMOD_Channel_SetMode(m_pChannelArr[eID], FMOD_LOOP_OFF);

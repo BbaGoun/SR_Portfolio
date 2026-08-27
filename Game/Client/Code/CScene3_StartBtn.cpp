@@ -52,7 +52,7 @@ HRESULT CScene3_StartBtn::Ready_GameObject()
 
 void CScene3_StartBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 	{
 		m_fFrame = 1;
 
@@ -68,7 +68,7 @@ _int CScene3_StartBtn::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
 		{
 			Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);

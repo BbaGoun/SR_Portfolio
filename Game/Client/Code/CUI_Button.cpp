@@ -46,7 +46,7 @@ HRESULT CUI_Button::Ready_GameObject()
 
 void CUI_Button::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 	{
 		m_fFrame += 10 * fFixedDeltaTime;
 		if (m_fFrame > 4)

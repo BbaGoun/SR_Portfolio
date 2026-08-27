@@ -23,7 +23,7 @@ HRESULT CHUD_Gage::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Pos({ 0,-307.5,1 });
+	m_pTransformCom->Set_Pos({ 0,-307.5,2 });
 	m_pTransformCom->Set_Scale({ 282, 105, 1 });
 
 
