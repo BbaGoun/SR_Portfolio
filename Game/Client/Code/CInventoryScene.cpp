@@ -130,7 +130,7 @@ HRESULT CInventoryScene::Ready_RenderTarget()
 
 HRESULT CInventoryScene::Ready_GameLogic_Layer()
 {
-	// °ÔÀÓ ¿ÀºêÁ§Æ®
+	// Â°Ã”Ã€Ã“ Â¿Ã€ÂºÃªÃÂ§Ã†Â®
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)

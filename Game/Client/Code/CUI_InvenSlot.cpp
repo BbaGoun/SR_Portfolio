@@ -29,7 +29,7 @@ HRESULT CUI_InvenSlot::Ready_GameObject()
 	m_pItem = nullptr;
 
 	//m_vPos = { 0,100,1 };
-	m_vScale = { 250,400,1 };
+	m_vScale = { 100,150,1 };
 	m_pTransformCom->Set_Scale(m_vScale);
 
 	Engine::CComponent* pComponent = nullptr;
@@ -37,6 +37,8 @@ HRESULT CUI_InvenSlot::Ready_GameObject()
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 	if (pComponent == nullptr)
 		return E_FAIL;
+
+	Set_Show(false);
 
 	return S_OK;
 }
@@ -67,7 +69,8 @@ _int CUI_InvenSlot::Update_GameObject(const _float& fDeltaTime)
 		}
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
-			pBG->SetSelected();
+			pBG->SetSelected(true);
+
 		}
 	}
 	else
@@ -86,11 +89,16 @@ _int CUI_InvenSlot::Update_GameObject(const _float& fDeltaTime)
 
 void CUI_InvenSlot::LateUpdate_GameObject(const _float& fDeltaTime)
 {
+	if (m_bShow == false)
+		return;
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 void CUI_InvenSlot::Render_GameObject()
 {
+	if (m_bShow == false)
+		return;
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	TCHAR   szFileName[128] = L"";

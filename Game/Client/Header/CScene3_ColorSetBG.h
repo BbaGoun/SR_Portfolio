@@ -3,13 +3,13 @@
 #include "CRcTex.h"
 #include "CTexture.h"
 
-class CScene3_KartBtn :
+class CScene3_ColorSetBG :
 	public CGameObject
 {
 private:
-	explicit CScene3_KartBtn(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CScene3_KartBtn(const CGameObject& rhs);
-	~CScene3_KartBtn() override;
+	explicit CScene3_ColorSetBG(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CScene3_ColorSetBG(const CGameObject& rhs);
+	~CScene3_ColorSetBG() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -17,16 +17,20 @@ public:
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
+	void						Set_Show(bool bShow) { m_bShow = bShow; };
+	bool						Get_Show() { return m_bShow; }
 	
+
 private:
 	CRcTex* m_pBufferCom;
 	CTexture* m_pTextureCom;
 
-	float	m_fFrame;
-	_vec3	m_vPos;
-	_vec3	m_vScale;
+	bool	m_bShow;
+
+	
 public:
-	static CScene3_KartBtn* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CScene3_ColorSetBG* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	
 
 protected:
 	virtual		void		Free() override;

@@ -238,6 +238,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CScene2_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_CharBtn.h" />
     <ClInclude Include="..\Header\CScene3_ColorBtn.h" />
+    <ClInclude Include="..\Header\CScene3_ColorSetBG.h" />
     <ClInclude Include="..\Header\CScene3_KartBtn.h" />
     <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_StartBtn.h" />
@@ -313,6 +314,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CScene2_ForestValley.cpp" />
     <ClCompile Include="..\Code\CScene3_CharBtn.cpp" />
     <ClCompile Include="..\Code\CScene3_ColorBtn.cpp" />
+    <ClCompile Include="..\Code\CScene3_ColorSetBG.cpp" />
     <ClCompile Include="..\Code\CScene3_KartBtn.cpp" />
     <ClCompile Include="..\Code\CScene3_Map_ForestValley.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
