@@ -5,6 +5,7 @@
 #include "CCollider.h"
 #include "CSpline.h"
 #include "CRenderer.h"
+#include "CHeightMap.h"
 
 CSceneWindow::CSceneWindow() : CWindow()
 , m_pSceneTex(nullptr)
@@ -405,34 +406,36 @@ void CSceneWindow::Update_Window()
                 // Spline의 점을 순회
                 CGameObject* pSel = FindByGuid(g_uSelected, map);
                 if (pSel != nullptr) {
-                    CSpline* pSpline = pSel->Get_Component<CSpline>();
+                    // Spline 점 피킹
+                    if (CSpline* pSpline = pSel->Get_Component<CSpline>()) {
+                        DirectX::BoundingSphere sphere;
+                        sphere.Radius = 0.15f;
 
-                    DirectX::BoundingSphere sphere;
-                    sphere.Radius = 0.15f;
+                        auto& vecP = pSpline->Get_ControlPoints();
+                        for (int i = 0; i < vecP.size(); ++i) {
+                            ControlPoint& cp = vecP[i];
+                            _vec3 vPointPos = cp.position;
+                            D3DXVec3TransformCoord(&vPointPos, &vPointPos, pSel->Get_Transform()->Get_World());
+                            sphere.Center = ToXMFLOAT3(vPointPos);
 
-                    auto& vecP = pSpline->Get_ControlPoints();
-                    for (int i = 0; i < vecP.size(); ++i) {
-                        ControlPoint& cp = vecP[i];
-                        _vec3 vPointPos = cp.position;
-                        D3DXVec3TransformCoord(&vPointPos, &vPointPos, pSel->Get_Transform()->Get_World());
-                        sphere.Center = ToXMFLOAT3(vPointPos);
-
-                        float dist;
-                        if (sphere.Intersects(ToXMVec(rayOrigin), ToXMVec(rayDir), dist) && dist < bestDist) {
-                            bestDist = dist;
-                            bestId = cp.id;
-                            hit = true;
+                            float dist;
+                            if (sphere.Intersects(ToXMVec(rayOrigin), ToXMVec(rayDir), dist) && dist < bestDist) {
+                                bestDist = dist;
+                                bestId = cp.id;
+                                hit = true;
+                            }
                         }
-                    }
-                    if (hit) {
-                        ::Set_PointSelected(bestId);
-                    }
-                    else {
-                        ::Free_PointSelected();
+                        if (hit) {
+                            ::Set_PointSelected(bestId);
+                        }
+                        else {
+                            ::Free_PointSelected();
+                        }
                     }
                 }
             }
         }
+
 
         if (ImGui::IsMouseDragging(ImGuiMouseButton_Right))
         {
