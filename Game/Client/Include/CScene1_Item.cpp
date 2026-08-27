@@ -10,6 +10,7 @@
 #include "CRenderer.h"
 #include "CDInputMgr.h"
 #include "CManagement.h"
+#include "SoundMgr.h"
 
 CScene1_Item::CScene1_Item(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -75,6 +76,7 @@ _int CScene1_Item::Update_GameObject(const _float& fDeltaTime)
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
 		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
 		{
+			SoundMgr::GetInstance().PlaySound(L"Effect/UI/click.flac", SOUND_EFFECT1, 0.4f);
 			Engine::CScene* pStage = CMenu_Item::Create(m_pGraphicDev);
 
 			if (nullptr == pStage)
