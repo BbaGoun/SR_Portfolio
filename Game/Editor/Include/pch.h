@@ -47,10 +47,14 @@ extern bool						g_bEdit;
 extern bool                     g_bPointSelected;
 extern uint32_t                 g_uPointSelected;
 
+extern bool                     g_bHMPick;
+extern _vec3                    g_vHMPickPos;
+
+extern bool                     g_bMoveTo;
+
 extern ImGuizmo::OPERATION		g_GizmoOp;
 extern ImGuizmo::MODE			g_GizmoMode;
 
-extern bool                     g_bMoveTo;
 
 inline void Set_ObjSelected(uint32_t id) {
     if (!g_bEdit) {
@@ -76,6 +80,20 @@ inline void Free_PointSelected() {
     if (g_bEdit) {
         g_bPointSelected = false;
         g_uPointSelected = 0;
+    }
+}
+
+inline void Set_HMPick(_vec3 pos) {
+    if (g_bEdit) {
+        g_bHMPick = true;
+        g_vHMPickPos = pos;
+    }
+}
+
+inline void Free_HMPick() {
+    if (g_bEdit) {
+        g_bHMPick = false;
+        g_vHMPickPos = { 0, 0, 0 };
     }
 }
 

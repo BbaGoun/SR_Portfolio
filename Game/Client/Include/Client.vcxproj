@@ -108,8 +108,14 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -131,8 +137,14 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -152,8 +164,14 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -175,8 +193,14 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
