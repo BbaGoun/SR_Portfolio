@@ -599,9 +599,17 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 
 	CCube_Collider* pCol = Get_ComponentSpread<CCube_Collider>();
 
-	// for문 밖에 생성
-	_vec3 vCartOldCenter = ToVec3(pCol->Get_Info().Center);
+	// Reference가 아니라 값 복사 (변환을 하다보니 값 복사)
+	DirectX::BoundingOrientedBox OBB = pCol->Get_Info();
+
+	// 계산에 쓰기 위해 벡터 준비
+	_vec3 vCartOldCenter = ToVec3(OBB.Center);
+	_quaternion qCart = ToQuaternion(OBB.Orientation);
+	_vec3 extends = ToVec3(OBB.Extents);
+
+	// 변환될 결과를 담을 벡터
 	_vec3 vCartModelCenter;
+	_quaternion qCartModel;
 
 	float fGroundY = 0.f;
 	float fMinRayDist = FLT_MAX;
@@ -612,18 +620,24 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 		DirectX::BoundingBox box = *pSpline->GetBoundingBox();
 
 		// spline의 모델 스페이스로 보내기 위한 역행렬
-
 		_matrix matTrack, matInvTrack;
 		matTrack = *track->Get_Transform()->Get_World();
 		D3DXMatrixInverse(&matInvTrack, 0, &matTrack);
 
+		// OBB의 회전을 spline의 모델 스페이스로 보내기 위한 역 쿼터니언
+		_quaternion qTrack, qInvTrack;
+		qTrack = track->Get_Transform()->Get_WorldQuaternion();
+		D3DXQuaternionInverse(&qInvTrack, &qTrack);
+
 		// 플레이어의 박스 콜라이더를 spline의 모델 스페이스로 보낸다.
-		// 박스 콜라이더의 center를 변환해서 다시 넣는 방식
+		// 박스 콜라이더의 Center/Orientation를 변환해서 다시 넣는 방식
 		D3DXVec3TransformCoord(&vCartModelCenter, &vCartOldCenter, &matInvTrack);
-		pCol->Set_Center(vCartModelCenter);
+		qCartModel = qCart * qInvTrack;
+		OBB.Center = ToXMFLOAT3(vCartModelCenter);
+		OBB.Orientation = ToXMFLOAT4(qCartModel);
 
 		// 트랙의 boundingbox와 플레이어의 콜라이더가 닿는지 검사
-		bool bCheckCollision = box.Intersects(pCol->Get_Info());
+		bool bCheckCollision = box.Intersects(OBB);
 		pCol->Set_Center(vCartOldCenter);
 		if (bCheckCollision == false)
 			continue;
@@ -665,6 +679,8 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 			D3DXVec3TransformNormal(&vLocalNormal, &vLocalNormal, &matNormal);
 			D3DXVec3Normalize(&vLocalNormal, &vLocalNormal);
 			m_vTerrainNormal = vLocalNormal;
+			if (m_vTerrainNormal.y < 0)
+				m_vTerrainNormal *= -1;
 			break;
 		}
 	}
@@ -890,6 +906,7 @@ void CCart::CollisionWall()
 			// 최단거리 평면과의 MTV를 구함
 			if (s < closestDist) {
 				bCollision = true;
+				closestDist = s;
 				MTV = (r - s) * normal;
 				//법선벡터에 -1을 곱하냐 마냐를 결정함
 				if (plane.a * vCartOldCenter.x 

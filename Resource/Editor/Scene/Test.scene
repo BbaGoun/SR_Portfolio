@@ -12,7 +12,7 @@ OBJECT
     quat=0.000000 0.000000 0.000000 1.000000
     scale=1.000000 1.000000 1.000000
   OBJECT
-    type=Track
+    type=
     prefabPath=
     belong=0
     name=Empty
