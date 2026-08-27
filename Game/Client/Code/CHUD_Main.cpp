@@ -22,7 +22,7 @@ HRESULT CHUD_Main::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Pos({ 0,-307.5,1 });
+	m_pTransformCom->Set_Pos({ 0,-307.5,3 });
 
 	m_pTransformCom->Set_Scale({ 282, 105, 1 });
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
@@ -40,7 +40,7 @@ HRESULT CHUD_Main::Ready_GameObject()
 
 _int CHUD_Main::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

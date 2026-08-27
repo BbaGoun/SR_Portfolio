@@ -40,6 +40,7 @@
     <ClInclude Include="..\Header\CCamera.h" />
     <ClInclude Include="..\Header\CGameUI.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
+    <ClInclude Include="..\Header\CHeightMap.h" />
     <ClInclude Include="..\Header\CInnerBox.h" />
     <ClInclude Include="..\Header\CLayer.h" />
     <ClInclude Include="..\Header\CMagnetTex.h" />
@@ -62,6 +63,7 @@
     <ClInclude Include="..\Header\CTransform.h" />
     <ClInclude Include="..\Header\CTriangularPrism.h" />
     <ClInclude Include="..\Header\CVIBuffer.h" />
+    <ClInclude Include="..\Header\CDustLandingParticle.h" />
     <ClInclude Include="..\Header\Engine_Define.h" />
     <ClInclude Include="..\Header\Engine_Enum.h" />
     <ClInclude Include="..\Header\Engine_Function.h" />
@@ -95,6 +97,7 @@
     <ClCompile Include="..\Code\CCamera.cpp" />
     <ClCompile Include="..\Code\CGameUI.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
+    <ClCompile Include="..\Code\CHeightMap.cpp" />
     <ClCompile Include="..\Code\CInnerBox.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />
     <ClCompile Include="..\Code\CMagnetTex.cpp" />
@@ -119,6 +122,7 @@
     <ClCompile Include="..\Code\CVIBuffer.cpp" />
     <ClCompile Include="..\Code\CHeightMapLoader.cpp" />
     <ClCompile Include="..\Code\CProtoMgr.cpp" />
+    <ClCompile Include="..\Code\CDustLandingParticle.cpp" />
     <ClCompile Include="..\Code\PSystem.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

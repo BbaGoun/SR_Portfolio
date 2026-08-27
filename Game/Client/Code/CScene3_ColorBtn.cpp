@@ -54,14 +54,7 @@ HRESULT CScene3_ColorBtn::Ready_GameObject()
 
 void CScene3_ColorBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-
-}
-
-_int CScene3_ColorBtn::Update_GameObject(const _float& fDeltaTime)
-{
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
-	
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 	{
 		
 		m_fFrame = 1;
@@ -81,6 +74,9 @@ _int CScene3_ColorBtn::Update_GameObject(const _float& fDeltaTime)
 	
 
 
+_int CScene3_ColorBtn::Update_GameObject(const _float& fDeltaTime)
+{
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

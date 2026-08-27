@@ -177,6 +177,11 @@ bool PSystem::IsDead()
 	return true;
 }
 
+void PSystem::ResetAll()
+{
+	for (auto& p : m_Particles)
+		ResetParticle(&p);
+}
 void PSystem::RemoveDeadParticles()
 {
 	for (auto iter = m_Particles.begin(); iter != m_Particles.end();)

@@ -130,7 +130,7 @@ HRESULT CInventoryScene::Ready_RenderTarget()
 
 HRESULT CInventoryScene::Ready_GameLogic_Layer()
 {
-	// °ÔÀÓ ¿ÀºêÁ§Æ®
+	// Â°Ã”Ã€Ã“ Â¿Ã€ÂºÃªÃÂ§Ã†Â®
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)
@@ -154,17 +154,17 @@ HRESULT CInventoryScene::Ready_Environment_Layer()
 	CGameObject* pEnvObject = nullptr;
 
 	// BackGround
-	//pEnvObject = CBackGround::Create(m_pGraphicDev);
-	//dynamic_cast<CBackGround*>(pEnvObject)->Change_BackgroundTexture(BACKGROUND_STARTMENU);
-	//
-	//if (nullptr == pEnvObject)
-	//	return E_FAIL;
-	//
-	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"BackGround", pEnvObject)))
-	//	return E_FAIL;
-	//
-	//pEnvObject->Get_Transform()->Set_Scale({ WINCX, WINCY, 1 });
-	//pEnvObject->Get_Transform()->Set_Pos({ 0, 0, 10 });
+	pEnvObject = CBackGround::Create(m_pGraphicDev);
+	dynamic_cast<CBackGround*>(pEnvObject)->Change_BackgroundTexture(BACKGROUND_STARTMENU);
+	
+	if (nullptr == pEnvObject)
+		return E_FAIL;
+	
+	if (FAILED(pEnvironmentLayer->Add_GameObject(L"BackGround", pEnvObject)))
+		return E_FAIL;
+	
+	pEnvObject->Get_Transform()->Set_Scale({ WINCX, WINCY, 1 });
+	pEnvObject->Get_Transform()->Set_Pos({ 0, 0, 100 });
 	return S_OK;
 }
 

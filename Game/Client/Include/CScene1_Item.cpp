@@ -10,6 +10,7 @@
 #include "CRenderer.h"
 #include "CDInputMgr.h"
 #include "CManagement.h"
+#include "SoundMgr.h"
 
 CScene1_Item::CScene1_Item(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -55,7 +56,7 @@ HRESULT CScene1_Item::Ready_GameObject()
 void CScene1_Item::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 		{
 		m_fFrame = 1;
 
@@ -70,11 +71,12 @@ void CScene1_Item::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CScene1_Item::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
 		{
+			SoundMgr::GetInstance().PlaySound(L"Effect/UI/click.flac", SOUND_EFFECT1, 0.4f);
 			Engine::CScene* pStage = CMenu_Item::Create(m_pGraphicDev);
 
 			if (nullptr == pStage)

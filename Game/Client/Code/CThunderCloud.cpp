@@ -10,7 +10,8 @@
 #include "CThunder.h"
 #include "CThunderPlayerEffect.h"
 #include "CThunderFloorEffect.h"
-#include <CCartBody.h>
+#include "CCartBody.h"
+#include "SoundMgr.h"
 
 CThunderCloud::CThunderCloud(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -95,8 +96,6 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 	}
 	
 
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	CGameObject::Compute_ViewZ(&vPos);
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
 
@@ -135,6 +134,7 @@ CThunderCloud* CThunderCloud::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CThunderCloud::CreateThunder()
 {
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_thunderbolt/Thunder.ogg", SOUND_THUNDER, 0.4f);
 	m_bCreateThunder = true;
 	m_pThunder = CThunder::Create(m_pGraphicDev);
 
@@ -153,6 +153,7 @@ void CThunderCloud::CreateThunder()
 
 void CThunderCloud::CreateThunderPlayerEffect()
 {
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_thunderbolt/ThunderPlayer.ogg", SOUND_THUNDERPLAYER, 0.4f);
 	m_pThunderPlayerEffect = CThunderPlayerEffect::Create(m_pGraphicDev);
 
 	if (nullptr == m_pThunderPlayerEffect)

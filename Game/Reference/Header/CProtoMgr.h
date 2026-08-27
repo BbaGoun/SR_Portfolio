@@ -26,6 +26,7 @@
 #include "CTriangularPrism.h"
 #include "CArrowTex.h"
 #include "CSpline.h"
+#include "CHeightMap.h"
 
 BEGIN(Engine)
 

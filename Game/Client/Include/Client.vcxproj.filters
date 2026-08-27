@@ -244,15 +244,6 @@
     <Filter Include="02. GameObject\UI\UI_InvenSlot">
       <UniqueIdentifier>{b03628f0-522f-40e1-99cb-462e3618bc49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InvenSlot">
-      <UniqueIdentifier>{64d767c2-b491-4457-9c68-be2d9b09897f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InvenSlot\InvenSlotCart">
-      <UniqueIdentifier>{e00f7f40-4940-40b5-be88-a93a29336aa9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InvenSlot\InvneSlotBG">
-      <UniqueIdentifier>{5d05593f-d04c-45d4-942e-c94569cddeb3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Cart\Effect\CollisionStarEffect">
       <UniqueIdentifier>{f12d7011-9ad7-42bc-b18f-19c89042af19}</UniqueIdentifier>
     </Filter>
@@ -273,6 +264,24 @@
     </Filter>
     <Filter Include="02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Color">
       <UniqueIdentifier>{2bf50398-435b-4292-a5e2-1e2c81c15476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\DustLandingEffect">
+      <UniqueIdentifier>{66ed2f70-e704-43b7-8a62-f181bab9a3f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\InvenSlot">
+      <UniqueIdentifier>{64d767c2-b491-4457-9c68-be2d9b09897f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\InvenSlot\InvenSlotCart">
+      <UniqueIdentifier>{e00f7f40-4940-40b5-be88-a93a29336aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\InvenSlot\InvneSlotBG">
+      <UniqueIdentifier>{5d05593f-d04c-45d4-942e-c94569cddeb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_SpeedLine">
+      <UniqueIdentifier>{2b2148f6-5e99-46b6-806a-7528fe51e1cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\SoundMgr">
+      <UniqueIdentifier>{bd3a545d-4fa4-4a5d-be8a-2a6629c417ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -502,10 +511,10 @@
       <Filter>02. GameObject\UI\UI_InvenSlot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CInvenSlotCart.h">
-      <Filter>InvenSlot\InvenSlotCart</Filter>
+      <Filter>02. GameObject\InvenSlot\InvenSlotCart</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CInvenSlotBG.h">
-      <Filter>InvenSlot\InvneSlotBG</Filter>
+      <Filter>02. GameObject\InvenSlot\InvneSlotBG</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCollisionStarEffect.h">
       <Filter>02. GameObject\Cart\Effect\CollisionStarEffect</Filter>
@@ -536,6 +545,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\CScene3_ColorSetBG.h">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Color</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDustLandingEffect.h">
+      <Filter>02. GameObject\Cart\Effect\DustLandingEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSpeedLine.h">
+      <Filter>02. GameObject\UI\UI_SpeedLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoundMgr.h">
+      <Filter>03. Manager\SoundMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -756,10 +774,10 @@
       <Filter>02. GameObject\UI\UI_InvenSlot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CInvenSlotCart.cpp">
-      <Filter>InvenSlot\InvenSlotCart</Filter>
+      <Filter>02. GameObject\InvenSlot\InvenSlotCart</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CInvenSlotBG.cpp">
-      <Filter>InvenSlot\InvneSlotBG</Filter>
+      <Filter>02. GameObject\InvenSlot\InvneSlotBG</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCollisionStarEffect.cpp">
       <Filter>02. GameObject\Cart\Effect\CollisionStarEffect</Filter>
@@ -793,6 +811,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_ColorSetBG.cpp">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Color</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDustLandingEffect.cpp">
+      <Filter>02. GameObject\Cart\Effect\DustLandingEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSpeedLine.cpp">
+      <Filter>02. GameObject\UI\UI_SpeedLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoundMgr.cpp">
+      <Filter>03. Manager\SoundMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

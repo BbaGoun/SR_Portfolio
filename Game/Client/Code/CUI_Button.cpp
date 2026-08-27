@@ -46,7 +46,7 @@ HRESULT CUI_Button::Ready_GameObject()
 
 void CUI_Button::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 	{
 		m_fFrame += 10 * fFixedDeltaTime;
 		if (m_fFrame > 4)
@@ -62,7 +62,7 @@ void CUI_Button::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CUI_Button::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 	
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

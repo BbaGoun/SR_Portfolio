@@ -54,7 +54,7 @@ void CUI_ItemIcon::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CUI_ItemIcon::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	CCart* pCart = dynamic_cast<CCart*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart"));
 	m_eFirstSlot = pCart->GetFirstSlot();

@@ -13,7 +13,7 @@ CSmoke::~CSmoke()
 HRESULT CSmoke::Ready_PSystem()
 {
 
-	m_fSize = 1.f;			// 연기 하나의 화면상 크기 (픽셀단위)
+	m_fSize = 0.8f;			// 연기 하나의 화면상 크기 (픽셀단위)
 	m_dwVbSize = 100;		// 버텍스 버퍼 전체 크기
 	m_dwVbOffset = 0;
 	m_dwVbBatchSize = 25;   // 한 배치 크기 (100/25 = 4구간)
@@ -24,6 +24,8 @@ HRESULT CSmoke::Ready_PSystem()
 		AddParticle();
 
 	PSystem::Ready_PSystem();
+	for (auto& p : m_Particles)
+		ResetParticle(&p);
 
 	return S_OK;
 }

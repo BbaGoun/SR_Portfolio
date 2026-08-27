@@ -49,9 +49,7 @@ void CUI_InvenSlot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CUI_InvenSlot::Update_GameObject(const _float& fDeltaTime)
 {
-	if (m_bShow == false)
-		return 0;
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	CInvenSlotCart* pItem = dynamic_cast<CInvenSlotCart*>(m_pItem);
 
@@ -59,7 +57,7 @@ _int CUI_InvenSlot::Update_GameObject(const _float& fDeltaTime)
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	if (CheckCollisionUI(g_hWnd, vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, vPos, m_vScale, m_pGraphicDev))
 	{
 		if (pItem)
 		{

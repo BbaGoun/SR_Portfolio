@@ -52,15 +52,7 @@ HRESULT CScene2_ForestValley::Ready_GameObject()
 
 void CScene2_ForestValley::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-
-}
-
-_int CScene2_ForestValley::Update_GameObject(const _float& fDeltaTime)
-{
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
-
-
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 	{
 		m_fFrame = 1;
 
@@ -70,8 +62,13 @@ _int CScene2_ForestValley::Update_GameObject(const _float& fDeltaTime)
 	{
 		m_fFrame = 0;
 	}
+}
 
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
+_int CScene2_ForestValley::Update_GameObject(const _float& fDeltaTime)
+{
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
+
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
 		{
 			Engine::CScene* pStage = CMenu_Set::Create(m_pGraphicDev);
