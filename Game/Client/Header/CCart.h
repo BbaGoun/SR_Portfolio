@@ -69,6 +69,7 @@ public:
 	void			CreateMissileObject();	
 	void			CreateMagnetObject();
 	void			CreateWaterBombObject();
+	void			CreateWaterFlyObject();
 	void			CreateTargetAimObject();	
 	void			CreateMissileAimObject();
 	void			CreateMagnetAimObject();

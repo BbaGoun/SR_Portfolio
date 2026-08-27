@@ -23,7 +23,7 @@ HRESULT CMissileTarget::Ready_GameObject()
 	m_fSpeed = 0.f;
 	m_fMaxSpeed = 3.f;
 	//m_pTransformCom->Set_Pos({ 0.f,0.f, 170.f });
-	m_pTransformCom->Set_Pos({ 0.f,0.f, 40.f });
+	m_pTransformCom->Set_Pos({ -70.f,0.f, 40.f });
 	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
 
 	m_fTimer			= 0.f;

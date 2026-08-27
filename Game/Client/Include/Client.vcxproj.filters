@@ -271,6 +271,12 @@
     <Filter Include="02. GameObject\Item\WaterBomb\WaterBombBubble">
       <UniqueIdentifier>{90d69fb1-89e6-4de2-a700-7baf6e471c8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\WaterFly">
+      <UniqueIdentifier>{99185cdf-5425-4777-8443-436e4040a757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\WaterFly\CWaterFlyBody">
+      <UniqueIdentifier>{d565c4c7-e73e-406d-9262-0d07adddb769}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -534,6 +540,12 @@
     <ClInclude Include="..\Header\CWaterBombBubble.h">
       <Filter>02. GameObject\Item\WaterBomb\WaterBombBubble</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWaterFly.h">
+      <Filter>02. GameObject\Item\WaterFly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWaterFlyBody.h">
+      <Filter>02. GameObject\Item\WaterFly\CWaterFlyBody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -790,6 +802,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CWaterBombBubble.cpp">
       <Filter>02. GameObject\Item\WaterBomb\WaterBombBubble</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterFly.cpp">
+      <Filter>02. GameObject\Item\WaterFly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterFlyBody.cpp">
+      <Filter>02. GameObject\Item\WaterFly\CWaterFlyBody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

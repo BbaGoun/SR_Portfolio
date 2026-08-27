@@ -19,6 +19,8 @@
 #include "CWaterBombBody.h"
 #include "CWaterBombThrow.h"
 #include "CWaterBombBubble.h"
+#include "CWaterFly.h"
+#include "CWaterFLyBody.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -167,10 +169,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateRainbowObject();
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
-	{
-		CreateBananaObject();
-	}
+
+	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
+	//{
+	//	CreateBananaObject();
+	//}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
 	{
@@ -201,6 +204,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Y))
 	{
 		CreateWaterBombObject();
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_U))
+	{
+		CreateWaterFlyObject();
 	}
 
 	// ShortBooster
@@ -1208,6 +1216,31 @@ void CCart::CreateWaterBombObject()
 		return;
 
 	pWaterBombBubble->SetLayer(m_pLayer);
+}
+
+void CCart::CreateWaterFlyObject()
+{
+	CGameObject* pWaterFly = CWaterFly::Create(m_pGraphicDev);
+
+	if (pWaterFly == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFly", pWaterFly)))
+		return;
+
+	pWaterFly->SetLayer(m_pLayer);
+	
+
+	CGameObject* pWaterFlyBody = CWaterFlyBody::Create(m_pGraphicDev);
+
+	if (pWaterFlyBody == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFlyBody", pWaterFlyBody)))
+		return;
+
+	pWaterFlyBody->SetLayer(m_pLayer);
+	pWaterFly->Set_Child(pWaterFlyBody);
 }
 
 void CCart::CreateMagnetAimObject()

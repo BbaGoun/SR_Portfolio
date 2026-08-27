@@ -111,16 +111,16 @@ void CWaterBombBody::Render_GameObject()
 
 CWaterBombBody* CWaterBombBody::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CWaterBombBody* pMissile = new CWaterBombBody(pGraphicDev);
+	CWaterBombBody* pWaterBombBody = new CWaterBombBody(pGraphicDev);
 
-	if (FAILED(pMissile->Ready_GameObject()))
+	if (FAILED(pWaterBombBody->Ready_GameObject()))
 	{
-		Safe_Release(pMissile);
-		MSG_BOX("pMissile Create Failed");
+		Safe_Release(pWaterBombBody);
+		MSG_BOX("pWaterBombBody Create Failed");
 		return nullptr;
 	}
 
-	return pMissile;
+	return pWaterBombBody;
 }
 
 void CWaterBombBody::Free()

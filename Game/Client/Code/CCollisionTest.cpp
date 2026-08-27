@@ -51,6 +51,7 @@
 #include "CCollisionStarEffect.h"
 #include "CDriftSpark.h"
 #include "CWaterBombBubble.h"
+#include "CDynamicCamera.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -405,8 +406,30 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
+	///////////////////////////////////////////////////////////////////////////////////////
+	/*_vec3 vEye = { 0.f, 30.f, -30.f };
+	_vec3 vAt = { 0.f, 0.f, 100.f };
+	_vec3 vUp = { 0.f, 1.f, 0.f };
 
+	CGameObject* pDynamicCam =
+		CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
 
+	if (pDynamicCam == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(
+		L"Obj_DynamicCamera", pDynamicCam)))
+		return E_FAIL;
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(
+		CAMERA_DYNAMIC,
+		static_cast<CCamera*>(pDynamicCam))))
+		return E_FAIL;
+
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
+		return E_FAIL;*/
+	///////////////////////////////////////////////////////////////////////////////////////
+	
 	// # 트랙
 	for (int i = 0; i < 40; ++i)
 	{
@@ -479,18 +502,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget", pMissileTarget)))
 		return E_FAIL;
   
-
-	// 워터밤 물방울 - 테스트
-	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
-
-	//if (pWaterBombBubble == nullptr)
-	//	return E_FAIL;
-
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
-	//	return E_FAIL;
-	
-
-
 	return S_OK;
 }
 
