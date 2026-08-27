@@ -11,6 +11,9 @@
 #include "CDInputMgr.h"
 #include "CManagement.h"
 
+#include "CMenu_Set.h"
+#include <CUI_InvenSlot.h>
+
 CScene3_KartBtn::CScene3_KartBtn(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
 }
@@ -47,31 +50,49 @@ HRESULT CScene3_KartBtn::Ready_GameObject()
 
 	m_fFrame = 0;
 
+
+
+
 	return S_OK;
 }
 
-//HRESULT CScene3_KartBtn::Set_ClickIcon(const _float& fDeltaTime)
-//{
-//
-//}
+
 
 void CScene3_KartBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	
+}
+
+_int CScene3_KartBtn::Update_GameObject(const _float& fDeltaTime)
+{
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
 	{
 		m_fFrame = 1;
 
+		CUI_InvenSlot* pSlot = static_cast<CUI_InvenSlot*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_InvenSlot"));
+		CUI_InvenSlot* pSlot2 = static_cast<CUI_InvenSlot*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_InvenSlot2"));
+
+		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
+		{
+			
+			if (pSlot->Get_Show() == true)
+				pSlot->Set_Show(false);
+			else
+				pSlot->Set_Show(true);
+
+			if (pSlot2   ->Get_Show() == true)
+				pSlot2->Set_Show(false);
+			else
+				pSlot2->Set_Show(true);
+		}
 	}
 
 	else
 	{
 		m_fFrame = 0;
 	}
-}
-
-_int CScene3_KartBtn::Update_GameObject(const _float& fDeltaTime)
-{
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -101,6 +122,8 @@ CScene3_KartBtn* CScene3_KartBtn::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 
 	return pObj;
+
+	
 }
 
 void CScene3_KartBtn::Free()

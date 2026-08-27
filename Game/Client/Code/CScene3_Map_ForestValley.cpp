@@ -11,6 +11,8 @@
 #include "CDInputMgr.h"
 #include "CManagement.h"
 
+#include "CScene3_CharBtn.h"
+
 CScene3_Map_ForestValley::CScene3_Map_ForestValley(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
 }
@@ -54,6 +56,9 @@ void CScene3_Map_ForestValley::FixedUpdate_GameObject(const _float& fFixedDeltaT
 _int CScene3_Map_ForestValley::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+
+
+
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

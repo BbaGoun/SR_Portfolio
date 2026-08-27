@@ -11,6 +11,8 @@
 #include "CDInputMgr.h"
 #include "CManagement.h"
 
+#include "CScene3_Map_ForestValley.h"
+
 CScene3_CharBtn::CScene3_CharBtn(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
 }
@@ -50,10 +52,6 @@ HRESULT CScene3_CharBtn::Ready_GameObject()
 	return S_OK;
 }
 
-//HRESULT CScene3_KartBtn::Set_ClickIcon(const _float& fDeltaTime)
-//{
-//
-//}
 
 void CScene3_CharBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {

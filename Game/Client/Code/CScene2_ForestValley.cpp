@@ -52,21 +52,24 @@ HRESULT CScene2_ForestValley::Ready_GameObject()
 
 void CScene2_ForestValley::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+
+}
+
+_int CScene2_ForestValley::Update_GameObject(const _float& fDeltaTime)
+{
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+
+
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
 	{
 		m_fFrame = 1;
-		
+
 	}
 
 	else
 	{
 		m_fFrame = 0;
 	}
-}
-
-_int CScene2_ForestValley::Update_GameObject(const _float& fDeltaTime)
-{
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale))
 		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))

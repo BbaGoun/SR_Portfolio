@@ -198,7 +198,7 @@
     </Filter>
     <Filter Include="02. GameObject\UI\UI_Laps">
       <UniqueIdentifier>{42c1be04-11a9-46ca-8b61-5ea9a8a3db04}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="02. GameObject\Item\Missile">
       <UniqueIdentifier>{d6b85c0f-4e58-4131-bf43-13d6294f242c}</UniqueIdentifier>
     </Filter>
@@ -267,6 +267,12 @@
     </Filter>
     <Filter Include="03. Manager\CLoadMgr">
       <UniqueIdentifier>{a6062789-bc8f-4b64-bb3d-4fa8fbaeae29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button">
+      <UniqueIdentifier>{1245e30a-3590-4698-847c-f1bbbea1af52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Color">
+      <UniqueIdentifier>{2bf50398-435b-4292-a5e2-1e2c81c15476}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -465,24 +471,9 @@
     <ClInclude Include="..\Header\CMenu_Set.h">
       <Filter>01. Scene\Menu\Menu_Set%28ForestValley%29</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CScene3_StartBtn.h">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CScene3_CharBtn.h">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CScene3_KartBtn.h">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CScene3_ColorBtn.h">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CScene3_Map_ForestValley.h">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUI_Laps.h">
       <Filter>02. GameObject\UI\UI_Laps</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\CMagnetBody.h">
       <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClInclude>
@@ -527,6 +518,24 @@
     </ClInclude>
     <ClInclude Include="..\Header\CLoadMgr.h">
       <Filter>03. Manager\CLoadMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_CharBtn.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_ColorBtn.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_KartBtn.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_Map_ForestValley.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_StartBtn.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_ColorSetBG.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Color</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -716,24 +725,9 @@
     <ClCompile Include="..\Code\CMenu_Set.cpp">
       <Filter>01. Scene\Menu\Menu_Set%28ForestValley%29</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CScene3_CharBtn.cpp">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScene3_KartBtn.cpp">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScene3_StartBtn.cpp">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScene3_ColorBtn.cpp">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScene3_Map_ForestValley.cpp">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <Filter>02. GameObject\UI\UI_Laps</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\CMagnetBody.cpp">
       <Filter>02. GameObject\Item\MagnetBody</Filter>
     </ClCompile>
@@ -778,6 +772,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\CLoadMgr.cpp">
       <Filter>03. Manager\CLoadMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI_Menu.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_CharBtn.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_ColorBtn.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_KartBtn.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_Map_ForestValley.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_StartBtn.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_ColorSetBG.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Color</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
