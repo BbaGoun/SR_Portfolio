@@ -152,14 +152,14 @@ void SoundMgr::LoadSoundFileRecursive(const WCHAR* szFolderPath, const WCHAR* sz
 		WCHAR wszFullPath[MAX_PATH] = {};
 		swprintf_s(wszFullPath, L"%s%s", szFolderPath, fd.name);
 
-		char szFullPath[MAX_PATH] = {};
-		WideCharToMultiByte(CP_ACP, 0, wszFullPath, -1, szFullPath, MAX_PATH, nullptr, nullptr);
+		char szFullPath[MAX_PATH * 3] = {};
+		WideCharToMultiByte(CP_UTF8, 0, wszFullPath, -1, szFullPath, sizeof(szFullPath), nullptr, nullptr);
 
 		FMOD_SOUND* pSound = nullptr;
 		FMOD_MODE mode = FMOD_DEFAULT | FMOD_2D;
 
 		const WCHAR* pExt = wcsrchr(fd.name, L'.');
-		if (pExt && (!lstrcmpi(pExt, L".ogg") || !lstrcmpi(pExt, L".mp3")))
+		if (pExt && (!lstrcmpi(pExt, L".ogg") || !lstrcmpi(pExt, L".mp3") || !lstrcmpi(pExt, L".flac")))
 			mode |= FMOD_CREATESTREAM;
 
 		FMOD_RESULT eRes = FMOD_System_CreateSound(m_pSystem, szFullPath, mode, nullptr, &pSound);
