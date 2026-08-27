@@ -40,7 +40,7 @@ HRESULT CHUD_Main::Ready_GameObject()
 
 _int CHUD_Main::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

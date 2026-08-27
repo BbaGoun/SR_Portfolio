@@ -95,8 +95,6 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 	}
 	
 
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	CGameObject::Compute_ViewZ(&vPos);
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
 

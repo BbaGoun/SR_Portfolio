@@ -30,6 +30,8 @@
 #include "CBoostWind.h"
 #include "CBoostJet.h"
 #include "CFollowSmoothCam.h"
+#include "CDustLandingEffect.h"
+#include "CSpeedLine.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -344,6 +346,25 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"SmokeEffect", pGameObject)))
 		return E_FAIL;
+	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
+
+	// 착지시 먼지 이펙트
+	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"DustLandingEffect", pGameObject)))
+		return E_FAIL;
+
+
+	// SpeedLine
+	pGameObject = CSpeedLine::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"SpeedLine", pGameObject)))
+		return E_FAIL;
+	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
+
 
 	// # 플레이어 따라다니는 3인칭 카메라
 	_vec3 vEye, vAt, vUp, vLook;
@@ -365,6 +386,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
+
 
 	return S_OK;
 }

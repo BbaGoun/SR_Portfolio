@@ -55,7 +55,6 @@ _int CStartMenu::Update_Scene(const _float& fDeltaTime)
 
 	if (GetAsyncKeyState('M'))
 	{
-
 		//Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
 		//Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
 		Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);

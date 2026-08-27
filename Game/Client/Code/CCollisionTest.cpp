@@ -50,6 +50,8 @@
 #include "CWaterBombThrow.h"
 #include "CCollisionStarEffect.h"
 #include "CDriftSpark.h"
+#include "CDustLandingEffect.h"
+#include "CSpeedLine.h"
 #include "SoundMgr.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
@@ -354,6 +356,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"SmokeEffect", pGameObject)))
 		return E_FAIL;
+	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
 	// 충돌시 나오는 별 이펙트
 	pGameObject = CCollisionStarEffect::Create(m_pGraphicDev);
@@ -363,6 +366,12 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	pCartBody->Set_Child(pGameObject);
 
+	// 착지시 먼지 이펙트
+	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"DustLandingEffect", pGameObject)))
+		return E_FAIL;
 
 	// DriftSpark
 	pGameObject = CDriftSpark::Create(m_pGraphicDev);
@@ -371,6 +380,16 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"DriftSpark", pGameObject)))
 		return E_FAIL;
 	pCart->Set_Child(pGameObject);
+
+	// SpeedLine
+	pGameObject = CSpeedLine::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"SpeedLine", pGameObject)))
+		return E_FAIL;
+	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
+
 
 	// ItemBox
 	for (int i = 0; i < 5; ++i)
@@ -468,6 +487,8 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
 		return E_FAIL;
+
+
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	// 미사일 타겟
@@ -660,12 +681,14 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"MinimapCart", pUIObject)))
 		return E_FAIL;
 
+	// 미니맵 Ground
 	pUIObject = CMinimapGround::Create(m_pGraphicDev);
 
 	if (pUIObject == nullptr)
 		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"Env_MinimapGround", pUIObject)))
+	if (FAILED(pUILayer->Add_GameObject(L"MinimapGround", pUIObject)))
 		return E_FAIL;
+
 
 	return S_OK;
 }

@@ -19,11 +19,13 @@ public:
 
 	virtual			void		OnLostDevice();
 	virtual			void		OnResetDevice();
+	virtual			void		SetCart(CGameObject* pObj);
 
 private:
-	CTexture*	m_pTextureCom;
-	CSmoke*		m_pSmoke;
+	CTexture*		m_pTextureCom;
+	CSmoke*			m_pSmoke;
 
+	CGameObject*	m_pCart;
 
 public:
 	static CSmokeEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);

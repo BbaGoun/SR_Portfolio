@@ -49,7 +49,7 @@ void CUI_Laps::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CUI_Laps::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 
 

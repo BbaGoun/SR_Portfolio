@@ -192,6 +192,7 @@
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
     <ClInclude Include="..\Header\CDriftSpark.h" />
+    <ClInclude Include="..\Header\CDustLandingEffect.h" />
     <ClInclude Include="..\Header\CDynamicCamera.h" />
     <ClInclude Include="..\Header\CMenu_Item.h" />
     <ClInclude Include="..\Header\CMenu_Set.h" />
@@ -216,6 +217,7 @@
     <ClInclude Include="..\Header\CScene3_KartBtn.h" />
     <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_StartBtn.h" />
+    <ClInclude Include="..\Header\CSpeedLine.h" />
     <ClInclude Include="..\Header\CUI_Laps.h" />
     <ClInclude Include="..\Header\CLoadMgr.h" />
     <ClInclude Include="..\Header\CSkidMark.h" />
@@ -271,6 +273,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CDustLandingEffect.cpp" />
     <ClCompile Include="..\Code\CMenu_Item.cpp" />
     <ClCompile Include="..\Code\CMenu_Set.cpp" />
     <ClCompile Include="..\Code\CScene1_Replay.cpp">
@@ -291,6 +294,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_StartBtn.cpp" />
+    <ClCompile Include="..\Code\CSpeedLine.cpp" />
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>

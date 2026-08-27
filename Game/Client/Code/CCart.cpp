@@ -18,6 +18,7 @@
 #include "CWaterBomb.h"
 #include "CWaterBombBody.h"
 #include "CWaterBombThrow.h"
+#include "CDustLandingEffect.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -411,7 +412,6 @@ void CCart::UpdateDrift()
 			|| (!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT) && !CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 			|| m_eCartState != CART_STATE_GROUND)
 		{
-			cout << "EndDrift" << endl;
 			m_bShortBoosterOnOff = true;
 			m_fCurGage += m_fGainGage;
 			if (m_fCurGage >= 100.f)
@@ -625,7 +625,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 			D3DXVec3TransformNormal(&vLocalNormal, &vLocalNormal, &matNormal);
 			D3DXVec3Normalize(&vLocalNormal, &vLocalNormal);
 			m_vTerrainNormal = vLocalNormal;
-
+			break;
 		}
 	}
 	// for문이 끝나면 fGroundY, m_vTerrainNormal값이 구해짐
@@ -676,6 +676,12 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 	{
 		if (fDeltaY <= 0.1f)
 		{
+			if (m_fAirTime > 0.3f)//공중에 떠있는 시간
+			{
+				CDustLandingEffect* pDustLandingEffect = dynamic_cast<CDustLandingEffect*>
+					(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"DustLandingEffect"));
+				pDustLandingEffect->ResetParticle();
+			}
 			m_fAirTime = 0.f;
 			m_eCartState = CART_STATE_GROUND;
 			m_pTransformCom->Set_Pos({ vCartPos.x, fGroundY, vCartPos.z });
@@ -857,18 +863,18 @@ void CCart::CollisionWall()
 
 			// 2. 법선벡터만큼 밀어내기(들어간 만큼 이라는 것이 없어서 단위벡터만큼 밀어냄)
 
-			m_vForce += MTV;
-			//_vec3 vNewForce = m_vForce;
-			//vNewForce = MTV * D3DXVec3Length(&vNewForce);
-			//float fForceLength = D3DXVec3Length(&vNewForce);
-			//if (fForceLength >= 30)
-			//	vNewForce = vNewForce * 30 / fForceLength;
+			//m_vForce += MTV;
+			_vec3 vNewForce = m_vForce;
+			vNewForce = MTV * D3DXVec3Length(&vNewForce);
+			float fForceLength = D3DXVec3Length(&vNewForce);
+			if (fForceLength >= 30)
+				vNewForce = vNewForce * 30 / fForceLength;
 
 			//m_pTransformCom->Set_Pos(vPos + MTV);
 
 			// 3. 튕기기
-			//m_vForce += vNewForce;
-
+			m_vForce += vNewForce;
+			
 			// 4. Gage, Drift 초기화
 			m_fGainGage = 0;
 			m_bDrift = false;
@@ -1278,7 +1284,6 @@ void CCart::CreateMissileAimObject()
 }
 void CCart::GainItem()
 {
-	cout << "GainItem" << endl;
 	if (m_eFirstSlot == ITEM_END)
 	{
 		m_eFirstSlot = ITEM_TYPE(rand() % ITEM_END);

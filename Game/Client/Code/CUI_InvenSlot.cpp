@@ -47,7 +47,7 @@ void CUI_InvenSlot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CUI_InvenSlot::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	CInvenSlotCart* pItem = dynamic_cast<CInvenSlotCart*>(m_pItem);
 
