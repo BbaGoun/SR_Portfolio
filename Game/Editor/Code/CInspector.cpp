@@ -236,7 +236,9 @@ void CInspector::MeshCom(CGameObject* _pObj)
                     {
                         // 메시 교체
                         _pObj->Remove_Component(pBuf);
-                        _pObj->Add_Component(rec.tag, rec.tag);
+                        CComponent* pCom = _pObj->Add_Component(rec.tag, rec.tag);
+                        if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom))
+                            pSpline->Create_New();
                         ImGui::PopID();
                         break;
                     }

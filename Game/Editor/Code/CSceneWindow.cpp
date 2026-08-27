@@ -124,7 +124,7 @@ void CSceneWindow::Update_Window()
 
     // 투영 행렬 세팅
     _matrix matProj, matInvProj;
-    D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(45.f), viewSize.x / viewSize.y, 0.1f, 100.f);
+    D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(45.f), viewSize.x / viewSize.y, 0.1f, 1000.f);
     D3DXMatrixInverse(&matInvProj, 0, &matProj);
 
     // ### 기존 큐브를 RT에 그리는 과정
