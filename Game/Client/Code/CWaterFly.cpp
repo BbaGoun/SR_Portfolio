@@ -21,7 +21,7 @@ HRESULT CWaterFly::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 
 	m_fTimer		= 0.f;
-	//m_fSpeed		= 0.f;
+	m_fSpeed		= 400.f;
 	//m_fAngle		= 0.f;
 	m_fFlyBack		= 0.f;
 	m_fFlyFront		= 0.f; 
@@ -39,7 +39,7 @@ HRESULT CWaterFly::Ready_GameObject()
 
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->Set_Extents({ 1.f, 0.9f, 0.f });
+	m_pColliderCom->Set_Extents({ 1.0f, 1.0f, 1.0f });
 	//m_pColliderCom->Set_Offset({ 0.f, 4.f, 0.f });
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
@@ -72,9 +72,13 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	// m_pTransformCom->Set_Pos(vCartPos + vCartUp * m_vForce.y);
 	// m_pTransformCom->Set_Pos(vCartPos);
-	m_pTransformCom->Set_Pos(vFlyPos);	
-
 	m_fTimer += fFixedDeltaTime;
+	if (m_fTimer < 1.20f)
+	{
+		m_pTransformCom->Set_Pos(vFlyPos);
+	}
+
+	// m_fTimer += fFixedDeltaTime;
 	////////////////////////////////////////////////////////////////////////
 	// 구현 후 하드코딩 수정
 	if (m_fTimer > 0.f && m_fTimer < 0.06f)
@@ -158,6 +162,7 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_bSavePos = true;
 	}
 
+	 
 	vDir = vTargetPos - m_vSavePos;
 
 	_float fDistance = D3DXVec3Length(&vDir);
@@ -166,15 +171,15 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		return;
 
 	D3DXVec3Normalize(&vDir, &vDir);
+	
 
-	vMovePos = m_vSavePos + vDir * fDistance;
-	m_pTransformCom->Set_Pos(vMovePos);
+	m_pTransformCom->Move_Pos(&vDir, m_fSpeed, fFixedDeltaTime);
 
-	if (m_fTimer > 5.f)
-	{
-		// m_bSavePos = false;
-		m_pLayer->Delete_GameObject(this);
-	}
+	//if (m_fTimer > 5.f)
+	//{
+	//	// m_bSavePos = false;
+	//	m_pLayer->Delete_GameObject(this);
+	//}
 	////////////////////////////////////////////////////////////////////////
 	_quaternion q;
 

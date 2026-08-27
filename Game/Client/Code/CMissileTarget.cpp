@@ -23,15 +23,15 @@ HRESULT CMissileTarget::Ready_GameObject()
 	m_fSpeed = 0.f;
 	m_fMaxSpeed = 3.f;
 	//m_pTransformCom->Set_Pos({ 0.f,0.f, 170.f });
-	m_pTransformCom->Set_Pos({ -70.f,0.f, 40.f });
+	m_pTransformCom->Set_Pos({ 0.f,0.f, 60.f });
 	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
-
 	m_fTimer			= 0.f;
 
 	m_bMissileHit		= false;
 	m_bWaterBombHit		= false;
+	m_bWaterFlyHit		= false;
 	m_bWaterBubble		= false;
-
+	m_bWaterFly			= false;
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -57,7 +57,7 @@ HRESULT CMissileTarget::Ready_GameObject()
 
 void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	if (m_bMissileHit == false && m_bWaterBombHit == false)
+	if (m_bMissileHit == false && m_bWaterBombHit == false && m_bWaterFlyHit == false)
 		return;
 
 	if (m_bMissileHit)
@@ -175,11 +175,92 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		pBubble->Get_Transform()->Set_Pos(vPos);
 		//pBubble->GetLayer()->Delete_GameObject(pBubble);
 	}
+
+	if (m_bWaterFlyHit)
+	{
+		m_fTimer += fFixedDeltaTime;
+		CGameObject* pFly = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterFly");
+
+		_vec3 vPos, vFlyPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+		if (m_fTimer < 0.08f)
+		{
+			vPos.y += m_vForce.y * fFixedDeltaTime;
+		}
+
+		//else if (m_fTimer < 0.08f)
+		//{
+		//	m_vForce.y = 0;
+		//}
+
+		else if (m_fTimer > 0.15f && m_fTimer < 0.40f)
+		{
+			m_vRotation.x -= D3DXToRadian(100.f) * fFixedDeltaTime;
+			m_vRotation.y += D3DXToRadian(100.f) * fFixedDeltaTime;
+
+			if (m_vRotation.x <= D3DXToRadian(-25.f))
+			{
+				m_vRotation.x = D3DXToRadian(-25.f);
+			}
+
+			if (m_vRotation.y >= D3DXToRadian(25.f))
+			{
+				m_vRotation.y = D3DXToRadian(25.f);
+			}
+		}
+
+		else if (m_fTimer > 1.0f && m_fTimer < 2.f)
+		{
+			m_vRotation.x += D3DXToRadian(5.f) * fFixedDeltaTime;
+			m_vRotation.y -= D3DXToRadian(5.f) * fFixedDeltaTime;
+
+			if (m_vRotation.x >= D3DXToRadian(-20.f))
+			{
+				m_vRotation.x = D3DXToRadian(-20.f);
+			}
+
+			if (m_vRotation.y <= D3DXToRadian(20.f))
+			{
+				m_vRotation.y = D3DXToRadian(20.f);
+			}
+
+		}
+
+		else if (m_fTimer >= 2.f)
+		{
+			vPos.y -= m_vForce.y * 0.45f * fFixedDeltaTime;
+			m_vForce.y -= 5.f * fFixedDeltaTime;
+		}
+
+		_quaternion q;
+		D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
+		m_pTransformCom->Set_Quaternion(&q);
+
+		if (vPos.y <= 0.f)
+		{
+			vPos.y = 0.f;
+			m_vForce.y = 0.f;
+			m_vRotation.x = 0.f;
+			m_vRotation.y = 0.f;
+			m_bWaterFlyHit = false;
+			m_bWaterBubble = false;
+			//pFly->GetLayer()->Delete_GameObject(pFly);
+			m_fTimer = 0.f;
+
+			_quaternion qReset;
+			D3DXQuaternionRotationYawPitchRoll(&qReset, 0.f, 0.f, 0.f);
+			m_pTransformCom->Set_Quaternion(&qReset);
+		}
+
+		m_pTransformCom->Set_Pos(vPos);
+		pFly->Get_Transform()->Set_Pos(vPos);
+		//pBubble->GetLayer()->Delete_GameObject(pBubble);
+	}
 }
 
 _int CMissileTarget::Update_GameObject(const _float& fDeltaTime)
 {
-
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -220,6 +301,18 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 		{
 			m_bWaterBombHit = true;
 			m_bWaterBubble	= true;
+			m_vForce.y = 120.f;
+			m_vRotation.x += D3DXToRadian(0.f);
+			m_vRotation.y += D3DXToRadian(0.f);
+		}
+	}
+
+	if (wcscmp(wOtherTag, L"Obj_WaterFly") == 0)
+	{
+		if (m_bWaterFlyHit == false && m_bWaterBubble == false)
+		{
+			m_bWaterFlyHit = true;
+			m_bWaterBubble = true;
 			m_vForce.y = 120.f;
 			m_vRotation.x += D3DXToRadian(0.f);
 			m_vRotation.y += D3DXToRadian(0.f);
