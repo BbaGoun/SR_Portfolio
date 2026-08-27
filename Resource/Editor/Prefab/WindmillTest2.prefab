@@ -1,0 +1,94 @@
+﻿OBJECT
+  type=
+  prefabPath=..\..\..\Resource\Editor\Prefab\WindmillTest2.prefab
+  belong=1
+  name=Empty
+  tag=2
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=1
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=Proto_WindmillTest5 mapTag=Proto_WindmillTest5
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 2.900000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=1.000000 3.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=3
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=Proto_WindmillTest5 mapTag=Proto_WindmillTest5
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-2.000000 0.900000 0.000000
+      rot=0.000000 -0.000000 90.000031
+      quat=-0.000000 -0.000000 0.707107 0.707107
+      scale=1.000000 2.999997 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=4
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=Proto_WindmillTest5 mapTag=Proto_WindmillTest5
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 -1.100000 0.000000
+      rot=0.000000 -0.000000 -179.999878
+      quat=0.000000 0.000000 1.000000 -0.000001
+      scale=1.000000 3.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=Proto_WindmillTest5 mapTag=Proto_WindmillTest5
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=2.000000 0.900000 0.000000
+      rot=0.000000 -0.000000 -90.000031
+      quat=0.000000 0.000000 -0.707107 0.707107
+      scale=1.000001 3.000001 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=6
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=Proto_WindmillTest6 mapTag=Proto_WindmillTest6
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.900000 0.000000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+ENDOBJECT
