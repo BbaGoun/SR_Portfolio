@@ -122,6 +122,11 @@ namespace Engine
 		return _vec3(_XMFLOAT3.x, _XMFLOAT3.y, _XMFLOAT3.z);
 	}
 
+	inline _quaternion ToQuaternion(const DirectX::XMFLOAT4& _XMFLOAT4)
+	{
+		return _quaternion(_XMFLOAT4.x, _XMFLOAT4.y, _XMFLOAT4.z, _XMFLOAT4.w);
+	}
+
 	inline DirectX::XMFLOAT4 ToXMFLOAT4(const D3DXQUATERNION& q)
 	{
 		return DirectX::XMFLOAT4(q.x, q.y, q.z, q.w);
