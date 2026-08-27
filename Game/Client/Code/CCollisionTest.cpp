@@ -52,6 +52,7 @@
 #include "CDriftSpark.h"
 #include "CDustLandingEffect.h"
 #include "CSpeedLine.h"
+#include "SoundMgr.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {

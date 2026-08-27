@@ -97,6 +97,8 @@ public:
 	void			SetLayer(CLayer* pLayer) { m_pLayer = pLayer; }
 	CLayer*			GetLayer() { return m_pLayer; }
 
+	void			SetActive(bool _b) { m_bActive = _b; }
+	bool			GetActive() { return m_bActive; }
 
 	virtual			void		OnLostDevice();
 	virtual			void		OnResetDevice();
@@ -130,6 +132,8 @@ protected:
 	_float									m_fViewZ;
 
 	CLayer*									m_pLayer;
+
+	bool									m_bActive = true;
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);

@@ -19,6 +19,7 @@
 #include "CInventoryScene.h"
 #include "CRacingScene.h"
 #include "CDInputMgr.h"
+#include "SoundMgr.h"
 
 CStartMenu::CStartMenu(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -40,7 +41,7 @@ HRESULT CStartMenu::Ready_Scene()
 	if (FAILED(Ready_UI_Layer()))
 		return E_FAIL;
 
-
+	SoundMgr::GetInstance().PlayBGM(L"BGM/Main/title.ogg", 0.4f);
 
 	return S_OK;
 }
@@ -195,6 +196,5 @@ CStartMenu* CStartMenu::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStartMenu::Free()
 {
-
 	CScene::Free();
 }

@@ -15,7 +15,6 @@ protected:
 public:
 	virtual _int Update_Component(const _float& fTimeDelta) { return 0; }
 	virtual void LateUpdate_Component() {}
-	virtual void Render_Component(D3DXCOLOR color) {}
 
 public:
 	HRESULT			Ready_CSplineCom();

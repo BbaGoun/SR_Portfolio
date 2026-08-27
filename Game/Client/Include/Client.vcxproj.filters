@@ -274,6 +274,9 @@
     <Filter Include="02. GameObject\UI\UI_SpeedLine">
       <UniqueIdentifier>{2b2148f6-5e99-46b6-806a-7528fe51e1cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager\SoundMgr">
+      <UniqueIdentifier>{bd3a545d-4fa4-4a5d-be8a-2a6629c417ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -540,6 +543,9 @@
     <ClInclude Include="..\Header\CSpeedLine.h">
       <Filter>02. GameObject\UI\UI_SpeedLine</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\SoundMgr.h">
+      <Filter>03. Manager\SoundMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -799,6 +805,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSpeedLine.cpp">
       <Filter>02. GameObject\UI\UI_SpeedLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoundMgr.cpp">
+      <Filter>03. Manager\SoundMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
