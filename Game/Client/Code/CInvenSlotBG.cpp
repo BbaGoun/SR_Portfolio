@@ -51,7 +51,7 @@ _int CInvenSlotBG::Update_GameObject(const _float& fDeltaTime)
 	TCHAR   szFileName[128] = L"";
 	wsprintf(szFileName, L"InvenSlot%d", m_eSlotNum);
 	CRenderer::GetInstance()->Add_RenderTargetGroup(szFileName, this);
-	//CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	//CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

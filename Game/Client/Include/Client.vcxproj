@@ -217,6 +217,7 @@
     <ClInclude Include="..\Header\CScene3_KartBtn.h" />
     <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_StartBtn.h" />
+    <ClInclude Include="..\Header\CSpeedLine.h" />
     <ClInclude Include="..\Header\CUI_Laps.h" />
     <ClInclude Include="..\Header\CLoadMgr.h" />
     <ClInclude Include="..\Header\CSkidMark.h" />
@@ -292,6 +293,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_StartBtn.cpp" />
+    <ClCompile Include="..\Code\CSpeedLine.cpp" />
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>

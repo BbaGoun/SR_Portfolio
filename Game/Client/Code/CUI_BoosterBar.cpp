@@ -49,7 +49,7 @@ HRESULT CUI_BoosterBar::Ready_GameObject()
 
 _int CUI_BoosterBar::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHAUI, this);
 
 	CCart* pCart = dynamic_cast<CCart*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart"));
 	m_fCurGage = pCart->GetCurGage();
@@ -70,10 +70,14 @@ void CUI_BoosterBar::Render_GameObject()
 	m_pTransformCom->Set_Scale({ m_fResultGauge * 0.01f * m_fSizeX, 14, 1 });
 	m_pTransformCom->Set_Pos({ 0.5f * (-m_fSizeX + m_fResultGauge * 0.01f * m_fSizeX), -250, 1 });
 
+	DWORD dwOldRef;
+	m_pGraphicDev->GetRenderState(D3DRS_ALPHAREF, &dwOldRef);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 200);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, dwOldRef);
 }
 
 CUI_BoosterBar* CUI_BoosterBar::Create(LPDIRECT3DDEVICE9 pGraphicDev)

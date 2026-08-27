@@ -71,7 +71,7 @@ void CScene3_CharBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CScene3_CharBtn::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

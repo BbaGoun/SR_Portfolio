@@ -34,7 +34,8 @@ public:
 	void		Render_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev);
-	void		Render_UI(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 
 
 	LPDIRECT3DTEXTURE9	GetRTTexture()		{ return m_pRTTexture; }

@@ -44,7 +44,7 @@ HRESULT CHUD_Gage::Ready_GameObject()
 
 _int CHUD_Gage::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 	m_fFrame += 10 * fDeltaTime;
 	if (m_fFrame > 5)
 		m_fFrame = 0;

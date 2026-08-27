@@ -45,7 +45,7 @@ HRESULT CBanana::Ready_GameObject()
 
 _int CBanana::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

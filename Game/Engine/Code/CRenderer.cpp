@@ -33,7 +33,8 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
 	Render_Particle(pGraphicDev);
-	Render_UI(pGraphicDev);
+	Render_NonAlphaUI(pGraphicDev);
+	Render_AlphaUI(pGraphicDev);
 
 	PostRender(pGraphicDev);
 
@@ -201,8 +202,19 @@ void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev)
 
 void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev)
 {
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 254);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
 	for (auto& pObj : m_RenderGroup[RENDER_NONALPHA])
 		pObj->Render_GameObject();
+
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 
 void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -216,6 +228,14 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	//pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	//pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
+
+	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
+	{
+		_vec3 vPos;
+		pObj->Get_Transform()->Get_Info(INFO_POS, &vPos);
+		pObj->Compute_ViewZ(&vPos);
+	}
+
 	m_RenderGroup[RENDER_ALPHA].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
 		{
 			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
@@ -232,12 +252,14 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 void CRenderer::Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
 	for (auto& pObj : m_RenderGroup[RENDER_PARTICLE])
 		pObj->Render_GameObject();
+
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
-void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
+void CRenderer::Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	if (CCameraMgr::GetInstance()->GetMainCamera())
 	{
@@ -248,14 +270,31 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 
 		pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 	}
+	//pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+	//pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 254);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	for (auto& pObj : m_RenderGroup[RENDER_NONALPHAUI])
+		pObj->Render_GameObject();
+
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+}
+
+void CRenderer::Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
+{
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	m_RenderGroup[RENDER_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+	m_RenderGroup[RENDER_ALPHAUI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
 		{
 			// z값이 먼 것 부터 그리겠다. 
 			// 알파블랜딩은 뒤에 있는 것이 이미 있다고 생각하고 그리는것이기 때문
@@ -266,7 +305,7 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 			return vDstPos.z > vSrcPos.z;
 		});
 
-	for (auto& pObj : m_RenderGroup[RENDER_UI])
+	for (auto& pObj : m_RenderGroup[RENDER_ALPHAUI])
 		pObj->Render_GameObject();
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);

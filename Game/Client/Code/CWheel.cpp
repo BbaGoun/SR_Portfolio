@@ -90,6 +90,9 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
 	m_pTransformCom->Set_Quaternion(&q);
 
+	if (m_eWheelType < WHEEL_BL)
+		return;
+
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	_vec3 originPos = vPos;
@@ -125,7 +128,6 @@ void CWheel::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CWheel::Render_GameObject()
 {
-	//m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pBufferCom->Render_Buffer();
 }

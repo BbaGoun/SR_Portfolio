@@ -65,9 +65,6 @@ _int CDriftSpark::Update_GameObject(const _float& fDeltaTime)
 		//if (m_fFrame > 2.f)
 		//	m_fFrame = 0;
 
-		_vec3 vPos;
-		m_pTransformCom->Get_Info(INFO_POS, &vPos);
-		CGameObject::Compute_ViewZ(&vPos);
 		if (GetAsyncKeyState('A'))
 			m_vRotation.y += 180 * fDeltaTime;
 		if (GetAsyncKeyState('D'))

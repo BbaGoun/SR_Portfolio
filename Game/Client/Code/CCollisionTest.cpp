@@ -51,6 +51,7 @@
 #include "CCollisionStarEffect.h"
 #include "CDriftSpark.h"
 #include "CDustLandingEffect.h"
+#include "CSpeedLine.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -379,6 +380,16 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	pCart->Set_Child(pGameObject);
 
+	// SpeedLine
+	pGameObject = CSpeedLine::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"SpeedLine", pGameObject)))
+		return E_FAIL;
+	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
+
+
 	// ItemBox
 	for (int i = 0; i < 5; ++i)
 	{
@@ -475,6 +486,8 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
 		return E_FAIL;
+
+
 
 	////////////////////////////////////////////////////////////////////////////////////////
 	// 미사일 타겟
@@ -667,12 +680,14 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"MinimapCart", pUIObject)))
 		return E_FAIL;
 
+	// 미니맵 Ground
 	pUIObject = CMinimapGround::Create(m_pGraphicDev);
 
 	if (pUIObject == nullptr)
 		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"Env_MinimapGround", pUIObject)))
+	if (FAILED(pUILayer->Add_GameObject(L"MinimapGround", pUIObject)))
 		return E_FAIL;
+
 
 	return S_OK;
 }

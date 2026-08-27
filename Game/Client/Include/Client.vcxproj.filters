@@ -271,6 +271,9 @@
     <Filter Include="02. GameObject\InvenSlot\InvneSlotBG">
       <UniqueIdentifier>{5d05593f-d04c-45d4-942e-c94569cddeb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI\UI_SpeedLine">
+      <UniqueIdentifier>{2b2148f6-5e99-46b6-806a-7528fe51e1cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -534,6 +537,9 @@
     <ClInclude Include="..\Header\CDustLandingEffect.h">
       <Filter>02. GameObject\Cart\Effect\DustLandingEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSpeedLine.h">
+      <Filter>02. GameObject\UI\UI_SpeedLine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -790,6 +796,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDustLandingEffect.cpp">
       <Filter>02. GameObject\Cart\Effect\DustLandingEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSpeedLine.cpp">
+      <Filter>02. GameObject\UI\UI_SpeedLine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
