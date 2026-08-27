@@ -39,7 +39,7 @@ CGameObject* CLoadMgr::LoadGameObjectClient(FileReadState& st, LPDIRECT3DDEVICE9
 
 		if (!wcscmp(t, L"OBJECT"))
 		{
-			LoadGameObject(st, pGraphicDev, pObj, pScene);
+			LoadGameObjectClient(st, pGraphicDev, pObj, pScene);
 			continue;
 		}
 

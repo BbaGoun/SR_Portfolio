@@ -56,7 +56,7 @@ void CScene3_ColorBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 	{
-		
+
 		m_fFrame = 1;
 		//CScene3_ColorSetBG* pSetBG = static_cast<CScene3_ColorSetBG*>(m_pSetBG);
 		//if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
@@ -70,7 +70,8 @@ void CScene3_ColorBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	}
 	else
-	m_fFrame = 0;
+		m_fFrame = 0;
+}
 	
 
 

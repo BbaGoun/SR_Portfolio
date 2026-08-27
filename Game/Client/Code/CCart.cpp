@@ -787,7 +787,8 @@ void CCart::CollisionWall()
 	auto& walls = CManagement::GetInstance()->Find_GameObjectsByTag(L"Default", L"Wall");
 	if (walls.empty())
 		return;
-	
+	int a = 5;
+
 	// 플레이어의 정보
 	_vec3 vRight, vUp, vLook, vPos;
 	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
@@ -1061,7 +1062,7 @@ void CCart::StartCountDown(const _float& fDeltaTime)
 
 void CCart::EndCoundDown(const _float& fDeltaTime)
 {
-	float fEndTime = 5;
+	float fEndTime = 300;
 
 	if (m_fPlayTimer < fEndTime || m_bPlaying == false)
 		return;

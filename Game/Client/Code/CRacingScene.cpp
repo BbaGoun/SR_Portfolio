@@ -137,7 +137,6 @@ HRESULT CRacingScene::LoadSceneFromFile()
 		else
 			break;
 	}
-	int a = 2;
 	fclose(fp);
 
 	return S_OK;

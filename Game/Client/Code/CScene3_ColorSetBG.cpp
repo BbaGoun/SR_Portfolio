@@ -58,11 +58,9 @@ _int CScene3_ColorSetBG::Update_GameObject(const _float& fDeltaTime)
 {
 	if (m_bShow == false)
 		return 0;
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	
-
-
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
