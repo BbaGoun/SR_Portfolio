@@ -18,6 +18,9 @@
 #include "CWaterBomb.h"
 #include "CWaterBombBody.h"
 #include "CWaterBombThrow.h"
+#include "CWaterBombBubble.h"
+#include "CWaterFly.h"
+#include "CWaterFLyBody.h"
 #include "CDustLandingEffect.h"
 #include "SoundMgr.h"
 
@@ -179,10 +182,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateRainbowObject();
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
-	{
-		CreateBananaObject();
-	}
+
+	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
+	//{
+	//	CreateBananaObject();
+	//}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
 	{
@@ -213,6 +217,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Y))
 	{
 		CreateWaterBombObject();
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_U))
+	{
+		CreateWaterFlyObject();
 	}
 
 	// ShortBooster
@@ -984,6 +993,7 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 		if (fDirection < -0.5 || fDirection > 0.5)		// 그 방향이 카트 기준 앞/뒤 방향인지 확인
 		{
 			m_vForce += vDir * 2.f;
+			//vDir += m_vForce * 2.f;
 		}
 
 		m_fMagnetTimer += fDeltaTime;							// 3.5초 지나면 m_bMagnet = false로 종료
@@ -1270,7 +1280,8 @@ void CCart::CreateMagnetObject()
 
 void CCart::CreateWaterBombObject()
 {
-	CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
+	// CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
+	CWaterBomb* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
 
 	if (pWaterBomb == nullptr)
 		return;
@@ -1278,6 +1289,9 @@ void CCart::CreateWaterBombObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBomb", pWaterBomb)))
 		return;
 
+	_vec3 vLook;
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+	pWaterBomb->Set_ThrowLook(vLook);
 	pWaterBomb->SetLayer(m_pLayer);
 
 	CGameObject* pWaterBombBody = CWaterBombBody::Create(m_pGraphicDev);
@@ -1301,19 +1315,40 @@ void CCart::CreateWaterBombObject()
 
 	pWaterBombThrow->SetLayer(m_pLayer);
 
-	_vec3 vPos, vWaterBombPos, vLook, vUp;
+	CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
 
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	m_pTransformCom->Get_Info(INFO_UP, &vUp);
+	if (pWaterBombBubble == nullptr)
+		return;
 
-	pWaterBomb->Get_Transform()->Get_Info(INFO_POS, &vWaterBombPos);
-	//->Get_Transform()->Set_Pos(vPos);
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+		return;
 
-	vPos += vUp * 5.f;
+	pWaterBombBubble->SetLayer(m_pLayer);
+}
 
-	pWaterBombThrow->Get_Transform()->Set_Pos(vPos);
+void CCart::CreateWaterFlyObject()
+{
+	CGameObject* pWaterFly = CWaterFly::Create(m_pGraphicDev);
 
+	if (pWaterFly == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFly", pWaterFly)))
+		return;
+
+	pWaterFly->SetLayer(m_pLayer);
+	
+
+	CGameObject* pWaterFlyBody = CWaterFlyBody::Create(m_pGraphicDev);
+
+	if (pWaterFlyBody == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFlyBody", pWaterFlyBody)))
+		return;
+
+	pWaterFlyBody->SetLayer(m_pLayer);
+	pWaterFly->Set_Child(pWaterFlyBody);
 }
 
 void CCart::CreateMagnetAimObject()
@@ -1424,7 +1459,7 @@ void CCart::UseItem()
 		CreateBananaObject();
 		break;
 	case Engine::ITEM_WATERBOMB:
-		//CreateWaterBombObject();
+		CreateWaterBombObject();
 		break;
 	case Engine::ITEM_END:
 		break;

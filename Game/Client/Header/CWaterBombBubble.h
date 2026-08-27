@@ -4,12 +4,18 @@
 #include "CTexture.h"
 #include "CCube_Collider.h"
 
-class CWaterBombThrow : public CGameObject
+namespace Engine
+{
+	class CCartBodyCol;		// 물방울 임시
+	// class CRcTex;
+}
+
+class CWaterBombBubble : public CGameObject
 {
 private:
-	explicit CWaterBombThrow(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CWaterBombThrow(const CGameObject& rhs);
-	~CWaterBombThrow() override;
+	explicit CWaterBombBubble(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CWaterBombBubble(const CGameObject& rhs);
+	~CWaterBombBubble() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -27,15 +33,17 @@ public:
 	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
 
 private:
-	CRcTex* m_pBufferCom;
+	CCartBodyCol* m_pBufferCom;
 	CTexture* m_pTextureCom;
 	CCube_Collider* m_pColliderCom;
-
+	// CRcTex* m_pBufferCom;
 	_float	m_fTimer;
-	_float	m_fThrowHeight;
+	// _float			m_fSpeed;
+	// _float			m_fAngle;	// 풍선  회전 이거 말고 -> D3DXToRadian 이걸로?
+	_bool	m_bBubbleAppear;
 
 public:
-	static CWaterBombThrow* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CWaterBombBubble* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
 	virtual		void		Free() override;

@@ -28,7 +28,6 @@ public:
 	// KeyInput
 	void			KeyInput(const _float& fDeltaTime);
 
-
 	// Update
 	void			UpdateDrift();
 	void			UpdateBoost(const _float& fDeltaTime);
@@ -76,6 +75,7 @@ public:
 	void			CreateMissileObject();	
 	void			CreateMagnetObject();
 	void			CreateWaterBombObject();
+	void			CreateWaterFlyObject();
 	void			CreateTargetAimObject();	
 	void			CreateMissileAimObject();
 	void			CreateMagnetAimObject();
@@ -101,6 +101,7 @@ private:
 	bool			m_bRainbowUI;
 	_bool			m_bMagnet;
 	_float			m_fMagnetTimer;
+
 	_bool			m_bUseItem;
 
 	float			m_fNormalTurnAngle;

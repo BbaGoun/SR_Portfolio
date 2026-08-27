@@ -4,14 +4,14 @@
 
 namespace Engine
 {
-	class CCartBodyCol;		// 반구 임시
+	class CCartBodyCol;		// 물파리 임시
 }
 
-class CWaterBombBody : public CGameObject
+class CWaterFlyBody : public CGameObject
 {
 private:
-	explicit CWaterBombBody(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CWaterBombBody() override;
+	explicit CWaterFlyBody(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CWaterFlyBody() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject()									  override;
@@ -25,7 +25,7 @@ private:
 	_float	m_fTimer;
 
 public:
-	static CWaterBombBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CWaterFlyBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
 	virtual void	Free() override;

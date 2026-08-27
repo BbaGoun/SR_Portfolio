@@ -50,6 +50,8 @@
 #include "CWaterBombThrow.h"
 #include "CCollisionStarEffect.h"
 #include "CDriftSpark.h"
+#include "CWaterBombBubble.h"
+#include "CDynamicCamera.h"
 #include "CDustLandingEffect.h"
 #include "CSpeedLine.h"
 #include "SoundMgr.h"
@@ -425,8 +427,30 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
+	///////////////////////////////////////////////////////////////////////////////////////
+	/*_vec3 vEye = { 0.f, 30.f, -30.f };
+	_vec3 vAt = { 0.f, 0.f, 100.f };
+	_vec3 vUp = { 0.f, 1.f, 0.f };
 
+	CGameObject* pDynamicCam =
+		CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
 
+	if (pDynamicCam == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(
+		L"Obj_DynamicCamera", pDynamicCam)))
+		return E_FAIL;
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(
+		CAMERA_DYNAMIC,
+		static_cast<CCamera*>(pDynamicCam))))
+		return E_FAIL;
+
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
+		return E_FAIL;*/
+	///////////////////////////////////////////////////////////////////////////////////////
+	
 	// # 트랙
 	for (int i = 0; i < 40; ++i)
 	{
@@ -501,36 +525,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget", pMissileTarget)))
 		return E_FAIL;
   
-
-	//// 워터밤 반구 - 테스트
-	//CGameObject* pWaterBombBody = CWaterBombBody::Create(m_pGraphicDev);
-
-	//if (pWaterBombBody == nullptr)
-	//	return E_FAIL;
-
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_WaterBombBody", pWaterBombBody)))
-	//	return E_FAIL;
-	//
-
-	//// 워터밤 물리 - 테스트
-	//CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
-
-	//if (pWaterBomb == nullptr)
-	//	return E_FAIL;
-
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_WaterBomb", pWaterBomb)))
-	//	return E_FAIL;
-
-
-	//// 워터밤 송구 - 테스트
-	//CGameObject* pWaterBombThrow = CWaterBombThrow::Create(m_pGraphicDev);
-
-	//if (pWaterBombThrow == nullptr)
-	//	return E_FAIL;
-
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_WaterBombThrow", pWaterBombThrow)))
-	//	return E_FAIL;
-
 	return S_OK;
 }
 

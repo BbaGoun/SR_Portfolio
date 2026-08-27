@@ -259,6 +259,15 @@
     <Filter Include="03. Manager\CLoadMgr">
       <UniqueIdentifier>{a6062789-bc8f-4b64-bb3d-4fa8fbaeae29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\WaterBomb\WaterBombBubble">
+      <UniqueIdentifier>{90d69fb1-89e6-4de2-a700-7baf6e471c8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\WaterFly">
+      <UniqueIdentifier>{99185cdf-5425-4777-8443-436e4040a757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\WaterFly\CWaterFlyBody">
+      <UniqueIdentifier>{d565c4c7-e73e-406d-9262-0d07adddb769}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button">
       <UniqueIdentifier>{1245e30a-3590-4698-847c-f1bbbea1af52}</UniqueIdentifier>
     </Filter>
@@ -528,6 +537,15 @@
     <ClInclude Include="..\Header\CLoadMgr.h">
       <Filter>03. Manager\CLoadMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWaterBombBubble.h">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombBubble</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWaterFly.h">
+      <Filter>02. GameObject\Item\WaterFly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWaterFlyBody.h">
+      <Filter>02. GameObject\Item\WaterFly\CWaterFlyBody</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CScene3_CharBtn.h">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
     </ClInclude>
@@ -793,6 +811,15 @@
     </ClCompile>
     <ClCompile Include="CUI_Menu.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterBombBubble.cpp">
+      <Filter>02. GameObject\Item\WaterBomb\WaterBombBubble</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterFly.cpp">
+      <Filter>02. GameObject\Item\WaterFly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWaterFlyBody.cpp">
+      <Filter>02. GameObject\Item\WaterFly\CWaterFlyBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_CharBtn.cpp">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>

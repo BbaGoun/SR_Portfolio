@@ -19,9 +19,10 @@ CWaterBombBody::~CWaterBombBody()
 HRESULT CWaterBombBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
+	m_pTransformCom->Set_Pos({ 0.f,0.f,0.f });
+	m_pTransformCom->Set_Scale({ 0.f, 3.5f, 0.f });
 
-	m_pTransformCom->Set_Pos({ -50.f,0.f,150.f });
-	m_pTransformCom->Set_Scale({ 1.5f, 3.5f, 0.7f });
+	m_fTimer = 0.f;
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -39,27 +40,35 @@ HRESULT CWaterBombBody::Ready_GameObject()
 
 void CWaterBombBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	_vec3 vScale;
-	vScale = m_pTransformCom->Get_Scale();
+	// CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
 
-	if (vScale.x < 16.f && vScale.y < 16.f && vScale.z < 16.f)
+	// _vec3 vScale, vCartLook, vCartPos;
+	// vScale = m_pTransformCom->Get_Scale();
+	//pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
+	// pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
+
+	// m_pTransformCom->Set_Pos(vCartPos);
+
+	_vec3 vScale = m_pTransformCom->Get_Scale();
+
+	m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
+
+	m_fTimer += fFixedDeltaTime;	
+
+	if (m_fTimer > 1.6f)
 	{
-		vScale.x += 40.f * fFixedDeltaTime;
-		vScale.y += 40.f * fFixedDeltaTime;
-		vScale.z += 40.f * fFixedDeltaTime;
+		if (vScale.x < 16.f && vScale.y < 16.f && vScale.z < 16.f)
+		{
+			vScale.x += 45.f * fFixedDeltaTime;
+			vScale.y += 45.f * fFixedDeltaTime;
+			vScale.z += 45.f * fFixedDeltaTime;
+		}
 	}
-
-	// 디테일 나중에 반구 만들고
-	//if (vScale.x < 12.f && vScale.z < 12.f)
-	//{
-	//	vScale.x += 30.f * fFixedDeltaTime;
-	//	vScale.z += 30.f * fFixedDeltaTime;
-	//}
-
-	//if (vScale.y < 50.f)
-	//{
-	//	vScale.y += 60.f * fFixedDeltaTime;
-	//}
+	
+	if (m_fTimer > 3.5f)
+	{
+		m_pLayer->Delete_GameObject(this);
+	}
 
 	m_pTransformCom->Set_Scale(vScale);
 }
@@ -68,7 +77,11 @@ _int CWaterBombBody::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
+	if (m_fTimer > 1.75f)
+	{
+		CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
+	}
+	//CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
 
 	return iExit;
 }
@@ -84,9 +97,13 @@ void CWaterBombBody::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
 	//m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
@@ -94,16 +111,16 @@ void CWaterBombBody::Render_GameObject()
 
 CWaterBombBody* CWaterBombBody::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CWaterBombBody* pMissile = new CWaterBombBody(pGraphicDev);
+	CWaterBombBody* pWaterBombBody = new CWaterBombBody(pGraphicDev);
 
-	if (FAILED(pMissile->Ready_GameObject()))
+	if (FAILED(pWaterBombBody->Ready_GameObject()))
 	{
-		Safe_Release(pMissile);
-		MSG_BOX("pMissile Create Failed");
+		Safe_Release(pWaterBombBody);
+		MSG_BOX("pWaterBombBody Create Failed");
 		return nullptr;
 	}
 
-	return pMissile;
+	return pWaterBombBody;
 }
 
 void CWaterBombBody::Free()

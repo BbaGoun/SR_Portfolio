@@ -20,10 +20,15 @@ HRESULT CWaterBomb::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_fSpeed = 0.f;
-	m_fAngle = 0.f;
+	m_fTimer	= 0.f;
+	//m_fSpeed	= 0.f;
+	//m_fAngle	= 0.f;
 
-	m_pTransformCom->Set_Pos({ -50.f,0.f,150.f });
+	m_bCreate	= false;
+
+	m_vThrowLook = { 0.f, 0.f, 0.f };
+
+	m_pTransformCom->Set_Pos({ 0.f, -1000.f, 0.f });
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -33,7 +38,7 @@ HRESULT CWaterBomb::Ready_GameObject()
 
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->Set_Extents({ 40.f, 12.f, 40.f });
+	m_pColliderCom->Set_Extents({ 40.f, 12.f, 60.f });
 	m_pColliderCom->Set_Offset({ 0.f, 4.f, 0.f });
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
@@ -43,14 +48,39 @@ HRESULT CWaterBomb::Ready_GameObject()
 
 void CWaterBomb::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
 
+	_vec3 vCartPos; // , vCartLook;
+
+	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
+	//pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
+
+	//vCartPos += vCartLook * 200.f;
+
+	m_fTimer += fFixedDeltaTime;
+
+	if (m_fTimer > 1.6f && m_bCreate == false)
+	{
+		vCartPos += m_vThrowLook * 200.f;
+		m_pTransformCom->Set_Pos(vCartPos);
+		m_bCreate = true;
+	}
+
+	if (m_fTimer > 3.f)
+	{
+		m_bCreate = false;
+		m_pLayer->Delete_GameObject(this);
+	}
 }
 
 _int CWaterBomb::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	if (m_fTimer > 1.75f)
+	{
+		CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
+	}
 
 	return iExit;
 }
@@ -63,8 +93,6 @@ void CWaterBomb::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CWaterBomb::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	//m_pTextureCom->Set_Texture(0);
@@ -81,6 +109,7 @@ void CWaterBomb::CollisionEnter(CCollider* pOtherCollider)
 
 void CWaterBomb::TriggerEnter(CCollider* pOtherCollider)
 {
+	// 컨셉에 맞게 따로 삭제
 	//const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 
 	//if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)

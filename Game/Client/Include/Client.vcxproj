@@ -287,7 +287,10 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CUI_XButton.h" />
     <ClInclude Include="..\Header\CWaterBomb.h" />
     <ClInclude Include="..\Header\CWaterBombBody.h" />
+    <ClInclude Include="..\Header\CWaterBombBubble.h" />
     <ClInclude Include="..\Header\CWaterBombThrow.h" />
+    <ClInclude Include="..\Header\CWaterFly.h" />
+    <ClInclude Include="..\Header\CWaterFlyBody.h" />
     <ClInclude Include="..\Header\CWheel.h" />
     <ClInclude Include="..\Header\CRacingScene.h" />
     <ClInclude Include="..\Header\SoundMgr.h" />
@@ -326,6 +329,9 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     </ClCompile>
     <ClCompile Include="..\Code\CUI_UnderBar.cpp" />
     <ClCompile Include="..\Code\CUI_XButton.cpp" />
+    <ClCompile Include="..\Code\CWaterBombBubble.cpp" />
+    <ClCompile Include="..\Code\CWaterFly.cpp" />
+    <ClCompile Include="..\Code\CWaterFlyBody.cpp" />
     <ClCompile Include="..\Code\SoundMgr.cpp" />
     <ClCompile Include="CScene1_Item.cpp" />
     <ClCompile Include="..\Code\CCollisionStarEffect.cpp" />
