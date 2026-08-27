@@ -4,6 +4,7 @@
 namespace Engine
 {
 	class CCartWheelCol;
+	class CCube_Collider;
 }
 class CWheel : public CGameObject
 {
@@ -26,16 +27,20 @@ public:
 
 	void			ResetPrePos();
 	void			CreateSkidMark();
+	bool			CheckInTerrain();
 public:
 	static CWheel* Create(LPDIRECT3DDEVICE9 pGraphicDev, WHEEL_TYPE eType);
 
 private:
 	Engine::CCartWheelCol*	m_pBufferCom;
+	Engine::CCube_Collider* m_pColliderCom;
 	WHEEL_TYPE				m_eWheelType;
 
 	float					m_fDistSum;
 	_vec3					m_vPrePos;
 
+	float					m_fScale;
+	_vec3					m_vColliderSize;
 protected:
 	virtual		void		Free() override;
 };

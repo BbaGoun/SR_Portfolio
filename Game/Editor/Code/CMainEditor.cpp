@@ -30,7 +30,7 @@ void CMainEditor::GameLoop()
 		m_pManagementClass->Change_NextScene();
 
 		for (int i = 0; i < fixedStep; ++i)
-			Update_MainEditor(fFixed_DeltaTime);
+			FixedUpdate_MainEditor(fFixed_DeltaTime);
 
 		// 이 부분이 FixedUpdate 말한대로 이번 프레임에 FixedUpdate를 몇번 호출해야하나 횟수를 얻어서 여러번
 		// 실행한다.
@@ -93,9 +93,22 @@ void CMainEditor::Render_MainEditor()
 	m_pManagementClass->Render_Scene(m_pGraphicDev, true);
 }
 
-void CMainEditor::InvalidateDeviceObjects()
+void CMainEditor::Reset_MainEditor()
 {
+	// D3DPOOL_DEFAULT로 선언된 리소스 해제
 	m_pManagementClass->OnLostDevice();
+
+	ImGui_ImplDX9_InvalidateDeviceObjects();
+	HRESULT hr = g_pd3dDevice->Reset(&g_d3dpp);
+	if (hr == D3DERR_INVALIDCALL)
+		IM_ASSERT(0);
+	ImGui_ImplDX9_CreateDeviceObjects();
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	
+	m_pManagementClass->OnResetDevice();
 }
 
 HRESULT CMainEditor::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)

@@ -17,7 +17,7 @@ public:
 	int			Update_MainEditor(const float& fDeltaTime);
 	void		LateUpdate_MainEditor(const float& fDeltaTime);
 	void		Render_MainEditor();
-	void		InvalidateDeviceObjects();
+	void		Reset_MainEditor();
 
 private:
 	HRESULT		Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);

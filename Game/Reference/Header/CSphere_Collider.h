@@ -23,14 +23,11 @@ public:
 
 	void		Set_Center(_vec3 vPos)		{ m_tBoundingSphere.Center = ToXMFLOAT3(vPos); }
 	void		Set_Radius(float fRadius)	{ m_tBoundingSphere.Radius = max(0.01f, fRadius); }
-	void		Set_Offset(_vec3 vOffset)	{ m_vOffset = vOffset; }
-	_vec3		Get_Offset()				{ return m_vOffset; }
 
 	virtual		CComponent* Clone();
 
 private:
 	DirectX::BoundingSphere	m_tBoundingSphere;
-	_vec3					m_vOffset = { 0, 0, 0 };
 
 private:
 	virtual		void		Free();

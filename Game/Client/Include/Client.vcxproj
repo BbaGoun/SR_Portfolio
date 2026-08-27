@@ -98,18 +98,24 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header;../Bin/fmod/core/inc</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../Reference/Library;../Bin/fmod/core/lib/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -121,18 +127,24 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header;../Bin/fmod/core/inc</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../Reference/Library;../Bin/fmod/core/lib/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -142,18 +154,24 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header;../Bin/fmod/core/inc</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../Reference/Library;../Bin/fmod/core/lib/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -165,18 +183,24 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header;../Bin/fmod/core/inc</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../Reference/Library;../Bin/fmod/core/lib/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
@@ -192,6 +216,7 @@
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
     <ClInclude Include="..\Header\CDriftSpark.h" />
+    <ClInclude Include="..\Header\CDustLandingEffect.h" />
     <ClInclude Include="..\Header\CDynamicCamera.h" />
     <ClInclude Include="..\Header\CMenu_Item.h" />
     <ClInclude Include="..\Header\CMenu_Set.h" />
@@ -213,9 +238,11 @@
     <ClInclude Include="..\Header\CScene2_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_CharBtn.h" />
     <ClInclude Include="..\Header\CScene3_ColorBtn.h" />
+    <ClInclude Include="..\Header\CScene3_ColorSetBG.h" />
     <ClInclude Include="..\Header\CScene3_KartBtn.h" />
     <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_StartBtn.h" />
+    <ClInclude Include="..\Header\CSpeedLine.h" />
     <ClInclude Include="..\Header\CUI_Laps.h" />
     <ClInclude Include="..\Header\CLoadMgr.h" />
     <ClInclude Include="..\Header\CSkidMark.h" />
@@ -263,6 +290,7 @@
     <ClInclude Include="..\Header\CWaterBombThrow.h" />
     <ClInclude Include="..\Header\CWheel.h" />
     <ClInclude Include="..\Header\CRacingScene.h" />
+    <ClInclude Include="..\Header\SoundMgr.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -270,6 +298,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CDustLandingEffect.cpp" />
     <ClCompile Include="..\Code\CMenu_Item.cpp" />
     <ClCompile Include="..\Code\CMenu_Set.cpp" />
     <ClCompile Include="..\Code\CScene1_Replay.cpp">
@@ -285,16 +314,19 @@
     <ClCompile Include="..\Code\CScene2_ForestValley.cpp" />
     <ClCompile Include="..\Code\CScene3_CharBtn.cpp" />
     <ClCompile Include="..\Code\CScene3_ColorBtn.cpp" />
+    <ClCompile Include="..\Code\CScene3_ColorSetBG.cpp" />
     <ClCompile Include="..\Code\CScene3_KartBtn.cpp" />
     <ClCompile Include="..\Code\CScene3_Map_ForestValley.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_StartBtn.cpp" />
+    <ClCompile Include="..\Code\CSpeedLine.cpp" />
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\CUI_UnderBar.cpp" />
     <ClCompile Include="..\Code\CUI_XButton.cpp" />
+    <ClCompile Include="..\Code\SoundMgr.cpp" />
     <ClCompile Include="CScene1_Item.cpp" />
     <ClCompile Include="..\Code\CCollisionStarEffect.cpp" />
     <ClCompile Include="..\Code\CDriftSpark.cpp" />

@@ -10,6 +10,7 @@
 #include "CCollisionMgr.h"
 #include "CMissileTarget.h"
 #include "CCollisionStarEffect.h"
+#include <SoundMgr.h>
 
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -89,6 +90,7 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 
 	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
 	{
+		SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 		_vec3 vParentForce = m_pParent->Get_Force();
 		float vParentSpeed = m_pParent->Get_Speed();
 		// StarEffect
@@ -146,6 +148,7 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 	{
 		if (pCart->GetBanana() == false)
 		{
+			SoundMgr::GetInstance().PlaySound(L"Effect/Item_banana/Bananatrapped.ogg", SOUND_BANANA, 0.4f);
 			pCart->SetBanana(true);
 			pCart->SetBoost(BOOST_STATE_NORMAL);
 		}
@@ -155,6 +158,7 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 		CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
 		if (pItemBox->GetShow() == true)
 		{
+			SoundMgr::GetInstance().PlaySound(L"Effect/ItemGain/eaten.ogg", SOUND_ITEMGAIN, 0.4f);
 			pCart->GainItem();
 			pItemBox->SetShow(false);
 		}

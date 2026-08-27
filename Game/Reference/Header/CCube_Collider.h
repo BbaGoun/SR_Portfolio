@@ -25,17 +25,14 @@ public:
 	DirectX::BoundingOrientedBox&	Get_Info()							{ return m_tBoundingBox; }
 
 	void							Set_Center(_vec3 vPos)				{ m_tBoundingBox.Center = ToXMFLOAT3(vPos); }
-	void							Set_Extents(_vec3 vExtents)			{ m_tBoundingBox.Extents = ToXMFLOAT3(vExtents); }
 	void							Set_Orientation(D3DXQUATERNION q)	{ m_tBoundingBox.Orientation = ToXMFLOAT4(q); }
-	void							Set_Offset(_vec3 vOffset)			{ m_vOffset = vOffset; }
-	_vec3							Get_Offset()						{ return m_vOffset; }
+	void							Set_Extents(_vec3 vExtents)			{ m_tBoundingBox.Extents = ToXMFLOAT3(vExtents); }
 	_vec3							Get_Extents()						{ return ToVec3(m_tBoundingBox.Extents); }
 
 	virtual		CComponent* Clone();
 
 private:
 	DirectX::BoundingOrientedBox	m_tBoundingBox;
-	_vec3							m_vOffset = { 0,0,0 };
 
 private:
 	virtual		void		Free();

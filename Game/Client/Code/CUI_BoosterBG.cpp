@@ -46,7 +46,7 @@ HRESULT CUI_BoosterBG::Ready_GameObject()
 
 _int CUI_BoosterBG::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHAUI, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -57,10 +57,14 @@ void CUI_BoosterBG::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CUI_BoosterBG::Render_GameObject()
 {
+	DWORD dwOldRef;
+	m_pGraphicDev->GetRenderState(D3DRS_ALPHAREF, &dwOldRef);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 100);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, dwOldRef);
 }
 
 CUI_BoosterBG* CUI_BoosterBG::Create(LPDIRECT3DDEVICE9 pGraphicDev)

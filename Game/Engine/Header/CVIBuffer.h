@@ -19,9 +19,8 @@ public:
     virtual void Render_Buffer();
 
 
-    DirectX::BoundingBox* GetBoundingBox(DirectX::BoundingBox* pBoundingBox) {
-        *pBoundingBox = m_boundingBox;
-        return pBoundingBox;
+    DirectX::BoundingBox* GetBoundingBox() {
+        return &m_boundingBox;
     }
 
 protected:

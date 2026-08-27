@@ -8,6 +8,7 @@
 #include "CRenderer.h"
 #include "CCollisionMgr.h"
 #include "CLoadMgr.h"
+#include "SoundMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr)
@@ -34,6 +35,7 @@ HRESULT CMainApp::Ready_MainApp()
 
 #endif // _DEBUG
 
+	SoundMgr::GetInstance().Initialize();
 	CLoadMgr::GetInstance()->ReadyCreateMap();
 
 	if (FAILED(Ready_DefaultSetting(&m_pGraphicDev)))
@@ -56,6 +58,8 @@ int CMainApp::Update_MainApp(const float& fDeltaTime)
 	m_pManagementClass->Change_NextScene();
 
 	CDInputMgr::GetInstance()->Update_InputDev();
+	SoundMgr::GetInstance().Update();
+
 	m_pManagementClass->Update_Scene(fDeltaTime);
 
 	return 0;

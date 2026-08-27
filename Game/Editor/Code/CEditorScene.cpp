@@ -177,6 +177,12 @@ void CEditorScene::OnLostDevice()
 {
 	for (auto& wnd : m_windowList)
 		wnd->InvalidateDeviceObjects();
+	CScene::OnLostDevice();
+}
+
+void CEditorScene::OnResetDevice()
+{
+	CScene::OnResetDevice();
 }
 
 CEditorScene* CEditorScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)

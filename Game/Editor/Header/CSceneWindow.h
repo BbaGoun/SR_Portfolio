@@ -2,6 +2,7 @@
 #include "CWindow.h"
 #include "CGraphicDev.h"
 #include "CCube.h"
+#include "CHeightMap.h"
 
 class CSceneWindow :
     public CWindow
@@ -19,7 +20,12 @@ public:
 private:
     void Draw_Outline(CGameObject* pObj, D3DXCOLOR color);
     void Draw_Collider(CGameObject* pObj);
-    void Control_Spline(CGameObject* pObj);
+    void Draw_SplinePoints(CGameObject* pObj);
+    void Draw_HeightMap(CGameObject* pObj);
+
+    void Object_Pick(const map<const _tchar*, vector<CGameObject*>>& map, _vec3 worldRayOrigin, _vec3 worldRayDir);
+    void Spline_Pick(const map<const _tchar*, vector<CGameObject*>>& map, _vec3 worldRayOrigin, _vec3 worldRayDir);
+    void HeightMap_Pick(CHeightMap* pHM, _vec3 worldRayOrigin, _vec3 worldRayDir);
 
 private:
     Engine::CCube* m_pCubeBuffer = nullptr;

@@ -48,8 +48,6 @@ _int CThunder::Update_GameObject(const _float& fDeltaTime)
 
 	m_pTransformCom->Set_Pos({ vThunderCloudPos.x,vThunderCloudPos.y - 5.f,vThunderCloudPos.z });
 
-	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	CGameObject::Compute_ViewZ(&vPos);
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	m_fFrame += 10 * fDeltaTime;
 

@@ -24,7 +24,7 @@ HRESULT CHUD_Num::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Scale({ 34, 45, 1 });
+	m_pTransformCom->Set_Scale({ 34, 45, 2 });
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 
@@ -44,7 +44,7 @@ HRESULT CHUD_Num::Ready_GameObject()
 
 _int CHUD_Num::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	CComponent* pCom = CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_Cart", L"Com_Transform");
 	CGameObject* pCart = pCom->Get_Owner();
