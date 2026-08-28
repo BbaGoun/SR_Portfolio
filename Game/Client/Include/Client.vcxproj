@@ -108,11 +108,11 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\."
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
 </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\."
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
 xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
 xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     </PreBuildEvent>
@@ -137,11 +137,11 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\."
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
 </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\."
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
 xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
 xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     </PreBuildEvent>
@@ -164,11 +164,11 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\."
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
 </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\."
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
 xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
 xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     </PreBuildEvent>
@@ -193,11 +193,11 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\."
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
 </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\."
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
 xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
 xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     </PreBuildEvent>
