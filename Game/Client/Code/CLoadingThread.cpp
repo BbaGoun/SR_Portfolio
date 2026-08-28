@@ -63,11 +63,15 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MagnetTex", Engine::CMagnetTex::Create(m_pGraphicDev))))
         return E_FAIL;
-
+    
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ArrowCol", Engine::CArrowTex::Create(m_pGraphicDev))))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Cube", Engine::CCube::Create(m_pGraphicDev))))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Sphere", Engine::CSphere::Create(m_pGraphicDev)
+        , true, L"Sphere")))
         return E_FAIL;
 
     EnterCriticalSection(Get_Crt());
@@ -391,6 +395,18 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartSide", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Color/CartSide.png", 1),
         true, L"CartSide")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Red", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Red.png", 1),
+        true, L"Red")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_White", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/White.png", 1),
+        true, L"White")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_bazzi_face00", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Character/Bazzi/Face/f00_1.png", 1),
+        true, L"Bazzi_Face00")))
         return E_FAIL;
 
     EnterCriticalSection(Get_Crt());

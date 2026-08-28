@@ -63,7 +63,7 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(m_vRotation.y), D3DXToRadian(m_vRotation.x), D3DXToRadian(m_vRotation.z));
 	m_pTransformCom->Set_Quaternion(&q);
 	
-	m_pTransformCom->Set_Scale({ m_fScale,m_fScale,m_fScale });
+	//m_pTransformCom->Set_Scale({ m_fScale,m_fScale,m_fScale });
 	//m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
 	//m_pTransformCom->Set_Pos({ 0,m_fScale,3 });
 }

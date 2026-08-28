@@ -300,6 +300,9 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CGameObject* pGameObject = nullptr;
 	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
 	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
+	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
+
+	pCart->Set_Child(pPlayer);
 
 // 이펙트
 	// ## 부스터 왼쪽1 바람 이펙트

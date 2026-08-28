@@ -254,6 +254,8 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartSide", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Color/CartSide.png", 1),
         true, L"CartSide")))
+        return E_FAIL;
+
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Red", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Red.png", 1),
         true, L"Red")))
         return E_FAIL;
