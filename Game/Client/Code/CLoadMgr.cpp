@@ -20,8 +20,12 @@ void CLoadMgr::ReadyCreateMap() {
 CGameObject* CLoadMgr::CreateByType(const _tchar* type, LPDIRECT3DDEVICE9 pGraphicDev) {
 	auto it = find_if(m_createMap.begin(), m_createMap.end(), CTag_Finder(type));
 
-	if (it == m_createMap.end())
+	if (it == m_createMap.end()) {
+		wstring s = type;
+		s += L" Type Not Set";
+		MSG_BOXF(s.c_str());
 		return nullptr;
+	}
 
 	return it->second(pGraphicDev);
 }
