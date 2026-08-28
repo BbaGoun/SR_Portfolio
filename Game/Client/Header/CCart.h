@@ -144,6 +144,7 @@ private:
 	float			m_fPreTimer;
 	bool			m_bPlaying;
 
+
 protected:
 	virtual		void		Free() override;
 };

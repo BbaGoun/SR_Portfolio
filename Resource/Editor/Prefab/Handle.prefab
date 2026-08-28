@@ -1,0 +1,174 @@
+﻿OBJECT
+  type=
+  prefabPath=..\..\..\Resource\Editor\Prefab\Handle.prefab
+  belong=1
+  name=Handle
+  tag=19
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=1.337115 2.033369 1.637774
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 0.999991 0.999991
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+    belong=1
+    name=Empty
+    tag=18
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.120700 0.000000
+      rot=0.000000 89.999977 0.000000
+      quat=0.000000 0.707107 0.000000 0.707107
+      scale=0.010000 0.010000 0.099999
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+    belong=1
+    name=Empty
+    tag=18
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.085400 0.085400 0.000000
+      rot=115.016884 89.999962 -45.000000
+      quat=0.637318 0.306311 -0.637318 0.306311
+      scale=0.010000 0.010000 0.100000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+    belong=1
+    name=Empty
+    tag=18
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.120700 0.000000 0.000000
+      rot=2.544804 89.999916 92.544800
+      quat=-0.511483 0.488246 0.511484 0.488247
+      scale=0.010000 0.010000 0.100000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+    belong=1
+    name=Empty
+    tag=18
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.085400 -0.085400 0.000000
+      rot=33.178509 89.999947 -7.352378
+      quat=0.265142 0.655515 -0.265142 0.655515
+      scale=0.010000 0.010000 0.100000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+    belong=1
+    name=Empty
+    tag=18
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 -0.120700 0.000000
+      rot=0.000000 89.999977 0.000000
+      quat=0.000000 0.707107 0.000000 0.707107
+      scale=0.010000 0.010000 0.100000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+    belong=1
+    name=Empty
+    tag=18
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.120700 0.000000 0.000000
+      rot=135.000000 89.999985 -172.874969
+      quat=-0.522144 0.476829 0.522144 0.476829
+      scale=0.010000 0.010000 0.100000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+    belong=1
+    name=Empty
+    tag=18
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.085400 0.085400 0.000000
+      rot=-5.572198 89.999924 126.253830
+      quat=-0.652088 0.273460 0.652089 0.273461
+      scale=0.010000 0.010000 0.099996
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+    belong=1
+    name=Empty
+    tag=18
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.087909 -0.086364 0.001201
+      rot=-51.726879 89.999756 -6.661301
+      quat=-0.270599 0.653280 0.270597 0.653283
+      scale=0.010000 0.010000 0.100000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+    belong=1
+    name=Empty
+    tag=18
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.060302 -0.048750 -0.000319
+      rot=88.784218 -4.356095 45.980190
+      quat=0.654142 0.248033 0.303364 0.646955
+      scale=0.010000 0.010000 0.100001
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+    belong=1
+    name=Empty
+    tag=18
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.051313 0.057680 -0.000319
+      rot=89.017281 -4.043563 42.113998
+      quat=0.662838 0.228236 0.279151 0.656224
+      scale=0.010000 0.010000 0.100001
+  ENDOBJECT
+ENDOBJECT

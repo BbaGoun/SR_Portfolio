@@ -41,6 +41,8 @@ private:
 
 	float					m_fScale;
 	_vec3					m_vColliderSize;
+
+	float					m_fRayMinDist;
 protected:
 	virtual		void		Free() override;
 };

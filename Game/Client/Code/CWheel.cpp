@@ -66,6 +66,7 @@ HRESULT CWheel::Ready_GameObject()
 
 
 	m_fScale = 1.f;
+	m_fRayMinDist = 0.99f;
 
 	return S_OK;
 }
@@ -167,13 +168,12 @@ void CWheel::CreateSkidMark()
 	if (nullptr == pGameObject)
 		return;
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Proto_SkidMark", pGameObject)))
-		return;
-	pGameObject->SetLayer(m_pLayer);
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Proto_SkidMark", pGameObject);
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	vPos.y -=0.99f;
+	vPos.y -= m_fRayMinDist - 0.01f;
+
 	pGameObject->Get_Transform()->Set_Pos(vPos);
 
 	//CCartBody의 WorldQuaternion을 가져옴
@@ -183,14 +183,15 @@ void CWheel::CreateSkidMark()
 
 bool CWheel::CheckInTerrain()
 {
-	auto& tracks = CManagement::GetInstance()->Find_GameObjectsByTag(L"Default", L"Track");
+	auto& tracks = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Track");
 	if (tracks.empty())
 		return false;
-
 	// for문 밖에 생성
 	_vec3 vWheelWorldCenter = ToVec3(m_pColliderCom->Get_Info().Center);
 	_vec3 vWheelModelCenter;
 
+	m_fRayMinDist = FLT_MAX;
+	bool  bFind = false;
 	// 지형들 중 어떤 지형과 충돌했는지 확인 후 fGroundY, m_vTerrainNormal값이 구해짐
 	for (auto& track : tracks) {
 		CSpline* pSpline = track->Get_Component<CSpline>();
@@ -216,7 +217,12 @@ bool CWheel::CheckInTerrain()
 		vector<FACE32> vecFaces = pSpline->GetFaces();
 
 		D3DXVECTOR3 vRayPos = { vWheelModelCenter.x, vWheelModelCenter.y, vWheelModelCenter.z };
+
 		D3DXVECTOR3 vRayDir = { 0.f, -1.f, 0.f };
+		D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matInvTrack);
+
+		//cout << vRayDir.x << "\t" << vRayDir.y << "\t" << vRayDir.z << endl;
+		int a = 0;
 		for (int i = 0; i < vecFaces.size(); ++i)
 		{
 			_vec3 p0 = vecVertices[vecFaces[i].indices._0].vPosition;
@@ -224,13 +230,21 @@ bool CWheel::CheckInTerrain()
 			_vec3 p2 = vecVertices[vecFaces[i].indices._2].vPosition;
 
 			float u, v, fDist;
-			if (D3DXIntersectTri(&p0, &p1, &p2, &vRayPos, &vRayDir, &u, &v, &fDist) && fDist <= 1.3f)
+			if (!D3DXIntersectTri(&p0, &p1, &p2, &vRayPos, &vRayDir, &u, &v, &fDist))
 			{
-				return true;
+				continue;
 			}
+
+			if (fDist >= m_fRayMinDist)
+				continue;
+			m_fRayMinDist = fDist;
+			bFind = true;
 		}
 	}
-	return false;
+	if (bFind)
+		return true;
+	else
+		return false;
 }
 
 CWheel* CWheel::Create(LPDIRECT3DDEVICE9 pGraphicDev,WHEEL_TYPE eType)

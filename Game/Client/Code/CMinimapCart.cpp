@@ -51,6 +51,8 @@ _int CMinimapCart::Update_GameObject(const _float& fDeltaTime)
 	m_vRotation = pCart->Get_Rotation();
 	D3DXQUATERNION q=pCart->Get_Transform()->Get_WorldQuaternion();
 	m_pTransformCom->Set_Quaternion(&q);
+
+	vPos.y += 0.01f;
 	m_pTransformCom->Set_Pos(vPos);
 
 	return CGameObject::Update_GameObject(fDeltaTime);

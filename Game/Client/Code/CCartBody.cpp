@@ -29,7 +29,7 @@ CCartBody::~CCartBody()
 HRESULT CCartBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Pos({ 0,2,3 });
+	//m_pTransformCom->Set_Pos({ 0,2,3 });
 
 	m_bBananaSpinState		= false;
 	m_bThunderSpinState		= false;
@@ -44,10 +44,11 @@ HRESULT CCartBody::Ready_GameObject()
 	if (nullptr == pComponent)
 		return E_FAIL;
 
-	m_vColliderSize = { 2.5f,1.5f,5.f };
+	//m_vColliderSize = { 2.5f,1.5f,5.f };
+	//m_pColliderCom->Set_Extents(m_vColliderSize);
+	
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(false);
-	m_pColliderCom->Set_Extents(m_vColliderSize);
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 	return S_OK;
 }
@@ -63,8 +64,8 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pTransformCom->Set_Quaternion(&q);
 	
 	m_pTransformCom->Set_Scale({ m_fScale,m_fScale,m_fScale });
-	m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
-	m_pTransformCom->Set_Pos({ 0,2*m_fScale,3 });
+	//m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
+	//m_pTransformCom->Set_Pos({ 0,m_fScale,3 });
 }
 
 _int CCartBody::Update_GameObject(const _float& fDeltaTime)
@@ -80,6 +81,7 @@ void CCartBody::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CCartBody::Render_GameObject()
 {
+	int a;
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 }
