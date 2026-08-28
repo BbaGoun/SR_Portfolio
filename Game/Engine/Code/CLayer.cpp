@@ -59,10 +59,12 @@ HRESULT CLayer::Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject)
 		vec.push_back(pGameObject);
 		pGameObject->SetTag(pTag);
 		m_mapObject.insert({ pTag, vec });
+		pGameObject->SetLayer(this);
 	}
 	else {
 		iter->second.push_back(pGameObject);
 		pGameObject->SetTag(iter->first);
+		pGameObject->SetLayer(this);
 	}
 
 	if (pGameObject->Get_Parent() == nullptr)

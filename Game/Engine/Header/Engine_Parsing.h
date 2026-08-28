@@ -90,6 +90,9 @@ namespace Engine
             if (!lstrcmp(proto.second.tag, tag))
                 return proto.second.tag;
         }
+		wstring s = tag;
+		s += L" proto not set";
+		MSG_BOXF(s.c_str());
         return nullptr;
     }
 
@@ -120,29 +123,32 @@ namespace Engine
         while (st.Next(t))
         {
             ControlPoint cp;
-            float x = 0.f, y = 0.f, z = 0.f, w = 0.f;
+			VTXTEX vtxTex;
+			FACE32 face;
+            float fX = 0.f, fY = 0.f, fZ = 0.f, fW = 0.f;
+            int iX = 0, iY = 0, iZ = 0, iW = 0;
             int   trig = 0;
 
             // Transform
-            if (swscanf_s(t, L"pos=%f %f %f", &x, &y, &z) == 3)
+            if (swscanf_s(t, L"pos=%f %f %f", &fX, &fY, &fZ) == 3)
             {
                 if (CTransform* pTF = pObj->Get_Transform())
-                    pTF->Set_Pos(_vec3(x, y, z));
+                    pTF->Set_Pos(_vec3(fX, fY, fZ));
             }
-            else if (swscanf_s(t, L"rot=%f %f %f", &x, &y, &z) == 3)
+            else if (swscanf_s(t, L"rot=%f %f %f", &fX, &fY, &fZ) == 3)
             {
                 // 런타임 회전은 quat가 기준. rot는 저장용 미리보기.
             }
-            else if (swscanf_s(t, L"quat=%f %f %f %f", &x, &y, &z, &w) == 4)
+            else if (swscanf_s(t, L"quat=%f %f %f %f", &fX, &fY, &fZ, &fW) == 4)
             {
-                D3DXQUATERNION q(x, y, z, w);
+                D3DXQUATERNION q(fX, fY, fZ, fW);
                 if (CTransform* pTF = pObj->Get_Transform())
                     pTF->Set_Quaternion(&q);
             }
-            else if (swscanf_s(t, L"scale=%f %f %f", &x, &y, &z) == 3)
+            else if (swscanf_s(t, L"scale=%f %f %f", &fX, &fY, &fZ) == 3)
             {
                 if (CTransform* pTF = pObj->Get_Transform())
-                    pTF->Set_Scale(_vec3(x, y, z));
+                    pTF->Set_Scale(_vec3(fX, fY, fZ));
             }
 
             // Collider
@@ -151,32 +157,32 @@ namespace Engine
                 if (CCollider* pCol = dynamic_cast<CCollider*>(pCom))
                     pCol->SetIsTrigger(trig != 0);
             }
-            else if (swscanf_s(t, L"offset=%f %f %f", &x, &y, &z) == 3)
+            else if (swscanf_s(t, L"offset=%f %f %f", &fX, &fY, &fZ) == 3)
             {
                 if (CCube_Collider* pBox = dynamic_cast<CCube_Collider*>(pCom))
-                    pBox->Set_Offset(_vec3(x, y, z));
+                    pBox->Set_Offset(_vec3(fX, fY, fZ));
                 else if (CSphere_Collider* pSphere = dynamic_cast<CSphere_Collider*>(pCom))
-                    pSphere->Set_Offset(_vec3(x, y, z));
+                    pSphere->Set_Offset(_vec3(fX, fY, fZ));
             }
-            else if (swscanf_s(t, L"extents=%f %f %f", &x, &y, &z) == 3)
+            else if (swscanf_s(t, L"extents=%f %f %f", &fX, &fY, &fZ) == 3)
             {
                 if (CCube_Collider* pBox = dynamic_cast<CCube_Collider*>(pCom))
-                    pBox->Set_Extents(_vec3(x, y, z));
+                    pBox->Set_Extents(_vec3(fX, fY, fZ));
             }
-            else if (swscanf_s(t, L"radius=%f", &x) == 1)
+            else if (swscanf_s(t, L"radius=%f", &fX) == 1)
             {
                 if (CSphere_Collider* pSphere = dynamic_cast<CSphere_Collider*>(pCom))
-                    pSphere->Set_Radius(x);
+                    pSphere->Set_Radius(fX);
             }
 
             // Spline
-			else if (swscanf_s(t, L"SampleUnit=%f", &x) == 1) {
+			else if (swscanf_s(t, L"SampleUnit=%f", &fX) == 1) {
 				if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom))
-					pSpline->Set_SampleUnit(x);
+					pSpline->Set_SampleUnit(fX);
 			}
-			else if (swscanf_s(t, L"TextureUnit=%f", &x) == 1) {
+			else if (swscanf_s(t, L"TextureUnit=%f", &fX) == 1) {
 				if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom))
-					pSpline->Set_TextureUnit(x);
+					pSpline->Set_TextureUnit(fX);
 			}
             else if (!wcscmp(t, L"CONTROL_POINT"))
             {
@@ -184,21 +190,21 @@ namespace Engine
                 if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom))
                     cp.id = pSpline->GenerateId();
             }
-            else if (swscanf_s(t, L"cp_pos=%f %f %f", &x, &y, &z) == 3)
+            else if (swscanf_s(t, L"cp_pos=%f %f %f", &fX, &fY, &fZ) == 3)
             {
-                cp.position = { x, y, z };
+                cp.position = { fX, fY, fZ };
             }
-            else if (swscanf_s(t, L"cp_bank=%f", &x) == 1)
+            else if (swscanf_s(t, L"cp_bank=%f", &fX) == 1)
             {
-                cp.bank = x;
+                cp.bank = fX;
             }
-            else if (swscanf_s(t, L"cp_width=%f", &x) == 1)
+            else if (swscanf_s(t, L"cp_width=%f", &fX) == 1)
             {
-                cp.width = x;
+                cp.width = fX;
             }
-            else if (swscanf_s(t, L"cp_depth=%f", &x) == 1)
+            else if (swscanf_s(t, L"cp_depth=%f", &fX) == 1)
             {
-                cp.depth = x;
+                cp.depth = fX;
             }
             else if (!wcscmp(t, L"END_CONTROL_POINT"))
             {
@@ -208,6 +214,67 @@ namespace Engine
                 }
             }
 
+			// HeightMap
+			else if (swscanf_s(t, L"m_fEditStrength=%f", &fX) == 1)
+			{
+				if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom))
+					pHM->Set_EditStrength(fX);
+			}
+			else if (swscanf_s(t, L"m_fEditRadius=%f", &fX) == 1)
+			{
+				if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom))
+					pHM->Set_EditRadius(fX);
+			}
+			else if (swscanf_s(t, L"m_iCntX=%d", &iX) == 1)
+			{
+				if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom))
+					pHM->Set_CntX(iX);
+			}
+			else if (swscanf_s(t, L"m_iCntZ=%d", &iX) == 1)
+			{
+				if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom))
+					pHM->Set_CntZ(iX);
+			}
+			else if (swscanf_s(t, L"m_fItv=%f", &fX) == 1)
+			{
+				if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom))
+					pHM->Set_Itv(fX);
+			}
+			else if (!wcscmp(t, L"HM_VERTEX"))
+			{
+				vtxTex = {};
+			}
+			else if (swscanf_s(t, L"hm_vtx_pos=%f %f %f", &fX, &fY, &fZ) == 3)
+			{
+				vtxTex.vPosition = { fX, fY, fZ };
+			}
+			else if (swscanf_s(t, L"hm_vtx_uv=%f %f", &fX, &fY) == 2)
+			{
+				vtxTex.vTexUV = { fX, fY };
+			}
+			else if (!wcscmp(t, L"END_HM_VERTEX"))
+			{
+				if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom))
+					pHM->GetVertices().push_back(vtxTex);
+			}
+			else if (!wcscmp(t, L"HM_FACE"))
+			{
+				face = {};
+			}
+			else if (swscanf_s(t, L"hm_face_index=%u %u %u", &iX, &iY, &iZ) == 3)
+			{
+				face.indices = { _ulong(iX), _ulong(iY), _ulong(iZ) };
+			}
+			else if (swscanf_s(t, L"hm_face_normal=%f %f %f", &fX, &fY, &fZ) == 3)
+			{
+				face.vNoraml = { fX, fY, fZ };
+			}
+			else if (!wcscmp(t, L"END_HM_FACE"))
+			{
+				if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom))
+					pHM->GetFaces().push_back(face);
+			}
+
             else
             {
                 st.Unget();
@@ -216,6 +283,9 @@ namespace Engine
         }
         if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom)) {
             pSpline->Compute_Spline();
+        }
+        else if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom)) {
+			pHM->Ready_BufferByVec();
         }
     }
 
@@ -323,6 +393,42 @@ namespace Engine
 						fwprintf(pf, L"cp_depth=%f\n", cp.depth);
 						writeIndent(pf, depth + 2);
 						fwprintf(pf, L"END_CONTROL_POINT\n");
+					}
+				}
+				else if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pBuf)) {
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"m_fEditStrength=%f\n", pHM->Get_EditStrength());
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"m_fEditRadius=%f\n", pHM->Get_EditRadius());
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"m_iCntX=%d\n", pHM->Get_CntX());
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"m_iCntZ=%d\n", pHM->Get_CntZ());
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"m_fItv=%f\n", pHM->Get_Itv());
+					
+					auto& vertices = pHM->GetVertices();
+					for (auto& v : vertices) {
+						writeIndent(pf, depth + 2);
+						fwprintf(pf, L"HM_VERTEX\n");
+						writeIndent(pf, depth + 3);
+						fwprintf(pf, L"hm_vtx_pos=%f %f %f\n", v.vPosition.x, v.vPosition.y, v.vPosition.z);
+						writeIndent(pf, depth + 3);
+						fwprintf(pf, L"hm_vtx_uv=%f %f\n", v.vTexUV.x, v.vTexUV.y);
+						writeIndent(pf, depth + 2);
+						fwprintf(pf, L"END_HM_VERTEX\n");
+					}
+
+					auto& faces = pHM->GetFaces();
+					for (auto& f : faces) {
+						writeIndent(pf, depth + 2);
+						fwprintf(pf, L"HM_FACE\n");
+						writeIndent(pf, depth + 3);
+						fwprintf(pf, L"hm_face_index=%u %u %u\n", f.indices._0, f.indices._1, f.indices._2);
+						writeIndent(pf, depth + 3);
+						fwprintf(pf, L"hm_face_normal=%f %f %f\n", f.vNoraml.x, f.vNoraml.y, f.vNoraml.z);
+						writeIndent(pf, depth + 2);
+						fwprintf(pf, L"END_HM_FACE\n");
 					}
 				}
 			}

@@ -190,6 +190,91 @@ void CHeightMap::HeightMap_Edit(_vec3 _pickPos, bool bShift)
 	Adjust_Edit();
 }
 
+HRESULT CHeightMap::Ready_BufferByVec()
+{
+	m_dwVtxCnt = m_iCntX * m_iCntZ;
+	m_dwVtxSize = sizeof(VTXTEX);
+	m_dwFVF = FVF_TEX;
+
+	m_dwTriCnt = (m_iCntX - 1) * (m_iCntZ - 1) * 2;
+	m_dwIdxCnt = m_dwTriCnt * 3;
+	m_IdxFmt = D3DFMT_INDEX32;
+
+	if (m_pVB)
+		Safe_Release(m_pVB);
+	if (m_pIB)
+		Safe_Release(m_pIB);
+
+	// 높이 값 변경 최적화를 위해 동적 버퍼
+	if (FAILED(m_pGraphicDev->CreateVertexBuffer(
+		m_dwVtxCnt * m_dwVtxSize,
+		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
+		m_dwFVF,
+		D3DPOOL_DEFAULT,
+		&m_pVB,
+		0)
+	))
+		return E_FAIL;
+
+	int idxSize = m_IdxFmt == D3DFMT_INDEX16 ? sizeof(WORD) : sizeof(DWORD);
+
+	// 높이 값이 달라져도 인덱스가 달라지진 않으므로 정적
+	if (FAILED(m_pGraphicDev->CreateIndexBuffer(
+		m_dwIdxCnt * idxSize,
+		D3DUSAGE_WRITEONLY,
+		m_IdxFmt,
+		D3DPOOL_MANAGED,
+		&m_pIB,
+		0)
+	))
+		return E_FAIL;
+
+	VTXTEX* vertices = nullptr;
+
+	m_pVB->Lock(0, 0, (void**)&vertices, 0);
+
+	for (int i = 0; i < m_iCntZ; ++i) {
+		for (int j = 0; j < m_iCntX; ++j) {
+			int index = i * m_iCntX + j;
+			vertices[index].vPosition = m_vecVertices[index].vPosition;
+			vertices[index].vTexUV = m_vecVertices[index].vTexUV;
+		}
+	}
+
+	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
+	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+
+	for (int i = 0; i < m_dwVtxCnt; ++i) {
+		UpdateMinMaxVtx(vertices[i].vPosition);
+	}
+
+	SetBoundingBox();
+
+	m_pVB->Unlock();
+
+	INDEX32* indices = nullptr;
+
+	m_pIB->Lock(0, 0, (void**)&indices, 0);
+
+	for (int i = 0; i < m_iCntZ - 1; ++i) {
+		for (int j = 0; j < m_iCntX - 1; ++j) {
+			// 왼쪽 위 삼각형
+			indices[(i * (m_iCntX - 1) + j) * 2]._0 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2].indices._0;
+			indices[(i * (m_iCntX - 1) + j) * 2]._1 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2].indices._1;
+			indices[(i * (m_iCntX - 1) + j) * 2]._2 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2].indices._2;
+
+			// 오른쪽 아래 삼각형
+			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._0 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2 + 1].indices._0;
+			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._1 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2 + 1].indices._1;
+			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._2 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2 + 1].indices._2;
+		}
+	}
+
+	m_pIB->Unlock();
+
+	return S_OK;
+}
+
 void CHeightMap::Render_Buffer()
 {
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
@@ -243,31 +328,38 @@ void CHeightMap::Render_Points()
 
 void CHeightMap::Render_Brush(_vec3 _pickPos)
 {
-	int iSegment = 60;
-	_vec3 first, before, current;
-	_vec3 tmp;
-	for (int i = 0; i < iSegment; ++i) {
-		float radian = D3DXToRadian(360.f * i / iSegment);
-		tmp = _pickPos +
-			_vec3{ m_fEditRadius * cosf(radian),
-			0,
-			m_fEditRadius * sinf(radian) };
-		tmp = GetHeightFromXZ(tmp) + _vec3{ 0, 0.01f, 0 };
-		if (i == iSegment - 1) {
-			current = tmp;
-			CCalculator::DrawRayLine(m_pGraphicDev, first, current, D3DXCOLOR(0, 0, 1, 1));
-			CCalculator::DrawRayLine(m_pGraphicDev, _pickPos, current, D3DXCOLOR(0, 0, 1, 1));
+	int iSegmentRound = 60;
+	int iSegmentLine = 10;
+	_vec3 firstEnd, beforeEnd, currentEnd;
+	_vec3 beforetmp, tmp, worldPickPos;
+	_matrix* matWorld = m_pOwner->Get_Transform()->Get_World();
+	D3DXVec3TransformCoord(&worldPickPos, &_pickPos, matWorld);
+
+	for (int i = 0; i < iSegmentRound; ++i) {
+		float radian = D3DXToRadian(360.f * i / iSegmentRound);
+		beforetmp = worldPickPos;
+		for (int j = 1; j <= iSegmentLine; ++j) {
+			tmp = _pickPos +
+				_vec3{ m_fEditRadius * j / iSegmentLine * cosf(radian),
+				0,
+				m_fEditRadius * j / iSegmentLine * sinf(radian) };
+			tmp = GetHeightFromXZ(tmp) + _vec3{ 0, 0.1f, 0 };
+			D3DXVec3TransformCoord(&tmp, &tmp, matWorld);
+			CCalculator::DrawRayLine(m_pGraphicDev, beforetmp, tmp, D3DXCOLOR(0, 0, 1, 1));
+			beforetmp = tmp;
+		}
+		if (i == iSegmentRound - 1) {
+			currentEnd = tmp;
+			CCalculator::DrawRayLine(m_pGraphicDev, firstEnd, currentEnd, D3DXCOLOR(0, 0, 1, 1));
 		}
 		else if(i > 0){
-			current = tmp;
-			CCalculator::DrawRayLine(m_pGraphicDev, before, current, D3DXCOLOR(0, 0, 1, 1));
-			CCalculator::DrawRayLine(m_pGraphicDev, _pickPos, current, D3DXCOLOR(0, 0, 1, 1));				
-			before = current;
+			currentEnd = tmp;
+			CCalculator::DrawRayLine(m_pGraphicDev, beforeEnd, currentEnd, D3DXCOLOR(0, 0, 1, 1));
+			beforeEnd = currentEnd;
 		}
 		else {
-			first = tmp;
-			before = tmp;
-			CCalculator::DrawRayLine(m_pGraphicDev, _pickPos, before, D3DXCOLOR(0, 0, 1, 1));
+			firstEnd = tmp;
+			beforeEnd = tmp;
 		}
 	}
 }
