@@ -118,7 +118,7 @@ HRESULT CStartMenu::Ready_Environment_Layer(const _tchar* pLayerTag)
 	
 	pGameObject->Get_Transform()->Set_Scale({ WINCX, WINCY, 1 });
 	pGameObject->Get_Transform()->Set_Pos({ 0, 0, 15 });
-
+	
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;

@@ -60,6 +60,12 @@ HRESULT CScene3_KartBtn::Ready_GameObject()
 
 void CScene3_KartBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	
+}
+
+_int CScene3_KartBtn::Update_GameObject(const _float& fDeltaTime)
+{
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 	{
 		m_fFrame = 1;
@@ -69,13 +75,12 @@ void CScene3_KartBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
-			
 			if (pSlot->Get_Show() == true)
 				pSlot->Set_Show(false);
 			else
 				pSlot->Set_Show(true);
 
-			if (pSlot2   ->Get_Show() == true)
+			if (pSlot2->Get_Show() == true)
 				pSlot2->Set_Show(false);
 			else
 				pSlot2->Set_Show(true);
@@ -86,12 +91,6 @@ void CScene3_KartBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		m_fFrame = 0;
 	}
-}
-
-_int CScene3_KartBtn::Update_GameObject(const _float& fDeltaTime)
-{
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
-
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

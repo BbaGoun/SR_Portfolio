@@ -68,6 +68,7 @@ HRESULT CLayer::Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject)
 	if (pGameObject->Get_Parent() == nullptr)
 		Attach_Root(pGameObject);
 
+	pGameObject->SetLayer(this);
 	return S_OK;
 }
 

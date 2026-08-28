@@ -74,6 +74,7 @@ void CInspector::GameObjectInfo(CGameObject* _pObj)
         static char s_typeBuf[128];
         strcpy_s(s_nameBuf, ToUtf8(_pObj->GetName()).c_str());
         strcpy_s(s_tagBuf, ToUtf8(_pObj->GetTag()).c_str());
+        strcpy_s(s_typeBuf, ToUtf8(_pObj->GetType()).c_str());
 
         // Name
         ImGuiLabel("Name        ");

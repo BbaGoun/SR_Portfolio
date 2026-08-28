@@ -566,7 +566,8 @@ void CCart::CreateThunderCloudObject()
 
 void CCart::UpdateThunder()
 {
-	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+	CCartBody* pCartBody  = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+	
 	m_bThunder = pCartBody->GetThunderSpinState();
 
 	if (m_bThunder == true)
@@ -593,7 +594,7 @@ void CCart::UpdateThunder()
 
 void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 {
-	auto& tracks = CManagement::GetInstance()->Find_GameObjectsByTag(L"Default", L"Track");
+	auto& tracks = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Track");
 	if (tracks.empty())
 		return;
 
@@ -659,9 +660,8 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 			if (!D3DXIntersectTri(&p0, &p1, &p2, &vRayPos, &vRayDir, &u, &v, &fDist))
 				continue;
 
-			//if (fDist >= fMinRayDist)
-			//	continue;
-
+			if (fDist >= fMinRayDist)
+				continue;
 			D3DXPLANE plane;
 			D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
 
@@ -681,7 +681,6 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 			m_vTerrainNormal = vLocalNormal;
 			if (m_vTerrainNormal.y < 0)
 				m_vTerrainNormal *= -1;
-			break;
 		}
 	}
 	// for문이 끝나면 fGroundY, m_vTerrainNormal값이 구해짐
@@ -800,7 +799,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 
 void CCart::CollisionWall()
 {
-	auto& walls = CManagement::GetInstance()->Find_GameObjectsByTag(L"Default", L"Wall");
+	auto& walls = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Wall");
 	if (walls.empty())
 		return;
 	int a = 5;

@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "Engine_Define.h"
 #include "CLoadMgr.h"
+#include "CCart.h"
+#include "CCartBody.h"
+#include "CWheel.h"
 
 IMPLEMENT_SINGLETON(CLoadMgr)
 
@@ -14,7 +17,15 @@ CLoadMgr::~CLoadMgr()
 }
 
 void CLoadMgr::ReadyCreateMap() {
+	int a;
 	m_createMap[L""] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CEmpty::Create(pGraphicDev); };
+	m_createMap[L"Obj_Cart"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CCart::Create(pGraphicDev); };
+	m_createMap[L"Obj_CartBody"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CCartBody::Create(pGraphicDev); };
+	m_createMap[L"CWheelFL"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CWheel::Create(pGraphicDev,WHEEL_FL); };
+	m_createMap[L"CWheelFR"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CWheel::Create(pGraphicDev,WHEEL_FR); };
+	m_createMap[L"CWheelBL"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CWheel::Create(pGraphicDev,WHEEL_BL); };
+	m_createMap[L"CWheelBR"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CWheel::Create(pGraphicDev,WHEEL_BR); };
+
 }
 
 CGameObject* CLoadMgr::CreateByType(const _tchar* type, LPDIRECT3DDEVICE9 pGraphicDev) {
@@ -59,7 +70,7 @@ CGameObject* CLoadMgr::LoadGameObjectClient(FileReadState& st, LPDIRECT3DDEVICE9
 				pParent->Set_Child(pObj);
 		}
 		else if (StartsWith(t, L"tag=")) {
-			pScene->Add_GameObject(L"Default", t + 4, pObj);
+			pScene->Add_GameObject(L"GameLogic", t + 4, pObj);
 		}
 		else if (StartsWith(t, L"collisionLayer="))
 			pObj->Set_CollisionLayer((COLLISION_LAYER)_wtoi(t + 15));
