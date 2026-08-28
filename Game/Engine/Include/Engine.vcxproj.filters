@@ -157,6 +157,9 @@
     <Filter Include="04. Component\Shape\HeightMap">
       <UniqueIdentifier>{82e0f4f7-dd13-4c69-8776-a9984e25d7a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\Sphere">
+      <UniqueIdentifier>{5d27ba74-c0fc-405d-b474-fd212bb1031b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -322,6 +325,9 @@
     <ClInclude Include="..\Header\CHeightMap.h">
       <Filter>04. Component\Shape\HeightMap</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSphere.h">
+      <Filter>04. Component\Shape\Sphere</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -465,6 +471,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CHeightMap.cpp">
       <Filter>04. Component\Shape\HeightMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSphere.cpp">
+      <Filter>04. Component\Shape\Sphere</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

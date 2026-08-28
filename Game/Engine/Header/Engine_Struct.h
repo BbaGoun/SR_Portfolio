@@ -94,7 +94,7 @@ namespace Engine
 	typedef struct tagFace32
 	{
 		INDEX32 indices;
-		_vec3	vNoraml;
+		_vec3	vNoraml = { 0, 0 ,0 };
 	}FACE32;
 
 

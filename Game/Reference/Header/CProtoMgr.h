@@ -27,6 +27,7 @@
 #include "CArrowTex.h"
 #include "CSpline.h"
 #include "CHeightMap.h"
+#include "CSphere.h"
 
 BEGIN(Engine)
 
