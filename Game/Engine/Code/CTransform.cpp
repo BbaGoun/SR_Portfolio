@@ -4,6 +4,7 @@
 CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev) : CComponent(pGraphicDev)
 , m_localQuaternion({ 0, 0, 0, 1 })
 , m_worldQuaternion({ 0, 0, 0, 1 })
+, m_defaultQuaternion({ 0, 0, 0, 1 })
 , m_vScale({ 1, 1, 1 })
 , m_bDirty(true)
 {
@@ -19,6 +20,7 @@ CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev) : CComponent(pGraphicDev)
 CTransform::CTransform(const CTransform& rhs):CComponent(rhs)
 , m_localQuaternion(rhs.m_localQuaternion)
 , m_worldQuaternion(rhs.m_worldQuaternion)
+, m_defaultQuaternion(rhs.m_worldQuaternion)
 , m_vScale(rhs.m_vScale)
 , m_bDirty(rhs.m_bDirty)
 {

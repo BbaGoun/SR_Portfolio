@@ -35,6 +35,12 @@ public:
 	}
 
 	void		Set_Quaternion(D3DXQUATERNION* pQuater) {
+		m_localQuaternion = m_defaultQuaternion * (*pQuater);
+		D3DXQuaternionNormalize(&m_localQuaternion, &m_localQuaternion);
+		Set_Dirty();
+	}
+	void		Set_DefaultQuaternion(D3DXQUATERNION* pQuater) {
+		m_defaultQuaternion = *pQuater;
 		m_localQuaternion = *pQuater;
 		Set_Dirty();
 	}
@@ -114,6 +120,7 @@ private:
 
 	D3DXQUATERNION	m_worldQuaternion;
 	D3DXQUATERNION	m_localQuaternion;
+	_quaternion		m_defaultQuaternion;
 	_vec3			m_vScale;
 
 	_matrix			m_matBillboard;

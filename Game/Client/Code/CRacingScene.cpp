@@ -162,7 +162,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
 	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
 
-	pCart->Set_Child(pPlayer);
+	pCart->Set_ChildWithOutTune(pPlayer);
 	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
 // 이펙트
 	// ## 부스터 왼쪽1 바람 이펙트
@@ -171,7 +171,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
-	pCart->Set_Child(pGameObject);
+	pCart->Set_ChildWithOutTune(pGameObject);
 	
 	// ## 부스터 왼쪽2 바람 이펙트
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
@@ -179,7 +179,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
-	pCart->Set_Child(pGameObject);
+	pCart->Set_ChildWithOutTune(pGameObject);
 	
 	// ## 부스터 오른쪽1 바람 이펙트
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
@@ -187,14 +187,14 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
-	pCart->Set_Child(pGameObject);
+	pCart->Set_ChildWithOutTune(pGameObject);
 	// ## 부스터 오른쪽2 바람 이펙트
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
-	pCart->Set_Child(pGameObject);
+	pCart->Set_ChildWithOutTune(pGameObject);
 	
 	// ## 부스터 제트 이펙트
 	pGameObject = CBoostJet::Create(m_pGraphicDev);
@@ -202,7 +202,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
-	pCartBody->Set_Child(pGameObject);
+	pCartBody->Set_ChildWithOutTune(pGameObject);
 
 // 파티클
 	// 연기 이펙트
@@ -227,42 +227,41 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SpeedLine", pGameObject);
 	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
 
-
 	//// # 플레이어 따라다니는 3인칭 카메라
-	//_vec3 vEye, vAt, vUp, vLook;
-	//pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
-	//pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
-	//pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	//vEye = vAt + (vUp * 10) + (vLook * -20);
-	//pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp);
-	//
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FollowSmoothCam", pGameObject);
-	//if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
-	//	static_cast<CCamera*>(pGameObject))))
-	//	return E_FAIL;
-	//
-	//if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
-	//	return E_FAIL;
-
-	// # 자유 카메라
-	_vec3 vEye = { 0, 0, -5 }, vAt = { 0, 0, 0 };
-	_vec3 vUp = { 0, 1, 0 };
-
-	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
-
+	_vec3 vEye, vAt, vUp, vLook;
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 5) + (vLook * -10);
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45.f));
+	
 	if (pGameObject == nullptr)
 		return E_FAIL;
-
-	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_DynamicCam", pGameObject);
-
-	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_DYNAMIC,
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FollowSmoothCam", pGameObject);
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
-
-	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
+	
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
+
+	// # 자유 카메라
+	//_vec3 vEye = { 0, 0, -5 }, vAt = { 0, 0, 0 };
+	//_vec3 vUp = { 0, 1, 0 };
+
+	//pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
+
+	//if (pGameObject == nullptr)
+	//	return E_FAIL;
+
+	//CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_DynamicCam", pGameObject);
+
+	//if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_DYNAMIC,
+	//	static_cast<CCamera*>(pGameObject))))
+	//	return E_FAIL;
+
+	//if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
+	//	return E_FAIL;
 
 	return S_OK;
 }

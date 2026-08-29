@@ -82,7 +82,12 @@ void CGameObject::Set_Child(CGameObject* _pGO)
     Insert_Child(_pGO, -1);
 }
 
-void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
+void CGameObject::Set_ChildWithOutTune(CGameObject* _pGO)
+{
+    Insert_Child(_pGO, -1, false);
+}
+
+void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex, bool bTune)
 {
     if (_pGO == nullptr)
         return;
@@ -140,7 +145,7 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex)
     _pGO->m_pParent = this;
 
     // 아까 저장한 위치로 보존
-    if (!bSameParent)
+    if (!bSameParent && bTune)
     {
         _matrix* pMatParent = Get_Transform()->Get_World();
         _matrix matInvParent;

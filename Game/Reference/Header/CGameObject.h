@@ -27,12 +27,13 @@ public:
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	const map<const _tchar*, CComponent*>& Get_ComponentMap() { return m_mapComponent; }
 
-	CTransform* Get_Transform() { return m_pTransformCom; }
+ 	CTransform* Get_Transform() { return m_pTransformCom; }
 	CComponent* Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
 	void	Remove_Component(CComponent* _pCom);
 
 	void	Set_Child(CGameObject* _pGO);
-	void	Insert_Child(CGameObject* _pGO, int _iIndex);
+	void	Set_ChildWithOutTune(CGameObject* _pGO);
+	void	Insert_Child(CGameObject* _pGO, int _iIndex, bool bTune = true);
 	void	Insert_Before(CGameObject* _pGO);
 	void	Insert_After(CGameObject* _pGO);
 	const vector<CGameObject*>& Get_Children() { return m_vecChildren; }
