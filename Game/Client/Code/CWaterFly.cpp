@@ -50,18 +50,26 @@ HRESULT CWaterFly::Ready_GameObject()
 
 void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
+	CGameObject* pCartBody =CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
+
 	CGameObject* pTarget1 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 	CGameObject* pTarget2 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget2");
+	CGameObject* pTarget3 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget3");
+	CGameObject* pTarget4 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget4");
 
-	_vec3 vFlyPos, vCartPos, vCartUp, vCartLook, vTargetPos1, vTargetPos2, vDirTarget1, vDirTarget2, vDirTarget, vMovePos;
+	_vec3 vFlyPos, vCartPos, vCartUp, vCartLook,
+		vTargetPos1, vTargetPos2, vTargetPos3, vTargetPos4,
+		vDirTarget1, vDirTarget2, vDirTarget3, vDirTarget4,
+		vDirTarget; // vMovePos;
 
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 	pCartBody->Get_Transform()->Get_Info(INFO_UP, &vCartUp);
 	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
+
 	pTarget1->Get_Transform()->Get_Info(INFO_POS, &vTargetPos1);
 	pTarget2->Get_Transform()->Get_Info(INFO_POS, &vTargetPos2);
-
+	pTarget3->Get_Transform()->Get_Info(INFO_POS, &vTargetPos3);
+	pTarget4->Get_Transform()->Get_Info(INFO_POS, &vTargetPos4);
 
 	vCartPos += vCartUp * 0.f;
 
@@ -171,15 +179,34 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		vDirTarget1 = vTargetPos1 - m_vSavePos;
 		vDirTarget2 = vTargetPos2 - m_vSavePos;
+		vDirTarget3 = vTargetPos3 - m_vSavePos;
+		vDirTarget4 = vTargetPos4 - m_vSavePos;
 
-		if (D3DXVec3Length(&vDirTarget1) < D3DXVec3Length(&vDirTarget2))
+		// 하드 코딩 수정
+		if (D3DXVec3Length(&vDirTarget1) < D3DXVec3Length(&vDirTarget2) 
+			&& D3DXVec3Length(&vDirTarget1) <  D3DXVec3Length(&vDirTarget3)
+			&& D3DXVec3Length(&vDirTarget1) < D3DXVec3Length(&vDirTarget4))
 		{
 			vDirTarget = vDirTarget1;
 		}
 
-		else
+		else if (D3DXVec3Length(&vDirTarget2) < D3DXVec3Length(&vDirTarget1) 
+			&& D3DXVec3Length(&vDirTarget2) < D3DXVec3Length(&vDirTarget3)
+			&& D3DXVec3Length(&vDirTarget2) < D3DXVec3Length(&vDirTarget4))
 		{
 			vDirTarget = vDirTarget2;
+		}
+
+		else if (D3DXVec3Length(&vDirTarget3) < D3DXVec3Length(&vDirTarget1)
+			&& D3DXVec3Length(&vDirTarget3) < D3DXVec3Length(&vDirTarget2)
+			&& D3DXVec3Length(&vDirTarget3) < D3DXVec3Length(&vDirTarget4))
+		{
+			vDirTarget = vDirTarget3;
+		}
+
+		else
+		{
+			vDirTarget = vDirTarget4;
 		}
 
 		if (D3DXVec3Length(&vDirTarget) <= 0.001f)
@@ -230,8 +257,9 @@ void CWaterFly::CollisionEnter(CCollider* pOtherCollider)
 void CWaterFly::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-
-	if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)
+	// if (wcsncmp(wOtherTag, L"Obj_MissileTarget", 17) == 0)
+	// if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)
+	if (wcsncmp(wOtherTag, L"Obj_MissileTarget", 17) == 0)
 	{
 		//vector<CGameObject*> vecChildren = Get_Children();
 

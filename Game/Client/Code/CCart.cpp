@@ -350,7 +350,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			if (vCross.y < 0)
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle) * m_eDirection;
-				
+
 				m_vRotation.z += fDeltaTime * 0.5f * m_eDirection;
 			}
 			else
