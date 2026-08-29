@@ -1,16 +1,16 @@
 ﻿OBJECT
-  type=
+  type=Obj_PlayerHead
   prefabPath=..\..\..\Resource\Editor\Prefab\Character\bazzi.prefab
   belong=1
   name=Bazzi
-  tag=17
+  tag=Obj_Player
   collisionLayer=0
   cullDistance=0
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-    pos=0.000000 0.000000 0.000000
-    rot=0.000000 -0.000000 0.000000
-    quat=0.000000 0.000000 0.000000 1.000000
-    scale=1.000000 1.000000 1.000000
+    pos=0.000000 2.388705 -0.126125
+    rot=0.000000 89.991447 0.000000
+    quat=0.000000 0.707054 0.000000 0.707159
+    scale=0.999914 1.000000 0.999914
   OBJECT
     type=
     prefabPath=..\..\..\Resource\Editor\Prefab\Character\bazzi.prefab
@@ -23,13 +23,13 @@
       pos=0.000000 0.000000 0.000000
       rot=0.000000 -0.000000 0.000000
       quat=0.000000 0.000000 0.000000 1.000000
-      scale=1.000000 1.000000 1.000000
+      scale=2.000000 2.000000 2.000000
     OBJECT
-      type=
+      type=Obj_PlayerHead
       prefabPath=
       belong=1
       name=Head
-      tag=3
+      tag=Obj_PlayerHead
       collisionLayer=0
       cullDistance=0
       COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
@@ -99,7 +99,7 @@
           pos=-0.008125 0.000000 0.000000
           rot=-89.999870 -0.000000 0.000000
           quat=-0.707106 0.000000 0.000000 0.707108
-          scale=1.000000 1.000001 1.000001
+          scale=1.000000 1.000005 1.000005
       ENDOBJECT
     ENDOBJECT
     OBJECT

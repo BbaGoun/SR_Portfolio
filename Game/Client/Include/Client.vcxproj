@@ -229,6 +229,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CMissile.h" />
     <ClInclude Include="..\Header\CMissileBody.h" />
     <ClInclude Include="..\Header\CMissileTarget.h" />
+    <ClInclude Include="..\Header\CPlayer.h" />
+    <ClInclude Include="..\Header\CPlayerHead.h" />
     <ClInclude Include="..\Header\CScene1_Replay.h" />
     <ClInclude Include="..\Header\CScene1_Speed.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -243,6 +245,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_StartBtn.h" />
     <ClInclude Include="..\Header\CSpeedLine.h" />
+    <ClInclude Include="..\Header\CUI_EndCountDown.h" />
     <ClInclude Include="..\Header\CUI_Laps.h" />
     <ClInclude Include="..\Header\CLoadMgr.h" />
     <ClInclude Include="..\Header\CSkidMark.h" />
@@ -282,6 +285,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CUI_ItemSlot.h" />
     <ClInclude Include="..\Header\CScene1_Item.h" />
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
+    <ClInclude Include="..\Header\CUI_StartCountDown.h" />
     <ClInclude Include="..\Header\CUI_Timer.h" />
     <ClInclude Include="..\Header\CUI_UnderBar.h" />
     <ClInclude Include="..\Header\CUI_XButton.h" />
@@ -304,6 +308,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CDustLandingEffect.cpp" />
     <ClCompile Include="..\Code\CMenu_Item.cpp" />
     <ClCompile Include="..\Code\CMenu_Set.cpp" />
+    <ClCompile Include="..\Code\CPlayer.cpp" />
+    <ClCompile Include="..\Code\CPlayerHead.cpp" />
     <ClCompile Include="..\Code\CScene1_Replay.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -324,9 +330,11 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_StartBtn.cpp" />
     <ClCompile Include="..\Code\CSpeedLine.cpp" />
+    <ClCompile Include="..\Code\CUI_EndCountDown.cpp" />
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\CUI_StartCountDown.cpp" />
     <ClCompile Include="..\Code\CUI_UnderBar.cpp" />
     <ClCompile Include="..\Code\CUI_XButton.cpp" />
     <ClCompile Include="..\Code\CWaterBombBubble.cpp" />

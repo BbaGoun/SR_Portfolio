@@ -23,6 +23,8 @@
 #include "CWaterFLyBody.h"
 #include "CDustLandingEffect.h"
 #include "SoundMgr.h"
+#include "CUI_StartCountDown.h"
+#include "CUI_EndCountDown.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -85,8 +87,11 @@ HRESULT CCart::Ready_GameObject()
 	m_bCanShortBoost		= true;
 	m_bPlaying				= false;
 
-	m_fPlayTimer	= 0.f;
-	m_fPreTimer		= 0.f;
+	m_fPlayTimer			= 0.f;
+	m_fPreTimer				= 0.f;
+
+	m_pPlayerHead			= nullptr;
+
 	return S_OK;
 }
 
@@ -482,6 +487,7 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 		return;
 	m_fSpeed *= m_fBoostCal;
 	SoundMgr::GetInstance().PlaySound(L"Effect/cart/booster.ogg", SOUND_BOOST, 0.4f);
+	m_pPlayerHead->SetBoost(true);
 	if (m_eBoostState == BOOST_STATE_SHORT_BOOST)
 	{
 		if (m_fSpeed > 2)
@@ -497,6 +503,7 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 	{
 		m_eBoostState = BOOST_STATE_NORMAL;
 		m_fSpeed = 1;
+		m_pPlayerHead->SetBoost(false);
 		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 	}
 }
@@ -1054,6 +1061,8 @@ void CCart::StartCountDown(const _float& fDeltaTime)
 
 	if (m_fPlayTimer > 3.f)
 	{
+		static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
+			->SetFrame(4);
 		m_bPlaying = true;
 		m_bCanShortBoost = true;
 		m_bShortBoosterOnOff = true;
@@ -1061,16 +1070,22 @@ void CCart::StartCountDown(const _float& fDeltaTime)
 	}
 	else if (m_fPreTimer < 2.f && m_fPlayTimer > 2.f)
 	{
+		static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
+			->SetFrame(1);
 		m_fPreTimer = m_fPlayTimer;
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT3, 0.4f);
 	}
 	else if (m_fPreTimer < 1.f && m_fPlayTimer > 1.f)
 	{
+		static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
+			->SetFrame(2);
 		m_fPreTimer = m_fPlayTimer;
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT2, 0.4f);
 	}
 	else if (m_fPreTimer == 0.f && m_fPlayTimer > 0.f)
 	{
+		static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
+			->SetFrame(3);
 		m_fPreTimer = m_fPlayTimer;
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT1, 0.4f);
 	}
@@ -1078,13 +1093,15 @@ void CCart::StartCountDown(const _float& fDeltaTime)
 
 void CCart::EndCoundDown(const _float& fDeltaTime)
 {
-	float fEndTime = 300;
+	float fEndTime = 5;
 
 	if (m_fPlayTimer < fEndTime || m_bPlaying == false)
 		return;
 
 	if (m_fPlayTimer > fEndTime + 10.f && m_bPlaying == true)
 	{
+		static_cast<CUI_EndCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_EndCountDown"))
+			->SetFrame(0);
 		m_bPlaying = false;
 		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
@@ -1096,6 +1113,9 @@ void CCart::EndCoundDown(const _float& fDeltaTime)
 		{
 			if (m_fPreTimer < fEndTime + float(i) && m_fPlayTimer > fEndTime + float(i))
 			{
+				cout << 10 - i << endl;
+				static_cast<CUI_EndCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_EndCountDown"))
+					->SetFrame(10 - i);
 				m_fPreTimer = m_fPlayTimer;
 				SoundMgr::GetInstance().PlaySound(L"Effect/lab/ro_count.flac", SOUND_ENDCOUND, 0.4f);
 			}
