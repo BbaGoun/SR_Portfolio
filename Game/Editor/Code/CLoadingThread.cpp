@@ -264,9 +264,18 @@ _uint CLoadingThread::Loading_Stage()
         true, L"White")))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_bazzi_face00", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Character/Bazzi/Face/f00_1.png", 1),
-        true, L"Bazzi_Face00")))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_bazzi_face00_0", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Character/Bazzi/Face/f00_0.png", 1),
+        true, L"Bazzi_Face00_0")))
         return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_bazzi_face00_1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Character/Bazzi/Face/f00_1.png", 1),
+        true, L"Bazzi_Face00_1")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartWheelTex", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/wheel%d.png", 2),
+        true, L"CartWheel")))
+        return E_FAIL;
+    int a;
 
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Etc Loading.....................................");

@@ -10,7 +10,6 @@
 #include "CProject.h"
 #include "CSequence.h"
 #include "imgui_internal.h"  // DockBuilder* API
-#include "CEmpty.h"
 #include "CGameObject.h"
 #include "CManagement.h"
 #include "Engine_Parsing.h"
@@ -71,10 +70,10 @@ void CEditorScene::Render_Scene()
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("New Scene")) { OnNewScene(); }
-			if (ImGui::MenuItem("Open Scene")) { OnLoad(); }
+			if (ImGui::MenuItem("Open Scene")) { OnSceneLoad(); }
 			ImGui::Separator();
-			if (ImGui::MenuItem("Save")) { OnSave(false); }
-			if (ImGui::MenuItem("Save As")) { OnSave(true); }
+			if (ImGui::MenuItem("Save")) { OnSceneSave(false); }
+			if (ImGui::MenuItem("Save As")) { OnSceneSave(true); }
 			ImGui::Separator();
 			if (ImGui::MenuItem("Exit")) {}
 			ImGui::EndMenu();
@@ -94,6 +93,9 @@ void CEditorScene::Render_Scene()
 				wstring s = std::to_wstring(guid);
 				CManagement::GetInstance()->Add_GameObject(L"Default", s.c_str(), obj);
 				::Set_ObjSelected(guid);
+			}
+			if (ImGui::MenuItem("Load Prefab")) {
+				OnPrefabLoad();
 			}
 			ImGui::EndMenu();
 		}
@@ -243,7 +245,7 @@ void CEditorScene::OnNewScene()
 	CManagement::GetInstance()->Request_Scene(pScene);
 }
 
-void CEditorScene::OnLoad()
+void CEditorScene::OnSceneLoad()
 {
 	if (!OpenLoadSceneDialog(m_scenePath, MAX_PATH))
 		return;  // 취소
@@ -310,7 +312,7 @@ void CEditorScene::LoadSceneFile(const _tchar* path, CScene* pScene)
 	fclose(fp);
 }
 
-void CEditorScene::OnSave(bool bSaveAs)
+void CEditorScene::OnSceneSave(bool bSaveAs)
 {
 	if (bSaveAs || m_scenePath[0] == L'\0')
 	{
@@ -369,6 +371,74 @@ void CEditorScene::SaveSceneFile(const _tchar* path)
 	}
 
 	fclose(pf);
+}
+
+void CEditorScene::OnPrefabLoad()
+{
+	_tchar prefabPath[MAX_PATH] = L"\0";
+
+	if (!OpenLoadPrefabDialog(prefabPath, MAX_PATH))
+		return;  // 취소
+
+	CreatePrefabFromFile(prefabPath);
+}
+
+bool CEditorScene::OpenLoadPrefabDialog(_tchar* outPath, DWORD outChars)
+{
+	wchar_t fileBuf[MAX_PATH] = {};
+	wchar_t initialDir[MAX_PATH] = {};
+	GetFullPathNameW(L"../../../Resource/Editor/Prefab", MAX_PATH, initialDir, nullptr);
+	CreateDirectoryW(initialDir, nullptr);  // 없으면 만들기
+
+	swprintf_s(fileBuf, L"%s\\.prefab", initialDir);
+
+	OPENFILENAMEW ofn = {};
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = g_hWnd;
+	ofn.lpstrFile = fileBuf;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrFilter = L"Prefab (*.prefab)\0*.prefab\0All Files (*.*)\0*.*\0";
+	ofn.nFilterIndex = 1;
+	ofn.lpstrDefExt = L"prefab";
+	ofn.lpstrInitialDir = initialDir;
+	ofn.lpstrTitle = L"Open Prefab";
+	ofn.Flags = OFN_FILEMUSTEXIST   // 없는 파일은 선택 불가
+		| OFN_PATHMUSTEXIST
+		| OFN_NOCHANGEDIR;
+
+	if (!GetOpenFileNameW(&ofn))
+		return false;
+
+	if (!ToRelFromCwd(fileBuf, outPath, outChars))
+		wcscpy_s(outPath, outChars, fileBuf);  // 다른 드라이브면 절대경로 유지
+
+	return true;
+}
+
+void CEditorScene::CreatePrefabFromFile(const wchar_t* path)
+{
+	if (path == nullptr || path[0] == L'\0')
+		return;
+
+	FILE* fp = nullptr;
+	if (_wfopen_s(&fp, path, L"r, ccs=UTF-8") != 0 || !fp)
+		return;
+
+	FileReadState st;
+	st.fp = fp;
+
+	wchar_t* t = nullptr;
+	CGameObject* pRoot = nullptr;
+	if (st.Next(t) && !wcscmp(t, L"OBJECT"))
+		pRoot = ::LoadGameObject(st, m_pGraphicDev, nullptr);
+
+	fclose(fp);
+
+	if (pRoot == nullptr)
+		return;
+
+	::Set_ObjSelected(pRoot->GetGuid());
+	CManagement::GetInstance()->Set_SceneDirty(true);
 }
 
 void CEditorScene::InputShortCut()
