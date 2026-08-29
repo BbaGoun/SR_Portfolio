@@ -12,9 +12,13 @@ protected:
 
 public:
     HRESULT Ready_Buffer() override;
+    void Render_Buffer() override;
 
     static CCartWheelCol* Create(LPDIRECT3DDEVICE9 pGraphicDev);
     CComponent* Clone() override;
+
+private:
+    int m_iSegment = 16;
 
 protected:
     virtual void		Free() override;

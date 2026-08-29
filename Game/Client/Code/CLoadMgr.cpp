@@ -17,15 +17,19 @@ CLoadMgr::~CLoadMgr()
 }
 
 void CLoadMgr::ReadyCreateMap() {
-	int a;
 	m_createMap[L""] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CEmpty::Create(pGraphicDev); };
+	m_createMap[L"Alpha"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CAlphaEmpty::Create(pGraphicDev); };
 	m_createMap[L"Obj_Cart"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CCart::Create(pGraphicDev); };
 	m_createMap[L"Obj_CartBody"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CCartBody::Create(pGraphicDev); };
+	
+	m_createMap[L"Obj_Player"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CEmpty::Create(pGraphicDev); };
+	m_createMap[L"Obj_PlayerHead"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CEmpty::Create(pGraphicDev); };
+	m_createMap[L"Obj_PlayerArm"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CEmpty::Create(pGraphicDev); };
+	
 	m_createMap[L"CWheelFL"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CWheel::Create(pGraphicDev,WHEEL_FL); };
 	m_createMap[L"CWheelFR"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CWheel::Create(pGraphicDev,WHEEL_FR); };
 	m_createMap[L"CWheelBL"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CWheel::Create(pGraphicDev,WHEEL_BL); };
 	m_createMap[L"CWheelBR"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CWheel::Create(pGraphicDev,WHEEL_BR); };
-
 }
 
 CGameObject* CLoadMgr::CreateByType(const _tchar* type, LPDIRECT3DDEVICE9 pGraphicDev) {
