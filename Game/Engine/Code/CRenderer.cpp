@@ -41,6 +41,18 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	Clear_RenderGroup();
 }
 
+void CRenderer::Delete_RenderGroup(CGameObject* pObj)
+{
+	for (int i = 0; i < RENDER_END; ++i) {
+		auto it = find(m_RenderGroup[i].begin(), m_RenderGroup[i].end(), pObj);
+
+		if (it != m_RenderGroup[i].end()) {
+			m_RenderGroup[i].erase(it);
+			return;
+		}
+	}
+}
+
 void CRenderer::Clear_RenderGroup()
 {
 	for (size_t i = 0; i < RENDER_END; ++i)

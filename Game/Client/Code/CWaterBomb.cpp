@@ -110,10 +110,11 @@ void CWaterBomb::CollisionEnter(CCollider* pOtherCollider)
 void CWaterBomb::TriggerEnter(CCollider* pOtherCollider)
 {
 	// 컨셉에 맞게 따로 삭제
-	//const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
+	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 
 	//if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)
-	//{
+	if (wcsncmp(wOtherTag, L"Obj_MissileTarget", 17) == 0)
+	{
 	//	vector<CGameObject*> vecChildren = Get_Children();
 
 	//	for (auto& pChild : vecChildren)
@@ -122,7 +123,7 @@ void CWaterBomb::TriggerEnter(CCollider* pOtherCollider)
 	//		m_pLayer->Delete_GameObject(pChild);
 	//	}
 	//	m_pLayer->Delete_GameObject(this);
-	//}
+	}
 }
 
 CWaterBomb* CWaterBomb::Create(LPDIRECT3DDEVICE9 pGraphicDev)

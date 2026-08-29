@@ -18,6 +18,8 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+					void			KeyInput(const _float& fDeltaTime);
+
 	virtual			void		CollisionEnter(CCollider* pOtherCollider) override;
 	virtual			void		CollisionExit(CCollider* pOtherCollider) {};
 	virtual			void		CollisionStay(CCollider* pOtherCollider) {};
@@ -36,12 +38,17 @@ private:
 	Engine::CCube_Collider*		m_pColliderCom;
 			_float				m_fMaxSpeed;
 			_float				m_fTimer;
+
+			_int				m_iLast_KeyInput;
+			_int				m_iAccumulate;
+
 			_bool				m_bMissileHit;
 			_bool				m_bWaterBombHit;
 			_bool				m_bWaterFlyHit;
 			_bool				m_bWaterBubble;
 			_bool				m_bWaterFly;
-
+			_bool				m_bBubbling;
+				
 protected:
 	virtual		void		Free() override;
 };

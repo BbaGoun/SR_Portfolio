@@ -428,27 +428,28 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
 	///////////////////////////////////////////////////////////////////////////////////////
-	/*_vec3 vEye = { 0.f, 30.f, -30.f };
-	_vec3 vAt = { 0.f, 0.f, 100.f };
-	_vec3 vUp = { 0.f, 1.f, 0.f };
+	// 테스트용 다이나믹 카메라
+	//_vec3 vEye = { 0.f, 30.f, -30.f };
+	//_vec3 vAt = { 0.f, 0.f, 100.f };
+	//_vec3 vUp = { 0.f, 1.f, 0.f };
 
-	CGameObject* pDynamicCam =
-		CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
+	//CGameObject* pDynamicCam =
+	//	CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
 
-	if (pDynamicCam == nullptr)
-		return E_FAIL;
+	//if (pDynamicCam == nullptr)
+	//	return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(
-		L"Obj_DynamicCamera", pDynamicCam)))
-		return E_FAIL;
+	//if (FAILED(pGameObjectLayer->Add_GameObject(
+	//	L"Obj_DynamicCamera", pDynamicCam)))
+	//	return E_FAIL;
 
-	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(
-		CAMERA_DYNAMIC,
-		static_cast<CCamera*>(pDynamicCam))))
-		return E_FAIL;
+	//if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(
+	//	CAMERA_DYNAMIC,
+	//	static_cast<CCamera*>(pDynamicCam))))
+	//	return E_FAIL;
 
-	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
-		return E_FAIL;*/
+	//if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
+	//	return E_FAIL;
 	///////////////////////////////////////////////////////////////////////////////////////
 	
 	// # 트랙
@@ -516,7 +517,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	// 미사일 타겟
+	// 미사일 타겟1
 	CGameObject* pMissileTarget = CMissileTarget::Create(m_pGraphicDev);
 	
 	if (pMissileTarget == nullptr)
@@ -525,6 +526,39 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget", pMissileTarget)))
 		return E_FAIL;
   
+	// 미사일 타겟2
+	CGameObject* pMissileTarget2 = CMissileTarget::Create(m_pGraphicDev);
+
+	if (pMissileTarget2 == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget2", pMissileTarget2)))
+		return E_FAIL;
+
+	pMissileTarget2->Get_Transform()->Set_Pos({ -15.f, 0.f, 80.f });
+
+	// 미사일 타겟3
+	CGameObject* pMissileTarget3 = CMissileTarget::Create(m_pGraphicDev);
+
+	if (pMissileTarget3 == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget3", pMissileTarget3)))
+		return E_FAIL;
+
+	pMissileTarget3->Get_Transform()->Set_Pos({ 15.f, 0.f, 60.f });
+
+	// 미사일 타겟4
+	CGameObject* pMissileTarget4 = CMissileTarget::Create(m_pGraphicDev);
+
+	if (pMissileTarget4 == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget4", pMissileTarget4)))
+		return E_FAIL;
+
+	pMissileTarget4->Get_Transform()->Set_Pos({ -15.f, 0.f, 60.f });
+
 	return S_OK;
 }
 

@@ -355,7 +355,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			if (vCross.y < 0)
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle) * m_eDirection;
-				
+
 				m_vRotation.z += fDeltaTime * 0.5f * m_eDirection;
 			}
 			else
@@ -1386,6 +1386,13 @@ void CCart::CreateWaterFlyObject()
 
 	pWaterFlyBody->SetLayer(m_pLayer);
 	pWaterFly->Set_Child(pWaterFlyBody);
+
+	CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+		return;
+
+	pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateMagnetAimObject()

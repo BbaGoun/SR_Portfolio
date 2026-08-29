@@ -20,11 +20,11 @@ HRESULT CMissileTarget::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_fSpeed = 0.f;
-	m_fMaxSpeed = 3.f;
-	//m_pTransformCom->Set_Pos({ 0.f,0.f, 170.f });
-	m_pTransformCom->Set_Pos({ 0.f,0.f, 60.f });
-	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
+	m_iLast_KeyInput	= 0;	// 아무것도 누르지 않았을경우 '0'으로 없음 표시
+	m_iAccumulate		= 0;
+
+	m_fSpeed			= 0.f;
+	m_fMaxSpeed			= 3.f;
 	m_fTimer			= 0.f;
 
 	m_bMissileHit		= false;
@@ -32,6 +32,10 @@ HRESULT CMissileTarget::Ready_GameObject()
 	m_bWaterFlyHit		= false;
 	m_bWaterBubble		= false;
 	m_bWaterFly			= false;
+	m_bBubbling			= false;
+
+	m_pTransformCom->Set_Pos({ 0.f,0.f, 60.f });
+	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -145,7 +149,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		}
 
-		else if (m_fTimer >= 2.f)
+		else if (m_fTimer >= 2.f)	// 20
 		{
 			vPos.y -= m_vForce.y * 0.45f * fFixedDeltaTime;
 			m_vForce.y -= 5.f * fFixedDeltaTime;
@@ -179,7 +183,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (m_bWaterFlyHit)
 	{
 		m_fTimer += fFixedDeltaTime;
-		CGameObject* pFly = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterFly");
+		CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
 
 		_vec3 vPos, vFlyPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -227,7 +231,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		}
 
-		else if (m_fTimer >= 2.f)
+		else if (m_fTimer >= 2.f)	// 20
 		{
 			vPos.y -= m_vForce.y * 0.45f * fFixedDeltaTime;
 			m_vForce.y -= 5.f * fFixedDeltaTime;
@@ -245,7 +249,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_vRotation.y = 0.f;
 			m_bWaterFlyHit = false;
 			m_bWaterBubble = false;
-			//pFly->GetLayer()->Delete_GameObject(pFly);
+			pBubble->GetLayer()->Delete_GameObject(pBubble);
 			m_fTimer = 0.f;
 
 			_quaternion qReset;
@@ -254,13 +258,13 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		}
 
 		m_pTransformCom->Set_Pos(vPos);
-		pFly->Get_Transform()->Set_Pos(vPos);
-		//pBubble->GetLayer()->Delete_GameObject(pBubble);
+		pBubble->Get_Transform()->Set_Pos(vPos);
 	}
 }
 
 _int CMissileTarget::Update_GameObject(const _float& fDeltaTime)
 {
+	// KeyInput(fDeltaTime);
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -275,6 +279,68 @@ void CMissileTarget::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pBufferCom->Render_Buffer();
 }
+
+//void CMissileTarget::KeyInput(const _float& fDeltaTime)
+//{	// 1. 클래스 만들어서 버블 시 화면에 키보드 UI 띄우고 누르는키 표시 되게
+//	// 2. 나중에 카트처럼 머리 및 바퀴 움직임 구현
+//	CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
+//
+//	_vec3 vPos, vFlyPos;
+//	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+//
+//	m_pTransformCom->Set_Pos(vPos);
+//	pBubble->Get_Transform()->Set_Pos(vPos);
+//
+//	if (vPos.y <= 0.f)		//(m_bBubbling == true)
+//	{
+//		if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LEFT))
+//		{
+//			if (m_iAccumulate == 20)// m_iAccumulate 일경우 리턴	-> 수정하기
+//			{
+//				if (m_iLast_KeyInput == 1)// 마지막 키가 왼쪽 '1' 일 경우 적게 적립
+//				{
+//					m_iAccumulate += 1;
+//				}
+//				
+//				else if (m_iLast_KeyInput == 2) // 마지막 키가 오른쪽 '2' 일 경우 많이 적립
+//				{
+//					m_iAccumulate += 2;
+//				}
+//				m_iLast_KeyInput = 1;	// m_iLast_KeyInput	마지막 키 저장 왼쪽 '1' 로 왼쪽 표시
+//
+//				// m_bBubbling = false;	// 버블 사라지게 하기
+//
+//				vPos.y = 0.f;
+//				m_bWaterBubble = false;
+//				pBubble->GetLayer()->Delete_GameObject(pBubble);
+//			}
+//		}
+//
+//		if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_RIGHT))
+//		{
+//			if (m_iAccumulate == 20)// m_iAccumulate 일경우 리턴		-> 수정하기
+//			{
+//				if (m_iLast_KeyInput == 2)// 마지막 키가 오른쪽 '2' 일 경우 적게 적립
+//				{
+//					m_iAccumulate += 1;
+//				}
+//
+//				else if (m_iLast_KeyInput == 1) // 마지막 키가 왼쪽 '1' 일 경우 많이 적립
+//				{
+//					m_iAccumulate += 2;
+//				}
+//
+//				m_iLast_KeyInput = 2;	// m_iLast_KeyInput	마지막 키 저장 오른쪽 '2' 로 오른쪽 표시
+//
+//				// m_bBubbling = false;	// 버블 사라지게 하기
+//
+//				vPos.y = 0.f;
+//				m_bWaterBubble = false;
+//				pBubble->GetLayer()->Delete_GameObject(pBubble);
+//			}
+//		}
+//	}
+//}
 
 void CMissileTarget::CollisionEnter(CCollider* pOtherCollider)
 {

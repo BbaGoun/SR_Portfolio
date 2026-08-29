@@ -1,4 +1,5 @@
 ﻿#include "CLayer.h"
+#include "CRenderer.h"
 
 CLayer::CLayer()
 {
@@ -247,6 +248,9 @@ HRESULT CLayer::PostProcess_Delete()
 		vector<CGameObject*>& vec = it->second;
 		vec.erase(remove(vec.begin(), vec.end(), pObj), vec.end());
 		Detach_Root(pObj);
+
+		CRenderer::GetInstance()->Delete_RenderGroup(pObj);
+
 		Safe_Release(pObj);
 		
 		if (vec.empty()) // vector가 비었으면
