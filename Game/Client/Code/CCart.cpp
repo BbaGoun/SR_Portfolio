@@ -487,7 +487,8 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 		return;
 	m_fSpeed *= m_fBoostCal;
 	SoundMgr::GetInstance().PlaySound(L"Effect/cart/booster.ogg", SOUND_BOOST, 0.4f);
-	m_pPlayerHead->SetBoost(true);
+	if(m_pPlayerHead)
+		m_pPlayerHead->SetBoost(true);
 	if (m_eBoostState == BOOST_STATE_SHORT_BOOST)
 	{
 		if (m_fSpeed > 2)
@@ -503,7 +504,8 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 	{
 		m_eBoostState = BOOST_STATE_NORMAL;
 		m_fSpeed = 1;
-		m_pPlayerHead->SetBoost(false);
+		if(m_pPlayerHead)
+			m_pPlayerHead->SetBoost(false);
 		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 	}
 }
@@ -1093,7 +1095,7 @@ void CCart::StartCountDown(const _float& fDeltaTime)
 
 void CCart::EndCoundDown(const _float& fDeltaTime)
 {
-	float fEndTime = 5;
+	float fEndTime = 300;
 
 	if (m_fPlayTimer < fEndTime || m_bPlaying == false)
 		return;

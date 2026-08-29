@@ -55,6 +55,9 @@
 #include "CDustLandingEffect.h"
 #include "CSpeedLine.h"
 #include "SoundMgr.h"
+#include "CUI_StartCountDown.h"
+#include "CUI_EndCountDown.h"
+
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -579,22 +582,6 @@ HRESULT CCollisionTest::Ready_Environment_Layer()
 	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_SkyBox", pEnvObject)))
 		return E_FAIL;
 
-
-	//pEnvObject = CLand::Create(m_pGraphicDev);
-	//
-	//if (pEnvObject == nullptr)
-	//	return E_FAIL;
-	//
-	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land", pEnvObject)))
-	//	return E_FAIL;
-
-	//pEnvObject = CLand2::Create(m_pGraphicDev);
-	//
-	//if (pEnvObject == nullptr)
-	//	return E_FAIL;
-	//
-	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land2", pEnvObject)))
-	//	return E_FAIL;
 	pEnvObject = CLand3::Create(m_pGraphicDev);
 
 	if (pEnvObject == nullptr)
@@ -602,6 +589,7 @@ HRESULT CCollisionTest::Ready_Environment_Layer()
 
 	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_Land3", pEnvObject)))
 		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -718,6 +706,19 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"MinimapGround", pUIObject)))
 		return E_FAIL;
 
+	// CUI_StartCountDown
+	pUIObject = CUI_StartCountDown::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_StartCountDown", pUIObject)))
+		return E_FAIL;
+
+	// CUI_EndCountDown
+	pUIObject = CUI_EndCountDown::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_EndCountDown", pUIObject)))
+		return E_FAIL;
 
 	return S_OK;
 }
