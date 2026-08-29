@@ -54,6 +54,10 @@ HRESULT CWheel::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
+	pComponent = CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CartWheelTex");
+	pComponent->Set_Owner(this);
+	m_mapComponent.insert({ L"Com_Tex", pComponent });
+
 	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
 	if (nullptr == pComponent)
 		return E_FAIL;

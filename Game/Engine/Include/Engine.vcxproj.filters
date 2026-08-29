@@ -160,6 +160,9 @@
     <Filter Include="04. Component\Shape\Sphere">
       <UniqueIdentifier>{5d27ba74-c0fc-405d-b474-fd212bb1031b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Management\GameObject\AlphaEmpty">
+      <UniqueIdentifier>{60b4fbdc-da50-4f5b-84b7-f4a988b7376d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -328,6 +331,9 @@
     <ClInclude Include="..\Header\CSphere.h">
       <Filter>04. Component\Shape\Sphere</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CAlphaEmpty.h">
+      <Filter>03. Management\GameObject\AlphaEmpty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -474,6 +480,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSphere.cpp">
       <Filter>04. Component\Shape\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAlphaEmpty.cpp">
+      <Filter>03. Management\GameObject\AlphaEmpty</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

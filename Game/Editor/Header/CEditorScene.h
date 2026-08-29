@@ -29,13 +29,17 @@ private:
 
 	void OnNewScene();
 
-	void OnLoad();
+	void OnSceneLoad();
 	bool OpenLoadSceneDialog(_tchar* outPath, DWORD outChars);
 	void LoadSceneFile(const _tchar* path, CScene* pScene);
 	
-	void OnSave(bool bSaveAs);
+	void OnSceneSave(bool bSaveAs);
 	bool OpenSaveSceneDialog(_tchar* outPath, DWORD outChars);
 	void SaveSceneFile(const _tchar* path);
+
+	void OnPrefabLoad();
+	bool OpenLoadPrefabDialog(_tchar* outPath, DWORD outChars);
+	void CreatePrefabFromFile(const wchar_t* path);
 
 	void InputShortCut();
 	void DoUndo();

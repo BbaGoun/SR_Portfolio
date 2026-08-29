@@ -154,149 +154,6 @@ HRESULT CRacingScene::Ready_RenderTarget()
 
 HRESULT CRacingScene::Ready_GameLogic_Layer()
 {
-	// 게임 오브젝트
-	//CLayer* pGameObjectLayer = CLayer::Create();
-
-	//if (pGameObjectLayer == nullptr)
-	//	return E_FAIL;
-
-	//m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
-
-	//int a;
-	//// # 자유 카메라
-	//_vec3 vEye = { 0, 0, -5 }, vAt = { 0, 0, 0 };
-	//_vec3 vUp = { 0, 1, 0 };
-	//
-	//pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
-	//
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_DynamicCam", pGameObject)))
-	//	return E_FAIL;
-	//
-	//if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_DYNAMIC,
-	//	static_cast<CCamera*>(pGameObject))))
-	//	return E_FAIL;
-	//
-	//if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
-	//	return E_FAIL;
-
-
-	//// # 카트
-	//CGameObject* pCart = CCart::Create(m_pGraphicDev);
-	//
-	//if (pCart == nullptr)
-	//	return E_FAIL;
-	//
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Cart", pCart)))
-	//	return E_FAIL;
-	//pCart->SetLayer(pGameObjectLayer);
-	//
-	//
-	//// ## 카트 몸체
-	//CGameObject* pCartBody = CCartBody::Create(m_pGraphicDev);
-	//
-	//if (pCartBody == nullptr)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CartBody", pCartBody)))
-	//	return E_FAIL;
-	//
-	//pCart->Set_Child(pCartBody);
-	//
-	//pGameObject = nullptr;
-	//// ## 카트 몸체1
-	//pGameObject = CCartBody1::Create(m_pGraphicDev);
-	//pCartBody->Set_Child(pGameObject);
-	//pGameObject->Get_Transform()->Set_Scale({ 2.5,1.5,1 });
-	//pGameObject->Get_Transform()->Set_Pos({ 0,0,-3 });
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody1", pGameObject)))
-	//	return E_FAIL;
-	//
-	//
-	//// ## 카트 몸체2
-	//pGameObject = CCartBody2::Create(m_pGraphicDev);
-	//pCartBody->Set_Child(pGameObject);
-	//pGameObject->Get_Transform()->Set_Scale({ 2.5,0.5,0.5 });
-	//pGameObject->Get_Transform()->Set_Pos({ 0,1,-1.5 });
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody2", pGameObject)))
-	//	return E_FAIL;
-	//
-	//
-	//// ## 카트 몸체3
-	//pGameObject = CCartBody1::Create(m_pGraphicDev);
-	//pCartBody->Set_Child(pGameObject);
-	//pGameObject->Get_Transform()->Set_Scale({ 2.5,1,0.5 });
-	//pGameObject->Get_Transform()->Set_Pos({ 0,-0.5,-1.5 });
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody3", pGameObject)))
-	//	return E_FAIL;
-	//
-	//
-	//// ## 카트 몸체4
-	//pGameObject = CCartBody1::Create(m_pGraphicDev);
-	//pCartBody->Set_Child(pGameObject);
-	//pGameObject->Get_Transform()->Set_Scale({ 2.5,1.f,4 });
-	//pGameObject->Get_Transform()->Set_Pos({ 0,-0.75,0.5 });
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody4", pGameObject)))
-	//	return E_FAIL;
-	//
-	//
-	//
-	//// ## 왼쪽 앞바퀴
-	//pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FL);
-	//
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_FL", pGameObject)))
-	//	return E_FAIL;
-	//
-	//pGameObject->SetLayer(pGameObjectLayer);
-	//pCartBody->Set_Child(pGameObject);
-	//dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
-	//
-	//// ## 오른쪽 앞바퀴
-	//pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FR);
-	//
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_FR", pGameObject)))
-	//	return E_FAIL;
-	//
-	//pGameObject->SetLayer(pGameObjectLayer);
-	//pCartBody->Set_Child(pGameObject);
-	//dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
-	//
-	//// ## 왼쪽 뒷바퀴
-	//pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BL);
-	//
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BL", pGameObject)))
-	//	return E_FAIL;
-	//
-	//pGameObject->SetLayer(pGameObjectLayer);
-	//pCartBody->Set_Child(pGameObject);
-	//dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
-	//
-	//// ## 오른쪽 뒷바퀴
-	//pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BR);
-	//
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BR", pGameObject)))
-	//	return E_FAIL;
-	//pGameObject->SetLayer(pGameObjectLayer);
-	//pCartBody->Set_Child(pGameObject);
-	//dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
-
 	CGameObject* pGameObject = nullptr;
 	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
 	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
@@ -368,24 +225,41 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
 
 
-	// # 플레이어 따라다니는 3인칭 카메라
-	_vec3 vEye, vAt, vUp, vLook;
-	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
-	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
-	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	vEye = vAt + (vUp * 10) + (vLook * -20);
-	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp);
-	
+	//// # 플레이어 따라다니는 3인칭 카메라
+	//_vec3 vEye, vAt, vUp, vLook;
+	//pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	//pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	//pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	//vEye = vAt + (vUp * 10) + (vLook * -20);
+	//pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp);
+	//
+	//if (pGameObject == nullptr)
+	//	return E_FAIL;
+	//CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FollowSmoothCam", pGameObject);
+	//if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
+	//	static_cast<CCamera*>(pGameObject))))
+	//	return E_FAIL;
+	//
+	//if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
+	//	return E_FAIL;
+
+	// # 자유 카메라
+	_vec3 vEye = { 0, 0, -5 }, vAt = { 0, 0, 0 };
+	_vec3 vUp = { 0, 1, 0 };
+
+	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
+
 	if (pGameObject == nullptr)
 		return E_FAIL;
-	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FollowSmoothCam", pGameObject);
-	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
+
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_DynamicCam", pGameObject);
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_DYNAMIC,
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
-	
-	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
-		return E_FAIL;
 
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
+		return E_FAIL;
 
 	return S_OK;
 }
