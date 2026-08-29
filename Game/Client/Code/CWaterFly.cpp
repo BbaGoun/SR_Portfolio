@@ -25,6 +25,7 @@ HRESULT CWaterFly::Ready_GameObject()
 	//m_fAngle		= 0.f;
 	m_fFlyBack		= 0.f;
 	m_fFlyFront		= 0.f; 
+
 	m_vSavePos		= { 0.f, 0.f, 0.f };
 
 	m_bSavePos		= false;
@@ -50,14 +51,17 @@ HRESULT CWaterFly::Ready_GameObject()
 void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
-	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+	CGameObject* pTarget1 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+	CGameObject* pTarget2 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget2");
 
-	_vec3 vFlyPos, vCartPos, vCartUp, vCartLook, vTargetPos, vDir, vMovePos;
+	_vec3 vFlyPos, vCartPos, vCartUp, vCartLook, vTargetPos1, vTargetPos2, vDirTarget1, vDirTarget2, vDirTarget, vMovePos;
 
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 	pCartBody->Get_Transform()->Get_Info(INFO_UP, &vCartUp);
 	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
-	pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+	pTarget1->Get_Transform()->Get_Info(INFO_POS, &vTargetPos1);
+	pTarget2->Get_Transform()->Get_Info(INFO_POS, &vTargetPos2);
+
 
 	vCartPos += vCartUp * 0.f;
 
@@ -65,25 +69,25 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	vFlyPos.x += m_vForce.x;
 	vFlyPos.y += m_vForce.y;
-	vFlyPos.z += m_vForce.z;
+	//vFlyPos.z += m_vForce.z;
 
 	vFlyPos -= vCartLook * m_fFlyBack;
 	vFlyPos += vCartLook * m_fFlyFront;
 
-	// m_pTransformCom->Set_Pos(vCartPos + vCartUp * m_vForce.y);
-	// m_pTransformCom->Set_Pos(vCartPos);
+
+	//m_pTransformCom->Set_Pos(vFlyPos);
+////////////////////////////////////////////////////////////////////////
+// 구현 후 하드코딩 수정
 	m_fTimer += fFixedDeltaTime;
 	if (m_fTimer < 1.20f)
 	{
 		m_pTransformCom->Set_Pos(vFlyPos);
 	}
 
-	// m_fTimer += fFixedDeltaTime;
-	////////////////////////////////////////////////////////////////////////
-	// 구현 후 하드코딩 수정
 	if (m_fTimer > 0.f && m_fTimer < 0.06f)
 	{
 		m_vForce.y += 1.5f;
+
 	}
 
 	if (m_fTimer > 0.60f && m_fTimer < 0.65f)
@@ -104,6 +108,7 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_fFlyBack += 3.0f;
 	}
 
+
 	if (m_fTimer > 0.67f && m_fTimer < 0.68)
 	{
 		m_vForce.x += 0.6f;
@@ -120,40 +125,40 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	if (m_fTimer > 0.69f && m_fTimer < 0.70)
 	{
-		m_vForce.x += 0.6f;
-		m_vForce.y += 1.2f;
-		m_fFlyBack += 3.0f;
+			m_vForce.x += 0.6f;
+			m_vForce.y += 1.2f;
+			m_fFlyBack += 3.0f;
 	}
 
 	if (m_fTimer > 0.70f && m_fTimer < 0.71)
 	{
-		m_vForce.y += 1.2f;
-		m_fFlyBack += 3.0f;
+			m_vForce.y += 1.2f;
+			m_fFlyBack += 3.0f;
 	}
 
 	if (m_fTimer > 0.71f && m_fTimer < 0.75)
 	{
-		m_vForce.y += 1.2f;
-		m_fFlyBack += 3.0f;
+			m_vForce.y += 1.2f;
+			m_fFlyBack += 3.0f;
 	}
 
 	if (m_fTimer > 0.75f && m_fTimer < 0.80)
 	{
-		m_fFlyFront += 1.0f;
-		m_vForce.y += 1.2f;
+			m_fFlyFront += 1.0f;
+			m_vForce.y += 1.2f;
 	}
 
 	if (m_fTimer > 0.80f && m_fTimer < 0.85)
 	{
-		m_fFlyFront += 7.0f;
-		m_vForce.y += 1.2f;
+			m_fFlyFront += 7.0f;
+			m_vForce.y += 1.2f;
 	}
 
 	if (m_fTimer > 0.95f && m_fTimer < 1.20f)
 	{
-		m_vForce.x -= 0.8f;
-		m_fFlyFront += 1.3f;
-		m_vForce.y -= 0.8f;
+			m_vForce.x -= 0.8f;
+			m_fFlyFront += 1.3f;
+			m_vForce.y -= 0.8f;
 	}
 
 	if (m_fTimer > 1.20f && m_bSavePos == false)
@@ -162,25 +167,29 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_bSavePos = true;
 	}
 
-	 
-	vDir = vTargetPos - m_vSavePos;
+	if (m_fTimer > 1.20f)
+	{
+		vDirTarget1 = vTargetPos1 - m_vSavePos;
+		vDirTarget2 = vTargetPos2 - m_vSavePos;
 
-	_float fDistance = D3DXVec3Length(&vDir);
+		if (D3DXVec3Length(&vDirTarget1) < D3DXVec3Length(&vDirTarget2))
+		{
+			vDirTarget = vDirTarget1;
+		}
 
-	if (D3DXVec3Length(&vDir) <= 0.001f)
-		return;
+		else
+		{
+			vDirTarget = vDirTarget2;
+		}
 
-	D3DXVec3Normalize(&vDir, &vDir);
-	
+		if (D3DXVec3Length(&vDirTarget) <= 0.001f)
+			return;
 
-	m_pTransformCom->Move_Pos(&vDir, m_fSpeed, fFixedDeltaTime);
+		D3DXVec3Normalize(&vDirTarget, &vDirTarget);
 
-	//if (m_fTimer > 5.f)
-	//{
-	//	// m_bSavePos = false;
-	//	m_pLayer->Delete_GameObject(this);
-	//}
-	////////////////////////////////////////////////////////////////////////
+		m_pTransformCom->Move_Pos(&vDirTarget, m_fSpeed, fFixedDeltaTime);
+	}
+
 	_quaternion q;
 
 	m_pTransformCom->GetFollowQuaternion(&vCartLook, &q);
@@ -224,14 +233,14 @@ void CWaterFly::TriggerEnter(CCollider* pOtherCollider)
 
 	if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)
 	{
-		vector<CGameObject*> vecChildren = Get_Children();
+		//vector<CGameObject*> vecChildren = Get_Children();
 
-		for (auto& pChild : vecChildren)
-		{
-			pChild->To_Root();
-			m_pLayer->Delete_GameObject(pChild);
-		}
-		m_pLayer->Delete_GameObject(this);
+		//for (auto& pChild : vecChildren)
+		//{
+		//	pChild->To_Root();
+		//	m_pLayer->Delete_GameObject(pChild);
+		//}
+	 m_pLayer->Delete_GameObject(this);
 	}
 }
 

@@ -525,6 +525,16 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget", pMissileTarget)))
 		return E_FAIL;
   
+	CGameObject* pMissileTarget2 = CMissileTarget::Create(m_pGraphicDev);
+
+	if (pMissileTarget2 == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget2", pMissileTarget2)))
+		return E_FAIL;
+
+	pMissileTarget2->Get_Transform()->Set_Pos({ -30.f, 0.f, 20.f });
+
 	return S_OK;
 }
 

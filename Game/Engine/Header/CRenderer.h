@@ -17,6 +17,7 @@ private:
 public:
 	void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);
 	void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Delete_RenderGroup(CGameObject* pObj);
 	void		Clear_RenderGroup();
 
 public:

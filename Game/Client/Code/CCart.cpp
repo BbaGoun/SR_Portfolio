@@ -1367,6 +1367,13 @@ void CCart::CreateWaterFlyObject()
 
 	pWaterFlyBody->SetLayer(m_pLayer);
 	pWaterFly->Set_Child(pWaterFlyBody);
+
+	CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+		return;
+
+	pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateMagnetAimObject()

@@ -179,7 +179,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (m_bWaterFlyHit)
 	{
 		m_fTimer += fFixedDeltaTime;
-		CGameObject* pFly = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterFly");
+		CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
 
 		_vec3 vPos, vFlyPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -245,7 +245,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_vRotation.y = 0.f;
 			m_bWaterFlyHit = false;
 			m_bWaterBubble = false;
-			//pFly->GetLayer()->Delete_GameObject(pFly);
+			pBubble->GetLayer()->Delete_GameObject(pBubble);
 			m_fTimer = 0.f;
 
 			_quaternion qReset;
@@ -254,8 +254,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		}
 
 		m_pTransformCom->Set_Pos(vPos);
-		pFly->Get_Transform()->Set_Pos(vPos);
-		//pBubble->GetLayer()->Delete_GameObject(pBubble);
+		pBubble->Get_Transform()->Set_Pos(vPos);
 	}
 }
 
