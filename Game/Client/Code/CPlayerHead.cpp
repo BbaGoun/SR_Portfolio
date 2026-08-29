@@ -56,24 +56,50 @@ void CPlayerHead::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-	if (m_bBoost == true)
-	{
-		m_vRotation.x = 0.f;
-		// 고개 뒤로 x축 회전 -> z축 회전
-		if (m_vRotation.z > -30.f)
-			m_vRotation.z -= 50 *fDeltaTime;
-		else
-			m_vRotation.z = -30.f;
 
+	if (m_eCartDirType == DIR_FORWARD)
+	{
+		if (m_bBoost == true)
+		{
+			m_vRotation.x = 0.f;
+			// 고개 뒤로 x축 회전 -> z축 회전
+			if (m_vRotation.z > -30.f)
+				m_vRotation.z -= 50 * fDeltaTime;
+			else
+				m_vRotation.z = -30.f;
+
+		}
+		else
+		{
+			// 고개 원위치
+			if (m_vRotation.z < 0.f)
+				m_vRotation.z += 50 * fDeltaTime;
+			else
+				m_vRotation.z = 0.f;
+			KeyInput(fDeltaTime);
+		}
+
+		if (m_vRotation.y < 0.f)
+		{
+			m_vRotation.y += 180 * fDeltaTime;
+		}
+		else
+		{
+			m_vRotation.y = 0.f;
+		}
 	}
 	else
 	{
-		// 고개 원위치
-		if (m_vRotation.z < 0.f)
-			m_vRotation.z += 50 * fDeltaTime;
+		m_vRotation.x = 0.f;
+		if (m_vRotation.y > -160.f)
+		{
+			m_vRotation.y -= 180 * fDeltaTime;
+		}
 		else
-			m_vRotation.z = 0.f;
-		KeyInput(fDeltaTime);
+		{
+			m_vRotation.y = -160.f;
+		}
+
 	}
 
 	return CGameObject::Update_GameObject(fDeltaTime);

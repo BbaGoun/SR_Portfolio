@@ -71,7 +71,7 @@ void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			vPlayerLOOK.y = 0;
 			D3DXVec3Normalize(&vPlayerLOOK, &vPlayerLOOK);
 		}
-		_vec3	vTargetPos = vPlayerPos + (vPlayerUp * 8) + (vPlayerLOOK * -15);
+		_vec3	vTargetPos = vPlayerPos + (vPlayerUp * 5) + (vPlayerLOOK * -15);
 
 		_vec3	vPlayerForce = pTrans->Get_Owner()->Get_Force();
 		_vec3	vDeltaPos = vTargetPos - vMyPos;

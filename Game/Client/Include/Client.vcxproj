@@ -231,6 +231,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CMissileTarget.h" />
     <ClInclude Include="..\Header\CPlayer.h" />
     <ClInclude Include="..\Header\CPlayerHead.h" />
+    <ClInclude Include="..\Header\CPlayTimeMgr.h" />
     <ClInclude Include="..\Header\CScene1_Replay.h" />
     <ClInclude Include="..\Header\CScene1_Speed.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -310,6 +311,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CMenu_Set.cpp" />
     <ClCompile Include="..\Code\CPlayer.cpp" />
     <ClCompile Include="..\Code\CPlayerHead.cpp" />
+    <ClCompile Include="..\Code\CPlayTimeMgr.cpp" />
     <ClCompile Include="..\Code\CScene1_Replay.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>

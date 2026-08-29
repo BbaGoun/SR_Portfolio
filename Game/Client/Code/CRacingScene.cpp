@@ -34,6 +34,7 @@
 #include "CSpeedLine.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
+#include "CPlayTimeMgr.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -57,6 +58,7 @@ HRESULT CRacingScene::PostReady_Scene()
 	Ready_UI_Layer();
 	Ready_Collision_Matrix();
 
+	CPlayTimeMgr::GetInstance()->SetRaceStart();
 	return S_OK;
 }
 
@@ -107,7 +109,7 @@ void CRacingScene::OnResetDevice()
 
 HRESULT CRacingScene::LoadSceneFromFile()
 {
-	// ÀÏ´Ü ³Ö¾îµÎ±â
+	// ï¿½Ï´ï¿½ ï¿½Ö¾ï¿½Î±ï¿½
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)
@@ -164,8 +166,8 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 
 	pCart->Set_Child(pPlayer);
 	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
-// ÀÌÆåÆ®
-	// ## ºÎ½ºÅÍ ¿ÞÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
+// ï¿½ï¿½ï¿½ï¿½Æ®
+	// ## ï¿½Î½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½1 ï¿½Ù¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
 	
 	if (nullptr == pGameObject)
@@ -173,7 +175,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
 	pCart->Set_Child(pGameObject);
 	
-	// ## ºÎ½ºÅÍ ¿ÞÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
+	// ## ï¿½Î½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½2 ï¿½Ù¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
 	
 	if (nullptr == pGameObject)
@@ -181,14 +183,14 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
 	pCart->Set_Child(pGameObject);
 	
-	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
+	// ## ï¿½Î½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1 ï¿½Ù¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
 	pCart->Set_Child(pGameObject);
-	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
+	// ## ï¿½Î½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2 ï¿½Ù¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
 	
 	if (nullptr == pGameObject)
@@ -196,7 +198,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
 	pCart->Set_Child(pGameObject);
 	
-	// ## ºÎ½ºÅÍ Á¦Æ® ÀÌÆåÆ®
+	// ## ï¿½Î½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Æ®
 	pGameObject = CBoostJet::Create(m_pGraphicDev);
 	
 	if (nullptr == pGameObject)
@@ -204,8 +206,8 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
 	pCartBody->Set_Child(pGameObject);
 
-// ÆÄÆ¼Å¬
-	// ¿¬±â ÀÌÆåÆ®
+// ï¿½ï¿½Æ¼Å¬
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
 	
 	if (nullptr == pGameObject)
@@ -213,7 +215,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
-	// ÂøÁö½Ã ¸ÕÁö ÀÌÆåÆ®
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -228,30 +230,13 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
 
 
-	//// # ÇÃ·¹ÀÌ¾î µû¶ó´Ù´Ï´Â 3ÀÎÄª Ä«¸Þ¶ó
-	//_vec3 vEye, vAt, vUp, vLook;
-	//pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
-	//pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
-	//pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	//vEye = vAt + (vUp * 10) + (vLook * -20);
-	//pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp);
-	//
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FollowSmoothCam", pGameObject);
-	//if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
-	//	static_cast<CCamera*>(pGameObject))))
-	//	return E_FAIL;
-	//
-	//if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
-	//	return E_FAIL;
-
-	// # ÀÚÀ¯ Ä«¸Þ¶ó
-	_vec3 vEye = { 0, 0, -5 }, vAt = { 0, 0, 0 };
-	_vec3 vUp = { 0, 1, 0 };
-
-	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
-
+	_vec3 vEye, vAt, vUp, vLook;
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 5) + (vLook * -15);
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp , D3DXToRadian(45));
+	
 	if (pGameObject == nullptr)
 		return E_FAIL;
 
@@ -377,7 +362,7 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		return E_FAIL;
 
 
-	// ¹Ì´Ï¸Ê Cart
+	// ï¿½Ì´Ï¸ï¿½ Cart
 	pUIObject = CMinimapCart::Create(m_pGraphicDev);
 
 	if (nullptr == pUIObject)
