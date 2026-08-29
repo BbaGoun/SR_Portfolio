@@ -1,6 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 #include "Engine_Enum.h"
+#include "CPlayerHead.h"
 
 namespace Engine
 {
@@ -94,6 +95,9 @@ public:
 	void			StartCountDown(const _float& fDeltaTime);
 	void			EndCoundDown(const _float& fDeltaTime);
 
+	// SetPlayerHead
+	void			SetPlayerHead(CGameObject* pPlayerHead) { m_pPlayerHead = static_cast<CPlayerHead*>(pPlayerHead); }
+
 private:
 	_float			m_fMaxSpeed;
 	bool			m_bDrift;
@@ -144,6 +148,7 @@ private:
 	float			m_fPreTimer;
 	bool			m_bPlaying;
 
+	CPlayerHead*	m_pPlayerHead;
 
 protected:
 	virtual		void		Free() override;

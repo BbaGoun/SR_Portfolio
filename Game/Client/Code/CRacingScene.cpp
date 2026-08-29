@@ -32,6 +32,8 @@
 #include "CFollowSmoothCam.h"
 #include "CDustLandingEffect.h"
 #include "CSpeedLine.h"
+#include "CUI_StartCountDown.h"
+#include "CUI_EndCountDown.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -158,9 +160,10 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
 	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
 	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
+	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
 
 	pCart->Set_Child(pPlayer);
-
+	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
 // ÀÌÆåÆ®
 	// ## ºÎ½ºÅÍ ¿ÞÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
@@ -389,6 +392,20 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"Env_MinimapGround", pUIObject)))
 		return E_FAIL;
 
+
+	// CUI_StartCountDown
+	pUIObject = CUI_StartCountDown::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_StartCountDown", pUIObject)))
+		return E_FAIL;
+
+	// CUI_EndCountDown
+	pUIObject = CUI_EndCountDown::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_EndCountDown", pUIObject)))
+		return E_FAIL;
 
 	return S_OK;
 }

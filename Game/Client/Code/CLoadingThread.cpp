@@ -228,6 +228,13 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SpeedLine", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Effect/SpeedLine/speedline%d.png", 8))))
         return E_FAIL;
 
+    // UI_StartCountDown
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_StartCountDown", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/StartCountDown/StartCountDown%d.png", 4))))
+        return E_FAIL;
+    // UI_EndCountDown
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EndCountDown", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/EndCountDown/CountDown_%d.png", 11))))
+        return E_FAIL;
+
     //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BoosterIcon", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item_Boost.png", 1))))
     //    return E_FAIL;
 
@@ -416,6 +423,8 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartWheelTex", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/wheel%d.png", 2),
         true, L"CartWheel")))
         return E_FAIL;
+
+
 
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Etc Loading.....................................");
