@@ -38,8 +38,7 @@ HRESULT CWaterBomb::Ready_GameObject()
 
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
-	//m_pColliderCom->Set_Extents({ 40.f, 12.f, 60.f });
-	m_pColliderCom->Set_Extents({ 1.f, 1.f, 1.f });
+	m_pColliderCom->Set_Extents({ 40.f, 12.f, 60.f });
 	m_pColliderCom->Set_Offset({ 0.f, 4.f, 0.f });
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
@@ -120,8 +119,9 @@ void CWaterBomb::TriggerEnter(CCollider* pOtherCollider)
 
 		for (auto& pChild : vecChildren)
 		{
+
 			pChild->To_Root();
-			m_pLayer->Delete_GameObject(pChild);
+			// m_pLayer->Delete_GameObject(pChild);
 		}
 		m_pLayer->Delete_GameObject(this);
 	}

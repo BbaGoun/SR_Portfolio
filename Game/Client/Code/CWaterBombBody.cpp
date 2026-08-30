@@ -51,7 +51,10 @@ void CWaterBombBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	_vec3 vScale = m_pTransformCom->Get_Scale();
 
-	m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
+	if (m_pParent != nullptr)
+	{
+		m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
+	}
 
 	m_fTimer += fFixedDeltaTime;	
 
@@ -65,7 +68,7 @@ void CWaterBombBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		}
 	}
 	
-	if (m_fTimer > 3.5f)		
+	if (m_fTimer > 10.5f)		
 	{
 		m_pLayer->Delete_GameObject(this);
 	}
