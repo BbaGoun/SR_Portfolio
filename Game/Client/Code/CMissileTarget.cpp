@@ -344,22 +344,37 @@ void CMissileTarget::KeyInput(const _float& fDeltaTime)
 
 		if (vPos.y <= 0.f && m_iAccumulate >= 12)
 		{
+
+			if (m_bWaterBombHit)
+			{
+				if (pWaterBody != nullptr)
+				pWaterBody->GetLayer()->Delete_GameObject(pWaterBody);
+
+				m_bWaterBombHit = false;
+			}
+
+			else if (m_bWaterFlyHit)
+			{
+				m_bWaterFlyHit = false;
+			}
+
 			vPos.y = 0.f;
 			m_vForce.y = 0.f;
 			m_vRotation.x = 0.f;
 			m_vRotation.y = 0.f;
 			m_iAccumulate = 0.f;
-			m_bWaterFlyHit = false;
-			m_bWaterBombHit = false;	
+			// m_bWaterFlyHit = false;
+			// m_bWaterBombHit = false;	
 			m_bWaterBubble = false;
 			m_pBubble->GetLayer()->Delete_GameObject(m_pBubble);
-			pWaterBody->GetLayer()->Delete_GameObject(pWaterBody);
+			// pWaterBody->GetLayer()->Delete_GameObject(pWaterBody);
 			m_fTimer = 0.f;
 
 			_quaternion qReset;
 			D3DXQuaternionRotationYawPitchRoll(&qReset, 0.f, 0.f, 0.f);
 			m_pTransformCom->Set_Quaternion(&qReset);
 		}
+
 	}
 }
 
@@ -397,8 +412,7 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 			if (m_pBubble == nullptr)
 				return;
 
-			if (FAILED(m_pLayer->Add_GameObject(
-				L"Obj_WaterBombBubble", m_pBubble)))
+			if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", m_pBubble)))
 				return;
 
 			m_pBubble->SetLayer(m_pLayer);
@@ -425,8 +439,7 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 			if (m_pBubble == nullptr)
 				return;
 
-			if (FAILED(m_pLayer->Add_GameObject(
-				L"Obj_WaterBombBubble", m_pBubble)))
+			if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", m_pBubble)))
 				return;
 
 			m_pBubble->SetLayer(m_pLayer);
