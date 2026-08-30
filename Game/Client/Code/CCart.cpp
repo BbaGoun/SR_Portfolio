@@ -92,6 +92,7 @@ HRESULT CCart::Ready_GameObject()
 	m_fPreTimer				= 0.f;
 
 	m_pPlayerHead			= nullptr;
+	m_PreQuaternion			= { 0,0,0,1 };
 
 	return S_OK;
 }
@@ -930,6 +931,7 @@ void CCart::CollisionWall()
 			}
 		}
 		if (bCollision) {
+			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 			m_pTransformCom->Set_Pos(vPos + MTV);
 
 			// 2. 법선벡터만큼 밀어내기(들어간 만큼 이라는 것이 없어서 단위벡터만큼 밀어냄)
@@ -938,8 +940,8 @@ void CCart::CollisionWall()
 			_vec3 vNewForce = m_vForce;
 			vNewForce = MTV * D3DXVec3Length(&vNewForce);
 			float fForceLength = D3DXVec3Length(&vNewForce);
-			if (fForceLength >= 30)
-				vNewForce = vNewForce * 30 / fForceLength;
+			if (fForceLength >= 10)
+				vNewForce = vNewForce * 10 / fForceLength;
 
 			//m_pTransformCom->Set_Pos(vPos + MTV);
 

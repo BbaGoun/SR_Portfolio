@@ -47,6 +47,7 @@ void CRenderer::Delete_RenderGroup(CGameObject* pObj)
 		auto it = find(m_RenderGroup[i].begin(), m_RenderGroup[i].end(), pObj);
 
 		if (it != m_RenderGroup[i].end()) {
+			(*it)->Release();
 			m_RenderGroup[i].erase(it);
 			return;
 		}

@@ -313,6 +313,9 @@
     <Filter Include="02. GameObject\Camera\StartCamera">
       <UniqueIdentifier>{a44fac43-befa-4f1f-a998-dfd4220b4758}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Camera\TrackCam">
+      <UniqueIdentifier>{e5128873-8abd-4e9a-aa0b-636b5d335b98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -612,6 +615,9 @@
     <ClInclude Include="..\Header\CStartCam.h">
       <Filter>02. GameObject\Camera\StartCamera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTrackCam.h">
+      <Filter>02. GameObject\Camera\TrackCam</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -904,6 +910,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CStartCam.cpp">
       <Filter>02. GameObject\Camera\StartCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTrackCam.cpp">
+      <Filter>02. GameObject\Camera\TrackCam</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
