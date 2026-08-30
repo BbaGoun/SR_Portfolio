@@ -19,6 +19,7 @@ public:
 
 	void		SetFrame(int iFrame);
 	void		Shake(const _float fDeltaTime);
+	void		UdateFrame();
 
 private:
 	CRcTex* m_pBufferCom;
@@ -30,6 +31,7 @@ private:
 	float		m_fScale;
 	float		m_fTimer;
 	int			m_iShakeCnt;
+	float		m_fTimerFlag;
 
 public:
 	static CUI_EndCountDown* Create(LPDIRECT3DDEVICE9 pGraphicDev);

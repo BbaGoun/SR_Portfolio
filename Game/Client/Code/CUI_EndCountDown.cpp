@@ -5,6 +5,7 @@
 #include "CTexture.h"
 #include "CRenderer.h"
 #include "CManagement.h"
+#include "CPlayTimeMgr.h"
 
 CUI_EndCountDown::CUI_EndCountDown(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -38,11 +39,12 @@ HRESULT CUI_EndCountDown::Ready_GameObject()
 	m_pGraphicDev->GetViewport(&vp);
 	m_pTransformCom->Set_Pos({ 0.f, vp.Height * 0.1f, 1.f });
 
-	m_fFrame	= 0.f;
-	m_fTimer	= 0.f;
-	m_bShow		= false;
-	m_iShakeCnt = 0;
-	m_vForce	= { 1,0,0 };
+	m_fFrame		= 0.f;
+	m_fTimer		= 0.f;
+	m_fTimerFlag	= 0.f;
+	m_bShow			= false;
+	m_iShakeCnt		= 0;
+	m_vForce		= { 1,0,0 };
 
 
 	return S_OK;
@@ -50,6 +52,7 @@ HRESULT CUI_EndCountDown::Ready_GameObject()
 
 _int CUI_EndCountDown::Update_GameObject(const _float& fDeltaTime)
 {
+	UdateFrame();
 	if (m_bShow)
 	{
 		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
@@ -140,6 +143,32 @@ void CUI_EndCountDown::Shake(const _float fDeltaTime)
 	else
 		m_pTransformCom->Set_Pos({ 0,vPos.y + 20.f,1 });
 
+}
+
+void CUI_EndCountDown::UdateFrame()
+{
+	float fEndTime		= CPlayTimeMgr::GetInstance()->GetPlayEndTime();
+	float fPlayTimer	= CPlayTimeMgr::GetInstance()->GetPlayTimer();
+	bool  bPlaying		= CPlayTimeMgr::GetInstance()->GetPlaying();
+
+	//if (fPlayTimer < fEndTime || bPlaying == false)
+	//	return;
+
+	if (fPlayTimer > fEndTime + 10.f && bPlaying == false)
+	{
+		SetFrame(0);
+	}
+	else
+	{
+		for (int i = 0; i < 10; ++i)
+		{
+			if (m_fTimerFlag < fEndTime + float(i) && fPlayTimer > fEndTime + float(i))
+			{
+				SetFrame(10 - i);
+				m_fTimerFlag = fPlayTimer;
+			}
+		}
+	}
 }
 
 CUI_EndCountDown* CUI_EndCountDown::Create(LPDIRECT3DDEVICE9 pGraphicDev)

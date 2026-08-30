@@ -298,14 +298,20 @@
     <Filter Include="02. GameObject\Player\CPlayerHead">
       <UniqueIdentifier>{45582177-9ac3-4af3-8963-61c9bfd2d6c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI\UI_StartCountDown">
-      <UniqueIdentifier>{32aaec34-14b8-401d-a565-87c8ec0278af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\UI\UI_EndCountDown">
-      <UniqueIdentifier>{61d92167-411c-4ed8-8c2f-7e5586d7641d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Manager\PlayTimeMgr">
       <UniqueIdentifier>{6af78bb9-b40c-4727-a223-39b5dbeecde6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_CountDown">
+      <UniqueIdentifier>{3f87f47a-6958-41fe-9908-5a9e918940fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_CountDown\UI_EndCountDown">
+      <UniqueIdentifier>{61d92167-411c-4ed8-8c2f-7e5586d7641d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_CountDown\UI_StartCountDown">
+      <UniqueIdentifier>{32aaec34-14b8-401d-a565-87c8ec0278af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Camera\StartCamera">
+      <UniqueIdentifier>{a44fac43-befa-4f1f-a998-dfd4220b4758}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -595,13 +601,16 @@
       <Filter>02. GameObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CUI_StartCountDown.h">
-      <Filter>02. GameObject\UI\UI_StartCountDown</Filter>
+      <Filter>02. GameObject\UI\UI_CountDown\UI_StartCountDown</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CUI_EndCountDown.h">
-      <Filter>02. GameObject\UI\UI_EndCountDown</Filter>
+      <Filter>02. GameObject\UI\UI_CountDown\UI_EndCountDown</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CPlayTimeMgr.h">
       <Filter>03. Manager\PlayTimeMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CStartCam.h">
+      <Filter>02. GameObject\Camera\StartCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -885,13 +894,16 @@
       <Filter>02. GameObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUI_StartCountDown.cpp">
-      <Filter>02. GameObject\UI\UI_StartCountDown</Filter>
+      <Filter>02. GameObject\UI\UI_CountDown\UI_StartCountDown</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUI_EndCountDown.cpp">
-      <Filter>02. GameObject\UI\UI_EndCountDown</Filter>
+      <Filter>02. GameObject\UI\UI_CountDown\UI_EndCountDown</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CPlayTimeMgr.cpp">
       <Filter>03. Manager\PlayTimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CStartCam.cpp">
+      <Filter>02. GameObject\Camera\StartCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

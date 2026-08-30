@@ -19,6 +19,7 @@ CPlayTimeMgr::CPlayTimeMgr()
 	m_fTimerFlag	= 0.f;
 	m_bStart		= false;
 	m_bPlaying		= false;
+	m_fPlayEndTime	= 3000.f;
 }
 
 CPlayTimeMgr::~CPlayTimeMgr()
@@ -26,68 +27,60 @@ CPlayTimeMgr::~CPlayTimeMgr()
 	Free();
 }
 
-void CPlayTimeMgr::UpdateCPlayTimeMgr(const _float fDeltaTime)
+void CPlayTimeMgr::UpdateCPlayTimeMgr(const _float& fDeltaTime)
 {
 	if (m_bStart)
 	{
 		StartCountDown(fDeltaTime);
+		UpdatePlayTime(fDeltaTime);
 		EndCoundDown(fDeltaTime);
 	}
 }
 
-void CPlayTimeMgr::StartCountDown(const _float fDeltaTime)
+
+void CPlayTimeMgr::UpdatePlayTime(const _float& fDeltaTime)
+{
+	if (m_bPlaying)
+		m_fPlayTimer += fDeltaTime;
+}
+
+void CPlayTimeMgr::StartCountDown(const _float& fDeltaTime)
 {
 	m_fStartTimer += fDeltaTime;
 
 	if (m_fStartTimer > 4.f)
-	{
-		m_fPlayTimer += fDeltaTime;
 		return;
-	}
 
 	if (m_fStartTimer > 3.f)
 	{
 		m_bPlaying = true;
-		//static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
-		//	->SetFrame(4);
-		//m_bCanShortBoost = true;
-		//m_bShortBoosterOnOff = true;
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_go.flac", SOUND_EFFECT1, 0.4f);
 	}
 	else if (m_fTimerFlag < 2.f && m_fStartTimer > 2.f)
 	{
-		//static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
-		//	->SetFrame(1);
 		m_fTimerFlag = m_fStartTimer;
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT3, 0.4f);
 	}
 	else if (m_fTimerFlag < 1.f && m_fStartTimer > 1.f)
 	{
-		//static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
-		//	->SetFrame(2);
 		m_fTimerFlag = m_fStartTimer;
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT2, 0.4f);
 	}
 	else if (m_fTimerFlag == 0.f && m_fStartTimer > 0.f)
 	{
-		//static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
-		//	->SetFrame(3);
 		m_fTimerFlag = m_fStartTimer;
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT1, 0.4f);
 	}
 }
 
-void CPlayTimeMgr::EndCoundDown(const _float fDeltaTime)
+void CPlayTimeMgr::EndCoundDown(const _float& fDeltaTime)
 {
-	float fEndTime = 300;
 
-	if (m_fPlayTimer < fEndTime || m_bPlaying == false)
+	if (m_fPlayTimer < m_fPlayEndTime || m_bPlaying == false)
 		return;
 
-	if (m_fPlayTimer > fEndTime + 10.f && m_bPlaying == true)
+	if (m_fPlayTimer > m_fPlayEndTime + 10.f && m_bPlaying == true)
 	{
-		//static_cast<CUI_EndCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_EndCountDown"))
-		//	->SetFrame(0);
 		m_bPlaying = false;
 		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
@@ -97,11 +90,8 @@ void CPlayTimeMgr::EndCoundDown(const _float fDeltaTime)
 	{
 		for (int i = 0; i < 10; ++i)
 		{
-			if (m_fTimerFlag < fEndTime + float(i) && m_fPlayTimer > fEndTime + float(i))
+			if (m_fTimerFlag < m_fPlayEndTime + float(i) && m_fPlayTimer > m_fPlayEndTime + float(i))
 			{
-				cout << 10 - i << endl;
-				//static_cast<CUI_EndCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_EndCountDown"))
-				//	->SetFrame(10 - i);
 				m_fTimerFlag = m_fPlayTimer;
 				SoundMgr::GetInstance().PlaySound(L"Effect/lab/ro_count.flac", SOUND_ENDCOUND, 0.4f);
 			}

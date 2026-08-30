@@ -13,11 +13,15 @@ private:
     ~CPlayTimeMgr() override;
 
 public:
-    void            UpdateCPlayTimeMgr(const _float fDeltaTime);
-    void            StartCountDown(const _float fDeltaTime);
-    void            EndCoundDown(const _float fDeltaTime);
+    void            UpdateCPlayTimeMgr(const _float& fDeltaTime);
+
+    void            UpdatePlayTime(const _float& fDeltaTime);
+    void            StartCountDown(const _float& fDeltaTime);
+    void            EndCoundDown(const _float& fDeltaTime);
     
+    float           GetPlayEndTime()    { return m_fPlayEndTime; }
     float           GetPlayTimer()      { return m_fPlayTimer; }
+    float           GetTimerFlag()      { return m_fTimerFlag; }
     float           GetStartTimer()     { return m_fStartTimer; }
     bool            GetPlaying()        { return m_bPlaying; }
 
@@ -26,6 +30,7 @@ public:
     
 private:
 
+    float           m_fPlayEndTime;
     float           m_fStartTimer;
     float			m_fPlayTimer;
     float			m_fTimerFlag;

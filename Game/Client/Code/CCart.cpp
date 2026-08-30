@@ -85,7 +85,7 @@ HRESULT CCart::Ready_GameObject()
 	m_vBananaSpinStartLook	= { 0,0,0 };
 
 	m_bCanShortBoost		= true;
-	m_bShortBoosterOnOff	= false;
+	m_bShortBoosterTimerOnOff	= false;
 	m_bPlaying				= false;
 
 	m_fPlayTimer			= 0.f;
@@ -122,18 +122,15 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 
-	//StartCountDown(fDeltaTime);
-	//EndCoundDown(fDeltaTime);
-
 	m_bPlaying = CPlayTimeMgr::GetInstance()->GetPlaying();
 
+	UpdateStartBoost();
 	KeyInput(fDeltaTime);
 	UpdateBoost(fDeltaTime);
 	UpdateDrift();
 	UpdateThunder();
 	UpdateMagnet(fDeltaTime);
 
-	//OutputCarState();
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -235,7 +232,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	// ShortBooster
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_UP))
 	{
-		if (m_bShortBoosterOnOff == true && m_bCanShortBoost == true)
+		if (m_bShortBoosterTimerOnOff == true && m_bCanShortBoost == true)
 		{
 			m_bCanShortBoost = false;
 			m_eBoostState = BOOST_STATE_SHORT_BOOST;
@@ -455,7 +452,7 @@ void CCart::UpdateDrift()
 			|| (!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT) && !CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 			|| m_eCartState != CART_STATE_GROUND)
 		{
-			m_bShortBoosterOnOff = true;
+			m_bShortBoosterTimerOnOff = true;
 			m_fCurGage += m_fGainGage;
 			if (m_fCurGage >= 100.f)
 			{
@@ -477,16 +474,17 @@ void CCart::UpdateDrift()
 
 void CCart::UpdateBoost(const _float& fDeltaTime)
 {
-	if (m_bShortBoosterOnOff == true)
+	if (m_bShortBoosterTimerOnOff == true)
 	{
 		m_fShortBoosterTimer += fDeltaTime;
 		if (m_fShortBoosterTimer > 0.5f)
 		{
 			m_fShortBoosterTimer = 0.f;
-			m_bShortBoosterOnOff = false;
+			m_bShortBoosterTimerOnOff = false;
 			m_bCanShortBoost = true;
 		}
 	}
+	//cout << m_fShortBoosterTimer << endl;
 	if (m_eBoostState == BOOST_STATE_NORMAL)
 		return;
 	m_fSpeed *= m_fBoostCal;
@@ -1040,6 +1038,17 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 	}
 }
 
+void CCart::UpdateStartBoost()
+{
+	m_fPreTimer = m_fPlayTimer;
+	m_fPlayTimer = CPlayTimeMgr::GetInstance()->GetPlayTimer();
+	if (m_fPlayTimer > 0.f && m_fPreTimer == 0.f)
+	{
+		m_bCanShortBoost = true;
+		m_bShortBoosterTimerOnOff = true;
+	}
+}
+
 void CCart::OutputCarState()
 {
 	switch (m_eCartState)
@@ -1059,77 +1068,6 @@ void CCart::OutputCarState()
 	default:
 		break;
 	}
-}
-
-void CCart::StartCountDown(const _float& fDeltaTime)
-{
-	m_fPlayTimer += fDeltaTime;
-
-	if (m_fPlayTimer > 4.f)
-		return;
-
-	if (m_fPlayTimer > 3.f)
-	{
-		static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
-			->SetFrame(4);
-		m_bPlaying = true;
-		m_bCanShortBoost = true;
-		m_bShortBoosterOnOff = true;
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_go.flac", SOUND_EFFECT1, 0.4f);
-	}
-	else if (m_fPreTimer < 2.f && m_fPlayTimer > 2.f)
-	{
-		static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
-			->SetFrame(1);
-		m_fPreTimer = m_fPlayTimer;
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT3, 0.4f);
-	}
-	else if (m_fPreTimer < 1.f && m_fPlayTimer > 1.f)
-	{
-		static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
-			->SetFrame(2);
-		m_fPreTimer = m_fPlayTimer;
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT2, 0.4f);
-	}
-	else if (m_fPreTimer == 0.f && m_fPlayTimer > 0.f)
-	{
-		static_cast<CUI_StartCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_StartCountDown"))
-			->SetFrame(3);
-		m_fPreTimer = m_fPlayTimer;
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT1, 0.4f);
-	}
-}
-
-void CCart::EndCoundDown(const _float& fDeltaTime)
-{
-	float fEndTime = 300;
-
-	if (m_fPlayTimer < fEndTime || m_bPlaying == false)
-		return;
-
-	if (m_fPlayTimer > fEndTime + 10.f && m_bPlaying == true)
-	{
-		static_cast<CUI_EndCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_EndCountDown"))
-			->SetFrame(0);
-		m_bPlaying = false;
-		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
-		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/race_over.flac", SOUND_ENDCOUND, 0.4f);
-	}
-	else
-	{
-		for (int i = 0; i < 10; ++i)
-		{
-			if (m_fPreTimer < fEndTime + float(i) && m_fPlayTimer > fEndTime + float(i))
-			{
-				cout << 10 - i << endl;
-				static_cast<CUI_EndCountDown*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_EndCountDown"))
-					->SetFrame(10 - i);
-				m_fPreTimer = m_fPlayTimer;
-				SoundMgr::GetInstance().PlaySound(L"Effect/lab/ro_count.flac", SOUND_ENDCOUND, 0.4f);
-			}
-		}
-	}	
 }
 
 
@@ -1219,7 +1157,8 @@ void CCart::CreateTargetAimObject()
 	//pTargetAim->SetLayer(m_pLayer);
 
 	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
+	if (pTarget == nullptr)
+		return;
 	_vec3 vPos, vLook, vTarget, vAimScreen, vTargetScreen;
 
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);

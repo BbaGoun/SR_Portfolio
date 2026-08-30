@@ -17,6 +17,7 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+	void		UpdateFrame();
 	void		SetFrame(int iFrame);
 
 private:
@@ -28,6 +29,7 @@ private:
 	bool		m_bShow;
 	float		m_fScale;
 	float		m_fTimer;
+	float		m_fTimerFlag;
 
 public:
 	static CUI_StartCountDown* Create(LPDIRECT3DDEVICE9 pGraphicDev);

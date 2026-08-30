@@ -5,6 +5,7 @@
 #include "CTexture.h"
 #include "CRenderer.h"
 #include "CManagement.h"
+#include "CPlayTimeMgr.h"
 
 CUI_StartCountDown::CUI_StartCountDown(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -38,16 +39,18 @@ HRESULT CUI_StartCountDown::Ready_GameObject()
 	m_pGraphicDev->GetViewport(&vp);
 	m_pTransformCom->Set_Pos({ 0.f, vp.Height*0.1f, 1.f });
 
-	m_fFrame	= 0.f;
-	m_fTimer	= 0.f;
-	m_bShow		= false;
-
+	m_fFrame		= 0.f;
+	m_fTimer		= 0.f;
+	m_bShow			= false;
+	m_fTimerFlag	= 0.f;
 
 	return S_OK;
 }
 
 _int CUI_StartCountDown::Update_GameObject(const _float& fDeltaTime)
 {
+	UpdateFrame();
+
 	if (m_bShow)
 	{
 		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
@@ -86,6 +89,34 @@ void CUI_StartCountDown::Render_GameObject()
 		m_pTextureCom->Set_Texture(m_fFrame);
 
 		m_pBufferCom->Render_Buffer();
+	}
+}
+
+void CUI_StartCountDown::UpdateFrame()
+{
+	float fStartTimer = CPlayTimeMgr::GetInstance()->GetStartTimer();
+	
+	if (fStartTimer > 4.f)
+		return;
+
+	if (fStartTimer > 3.f)
+	{
+		SetFrame(4);
+	}
+	else if (m_fTimerFlag < 2.f && fStartTimer > 2.f)
+	{
+		m_fTimerFlag = fStartTimer;
+		SetFrame(1);
+	}
+	else if (m_fTimerFlag < 1.f && fStartTimer > 1.f)
+	{
+		m_fTimerFlag = fStartTimer;
+		SetFrame(2);
+	}
+	else if (m_fTimerFlag == 0.f && fStartTimer > 0.f)
+	{
+		m_fTimerFlag = fStartTimer;
+		SetFrame(3);
 	}
 }
 

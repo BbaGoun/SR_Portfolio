@@ -135,9 +135,9 @@ void CPlayerHead::KeyInput(const _float& fDeltaTime)
 	else
 	{
 		// 고개 원위치
-		if (m_vRotation.x < 0)
+		if (m_vRotation.x < -1.f)
 			m_vRotation.x += 50 * fDeltaTime;
-		else if (m_vRotation.x > 0)
+		else if (m_vRotation.x > 1.f)
 			m_vRotation.x -= 50 * fDeltaTime;
 		else
 			m_vRotation.x = 0.f;
