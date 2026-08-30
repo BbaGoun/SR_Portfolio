@@ -65,7 +65,7 @@ void CWaterBombBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		}
 	}
 	
-	if (m_fTimer > 3.5f)
+	if (m_fTimer > 3.5f)		
 	{
 		m_pLayer->Delete_GameObject(this);
 	}

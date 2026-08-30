@@ -38,7 +38,8 @@ HRESULT CWaterBomb::Ready_GameObject()
 
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->Set_Extents({ 40.f, 12.f, 60.f });
+	//m_pColliderCom->Set_Extents({ 40.f, 12.f, 60.f });
+	m_pColliderCom->Set_Extents({ 1.f, 1.f, 1.f });
 	m_pColliderCom->Set_Offset({ 0.f, 4.f, 0.f });
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
@@ -96,7 +97,7 @@ void CWaterBomb::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	//m_pTextureCom->Set_Texture(0);
-	//m_pBufferCom->Render_Buffer();
+	// m_pBufferCom->Render_Buffer();
 
 	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 
@@ -115,14 +116,14 @@ void CWaterBomb::TriggerEnter(CCollider* pOtherCollider)
 	//if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)
 	if (wcsncmp(wOtherTag, L"Obj_MissileTarget", 17) == 0)
 	{
-	//	vector<CGameObject*> vecChildren = Get_Children();
+		 vector<CGameObject*> vecChildren = Get_Children();
 
-	//	for (auto& pChild : vecChildren)
-	//	{
-	//		pChild->To_Root();
-	//		m_pLayer->Delete_GameObject(pChild);
-	//	}
-	//	m_pLayer->Delete_GameObject(this);
+		for (auto& pChild : vecChildren)
+		{
+			pChild->To_Root();
+			m_pLayer->Delete_GameObject(pChild);
+		}
+		m_pLayer->Delete_GameObject(this);
 	}
 }
 

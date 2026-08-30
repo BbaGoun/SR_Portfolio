@@ -149,7 +149,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		}
 
-		else if (m_fTimer >= 20.f)	// 2
+		else if (m_fTimer >= 2.f)	
 		{
 			vPos.y -= m_vForce.y * 0.45f * fFixedDeltaTime;
 			m_vForce.y -= 5.f * fFixedDeltaTime;
@@ -231,7 +231,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		}
 
-		else if (m_fTimer >= 20.f)	// 2
+		else if (m_fTimer >= 2.f)	
 		{
 			vPos.y -= m_vForce.y * 0.45f * fFixedDeltaTime;
 			m_vForce.y -= 5.f * fFixedDeltaTime;
@@ -287,114 +287,75 @@ void CMissileTarget::KeyInput(const _float& fDeltaTime)
 
 	_vec3 vPos, vFlyPos;
 
-	if (vPos.y <= 0.f && m_bWaterBubble == true)		//(m_bBubbling == true)
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	if (vPos.y >= 0.f && m_bWaterBubble == true)
 	{
 		if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LEFT))
 		{
-			if (m_iAccumulate <= 20)// m_iAccumulate 일경우 리턴	-> 수정하기
-			{	
-				m_pTransformCom->Get_Info(INFO_POS, &vPos);
+			if (m_iAccumulate <= 12)
+			{
 
-				if (m_iLast_KeyInput == 1)// 마지막 키가 왼쪽 '1' 일 경우 적게 적립
+				if (m_iLast_KeyInput == 1)
 				{
 					m_iAccumulate += 1;
 				}
 
-				else if (m_iLast_KeyInput == 2) // 마지막 키가 오른쪽 '2' 일 경우 많이 적립
+				else if (m_iLast_KeyInput == 2) 
 				{
 					m_iAccumulate += 2;
 				}
-				m_iLast_KeyInput = 1;	// m_iLast_KeyInput	마지막 키 저장 왼쪽 '1' 로 왼쪽 표시
+				m_iLast_KeyInput = 1;	
 
-				// m_bBubbling = false;	// 버블 사라지게 하기
-
-				//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-
-				if (m_iAccumulate >= 20)
-				{
-					vPos.y -= m_vForce.y * 0.45f * fDeltaTime;	// 원래는 픽시드
-					m_vForce.y -= 5.f * fDeltaTime;
-
-					vPos.y = 0.f;
-					m_vForce.y = 0.f;
-					m_vRotation.x = 0.f;
-					m_vRotation.y = 0.f;
-					m_bWaterFlyHit = false;
-					m_bWaterBubble = false;
-					pBubble->GetLayer()->Delete_GameObject(pBubble);
-					m_fTimer = 0.f;
-
-					_quaternion qReset;
-					D3DXQuaternionRotationYawPitchRoll(&qReset, 0.f, 0.f, 0.f);
-					m_pTransformCom->Set_Quaternion(&qReset);
-
-					//m_pTransformCom->Set_Pos(vPos);
-					//pBubble->Get_Transform()->Set_Pos(vPos);
-				}
-
-				 m_pTransformCom->Set_Pos(vPos);
-				 pBubble->Get_Transform()->Set_Pos(vPos);
 			}
 
-			// m_pTransformCom->Set_Pos(vPos);
-			//  pBubble->Get_Transform()->Set_Pos(vPos);
 		}
 
 		if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_RIGHT))
 		{
-			if (m_iAccumulate <= 20)// m_iAccumulate 일경우 리턴		-> 수정하기
+			if (m_iAccumulate <= 12)
 			{
-				m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
-				if (m_iLast_KeyInput == 2)// 마지막 키가 오른쪽 '2' 일 경우 적게 적립
+				if (m_iLast_KeyInput == 2)
 				{
 					m_iAccumulate += 1;
 				}
 
-				else if (m_iLast_KeyInput == 1) // 마지막 키가 왼쪽 '1' 일 경우 많이 적립
+				else if (m_iLast_KeyInput == 1) 
 				{
 					m_iAccumulate += 2;
 				}
 
-				m_iLast_KeyInput = 2;	// m_iLast_KeyInput	마지막 키 저장 오른쪽 '2' 로 오른쪽 표시
-
-				// m_bBubbling = false;	// 버블 사라지게 하기
-
-				//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-
-				if (m_iAccumulate >= 20)
-				{
-					vPos.y -= m_vForce.y * 0.45f * fDeltaTime;	// 원래는 픽시드
-					m_vForce.y -= 5.f * fDeltaTime;
-
-					vPos.y = 0.f;
-					m_vForce.y = 0.f;
-					m_vRotation.x = 0.f;
-					m_vRotation.y = 0.f;
-					m_iAccumulate = 0.f;
-					m_bWaterFlyHit = false;
-					m_bWaterBubble = false;
-					pBubble->GetLayer()->Delete_GameObject(pBubble);
-					m_fTimer = 0.f;
-
-					_quaternion qReset;
-					D3DXQuaternionRotationYawPitchRoll(&qReset, 0.f, 0.f, 0.f);
-					m_pTransformCom->Set_Quaternion(&qReset);
-
-					//m_pTransformCom->Set_Pos(vPos);
-					//pBubble->Get_Transform()->Set_Pos(vPos);
-				}
-
-				 m_pTransformCom->Set_Pos(vPos);
-				 pBubble->Get_Transform()->Set_Pos(vPos);
+				m_iLast_KeyInput = 2;
 			}
-			 // m_pTransformCom->Set_Pos(vPos);
-			//  pBubble->Get_Transform()->Set_Pos(vPos);
 		}
 
-		// m_pTransformCom->Set_Pos(vPos);
-		// pBubble->Get_Transform()->Set_Pos(vPos);
+		if (m_iAccumulate >= 12)
+		{
+			vPos.y -= m_vForce.y * 0.45f * fDeltaTime;	// 원래는 픽시드
+			m_vForce.y -= 5.f * fDeltaTime;
 
+			m_pTransformCom->Set_Pos(vPos);
+			pBubble->Get_Transform()->Set_Pos(vPos);
+		}
+
+		if (vPos.y <= 0.f && m_iAccumulate >= 12)
+		{
+			vPos.y = 0.f;
+			m_vForce.y = 0.f;
+			m_vRotation.x = 0.f;
+			m_vRotation.y = 0.f;
+			m_iAccumulate = 0.f;
+			m_bWaterFlyHit = false;
+			m_bWaterBombHit = false;	
+			m_bWaterBubble = false;
+			pBubble->GetLayer()->Delete_GameObject(pBubble);
+			m_fTimer = 0.f;
+
+			_quaternion qReset;
+			D3DXQuaternionRotationYawPitchRoll(&qReset, 0.f, 0.f, 0.f);
+			m_pTransformCom->Set_Quaternion(&qReset);
+		}
 	}
 }
 
