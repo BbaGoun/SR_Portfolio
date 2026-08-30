@@ -6,6 +6,7 @@
 #include "CCollisionMgr.h"
 #include "CManagement.h"
 #include "CCube_Collider.h"	
+#include "CWaterBombBubble.h"
 
 CMissileTarget::CMissileTarget(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -36,6 +37,8 @@ HRESULT CMissileTarget::Ready_GameObject()
 
 	m_pTransformCom->Set_Pos({ 0.f,0.f, 60.f });
 	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
+
+						m_pBubble = nullptr;
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -101,7 +104,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (m_bWaterBombHit)
 	{
 		m_fTimer += fFixedDeltaTime;
-		CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
+		// CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
 
 		_vec3 vPos, vBubblePos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -167,7 +170,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_vRotation.y = 0.f;
 			m_bWaterBombHit = false;
 			m_bWaterBubble	= false;
-			pBubble->GetLayer()->Delete_GameObject(pBubble);
+			m_pBubble->GetLayer()->Delete_GameObject(m_pBubble);
 			m_fTimer = 0.f;
 
 			_quaternion qReset;
@@ -176,14 +179,14 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		}
 
 		m_pTransformCom->Set_Pos(vPos);	
-		pBubble->Get_Transform()->Set_Pos(vPos);
+		m_pBubble->Get_Transform()->Set_Pos(vPos);
 		//pBubble->GetLayer()->Delete_GameObject(pBubble);
 	}
 
 	if (m_bWaterFlyHit)
 	{
 		m_fTimer += fFixedDeltaTime;
-		CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
+		// CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
 
 		_vec3 vPos, vFlyPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -249,7 +252,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_vRotation.y = 0.f;
 			m_bWaterFlyHit = false;
 			m_bWaterBubble = false;
-			pBubble->GetLayer()->Delete_GameObject(pBubble);
+			m_pBubble->GetLayer()->Delete_GameObject(m_pBubble);
 			m_fTimer = 0.f;
 
 			_quaternion qReset;
@@ -258,7 +261,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		}
 
 		m_pTransformCom->Set_Pos(vPos);
-		pBubble->Get_Transform()->Set_Pos(vPos);
+		m_pBubble->Get_Transform()->Set_Pos(vPos);
 	}
 }
 
@@ -283,7 +286,7 @@ void CMissileTarget::Render_GameObject()
 void CMissileTarget::KeyInput(const _float& fDeltaTime)
 {	// 1. 클래스 만들어서 버블 시 화면에 키보드 UI 띄우고 누르는키 표시 되게
 	// 2. 나중에 카트처럼 머리 및 바퀴 움직임 구현
-	CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
+	CGameObject* pWaterBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBody");
 
 	_vec3 vPos, vFlyPos;
 
@@ -336,7 +339,7 @@ void CMissileTarget::KeyInput(const _float& fDeltaTime)
 			m_vForce.y -= 5.f * fDeltaTime;
 
 			m_pTransformCom->Set_Pos(vPos);
-			pBubble->Get_Transform()->Set_Pos(vPos);
+			m_pBubble->Get_Transform()->Set_Pos(vPos);
 		}
 
 		if (vPos.y <= 0.f && m_iAccumulate >= 12)
@@ -349,7 +352,8 @@ void CMissileTarget::KeyInput(const _float& fDeltaTime)
 			m_bWaterFlyHit = false;
 			m_bWaterBombHit = false;	
 			m_bWaterBubble = false;
-			pBubble->GetLayer()->Delete_GameObject(pBubble);
+			m_pBubble->GetLayer()->Delete_GameObject(m_pBubble);
+			pWaterBody->GetLayer()->Delete_GameObject(pWaterBody);
 			m_fTimer = 0.f;
 
 			_quaternion qReset;
@@ -387,6 +391,22 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 			m_vForce.y = 120.f;
 			m_vRotation.x += D3DXToRadian(0.f);
 			m_vRotation.y += D3DXToRadian(0.f);
+
+			m_pBubble = CWaterBombBubble::Create(m_pGraphicDev);
+
+			if (m_pBubble == nullptr)
+				return;
+
+			if (FAILED(m_pLayer->Add_GameObject(
+				L"Obj_WaterBombBubble", m_pBubble)))
+				return;
+
+			m_pBubble->SetLayer(m_pLayer);
+
+			_vec3 vPos;
+			
+			m_pTransformCom->Get_Info(INFO_POS, &vPos);
+			m_pBubble->Get_Transform()->Set_Pos(vPos);
 		}
 	}
 
@@ -399,6 +419,22 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 			m_vForce.y = 120.f;
 			m_vRotation.x += D3DXToRadian(0.f);
 			m_vRotation.y += D3DXToRadian(0.f);
+
+			m_pBubble = CWaterBombBubble::Create(m_pGraphicDev);
+
+			if (m_pBubble == nullptr)
+				return;
+
+			if (FAILED(m_pLayer->Add_GameObject(
+				L"Obj_WaterBombBubble", m_pBubble)))
+				return;
+
+			m_pBubble->SetLayer(m_pLayer);
+
+			_vec3 vPos;
+
+			m_pTransformCom->Get_Info(INFO_POS, &vPos);
+			m_pBubble->Get_Transform()->Set_Pos(vPos);
 		}
 	}
 }

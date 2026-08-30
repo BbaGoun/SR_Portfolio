@@ -1354,15 +1354,15 @@ void CCart::CreateWaterBombObject()
 
 	pWaterBombThrow->SetLayer(m_pLayer);
 
-	CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
+	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
 
-	if (pWaterBombBubble == nullptr)
-		return;
+	//if (pWaterBombBubble == nullptr)
+	//	return;
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
-		return;
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+	//	return;
 
-	pWaterBombBubble->SetLayer(m_pLayer);
+	//pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateWaterFlyObject()
@@ -1389,12 +1389,15 @@ void CCart::CreateWaterFlyObject()
 	pWaterFlyBody->SetLayer(m_pLayer);
 	pWaterFly->Set_Child(pWaterFlyBody);
 
-	CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
+	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
-		return;
+	//if (pWaterBombBubble == nullptr)
+	//	return;
 
-	pWaterBombBubble->SetLayer(m_pLayer);
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+	//	return;
+
+	//pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateMagnetAimObject()

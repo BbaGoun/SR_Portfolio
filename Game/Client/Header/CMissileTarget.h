@@ -5,6 +5,8 @@ namespace Engine
 	class CCartBodyCol;
 	class CCube_Collider;
 }
+class CWaterBombBubble;
+
 class CMissileTarget : public CGameObject
 {
 private:
@@ -30,12 +32,14 @@ public:
 
 	bool		GetMissileHit() { return m_bMissileHit; }
 	void		SetMissileHit(bool bMissileHit) { m_bMissileHit = bMissileHit; }
+
 public:
 	static CMissileTarget* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	Engine::CCartBodyCol*		m_pBufferCom;
 	Engine::CCube_Collider*		m_pColliderCom;
+			CWaterBombBubble*	m_pBubble;
 			_float				m_fMaxSpeed;
 			_float				m_fTimer;
 
