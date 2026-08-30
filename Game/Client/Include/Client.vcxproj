@@ -208,6 +208,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CBoostWind.h" />
     <ClInclude Include="..\Header\CBoostJet.h" />
     <ClInclude Include="..\Header\CBox.h" />
+    <ClInclude Include="..\Header\CBubbleEscape.h" />
     <ClInclude Include="..\Header\CCart.h" />
     <ClInclude Include="..\Header\CCartBody.h" />
     <ClInclude Include="..\Header\CCartBody1.h" />
@@ -305,6 +306,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CBubbleEscape.cpp" />
     <ClCompile Include="..\Code\CDustLandingEffect.cpp" />
     <ClCompile Include="..\Code\CMenu_Item.cpp" />
     <ClCompile Include="..\Code\CMenu_Set.cpp" />

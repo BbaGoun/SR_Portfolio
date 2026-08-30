@@ -34,7 +34,7 @@ HRESULT CMissileTarget::Ready_GameObject()
 	m_bWaterBubble		= false;
 	m_bWaterFly			= false;
 	m_bBubbling			= false;
-
+	m_bBubbleUI			= false;
 	m_pTransformCom->Set_Pos({ 0.f,0.f, 60.f });
 	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
 
@@ -170,6 +170,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_vRotation.y = 0.f;
 			m_bWaterBombHit = false;
 			m_bWaterBubble	= false;
+			SetBubbleUI(false);
 			m_pBubble->GetLayer()->Delete_GameObject(m_pBubble);
 			m_fTimer = 0.f;
 
@@ -252,6 +253,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_vRotation.y = 0.f;
 			m_bWaterFlyHit = false;
 			m_bWaterBubble = false;
+			SetBubbleUI(false);
 			m_pBubble->GetLayer()->Delete_GameObject(m_pBubble);
 			m_fTimer = 0.f;
 
@@ -366,6 +368,7 @@ void CMissileTarget::KeyInput(const _float& fDeltaTime)
 			// m_bWaterFlyHit = false;
 			// m_bWaterBombHit = false;	
 			m_bWaterBubble = false;
+			SetBubbleUI(false);
 			m_pBubble->GetLayer()->Delete_GameObject(m_pBubble);
 			// pWaterBody->GetLayer()->Delete_GameObject(pWaterBody);
 			m_fTimer = 0.f;
@@ -403,6 +406,7 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 		{
 			m_bWaterBombHit = true;
 			m_bWaterBubble	= true;
+			SetBubbleUI(true);
 			m_vForce.y = 120.f;
 			m_vRotation.x += D3DXToRadian(0.f);
 			m_vRotation.y += D3DXToRadian(0.f);
@@ -430,6 +434,7 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 		{
 			m_bWaterFlyHit = true;
 			m_bWaterBubble = true;
+			SetBubbleUI(true);
 			m_vForce.y = 120.f;
 			m_vRotation.x += D3DXToRadian(0.f);
 			m_vRotation.y += D3DXToRadian(0.f);

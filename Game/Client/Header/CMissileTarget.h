@@ -33,6 +33,9 @@ public:
 	bool		GetMissileHit() { return m_bMissileHit; }
 	void		SetMissileHit(bool bMissileHit) { m_bMissileHit = bMissileHit; }
 
+	bool		GetBubbleUI() { return m_bBubbleUI; }
+	void		SetBubbleUI(bool bBubbleState) { m_bBubbleUI = bBubbleState; }
+
 public:
 	static CMissileTarget* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
@@ -52,7 +55,8 @@ private:
 			_bool				m_bWaterBubble;
 			_bool				m_bWaterFly;
 			_bool				m_bBubbling;
-				
+			_bool				m_bBubbleUI;
+
 protected:
 	virtual		void		Free() override;
 };

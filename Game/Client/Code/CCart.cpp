@@ -56,6 +56,7 @@ HRESULT CCart::Ready_GameObject()
 	m_fDriftTurnAngle		= 1.5f;
 
 	m_bRainbowUI			= false;
+	// m_bBubbleUI				= false;
 	m_bBanana				= false;
 	m_bThunder				= false;
 	m_bMagnet				= false;

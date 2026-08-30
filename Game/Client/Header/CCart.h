@@ -46,6 +46,9 @@ public:
 	bool			GetRainbowUI()						{ return m_bRainbowUI; }
 	void			SetRainbowUI(bool bRainbowState)	{ m_bRainbowUI = bRainbowState; }
 
+	// bool			GetBubbleUI()						{ return m_bBubbleUI; }
+	// void			SetBubbleUI(bool bBubbleUI)			{ m_bBubbleUI = bBubbleUI; }
+
 	void			SetBanana(bool bBanana)				{ m_bBanana = bBanana; }
 	bool			GetBanana()							{ return m_bBanana; }
 
@@ -103,6 +106,7 @@ private:
 	bool			m_bDrift;
 	bool			m_bBanana;
 	bool			m_bRainbowUI;
+	// _bool			m_bBubbleUI;
 	_bool			m_bMagnet;
 	_float			m_fMagnetTimer;
 

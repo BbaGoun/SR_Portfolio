@@ -57,7 +57,7 @@
 #include "SoundMgr.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
-
+#include "CBubbleEscape.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -718,6 +718,15 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_EndCountDown", pUIObject)))
+		return E_FAIL;
+
+	// 버블 공격시 키보드 UI
+	CGameObject* pBubbleEscape = CBubbleEscape::Create(m_pGraphicDev);
+
+	if (pBubbleEscape == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pUILayer->Add_GameObject(L"UI_BubbleEscape", pBubbleEscape)))
 		return E_FAIL;
 
 	return S_OK;
