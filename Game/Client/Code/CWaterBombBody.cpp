@@ -20,14 +20,13 @@ HRESULT CWaterBombBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 	m_pTransformCom->Set_Pos({ 0.f,0.f,0.f });
-	m_pTransformCom->Set_Scale({ 0.f, 3.5f, 0.f });
-
+	// m_pTransformCom->Set_Scale({ 0.f, 3.5f, 0.f });
+	m_pTransformCom->Set_Scale({ 20.f, 20.f, 20.f });
 	m_fTimer = 0.f;
 
 	Engine::CComponent* pComponent = nullptr;
 
-	// 임시 반구
-	pComponent = m_pBufferCom = dynamic_cast<CCartBodyCol*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CartBodyCol"));
+	pComponent = m_pBufferCom = dynamic_cast<CSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Sphere"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 
@@ -60,11 +59,11 @@ void CWaterBombBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	if (m_fTimer > 1.6f)
 	{
-		if (vScale.x < 16.f && vScale.y < 16.f && vScale.z < 16.f)
+		if (vScale.x < 120.f && vScale.y < 120.f && vScale.z < 120.f)
 		{
-			vScale.x += 45.f * fFixedDeltaTime;
-			vScale.y += 45.f * fFixedDeltaTime;
-			vScale.z += 45.f * fFixedDeltaTime;
+			vScale.x += 380.f * fFixedDeltaTime;
+			vScale.y += 380.f * fFixedDeltaTime;
+			vScale.z += 380.f * fFixedDeltaTime;
 		}
 	}
 	

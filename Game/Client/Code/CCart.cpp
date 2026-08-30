@@ -1488,23 +1488,6 @@ void CCart::UseItem()
 		break;
 	case Engine::ITEM_WATERFLY:
 		break;
-		//case Engine::ITEM_MAGNET:
-		//	//m_bMagnet = true;
-		//	UseMagnetItem();
-		//	//CreateMagnetAimObject();
-		//	//CreateTargetAimObject();
-		//	//CreateMagnetAimObject();
-		//	//CreateMagnetObject();
-		//	break;
-		//case Engine::ITEM_BARRICADE:
-		//	break;
-		//case Engine::ITEM_ROCKET:
-		//	UseMissileItem();
-		//	//CreateMissileAimObject();
-		//	//CreateTargetAimObject();
-		//	//CreateMissileAimObject();
-		//	//CreateMissileObject();
-		//	break;
 	case Engine::ITEM_BANANA:
 		CreateBananaObject();
 		break;

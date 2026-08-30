@@ -30,9 +30,8 @@ HRESULT CWaterBombBubble::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 
-	// 임시 물방울
-	m_pTransformCom->Set_Scale({ 1.5f, 3.5f, 0.7f });
-	pComponent = m_pBufferCom = dynamic_cast<CCartBodyCol*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CartBodyCol"));
+	m_pTransformCom->Set_Scale({ 15.5f, 15.5f, 15.5f });
+	pComponent = m_pBufferCom = dynamic_cast<CSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Sphere"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 

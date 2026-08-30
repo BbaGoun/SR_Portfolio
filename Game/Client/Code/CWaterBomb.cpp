@@ -3,9 +3,9 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CManagement.h"
-//#include "CWaterBombTex.h"
 #include "CCollisionMgr.h"
 #include "CCube_Collider.h"
+#include "CSphere_Collider.h"
 
 CWaterBomb::CWaterBomb(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -32,13 +32,13 @@ HRESULT CWaterBomb::Ready_GameObject()
 
 	Engine::CComponent* pComponent = nullptr;
 
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
+	pComponent = m_pColliderCom = dynamic_cast<CSphere_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SphereCollider"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->Set_Extents({ 40.f, 12.f, 60.f });
+	m_pColliderCom->Set_Radius(60.f);
 	m_pColliderCom->Set_Offset({ 0.f, 4.f, 0.f });
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
