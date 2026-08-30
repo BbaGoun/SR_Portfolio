@@ -82,12 +82,17 @@ void CGameObject::Set_Child(CGameObject* _pGO)
     Insert_Child(_pGO, -1);
 }
 
-void CGameObject::Set_ChildWithOutTune(CGameObject* _pGO)
+void CGameObject::Set_ChildWithoutTune(CGameObject* _pGO)
 {
     Insert_Child(_pGO, -1, false);
 }
 
-void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex, bool bTune)
+void CGameObject::Set_ChildTuneDefault(CGameObject* _pGO)
+{
+    Insert_Child(_pGO, -1, true, true);
+}
+
+void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex, bool bTune, bool bDefault)
 {
     if (_pGO == nullptr)
         return;
@@ -151,7 +156,7 @@ void CGameObject::Insert_Child(CGameObject* _pGO, int _iIndex, bool bTune)
         _matrix matInvParent;
         D3DXMatrixInverse(&matInvParent, 0, pMatParent);
         matLocal *= matInvParent;
-        _pGO->Get_Transform()->Set_LocalWorld(&matLocal);
+        _pGO->Get_Transform()->Set_LocalWorld(&matLocal, bDefault);
     }
 }
 
@@ -254,11 +259,12 @@ void CGameObject::Set_CollisionLayer(COLLISION_LAYER eID)
     m_uCollisionLayerBit = 1 << eID;
 }
 
-void CGameObject::Compute_ViewZ(const _vec3* pPos)
+void CGameObject::Compute_ViewZ()
 {
     _matrix matView;
     m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-    _vec3 viewPos = *pPos;
+    _vec3 viewPos;
+    m_pTransformCom->Get_Info(INFO_POS, &viewPos);
     D3DXVec3TransformCoord(&viewPos, &viewPos, &matView);
     m_fViewZ = viewPos.z;
 }

@@ -47,6 +47,7 @@ void CRenderer::Delete_RenderGroup(CGameObject* pObj)
 		auto it = find(m_RenderGroup[i].begin(), m_RenderGroup[i].end(), pObj);
 
 		if (it != m_RenderGroup[i].end()) {
+			Safe_Release((*it));
 			m_RenderGroup[i].erase(it);
 			return;
 		}
@@ -201,8 +202,8 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 
 		pGraphicDev->SetRenderTarget(0, pOldRT);
 		pGraphicDev->SetDepthStencilSurface(pOldDS);
-		pOldRT->Release();
-		pOldDS->Release();
+		Safe_Release(pOldRT);
+		Safe_Release(pOldDS);
 	}
 }
 
@@ -243,9 +244,7 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
 	{
-		_vec3 vPos;
-		pObj->Get_Transform()->Get_Info(INFO_POS, &vPos);
-		pObj->Compute_ViewZ(&vPos);
+		pObj->Compute_ViewZ();
 	}
 
 	m_RenderGroup[RENDER_ALPHA].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
@@ -371,8 +370,13 @@ void CRenderer::DistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 	{
 		for (auto it = m_RenderGroup[i].begin(); it != m_RenderGroup[i].end();) {
 			if (*it == nullptr) {
-				(*it)->Release();
+				Safe_Release((*it));
 				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+
+			if (!(*it)->Get_CullEnable()) {
+				++it;
 				continue;
 			}
 
@@ -386,7 +390,7 @@ void CRenderer::DistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 			_vec3 dir = vObjPos - vCamPos;
 			dist = D3DXVec3Length(&dir);
 			if (dist >= fCullDistance) {
-				(*it)->Release();
+				Safe_Release((*it));
 				it = m_RenderGroup[i].erase(it);
 			}
 			else
@@ -422,14 +426,19 @@ void CRenderer::FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 	{
 		for (auto it = m_RenderGroup[i].begin(); it != m_RenderGroup[i].end();) {
 			if (*it == nullptr) {
-				(*it)->Release();
+				Safe_Release((*it));
 				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+
+			if (!(*it)->Get_CullEnable()) {
+				++it;
 				continue;
 			}
 
 			CVIBuffer* pBuf = (*it)->Get_Component<CVIBuffer>();
 			if (pBuf == nullptr) {
-				(*it)->Release();
+				Safe_Release((*it));
 				it = m_RenderGroup[i].erase(it);
 				continue;
 			}
@@ -442,7 +451,7 @@ void CRenderer::FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 			box.Transform(box, xmMatWorld);
 
 			if (!tFrustum.Intersects(box)) {
-				(*it)->Release();
+				Safe_Release((*it));
 				it = m_RenderGroup[i].erase(it);
 				continue;
 			}

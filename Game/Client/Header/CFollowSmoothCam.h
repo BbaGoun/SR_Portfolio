@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CCamera.h"
 
 class CFollowSmoothCam : public CCamera
@@ -26,6 +26,8 @@ public:
 private:
 	_float m_fYaw;
 	_float m_fDistScale;
+	_float m_fAtYOffset;
+	_float m_fUpDistance;
 	_float m_fBackDistance;
 
 public:

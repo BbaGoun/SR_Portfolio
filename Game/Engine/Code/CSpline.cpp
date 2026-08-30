@@ -311,7 +311,7 @@ void CSpline::Render_Points()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, matWorld);
 	m_pGraphicDev->DrawPrimitive(D3DPT_POINTLIST, 0, m_vecControlPoint.size());
 
-	_pVB->Release();
+	Safe_Release(_pVB);
 	m_pGraphicDev->SetTexture(0, nullptr);
 
 	PostRender_Points();
@@ -562,7 +562,6 @@ CComponent* CSpline::Clone()
 
 	return pCom;
 }
-
 
 void CSpline::Free()
 {

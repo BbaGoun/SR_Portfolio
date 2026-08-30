@@ -1,6 +1,8 @@
-#pragma once
+﻿#pragma once
 #include "CGameObject.h"
 #include "Engine_Enum.h"
+#include "CDriftTrail.h"
+
 namespace Engine
 {
 	class CCartWheelCol;
@@ -28,6 +30,7 @@ public:
 	void			ResetPrePos();
 	void			CreateSkidMark();
 	bool			CheckInTerrain();
+	void			ForgetDriftTrail(CDriftTrail* pDriftTrail);
 public:
 	static CWheel* Create(LPDIRECT3DDEVICE9 pGraphicDev, WHEEL_TYPE eType);
 
@@ -43,6 +46,8 @@ private:
 	_vec3					m_vColliderSize;
 
 	float					m_fRayMinDist;
+
+	CDriftTrail*			m_pDriftTrail = nullptr;
 protected:
 	virtual		void		Free() override;
 };

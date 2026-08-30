@@ -59,7 +59,7 @@ HRESULT CTransform::Ready_Transform()
 	return S_OK;
 }
 
-void CTransform::Set_LocalWorld(_matrix* _MatLocal)
+void CTransform::Set_LocalWorld(_matrix* _MatLocal, bool bDefault)
 {
 	// 크기 분해
 	_vec3 vRight, vUp, vLook;
@@ -75,6 +75,9 @@ void CTransform::Set_LocalWorld(_matrix* _MatLocal)
 	memcpy(&matRot.m[1], D3DXVec3Normalize(&vUp, &vUp), sizeof(_vec3));
 	memcpy(&matRot.m[2], D3DXVec3Normalize(&vLook, &vLook), sizeof(_vec3));
 
+	if (bDefault) {
+		D3DXQuaternionRotationMatrix(&m_defaultQuaternion, &matRot);
+	}
 	D3DXQuaternionRotationMatrix(&m_localQuaternion, &matRot);
 
 	// 이동 분해

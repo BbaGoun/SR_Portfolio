@@ -1095,7 +1095,7 @@ void CCart::StartCountDown(const _float& fDeltaTime)
 
 void CCart::EndCoundDown(const _float& fDeltaTime)
 {
-	float fEndTime = 300;
+	float fEndTime = 30000;
 
 	if (m_fPlayTimer < fEndTime || m_bPlaying == false)
 		return;

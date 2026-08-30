@@ -98,22 +98,42 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (m_eWheelType < WHEEL_BL)
 		return;
 
+
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	_vec3 originPos = vPos;
 	if (pCart->GetDrift())
 	{
+		if (!m_pDriftTrail) {
+			m_pDriftTrail = CDriftTrail::Create(m_pGraphicDev, vPos, this);
+			if(m_pDriftTrail != nullptr)
+				CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Drift_Trail", m_pDriftTrail);
+		}
+
 		_vec3 vDeltaPos;
 		vDeltaPos = vPos - m_vPrePos;
 		m_fDistSum += D3DXVec3Length(&vDeltaPos);
-		if (m_fDistSum >= 0.01f && CheckInTerrain())
+		if (m_fDistSum >= 0.5f && CheckInTerrain())
 		{
+			// 스플라인을 사용하여 스키드 마크 생성
 			CreateSkidMark();
 			m_fDistSum = 0;
+
+			// 여기에 드리프트 이펙트 만들기
+			// 스플라인의 구성 요소
+			// 컨트롤 포인트, 샘플 유닛, 텍스처 유닛, 텍스처
+			// 드리프트 시작점부터 샘플유닛마다 컨트롤 포인트를 찍는다
+			// 컨트롤 포인트가 생길 때 마다 Mesh를 재 계산한다.
+			// 기존의 컨트롤 포인트는 바뀌지 않으므로 최적화 접근
+			// 텍스처 유닛은 샘플 유닛과 동일
+			// 텍스처는 동적으로 생성된다?
+			if(m_pDriftTrail)
+				m_pDriftTrail->Append_Point(vPos);
 		}
 	}
 	else
 	{
+		m_pDriftTrail = nullptr;
 		m_fDistSum = 0;
 	}
 	m_vPrePos = vPos;
@@ -249,6 +269,12 @@ bool CWheel::CheckInTerrain()
 		return true;
 	else
 		return false;
+}
+
+void CWheel::ForgetDriftTrail(CDriftTrail* pDriftTrail)
+{
+	if (m_pDriftTrail == pDriftTrail)
+		m_pDriftTrail = nullptr;
 }
 
 CWheel* CWheel::Create(LPDIRECT3DDEVICE9 pGraphicDev,WHEEL_TYPE eType)

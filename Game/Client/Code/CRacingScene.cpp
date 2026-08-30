@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CRacingScene.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -107,7 +107,7 @@ void CRacingScene::OnResetDevice()
 
 HRESULT CRacingScene::LoadSceneFromFile()
 {
-	// ÀÏ´Ü ³Ö¾îµÎ±â
+	// ì¼ë‹¨ ë„£ì–´ë‘ê¸°
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)
@@ -162,50 +162,50 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
 	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
 
-	pCart->Set_ChildWithOutTune(pPlayer);
+	pCart->Set_ChildTuneDefault(pPlayer);
 	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
-// ÀÌÆåÆ®
-	// ## ºÎ½ºÅÍ ¿ŞÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
+// ì´í™íŠ¸
+	// ## ë¶€ìŠ¤í„° ì™¼ìª½1 ë°”ëŒ ì´í™íŠ¸
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
-	pCart->Set_ChildWithOutTune(pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
 	
-	// ## ºÎ½ºÅÍ ¿ŞÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
+	// ## ë¶€ìŠ¤í„° ì™¼ìª½2 ë°”ëŒ ì´í™íŠ¸
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
-	pCart->Set_ChildWithOutTune(pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
 	
-	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
+	// ## ë¶€ìŠ¤í„° ì˜¤ë¥¸ìª½1 ë°”ëŒ ì´í™íŠ¸
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
-	pCart->Set_ChildWithOutTune(pGameObject);
-	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
+	pCart->Set_ChildWithoutTune(pGameObject);
+	// ## ë¶€ìŠ¤í„° ì˜¤ë¥¸ìª½2 ë°”ëŒ ì´í™íŠ¸
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
-	pCart->Set_ChildWithOutTune(pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
 	
-	// ## ºÎ½ºÅÍ Á¦Æ® ÀÌÆåÆ®
+	// ## ë¶€ìŠ¤í„° ì œíŠ¸ ì´í™íŠ¸
 	pGameObject = CBoostJet::Create(m_pGraphicDev);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
-	pCartBody->Set_ChildWithOutTune(pGameObject);
+	pCartBody->Set_ChildWithoutTune(pGameObject);
 
-// ÆÄÆ¼Å¬
-	// ¿¬±â ÀÌÆåÆ®
+// íŒŒí‹°í´
+	// ì—°ê¸° ì´í™íŠ¸
 	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
 	
 	if (nullptr == pGameObject)
@@ -213,7 +213,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
-	// ÂøÁö½Ã ¸ÕÁö ÀÌÆåÆ®
+	// ì°©ì§€ì‹œ ë¨¼ì§€ ì´í™íŠ¸
 	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -227,12 +227,12 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SpeedLine", pGameObject);
 	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
 
-	//// # ÇÃ·¹ÀÌ¾î µû¶ó´Ù´Ï´Â 3ÀÎÄª Ä«¸Ş¶ó
+	//// # í”Œë ˆì´ì–´ ë”°ë¼ë‹¤ë‹ˆëŠ” 3ì¸ì¹­ ì¹´ë©”ë¼
 	_vec3 vEye, vAt, vUp, vLook;
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
 	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
 	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	vEye = vAt + (vUp * 5) + (vLook * -10);
+	vEye = vAt + (vUp * 8.5f) + (vLook * -15.f);
 	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45.f));
 	
 	if (pGameObject == nullptr)
@@ -245,7 +245,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
 
-	// # ÀÚÀ¯ Ä«¸Ş¶ó
+	// # ììœ  ì¹´ë©”ë¼
 	//_vec3 vEye = { 0, 0, -5 }, vAt = { 0, 0, 0 };
 	//_vec3 vUp = { 0, 1, 0 };
 
@@ -376,7 +376,7 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		return E_FAIL;
 
 
-	// ¹Ì´Ï¸Ê Cart
+	// ë¯¸ë‹ˆë§µ Cart
 	pUIObject = CMinimapCart::Create(m_pGraphicDev);
 
 	if (nullptr == pUIObject)

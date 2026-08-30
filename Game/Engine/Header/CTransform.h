@@ -45,7 +45,7 @@ public:
 		Set_Dirty();
 	}
 
-	void		Set_LocalWorld(_matrix* _MatLocal);
+	void		Set_LocalWorld(_matrix* _MatLocal, bool bDefault = false);
 
 	_quaternion Get_Quaternion() {
 		return m_localQuaternion;

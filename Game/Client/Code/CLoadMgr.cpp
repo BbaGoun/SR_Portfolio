@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Engine_Define.h"
 #include "CLoadMgr.h"
 #include "CCart.h"
@@ -73,7 +73,7 @@ CGameObject* CLoadMgr::LoadGameObjectClient(FileReadState& st, LPDIRECT3DDEVICE9
 			const uint32_t guid = pScene->GenerateGuid();
 			pObj->SetGuid(guid);
 			if (pParent)
-				pParent->Set_Child(pObj);
+				pParent->Set_ChildTuneDefault(pObj);
 		}
 		else if (StartsWith(t, L"tag=")) {
 			pScene->Add_GameObject(L"GameLogic", t + 4, pObj);
