@@ -22,8 +22,8 @@ CBoostJet::~CBoostJet()
 HRESULT CBoostJet::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Scale({ 2,10,1 });
-	m_pTransformCom->Set_Pos({ 1,1,-6 });
+	m_pTransformCom->Set_Scale({ 0.5,2.5,1 });
+	m_pTransformCom->Set_Pos({ 0.5f,0,-2.25f });
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, 0.f, D3DXToRadian(90), 0.f);
 	m_pTransformCom->Set_Quaternion(&q);
