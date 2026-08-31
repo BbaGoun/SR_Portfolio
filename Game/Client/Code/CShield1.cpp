@@ -27,7 +27,7 @@ HRESULT CShield1::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 	m_pTransformCom->Set_Pos({ 0.f,0.f,0.f });
-	m_pTransformCom->Set_Scale({ 9.5f, 5.5f, 9.5f });
+	m_pTransformCom->Set_Scale({ 15.5f, 10.8f, 15.5f });
 
 	pComponent = m_pBufferCom = dynamic_cast<CSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Sphere"));
 	if (nullptr == pComponent)
@@ -58,7 +58,7 @@ _int CShield1::Update_GameObject(const _float& fDeltaTime)
 
 	if (m_pParent != nullptr)
 	{
-		m_pTransformCom->Set_Pos({ 0.f, -0.5f, 0.f });
+		m_pTransformCom->Set_Pos({ 0.f, -5.f, 0.f });
 	}
 
 	//CMissileTarget* pTarget4 = dynamic_cast<CMissileTarget*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget4"));
