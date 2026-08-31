@@ -25,6 +25,8 @@
 #include "SoundMgr.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
+#include "CShield1.h"
+#include "CShield2.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -230,10 +232,10 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateWaterFlyObject();
 	}
 
-	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_O))
-	//{
-	//	CreateShieldObject();
-	//}
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_O))
+	{
+		CreateShieldObject();
+	}
 
 	// ShortBooster
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_UP))
@@ -1437,15 +1439,36 @@ void CCart::CreateMagnetAimObject()
 
 void CCart::CreateShieldObject()
 {
-	CGameObject* pShield1 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"UI_Shield1");
-	CGameObject* pShield2 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"UI_Shield2");
+	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
 
-	_vec3 vPos, vPos1, vPos2;
+	CGameObject* pShield1 = CShield1::Create(m_pGraphicDev);
 
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	if (pShield1 == nullptr)
+		return;
 
-	pShield1->Get_Transform()->Set_Pos(vPos);
-	pShield2->Get_Transform()->Set_Pos(vPos);
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
+		return;
+
+	pShield1->SetLayer(m_pLayer);
+	pCart->Set_Child(pShield1);
+
+	CGameObject* pShield2 = CShield2::Create(m_pGraphicDev);
+
+	if (pShield2 == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
+		return;
+
+	pShield2->SetLayer(m_pLayer);
+	pCart->Set_Child(pShield2);
+
+	//_vec3 vPos, vPos1, vPos2;
+
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	//pShield1->Get_Transform()->Set_Pos(vPos);
+	//pShield2->Get_Transform()->Set_Pos(vPos);
 }
 
 void CCart::CreateMissileAimObject()

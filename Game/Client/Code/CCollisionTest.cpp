@@ -58,8 +58,6 @@
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
 #include "CBubbleEscape.h"
-#include "CUI_Shield1.h"
-#include "CUI_Shield2.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -731,9 +729,7 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_BubbleEscape", pBubbleEscape)))
 		return E_FAIL;
 
-	/////////////////////////////////////////////////////////////////////////
-	//CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
-
+	////////////////////////////////////////////////////////////////////////////////
 	//// 임시 쉴드1 UI
 	//CGameObject* pShield1 = CUI_Shield1::Create(m_pGraphicDev);
 
@@ -751,9 +747,6 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 
 	//if (FAILED(pUILayer->Add_GameObject(L"UI_Shield2", pShield2)))
 	//	return E_FAIL;
-
-	//pCart->Set_Child(pShield1);
-	//pCart->Set_Child(pShield2);
 
 	return S_OK;
 }

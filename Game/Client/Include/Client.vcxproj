@@ -245,6 +245,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CScene3_KartBtn.h" />
     <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_StartBtn.h" />
+    <ClInclude Include="..\Header\CShield1.h" />
+    <ClInclude Include="..\Header\CShield2.h" />
     <ClInclude Include="..\Header\CSpeedLine.h" />
     <ClInclude Include="..\Header\CUI_EndCountDown.h" />
     <ClInclude Include="..\Header\CUI_Laps.h" />
@@ -286,8 +288,6 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CUI_ItemSlot.h" />
     <ClInclude Include="..\Header\CScene1_Item.h" />
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
-    <ClInclude Include="..\Header\CUI_Shield1.h" />
-    <ClInclude Include="..\Header\CUI_Shield2.h" />
     <ClInclude Include="..\Header\CUI_StartCountDown.h" />
     <ClInclude Include="..\Header\CUI_Timer.h" />
     <ClInclude Include="..\Header\CUI_UnderBar.h" />
@@ -333,13 +333,13 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_StartBtn.cpp" />
+    <ClCompile Include="..\Code\CShield1.cpp" />
+    <ClCompile Include="..\Code\CShield2.cpp" />
     <ClCompile Include="..\Code\CSpeedLine.cpp" />
     <ClCompile Include="..\Code\CUI_EndCountDown.cpp" />
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\Code\CUI_Shield1.cpp" />
-    <ClCompile Include="..\Code\CUI_Shield2.cpp" />
     <ClCompile Include="..\Code\CUI_StartCountDown.cpp" />
     <ClCompile Include="..\Code\CUI_UnderBar.cpp" />
     <ClCompile Include="..\Code\CUI_XButton.cpp" />

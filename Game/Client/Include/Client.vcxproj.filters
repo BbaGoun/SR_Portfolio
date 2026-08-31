@@ -310,14 +310,14 @@
     <Filter Include="02. GameObject\Item\Water\BubbleEscapeUI">
       <UniqueIdentifier>{2a125e2a-30a6-4f5f-8aa1-11c9a81c3b98}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI\UI_Shield">
-      <UniqueIdentifier>{fc4717ce-06e4-462f-a07b-f25e61a8051c}</UniqueIdentifier>
+    <Filter Include="02. GameObject\Item\Shield">
+      <UniqueIdentifier>{5480403e-f12f-4e41-b08a-635c6f76a5e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI\UI_Shield\UI_Shield1">
-      <UniqueIdentifier>{7513934e-e71a-4579-97ad-69ad0be50de0}</UniqueIdentifier>
+    <Filter Include="02. GameObject\Item\Shield\Shield1">
+      <UniqueIdentifier>{80458ce3-0693-430b-ba34-e5be29104e2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\UI\UI_Shield\UI_Shield2">
-      <UniqueIdentifier>{f454194c-69da-4c67-a8e7-b5035f442a8c}</UniqueIdentifier>
+    <Filter Include="02. GameObject\Item\Shield\Shield2">
+      <UniqueIdentifier>{d798c48d-f61d-4264-84f6-c3a4b047d43e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -615,11 +615,11 @@
     <ClInclude Include="..\Header\CBubbleEscape.h">
       <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CUI_Shield1.h">
-      <Filter>02. GameObject\UI\UI_Shield\UI_Shield1</Filter>
+    <ClInclude Include="..\Header\CShield1.h">
+      <Filter>02. GameObject\Item\Shield\Shield1</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CUI_Shield2.h">
-      <Filter>02. GameObject\UI\UI_Shield\UI_Shield2</Filter>
+    <ClInclude Include="..\Header\CShield2.h">
+      <Filter>02. GameObject\Item\Shield\Shield2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -911,11 +911,11 @@
     <ClCompile Include="..\Code\CBubbleEscape.cpp">
       <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CUI_Shield1.cpp">
-      <Filter>02. GameObject\UI\UI_Shield\UI_Shield1</Filter>
+    <ClCompile Include="..\Code\CShield1.cpp">
+      <Filter>02. GameObject\Item\Shield\Shield1</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CUI_Shield2.cpp">
-      <Filter>02. GameObject\UI\UI_Shield\UI_Shield2</Filter>
+    <ClCompile Include="..\Code\CShield2.cpp">
+      <Filter>02. GameObject\Item\Shield\Shield2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

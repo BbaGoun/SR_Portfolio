@@ -6,7 +6,7 @@
 
 namespace Engine
 {
-	class CSphere;		// 물방울 임시
+	class CSphere;		
 }
 
 class CWaterBombBubble : public CGameObject

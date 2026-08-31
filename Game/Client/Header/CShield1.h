@@ -3,13 +3,18 @@
 #include "CRcTex.h"
 #include "CTexture.h"
 
-class CUI_Shield2 :
+namespace Engine
+{
+	class CSphere;
+}
+
+class CShield1 :
 	public CGameObject
 {
 private:
-	explicit CUI_Shield2(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CUI_Shield2(const CGameObject& rhs);
-	~CUI_Shield2() override;
+	explicit CShield1(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CShield1(const CGameObject& rhs);
+	~CShield1() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -20,14 +25,14 @@ public:
 private:
 
 private:
-	CRcTex* m_pBufferCom;
+	CSphere* m_pBufferCom;
 	CTexture* m_pTextureCom;
 
 	bool	m_bCurState;
 	float	m_fTimer;
 
 public:
-	static CUI_Shield2* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CShield1* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
 	virtual		void		Free() override;
