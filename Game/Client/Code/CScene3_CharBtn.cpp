@@ -12,6 +12,7 @@
 #include "CManagement.h"
 
 #include "CScene3_Map_ForestValley.h"
+#include "CScene3_CharSlot.h"
 
 CScene3_CharBtn::CScene3_CharBtn(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -55,21 +56,47 @@ HRESULT CScene3_CharBtn::Ready_GameObject()
 
 void CScene3_CharBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
-	{
-		m_fFrame = 1;
 
-	}
-
-	else
-	{
-		m_fFrame = 0;
-	}
 }
 
 _int CScene3_CharBtn::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
+
+
+
+	CScene3_CharSlot* pSlot = static_cast<CScene3_CharSlot*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"CharSlot1"));
+	CScene3_CharSlot* pSlot2 = static_cast<CScene3_CharSlot*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"CharSlot2"));
+
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
+	{
+		m_fFrame = 1;
+
+
+		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
+		{
+			if (pSlot->Get_Show() == false)
+				pSlot->Set_Show(true);
+			else
+				pSlot->Set_Show(false);
+
+
+			if (pSlot2->Get_Show() == false)
+				pSlot2->Set_Show(true);
+			else
+				pSlot2->Set_Show(false);
+		}
+
+	}
+
+
+	else
+	{
+		m_fFrame = 0;
+
+	}
+
+
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

@@ -292,6 +292,12 @@
     <Filter Include="03. Manager\SoundMgr">
       <UniqueIdentifier>{bd3a545d-4fa4-4a5d-be8a-2a6629c417ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Character">
+      <UniqueIdentifier>{886c85e6-a6e2-4dd3-b6e0-72f3965630a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Pause">
+      <UniqueIdentifier>{fc986478-46b1-4b43-967d-18668d205bea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -576,6 +582,15 @@
     <ClInclude Include="..\Header\CScene3_ColorSet.h">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Color</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CScene3_CharSlot.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_CharBG.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene3_Char.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -850,6 +865,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_ColorSet.cpp">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Color</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_CharSlot.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_CharBG.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_Char.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
