@@ -615,6 +615,9 @@
     <ClInclude Include="..\Header\SoundMgr.h">
       <Filter>03. Manager\SoundMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CScene3_ColorSet.h">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Color</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CPlayerHead.h">
       <Filter>02. GameObject\Player\CPlayerHead</Filter>
     </ClInclude>
@@ -884,9 +887,6 @@
     <ClCompile Include="..\Code\CLoadMgr.cpp">
       <Filter>03. Manager\CLoadMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CUI_Menu.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CWaterBombBubble.cpp">
       <Filter>02. GameObject\Item\Water\WaterBomb\WaterBombBubble</Filter>
     </ClCompile>
@@ -922,6 +922,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SoundMgr.cpp">
       <Filter>03. Manager\SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_ColorSet.cpp">
+      <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Color</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerHead.cpp">
       <Filter>02. GameObject\Player\CPlayerHead</Filter>

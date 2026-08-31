@@ -66,15 +66,18 @@ void CScene3_KartBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CScene3_KartBtn::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
+	CUI_InvenSlot* pSlot = static_cast<CUI_InvenSlot*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_InvenSlot"));
+	CUI_InvenSlot* pSlot2 = static_cast<CUI_InvenSlot*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_InvenSlot2"));
+
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 	{
 		m_fFrame = 1;
 
-		CUI_InvenSlot* pSlot = static_cast<CUI_InvenSlot*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_InvenSlot"));
-		CUI_InvenSlot* pSlot2 = static_cast<CUI_InvenSlot*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_InvenSlot2"));
-
+		
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
+			if (pSlot->Get_Show() == false)
+				pSlot->Set_Show(true);
 			if (pSlot->Get_Show() == true)
 				pSlot->Set_Show(false);
 			else
@@ -83,13 +86,22 @@ _int CScene3_KartBtn::Update_GameObject(const _float& fDeltaTime)
 			if (pSlot2->Get_Show() == true)
 				pSlot2->Set_Show(false);
 			else
+				pSlot->Set_Show(false);
+
+
+			if (pSlot2->Get_Show() == false)
 				pSlot2->Set_Show(true);
+			else
+				pSlot2->Set_Show(false);
 		}
+			
 	}
+	
 
 	else
 	{
 		m_fFrame = 0;
+	
 	}
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

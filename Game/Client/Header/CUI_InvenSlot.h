@@ -29,6 +29,8 @@ public:
 private:
 	Engine::CRcTex* m_pVIBufferCom;
 
+	
+
 public:
 	static CUI_InvenSlot* Create(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID);
 

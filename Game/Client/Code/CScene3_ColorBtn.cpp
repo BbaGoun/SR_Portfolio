@@ -12,6 +12,7 @@
 #include "CManagement.h"
 
 #include "CScene3_ColorSetBG.h"
+#include "CScene3_ColorSet.h"
 
 CScene3_ColorBtn::CScene3_ColorBtn(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -54,23 +55,6 @@ HRESULT CScene3_ColorBtn::Ready_GameObject()
 
 void CScene3_ColorBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
-	{
-
-		m_fFrame = 1;
-		//CScene3_ColorSetBG* pSetBG = static_cast<CScene3_ColorSetBG*>(m_pSetBG);
-		//if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
-		//{
-		//	if (pSetBG->Get_Show() == false )
-		//	pSetBG->Set_Show(true);
-		//	else
-		//		pSetBG->Set_Show(false);
-		//}
-
-
-	}
-	else
-		m_fFrame = 0;
 }
 	
 
@@ -78,6 +62,48 @@ void CScene3_ColorBtn::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CScene3_ColorBtn::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
+	CScene3_ColorSetBG* pSetBG = static_cast<CScene3_ColorSetBG*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_ColorSetBG"));
+	CScene3_ColorSet* pRed = static_cast<CScene3_ColorSet*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_ColorSet1"));
+	CScene3_ColorSet* pGreen = static_cast<CScene3_ColorSet*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_ColorSet2"));
+
+	
+
+
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
+	{
+
+		m_fFrame = 1;
+
+		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
+		{
+
+			if (pSetBG->Get_Show() == false)
+				pSetBG->Set_Show(true);
+			else
+				pSetBG->Set_Show(false);
+
+
+			if (pRed->Get_Show1() == false)
+				pRed->Set_Show1(true);
+			else
+				pRed->Set_Show1(false);
+
+
+			if (pGreen->Get_Show1() == false)
+				pGreen->Set_Show1(true);
+			else
+				pGreen->Set_Show1(false);
+		}
+	
+
+	}
+
+	else
+	{
+	
+		m_fFrame = 0;
+		
+	}
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -101,7 +127,7 @@ CScene3_ColorBtn* CScene3_ColorBtn::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{
-		MSG_BOX("CScene3_KartBtn Create Failed");
+		MSG_BOX("CScene3_ColorBtn Create Failed");
 		Safe_Release(pObj);
 		return nullptr;
 	}

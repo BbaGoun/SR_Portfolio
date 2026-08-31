@@ -243,6 +243,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CScene2_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_CharBtn.h" />
     <ClInclude Include="..\Header\CScene3_ColorBtn.h" />
+    <ClInclude Include="..\Header\CScene3_ColorSet.h" />
     <ClInclude Include="..\Header\CScene3_ColorSetBG.h" />
     <ClInclude Include="..\Header\CScene3_KartBtn.h" />
     <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
@@ -333,7 +334,12 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CScene2_ForestValley.cpp" />
     <ClCompile Include="..\Code\CScene3_CharBtn.cpp" />
     <ClCompile Include="..\Code\CScene3_ColorBtn.cpp" />
-    <ClCompile Include="..\Code\CScene3_ColorSetBG.cpp" />
+    <ClCompile Include="..\Code\CScene3_ColorSet.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_ColorSetBG.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\CScene3_KartBtn.cpp" />
     <ClCompile Include="..\Code\CScene3_Map_ForestValley.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -371,7 +377,6 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CUI_InvenSlot.cpp" />
     <ClCompile Include="..\Code\CInvenSlotCart.cpp" />
     <ClCompile Include="..\Code\CRacingScene.cpp" />
-    <ClCompile Include="CUI_Menu.cpp" />
     <ClCompile Include="..\Code\CBackGround.cpp" />
     <ClCompile Include="..\Code\CBanana.cpp" />
     <ClCompile Include="..\Code\CBoostWind.cpp" />
