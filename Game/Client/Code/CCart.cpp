@@ -359,15 +359,15 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle) * m_eDirection;
 
-				m_vRotation.z += fDeltaTime * 0.5f * m_eDirection;
+				m_vRotation.z += fDeltaTime * 0.5f;
 			}
 			else
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle * 0.5f) * m_eDirection;
 
-				m_vRotation.z += fDeltaTime * 0.5f * m_eDirection;
-				if (m_vRotation.z > 0)
-					m_vRotation.z = 0;
+				m_vRotation.z += fDeltaTime * 0.5f;
+				//if (m_vRotation.z > 0)
+				//	m_vRotation.z = 0;
 			}
 		}
 		else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
@@ -376,15 +376,15 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			{
 				m_vRotation.y += D3DXToRadian(fTurnAngle) * m_eDirection;
 
-				m_vRotation.z += -fDeltaTime * 0.5f * m_eDirection;
+				m_vRotation.z += -fDeltaTime * 0.5f;
 			}
 			else
 			{
 				m_vRotation.y += D3DXToRadian(fTurnAngle * 0.5f) * m_eDirection;
 
-				m_vRotation.z += -fDeltaTime * 0.5f * m_eDirection;
-				if (m_vRotation.z < 0)
-					m_vRotation.z = 0;
+				m_vRotation.z += -fDeltaTime * 0.5f;
+				//if (m_vRotation.z < 0)
+				//	m_vRotation.z = 0;
 			}
 		}
 	}
@@ -444,11 +444,17 @@ void CCart::UpdateDrift()
 		_vec3 vCross;
 		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
 
+		//m_vRotation.z *= 3;
+		m_vRotation.z = clampT(float(m_vRotation.z), -5.f, 5.f);
+
+		D3DXQUATERNION q;
+		D3DXQuaternionRotationYawPitchRoll(&q, 0, 0, D3DXToRadian(m_vRotation.z));
+		m_pTransformCom->Multiple_Quaternion(&q);
+
+		cout << m_vRotation.z << endl;
+
+
 		m_fLookForceAngle = D3DXToDegree(acosf(D3DXVec3Dot(&vLook, &vTempForce)));
-		m_vRotation.z *= 0.98;
-		m_vRotation.z = clampT(float(m_vRotation.z), -0.1f, 0.1f);
-
-
 		if ((!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) && m_fLookForceAngle < 30.f )
 			|| (!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT) && !CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 			|| m_eCartState != CART_STATE_GROUND)

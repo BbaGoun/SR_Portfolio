@@ -61,9 +61,10 @@ void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		_vec3	vPlayerLOOK;
 
 		pTrans->Get_Info(INFO_POS, &vPlayerPos);
-		//pTrans->Get_Info(INFO_UP, &vPlayerUp);
+		pTrans->Get_Info(INFO_UP, &vPlayerUp);
 		pTrans->Get_Info(INFO_LOOK, &vPlayerLOOK);
 
+		//cout << "vPlayerUp.x : " << vPlayerUp.x << "\tvPlayerUp.y : " << vPlayerUp.y << "\tvPlayerUp.z : " << vPlayerUp.z << endl;
 		m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
 
 		if (fabsf(vPlayerLOOK.y) >= 0)

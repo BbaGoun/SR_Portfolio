@@ -165,6 +165,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
 	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
 
+	pCartBody->Get_Transform()->Set_Pos({ 0,0.1f,0 });
 	pCart->Set_Child(pPlayer);
 	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
 // Effect

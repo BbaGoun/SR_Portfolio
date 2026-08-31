@@ -57,6 +57,7 @@
 #include "SoundMgr.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
+#include "CPlayTimeMgr.h"
 
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
@@ -88,6 +89,7 @@ HRESULT CCollisionTest::Ready_Scene()
 		return E_FAIL;
 
 	SoundMgr::GetInstance().StopAll();
+	CPlayTimeMgr::GetInstance()->SetRaceStart();
 	return S_OK;
 }
 
