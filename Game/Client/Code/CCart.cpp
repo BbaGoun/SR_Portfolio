@@ -94,6 +94,8 @@ HRESULT CCart::Ready_GameObject()
 	m_pPlayerHead			= nullptr;
 	m_PreQuaternion			= { 0,0,0,1 };
 
+	m_PreQuaternion			= { 0, 0, 0, 1 };
+
 	return S_OK;
 }
 
@@ -657,7 +659,6 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 
 		// 트랙의 boundingbox와 플레이어의 콜라이더가 닿는지 검사
 		bool bCheckCollision = box.Intersects(OBB);
-		pCol->Set_Center(vCartOldCenter);
 		if (bCheckCollision == false)
 			continue;
 

@@ -316,6 +316,9 @@
     <Filter Include="02. GameObject\Camera\TrackCam">
       <UniqueIdentifier>{e5128873-8abd-4e9a-aa0b-636b5d335b98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\DriftTrail">
+      <UniqueIdentifier>{2d058116-00db-402b-b11f-74e293d4f114}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -618,6 +621,9 @@
     <ClInclude Include="..\Header\CTrackCam.h">
       <Filter>02. GameObject\Camera\TrackCam</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CDriftTrail.h">
+      <Filter>02. GameObject\Cart\Effect\DriftTrail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -913,6 +919,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTrackCam.cpp">
       <Filter>02. GameObject\Camera\TrackCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDriftTrail.cpp">
+      <Filter>02. GameObject\Cart\Effect\DriftTrail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

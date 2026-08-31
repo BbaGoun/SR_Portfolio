@@ -31,7 +31,11 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	Render_Priority(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
+
 	Render_Alpha(pGraphicDev);
+	Render_Skid(pGraphicDev);
+	Render_Trail(pGraphicDev);
+
 	Render_Particle(pGraphicDev);
 	Render_NonAlphaUI(pGraphicDev);
 	Render_AlphaUI(pGraphicDev);
@@ -47,7 +51,7 @@ void CRenderer::Delete_RenderGroup(CGameObject* pObj)
 		auto it = find(m_RenderGroup[i].begin(), m_RenderGroup[i].end(), pObj);
 
 		if (it != m_RenderGroup[i].end()) {
-			(*it)->Release();
+			Safe_Release((*it));
 			m_RenderGroup[i].erase(it);
 			return;
 		}
@@ -202,8 +206,8 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 
 		pGraphicDev->SetRenderTarget(0, pOldRT);
 		pGraphicDev->SetDepthStencilSurface(pOldDS);
-		pOldRT->Release();
-		pOldDS->Release();
+		Safe_Release(pOldRT);
+		Safe_Release(pOldDS);
 	}
 }
 
@@ -244,9 +248,7 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
 	{
-		_vec3 vPos;
-		pObj->Get_Transform()->Get_Info(INFO_POS, &vPos);
-		pObj->Compute_ViewZ(&vPos);
+		pObj->Compute_ViewZ();
 	}
 
 	m_RenderGroup[RENDER_ALPHA].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
@@ -254,6 +256,66 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
 		});
 	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
+		pObj->Render_GameObject();
+
+	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CRenderer::Render_Skid(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
+
+	for (auto& pObj : m_RenderGroup[RENDER_SKID])
+	{
+		pObj->Compute_ViewZ();
+	}
+
+	m_RenderGroup[RENDER_SKID].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+		});
+	for (auto& pObj : m_RenderGroup[RENDER_SKID])
+		pObj->Render_GameObject();
+
+	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CRenderer::Render_Trail(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
+
+	for (auto& pObj : m_RenderGroup[RENDER_TRAIL])
+	{
+		pObj->Compute_ViewZ();
+	}
+
+	m_RenderGroup[RENDER_TRAIL].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+		});
+	for (auto& pObj : m_RenderGroup[RENDER_TRAIL])
 		pObj->Render_GameObject();
 
 	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
@@ -372,8 +434,13 @@ void CRenderer::DistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 	{
 		for (auto it = m_RenderGroup[i].begin(); it != m_RenderGroup[i].end();) {
 			if (*it == nullptr) {
-				(*it)->Release();
+				Safe_Release((*it));
 				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+
+			if (!(*it)->Get_CullEnable()) {
+				++it;
 				continue;
 			}
 
@@ -387,7 +454,7 @@ void CRenderer::DistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 			_vec3 dir = vObjPos - vCamPos;
 			dist = D3DXVec3Length(&dir);
 			if (dist >= fCullDistance) {
-				(*it)->Release();
+				Safe_Release((*it));
 				it = m_RenderGroup[i].erase(it);
 			}
 			else
@@ -423,14 +490,19 @@ void CRenderer::FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 	{
 		for (auto it = m_RenderGroup[i].begin(); it != m_RenderGroup[i].end();) {
 			if (*it == nullptr) {
-				(*it)->Release();
+				Safe_Release((*it));
 				it = m_RenderGroup[i].erase(it);
+				continue;
+			}
+
+			if (!(*it)->Get_CullEnable()) {
+				++it;
 				continue;
 			}
 
 			CVIBuffer* pBuf = (*it)->Get_Component<CVIBuffer>();
 			if (pBuf == nullptr) {
-				(*it)->Release();
+				Safe_Release((*it));
 				it = m_RenderGroup[i].erase(it);
 				continue;
 			}
@@ -443,7 +515,7 @@ void CRenderer::FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 			box.Transform(box, xmMatWorld);
 
 			if (!tFrustum.Intersects(box)) {
-				(*it)->Release();
+				Safe_Release((*it));
 				it = m_RenderGroup[i].erase(it);
 				continue;
 			}

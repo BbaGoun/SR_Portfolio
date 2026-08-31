@@ -1,16 +1,16 @@
-#pragma once
+﻿#pragma once
 #include "CGameObject.h"
 #include "CTexture.h"
 #include "CMeshRibbon.h"
 
 class CWheel;
 
-class CSkidMark : public CGameObject
+class CDriftTrail : public CGameObject
 {
 private:
-	explicit CSkidMark(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CSkidMark(const CGameObject& rhs);
-	~CSkidMark() override;
+	explicit CDriftTrail(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CDriftTrail(const CGameObject& rhs);
+	~CDriftTrail() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -23,17 +23,17 @@ public:
 	void		Append_Point(_vec3 vPos);
 
 private:
-	CTexture* m_pTextureCom;
-	CMeshRibbon* m_pMeshRibbonCom;
+	CTexture*		m_pTextureCom;
+	CMeshRibbon*	m_pMeshRibbonCom;
 
 	float		m_fRemoveTimer = 0.f;
 	float		m_fWidthTimer = 0.f;
 	float		m_fNextWidthTimer = 0.05f;
 
-	CWheel* m_pWheel;
+	CWheel*		m_pWheel;
 
 public:
-	static CSkidMark* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, CWheel* pWheel);
+	static CDriftTrail* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, CWheel* pWheel);
 
 	virtual			void		OnLostDevice() override;
 	virtual			void		OnResetDevice() override;

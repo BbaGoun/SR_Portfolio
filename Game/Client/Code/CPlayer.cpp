@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CPlayer.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -38,7 +38,7 @@ HRESULT CPlayer::Ready_GameObject()
 
 	m_bBoost = false;
 
-	m_vRotation.y = 90.f;
+	//m_vRotation.y = 90.f;
 	return S_OK;
 }
 

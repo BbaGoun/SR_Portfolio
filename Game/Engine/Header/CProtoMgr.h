@@ -29,6 +29,7 @@
 #include "CSpline.h"
 #include "CHeightMap.h"
 #include "CSphere.h"
+#include "CMeshRibbon.h"
 
 BEGIN(Engine)
 

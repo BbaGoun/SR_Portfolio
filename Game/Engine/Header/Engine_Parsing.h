@@ -142,8 +142,8 @@ namespace Engine
             else if (swscanf_s(t, L"quat=%f %f %f %f", &fX, &fY, &fZ, &fW) == 4)
             {
                 D3DXQUATERNION q(fX, fY, fZ, fW);
-                if (CTransform* pTF = pObj->Get_Transform())
-                    pTF->Set_Quaternion(&q);
+				if (CTransform* pTF = pObj->Get_Transform())
+					pTF->Set_DefaultQuaternion(&q);
             }
             else if (swscanf_s(t, L"scale=%f %f %f", &fX, &fY, &fZ) == 3)
             {

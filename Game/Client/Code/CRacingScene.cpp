@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CRacingScene.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -110,7 +110,7 @@ void CRacingScene::OnResetDevice()
 
 HRESULT CRacingScene::LoadSceneFromFile()
 {
-	// �ϴ� �־�α�
+	// 일단 넣어두기
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)
@@ -165,50 +165,56 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
 	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
 
-	pCartBody->Get_Transform()->Set_Pos({ 0,0.1f,0 });
-	pCart->Set_Child(pPlayer);
+	pCartBody->Set_ChildTuneDefault(pPlayer);
 	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
-// Effect
-	//BoostWindL1
+
+	pCartBody->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
+
+// 이펙트
+	// ## 부스터 왼쪽1 바람 이펙트
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
-	pCart->Set_Child(pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
 	
+	// ## 부스터 왼쪽2 바람 이펙트
 	// BoostWindL2
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
-	pCart->Set_Child(pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
 	
+	// ## 부스터 오른쪽1 바람 이펙트
 	// BoostWindR1
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
-	pCart->Set_Child(pGameObject);
-
-	// BoostWindR2
+	pCart->Set_ChildWithoutTune(pGameObject);
+	// ## 부스터 오른쪽2 바람 이펙트
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
-	pCart->Set_Child(pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
 	
+	// ## 부스터 제트 이펙트
 	// BoostJet
 	pGameObject = CBoostJet::Create(m_pGraphicDev);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
-	pCartBody->Set_Child(pGameObject);
+	pCartBody->Set_ChildWithoutTune(pGameObject);
 
+// 파티클
+	// 연기 이펙트
 	// SpeedLine
 	pGameObject = CSpeedLine::Create(m_pGraphicDev);
 
@@ -226,6 +232,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
+	// 착지시 먼지 이펙트
 	// DustParticle
 	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
@@ -244,14 +251,25 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (pGameObject == nullptr)
 		return E_FAIL;
 
-	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_DynamicCam", pGameObject);
-
+	//// # 플레이어 따라다니는 3인칭 카메라
+	_vec3 vEye, vAt, vUp, vLook;
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 8.5f) + (vLook * -15.f);
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45.f));
+	
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FollowSmoothCam", pGameObject);
 	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
-
+	
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
+
+
 
 	//StartCam
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
@@ -385,7 +403,7 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		return E_FAIL;
 
 
-	// �̴ϸ� Cart
+	// 미니맵 Cart
 	pUIObject = CMinimapCart::Create(m_pGraphicDev);
 
 	if (nullptr == pUIObject)

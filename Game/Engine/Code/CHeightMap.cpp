@@ -1,4 +1,4 @@
-#include "CHeightMap.h"
+ï»¿#include "CHeightMap.h"
 #include "CProtoMgr.h"
 #include "CCalculator.h"
 
@@ -50,7 +50,7 @@ HRESULT CHeightMap::Ready_Buffer()
 	if (m_pIB)
 		Safe_Release(m_pIB);
 
-	// ³ôÀÌ °ª º¯°æ ÃÖÀûÈ­¸¦ À§ÇØ µ¿Àû ¹öÆÛ
+	// ë†’ì´ ê°’ ë³€ê²½ ìµœì í™”ë¥¼ ìœ„í•´ ë™ì  ë²„í¼
 	if (FAILED(m_pGraphicDev->CreateVertexBuffer(
 		m_dwVtxCnt * m_dwVtxSize,
 		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
@@ -63,7 +63,7 @@ HRESULT CHeightMap::Ready_Buffer()
 
 	int idxSize = m_IdxFmt == D3DFMT_INDEX16 ? sizeof(WORD) : sizeof(DWORD);
 
-	// ³ôÀÌ °ªÀÌ ´Þ¶óÁ®µµ ÀÎµ¦½º°¡ ´Þ¶óÁöÁø ¾ÊÀ¸¹Ç·Î Á¤Àû
+	// ë†’ì´ ê°’ì´ ë‹¬ë¼ì ¸ë„ ì¸ë±ìŠ¤ê°€ ë‹¬ë¼ì§€ì§„ ì•Šìœ¼ë¯€ë¡œ ì •ì 
 	if (FAILED(m_pGraphicDev->CreateIndexBuffer(
 		m_dwIdxCnt * idxSize,
 		D3DUSAGE_WRITEONLY,
@@ -110,7 +110,7 @@ HRESULT CHeightMap::Ready_Buffer()
 
 	for (int i = 0; i < m_iCntZ - 1; ++i) {
 		for (int j = 0; j < m_iCntX - 1; ++j) {
-			// ¿ÞÂÊ À§ »ï°¢Çü
+			// ì™¼ìª½ ìœ„ ì‚¼ê°í˜•
 			indices[(i * (m_iCntX - 1) + j) * 2]._0 = (i + 1) * m_iCntX + j;
 			indices[(i * (m_iCntX - 1) + j) * 2]._1 = (i + 1) * m_iCntX + (j + 1);
 			indices[(i * (m_iCntX - 1) + j) * 2]._2 = i * m_iCntX + j;
@@ -121,7 +121,7 @@ HRESULT CHeightMap::Ready_Buffer()
 					indices[(i * (m_iCntX - 1) + j) * 2]._2
 				},{} };
 
-			// ¿À¸¥ÂÊ ¾Æ·¡ »ï°¢Çü
+			// ì˜¤ë¥¸ìª½ ì•„ëž˜ ì‚¼ê°í˜•
 			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._0 = i * m_iCntX + (j + 1);
 			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._1 = i * m_iCntX + j;
 			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._2 = (i + 1) * m_iCntX + (j + 1);
@@ -171,9 +171,9 @@ void CHeightMap::Adjust_Itv()
 
 void CHeightMap::HeightMap_Edit(_vec3 _pickPos, bool bShift)
 {
-	// ÇØ´ç À§Ä¡·ÎºÎÅÍ ¹üÀ§ ³»¿¡ ÀÖ´Â Á¡µéÀ» ÆÄ¾Ç
-	// ÇØ´ç Á¡µéÀÇ ³ôÀÌ¸¦ ³ôÈ÷°Å³ª ³·Ãá´Ù
-	// ¹Ù²ï ³ôÀÌ¸¦ buffer¿¡ Àû¿ëÇÑ´Ù
+	// í•´ë‹¹ ìœ„ì¹˜ë¡œë¶€í„° ë²”ìœ„ ë‚´ì— ìžˆëŠ” ì ë“¤ì„ íŒŒì•…
+	// í•´ë‹¹ ì ë“¤ì˜ ë†’ì´ë¥¼ ë†’ížˆê±°ë‚˜ ë‚®ì¶˜ë‹¤
+	// ë°”ë€ ë†’ì´ë¥¼ bufferì— ì ìš©í•œë‹¤
 	float r2 = m_fEditRadius * m_fEditRadius;
 	for (auto& p : m_vecVertices) {
 		float dx = p.vPosition.x - _pickPos.x;
@@ -183,7 +183,7 @@ void CHeightMap::HeightMap_Edit(_vec3 _pickPos, bool bShift)
 		if (d2 > r2)
 			continue;
 
-		float w = 1.f - sqrtf(d2) / m_fEditRadius;   // ¼±Çü Æú¿ÀÇÁ. smoothstep / °¡¿ì½Ã¾Èµµ °¡´É
+		float w = 1.f - sqrtf(d2) / m_fEditRadius;   // ì„ í˜• í´ì˜¤í”„. smoothstep / ê°€ìš°ì‹œì•ˆë„ ê°€ëŠ¥
 		p.vPosition.y += (bShift ? -1.f : +1.f) * m_fEditStrength * w * 0.02f;
 	}
 
@@ -205,7 +205,7 @@ HRESULT CHeightMap::Ready_BufferByVec()
 	if (m_pIB)
 		Safe_Release(m_pIB);
 
-	// ³ôÀÌ °ª º¯°æ ÃÖÀûÈ­¸¦ À§ÇØ µ¿Àû ¹öÆÛ
+	// ë†’ì´ ê°’ ë³€ê²½ ìµœì í™”ë¥¼ ìœ„í•´ ë™ì  ë²„í¼
 	if (FAILED(m_pGraphicDev->CreateVertexBuffer(
 		m_dwVtxCnt * m_dwVtxSize,
 		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
@@ -218,7 +218,7 @@ HRESULT CHeightMap::Ready_BufferByVec()
 
 	int idxSize = m_IdxFmt == D3DFMT_INDEX16 ? sizeof(WORD) : sizeof(DWORD);
 
-	// ³ôÀÌ °ªÀÌ ´Þ¶óÁ®µµ ÀÎµ¦½º°¡ ´Þ¶óÁöÁø ¾ÊÀ¸¹Ç·Î Á¤Àû
+	// ë†’ì´ ê°’ì´ ë‹¬ë¼ì ¸ë„ ì¸ë±ìŠ¤ê°€ ë‹¬ë¼ì§€ì§„ ì•Šìœ¼ë¯€ë¡œ ì •ì 
 	if (FAILED(m_pGraphicDev->CreateIndexBuffer(
 		m_dwIdxCnt * idxSize,
 		D3DUSAGE_WRITEONLY,
@@ -258,12 +258,12 @@ HRESULT CHeightMap::Ready_BufferByVec()
 
 	for (int i = 0; i < m_iCntZ - 1; ++i) {
 		for (int j = 0; j < m_iCntX - 1; ++j) {
-			// ¿ÞÂÊ À§ »ï°¢Çü
+			// ì™¼ìª½ ìœ„ ì‚¼ê°í˜•
 			indices[(i * (m_iCntX - 1) + j) * 2]._0 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2].indices._0;
 			indices[(i * (m_iCntX - 1) + j) * 2]._1 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2].indices._1;
 			indices[(i * (m_iCntX - 1) + j) * 2]._2 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2].indices._2;
 
-			// ¿À¸¥ÂÊ ¾Æ·¡ »ï°¢Çü
+			// ì˜¤ë¥¸ìª½ ì•„ëž˜ ì‚¼ê°í˜•
 			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._0 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2 + 1].indices._0;
 			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._1 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2 + 1].indices._1;
 			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._2 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2 + 1].indices._2;
@@ -320,7 +320,7 @@ void CHeightMap::Render_Points()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, matWorld);
 	m_pGraphicDev->DrawPrimitive(D3DPT_POINTLIST, 0, m_vecVertices.size());
 
-	_pVB->Release();
+	Safe_Release(_pVB);
 	m_pGraphicDev->SetTexture(0, nullptr);
 
 	PostRender_Points();
@@ -379,21 +379,21 @@ _vec3 CHeightMap::GetHeightFromXZ(_vec3 vPos)
 	float zInPlane = float(vPos.z - row * m_fItv) / m_fItv;
 
 	_vec3 p0, p1, p2;
-	// ¿ÞÂÊ À§ »ï°¢Çü
+	// ì™¼ìª½ ìœ„ ì‚¼ê°í˜•
 	if (zInPlane - xInPlane > 0) {
-		p0 = m_vecVertices[(row + 1) * m_iCntX + col].vPosition;		// ¿ÞÂÊ À§
-		p1 = m_vecVertices[(row + 1) * m_iCntX + col + 1].vPosition;	// ¿À¸¥ÂÊ À§
-		p2 = m_vecVertices[row * m_iCntX + col].vPosition;				// ¿ÞÂÊ ¾Æ·¡
+		p0 = m_vecVertices[(row + 1) * m_iCntX + col].vPosition;		// ì™¼ìª½ ìœ„
+		p1 = m_vecVertices[(row + 1) * m_iCntX + col + 1].vPosition;	// ì˜¤ë¥¸ìª½ ìœ„
+		p2 = m_vecVertices[row * m_iCntX + col].vPosition;				// ì™¼ìª½ ì•„ëž˜
 	}
-	else { // ¿À¸¥ÂÊ ¾Æ·¡ »ï°¢Çü
-		p0 = m_vecVertices[row * m_iCntX + col + 1].vPosition;			// ¿À¸¥ÂÊ ¾Æ·¡
-		p1 = m_vecVertices[row * m_iCntX + col].vPosition;				// ¿ÞÂÊ ¾Æ·¡
-		p2 = m_vecVertices[(row + 1) * m_iCntX + col + 1].vPosition;	// ¿À¸¥ÂÊ À§
+	else { // ì˜¤ë¥¸ìª½ ì•„ëž˜ ì‚¼ê°í˜•
+		p0 = m_vecVertices[row * m_iCntX + col + 1].vPosition;			// ì˜¤ë¥¸ìª½ ì•„ëž˜
+		p1 = m_vecVertices[row * m_iCntX + col].vPosition;				// ì™¼ìª½ ì•„ëž˜
+		p2 = m_vecVertices[(row + 1) * m_iCntX + col + 1].vPosition;	// ì˜¤ë¥¸ìª½ ìœ„
 	}
 	D3DXPLANE plane;
 	D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
 
-	// normal¡¤p + d = 0
+	// normalÂ·p + d = 0
 	// ax + by + cz + d = 0
 	// by = -(ax + cz + d)
 	// y = -(ax + cz + d) / b
@@ -509,7 +509,7 @@ void CHeightMap::OnResetDevice()
 	m_dwIdxCnt = m_dwTriCnt * 3;
 	m_IdxFmt = D3DFMT_INDEX32;
 
-	// ³ôÀÌ °ª º¯°æ ÃÖÀûÈ­¸¦ À§ÇØ µ¿Àû ¹öÆÛ
+	// ë†’ì´ ê°’ ë³€ê²½ ìµœì í™”ë¥¼ ìœ„í•´ ë™ì  ë²„í¼
 	if (FAILED(m_pGraphicDev->CreateVertexBuffer(
 		m_dwVtxCnt * m_dwVtxSize,
 		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
@@ -523,7 +523,7 @@ void CHeightMap::OnResetDevice()
 
 	int idxSize = m_IdxFmt == D3DFMT_INDEX16 ? sizeof(WORD) : sizeof(DWORD);
 
-	// ³ôÀÌ °ªÀÌ ´Þ¶óÁ®µµ ÀÎµ¦½º°¡ ´Þ¶óÁöÁø ¾ÊÀ¸¹Ç·Î Á¤Àû
+	// ë†’ì´ ê°’ì´ ë‹¬ë¼ì ¸ë„ ì¸ë±ìŠ¤ê°€ ë‹¬ë¼ì§€ì§„ ì•Šìœ¼ë¯€ë¡œ ì •ì 
 	if (FAILED(m_pGraphicDev->CreateIndexBuffer(
 		m_dwIdxCnt * idxSize,
 		D3DUSAGE_WRITEONLY,
@@ -555,12 +555,12 @@ void CHeightMap::OnResetDevice()
 
 	for (int i = 0; i < m_iCntZ - 1; ++i) {
 		for (int j = 0; j < m_iCntX - 1; ++j) {
-			// ¿ÞÂÊ À§ »ï°¢Çü
+			// ì™¼ìª½ ìœ„ ì‚¼ê°í˜•
 			indices[(i * (m_iCntX - 1) + j) * 2]._0 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2].indices._0;
 			indices[(i * (m_iCntX - 1) + j) * 2]._1 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2].indices._1;
 			indices[(i * (m_iCntX - 1) + j) * 2]._2 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2].indices._2;
 
-			// ¿À¸¥ÂÊ ¾Æ·¡ »ï°¢Çü
+			// ì˜¤ë¥¸ìª½ ì•„ëž˜ ì‚¼ê°í˜•
 			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._0 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2 + 1].indices._0;
 			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._1 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2 + 1].indices._1;
 			indices[(i * (m_iCntX - 1) + j) * 2 + 1]._2 = m_vecFaces[(i * (m_iCntX - 1) + j) * 2 + 1].indices._2;
