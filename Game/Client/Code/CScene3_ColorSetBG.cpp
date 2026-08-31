@@ -12,6 +12,7 @@
 #include "CManagement.h"
 
 #include "CScene3_ColorBtn.h"
+#include "CScene3_ColorSet.h"
 
 CScene3_ColorSetBG::CScene3_ColorSetBG(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -28,8 +29,11 @@ CScene3_ColorSetBG::~CScene3_ColorSetBG()
 HRESULT CScene3_ColorSetBG::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Pos({ -300, -50, 5 });
-	m_pTransformCom->Set_Scale({ 156,108,1 });
+
+	m_vPos = { -310, -50, 5 };
+	m_vScale = { 156, 108, 1 };
+	m_pTransformCom->Set_Pos(m_vPos);
+	m_pTransformCom->Set_Scale(m_vScale);
 	CComponent* pComponent = nullptr;
 
 
@@ -43,6 +47,8 @@ HRESULT CScene3_ColorSetBG::Ready_GameObject()
 
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
+
+
 	Set_Show(false);
 
 	return S_OK;
@@ -51,7 +57,7 @@ HRESULT CScene3_ColorSetBG::Ready_GameObject()
 
 void CScene3_ColorSetBG::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-
+	
 }
 
 _int CScene3_ColorSetBG::Update_GameObject(const _float& fDeltaTime)
@@ -60,7 +66,7 @@ _int CScene3_ColorSetBG::Update_GameObject(const _float& fDeltaTime)
 		return 0;
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
-	
+
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

@@ -19,18 +19,22 @@ public:
 	virtual			void		Render_GameObject() override;
 	void						Set_Show(bool bShow) { m_bShow = bShow; };
 	bool						Get_Show() { return m_bShow; }
-	
+	void SetBG(CGameObject* pColorBG) { m_pColorBG = pColorBG; }
+
 
 private:
 	CRcTex* m_pBufferCom;
 	CTexture* m_pTextureCom;
 
-	bool	m_bShow;
+	_vec3	m_vPos;
+	_vec3	m_vScale;
 
 	
 public:
 	static CScene3_ColorSetBG* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	
+
+	bool	m_bShow;
+	CGameObject* m_pColorBG;
 
 protected:
 	virtual		void		Free() override;

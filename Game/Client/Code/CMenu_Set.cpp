@@ -15,6 +15,7 @@
 #include "CScene3_KartBtn.h"
 #include "CScene3_ColorBtn.h"
 #include "CScene3_ColorSetBG.h"
+#include "CScene3_ColorSet.h"
 #include "CUI_UnderBar.h"
 #include "CUI_XButton.h"
 #include "CScene3_Map_ForestValley.h"
@@ -59,9 +60,11 @@ HRESULT CMenu_Set::Ready_Scene()
 _int CMenu_Set::Update_Scene(const _float& fDeltaTime)
 {
 	_int iExit = CScene::Update_Scene(fDeltaTime);
-
-
-
+	//CScene3_ColorSetBG* pSetBG = static_cast<CScene3_ColorSetBG*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_ColorSetBG"));
+	//if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
+	//{
+	//	pSetBG->Set_Show(false);
+	//}
 
 	return iExit;
 }
@@ -182,7 +185,18 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_ColorSetBG", pUIObject)))
 		return E_FAIL;
-	
+
+	pUIObject = CScene3_ColorSet::Create(m_pGraphicDev, COLOR_RED);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ColorSet1", pUIObject)))
+		return E_FAIL;
+	pUIObject = CScene3_ColorSet::Create(m_pGraphicDev, COLOR_GREEN);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ColorSet2", pUIObject)))
+		return E_FAIL;
+
 	
 	
 	CGameObject* pUIInvenSlot = CUI_InvenSlot::Create(m_pGraphicDev, INVEN_FIRST);
@@ -190,7 +204,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_InvenSlot", pUIInvenSlot)))
 		return E_FAIL;
-	pUIInvenSlot->Get_Transform()->Set_Pos({ -300, 0, 1 });
+	pUIInvenSlot->Get_Transform()->Set_Pos({ -350, 0, 1 });
 	pUIInvenSlot->Get_Transform()->Set_Scale({ 100,150,1 });
 	
 	
@@ -213,7 +227,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_InvenSlot2", pUIInvenSlot2)))
 		return E_FAIL;
-	pUIInvenSlot2->Get_Transform()->Set_Pos({ -220, 0, 1 });
+	pUIInvenSlot2->Get_Transform()->Set_Pos({ -250, 0, 1 });
 	pUIInvenSlot2->Get_Transform()->Set_Scale({ 100,150,1 });
 
 

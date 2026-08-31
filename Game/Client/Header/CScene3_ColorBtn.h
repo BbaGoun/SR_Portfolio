@@ -32,7 +32,7 @@ private:
 
 public:
 	static CScene3_ColorBtn* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	CGameObject* m_pSetBG;
+	
 
 protected:
 	virtual		void		Free() override;
