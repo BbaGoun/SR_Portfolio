@@ -1,4 +1,4 @@
-#include "CCamera.h"
+﻿#include "CCamera.h"
 #include "CCalculator.h"
 
 CCamera::CCamera(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -57,6 +57,9 @@ void CCamera::LateUpdate_GameObject(const _float& fDeltaTime)
     CGameObject::LateUpdate_GameObject(fDeltaTime);
     D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
     m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
+
+    D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
+    m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 }
 
 void CCamera::Free()

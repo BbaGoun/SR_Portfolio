@@ -217,6 +217,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
     <ClInclude Include="..\Header\CDriftSpark.h" />
+    <ClInclude Include="..\Header\CDriftTrail.h" />
     <ClInclude Include="..\Header\CDustLandingEffect.h" />
     <ClInclude Include="..\Header\CDynamicCamera.h" />
     <ClInclude Include="..\Header\CMenu_Item.h" />
@@ -232,6 +233,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CMissileTarget.h" />
     <ClInclude Include="..\Header\CPlayer.h" />
     <ClInclude Include="..\Header\CPlayerHead.h" />
+    <ClInclude Include="..\Header\CPlayTimeMgr.h" />
     <ClInclude Include="..\Header\CScene1_Replay.h" />
     <ClInclude Include="..\Header\CScene1_Speed.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -248,6 +250,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CShield1.h" />
     <ClInclude Include="..\Header\CShield2.h" />
     <ClInclude Include="..\Header\CSpeedLine.h" />
+    <ClInclude Include="..\Header\CStartCam.h" />
+    <ClInclude Include="..\Header\CTrackCam.h" />
     <ClInclude Include="..\Header\CUI_EndCountDown.h" />
     <ClInclude Include="..\Header\CUI_Laps.h" />
     <ClInclude Include="..\Header\CLoadMgr.h" />
@@ -309,11 +313,13 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CBubbleEscape.cpp" />
+    <ClCompile Include="..\Code\CDriftTrail.cpp" />
     <ClCompile Include="..\Code\CDustLandingEffect.cpp" />
     <ClCompile Include="..\Code\CMenu_Item.cpp" />
     <ClCompile Include="..\Code\CMenu_Set.cpp" />
     <ClCompile Include="..\Code\CPlayer.cpp" />
     <ClCompile Include="..\Code\CPlayerHead.cpp" />
+    <ClCompile Include="..\Code\CPlayTimeMgr.cpp" />
     <ClCompile Include="..\Code\CScene1_Replay.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -336,6 +342,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CShield1.cpp" />
     <ClCompile Include="..\Code\CShield2.cpp" />
     <ClCompile Include="..\Code\CSpeedLine.cpp" />
+    <ClCompile Include="..\Code\CStartCam.cpp" />
+    <ClCompile Include="..\Code\CTrackCam.cpp" />
     <ClCompile Include="..\Code\CUI_EndCountDown.cpp" />
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

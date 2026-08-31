@@ -34,7 +34,7 @@ public:
 	void			Render_Points();
 
 	ControlPoint*	Get_ControlPoint(uint32_t cpId);
-
+		
 private:
 	void			ComputeV();
 	void			ComputeTRU();

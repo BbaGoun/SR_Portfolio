@@ -35,6 +35,7 @@ public:
 	void			UpdateThunder();
 	void			UpdateGravity();
 	void			UpdateMagnet(const _float& fDeltaTime);
+	void			UpdateStartBoost();
 
 	// Get, Set
 	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
@@ -95,10 +96,6 @@ public:
 	// OutputState
 	void			OutputCarState();
 
-	// CountDown
-	void			StartCountDown(const _float& fDeltaTime);
-	void			EndCoundDown(const _float& fDeltaTime);
-
 	// SetPlayerHead
 	void			SetPlayerHead(CGameObject* pPlayerHead) { m_pPlayerHead = static_cast<CPlayerHead*>(pPlayerHead); }
 
@@ -130,7 +127,7 @@ private:
 
 	bool			m_bThunder;
 
-	bool			m_bShortBoosterOnOff;
+	bool			m_bShortBoosterTimerOnOff;
 	float			m_fShortBoosterTimer;
 
 	CART_STATE		m_eCartState;

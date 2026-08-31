@@ -163,6 +163,9 @@
     <Filter Include="03. Management\GameObject\AlphaEmpty">
       <UniqueIdentifier>{60b4fbdc-da50-4f5b-84b7-f4a988b7376d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\MeshRibbon">
+      <UniqueIdentifier>{cc39311e-10d7-4f1a-8c54-8a063aef5c63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -334,6 +337,9 @@
     <ClInclude Include="..\Header\CAlphaEmpty.h">
       <Filter>03. Management\GameObject\AlphaEmpty</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMeshRibbon.h">
+      <Filter>04. Component\Shape\MeshRibbon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -483,6 +489,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CAlphaEmpty.cpp">
       <Filter>03. Management\GameObject\AlphaEmpty</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMeshRibbon.cpp">
+      <Filter>04. Component\Shape\MeshRibbon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

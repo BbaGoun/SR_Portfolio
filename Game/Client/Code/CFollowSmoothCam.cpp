@@ -42,7 +42,16 @@ HRESULT CFollowSmoothCam::Ready_GameObject(const _vec3& pEye,
 	m_pTransformCom->Set_Pos(m_vEye);
 	m_fYaw = 0;
 	m_fDistScale = 1;
-	m_fBackDistance = 0.f;
+
+	// AtYOffset : 4
+	// Up: 8.5
+	// Back : 15
+	// Fov : 45
+	// 플레이어의 적정 속도가 정해진 후 가능할 듯
+
+	m_fAtYOffset = 4.f;
+	m_fUpDistance = 8.5f;
+	m_fBackDistance = 15.f;
 	return S_OK;
 }
 void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
@@ -61,9 +70,10 @@ void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		_vec3	vPlayerLOOK;
 
 		pTrans->Get_Info(INFO_POS, &vPlayerPos);
-		//pTrans->Get_Info(INFO_UP, &vPlayerUp);
+		pTrans->Get_Info(INFO_UP, &vPlayerUp);
 		pTrans->Get_Info(INFO_LOOK, &vPlayerLOOK);
 
+		//cout << "vPlayerUp.x : " << vPlayerUp.x << "\tvPlayerUp.y : " << vPlayerUp.y << "\tvPlayerUp.z : " << vPlayerUp.z << endl;
 		m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
 
 		if (fabsf(vPlayerLOOK.y) >= 0)
@@ -71,7 +81,7 @@ void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			vPlayerLOOK.y = 0;
 			D3DXVec3Normalize(&vPlayerLOOK, &vPlayerLOOK);
 		}
-		_vec3	vTargetPos = vPlayerPos + (vPlayerUp * 8) + (vPlayerLOOK * -15);
+		_vec3	vTargetPos = vPlayerPos + (vPlayerUp * m_fUpDistance) + (vPlayerLOOK * -m_fBackDistance);
 
 		_vec3	vPlayerForce = pTrans->Get_Owner()->Get_Force();
 		_vec3	vDeltaPos = vTargetPos - vMyPos;
@@ -86,7 +96,7 @@ void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		m_pTransformCom->Get_Info(INFO_POS, &m_vEye);
 		m_vEye.y	= vTargetPos.y;
-		m_vAt		= vPlayerPos;
+		m_vAt		= vPlayerPos + _vec3{0, m_fAtYOffset, 0};
 		m_vUp		= vPlayerUp;
 	}
 }
@@ -95,7 +105,28 @@ void CFollowSmoothCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CFollowSmoothCam::Update_GameObject(const _float& fDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_1))
+			m_fUpDistance += 0.1f;
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_2))
+			m_fUpDistance -= 0.1f;
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_3))
+			m_fBackDistance += 0.1f;
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_4))
+			m_fBackDistance -= 0.1f;
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_5))
+			m_fFov += D3DXToRadian(1.f);
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_6))
+			m_fFov -= D3DXToRadian(1.f);
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_7))
+			m_fAtYOffset += 0.1f;
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_8))
+			m_fAtYOffset -= 0.1f;
 
+		cout << "Up : " << m_fUpDistance << 
+			"\nBack : " << m_fBackDistance << 
+			"\nFov : " << D3DXToDegree(m_fFov) <<
+			"\nAtYOffset : " << m_fAtYOffset <<
+			"\n";
 	}
 	return 0;
 }

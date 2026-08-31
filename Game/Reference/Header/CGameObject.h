@@ -27,12 +27,15 @@ public:
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	const map<const _tchar*, CComponent*>& Get_ComponentMap() { return m_mapComponent; }
 
-	CTransform* Get_Transform() { return m_pTransformCom; }
+ 	CTransform* Get_Transform() { return m_pTransformCom; }
 	CComponent* Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
 	void	Remove_Component(CComponent* _pCom);
 
 	void	Set_Child(CGameObject* _pGO);
-	void	Insert_Child(CGameObject* _pGO, int _iIndex);
+	void	Set_ChildWithoutTune(CGameObject* _pGO);
+	void	Set_ChildTuneDefault(CGameObject* _pGO);
+
+	void	Insert_Child(CGameObject* _pGO, int _iIndex, bool bTune = true, bool bDefault = false);
 	void	Insert_Before(CGameObject* _pGO);
 	void	Insert_After(CGameObject* _pGO);
 	const vector<CGameObject*>& Get_Children() { return m_vecChildren; }
@@ -74,7 +77,7 @@ public:
 	_float			Get_Speed() { return m_fSpeed; }
 
 	_float			Get_ViewZ() { return m_fViewZ; }
-	void			Compute_ViewZ(const _vec3* pPos);
+	virtual void	Compute_ViewZ();
 
 
 	void			Set_PrefabPath(const _tchar* _path) { wcscpy_s(m_prefabPath, MAX_PATH, _path); }
@@ -99,6 +102,9 @@ public:
 
 	void			SetActive(bool _b) { m_bActive = _b; }
 	bool			GetActive() { return m_bActive; }
+
+	void			Set_CullEnable(bool _b) { m_bCullEnable = _b; }
+	bool			Get_CullEnable() { return m_bCullEnable; }
 
 	virtual			void		OnLostDevice();
 	virtual			void		OnResetDevice();
@@ -134,6 +140,7 @@ protected:
 	CLayer*									m_pLayer;
 
 	bool									m_bActive = true;
+	bool									m_bCullEnable = true;
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);

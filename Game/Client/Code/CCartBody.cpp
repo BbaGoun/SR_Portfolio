@@ -29,7 +29,6 @@ CCartBody::~CCartBody()
 HRESULT CCartBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	//m_pTransformCom->Set_Pos({ 0,2,3 });
 
 	m_bBananaSpinState		= false;
 	m_bThunderSpinState		= false;
@@ -65,7 +64,7 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	
 	//m_pTransformCom->Set_Scale({ m_fScale,m_fScale,m_fScale });
 	//m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
-	//m_pTransformCom->Set_Pos({ 0,m_fScale,3 });
+	//m_pTransformCom->Set_Pos({ 0,0.1f,0 });
 }
 
 _int CCartBody::Update_GameObject(const _float& fDeltaTime)

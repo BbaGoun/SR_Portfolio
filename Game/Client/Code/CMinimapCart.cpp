@@ -23,7 +23,7 @@ HRESULT CMinimapCart::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_pTransformCom->Set_Scale({ 5,1,5 });
+	m_pTransformCom->Set_Scale({ 2,1,2 });
 
 	Engine::CComponent* pComponent = nullptr;
 	pComponent = m_pVIBufferCom = dynamic_cast<CArrowTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_ArrowCol"));
@@ -66,8 +66,24 @@ void CMinimapCart::LateUpdate_GameObject(const _float& fDeltaTime)
 void CMinimapCart::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	_matrix matOldView, matMinimapView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matOldView);
+	
+	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
+	
+	_vec3 vEye, vAt, vUp,vLook;
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	
+	vEye = vAt + vLook * -15 + vUp * 15;
+	D3DXMatrixLookAtLH(&matMinimapView, &vEye, &vAt, &vUp);
+	//m_pGraphicDev->SetTransform(D3DTS_VIEW, &matMinimapView);
 	m_pGraphicDev->SetTexture(0, nullptr);
+	
 	m_pVIBufferCom->Render_Buffer();
+	
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matOldView);
 }
 
 CMinimapCart* CMinimapCart::Create(LPDIRECT3DDEVICE9 pGraphicDev)

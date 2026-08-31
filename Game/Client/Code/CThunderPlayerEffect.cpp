@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CThunderPlayerEffect.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -43,12 +43,11 @@ HRESULT CThunderPlayerEffect::Ready_GameObject()
 _int CThunderPlayerEffect::Update_GameObject(const _float& fDeltaTime)
 {
 	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
-	_vec3 vCartBodyPos, vPos, vDir;
+	_vec3 vCartBodyPos, vDir;
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartBodyPos);
 
 	m_pTransformCom->Set_Pos({ vCartBodyPos.x,vCartBodyPos.y,vCartBodyPos.z});
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	CGameObject::Compute_ViewZ(&vPos);
+
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
 	if (m_fSize < 25)

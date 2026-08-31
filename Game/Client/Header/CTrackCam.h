@@ -1,12 +1,12 @@
-﻿#pragma once
+#pragma once
 #include "CCamera.h"
 
-class CFollowSmoothCam : public CCamera
+class CTrackCam : public CCamera
 {
 private:
-	explicit CFollowSmoothCam(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CFollowSmoothCam(const CFollowSmoothCam& rhs);
-	virtual ~CFollowSmoothCam();
+	explicit CTrackCam(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CTrackCam(const CTrackCam& rhs);
+	virtual ~CTrackCam();
 
 public:
 	HRESULT		Ready_GameObject(const _vec3& pEye,
@@ -26,12 +26,12 @@ public:
 private:
 	_float m_fYaw;
 	_float m_fDistScale;
-	_float m_fAtYOffset;
-	_float m_fUpDistance;
 	_float m_fBackDistance;
 
+	_float m_fLRMoveTime;
+
 public:
-	static CFollowSmoothCam* Create(LPDIRECT3DDEVICE9 pGraphicDev,
+	static CTrackCam* Create(LPDIRECT3DDEVICE9 pGraphicDev,
 		const _vec3& pEye = { 0, 30, -30 },
 		const _vec3& pAt = { 0, 0, 0 },
 		const _vec3& pUp = { 0, 1, 0 },
@@ -42,5 +42,4 @@ public:
 
 private:
 	virtual void		Free();
-
 };
