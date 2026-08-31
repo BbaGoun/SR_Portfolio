@@ -240,17 +240,6 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
 
 //Camera
-	//SmoothFollowCam
-	_vec3 vEye, vAt, vUp, vLook;
-	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
-	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
-	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	vEye = vAt + (vUp * 5) + (vLook * -15);
-	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp , D3DXToRadian(45));
-	
-	if (pGameObject == nullptr)
-		return E_FAIL;
-
 	//// # 플레이어 따라다니는 3인칭 카메라
 	_vec3 vEye, vAt, vUp, vLook;
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
@@ -261,6 +250,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	
 	if (pGameObject == nullptr)
 		return E_FAIL;
+
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FollowSmoothCam", pGameObject);
 	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
 		static_cast<CCamera*>(pGameObject))))
@@ -268,8 +258,6 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
-
-
 
 	//StartCam
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);

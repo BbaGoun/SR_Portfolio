@@ -426,7 +426,17 @@ _uint CLoadingThread::Loading_Stage()
         true, L"CartWheel")))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_StartFlag3", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_hightSpeed/Edited/StartFlag3.png", 1),
+        true, L"StartFlag3")))
+        return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Road1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_hightSpeed/Edited/Road1.png", 1),
+        true, L"Road1")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RoadCorner2", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_hightSpeed/Edited/RoadCorner2.png", 1),
+        true, L"RoadCorner2")))
+        return E_FAIL;
 
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Etc Loading.....................................");

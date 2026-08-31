@@ -102,8 +102,8 @@ void CDriftTrail::Append_Point(_vec3 vPos)
 	// 90 고정이 아니라 지형에 맞춰서
 	cp.bank = 90.f;
 	cp.position = vPos;
-	cp.width = 1;
-
+	cp.width = 2;
+	int a;
 	m_pMeshRibbonCom->Append_Point(cp);
 }
 

@@ -73,7 +73,6 @@ _int CUI_InvenSlot::Update_GameObject(const _float& fDeltaTime)
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
 			pBG->SetSelected(true);
-
 		}
 	}
 	else

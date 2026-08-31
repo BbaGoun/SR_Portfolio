@@ -95,7 +95,7 @@ void CSkidMark::Append_Point(_vec3 vPos)
 
 	cp.bank = 0;
 	cp.position = vPos;
-	cp.width = 1;
+	cp.width = 0.5f;
 
 	m_pMeshRibbonCom->Append_Point(cp);
 }

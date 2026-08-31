@@ -80,14 +80,11 @@ _int CScene3_KartBtn::Update_GameObject(const _float& fDeltaTime)
 				pSlot->Set_Show(true);
 			if (pSlot->Get_Show() == true)
 				pSlot->Set_Show(false);
-			else
-				pSlot->Set_Show(true);
 
 			if (pSlot2->Get_Show() == true)
 				pSlot2->Set_Show(false);
 			else
 				pSlot->Set_Show(false);
-
 
 			if (pSlot2->Get_Show() == false)
 				pSlot2->Set_Show(true);
