@@ -65,7 +65,7 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	
 	//m_pTransformCom->Set_Scale({ m_fScale,m_fScale,m_fScale });
 	//m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
-	//m_pTransformCom->Set_Pos({ 0,m_fScale,3 });
+	//m_pTransformCom->Set_Pos({ 0,0.1f,0 });
 }
 
 _int CCartBody::Update_GameObject(const _float& fDeltaTime)

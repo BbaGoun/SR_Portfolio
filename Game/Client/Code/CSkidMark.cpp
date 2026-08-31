@@ -52,7 +52,8 @@ _int CSkidMark::Update_GameObject(const _float& fDeltaTime)
 	m_fTimer += fDeltaTime;
 	if (m_fTimer > 15.f)
 	{
-		CManagement::GetInstance()->Delete_GameObject(L"GameLogic", this);
+		m_pLayer->Delete_GameObject(this);
+		return 0;
 	}
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

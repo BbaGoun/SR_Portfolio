@@ -231,6 +231,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CMissileTarget.h" />
     <ClInclude Include="..\Header\CPlayer.h" />
     <ClInclude Include="..\Header\CPlayerHead.h" />
+    <ClInclude Include="..\Header\CPlayTimeMgr.h" />
     <ClInclude Include="..\Header\CScene1_Replay.h" />
     <ClInclude Include="..\Header\CScene1_Speed.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -245,6 +246,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_StartBtn.h" />
     <ClInclude Include="..\Header\CSpeedLine.h" />
+    <ClInclude Include="..\Header\CStartCam.h" />
+    <ClInclude Include="..\Header\CTrackCam.h" />
     <ClInclude Include="..\Header\CUI_EndCountDown.h" />
     <ClInclude Include="..\Header\CUI_Laps.h" />
     <ClInclude Include="..\Header\CLoadMgr.h" />
@@ -310,6 +313,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CMenu_Set.cpp" />
     <ClCompile Include="..\Code\CPlayer.cpp" />
     <ClCompile Include="..\Code\CPlayerHead.cpp" />
+    <ClCompile Include="..\Code\CPlayTimeMgr.cpp" />
     <ClCompile Include="..\Code\CScene1_Replay.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -330,6 +334,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_StartBtn.cpp" />
     <ClCompile Include="..\Code\CSpeedLine.cpp" />
+    <ClCompile Include="..\Code\CStartCam.cpp" />
+    <ClCompile Include="..\Code\CTrackCam.cpp" />
     <ClCompile Include="..\Code\CUI_EndCountDown.cpp" />
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

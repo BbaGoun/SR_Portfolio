@@ -21,7 +21,7 @@ public:
 	virtual			void		Render_GameObject() override;
 
 	void		SetBoost(bool bBoost) { m_bBoost = bBoost; }
-	//void		SetCartDirType(DIRECTION_TYPE){m_eCartDirType}
+	void		SetCartDirType(DIRECTION_TYPE eCartDirType) { m_eCartDirType = eCartDirType; }
 	void		KeyInput(const _float& fDeltaTime);
 public:
 	static CPlayerHead* Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -34,6 +34,8 @@
 #include "CSpeedLine.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
+#include "CPlayTimeMgr.h"
+#include "CStartCam.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -57,6 +59,7 @@ HRESULT CRacingScene::PostReady_Scene()
 	Ready_UI_Layer();
 	Ready_Collision_Matrix();
 
+	//CPlayTimeMgr::GetInstance()->SetRaceStart();
 	return S_OK;
 }
 
@@ -107,7 +110,7 @@ void CRacingScene::OnResetDevice()
 
 HRESULT CRacingScene::LoadSceneFromFile()
 {
-	// ÀÏ´Ü ³Ö¾îµÎ±â
+	// ï¿½Ï´ï¿½ ï¿½Ö¾ï¿½Î±ï¿½
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)
@@ -162,10 +165,11 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
 	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
 
+	pCartBody->Get_Transform()->Set_Pos({ 0,0.1f,0 });
 	pCart->Set_Child(pPlayer);
 	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
-// ÀÌÆåÆ®
-	// ## ºÎ½ºÅÍ ¿ÞÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
+// Effect
+	//BoostWindL1
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
 	
 	if (nullptr == pGameObject)
@@ -173,7 +177,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
 	pCart->Set_Child(pGameObject);
 	
-	// ## ºÎ½ºÅÍ ¿ÞÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
+	// BoostWindL2
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
 	
 	if (nullptr == pGameObject)
@@ -181,14 +185,15 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
 	pCart->Set_Child(pGameObject);
 	
-	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
+	// BoostWindR1
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
 	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
 	pCart->Set_Child(pGameObject);
-	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
+
+	// BoostWindR2
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
 	
 	if (nullptr == pGameObject)
@@ -196,7 +201,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
 	pCart->Set_Child(pGameObject);
 	
-	// ## ºÎ½ºÅÍ Á¦Æ® ÀÌÆåÆ®
+	// BoostJet
 	pGameObject = CBoostJet::Create(m_pGraphicDev);
 	
 	if (nullptr == pGameObject)
@@ -204,8 +209,16 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
 	pCartBody->Set_Child(pGameObject);
 
-// ÆÄÆ¼Å¬
-	// ¿¬±â ÀÌÆåÆ®
+	// SpeedLine
+	pGameObject = CSpeedLine::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SpeedLine", pGameObject);
+	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
+
+// Particle
+	// SmokeParticle
 	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
 	
 	if (nullptr == pGameObject)
@@ -213,55 +226,50 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
-	// ÂøÁö½Ã ¸ÕÁö ÀÌÆåÆ®
+	// DustParticle
 	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
 
-	// SpeedLine
-	pGameObject = CSpeedLine::Create(m_pGraphicDev);
+//Camera
+	//SmoothFollowCam
+	_vec3 vEye, vAt, vUp, vLook;
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 5) + (vLook * -15);
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp , D3DXToRadian(45));
 	
-	if (pGameObject == nullptr)
-		return E_FAIL;
-	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SpeedLine", pGameObject);
-	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
-
-
-	//// # ÇÃ·¹ÀÌ¾î µû¶ó´Ù´Ï´Â 3ÀÎÄª Ä«¸Þ¶ó
-	//_vec3 vEye, vAt, vUp, vLook;
-	//pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
-	//pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
-	//pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	//vEye = vAt + (vUp * 10) + (vLook * -20);
-	//pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp);
-	//
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-	//CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FollowSmoothCam", pGameObject);
-	//if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
-	//	static_cast<CCamera*>(pGameObject))))
-	//	return E_FAIL;
-	//
-	//if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
-	//	return E_FAIL;
-
-	// # ÀÚÀ¯ Ä«¸Þ¶ó
-	_vec3 vEye = { 0, 0, -5 }, vAt = { 0, 0, 0 };
-	_vec3 vUp = { 0, 1, 0 };
-
-	pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
-
 	if (pGameObject == nullptr)
 		return E_FAIL;
 
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_DynamicCam", pGameObject);
 
-	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_DYNAMIC,
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
 
-	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
+		return E_FAIL;
+
+	//StartCam
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 15) + (vLook * 15);
+	pGameObject = CStartCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45));
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_StartCam", pGameObject);
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_START,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_START)))
 		return E_FAIL;
 
 	return S_OK;
@@ -377,7 +385,7 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		return E_FAIL;
 
 
-	// ¹Ì´Ï¸Ê Cart
+	// ï¿½Ì´Ï¸ï¿½ Cart
 	pUIObject = CMinimapCart::Create(m_pGraphicDev);
 
 	if (nullptr == pUIObject)
