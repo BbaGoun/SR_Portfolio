@@ -39,7 +39,7 @@ private:
 public:
 	deque<ControlPoint>& Get_ControlPoints() { return m_deqControlPoint; }
 	void			Set_RibbonType(RIBBONTYPE _eID) { m_eRibbonType = _eID; }
-	void			Set_QuadCopy(bool _b) { m_bQuadCopy = _b; }
+	void			Set_IsQuadCopy(bool _b) { m_bQuadCopy = _b; }
 
 protected:
 	deque<ControlPoint>		m_deqControlPoint;

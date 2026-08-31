@@ -162,8 +162,11 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
 	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
 
-	pCart->Set_ChildTuneDefault(pPlayer);
+	pCartBody->Set_ChildTuneDefault(pPlayer);
 	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
+
+	pCartBody->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
+
 // 이펙트
 	// ## 부스터 왼쪽1 바람 이펙트
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);

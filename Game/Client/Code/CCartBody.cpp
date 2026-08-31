@@ -29,7 +29,6 @@ CCartBody::~CCartBody()
 HRESULT CCartBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	//m_pTransformCom->Set_Pos({ 0,2,3 });
 
 	m_bBananaSpinState		= false;
 	m_bThunderSpinState		= false;

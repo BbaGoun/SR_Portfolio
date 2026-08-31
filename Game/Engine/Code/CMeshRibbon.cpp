@@ -203,7 +203,8 @@ void CMeshRibbon::Append_Point(const ControlPoint& _cp)
 
 	m_deqControlPoint.push_back(cp);
 
-	Append_MeshSegment();
+	if (m_deqControlPoint.size() > 1)
+		Append_MeshSegment();
 }
 
 void CMeshRibbon::Append_MeshSegment()
@@ -259,6 +260,12 @@ void CMeshRibbon::Append_Line()
 	m_deqVertices[m_dwVtxCnt + 1] = v2;
 
 	m_pVB->Unlock();
+
+	for (int i = 0; i < m_dwVtxCnt; ++i) {
+		UpdateMinMaxVtx(m_deqVertices[i].vPosition);
+	}
+
+	SetBoundingBox();
 
 	if (m_dwVtxCnt >= 2) {
 		INDEX32* indices = nullptr;
@@ -378,6 +385,15 @@ void CMeshRibbon::Append_Quad()
 
 	m_pVB->Unlock();
 
+	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
+	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+
+	for (int i = 0; i < m_dwVtxCnt; ++i) {
+		UpdateMinMaxVtx(m_deqVertices[i].vPosition);
+	}
+
+	SetBoundingBox();
+
 	INDEX32* indices = nullptr;
 
 	m_pIB->Lock(0, 0, (void**)&indices, D3DLOCK_NOOVERWRITE);
@@ -431,6 +447,15 @@ void CMeshRibbon::Delete_Line()
 	m_deqVertices.push_back({});
 	m_deqVertices.push_back({});
 
+	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
+	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+
+	for (int i = 0; i < m_dwVtxCnt; ++i) {
+		UpdateMinMaxVtx(m_deqVertices[i].vPosition);
+	}
+
+	SetBoundingBox();
+
 	m_pVB->Unlock();
 
 	INDEX32* indices = nullptr;
@@ -475,6 +500,15 @@ void CMeshRibbon::Delete_Quad()
 	m_deqVertices.push_back({});
 	m_deqVertices.push_back({});
 	m_deqVertices.push_back({});
+
+	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
+	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+
+	for (int i = 0; i < m_dwVtxCnt; ++i) {
+		UpdateMinMaxVtx(m_deqVertices[i].vPosition);
+	}
+
+	SetBoundingBox();
 
 	m_pVB->Unlock();
 

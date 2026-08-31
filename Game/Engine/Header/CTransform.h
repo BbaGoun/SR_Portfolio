@@ -54,7 +54,7 @@ public:
 		Get_World();
 		return m_worldQuaternion;
 	}
-
+	
 	void		Rotate(QUATERNION eType, _float fAngle)
 	{
 		if (eType == QUATER_PITCH)
@@ -62,7 +62,7 @@ public:
 
 		D3DXQUATERNION qDelta;
 		_vec3 vAxis;
-		D3DXVec3Normalize(&vAxis, &m_vInfo[eType]);
+		Get_Info((INFO)eType, &vAxis);
 		D3DXQuaternionRotationAxis(&qDelta, &vAxis, D3DXToRadian(fAngle));
 
 		m_localQuaternion *= qDelta;

@@ -31,7 +31,11 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	Render_Priority(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
+
 	Render_Alpha(pGraphicDev);
+	Render_Skid(pGraphicDev);
+	Render_Trail(pGraphicDev);
+
 	Render_Particle(pGraphicDev);
 	Render_NonAlphaUI(pGraphicDev);
 	Render_AlphaUI(pGraphicDev);
@@ -252,6 +256,66 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
 		});
 	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
+		pObj->Render_GameObject();
+
+	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CRenderer::Render_Skid(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
+
+	for (auto& pObj : m_RenderGroup[RENDER_SKID])
+	{
+		pObj->Compute_ViewZ();
+	}
+
+	m_RenderGroup[RENDER_SKID].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+		});
+	for (auto& pObj : m_RenderGroup[RENDER_SKID])
+		pObj->Render_GameObject();
+
+	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CRenderer::Render_Trail(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
+
+	for (auto& pObj : m_RenderGroup[RENDER_TRAIL])
+	{
+		pObj->Compute_ViewZ();
+	}
+
+	m_RenderGroup[RENDER_TRAIL].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+		});
+	for (auto& pObj : m_RenderGroup[RENDER_TRAIL])
 		pObj->Render_GameObject();
 
 	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);

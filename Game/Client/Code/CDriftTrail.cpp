@@ -33,9 +33,7 @@ HRESULT CDriftTrail::Ready_GameObject()
 	pComponent = m_pMeshRibbonCom = static_cast<CMeshRibbon*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_MeshRibbon"));
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
-	m_pMeshRibbonCom->Set_QuadCopy(true);
-
-	CGameObject::Set_CullEnable(false);
+	m_pMeshRibbonCom->Set_IsQuadCopy(true);
 
 	return S_OK;
 }
@@ -61,7 +59,7 @@ _int CDriftTrail::Update_GameObject(const _float& fDeltaTime)
 		m_pMeshRibbonCom->Update_Wave();
 	}
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_TRAIL, this);
 	
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -93,7 +91,7 @@ void CDriftTrail::Compute_ViewZ()
 	for (auto& p : points) {
 		_vec3 viewPos = p.position;
 		D3DXVec3TransformCoord(&viewPos, &viewPos, &matView);
-		if (m_fViewZ > viewPos.z)
+		if (viewPos.z > 0.f && m_fViewZ > viewPos.z)
 			m_fViewZ = viewPos.z;
 	}
 }
