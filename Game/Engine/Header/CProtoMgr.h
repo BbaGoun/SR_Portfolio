@@ -4,6 +4,7 @@
 
 // 오브젝트
 #include "CEmpty.h"
+#include "CAlphaEmpty.h"
 
 // 콜라이더
 #include "CCube_Collider.h"
@@ -27,6 +28,8 @@
 #include "CArrowTex.h"
 #include "CSpline.h"
 #include "CHeightMap.h"
+#include "CSphere.h"
+#include "CMeshRibbon.h"
 
 BEGIN(Engine)
 

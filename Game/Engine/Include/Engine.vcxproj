@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CAlphaEmpty.h" />
     <ClInclude Include="..\Header\CArrowTex.h" />
     <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCameraMgr.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="..\Header\CLayer.h" />
     <ClInclude Include="..\Header\CMagnetTex.h" />
     <ClInclude Include="..\Header\CManagement.h" />
+    <ClInclude Include="..\Header\CMeshRibbon.h" />
     <ClInclude Include="..\Header\CMissileTex.h" />
     <ClInclude Include="..\Header\CPyramid.h" />
     <ClInclude Include="..\Header\CQuadrangularPrism.h" />
@@ -52,6 +54,7 @@
     <ClInclude Include="..\Header\CRenderer.h" />
     <ClInclude Include="..\Header\CScene.h" />
     <ClInclude Include="..\Header\CSmoke.h" />
+    <ClInclude Include="..\Header\CSphere.h" />
     <ClInclude Include="..\Header\CSphere_Collider.h" />
     <ClInclude Include="..\Header\CSpline.h" />
     <ClInclude Include="..\Header\CStarParticle.h" />
@@ -76,6 +79,7 @@
     <ClInclude Include="..\Header\PSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CAlphaEmpty.cpp" />
     <ClCompile Include="..\Code\CArrowTex.cpp" />
     <ClCompile Include="..\Code\CCalculator.cpp" />
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
@@ -102,6 +106,7 @@
     <ClCompile Include="..\Code\CLayer.cpp" />
     <ClCompile Include="..\Code\CMagnetTex.cpp" />
     <ClCompile Include="..\Code\CManagement.cpp" />
+    <ClCompile Include="..\Code\CMeshRibbon.cpp" />
     <ClCompile Include="..\Code\CMissileTex.cpp" />
     <ClCompile Include="..\Code\CPyramid.cpp" />
     <ClCompile Include="..\Code\CQuadrangularPrism.cpp" />
@@ -109,6 +114,7 @@
     <ClCompile Include="..\Code\CRenderer.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
     <ClCompile Include="..\Code\CSmoke.cpp" />
+    <ClCompile Include="..\Code\CSphere.cpp" />
     <ClCompile Include="..\Code\CSphere_Collider.cpp" />
     <ClCompile Include="..\Code\CSpline.cpp" />
     <ClCompile Include="..\Code\CStarParticle.cpp" />

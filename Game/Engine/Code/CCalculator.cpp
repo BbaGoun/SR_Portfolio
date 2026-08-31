@@ -138,3 +138,13 @@ void CCalculator::DrawRayLine(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vStart, _vec3
 
 	//pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
+
+int CCalculator::RandInt()
+{
+	std::mt19937 gen{ std::random_device{}() };
+	std::uniform_int_distribution<int> dis{ 0, 99 };
+	// dis(gen)을 하면 0~99 사이의 숫자가 나옴
+	// 이를 통해 랜덤을 구현
+
+	return dis(gen);
+}

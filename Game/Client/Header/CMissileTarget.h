@@ -5,6 +5,8 @@ namespace Engine
 	class CCartBodyCol;
 	class CCube_Collider;
 }
+class CWaterBombBubble;
+
 class CMissileTarget : public CGameObject
 {
 private:
@@ -18,6 +20,8 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+					void			KeyInput(const _float& fDeltaTime);
+
 	virtual			void		CollisionEnter(CCollider* pOtherCollider) override;
 	virtual			void		CollisionExit(CCollider* pOtherCollider) {};
 	virtual			void		CollisionStay(CCollider* pOtherCollider) {};
@@ -28,19 +32,30 @@ public:
 
 	bool		GetMissileHit() { return m_bMissileHit; }
 	void		SetMissileHit(bool bMissileHit) { m_bMissileHit = bMissileHit; }
+
+	bool		GetBubbleUI() { return m_bBubbleUI; }
+	void		SetBubbleUI(bool bBubbleState) { m_bBubbleUI = bBubbleState; }
+
 public:
 	static CMissileTarget* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	Engine::CCartBodyCol*		m_pBufferCom;
 	Engine::CCube_Collider*		m_pColliderCom;
+			CWaterBombBubble*	m_pBubble;
 			_float				m_fMaxSpeed;
 			_float				m_fTimer;
+
+			_int				m_iLast_KeyInput;
+			_int				m_iAccumulate;
+
 			_bool				m_bMissileHit;
 			_bool				m_bWaterBombHit;
 			_bool				m_bWaterFlyHit;
 			_bool				m_bWaterBubble;
 			_bool				m_bWaterFly;
+			_bool				m_bBubbling;
+			_bool				m_bBubbleUI;
 
 protected:
 	virtual		void		Free() override;

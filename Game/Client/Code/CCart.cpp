@@ -23,6 +23,11 @@
 #include "CWaterFLyBody.h"
 #include "CDustLandingEffect.h"
 #include "SoundMgr.h"
+#include "CUI_StartCountDown.h"
+#include "CUI_EndCountDown.h"
+#include "CShield1.h"
+#include "CShield2.h"
+#include "CPlayTimeMgr.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -54,6 +59,7 @@ HRESULT CCart::Ready_GameObject()
 	m_fDriftTurnAngle		= 1.5f;
 
 	m_bRainbowUI			= false;
+	// m_bBubbleUI				= false;
 	m_bBanana				= false;
 	m_bThunder				= false;
 	m_bMagnet				= false;
@@ -68,7 +74,6 @@ HRESULT CCart::Ready_GameObject()
 	m_fBoostItemCnt			= 0.f;
 
 	m_fShortBoosterTimer	= 0.f;
-	m_bShortBoosterOnOff	= false;
 
 	m_eCartState			= CART_STATE_GROUND;
 	m_eBoostState			= BOOST_STATE_NORMAL;
@@ -83,10 +88,17 @@ HRESULT CCart::Ready_GameObject()
 	m_vBananaSpinStartLook	= { 0,0,0 };
 
 	m_bCanShortBoost		= true;
+	m_bShortBoosterTimerOnOff	= false;
 	m_bPlaying				= false;
 
-	m_fPlayTimer	= 0.f;
-	m_fPreTimer		= 0.f;
+	m_fPlayTimer			= 0.f;
+	m_fPreTimer				= 0.f;
+
+	m_pPlayerHead			= nullptr;
+	m_PreQuaternion			= { 0,0,0,1 };
+
+	m_PreQuaternion			= { 0, 0, 0, 1 };
+
 	return S_OK;
 }
 
@@ -116,16 +128,15 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 
-	StartCountDown(fDeltaTime);
-	EndCoundDown(fDeltaTime);
+	m_bPlaying = CPlayTimeMgr::GetInstance()->GetPlaying();
 
+	UpdateStartBoost();
 	KeyInput(fDeltaTime);
 	UpdateBoost(fDeltaTime);
 	UpdateDrift();
 	UpdateThunder();
 	UpdateMagnet(fDeltaTime);
 
-	//OutputCarState();
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -183,10 +194,10 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateRainbowObject();
 	}
 
-	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
-	//{
-	//	CreateBananaObject();
-	//}
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
+	{
+		CreateBananaObject();
+	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
 	{
@@ -224,10 +235,15 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateWaterFlyObject();
 	}
 
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_O))
+	{
+		CreateShieldObject();
+	}
+
 	// ShortBooster
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_UP))
 	{
-		if (m_bShortBoosterOnOff == true && m_bCanShortBoost == true)
+		if (m_bShortBoosterTimerOnOff == true && m_bCanShortBoost == true)
 		{
 			m_bCanShortBoost = false;
 			m_eBoostState = BOOST_STATE_SHORT_BOOST;
@@ -335,6 +351,8 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		m_eDirection = DIR_FORWARD;
 	else
 		m_eDirection = DIR_REVERSE;
+	if(m_pPlayerHead)
+		m_pPlayerHead->SetCartDirType(m_eDirection);
 
 	if (m_bDrift == true)
 	{
@@ -350,16 +368,16 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			if (vCross.y < 0)
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle) * m_eDirection;
-				
-				m_vRotation.z += fDeltaTime * 0.5f * m_eDirection;
+
+				m_vRotation.z += fDeltaTime * 0.5f;
 			}
 			else
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle * 0.5f) * m_eDirection;
 
-				m_vRotation.z += fDeltaTime * 0.5f * m_eDirection;
-				if (m_vRotation.z > 0)
-					m_vRotation.z = 0;
+				m_vRotation.z += fDeltaTime * 0.5f;
+				//if (m_vRotation.z > 0)
+				//	m_vRotation.z = 0;
 			}
 		}
 		else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
@@ -368,15 +386,15 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			{
 				m_vRotation.y += D3DXToRadian(fTurnAngle) * m_eDirection;
 
-				m_vRotation.z += -fDeltaTime * 0.5f * m_eDirection;
+				m_vRotation.z += -fDeltaTime * 0.5f;
 			}
 			else
 			{
 				m_vRotation.y += D3DXToRadian(fTurnAngle * 0.5f) * m_eDirection;
 
-				m_vRotation.z += -fDeltaTime * 0.5f * m_eDirection;
-				if (m_vRotation.z < 0)
-					m_vRotation.z = 0;
+				m_vRotation.z += -fDeltaTime * 0.5f;
+				//if (m_vRotation.z < 0)
+				//	m_vRotation.z = 0;
 			}
 		}
 	}
@@ -436,16 +454,22 @@ void CCart::UpdateDrift()
 		_vec3 vCross;
 		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
 
+		//m_vRotation.z *= 3;
+		m_vRotation.z = clampT(float(m_vRotation.z), -5.f, 5.f);
+
+		D3DXQUATERNION q;
+		D3DXQuaternionRotationYawPitchRoll(&q, 0, 0, D3DXToRadian(m_vRotation.z));
+		m_pTransformCom->Multiple_Quaternion(&q);
+
+		cout << m_vRotation.z << endl;
+
+
 		m_fLookForceAngle = D3DXToDegree(acosf(D3DXVec3Dot(&vLook, &vTempForce)));
-		m_vRotation.z *= 0.98;
-		m_vRotation.z = clampT(float(m_vRotation.z), -0.1f, 0.1f);
-
-
 		if ((!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) && m_fLookForceAngle < 30.f )
 			|| (!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT) && !CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 			|| m_eCartState != CART_STATE_GROUND)
 		{
-			m_bShortBoosterOnOff = true;
+			m_bShortBoosterTimerOnOff = true;
 			m_fCurGage += m_fGainGage;
 			if (m_fCurGage >= 100.f)
 			{
@@ -467,21 +491,23 @@ void CCart::UpdateDrift()
 
 void CCart::UpdateBoost(const _float& fDeltaTime)
 {
-	if (m_bShortBoosterOnOff == true)
+	if (m_bShortBoosterTimerOnOff == true)
 	{
 		m_fShortBoosterTimer += fDeltaTime;
 		if (m_fShortBoosterTimer > 0.5f)
 		{
 			m_fShortBoosterTimer = 0.f;
-			m_bShortBoosterOnOff = false;
+			m_bShortBoosterTimerOnOff = false;
 			m_bCanShortBoost = true;
 		}
 	}
-
+	//cout << m_fShortBoosterTimer << endl;
 	if (m_eBoostState == BOOST_STATE_NORMAL)
 		return;
 	m_fSpeed *= m_fBoostCal;
 	SoundMgr::GetInstance().PlaySound(L"Effect/cart/booster.ogg", SOUND_BOOST, 0.4f);
+	if(m_pPlayerHead)
+		m_pPlayerHead->SetBoost(true);
 	if (m_eBoostState == BOOST_STATE_SHORT_BOOST)
 	{
 		if (m_fSpeed > 2)
@@ -497,6 +523,8 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 	{
 		m_eBoostState = BOOST_STATE_NORMAL;
 		m_fSpeed = 1;
+		if(m_pPlayerHead)
+			m_pPlayerHead->SetBoost(false);
 		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 	}
 }
@@ -566,7 +594,8 @@ void CCart::CreateThunderCloudObject()
 
 void CCart::UpdateThunder()
 {
-	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+	CCartBody* pCartBody  = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+	
 	m_bThunder = pCartBody->GetThunderSpinState();
 
 	if (m_bThunder == true)
@@ -593,7 +622,7 @@ void CCart::UpdateThunder()
 
 void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 {
-	auto& tracks = CManagement::GetInstance()->Find_GameObjectsByTag(L"Default", L"Track");
+	auto& tracks = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Track");
 	if (tracks.empty())
 		return;
 
@@ -613,7 +642,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 
 	float fGroundY = 0.f;
 	float fMinRayDist = FLT_MAX;
-
+	bool bFind = false;
 	// 지형들 중 어떤 지형과 충돌했는지 확인 후 fGroundY, m_vTerrainNormal값이 구해짐
 	for (auto& track : tracks) {
 		CSpline* pSpline = track->Get_Component<CSpline>();
@@ -638,7 +667,6 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 
 		// 트랙의 boundingbox와 플레이어의 콜라이더가 닿는지 검사
 		bool bCheckCollision = box.Intersects(OBB);
-		pCol->Set_Center(vCartOldCenter);
 		if (bCheckCollision == false)
 			continue;
 
@@ -659,9 +687,10 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 			if (!D3DXIntersectTri(&p0, &p1, &p2, &vRayPos, &vRayDir, &u, &v, &fDist))
 				continue;
 
-			//if (fDist >= fMinRayDist)
-			//	continue;
+			if (fDist >= fMinRayDist)
+				continue;
 
+			bFind = true;
 			D3DXPLANE plane;
 			D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
 
@@ -681,90 +710,90 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 			m_vTerrainNormal = vLocalNormal;
 			if (m_vTerrainNormal.y < 0)
 				m_vTerrainNormal *= -1;
-			break;
 		}
 	}
 	// for문이 끝나면 fGroundY, m_vTerrainNormal값이 구해짐
 	// 이후부터는 CartState갱신
 	_vec3 vCartPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vCartPos);
-
-	float fDeltaY = vCartPos.y - fGroundY;
-	// m_eCart_State 업데이트
-	if (m_eCartState == CART_STATE_GROUND) // Ground 유지
+	if (bFind)
 	{
-		if (fDeltaY <= 0.1f)
+		float fDeltaY = vCartPos.y - fGroundY;
+		// m_eCart_State 업데이트
+		if (m_eCartState == CART_STATE_GROUND) // Ground 유지
 		{
-			m_fAirTime = 0.f;
-			m_eCartState = CART_STATE_GROUND;
-			m_pTransformCom->Set_Pos({ vCartPos.x, fGroundY, vCartPos.z });
-
-			// 경사면에 맞게 카트 몸체 회전
-			_vec3 vCartUp;
-			m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
-			float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
-
-			_vec3 vAxis;
-			D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
-
-			D3DXQUATERNION q;
-			D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
-
-			if (fabsf(m_vTerrainNormal.y) >= 0.999f)
+			if (fDeltaY <= 0.1f)
 			{
-				m_PreQuaternion = q;
-				m_iFlatFrameCnt = 0;
+				m_fAirTime = 0.f;
+				m_eCartState = CART_STATE_GROUND;
+				m_pTransformCom->Set_Pos({ vCartPos.x, fGroundY, vCartPos.z });
+
+				// 경사면에 맞게 카트 몸체 회전
+				_vec3 vCartUp;
+				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+
+				_vec3 vAxis;
+				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
+
+				D3DXQUATERNION q;
+				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+
+				if (fabsf(m_vTerrainNormal.y) >= 0.999f)
+				{
+					m_PreQuaternion = q;
+					m_iFlatFrameCnt = 0;
+				}
+				else
+				{
+					++m_iFlatFrameCnt;
+					if (m_iFlatFrameCnt > 3)
+						m_PreQuaternion = { 0,0,0,1 };
+				}
 			}
-			else
+			else // 점프 시작 
 			{
-				++m_iFlatFrameCnt;
-				if (m_iFlatFrameCnt > 3)
+				m_eCartState = CART_STATE_AIR;
+				m_fAirTime += fDeltaTime;
+			}
+		}
+		else if (m_eCartState == CART_STATE_AIR) // 착지
+		{
+			if (fDeltaY <= 0.1f)
+			{
+				if (m_fAirTime > 0.3f)//공중에 떠있는 시간
+				{
+					CDustLandingEffect* pDustLandingEffect = dynamic_cast<CDustLandingEffect*>
+						(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"DustLandingEffect"));
+					pDustLandingEffect->ResetParticle();
+				}
+				m_fAirTime = 0.f;
+				m_eCartState = CART_STATE_GROUND;
+				m_pTransformCom->Set_Pos({ vCartPos.x, fGroundY, vCartPos.z });
+
+				// 경사면에 맞게 카트 몸체 회전
+				_vec3 vCartUp;
+				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
+				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+
+				_vec3 vAxis;
+				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
+
+				D3DXQUATERNION q;
+				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+
+				if (fabsf(m_vTerrainNormal.y) >= 0.999f)
 					m_PreQuaternion = { 0,0,0,1 };
+				else
+					m_PreQuaternion = q;
 			}
-		}
-		else // 점프 시작 
-		{
-			m_eCartState = CART_STATE_AIR;
-			m_fAirTime += fDeltaTime;
-		}
-	}
-	else if (m_eCartState == CART_STATE_AIR) // 착지
-	{
-		if (fDeltaY <= 0.1f)
-		{
-			if (m_fAirTime > 0.3f)//공중에 떠있는 시간
+			else // 점프 유지
 			{
-				CDustLandingEffect* pDustLandingEffect = dynamic_cast<CDustLandingEffect*>
-					(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"DustLandingEffect"));
-				pDustLandingEffect->ResetParticle();
+				m_eCartState = CART_STATE_AIR;
+				m_fAirTime += fDeltaTime;
 			}
-			m_fAirTime = 0.f;
-			m_eCartState = CART_STATE_GROUND;
-			m_pTransformCom->Set_Pos({ vCartPos.x, fGroundY, vCartPos.z });
-
-			// 경사면에 맞게 카트 몸체 회전
-			_vec3 vCartUp;
-			m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
-			float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
-
-			_vec3 vAxis;
-			D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
-
-			D3DXQUATERNION q;
-			D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
-
-			if (fabsf(m_vTerrainNormal.y) >= 0.999f)
-				m_PreQuaternion = { 0,0,0,1 };
-			else
-				m_PreQuaternion = q;
-		}
-		else // 점프 유지
-		{
-			m_eCartState = CART_STATE_AIR;
-			m_fAirTime += fDeltaTime;
 		}
 	}
-
 	else //맵 전체를 지형으로 덮으면 else 부분은 필요 없을듯?
 	{
 		if (vCartOldCenter.y <= 0.f)
@@ -800,7 +829,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 
 void CCart::CollisionWall()
 {
-	auto& walls = CManagement::GetInstance()->Find_GameObjectsByTag(L"Default", L"Wall");
+	auto& walls = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Wall");
 	if (walls.empty())
 		return;
 	int a = 5;
@@ -917,6 +946,7 @@ void CCart::CollisionWall()
 			}
 		}
 		if (bCollision) {
+			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 			m_pTransformCom->Set_Pos(vPos + MTV);
 
 			// 2. 법선벡터만큼 밀어내기(들어간 만큼 이라는 것이 없어서 단위벡터만큼 밀어냄)
@@ -925,8 +955,8 @@ void CCart::CollisionWall()
 			_vec3 vNewForce = m_vForce;
 			vNewForce = MTV * D3DXVec3Length(&vNewForce);
 			float fForceLength = D3DXVec3Length(&vNewForce);
-			if (fForceLength >= 30)
-				vNewForce = vNewForce * 30 / fForceLength;
+			if (fForceLength >= 10)
+				vNewForce = vNewForce * 10 / fForceLength;
 
 			//m_pTransformCom->Set_Pos(vPos + MTV);
 
@@ -1025,6 +1055,17 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 	}
 }
 
+void CCart::UpdateStartBoost()
+{
+	m_fPreTimer = m_fPlayTimer;
+	m_fPlayTimer = CPlayTimeMgr::GetInstance()->GetPlayTimer();
+	if (m_fPlayTimer > 0.f && m_fPreTimer == 0.f)
+	{
+		m_bCanShortBoost = true;
+		m_bShortBoosterTimerOnOff = true;
+	}
+}
+
 void CCart::OutputCarState()
 {
 	switch (m_eCartState)
@@ -1044,64 +1085,6 @@ void CCart::OutputCarState()
 	default:
 		break;
 	}
-}
-
-void CCart::StartCountDown(const _float& fDeltaTime)
-{
-	m_fPlayTimer += fDeltaTime;
-
-	if (m_fPlayTimer > 4.f)
-		return;
-
-	if (m_fPlayTimer > 3.f)
-	{
-		m_bPlaying = true;
-		m_bCanShortBoost = true;
-		m_bShortBoosterOnOff = true;
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_go.flac", SOUND_EFFECT1, 0.4f);
-	}
-	else if (m_fPreTimer < 2.f && m_fPlayTimer > 2.f)
-	{
-		m_fPreTimer = m_fPlayTimer;
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT3, 0.4f);
-	}
-	else if (m_fPreTimer < 1.f && m_fPlayTimer > 1.f)
-	{
-		m_fPreTimer = m_fPlayTimer;
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT2, 0.4f);
-	}
-	else if (m_fPreTimer == 0.f && m_fPlayTimer > 0.f)
-	{
-		m_fPreTimer = m_fPlayTimer;
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_n.flac", SOUND_STARTCOUNT1, 0.4f);
-	}
-}
-
-void CCart::EndCoundDown(const _float& fDeltaTime)
-{
-	float fEndTime = 300;
-
-	if (m_fPlayTimer < fEndTime || m_bPlaying == false)
-		return;
-
-	if (m_fPlayTimer > fEndTime + 10.f && m_bPlaying == true)
-	{
-		m_bPlaying = false;
-		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
-		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/race_over.flac", SOUND_ENDCOUND, 0.4f);
-	}
-	else
-	{
-		for (int i = 0; i < 10; ++i)
-		{
-			if (m_fPreTimer < fEndTime + float(i) && m_fPlayTimer > fEndTime + float(i))
-			{
-				m_fPreTimer = m_fPlayTimer;
-				SoundMgr::GetInstance().PlaySound(L"Effect/lab/ro_count.flac", SOUND_ENDCOUND, 0.4f);
-			}
-		}
-	}	
 }
 
 
@@ -1191,7 +1174,8 @@ void CCart::CreateTargetAimObject()
 	//pTargetAim->SetLayer(m_pLayer);
 
 	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
+	if (pTarget == nullptr)
+		return;
 	_vec3 vPos, vLook, vTarget, vAimScreen, vTargetScreen;
 
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -1333,15 +1317,15 @@ void CCart::CreateWaterBombObject()
 
 	pWaterBombThrow->SetLayer(m_pLayer);
 
-	CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
+	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
 
-	if (pWaterBombBubble == nullptr)
-		return;
+	//if (pWaterBombBubble == nullptr)
+	//	return;
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
-		return;
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+	//	return;
 
-	pWaterBombBubble->SetLayer(m_pLayer);
+	//pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateWaterFlyObject()
@@ -1367,6 +1351,16 @@ void CCart::CreateWaterFlyObject()
 
 	pWaterFlyBody->SetLayer(m_pLayer);
 	pWaterFly->Set_Child(pWaterFlyBody);
+
+	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
+
+	//if (pWaterBombBubble == nullptr)
+	//	return;
+
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+	//	return;
+
+	//pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateMagnetAimObject()
@@ -1396,6 +1390,40 @@ void CCart::CreateMagnetAimObject()
 
 		m_pLayer->Delete_GameObject(pTargetAim);
 	}
+}
+
+void CCart::CreateShieldObject()
+{
+	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+
+	CGameObject* pShield1 = CShield1::Create(m_pGraphicDev);
+
+	if (pShield1 == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
+		return;
+
+	pShield1->SetLayer(m_pLayer);
+	pCart->Set_Child(pShield1);
+
+	CGameObject* pShield2 = CShield2::Create(m_pGraphicDev);
+
+	if (pShield2 == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
+		return;
+
+	pShield2->SetLayer(m_pLayer);
+	pCart->Set_Child(pShield2);
+
+	//_vec3 vPos, vPos1, vPos2;
+
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	//pShield1->Get_Transform()->Set_Pos(vPos);
+	//pShield2->Get_Transform()->Set_Pos(vPos);
 }
 
 void CCart::CreateMissileAimObject()
@@ -1455,24 +1483,8 @@ void CCart::UseItem()
 	case Engine::ITEM_UFO:
 		break;
 	case Engine::ITEM_WATERFLY:
+		CreateWaterFlyObject();
 		break;
-		//case Engine::ITEM_MAGNET:
-		//	//m_bMagnet = true;
-		//	UseMagnetItem();
-		//	//CreateMagnetAimObject();
-		//	//CreateTargetAimObject();
-		//	//CreateMagnetAimObject();
-		//	//CreateMagnetObject();
-		//	break;
-		//case Engine::ITEM_BARRICADE:
-		//	break;
-		//case Engine::ITEM_ROCKET:
-		//	UseMissileItem();
-		//	//CreateMissileAimObject();
-		//	//CreateTargetAimObject();
-		//	//CreateMissileAimObject();
-		//	//CreateMissileObject();
-		//	break;
 	case Engine::ITEM_BANANA:
 		CreateBananaObject();
 		break;

@@ -17,6 +17,7 @@ private:
 public:
 	void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);
 	void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Delete_RenderGroup(CGameObject* pObj);
 	void		Clear_RenderGroup();
 
 public:
@@ -33,6 +34,9 @@ public:
 	void		Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Render_Skid(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Render_Trail(LPDIRECT3DDEVICE9& pGraphicDev);
+
 	void		Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);

@@ -1,4 +1,5 @@
 ﻿#include "CLayer.h"
+#include "CRenderer.h"
 
 CLayer::CLayer()
 {
@@ -59,15 +60,18 @@ HRESULT CLayer::Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject)
 		vec.push_back(pGameObject);
 		pGameObject->SetTag(pTag);
 		m_mapObject.insert({ pTag, vec });
+		pGameObject->SetLayer(this);
 	}
 	else {
 		iter->second.push_back(pGameObject);
 		pGameObject->SetTag(iter->first);
+		pGameObject->SetLayer(this);
 	}
 
 	if (pGameObject->Get_Parent() == nullptr)
 		Attach_Root(pGameObject);
 
+	pGameObject->SetLayer(this);
 	return S_OK;
 }
 
@@ -244,6 +248,9 @@ HRESULT CLayer::PostProcess_Delete()
 		vector<CGameObject*>& vec = it->second;
 		vec.erase(remove(vec.begin(), vec.end(), pObj), vec.end());
 		Detach_Root(pObj);
+
+		CRenderer::GetInstance()->Delete_RenderGroup(pObj);
+
 		Safe_Release(pObj);
 		
 		if (vec.empty()) // vector가 비었으면

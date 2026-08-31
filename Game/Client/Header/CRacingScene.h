@@ -17,6 +17,7 @@ private:
 
 public:
 	virtual			HRESULT		Ready_Scene() override;
+	virtual			HRESULT		PostReady_Scene() override;
 	virtual			void		FixedUpdate_Scene(const _float& fFixedDeltaTime) override;
 	virtual			_int		Update_Scene(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_Scene(const _float& fDeltaTime) override;

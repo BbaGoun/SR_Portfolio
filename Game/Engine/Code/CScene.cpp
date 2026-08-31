@@ -180,6 +180,10 @@ void CScene::Process_Collision(const vector<CGameObject*>& vecObjects)
             }
         }
     }
+
+    for (auto& layer : m_mapLayer) {
+        layer.second->PostProcess_Delete();
+    }
 }
 
 void CScene::Set_CollisionMatrix(COLLISION_LAYER srcLayer, COLLISION_LAYER dstLayer, bool bCollision)

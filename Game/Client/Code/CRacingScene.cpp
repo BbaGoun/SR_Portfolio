@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CRacingScene.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -32,6 +32,10 @@
 #include "CFollowSmoothCam.h"
 #include "CDustLandingEffect.h"
 #include "CSpeedLine.h"
+#include "CUI_StartCountDown.h"
+#include "CUI_EndCountDown.h"
+#include "CPlayTimeMgr.h"
+#include "CStartCam.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -44,13 +48,18 @@ CRacingScene::~CRacingScene()
 HRESULT CRacingScene::Ready_Scene()
 {
 	LoadSceneFromFile();
+	return S_OK;
+}
 
+HRESULT CRacingScene::PostReady_Scene()
+{
 	Ready_RenderTarget();
 	Ready_GameLogic_Layer();
 	Ready_Environment_Layer();
 	Ready_UI_Layer();
 	Ready_Collision_Matrix();
 
+	//CPlayTimeMgr::GetInstance()->SetRaceStart();
 	return S_OK;
 }
 
@@ -58,13 +67,13 @@ void CRacingScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 {
 	CScene::FixedUpdate_Scene(fFixedDeltaTime);
 
-	auto map = Get_GameObjects(L"Default");
+	auto map = Get_GameObjects(L"GameLogic");
 
 	vector<CGameObject*> objects;
 	objects.reserve(1000);
 	for (auto& p : map){
 		for (auto& pObj : p.second)
-			if (!pObj->Get_Component<CCollider>())
+			if (pObj->Get_Component<CCollider>())
 				objects.push_back(pObj);
 	}
 
@@ -101,13 +110,13 @@ void CRacingScene::OnResetDevice()
 
 HRESULT CRacingScene::LoadSceneFromFile()
 {
-	// ÀÏ´Ü ³Ö¾îµÎ±â
+	// ì¼ë‹¨ ë„£ì–´ë‘ê¸°
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)
 		return E_FAIL;
 
-	m_mapLayer.insert({ L"Default", pGameObjectLayer });
+	m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
 
 	const _tchar* path = nullptr;
 	switch (m_eMapId) {
@@ -144,248 +153,142 @@ HRESULT CRacingScene::LoadSceneFromFile()
 
 HRESULT CRacingScene::Ready_RenderTarget()
 {
-	//CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"Minimap", 250, 400);
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"Minimap", 250, 400);
 	return S_OK;
 }
 
 HRESULT CRacingScene::Ready_GameLogic_Layer()
 {
-	// °ÔÀÓ ¿ÀºêÁ§Æ®
-	CLayer* pGameObjectLayer = CLayer::Create();
-
-	if (pGameObjectLayer == nullptr)
-		return E_FAIL;
-
-	m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
-
 	CGameObject* pGameObject = nullptr;
+	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
+	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
+	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
 
-	//// # ÀÚÀ¯ Ä«¸Þ¶ó
-	//_vec3 vEye = { 0, 0, -5 }, vAt = { 0, 0, 0 };
-	//_vec3 vUp = { 0, 1, 0 };
+	pCartBody->Set_ChildTuneDefault(pPlayer);
+	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
 
-	//pGameObject = CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
+	pCartBody->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
 
-	//if (pGameObject == nullptr)
-	//	return E_FAIL;
-
-	//if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_DynamicCam", pGameObject)))
-	//	return E_FAIL;
-
-	//if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_DYNAMIC,
-	//	static_cast<CCamera*>(pGameObject))))
-	//	return E_FAIL;
-
-	//if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
-	//	return E_FAIL;
-
-
-	// # Ä«Æ®
-	CGameObject* pCart = CCart::Create(m_pGraphicDev);
-
-	if (pCart == nullptr)
-		return E_FAIL;
-
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Cart", pCart)))
-		return E_FAIL;
-	pCart->SetLayer(pGameObjectLayer);
-
-
-	// ## Ä«Æ® ¸öÃ¼
-	CGameObject* pCartBody = CCartBody::Create(m_pGraphicDev);
-
-	if (pCartBody == nullptr)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CartBody", pCartBody)))
-		return E_FAIL;
-
-	pCart->Set_Child(pCartBody);
-
-	pGameObject = nullptr;
-	// ## Ä«Æ® ¸öÃ¼1
-	pGameObject = CCartBody1::Create(m_pGraphicDev);
-	pCartBody->Set_Child(pGameObject);
-	pGameObject->Get_Transform()->Set_Scale({ 2.5,1.5,1 });
-	pGameObject->Get_Transform()->Set_Pos({ 0,0,-3 });
-	if (pGameObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody1", pGameObject)))
-		return E_FAIL;
-
-
-	// ## Ä«Æ® ¸öÃ¼2
-	pGameObject = CCartBody2::Create(m_pGraphicDev);
-	pCartBody->Set_Child(pGameObject);
-	pGameObject->Get_Transform()->Set_Scale({ 2.5,0.5,0.5 });
-	pGameObject->Get_Transform()->Set_Pos({ 0,1,-1.5 });
-	if (pGameObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody2", pGameObject)))
-		return E_FAIL;
-
-
-	// ## Ä«Æ® ¸öÃ¼3
-	pGameObject = CCartBody1::Create(m_pGraphicDev);
-	pCartBody->Set_Child(pGameObject);
-	pGameObject->Get_Transform()->Set_Scale({ 2.5,1,0.5 });
-	pGameObject->Get_Transform()->Set_Pos({ 0,-0.5,-1.5 });
-	if (pGameObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody3", pGameObject)))
-		return E_FAIL;
-
-
-	// ## Ä«Æ® ¸öÃ¼4
-	pGameObject = CCartBody1::Create(m_pGraphicDev);
-	pCartBody->Set_Child(pGameObject);
-	pGameObject->Get_Transform()->Set_Scale({ 2.5,1.f,4 });
-	pGameObject->Get_Transform()->Set_Pos({ 0,-0.75,0.5 });
-	if (pGameObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CCartBody4", pGameObject)))
-		return E_FAIL;
-
-
-
-	// ## ¿ÞÂÊ ¾Õ¹ÙÄû
-	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FL);
-
-	if (pGameObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_FL", pGameObject)))
-		return E_FAIL;
-
-	pGameObject->SetLayer(pGameObjectLayer);
-	pCartBody->Set_Child(pGameObject);
-	dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
-
-	// ## ¿À¸¥ÂÊ ¾Õ¹ÙÄû
-	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_FR);
-
-	if (pGameObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_FR", pGameObject)))
-		return E_FAIL;
-
-	pGameObject->SetLayer(pGameObjectLayer);
-	pCartBody->Set_Child(pGameObject);
-	dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
-
-	// ## ¿ÞÂÊ µÞ¹ÙÄû
-	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BL);
-
-	if (pGameObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BL", pGameObject)))
-		return E_FAIL;
-
-	pGameObject->SetLayer(pGameObjectLayer);
-	pCartBody->Set_Child(pGameObject);
-	dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
-
-	// ## ¿À¸¥ÂÊ µÞ¹ÙÄû
-	pGameObject = CWheel::Create(m_pGraphicDev, WHEEL_BR);
-
-	if (pGameObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_Wheel_BR", pGameObject)))
-		return E_FAIL;
-	pGameObject->SetLayer(pGameObjectLayer);
-	pCartBody->Set_Child(pGameObject);
-	dynamic_cast<CWheel*>(pGameObject)->ResetPrePos();
-
-	// ## ºÎ½ºÅÍ ¿ÞÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
+// ì´íŽ™íŠ¸
+	// ## ë¶€ìŠ¤í„° ì™¼ìª½1 ë°”ëžŒ ì´íŽ™íŠ¸
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
-
+	
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindL1", pGameObject)))
-		return E_FAIL;
-	pCart->Set_Child(pGameObject);
-
-	// ## ºÎ½ºÅÍ ¿ÞÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	
+	// ## ë¶€ìŠ¤í„° ì™¼ìª½2 ë°”ëžŒ ì´íŽ™íŠ¸
+	// BoostWindL2
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
-
+	
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindL2", pGameObject)))
-		return E_FAIL;
-	pCart->Set_Child(pGameObject);
-
-	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	
+	// ## ë¶€ìŠ¤í„° ì˜¤ë¥¸ìª½1 ë°”ëžŒ ì´íŽ™íŠ¸
+	// BoostWindR1
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
-
+	
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindR1", pGameObject)))
-		return E_FAIL;
-	pCart->Set_Child(pGameObject);
-	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	// ## ë¶€ìŠ¤í„° ì˜¤ë¥¸ìª½2 ë°”ëžŒ ì´íŽ™íŠ¸
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
-
+	
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostWindR2", pGameObject)))
-		return E_FAIL;
-	pCart->Set_Child(pGameObject);
-
-	// ## ºÎ½ºÅÍ Á¦Æ® ÀÌÆåÆ®
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	
+	// ## ë¶€ìŠ¤í„° ì œíŠ¸ ì´íŽ™íŠ¸
+	// BoostJet
 	pGameObject = CBoostJet::Create(m_pGraphicDev);
-
+	
 	if (nullptr == pGameObject)
 		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"BoostJet", pGameObject)))
-		return E_FAIL;
-	pCartBody->Set_Child(pGameObject);
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
+	pCartBody->Set_ChildWithoutTune(pGameObject);
 
-	// ¿¬±â ÀÌÆåÆ®
-	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
-
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"SmokeEffect", pGameObject)))
-		return E_FAIL;
-	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
-
-	// ÂøÁö½Ã ¸ÕÁö ÀÌÆåÆ®
-	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
-	if (nullptr == pGameObject)
-		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"DustLandingEffect", pGameObject)))
-		return E_FAIL;
-
-
+// íŒŒí‹°í´
+	// ì—°ê¸° ì´íŽ™íŠ¸
 	// SpeedLine
 	pGameObject = CSpeedLine::Create(m_pGraphicDev);
 
 	if (pGameObject == nullptr)
 		return E_FAIL;
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"SpeedLine", pGameObject)))
-		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SpeedLine", pGameObject);
 	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
 
+// Particle
+	// SmokeParticle
+	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
+	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
-	// # ÇÃ·¹ÀÌ¾î µû¶ó´Ù´Ï´Â 3ÀÎÄª Ä«¸Þ¶ó
+	// ì°©ì§€ì‹œ ë¨¼ì§€ ì´íŽ™íŠ¸
+	// DustParticle
+	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
+
+//Camera
+	//SmoothFollowCam
 	_vec3 vEye, vAt, vUp, vLook;
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
 	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
 	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	vEye = vAt + (vUp * 10) + (vLook * -20);
-	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp);
+	vEye = vAt + (vUp * 5) + (vLook * -15);
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp , D3DXToRadian(45));
+	
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	//// # í”Œë ˆì´ì–´ ë”°ë¼ë‹¤ë‹ˆëŠ” 3ì¸ì¹­ ì¹´ë©”ë¼
+	_vec3 vEye, vAt, vUp, vLook;
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 8.5f) + (vLook * -15.f);
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45.f));
+	
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FollowSmoothCam", pGameObject);
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+	
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
+		return E_FAIL;
+
+
+
+	//StartCam
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 15) + (vLook * 15);
+	pGameObject = CStartCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45));
 
 	if (pGameObject == nullptr)
 		return E_FAIL;
 
-	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_FollowSmoothCam", pGameObject)))
-		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_StartCam", pGameObject);
 
-	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_START,
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
 
-	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_START)))
 		return E_FAIL;
-
 
 	return S_OK;
 }
@@ -413,108 +316,122 @@ HRESULT CRacingScene::Ready_Environment_Layer()
 
 HRESULT CRacingScene::Ready_UI_Layer()
 {
-	//CLayer* pUILayer = CLayer::Create();
+	CLayer* pUILayer = CLayer::Create();
 
-	//if (pUILayer == nullptr)
-	//	return E_FAIL;
+	if (pUILayer == nullptr)
+		return E_FAIL;
 
-	//m_mapLayer.insert({ L"UI", pUILayer });
+	m_mapLayer.insert({ L"UI", pUILayer });
 
-	//CGameObject* pUIObject = nullptr;
+	CGameObject* pUIObject = nullptr;
 
-	//// UI_HUDMain
-	//pUIObject = CHUD_Main::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_HUDMain", pUIObject)))
-	//	return E_FAIL;
+	// UI_HUDMain
+	pUIObject = CHUD_Main::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDMain", pUIObject)))
+		return E_FAIL;
 
-	//// UI_HUDGage
-	//pUIObject = CHUD_Gage::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_HUDGage", pUIObject)))
-	//	return E_FAIL;
+	// UI_HUDGage
+	pUIObject = CHUD_Gage::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDGage", pUIObject)))
+		return E_FAIL;
 
-	//// UI_HUDNum
-	//pUIObject = CHUD_Num::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_HUDNum", pUIObject)))
-	//	return E_FAIL;
+	// UI_HUDNum
+	pUIObject = CHUD_Num::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDNum", pUIObject)))
+		return E_FAIL;
 
-	//// UI_Rainbow
-	//pUIObject = CUI_Rainbow::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_Rainbow", pUIObject)))
-	//	return E_FAIL;
+	// UI_Rainbow
+	pUIObject = CUI_Rainbow::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Rainbow", pUIObject)))
+		return E_FAIL;
 
-	//// UI_BoosterBG
-	//pUIObject = CUI_BoosterBG::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBG", pUIObject)))
-	//	return E_FAIL;
+	// UI_BoosterBG
+	pUIObject = CUI_BoosterBG::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBG", pUIObject)))
+		return E_FAIL;
 
-	//// UI_BoosterBar
-	//pUIObject = CUI_BoosterBar::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
-	//	return E_FAIL;
+	// UI_BoosterBar
+	pUIObject = CUI_BoosterBar::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
+		return E_FAIL;
 
-	//// UI_BoosterBar
-	//pUIObject = CUI_Button::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_Button", pUIObject)))
-	//	return E_FAIL;
+	// UI_Button
+	pUIObject = CUI_Button::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Button", pUIObject)))
+		return E_FAIL;
 
-	//// UI_Timer
-	//pUIObject = CUI_Timer::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
-	//	return E_FAIL;
+	// UI_Timer
+	pUIObject = CUI_Timer::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
+		return E_FAIL;
 
-	//// UI_ItemSlot
-	//pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_ItemSlot", pUIObject)))
-	//	return E_FAIL;
+	// UI_ItemSlot
+	pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemSlot", pUIObject)))
+		return E_FAIL;
 
-	//// UI_ItemIcon
-	//pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
-	//	return E_FAIL;
+	// UI_ItemIcon
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
 
-	//// CUI_Minimap
-	//pUIObject = CUI_Minimap::Create(m_pGraphicDev);
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"PreviewCart", pUIObject)))
-	//	return E_FAIL;
+	// CUI_Minimap
+	pUIObject = CUI_Minimap::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"PreviewCart", pUIObject)))
+		return E_FAIL;
 
 
-	//// ¹Ì´Ï¸Ê Cart
-	//pUIObject = CMinimapCart::Create(m_pGraphicDev);
+	// ë¯¸ë‹ˆë§µ Cart
+	pUIObject = CMinimapCart::Create(m_pGraphicDev);
 
-	//if (nullptr == pUIObject)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"MinimapCart", pUIObject)))
-	//	return E_FAIL;
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"MinimapCart", pUIObject)))
+		return E_FAIL;
 
-	//pUIObject = CMinimapGround::Create(m_pGraphicDev);
+	pUIObject = CMinimapGround::Create(m_pGraphicDev);
 
-	//if (pUIObject == nullptr)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"Env_MinimapGround", pUIObject)))
-	//	return E_FAIL;
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"Env_MinimapGround", pUIObject)))
+		return E_FAIL;
 
+
+	// CUI_StartCountDown
+	pUIObject = CUI_StartCountDown::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_StartCountDown", pUIObject)))
+		return E_FAIL;
+
+	// CUI_EndCountDown
+	pUIObject = CUI_EndCountDown::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_EndCountDown", pUIObject)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -542,6 +459,7 @@ CRacingScene* CRacingScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, MAP_ID eID)
 
 void CRacingScene::Free()
 {
-	//CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
+	CRenderer::GetInstance()->Clear_RenderGroup();
+	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
 	CScene::Free();
 }

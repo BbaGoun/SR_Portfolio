@@ -38,9 +38,9 @@ CVIBuffer::~CVIBuffer()
 HRESULT CVIBuffer::Ready_Buffer()
 {
 	if(m_pVB)
-		m_pVB->Release();
+		Safe_Release(m_pVB);
 	if(m_pIB)	
-		m_pIB->Release();
+		Safe_Release(m_pIB);
 
 	if (FAILED(m_pGraphicDev->CreateVertexBuffer(
 		m_dwVtxCnt * m_dwVtxSize,

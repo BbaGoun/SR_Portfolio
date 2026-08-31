@@ -30,9 +30,8 @@ HRESULT CWaterBombBubble::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 
-	// 임시 물방울
-	m_pTransformCom->Set_Scale({ 1.5f, 3.5f, 0.7f });
-	pComponent = m_pBufferCom = dynamic_cast<CCartBodyCol*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CartBodyCol"));
+	m_pTransformCom->Set_Scale({ 15.5f, 15.5f, 15.5f });
+	pComponent = m_pBufferCom = dynamic_cast<CSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Sphere"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 
@@ -71,15 +70,15 @@ void CWaterBombBubble::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	m_fTimer += fFixedDeltaTime;	
 
-	if (m_fTimer > 1.6f)
-	{
+	// if (m_fTimer > 1.6f)
+	// {
 		if (vScale.x < 4.5f && vScale.y < 4.5f && vScale.z < 4.5f)
 		{
 			vScale.x += 3.f * fFixedDeltaTime;
 			vScale.y += 3.f * fFixedDeltaTime;
 			vScale.z += 3.f * fFixedDeltaTime;
 		}
-	}
+	// }
 
 	m_pTransformCom->Set_Scale(vScale);
 	// m_pTransformCom->Set_Pos(vTargetPos);
@@ -87,10 +86,10 @@ void CWaterBombBubble::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CWaterBombBubble::Update_GameObject(const _float& fDeltaTime)
 {
-	if (m_fTimer > 1.6f)
-	{
+	//if (m_fTimer > 1.6f)
+	//{
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
-	}
+	//}
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

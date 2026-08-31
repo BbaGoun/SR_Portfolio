@@ -1,0 +1,16 @@
+﻿OBJECT
+  type=
+  prefabPath=..\..\..\Resource\Editor\Prefab\smallBar.prefab
+  belong=1
+  name=Empty
+  tag=18
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+  COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.563000 0.425000
+    rot=0.217028 0.000000 -0.000000
+    quat=0.001894 0.000000 -0.000000 0.999998
+    scale=0.010000 0.010000 0.100000
+ENDOBJECT

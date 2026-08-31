@@ -1,6 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 #include "Engine_Enum.h"
+#include "CPlayerHead.h"
 
 namespace Engine
 {
@@ -34,6 +35,7 @@ public:
 	void			UpdateThunder();
 	void			UpdateGravity();
 	void			UpdateMagnet(const _float& fDeltaTime);
+	void			UpdateStartBoost();
 
 	// Get, Set
 	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
@@ -44,6 +46,9 @@ public:
 
 	bool			GetRainbowUI()						{ return m_bRainbowUI; }
 	void			SetRainbowUI(bool bRainbowState)	{ m_bRainbowUI = bRainbowState; }
+
+	// bool			GetBubbleUI()						{ return m_bBubbleUI; }
+	// void			SetBubbleUI(bool bBubbleUI)			{ m_bBubbleUI = bBubbleUI; }
 
 	void			SetBanana(bool bBanana)				{ m_bBanana = bBanana; }
 	bool			GetBanana()							{ return m_bBanana; }
@@ -79,6 +84,7 @@ public:
 	void			CreateTargetAimObject();	
 	void			CreateMissileAimObject();
 	void			CreateMagnetAimObject();
+	void			CreateShieldObject();
 
 	// Item
 	void			GainItem();
@@ -90,15 +96,15 @@ public:
 	// OutputState
 	void			OutputCarState();
 
-	// CountDown
-	void			StartCountDown(const _float& fDeltaTime);
-	void			EndCoundDown(const _float& fDeltaTime);
+	// SetPlayerHead
+	void			SetPlayerHead(CGameObject* pPlayerHead) { m_pPlayerHead = static_cast<CPlayerHead*>(pPlayerHead); }
 
 private:
 	_float			m_fMaxSpeed;
 	bool			m_bDrift;
 	bool			m_bBanana;
 	bool			m_bRainbowUI;
+	// _bool			m_bBubbleUI;
 	_bool			m_bMagnet;
 	_float			m_fMagnetTimer;
 
@@ -121,7 +127,7 @@ private:
 
 	bool			m_bThunder;
 
-	bool			m_bShortBoosterOnOff;
+	bool			m_bShortBoosterTimerOnOff;
 	float			m_fShortBoosterTimer;
 
 	CART_STATE		m_eCartState;
@@ -143,6 +149,8 @@ private:
 	float			m_fPlayTimer;
 	float			m_fPreTimer;
 	bool			m_bPlaying;
+
+	CPlayerHead*	m_pPlayerHead;
 
 protected:
 	virtual		void		Free() override;

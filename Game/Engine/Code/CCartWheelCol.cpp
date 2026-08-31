@@ -1,4 +1,6 @@
 ﻿#include "CCartWheelCol.h"
+#include "CGameObject.h"
+#include "CTexture.h"
 
 CCartWheelCol::CCartWheelCol(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {
@@ -14,10 +16,16 @@ CCartWheelCol::~CCartWheelCol()
 
 HRESULT CCartWheelCol::Ready_Buffer()
 {
-	m_dwVtxSize = sizeof(VTXCOL);
-	m_dwVtxCnt = 34;
-	m_dwTriCnt = 64;
-	m_dwFVF = FVF_COL;
+	m_dwVtxSize = sizeof(VTXTEX);
+	// 옆면 왼쪽 1 + 17
+	// 윗면 17 + 17 
+	// 옆면 오른쪽 17 + 1
+	m_dwVtxCnt = 1 + (m_iSegment + 1) * 4 + 1;
+	// 옆면 왼쪽 16
+	// 윗면 16 * 2
+	// 옆면 오른쪽 16
+	m_dwTriCnt = m_iSegment * 4;
+	m_dwFVF = FVF_TEX;
 
 	m_dwIdxCnt = m_dwTriCnt * 3;
 	m_IdxFmt = D3DFMT_INDEX32;
@@ -25,31 +33,66 @@ HRESULT CCartWheelCol::Ready_Buffer()
 	if (FAILED(CVIBuffer::Ready_Buffer()))
 		return E_FAIL;
 
-	VTXCOL* vertices = nullptr;
+	VTXTEX* vertices = nullptr;
+	int offset = 0;
 
 	m_pVB->Lock(0, 0, (void**)&vertices, 0);
 
-	for (int i = 0; i < 16; ++i)
+	// 왼쪽 옆면
+	// 1개
+	vertices[0].vPosition = { -0.2f, 0, 0 };
+	vertices[0].vTexUV = { 0.5f, 0.5f };
+	// 17개
+	offset = 1;
+	for (int i = 0; i <= m_iSegment; ++i)
 	{
-		vertices[i].vPosition = { -0.2, sinf(2 * D3DX_PI / 16 * i), cosf(2 * D3DX_PI / 16 * i) };
-		if(i % 4 == 0)
-			vertices[i].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-		else
-			vertices[i].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+		float radian = D3DXToRadian(360.f * i / m_iSegment);
+		vertices[i + offset].vPosition = { -0.2f,
+			cosf(radian),
+			sinf(radian)
+		};
+		vertices[i + offset].vTexUV = { 0.5f - sinf(radian) / 2.f, 0.5f - cosf(radian) / 2.f };
 	}
-	for (int i = 16; i < 32; ++i)
-	{
-		vertices[i].vPosition = { 0.2, sinf(2 * D3DX_PI / 16 * i), cosf(2 * D3DX_PI / 16 * i) };
-		if (i % 4 == 2)
-			vertices[i].dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-		else
-			vertices[i].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-	}
-	vertices[32].vPosition = { -0.2, 0, 0 };
-	vertices[32].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
 
-	vertices[33].vPosition = { 0.2, 0, 0 };
-	vertices[33].dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	// 윗면
+	// 17개
+	offset = 1 + (m_iSegment + 1);
+	for (int i = 0; i <= m_iSegment; ++i)
+	{
+		float radian = D3DXToRadian(360.f * i / m_iSegment);
+		vertices[i + offset].vPosition = { -0.2f,
+			cosf(radian),
+			sinf(radian)
+		};
+		vertices[i + offset].vTexUV = { 0, float(i) };
+	}
+	// 17개
+	offset = 1 + (m_iSegment + 1) * 2;
+	for (int i = 0; i <= m_iSegment; ++i)
+	{
+		float radian = D3DXToRadian(360.f * i / m_iSegment);
+		vertices[i + offset].vPosition = { 0.2f,
+			cosf(radian),
+			sinf(radian)
+		};
+		vertices[i + offset].vTexUV = { 1, float(i) };
+	}
+
+	// 오른쪽 옆면
+	// 17개
+	offset = 1 + (m_iSegment + 1) * 3;
+	for (int i = 0; i <= m_iSegment; ++i)
+	{
+		float radian = D3DXToRadian(360.f * i / m_iSegment);
+		vertices[i + offset].vPosition = { 0.2f,
+			cosf(radian),
+			sinf(radian)
+		};
+		vertices[i + offset].vTexUV = { 0.5f - sinf(radian) / 2.f, 0.5f - cosf(radian) / 2.f };
+	}
+	// 1개
+	vertices[m_dwVtxCnt - 1].vPosition = { 0.2f, 0, 0 };
+	vertices[m_dwVtxCnt - 1].vTexUV = { 0.5f, 0.5f };
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(vertices[i].vPosition);
@@ -63,54 +106,81 @@ HRESULT CCartWheelCol::Ready_Buffer()
 
 	m_pIB->Lock(0, 0, (void**)&indices, 0);
 
-	// -x 방향 원: 삼각형 16개
-	for (int i = 0; i < 16; ++i)
-	{
-		indices[i]._0 = 32;
-		indices[i]._1 = i;
-		indices[i]._2 = (i + 1) % 16;
+	// 왼쪽 면 
+	// 점 -> 중앙 -> 다음 점
+	for (int i = 0; i < m_iSegment; ++i) {
+		indices[i]._0 = i + 1;
+		indices[i]._1 = 0;
+		indices[i]._2 = i + 2;
 	}
 
-	// +x 방향 원: 삼각형 16개
-	for (int i = 16; i < 32; ++i)
-	{
-		indices[i]._0 = i;
-		indices[i]._1 = 33;
-		indices[i]._2 = i + 1;
+	//// 윗면
+	offset = 1 + (m_iSegment + 1);
+	for (int i = 0; i < m_iSegment; ++i) {
+		indices[i * 2 + m_iSegment]._0 = offset + i;
+		indices[i * 2 + m_iSegment]._1 = offset + i + 1;
+		indices[i * 2 + m_iSegment]._2 = offset + i + 1 + (m_iSegment + 1);
+
+		indices[i * 2 + m_iSegment + 1]._0 = offset + i;
+		indices[i * 2 + m_iSegment + 1]._1 = offset + i + 1 + (m_iSegment + 1);
+		indices[i * 2 + m_iSegment + 1]._2 = offset + i + (m_iSegment + 1);
 	}
-	indices[31]._2 = 16;
 
-	// 옆면
-	int index = 32;
-	for (int i = 0; i < 16; ++i)
-	{
-		if (i == 15)
-		{
-			indices[index]._0 = i;
-			indices[index]._1 = i + 16;
-			indices[index]._2 = 16;
-			++index;
-
-			indices[index]._0 = i;
-			indices[index]._1 = 16;
-			indices[index]._2 = 0;
-			++index;
-			break;
-		}
-		indices[index]._0 = i;
-		indices[index]._1 = i + 16;
-		indices[index]._2 = i + 17;
-		++index;
-
-		indices[index]._0 = i;
-		indices[index]._1 = i + 17;
-		indices[index]._2 = i + 1;
-		++index;
+	// 오른쪽 면
+	offset = 1 + (m_iSegment + 1) * 3;
+	for (int i = 0; i < m_iSegment; ++i) {
+		indices[i + m_iSegment * 3]._0 = offset + i + 1;
+		indices[i + m_iSegment * 3]._1 = m_dwVtxCnt - 1;
+		indices[i + m_iSegment * 3]._2 = offset + i;
 	}
 
 	m_pIB->Unlock();
 
 	return S_OK;
+}
+
+void CCartWheelCol::Render_Buffer()
+{
+	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
+	if (m_dwFVF != 0)
+		m_pGraphicDev->SetFVF(m_dwFVF);
+	else
+		m_pGraphicDev->SetVertexDeclaration(m_pVtxDecl);
+	m_pGraphicDev->SetIndices(m_pIB);
+
+	if (CTexture* pTex = m_pOwner->Get_Component<CTexture>()) 
+	{
+		// 왼쪽 옆 면
+		// 매개변수는 인덱스 offset, 그리는 삼각형 수
+		pTex->Set_Texture(0);
+		m_pGraphicDev->DrawIndexedPrimitive(
+			D3DPT_TRIANGLELIST,
+			0,
+			0,
+			m_dwVtxCnt,
+			0,
+			m_iSegment);
+
+		// 윗면
+		pTex->Set_Texture(1);
+		m_pGraphicDev->DrawIndexedPrimitive(
+			D3DPT_TRIANGLELIST,
+			0,
+			0,
+			m_dwVtxCnt,
+			m_iSegment * 3,
+			m_iSegment * 2);
+
+		// 오른쪽 옆면
+		pTex->Set_Texture(0);
+		m_pGraphicDev->DrawIndexedPrimitive(
+			D3DPT_TRIANGLELIST,
+			0,
+			0,
+			m_dwVtxCnt,
+			m_iSegment * 9,
+			m_iSegment);
+	}
 }
 
 CCartWheelCol* CCartWheelCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)

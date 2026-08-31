@@ -124,6 +124,8 @@ HRESULT CManagement::Set_Scene(CScene* pScene)
     m_pScene = pScene;
     m_pNextScene = nullptr;
 
+    m_pScene->PostReady_Scene();
+
     return S_OK;
 }
 
