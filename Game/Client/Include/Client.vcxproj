@@ -286,6 +286,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CUI_ItemSlot.h" />
     <ClInclude Include="..\Header\CScene1_Item.h" />
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
+    <ClInclude Include="..\Header\CUI_Shield1.h" />
+    <ClInclude Include="..\Header\CUI_Shield2.h" />
     <ClInclude Include="..\Header\CUI_StartCountDown.h" />
     <ClInclude Include="..\Header\CUI_Timer.h" />
     <ClInclude Include="..\Header\CUI_UnderBar.h" />
@@ -336,6 +338,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\CUI_Shield1.cpp" />
+    <ClCompile Include="..\Code\CUI_Shield2.cpp" />
     <ClCompile Include="..\Code\CUI_StartCountDown.cpp" />
     <ClCompile Include="..\Code\CUI_UnderBar.cpp" />
     <ClCompile Include="..\Code\CUI_XButton.cpp" />

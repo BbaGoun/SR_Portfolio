@@ -189,10 +189,10 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateRainbowObject();
 	}
 
-	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
-	//{
-	//	CreateBananaObject();
-	//}
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
+	{
+		CreateBananaObject();
+	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
 	{
@@ -229,6 +229,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateWaterFlyObject();
 	}
+
+	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_O))
+	//{
+	//	CreateShieldObject();
+	//}
 
 	// ShortBooster
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_UP))
@@ -1430,6 +1435,19 @@ void CCart::CreateMagnetAimObject()
 	}
 }
 
+void CCart::CreateShieldObject()
+{
+	CGameObject* pShield1 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"UI_Shield1");
+	CGameObject* pShield2 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"UI_Shield2");
+
+	_vec3 vPos, vPos1, vPos2;
+
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	pShield1->Get_Transform()->Set_Pos(vPos);
+	pShield2->Get_Transform()->Set_Pos(vPos);
+}
+
 void CCart::CreateMissileAimObject()
 {
 	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
@@ -1487,6 +1505,7 @@ void CCart::UseItem()
 	case Engine::ITEM_UFO:
 		break;
 	case Engine::ITEM_WATERFLY:
+		CreateWaterFlyObject();
 		break;
 	case Engine::ITEM_BANANA:
 		CreateBananaObject();

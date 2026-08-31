@@ -310,6 +310,15 @@
     <Filter Include="02. GameObject\Item\Water\BubbleEscapeUI">
       <UniqueIdentifier>{2a125e2a-30a6-4f5f-8aa1-11c9a81c3b98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI\UI_Shield">
+      <UniqueIdentifier>{fc4717ce-06e4-462f-a07b-f25e61a8051c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Shield\UI_Shield1">
+      <UniqueIdentifier>{7513934e-e71a-4579-97ad-69ad0be50de0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Shield\UI_Shield2">
+      <UniqueIdentifier>{f454194c-69da-4c67-a8e7-b5035f442a8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -606,6 +615,12 @@
     <ClInclude Include="..\Header\CBubbleEscape.h">
       <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI_Shield1.h">
+      <Filter>02. GameObject\UI\UI_Shield\UI_Shield1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_Shield2.h">
+      <Filter>02. GameObject\UI\UI_Shield\UI_Shield2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -895,6 +910,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CBubbleEscape.cpp">
       <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Shield1.cpp">
+      <Filter>02. GameObject\UI\UI_Shield\UI_Shield1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_Shield2.cpp">
+      <Filter>02. GameObject\UI\UI_Shield\UI_Shield2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

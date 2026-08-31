@@ -58,6 +58,8 @@
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
 #include "CBubbleEscape.h"
+#include "CUI_Shield1.h"
+#include "CUI_Shield2.h"
 
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -720,7 +722,7 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_EndCountDown", pUIObject)))
 		return E_FAIL;
 
-	// 버블 공격시 키보드 UI
+	// 임시 버블 공격시 키보드 UI
 	CGameObject* pBubbleEscape = CBubbleEscape::Create(m_pGraphicDev);
 
 	if (pBubbleEscape == nullptr)
@@ -728,6 +730,30 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 
 	if (FAILED(pUILayer->Add_GameObject(L"UI_BubbleEscape", pBubbleEscape)))
 		return E_FAIL;
+
+	/////////////////////////////////////////////////////////////////////////
+	//CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+
+	//// 임시 쉴드1 UI
+	//CGameObject* pShield1 = CUI_Shield1::Create(m_pGraphicDev);
+
+	//if (pShield1 == nullptr)
+	//	return E_FAIL;
+
+	//if (FAILED(pUILayer->Add_GameObject(L"UI_Shield1", pShield1)))
+	//	return E_FAIL;
+
+	//// 임시 쉴드2 UI
+	//CGameObject* pShield2 = CUI_Shield2::Create(m_pGraphicDev);
+
+	//if (pShield2 == nullptr)
+	//	return E_FAIL;
+
+	//if (FAILED(pUILayer->Add_GameObject(L"UI_Shield2", pShield2)))
+	//	return E_FAIL;
+
+	//pCart->Set_Child(pShield1);
+	//pCart->Set_Child(pShield2);
 
 	return S_OK;
 }

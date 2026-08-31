@@ -83,6 +83,7 @@ public:
 	void			CreateTargetAimObject();	
 	void			CreateMissileAimObject();
 	void			CreateMagnetAimObject();
+	void			CreateShieldObject();
 
 	// Item
 	void			GainItem();
