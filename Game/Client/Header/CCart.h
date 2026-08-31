@@ -30,7 +30,7 @@ public:
 	void			KeyInput(const _float& fDeltaTime);
 
 	// Update
-	void			UpdateDrift();
+	void			UpdateDrift(const _float fDeltaTime);
 	void			UpdateBoost(const _float& fDeltaTime);
 	void			UpdateThunder();
 	void			UpdateGravity();
@@ -88,6 +88,7 @@ public:
 
 	// Item
 	void			GainItem();
+	void			GainBoost();
 	void			UseItem();
 	void			UseAimItem();
 	void			UseMissileItem();
@@ -151,6 +152,7 @@ private:
 	bool			m_bPlaying;
 
 	CPlayerHead*	m_pPlayerHead;
+	bool			m_bUpKey;
 
 protected:
 	virtual		void		Free() override;

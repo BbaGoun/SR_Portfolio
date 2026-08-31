@@ -122,11 +122,11 @@ _int CFollowSmoothCam::Update_GameObject(const _float& fDeltaTime)
 		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_8))
 			m_fAtYOffset -= 0.1f;
 
-		cout << "Up : " << m_fUpDistance << 
-			"\nBack : " << m_fBackDistance << 
-			"\nFov : " << D3DXToDegree(m_fFov) <<
-			"\nAtYOffset : " << m_fAtYOffset <<
-			"\n";
+		//cout << "Up : " << m_fUpDistance << 
+		//	"\nBack : " << m_fBackDistance << 
+		//	"\nFov : " << D3DXToDegree(m_fFov) <<
+		//	"\nAtYOffset : " << m_fAtYOffset <<
+		//	"\n";
 	}
 	return 0;
 }

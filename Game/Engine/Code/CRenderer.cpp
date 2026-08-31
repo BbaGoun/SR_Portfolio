@@ -30,6 +30,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	PreRender(pGraphicDev);
 
 	Render_Priority(pGraphicDev);
+	Render_Fog(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
 
 	Render_Alpha(pGraphicDev);
@@ -334,6 +335,24 @@ void CRenderer::Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
+void CRenderer::Render_Fog(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, 0xFFB0C4DE); // ARGB 중 RGB만 사용
+
+	// 2. 픽셀 안개 모드를 선형(Linear) 공식으로 설정
+	pGraphicDev->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
+
+	// 3. 안개의 시작 위치와 끝 위치 설정
+	float fFogStart = 15.0f;  
+	float fFogEnd	= 300.0f; 
+
+	pGraphicDev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)(&fFogStart)));
+	pGraphicDev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&fFogEnd)));
+
+	//pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
+}
+
 void CRenderer::Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	if (CCameraMgr::GetInstance()->GetMainCamera())
@@ -348,6 +367,7 @@ void CRenderer::Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 	//pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
 	//pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 
+	pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 254);
 	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
