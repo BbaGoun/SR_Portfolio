@@ -25,6 +25,8 @@
 #include "SoundMgr.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
+#include "CShield1.h"
+#include "CShield2.h"
 #include "CPlayTimeMgr.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -57,6 +59,7 @@ HRESULT CCart::Ready_GameObject()
 	m_fDriftTurnAngle		= 1.5f;
 
 	m_bRainbowUI			= false;
+	// m_bBubbleUI				= false;
 	m_bBanana				= false;
 	m_bThunder				= false;
 	m_bMagnet				= false;
@@ -191,10 +194,10 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateRainbowObject();
 	}
 
-	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
-	//{
-	//	CreateBananaObject();
-	//}
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
+	{
+		CreateBananaObject();
+	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
 	{
@@ -230,6 +233,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_U))
 	{
 		CreateWaterFlyObject();
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_O))
+	{
+		CreateShieldObject();
 	}
 
 	// ShortBooster
@@ -1309,15 +1317,15 @@ void CCart::CreateWaterBombObject()
 
 	pWaterBombThrow->SetLayer(m_pLayer);
 
-	CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
+	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
 
-	if (pWaterBombBubble == nullptr)
-		return;
+	//if (pWaterBombBubble == nullptr)
+	//	return;
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
-		return;
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+	//	return;
 
-	pWaterBombBubble->SetLayer(m_pLayer);
+	//pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateWaterFlyObject()
@@ -1344,12 +1352,15 @@ void CCart::CreateWaterFlyObject()
 	pWaterFlyBody->SetLayer(m_pLayer);
 	pWaterFly->Set_Child(pWaterFlyBody);
 
-	CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
+	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
-		return;
+	//if (pWaterBombBubble == nullptr)
+	//	return;
 
-	pWaterBombBubble->SetLayer(m_pLayer);
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
+	//	return;
+
+	//pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateMagnetAimObject()
@@ -1379,6 +1390,40 @@ void CCart::CreateMagnetAimObject()
 
 		m_pLayer->Delete_GameObject(pTargetAim);
 	}
+}
+
+void CCart::CreateShieldObject()
+{
+	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+
+	CGameObject* pShield1 = CShield1::Create(m_pGraphicDev);
+
+	if (pShield1 == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
+		return;
+
+	pShield1->SetLayer(m_pLayer);
+	pCart->Set_Child(pShield1);
+
+	CGameObject* pShield2 = CShield2::Create(m_pGraphicDev);
+
+	if (pShield2 == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
+		return;
+
+	pShield2->SetLayer(m_pLayer);
+	pCart->Set_Child(pShield2);
+
+	//_vec3 vPos, vPos1, vPos2;
+
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	//pShield1->Get_Transform()->Set_Pos(vPos);
+	//pShield2->Get_Transform()->Set_Pos(vPos);
 }
 
 void CCart::CreateMissileAimObject()
@@ -1438,24 +1483,8 @@ void CCart::UseItem()
 	case Engine::ITEM_UFO:
 		break;
 	case Engine::ITEM_WATERFLY:
+		CreateWaterFlyObject();
 		break;
-		//case Engine::ITEM_MAGNET:
-		//	//m_bMagnet = true;
-		//	UseMagnetItem();
-		//	//CreateMagnetAimObject();
-		//	//CreateTargetAimObject();
-		//	//CreateMagnetAimObject();
-		//	//CreateMagnetObject();
-		//	break;
-		//case Engine::ITEM_BARRICADE:
-		//	break;
-		//case Engine::ITEM_ROCKET:
-		//	UseMissileItem();
-		//	//CreateMissileAimObject();
-		//	//CreateTargetAimObject();
-		//	//CreateMissileAimObject();
-		//	//CreateMissileObject();
-		//	break;
 	case Engine::ITEM_BANANA:
 		CreateBananaObject();
 		break;

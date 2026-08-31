@@ -208,6 +208,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CBoostWind.h" />
     <ClInclude Include="..\Header\CBoostJet.h" />
     <ClInclude Include="..\Header\CBox.h" />
+    <ClInclude Include="..\Header\CBubbleEscape.h" />
     <ClInclude Include="..\Header\CCart.h" />
     <ClInclude Include="..\Header\CCartBody.h" />
     <ClInclude Include="..\Header\CCartBody1.h" />
@@ -246,6 +247,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CScene3_KartBtn.h" />
     <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
     <ClInclude Include="..\Header\CScene3_StartBtn.h" />
+    <ClInclude Include="..\Header\CShield1.h" />
+    <ClInclude Include="..\Header\CShield2.h" />
     <ClInclude Include="..\Header\CSpeedLine.h" />
     <ClInclude Include="..\Header\CStartCam.h" />
     <ClInclude Include="..\Header\CTrackCam.h" />
@@ -309,6 +312,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CBubbleEscape.cpp" />
     <ClCompile Include="..\Code\CDriftTrail.cpp" />
     <ClCompile Include="..\Code\CDustLandingEffect.cpp" />
     <ClCompile Include="..\Code\CMenu_Item.cpp" />
@@ -335,6 +339,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_StartBtn.cpp" />
+    <ClCompile Include="..\Code\CShield1.cpp" />
+    <ClCompile Include="..\Code\CShield2.cpp" />
     <ClCompile Include="..\Code\CSpeedLine.cpp" />
     <ClCompile Include="..\Code\CStartCam.cpp" />
     <ClCompile Include="..\Code\CTrackCam.cpp" />

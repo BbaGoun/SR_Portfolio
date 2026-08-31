@@ -57,6 +57,7 @@
 #include "SoundMgr.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
+#include "CBubbleEscape.h"
 #include "CPlayTimeMgr.h"
 
 
@@ -540,7 +541,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget2", pMissileTarget2)))
 		return E_FAIL;
 
-	pMissileTarget2->Get_Transform()->Set_Pos({ -15.f, 0.f, 80.f });
+	pMissileTarget2->Get_Transform()->Set_Pos({ -15.f, 0.f, 150.f });
 
 	// 미사일 타겟3
 	CGameObject* pMissileTarget3 = CMissileTarget::Create(m_pGraphicDev);
@@ -721,6 +722,34 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_EndCountDown", pUIObject)))
 		return E_FAIL;
+
+	// 임시 버블 공격시 키보드 UI
+	CGameObject* pBubbleEscape = CBubbleEscape::Create(m_pGraphicDev);
+
+	if (pBubbleEscape == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pUILayer->Add_GameObject(L"UI_BubbleEscape", pBubbleEscape)))
+		return E_FAIL;
+
+	////////////////////////////////////////////////////////////////////////////////
+	//// 임시 쉴드1 UI
+	//CGameObject* pShield1 = CUI_Shield1::Create(m_pGraphicDev);
+
+	//if (pShield1 == nullptr)
+	//	return E_FAIL;
+
+	//if (FAILED(pUILayer->Add_GameObject(L"UI_Shield1", pShield1)))
+	//	return E_FAIL;
+
+	//// 임시 쉴드2 UI
+	//CGameObject* pShield2 = CUI_Shield2::Create(m_pGraphicDev);
+
+	//if (pShield2 == nullptr)
+	//	return E_FAIL;
+
+	//if (FAILED(pUILayer->Add_GameObject(L"UI_Shield2", pShield2)))
+	//	return E_FAIL;
 
 	return S_OK;
 }

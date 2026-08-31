@@ -229,15 +229,6 @@
     <Filter Include="02. GameObject\Cart\Effect\SmokeEffect">
       <UniqueIdentifier>{0e51cd6b-a3ef-4aa9-aa0f-1ecb58b27ae7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\WaterBomb">
-      <UniqueIdentifier>{76cf2e06-aad4-4100-a3e2-d55344215ad5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Item\WaterBomb\WaterBombBody">
-      <UniqueIdentifier>{0395d4fa-385f-41b2-ba98-249f1f40dc51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Item\WaterBomb\WaterBombThrow">
-      <UniqueIdentifier>{0664c967-8660-4258-8be3-a4df2247592a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\Inventory">
       <UniqueIdentifier>{443dfc68-b0e8-4e29-992d-15e8ad0cae1a}</UniqueIdentifier>
     </Filter>
@@ -258,15 +249,6 @@
     </Filter>
     <Filter Include="03. Manager\CLoadMgr">
       <UniqueIdentifier>{a6062789-bc8f-4b64-bb3d-4fa8fbaeae29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Item\WaterBomb\WaterBombBubble">
-      <UniqueIdentifier>{90d69fb1-89e6-4de2-a700-7baf6e471c8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Item\WaterFly">
-      <UniqueIdentifier>{99185cdf-5425-4777-8443-436e4040a757}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Item\WaterFly\CWaterFlyBody">
-      <UniqueIdentifier>{d565c4c7-e73e-406d-9262-0d07adddb769}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button">
       <UniqueIdentifier>{1245e30a-3590-4698-847c-f1bbbea1af52}</UniqueIdentifier>
@@ -318,6 +300,39 @@
     </Filter>
     <Filter Include="02. GameObject\Cart\Effect\DriftTrail">
       <UniqueIdentifier>{2d058116-00db-402b-b11f-74e293d4f114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Water">
+      <UniqueIdentifier>{44c05778-04fb-4b6b-b47c-fbf2d9047674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Water\WaterBomb">
+      <UniqueIdentifier>{76cf2e06-aad4-4100-a3e2-d55344215ad5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Water\WaterBomb\WaterBombBody">
+      <UniqueIdentifier>{0395d4fa-385f-41b2-ba98-249f1f40dc51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Water\WaterBomb\WaterBombThrow">
+      <UniqueIdentifier>{0664c967-8660-4258-8be3-a4df2247592a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Water\WaterBomb\WaterBombBubble">
+      <UniqueIdentifier>{90d69fb1-89e6-4de2-a700-7baf6e471c8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Water\WaterFly">
+      <UniqueIdentifier>{99185cdf-5425-4777-8443-436e4040a757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Water\WaterFly\CWaterFlyBody">
+      <UniqueIdentifier>{d565c4c7-e73e-406d-9262-0d07adddb769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Water\BubbleEscapeUI">
+      <UniqueIdentifier>{2a125e2a-30a6-4f5f-8aa1-11c9a81c3b98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Shield">
+      <UniqueIdentifier>{5480403e-f12f-4e41-b08a-635c6f76a5e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Shield\Shield1">
+      <UniqueIdentifier>{80458ce3-0693-430b-ba34-e5be29104e2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Shield\Shield2">
+      <UniqueIdentifier>{d798c48d-f61d-4264-84f6-c3a4b047d43e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -532,13 +547,13 @@
       <Filter>02. GameObject\Cart\Effect\SmokeEffect</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CWaterBomb.h">
-      <Filter>02. GameObject\Item\WaterBomb</Filter>
+      <Filter>02. GameObject\Item\Water\WaterBomb</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CWaterBombThrow.h">
-      <Filter>02. GameObject\Item\WaterBomb\WaterBombThrow</Filter>
+      <Filter>02. GameObject\Item\Water\WaterBomb\WaterBombThrow</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CWaterBombBody.h">
-      <Filter>02. GameObject\Item\WaterBomb\WaterBombBody</Filter>
+      <Filter>02. GameObject\Item\Water\WaterBomb\WaterBombBody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CInventoryScene.h">
       <Filter>01. Scene\Inventory</Filter>
@@ -565,13 +580,13 @@
       <Filter>03. Manager\CLoadMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CWaterBombBubble.h">
-      <Filter>02. GameObject\Item\WaterBomb\WaterBombBubble</Filter>
+      <Filter>02. GameObject\Item\Water\WaterBomb\WaterBombBubble</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CWaterFly.h">
-      <Filter>02. GameObject\Item\WaterFly</Filter>
+      <Filter>02. GameObject\Item\Water\WaterFly</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CWaterFlyBody.h">
-      <Filter>02. GameObject\Item\WaterFly\CWaterFlyBody</Filter>
+      <Filter>02. GameObject\Item\Water\WaterFly\CWaterFlyBody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CScene3_CharBtn.h">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
@@ -623,6 +638,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\CDriftTrail.h">
       <Filter>02. GameObject\Cart\Effect\DriftTrail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBubbleEscape.h">
+      <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShield1.h">
+      <Filter>02. GameObject\Item\Shield\Shield1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShield2.h">
+      <Filter>02. GameObject\Item\Shield\Shield2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -828,13 +852,13 @@
       <Filter>02. GameObject\Cart\Effect\SmokeEffect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CWaterBomb.cpp">
-      <Filter>02. GameObject\Item\WaterBomb</Filter>
+      <Filter>02. GameObject\Item\Water\WaterBomb</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CWaterBombThrow.cpp">
-      <Filter>02. GameObject\Item\WaterBomb\WaterBombThrow</Filter>
+      <Filter>02. GameObject\Item\Water\WaterBomb\WaterBombThrow</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CWaterBombBody.cpp">
-      <Filter>02. GameObject\Item\WaterBomb\WaterBombBody</Filter>
+      <Filter>02. GameObject\Item\Water\WaterBomb\WaterBombBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CInventoryScene.cpp">
       <Filter>01. Scene\Inventory</Filter>
@@ -864,13 +888,13 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CWaterBombBubble.cpp">
-      <Filter>02. GameObject\Item\WaterBomb\WaterBombBubble</Filter>
+      <Filter>02. GameObject\Item\Water\WaterBomb\WaterBombBubble</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CWaterFly.cpp">
-      <Filter>02. GameObject\Item\WaterFly</Filter>
+      <Filter>02. GameObject\Item\Water\WaterFly</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CWaterFlyBody.cpp">
-      <Filter>02. GameObject\Item\WaterFly\CWaterFlyBody</Filter>
+      <Filter>02. GameObject\Item\Water\WaterFly\CWaterFlyBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_CharBtn.cpp">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Button</Filter>
@@ -922,6 +946,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDriftTrail.cpp">
       <Filter>02. GameObject\Cart\Effect\DriftTrail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBubbleEscape.cpp">
+      <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShield1.cpp">
+      <Filter>02. GameObject\Item\Shield\Shield1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CShield2.cpp">
+      <Filter>02. GameObject\Item\Shield\Shield2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
