@@ -4,6 +4,8 @@
 #include "CGameObject.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
+
+#include "CPlayTimeMgr.h"
 CUI_Timer::CUI_Timer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -55,26 +57,34 @@ _int CUI_Timer::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
-	m_fFrame_1 += fDeltaTime;
+	int fTime		= CPlayTimeMgr::GetInstance()->GetPlayTimer();
+	int fMinut		= fTime / 60;
+	int fSec		= fTime % 60;
 
+	m_fFrame_10		= fSec / 10;
+	m_fFrame_1		= fSec % 10;
 
-	if (m_fFrame_1 >= 10)
-	{
-		m_fFrame_1 = 0;
-		m_fFrame_10++;
-	}
+	m_fFrame_600	= fMinut / 10;
+	m_fFrame_60		= fMinut % 10;
 
-	if (m_fFrame_10 >= 6)
-	{
-		m_fFrame_10 = 0;
-		m_fFrame_60++;
-	}
-
-	if (m_fFrame_60 >= 10)
-	{
-		m_fFrame_60 = 0;
-		m_fFrame_600++;
-	}
+	//m_fFrame_1 += fDeltaTime;
+	//if (m_fFrame_1 >= 10)
+	//{
+	//	m_fFrame_1 = 0;
+	//	m_fFrame_10++;
+	//}
+	//
+	//if (m_fFrame_10 >= 6)
+	//{
+	//	m_fFrame_10 = 0;
+	//	m_fFrame_60++;
+	//}
+	//
+	//if (m_fFrame_60 >= 10)
+	//{
+	//	m_fFrame_60 = 0;
+	//	m_fFrame_600++;
+	//}
 
 
 	return CGameObject::Update_GameObject(fDeltaTime);
