@@ -38,6 +38,7 @@ public:
 	void		Render_Trail(LPDIRECT3DDEVICE9& pGraphicDev);
 
 	void		Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Render_Fog(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 

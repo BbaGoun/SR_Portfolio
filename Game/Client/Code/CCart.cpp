@@ -56,7 +56,7 @@ HRESULT CCart::Ready_GameObject()
 
 	m_fBoostTurnAngle		= 0.5f;
 	m_fNormalTurnAngle		= 0.8f;
-	m_fDriftTurnAngle		= 1.5f;
+	m_fDriftTurnAngle		= 2.0f;
 
 	m_bRainbowUI			= false;
 	// m_bBubbleUI				= false;
@@ -99,6 +99,8 @@ HRESULT CCart::Ready_GameObject()
 
 	m_PreQuaternion			= { 0, 0, 0, 1 };
 
+	m_bUpKey				= false;
+
 	return S_OK;
 }
 
@@ -111,17 +113,27 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pTransformCom->Set_Quaternion(&q);
 
 	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
-	m_vForce *= 0.98;
-	if (D3DXVec3Length(&m_vForce) < 1.f)
+
+	if(!m_bUpKey)
+		m_vForce *= 0.98;
+	if (m_bDrift)
+		m_vForce *= 0.98;
+
+	float fForceLen = D3DXVec3Length(&m_vForce);
+	if (fForceLen < 1.f)
 		m_vForce *= 0;
+	if (fForceLen >= 80.f)
+		m_vForce = m_vForce / fForceLen * 80.f;
 
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	AdjustPosY_Slope(vPos, fFixedDeltaTime);
 	CollisionWall();
+	UpdateDrift(fFixedDeltaTime);
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
@@ -133,10 +145,11 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	UpdateStartBoost();
 	KeyInput(fDeltaTime);
 	UpdateBoost(fDeltaTime);
-	UpdateDrift();
 	UpdateThunder();
 	UpdateMagnet(fDeltaTime);
-
+	
+	//OutputCarState();
+	//cout << m_vTerrainNormal.x << "\t" << m_vTerrainNormal.y << "\t" << m_vTerrainNormal.z << endl;
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -243,12 +256,17 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	// ShortBooster
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_UP))
 	{
+		m_bUpKey = true;
 		if (m_bShortBoosterTimerOnOff == true && m_bCanShortBoost == true)
 		{
 			m_bCanShortBoost = false;
 			m_eBoostState = BOOST_STATE_SHORT_BOOST;
 			m_fBoostCal = 1.05f;
 		}
+	}
+	else
+	{
+		m_bUpKey = false;
 	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))	// 조준X 아이템
 	{
@@ -309,6 +327,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_UP) && m_bPlaying)
 	{
 		//SoundMgr::GetInstance().PlaySound(L"Effect/cart/motor.ogg", SOUND_MOTOR, 0.4f);
+		m_bUpKey = true;
 		if (m_bDrift == false)
 			m_vForce += vLook;
 		else
@@ -316,6 +335,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	}
 	else
 	{
+		m_bUpKey = false;
 		m_fSpeed = 1.f;
 		m_eBoostState = BOOST_STATE_NORMAL;
 		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
@@ -333,7 +353,8 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	if (m_eCartState != CART_STATE_GROUND)
 		return;
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) 
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT)
+		&&(CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT) || CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 		&& m_eCartState == CART_STATE_GROUND 
 		&& m_bPlaying == true)
 	{
@@ -361,7 +382,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		vLook.y = 0;
 		vTempForce.y = 0;
 		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
-		float fTurnAngle = min(m_fDriftTurnAngle, fForceLength * 0.04f);
+		float fTurnAngle = min(m_fDriftTurnAngle, fForceLength * 0.06f);
 
 		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 		{
@@ -369,13 +390,13 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle) * m_eDirection;
 
-				m_vRotation.z += fDeltaTime * 0.5f;
+				m_vRotation.z += fDeltaTime * 0.2f;
 			}
 			else
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle * 0.5f) * m_eDirection;
 
-				m_vRotation.z += fDeltaTime * 0.5f;
+				m_vRotation.z += fDeltaTime * 0.2f;
 				//if (m_vRotation.z > 0)
 				//	m_vRotation.z = 0;
 			}
@@ -386,13 +407,13 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			{
 				m_vRotation.y += D3DXToRadian(fTurnAngle) * m_eDirection;
 
-				m_vRotation.z += -fDeltaTime * 0.5f;
+				m_vRotation.z += -fDeltaTime * 0.2f;
 			}
 			else
 			{
 				m_vRotation.y += D3DXToRadian(fTurnAngle * 0.5f) * m_eDirection;
 
-				m_vRotation.z += -fDeltaTime * 0.5f;
+				m_vRotation.z += -fDeltaTime * 0.2f;
 				//if (m_vRotation.z < 0)
 				//	m_vRotation.z = 0;
 			}
@@ -426,7 +447,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	}
 }
 
-void CCart::UpdateDrift()
+void CCart::UpdateDrift(const _float fDeltaTime)
 {
 	if (m_bPlaying == false)
 	{
@@ -453,20 +474,11 @@ void CCart::UpdateDrift()
 
 		_vec3 vCross;
 		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
-
-		//m_vRotation.z *= 3;
-		m_vRotation.z = clampT(float(m_vRotation.z), -5.f, 5.f);
-
-		D3DXQUATERNION q;
-		D3DXQuaternionRotationYawPitchRoll(&q, 0, 0, D3DXToRadian(m_vRotation.z));
-		m_pTransformCom->Multiple_Quaternion(&q);
-
-		cout << m_vRotation.z << endl;
-
-
 		m_fLookForceAngle = D3DXToDegree(acosf(D3DXVec3Dot(&vLook, &vTempForce)));
-		if ((!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) && m_fLookForceAngle < 30.f )
-			|| (!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT) && !CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+		cout << m_fLookForceAngle << endl;
+
+		if ((!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) && m_fLookForceAngle < 15.f)
+			|| D3DXVec3Length(&m_vForce) < 0.1f
 			|| m_eCartState != CART_STATE_GROUND)
 		{
 			m_bShortBoosterTimerOnOff = true;
@@ -474,19 +486,33 @@ void CCart::UpdateDrift()
 			if (m_fCurGage >= 100.f)
 			{
 				m_fCurGage = 0;
-				++m_fBoostItemCnt;
+				//++m_fBoostItemCnt;
+				GainBoost();
+				
 			}
 			m_fGainGage = 0;
-			m_vRotation.z = 0;
+			//m_vRotation.z = 0;
 			m_bDrift = false;
 			SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
 		}
 		else
 		{
-			m_fGainGage += m_fLookForceAngle * 0.01f;
-			m_fGainGage += D3DXVec3Length(&m_vForce) * m_fSpeed * 0.005f;
+			m_fGainGage += m_fLookForceAngle * 0.02f;
+			m_fGainGage += D3DXVec3Length(&m_vForce) * m_fSpeed * 0.01f;
 		}
 	}
+	else
+	{
+		if (m_vRotation.z < -0.01f)
+			m_vRotation.z += fDeltaTime * 0.3f;
+		else if (m_vRotation.z > 0.01f)
+			m_vRotation.z -= fDeltaTime * 0.3f;
+		else
+			m_vRotation.z = 0;
+	}
+
+	m_vRotation.z = clampT(float(m_vRotation.z), -0.2f, 0.2f);
+	m_pTransformCom->Rotate(QUATER_ROLL, D3DXToDegree(m_vRotation.z));
 }
 
 void CCart::UpdateBoost(const _float& fDeltaTime)
@@ -515,7 +541,7 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 	}
 	else if (m_eBoostState == BOOST_STATE_LONG_BOOST)
 	{
-		if (m_fSpeed > 3)
+		if (m_fSpeed > 2.5)
 			m_fBoostCal = 0.994;
 	}
 
@@ -722,7 +748,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 		// m_eCart_State 업데이트
 		if (m_eCartState == CART_STATE_GROUND) // Ground 유지
 		{
-			if (fDeltaY <= 0.1f)
+			if (fDeltaY < 0.09f)
 			{
 				m_fAirTime = 0.f;
 				m_eCartState = CART_STATE_GROUND;
@@ -741,14 +767,14 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 
 				if (fabsf(m_vTerrainNormal.y) >= 0.999f)
 				{
-					m_PreQuaternion = q;
-					m_iFlatFrameCnt = 0;
-				}
-				else
-				{
 					++m_iFlatFrameCnt;
 					if (m_iFlatFrameCnt > 3)
 						m_PreQuaternion = { 0,0,0,1 };
+				}
+				else
+				{
+					m_PreQuaternion = q;
+					m_iFlatFrameCnt = 0;
 				}
 			}
 			else // 점프 시작 
@@ -1002,6 +1028,10 @@ void CCart::UpdateGravity()
 
 			// 구한 크기에 -Look 방향벡터 곱해서 vForce에 적용
 			m_vForce += fSize * vPlaneLook;
+		}
+		else
+		{
+			m_vForce.y = 0;
 		}
 		break;
 	case Engine::CART_STATE_AIR:
@@ -1466,13 +1496,26 @@ void CCart::GainItem()
 	}
 }
 
+void CCart::GainBoost()
+{
+	if (m_eFirstSlot == ITEM_END)
+	{
+		m_eFirstSlot = ITEM_BOOSTER;
+	}
+
+	else if (m_eFirstSlot != ITEM_END)
+	{
+		m_eSecondSlot = ITEM_BOOSTER;
+	}
+}
+
 void CCart::UseItem()
 {
 	switch (m_eFirstSlot)
 	{
 	case Engine::ITEM_BOOSTER:
 		m_eBoostState = BOOST_STATE_LONG_BOOST;
-		m_fBoostCal = 1.05f;
+		m_fBoostCal = 1.015f;
 		break;
 	case Engine::ITEM_THUNDER:
 		CreateThunderCloudObject();
