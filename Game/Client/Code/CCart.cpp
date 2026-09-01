@@ -28,6 +28,8 @@
 #include "CPlayTimeMgr.h"
 #include "CCart_Shield1.h"
 #include "CCart_Shield2.h"
+#include "CUfo.h"
+#include "CUfoBody.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -238,6 +240,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
 	{
 		CreateShieldObject_();
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_L))
+	{
+		CreateUfoObject();
 	}
 
 	// ShortBooster
@@ -1418,6 +1425,32 @@ void CCart::CreateShieldObject_()
 
 	pCartBody->SetShieldActive(true);
 }
+
+void CCart::CreateUfoObject()
+{
+	CGameObject* pUfo = CUfo::Create(m_pGraphicDev);
+
+	if (pUfo == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Ufo", pUfo)))
+		return;
+
+	pUfo->SetLayer(m_pLayer);
+
+
+	CGameObject* pUfoBody = CUfoBody::Create(m_pGraphicDev);
+
+	if (pUfoBody == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_UfoBody", pUfoBody)))
+		return;
+
+	pUfoBody->SetLayer(m_pLayer);
+	pUfo->Set_Child(pUfoBody);
+}
+
 void CCart::CreateMissileAimObject()
 {
 	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
@@ -1473,6 +1506,7 @@ void CCart::UseItem()
 		CreateRainbowObject();
 		break;
 	case Engine::ITEM_UFO:
+		CreateUfoObject();
 		break;
 	case Engine::ITEM_WATERFLY:
 		CreateWaterFlyObject();

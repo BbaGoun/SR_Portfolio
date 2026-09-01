@@ -343,6 +343,12 @@
     <Filter Include="02. GameObject\Item\Cart_Shield\Cart_Shield2">
       <UniqueIdentifier>{c7648e81-929b-4f85-a3fa-c7946d740b6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\Ufo">
+      <UniqueIdentifier>{a8308ac2-1c01-4d0d-9bb2-dd3a5d7fa208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Ufo\UfoBody">
+      <UniqueIdentifier>{903ebdc4-f140-4ddd-9975-e82261e7278d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -666,6 +672,12 @@
     <ClInclude Include="..\Header\CCart_Shield2.h">
       <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield2</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUfo.h">
+      <Filter>02. GameObject\Item\Ufo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUfoBody.h">
+      <Filter>02. GameObject\Item\Ufo\UfoBody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -979,6 +991,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCart_Shield2.cpp">
       <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUfo.cpp">
+      <Filter>02. GameObject\Item\Ufo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUfoBody.cpp">
+      <Filter>02. GameObject\Item\Ufo\UfoBody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

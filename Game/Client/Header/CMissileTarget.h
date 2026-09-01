@@ -66,6 +66,7 @@ private:
 	_bool				m_bShieldHit;
 	_bool				m_bShieldTimer;
 	_bool				m_bShieldActive;
+	_bool				m_bUfoHit;
 
 protected:
 	virtual		void		Free() override;

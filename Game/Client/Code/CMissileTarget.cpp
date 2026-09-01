@@ -41,6 +41,7 @@ HRESULT CMissileTarget::Ready_GameObject()
 	m_bShieldHit		= false;
 	m_bShieldTimer		= false;
 	m_bShieldActive		= false;
+	m_bUfoHit			= false;
 
 	m_pTransformCom->Set_Pos({ -30.f,0.f, 90.f });
 	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
@@ -71,7 +72,7 @@ HRESULT CMissileTarget::Ready_GameObject()
 
 void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	if (m_bMissileHit == false && m_bWaterBombHit == false && m_bWaterFlyHit == false)
+	if (m_bMissileHit == false && m_bWaterBombHit == false && m_bWaterFlyHit == false && m_bUfoHit == false)
 		return;
 
 	if (m_bMissileHit)
@@ -111,7 +112,6 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (m_bWaterBombHit)
 	{
 		m_fTimer += fFixedDeltaTime;
-		// CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
 
 		_vec3 vPos, vBubblePos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -194,7 +194,6 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (m_bWaterFlyHit)
 	{
 		m_fTimer += fFixedDeltaTime;
-		// CGameObject* pBubble = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBubble");
 
 		_vec3 vPos, vFlyPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -272,6 +271,87 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_pTransformCom->Set_Pos(vPos);
 		m_pBubble->Get_Transform()->Set_Pos(vPos);
 	}
+
+	// if (m_bUfoHit)
+	// {
+	//	m_fTimer += fFixedDeltaTime;
+
+	//	_vec3 vPos, vFlyPos;
+	//	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	//	if (m_fTimer < 0.08f)
+	//	{
+	//		vPos.y += m_vForce.y * fFixedDeltaTime;
+	//	}
+
+	//	//else if (m_fTimer < 0.08f)
+	//	//{
+	//	//	m_vForce.y = 0;
+	//	//}
+
+	//	else if (m_fTimer > 0.15f && m_fTimer < 0.40f)
+	//	{
+	//		m_vRotation.x -= D3DXToRadian(100.f) * fFixedDeltaTime;
+	//		m_vRotation.y += D3DXToRadian(100.f) * fFixedDeltaTime;
+
+	//		if (m_vRotation.x <= D3DXToRadian(-25.f))
+	//		{
+	//			m_vRotation.x = D3DXToRadian(-25.f);
+	//		}
+
+	//		if (m_vRotation.y >= D3DXToRadian(25.f))
+	//		{
+	//			m_vRotation.y = D3DXToRadian(25.f);
+	//		}
+	//	}
+
+	//	else if (m_fTimer > 1.0f && m_fTimer < 2.f)
+	//	{
+	//		m_vRotation.x += D3DXToRadian(5.f) * fFixedDeltaTime;
+	//		m_vRotation.y -= D3DXToRadian(5.f) * fFixedDeltaTime;
+
+	//		if (m_vRotation.x >= D3DXToRadian(-20.f))
+	//		{
+	//			m_vRotation.x = D3DXToRadian(-20.f);
+	//		}
+
+	//		if (m_vRotation.y <= D3DXToRadian(20.f))
+	//		{
+	//			m_vRotation.y = D3DXToRadian(20.f);
+	//		}
+
+	//	}
+
+	//	else if (m_fTimer >= 2.f)
+	//	{
+	//		vPos.y -= m_vForce.y * 0.45f * fFixedDeltaTime;
+	//		m_vForce.y -= 5.f * fFixedDeltaTime;
+	//	}
+
+	//	_quaternion q;
+	//	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
+	//	m_pTransformCom->Set_Quaternion(&q);
+
+	//	if (vPos.y <= 0.f)
+	//	{
+	//		vPos.y = 0.f;
+	//		m_vForce.y = 0.f;
+	//		m_vRotation.x = 0.f;
+	//		m_vRotation.y = 0.f;
+	//		m_bUfoHit	   = false;
+	//		m_bWaterBubble = false;
+	//		SetBubbleUI(false);
+	//		m_pBubble->GetLayer()->Delete_GameObject(m_pBubble);
+	//		m_fTimer = 0.f;
+
+	//		_quaternion qReset;
+	//		D3DXQuaternionRotationYawPitchRoll(&qReset, 0.f, 0.f, 0.f);
+	//		m_pTransformCom->Set_Quaternion(&qReset);
+	//	}
+
+	//	m_pTransformCom->Set_Pos(vPos);
+	//	m_pBubble->Get_Transform()->Set_Pos(vPos);
+	//}
 }
 
 _int CMissileTarget::Update_GameObject(const _float& fDeltaTime)
@@ -547,6 +627,36 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 				m_pBubble->Get_Transform()->Set_Pos(vPos);
 			}
 		}
+
+		//else if (wcscmp(wOtherTag, L"Obj_Ufo") == 0)
+		//{
+		//	if (m_bShieldActive)
+		//		m_bShieldHit = true;
+		//	else if (m_bUfoHit == false && m_bWaterBubble == false)	// 수정하기
+		//	{
+		//		m_bUfoHit = true;
+		//		m_bWaterBubble = true;
+		//		SetBubbleUI(true);
+		//		m_vForce.y = 120.f;
+		//		m_vRotation.x += D3DXToRadian(0.f);
+		//		m_vRotation.y += D3DXToRadian(0.f);
+
+		//		m_pBubble = CWaterBombBubble::Create(m_pGraphicDev);
+
+		//		if (m_pBubble == nullptr)
+		//			return;
+
+		//		if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", m_pBubble)))
+		//			return;
+
+		//		m_pBubble->SetLayer(m_pLayer);
+
+		//		_vec3 vPos;
+
+		//		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		//		m_pBubble->Get_Transform()->Set_Pos(vPos);
+		//	}
+		//}
 	//}
 }
 
