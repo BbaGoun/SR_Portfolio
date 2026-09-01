@@ -6,8 +6,7 @@
 
 namespace Engine
 {
-	class CCartBodyCol;		// 물방울 임시
-	// class CRcTex;
+	class CSphere;		
 }
 
 class CWaterBombBubble : public CGameObject
@@ -33,7 +32,7 @@ public:
 	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
 
 private:
-	CCartBodyCol* m_pBufferCom;
+	CSphere* m_pBufferCom;
 	CTexture* m_pTextureCom;
 	CCube_Collider* m_pColliderCom;
 	// CRcTex* m_pBufferCom;

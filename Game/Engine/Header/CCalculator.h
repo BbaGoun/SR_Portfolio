@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Engine_Define.h"
+#include <random>
 
 BEGIN(Engine)
 
@@ -14,6 +15,8 @@ public:
 	static uint32_t Get_LayerMask(COLLISION_LAYER layers[N]);
 
 	static void DrawRayLine(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vStart, _vec3 vEnd, D3DXCOLOR color);
+
+	static int RandInt();
 };
 
 template<int N>

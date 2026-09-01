@@ -21,6 +21,7 @@ public:
 	HRESULT			Ready_Buffer() override;
 	void			Adjust_Itv();
 	void			HeightMap_Edit(_vec3 _pickPos, bool bShift);
+	HRESULT			Ready_BufferByVec();
 
 	void			Render_Buffer() override;
 
@@ -51,9 +52,9 @@ public:
 	float	Get_EditRadius() { return m_fEditRadius; }
 
 	void	Set_CntX(int _iCntX) { m_iCntX = _iCntX; }
-	float	Get_CntX() { return m_iCntX; }
+	int		Get_CntX() { return m_iCntX; }
 	void	Set_CntZ(float _iCntZ) { m_iCntZ = _iCntZ; }
-	float	Get_CntZ() { return m_iCntZ; }
+	int		Get_CntZ() { return m_iCntZ; }
 
 	void	Set_Itv(float _fItv) { m_fItv = _fItv; }
 	float	Get_Itv() { return m_fItv; }

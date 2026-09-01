@@ -476,7 +476,7 @@ void CSceneWindow::Draw_HeightMap(CGameObject* pObj)
     if (!pHeightMap)
         return;
 
-    pHeightMap->Render_Points();
+    //pHeightMap->Render_Points();
     if (g_bHMPick)
         pHeightMap->Render_Brush(g_vHMPickPos);
 }

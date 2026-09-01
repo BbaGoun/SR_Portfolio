@@ -50,7 +50,6 @@ void CMinimapGround::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CMinimapGround::Update_GameObject(const _float& fDeltaTime)
 {
-	//CRenderer::GetInstance()->Add_RenderGroup(RENDER_TARGET, this);
 	CRenderer::GetInstance()->Add_RenderTargetGroup(L"Minimap", this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

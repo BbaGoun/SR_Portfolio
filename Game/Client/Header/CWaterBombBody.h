@@ -4,7 +4,7 @@
 
 namespace Engine
 {
-	class CCartBodyCol;		// 반구 임시
+	class CSphere;		
 }
 
 class CWaterBombBody : public CGameObject
@@ -21,7 +21,7 @@ public:
 	virtual			void		Render_GameObject()									  override;
 
 private:
-	Engine::CCartBodyCol* m_pBufferCom;
+	Engine::CSphere* m_pBufferCom;
 	_float	m_fTimer;
 
 public:

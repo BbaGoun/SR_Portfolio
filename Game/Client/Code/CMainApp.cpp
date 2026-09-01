@@ -9,6 +9,7 @@
 #include "CCollisionMgr.h"
 #include "CLoadMgr.h"
 #include "SoundMgr.h"
+#include "CPlayTimeMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr)
@@ -60,6 +61,7 @@ int CMainApp::Update_MainApp(const float& fDeltaTime)
 	CDInputMgr::GetInstance()->Update_InputDev();
 	SoundMgr::GetInstance().Update();
 
+	CPlayTimeMgr::GetInstance()->UpdateCPlayTimeMgr(fDeltaTime);
 	m_pManagementClass->Update_Scene(fDeltaTime);
 
 	return 0;
@@ -195,6 +197,7 @@ void CMainApp::Free()
 	Safe_Release(m_pGraphicDev);
 	Safe_Release(m_pDeviceClass);
 
+	CPlayTimeMgr::DestroyInstance();
 	CCollisionMgr::DestroyInstance();
 	CFrameMgr::DestroyInstance();
 	CTimerMgr::DestroyInstance();

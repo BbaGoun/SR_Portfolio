@@ -35,11 +35,17 @@ public:
 	}
 
 	void		Set_Quaternion(D3DXQUATERNION* pQuater) {
+		m_localQuaternion = m_defaultQuaternion * (*pQuater);
+		D3DXQuaternionNormalize(&m_localQuaternion, &m_localQuaternion);
+		Set_Dirty();
+	}
+	void		Set_DefaultQuaternion(D3DXQUATERNION* pQuater) {
+		m_defaultQuaternion = *pQuater;
 		m_localQuaternion = *pQuater;
 		Set_Dirty();
 	}
 
-	void		Set_LocalWorld(_matrix* _MatLocal);
+	void		Set_LocalWorld(_matrix* _MatLocal, bool bDefault = false);
 
 	_quaternion Get_Quaternion() {
 		return m_localQuaternion;
@@ -48,7 +54,7 @@ public:
 		Get_World();
 		return m_worldQuaternion;
 	}
-
+	
 	void		Rotate(QUATERNION eType, _float fAngle)
 	{
 		if (eType == QUATER_PITCH)
@@ -56,7 +62,7 @@ public:
 
 		D3DXQUATERNION qDelta;
 		_vec3 vAxis;
-		D3DXVec3Normalize(&vAxis, &m_vInfo[eType]);
+		Get_Info((INFO)eType, &vAxis);
 		D3DXQuaternionRotationAxis(&qDelta, &vAxis, D3DXToRadian(fAngle));
 
 		m_localQuaternion *= qDelta;
@@ -114,6 +120,7 @@ private:
 
 	D3DXQUATERNION	m_worldQuaternion;
 	D3DXQUATERNION	m_localQuaternion;
+	_quaternion		m_defaultQuaternion;
 	_vec3			m_vScale;
 
 	_matrix			m_matBillboard;

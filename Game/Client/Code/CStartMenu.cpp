@@ -57,7 +57,8 @@ _int CStartMenu::Update_Scene(const _float& fDeltaTime)
 	{
 		//Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
 		//Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
-		Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);//, MAP_TEST);
+		//Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
+		Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
 
 		if (nullptr == pStage)
 			return E_FAIL;
@@ -118,7 +119,7 @@ HRESULT CStartMenu::Ready_Environment_Layer(const _tchar* pLayerTag)
 	
 	pGameObject->Get_Transform()->Set_Scale({ WINCX, WINCY, 1 });
 	pGameObject->Get_Transform()->Set_Pos({ 0, 0, 15 });
-
+	
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
