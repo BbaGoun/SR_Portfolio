@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CComponent.h"
 #include "CTexture.h"
 
@@ -31,7 +31,8 @@ public:
 
 	void			Add_Point(TrackEdge* _pTE);
 	void			Del_Point(TrackEdge* _pTE, ControlPoint* _pCp);
-	
+	void			Set_PointPos(TrackEdge* _pTE, ControlPoint* _pCp, _vec3 newPos);
+
 	void			Compute_Edge(TrackEdge* _pTE);
 	void			Compute_Sample(TrackEdge* _pTE);
 	void			Compute_Graph();
@@ -59,7 +60,7 @@ private:
 
 public:
 	static			CTrackGraph* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual			CComponent* Clone(); //PURE·Î ¼³Á¤
+	virtual			CComponent* Clone(); //PUREë¡œ ì„¤ì •
 
 public:
 	vector<TrackNode>& Get_Nodes() { return m_vecNodes; }

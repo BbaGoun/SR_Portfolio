@@ -686,7 +686,7 @@ void CInspector::TrackGraph_Node(CTrackGraph* pTGraph)
     if (ImGui::Button("Edit Node", ImVec2(btnW, 0)))
     {
         pTGraph->Set_NodeEdit(!bNodeEdit);
-        g_bSplineEdit = pTGraph->Get_NodeEdit();
+        g_bGraphNodeEdit = pTGraph->Get_NodeEdit();
         Free_PointSelected();
     }
     if (bNodeEdit)
@@ -965,7 +965,9 @@ void CInspector::TrackGraph_Point(CTrackGraph* pTGraph, TrackEdge* _pTE)
                     // CP의 위치가 바뀐다 -> 곡선의 형태가 바뀐다 
                     // -> T,R,U가 바뀐다 -> 메쉬도 전부 다시 생성
                     // 최적화 시에는 +- 2 범위의 곡선만 다시 계산
-                    memcpy(&cp.position, tr, sizeof(_vec3));
+                    _vec3 newPos;
+                    memcpy(&newPos, tr, sizeof(_vec3));
+                    pTGraph->Set_PointPos(_pTE, &cp, newPos);
                     pTGraph->Compute_Graph();
                 }
 

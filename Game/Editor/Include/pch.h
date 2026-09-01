@@ -73,14 +73,14 @@ inline void Free_ObjSelected() {
     }
 }
 inline void Set_PointSelected(uint32_t id) {
-    if (g_bSplineEdit) {
+    if (g_bSplineEdit || g_bGraphNodeEdit || g_uGraphEdgeEdit != 0) {
         g_bPointSelected = true;
         g_uPointSelected = id;
     }
 }
 
 inline void Free_PointSelected() {
-    if (g_bSplineEdit) {
+    if (g_bSplineEdit || g_bGraphNodeEdit || g_uGraphEdgeEdit != 0) {
         g_bPointSelected = false;
         g_uPointSelected = 0;
     }

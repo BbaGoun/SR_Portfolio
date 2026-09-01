@@ -1,4 +1,4 @@
-#include "CTrackGraph.h"
+ï»¿#include "CTrackGraph.h"
 #include "CProtoMgr.h"
 
 CTrackGraph::CTrackGraph(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -57,13 +57,13 @@ void CTrackGraph::Del_Node(TrackNode* _pTN)
 	if (!pTN)
 		return;
 
-	// ÇØ´ç ³ëµå¿Í ¿¬°áµÈ ¿§Áö »èÁ¦
+	// í•´ë‹¹ ë…¸ë“œì™€ ì—°ê²°ëœ ì—£ì§€ ì‚­ì œ
 	m_vecEdges.erase(remove_if(m_vecEdges.begin(), m_vecEdges.end(),
 		[&](TrackEdge& TE)->bool {
 			return TE.fromNode == pTN->id || TE.toNode == pTN->id;
 		}), m_vecEdges.end());
 
-	// ÇØ´ç ³ëµå »èÁ¦
+	// í•´ë‹¹ ë…¸ë“œ ì‚­ì œ
 	m_vecNodes.erase(remove_if(m_vecNodes.begin(), m_vecNodes.end(),
 		[&](TrackNode& TN)->bool {
 			return TN.id == pTN->id;
@@ -217,6 +217,23 @@ void CTrackGraph::Del_Point(TrackEdge* _pTE, ControlPoint* _pCp)
 	Compute_Graph();
 }
 
+void CTrackGraph::Set_PointPos(TrackEdge* _pTE, ControlPoint* _pCp, _vec3 newPos)
+{
+	TrackEdge* pTE = Find_TrackEdge(_pTE);
+	if (!pTE)
+		return;
+
+	if (pTE->deqControls.empty())
+		return;
+
+	if (&pTE->deqControls.front() == _pCp || &pTE->deqControls.back() == _pCp)
+		return;
+
+	ControlPoint* pCp = Get_ControlPoint(pTE, _pCp->id);
+
+	pCp->position = newPos;
+}
+
 void CTrackGraph::Compute_Edge(TrackEdge* _pTE)
 {
 	TrackEdge* pTE = Find_TrackEdge(_pTE);
@@ -245,7 +262,7 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 
 	pTE->vecSamples.clear();
 
-	// °î¼±¸¶´Ù 50µîºĞÀ» ÇÏ¿© °Å¸®¸¦ ´©ÀûÇÒ »ı°¢
+	// ê³¡ì„ ë§ˆë‹¤ 50ë“±ë¶„ì„ í•˜ì—¬ ê±°ë¦¬ë¥¼ ëˆ„ì í•  ìƒê°
 	int n = pTE->deqControls.size();
 	float splineSum = 0.f;
 	float distSum = 0.f;
@@ -260,7 +277,7 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 	TrackSample TS;
 	_vec3 beforeSample;
 
-	// ½ÃÀÛÁ¡
+	// ì‹œì‘ì 
 	start = pTE->deqControls.front();
 	cur = start.position;
 	width = start.width; depth = start.depth;
@@ -272,7 +289,7 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 	TS.s = pTN_From->s_Global;
 	TS.halfW = width * 0.5f;
 	TS.halfH = depth * 0.5f;
-	// »ùÇÃ À¯´Öº¸´Ù Á¶±İ ´õ Å©°Ô
+	// ìƒ˜í”Œ ìœ ë‹›ë³´ë‹¤ ì¡°ê¸ˆ ë” í¬ê²Œ
 	TS.halfL = (m_fSampleUnit * 0.55f);
 	TS.curvature = 1.f;
 	pTE->vecSamples.push_back(TS);
@@ -297,7 +314,7 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 		splineSum += dist;
 		distSum += dist;
 
-		// »ùÇÃ »ı¼º
+		// ìƒ˜í”Œ ìƒì„±
 		if (distSum >= m_fSampleUnit) {
 			T = Cubic_Hermite_Curve_Derivative(local_t, A, D, vA, vD);
 			D3DXVec3Normalize(&T, &T);
@@ -321,16 +338,16 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 			TS.position = cur;
 			TS.T = T, TS.R = R, TS.U = U;
 			
-			// s¶û u ¼³Á¤ ÇÊ¿ä
+			// së‘ u ì„¤ì • í•„ìš”
 			// TS.s = 
 			// TS.u = 
 			TS.halfW = width * 0.5f;
 			TS.halfH = depth * 0.5f;
-			// »ùÇÃ À¯´Öº¸´Ù Á¶±İ ´õ Å©°Ô
+			// ìƒ˜í”Œ ìœ ë‹›ë³´ë‹¤ ì¡°ê¸ˆ ë” í¬ê²Œ
 			dir = cur - beforeSample;
 			dist = D3DXVec3Length(&dir);
 			TS.halfL = dist * 0.55f;
-			// ¿À¸£¸·, ³»¸®¸·, Ä¿ºê¿¡ µû¶ó °è»ê ÇÊ¿ä
+			// ì˜¤ë¥´ë§‰, ë‚´ë¦¬ë§‰, ì»¤ë¸Œì— ë”°ë¼ ê³„ì‚° í•„ìš”
 			TS.curvature = 1.f;
 			pTE->vecSamples.push_back(TS);
 
@@ -341,7 +358,7 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 		spline_t += 0.02f;
 	}
 
-	// ³¡Á¡
+	// ëì 
 	start = pTE->deqControls.back();
 	cur = start.position;
 	width = start.width; depth = start.depth;
@@ -353,7 +370,7 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 	TS.s = pTN_From->s_Global;
 	TS.halfW = width * 0.5f;
 	TS.halfH = depth * 0.5f;
-	// »ùÇÃ À¯´Öº¸´Ù Á¶±İ ´õ Å©°Ô
+	// ìƒ˜í”Œ ìœ ë‹›ë³´ë‹¤ ì¡°ê¸ˆ ë” í¬ê²Œ
 	dir = cur - beforeSample;
 	dist = D3DXVec3Length(&dir);
 	TS.halfL = dist * 0.55f;
@@ -361,9 +378,9 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 	pTE->vecSamples.push_back(TS);
 
 	pTE->fLength = splineSum;
-	// ÀÌ°Ô ¾Æ´Ï¾ß ´Ü¼ø ¿§Áö ÇÏ³ªÀÇ °è»êÀ¸·Î ÀÌ·ç¾îÁú ¼ö ¾ø´Ù
-	// ³ëµå¿Í ³ëµå »çÀÌÀÇ ¿§ÁöµéÀÌ ÀÖ°í, ÀÌ¸¦ ±×·¡ÇÁ Å½»öÀ¸·Î ´©ÀûÇØ¾ß
-	// ÇÏ³ªÀÇ ±×·¡ÇÁ°¡ ¿Ï¼ºµÈ´Ù.
+	// ì´ê²Œ ì•„ë‹ˆì•¼ ë‹¨ìˆœ ì—£ì§€ í•˜ë‚˜ì˜ ê³„ì‚°ìœ¼ë¡œ ì´ë£¨ì–´ì§ˆ ìˆ˜ ì—†ë‹¤
+	// ë…¸ë“œì™€ ë…¸ë“œ ì‚¬ì´ì˜ ì—£ì§€ë“¤ì´ ìˆê³ , ì´ë¥¼ ê·¸ë˜í”„ íƒìƒ‰ìœ¼ë¡œ ëˆ„ì í•´ì•¼
+	// í•˜ë‚˜ì˜ ê·¸ë˜í”„ê°€ ì™„ì„±ëœë‹¤.
 }
 
 void CTrackGraph::Compute_Graph()
@@ -421,7 +438,7 @@ void CTrackGraph::Set_BankByRight(TrackEdge* _pTE, ControlPoint* _pCp, _vec3 vRi
 	D3DXVec3Normalize(&U0, &U0);
 
 	_vec3 R = vRight;
-	R = R - T * D3DXVec3Dot(&R, &T); // T¿¡ ¼öÁ÷ÀÎ ¼ººĞ¸¸ ³²±â±â
+	R = R - T * D3DXVec3Dot(&R, &T); // Tì— ìˆ˜ì§ì¸ ì„±ë¶„ë§Œ ë‚¨ê¸°ê¸°
 	D3DXVec3Normalize(&R, &R);
 
 	_vec3 U;
@@ -613,11 +630,11 @@ void CTrackGraph::ComputeV(TrackEdge* _pTE)
 	if (!pTE)
 		return;
 
-	// ÃÊ±âÈ­
+	// ì´ˆê¸°í™”
 	for (auto& cp : pTE->deqControls)
 		cp.V = { 0, 0, 0 };
 
-	// °¢ Control PointÀÇ V¸¦ °è»ê
+	// ê° Control Pointì˜ Vë¥¼ ê³„ì‚°
 	for (auto it = pTE->deqControls.begin(); it != pTE->deqControls.end()-2; ++it) {
 		_vec3 start, end, v;
 		start = it->position, end = (it+2)->position;
@@ -632,7 +649,7 @@ void CTrackGraph::ComputeTRU(TrackEdge* _pTE)
 	if (!pTE)
 		return;
 
-	// Editor¿¡¼­ º¸¿©ÁÖ±â À§ÇÏ¿© °¢ Control PointÀÇ T, R, U¸¦ °è»ê
+	// Editorì—ì„œ ë³´ì—¬ì£¼ê¸° ìœ„í•˜ì—¬ ê° Control Pointì˜ T, R, Uë¥¼ ê³„ì‚°
 	_vec3 A, D, vA, vD;
 	_vec3 R0, U0;
 	_vec3 dir;

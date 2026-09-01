@@ -276,7 +276,7 @@ void CSceneWindow::Update_Window()
                     continue;
 
                 if (g_bSelected && (pObj->GetGuid() == g_uSelected)) {
-                    if (!g_bSplineEdit && g_bGraphNodeEdit && g_uGraphEdgeEdit == 0) {
+                    if (!g_bSplineEdit && !g_bGraphNodeEdit && g_uGraphEdgeEdit == 0) {
                         Draw_Outline(pObj, D3DXCOLOR{ 0.5f, 0.5f, 0.5f, 1.f });
                         Draw_Collider(pObj);
                     }
@@ -745,7 +745,9 @@ void CSceneWindow::Manipulate_GraphNode(CGameObject* pSel)
         matNode *= matInvObj;
 
         if (g_GizmoOp == ImGuizmo::TRANSLATE) {
-            memcpy(&pTN->position, &matNode.m[3], sizeof(_vec3));
+            _vec3 newPos;
+            memcpy(&newPos, &matNode.m[3], sizeof(_vec3));
+            pTGraph->Set_NodePos(pTN, newPos);
             m_bWasUsingTranslate = true;
         }
     }
@@ -799,7 +801,9 @@ void CSceneWindow::Manipulate_GraphPoint(CGameObject* pSel)
         matCP *= matInvObj;
 
         if (op == ImGuizmo::TRANSLATE) {
-            memcpy(&pCp->position, &matCP.m[3], sizeof(_vec3));
+            _vec3 newPos;
+            memcpy(&newPos, &matCP.m[3], sizeof(_vec3));
+            pTGraph->Set_PointPos(pTE, pCp, newPos);
             m_bWasUsingTranslate = true;
         }
         else if (op == ImGuizmo::ROTATE_Z) {
