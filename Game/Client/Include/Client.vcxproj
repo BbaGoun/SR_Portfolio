@@ -213,6 +213,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CCartBody.h" />
     <ClInclude Include="..\Header\CCartBody1.h" />
     <ClInclude Include="..\Header\CCartBody2.h" />
+    <ClInclude Include="..\Header\CCart_Shield1.h" />
+    <ClInclude Include="..\Header\CCart_Shield2.h" />
     <ClInclude Include="..\Header\CCollisionStarEffect.h" />
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
@@ -314,6 +316,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CBubbleEscape.cpp" />
+    <ClCompile Include="..\Code\CCart_Shield1.cpp" />
+    <ClCompile Include="..\Code\CCart_Shield2.cpp" />
     <ClCompile Include="..\Code\CDriftTrail.cpp" />
     <ClCompile Include="..\Code\CDustLandingEffect.cpp" />
     <ClCompile Include="..\Code\CMenu_Item.cpp" />

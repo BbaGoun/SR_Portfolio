@@ -46,6 +46,12 @@ public:
 	}
 	float			GetThunderTimerOnOff() { return m_bThunderTimerOnOff; }
 
+	bool	GetShieldHit() { return m_bShieldHit; }
+	void	SetShieldHit(bool bShieldState) { m_bShieldHit = bShieldState; }
+
+	bool	GetShieldActive() { return m_bShieldActive; }
+	void	SetShieldActive(bool bActiveState) { m_bShieldActive = bActiveState; }
+
 public:
 	static CCartBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
@@ -61,6 +67,12 @@ private:
 	float			m_fThunderTimer;
 	float			m_bThunderTimerOnOff;
 	_vec3			m_vColliderSize;
+
+
+	_float	m_fShieldTimer;
+	_bool	m_bShieldHit;
+	_bool	m_bShieldTimer;
+	_bool	m_bShieldActive;
 
 protected:
 	virtual		void		Free() override;

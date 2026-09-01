@@ -427,6 +427,7 @@ void CMissileTarget::CreateShieldObject()
 
 	//pShield1->SetLayer(m_pLayer);
 	pTarget->Set_Child(pShield1);
+	//Set_Child(pShield1);
 
 	CGameObject* pShield2 = CShield2::Create(m_pGraphicDev);
 
@@ -438,6 +439,7 @@ void CMissileTarget::CreateShieldObject()
 
 	//pShield2->SetLayer(m_pLayer);
 	pTarget->Set_Child(pShield2);
+	//Set_Child(pShield1);
 }
 
 void CMissileTarget::CollisionEnter(CCollider* pOtherCollider)

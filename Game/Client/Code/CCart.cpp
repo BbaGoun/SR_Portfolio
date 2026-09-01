@@ -26,6 +26,8 @@
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
 #include "CPlayTimeMgr.h"
+#include "CCart_Shield1.h"
+#include "CCart_Shield2.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -231,6 +233,11 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_U))
 	{
 		CreateWaterFlyObject();
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
+	{
+		CreateShieldObject_();
 	}
 
 	// ShortBooster
@@ -1385,6 +1392,32 @@ void CCart::CreateMagnetAimObject()
 	}
 }
 
+void CCart::CreateShieldObject_()
+{
+	CGameObject* pShield1 = CCart_Shield1::Create(m_pGraphicDev);
+
+	if (pShield1 == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
+		return;
+
+	Set_Child(pShield1);
+
+	CGameObject* pShield2 = CCart_Shield2::Create(m_pGraphicDev);
+
+	if (pShield2 == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
+		return;
+
+	Set_Child(pShield2);
+
+	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+
+	pCartBody->SetShieldActive(true);
+}
 void CCart::CreateMissileAimObject()
 {
 	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");

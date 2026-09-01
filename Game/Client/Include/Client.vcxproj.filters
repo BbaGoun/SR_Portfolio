@@ -325,14 +325,23 @@
     <Filter Include="02. GameObject\Item\Water\BubbleEscapeUI">
       <UniqueIdentifier>{2a125e2a-30a6-4f5f-8aa1-11c9a81c3b98}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\Shield">
+    <Filter Include="02. GameObject\Item\Target_Shield">
       <UniqueIdentifier>{5480403e-f12f-4e41-b08a-635c6f76a5e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\Shield\Shield1">
+    <Filter Include="02. GameObject\Item\Target_Shield\Target_Shield1">
       <UniqueIdentifier>{80458ce3-0693-430b-ba34-e5be29104e2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\Shield\Shield2">
+    <Filter Include="02. GameObject\Item\Target_Shield\Target_Shield2">
       <UniqueIdentifier>{d798c48d-f61d-4264-84f6-c3a4b047d43e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Cart_Shield">
+      <UniqueIdentifier>{13e119e0-720f-4274-a7e0-4da6deb29987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Cart_Shield\Cart_Shield1">
+      <UniqueIdentifier>{282ad70b-6ccc-4dda-945f-d5b9c33c13e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Cart_Shield\Cart_Shield2">
+      <UniqueIdentifier>{c7648e81-929b-4f85-a3fa-c7946d740b6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -646,10 +655,16 @@
       <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShield1.h">
-      <Filter>02. GameObject\Item\Shield\Shield1</Filter>
+      <Filter>02. GameObject\Item\Target_Shield\Target_Shield1</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShield2.h">
-      <Filter>02. GameObject\Item\Shield\Shield2</Filter>
+      <Filter>02. GameObject\Item\Target_Shield\Target_Shield2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCart_Shield1.h">
+      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCart_Shield2.h">
+      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -954,10 +969,16 @@
       <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShield1.cpp">
-      <Filter>02. GameObject\Item\Shield\Shield1</Filter>
+      <Filter>02. GameObject\Item\Target_Shield\Target_Shield1</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShield2.cpp">
-      <Filter>02. GameObject\Item\Shield\Shield2</Filter>
+      <Filter>02. GameObject\Item\Target_Shield\Target_Shield2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCart_Shield1.cpp">
+      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCart_Shield2.cpp">
+      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
