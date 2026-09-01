@@ -147,7 +147,7 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	UpdateBoost(fDeltaTime);
 	UpdateThunder();
 	UpdateMagnet(fDeltaTime);
-	
+	UpdateBlur(fDeltaTime);
 	//OutputCarState();
 	//cout << m_vTerrainNormal.x << "\t" << m_vTerrainNormal.y << "\t" << m_vTerrainNormal.z << endl;
 	return CGameObject::Update_GameObject(fDeltaTime);
@@ -180,7 +180,13 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
-
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_TAB))
+	{
+		if (CCameraMgr::GetInstance()->GetRePlay() == true)
+			CCameraMgr::GetInstance()->SetRePlay(false);
+		else
+			CCameraMgr::GetInstance()->SetRePlay(true);
+	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_I))
 	{
 		if (m_eFirstSlot == ITEM_END)
@@ -475,7 +481,6 @@ void CCart::UpdateDrift(const _float fDeltaTime)
 		_vec3 vCross;
 		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
 		m_fLookForceAngle = D3DXToDegree(acosf(D3DXVec3Dot(&vLook, &vTempForce)));
-		cout << m_fLookForceAngle << endl;
 
 		if ((!CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT) && m_fLookForceAngle < 15.f)
 			|| D3DXVec3Length(&m_vForce) < 0.1f
@@ -1074,7 +1079,7 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 			//vDir += m_vForce * 2.f;
 		}
 
-		m_fMagnetTimer += fDeltaTime;							// 3.5초 지나면 m_bMagnet = false로 종료
+		m_fMagnetTimer += fDeltaTime;					// 3.5초 지나면 m_bMagnet = false로 종료
 
 		if (m_fMagnetTimer > 3.5f)
 		{
@@ -1094,6 +1099,20 @@ void CCart::UpdateStartBoost()
 		m_bCanShortBoost = true;
 		m_bShortBoosterTimerOnOff = true;
 	}
+}
+
+void CCart::UpdateBlur(const _float& fDeltaTime)
+{
+	float fTotalSpeed = D3DXVec3Length(&m_vForce) * m_fSpeed;
+	if (fTotalSpeed > 60.f)
+	{
+		float fBlurPower = (fTotalSpeed - 60) / 140.f;
+		fBlurPower = clampT(fBlurPower, 0.f, 0.8f);
+		cout << fBlurPower << endl;
+		CRenderer::GetInstance()->SetBlurPower(0.8);
+	}
+	else
+		CRenderer::GetInstance()->SetBlurPower(0.f);
 }
 
 void CCart::OutputCarState()
@@ -1417,7 +1436,6 @@ void CCart::CreateMagnetAimObject()
 				CreateMagnetObject();
 			}
 		}
-
 		m_pLayer->Delete_GameObject(pTargetAim);
 	}
 }

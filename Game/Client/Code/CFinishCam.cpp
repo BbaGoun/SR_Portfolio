@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CTrackCam.h"
+#include "CFinishCam.h"
 #include "CCameraMgr.h"
 #include "CManagement.h"
 #include "CDInputMgr.h"
@@ -7,21 +7,21 @@
 #include "CCart.h"
 #include "CPlayTimeMgr.h"
 
-CTrackCam::CTrackCam(LPDIRECT3DDEVICE9 pGraphicDev)
+CFinishCam::CFinishCam(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
 {
 }
 
-CTrackCam::CTrackCam(const CTrackCam& rhs)
+CFinishCam::CFinishCam(const CFinishCam& rhs)
 	: CCamera(rhs)
 {
 }
 
-CTrackCam::~CTrackCam()
+CFinishCam::~CFinishCam()
 {
 }
 
-HRESULT CTrackCam::Ready_GameObject(const _vec3& pEye,
+HRESULT CFinishCam::Ready_GameObject(const _vec3& pEye,
 	const _vec3& pAt,
 	const _vec3& pUp,
 	const _float& fFov,
@@ -40,35 +40,47 @@ HRESULT CTrackCam::Ready_GameObject(const _vec3& pEye,
 
 	if (FAILED(CCamera::Ready_GameObject()))
 		return E_FAIL;
-	//m_pTransformCom->Set_Pos(m_vEye);
 
+	m_pTransformCom->Set_Pos(m_vEye);
 	m_fYaw = 0;
 	m_fDistScale = 1;
 	m_fBackDistance = 0.f;
-	m_fLRMoveTime = 0.f;
-
+	m_fDeltaAngle = -60.f;
+	m_vRotation.y = -45.f;
 	return S_OK;
 }
-void CTrackCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
+void CFinishCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
 		CTransform* pTrans = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart")->Get_Component<CTransform>();
-		
-		// 에디터에서 가져오는 경우 설정 필요
-		_vec3 vPos;
-		m_pTransformCom->Get_Info(INFO_POS, &vPos);
-		m_vEye = vPos;
 
 		if (pTrans == nullptr)
 			return;
-		_vec3	vPlayerPos;
+
+		_vec3	vPlayerPos, vPlayerRight, vPlayerUp;
 		pTrans->Get_Info(INFO_POS, &vPlayerPos);
+		pTrans->Get_Info(INFO_RIGHT, &vPlayerRight);
+		pTrans->Get_Info(INFO_UP, &vPlayerUp);
+
+		if (m_vRotation.y > -45.f)
+			m_fDeltaAngle = -60.f;
+		if (m_vRotation.y < -135.f)
+			m_fDeltaAngle = 60.f;
+
+		m_vRotation.y += m_fDeltaAngle * fFixedDeltaTime;
+		_matrix matRot;
+		D3DXMatrixRotationY(&matRot, D3DXToRadian(m_vRotation.y));
+
+		m_vEye = vPlayerRight * 20.f + vPlayerUp * 15.f;// _vec3({ 30, 15, 0 });
+		D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRot);
+
+		m_vEye += vPlayerPos;
 		m_vAt = vPlayerPos;
 	}
 }
 
 
-_int CTrackCam::Update_GameObject(const _float& fDeltaTime)
+_int CFinishCam::Update_GameObject(const _float& fDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
 
@@ -76,7 +88,7 @@ _int CTrackCam::Update_GameObject(const _float& fDeltaTime)
 	return 0;
 }
 
-void CTrackCam::LateUpdate_GameObject(const _float& fDeltaTime)
+void CFinishCam::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
 		CCamera::LateUpdate_GameObject(fDeltaTime);
@@ -84,9 +96,9 @@ void CTrackCam::LateUpdate_GameObject(const _float& fDeltaTime)
 	}
 }
 
-CTrackCam* CTrackCam::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& pEye, const _vec3& pAt, const _vec3& pUp, const _float& fFov, const _float& fAspect, const _float& fNear, const _float& fFar)
+CFinishCam* CFinishCam::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& pEye, const _vec3& pAt, const _vec3& pUp, const _float& fFov, const _float& fAspect, const _float& fNear, const _float& fFar)
 {
-	CTrackCam* pCamera = new CTrackCam(pGraphicDev);
+	CFinishCam* pCamera = new CFinishCam(pGraphicDev);
 
 	if (FAILED(pCamera->Ready_GameObject(pEye, pAt, pUp, fFov, fAspect, fNear, fFar)))
 	{
@@ -98,7 +110,7 @@ CTrackCam* CTrackCam::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& pEye, c
 	return pCamera;
 }
 
-void CTrackCam::Free()
+void CFinishCam::Free()
 {
 	CCamera::Free();
 }

@@ -36,6 +36,8 @@
 #include "CUI_EndCountDown.h"
 #include "CPlayTimeMgr.h"
 #include "CStartCam.h"
+#include "CTrackCam.h"
+#include "CFinishCam.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -83,6 +85,7 @@ void CRacingScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 _int CRacingScene::Update_Scene(const _float& fDeltaTime)
 {
 	_int iExit = CScene::Update_Scene(fDeltaTime);
+	CCameraMgr::GetInstance()->UpdateClosedRePlayCam();
 	return iExit;
 }
 
@@ -154,6 +157,7 @@ HRESULT CRacingScene::LoadSceneFromFile()
 HRESULT CRacingScene::Ready_RenderTarget()
 {
 	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"Minimap", 250, 400);
+	CRenderer::GetInstance()->Ready_BlurRT(m_pGraphicDev);
 	return S_OK;
 }
 
@@ -274,10 +278,33 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_START,
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
-
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_START)))
 		return E_FAIL;
 
+	//FinishCam
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 15) + (vLook * 15);
+	pGameObject = CFinishCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45));
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FinishCam", pGameObject);
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FINISH,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+
+	// TrackCam(RePlay)
+	auto& Cameras = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"TrackCam");
+	if (!Cameras.empty())
+	{
+		for(auto cam : Cameras)
+			CCameraMgr::GetInstance()->AddRePlayCam(static_cast<CCamera*>(cam));
+	}
+	CCameraMgr::GetInstance()->SetCart(pCart);
 	return S_OK;
 }
 
@@ -390,7 +417,6 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"PreviewCart", pUIObject)))
 		return E_FAIL;
 
-
 	// 미니맵 Cart
 	pUIObject = CMinimapCart::Create(m_pGraphicDev);
 
@@ -405,7 +431,6 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"Env_MinimapGround", pUIObject)))
 		return E_FAIL;
-
 
 	// CUI_StartCountDown
 	pUIObject = CUI_StartCountDown::Create(m_pGraphicDev);
@@ -441,7 +466,6 @@ CRacingScene* CRacingScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, MAP_ID eID)
 		Safe_Release(pScene);
 		return nullptr;
 	}
-
 	return pScene;
 }
 
@@ -449,5 +473,6 @@ void CRacingScene::Free()
 {
 	CRenderer::GetInstance()->Clear_RenderGroup();
 	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
+	CRenderer::GetInstance()->Delete_BlurRT();
 	CScene::Free();
 }

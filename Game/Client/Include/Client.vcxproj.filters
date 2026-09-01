@@ -334,6 +334,9 @@
     <Filter Include="02. GameObject\Item\Shield\Shield2">
       <UniqueIdentifier>{d798c48d-f61d-4264-84f6-c3a4b047d43e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Camera\EndCamera">
+      <UniqueIdentifier>{82b289d8-e95a-40fe-9f94-22000c0e3f05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -651,6 +654,9 @@
     <ClInclude Include="..\Header\CShield2.h">
       <Filter>02. GameObject\Item\Shield\Shield2</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CFinishCam.h">
+      <Filter>02. GameObject\Camera\EndCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -958,6 +964,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShield2.cpp">
       <Filter>02. GameObject\Item\Shield\Shield2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFinishCam.cpp">
+      <Filter>02. GameObject\Camera\EndCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
