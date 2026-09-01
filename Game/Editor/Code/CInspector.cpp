@@ -4,7 +4,6 @@
 #include "CCollider.h"
 #include "CCube_Collider.h"
 #include "CSphere_Collider.h"
-#include "CProtoMgr.h"
 
 CInspector::CInspector() : CWindow()
 {
@@ -60,6 +59,8 @@ void CInspector::Update_Window()
         ColliderComs(pObj);
     if (pObj->Get_Component<CTexture>())
         TextureCom(pObj);
+    if (pObj->Get_Component<CTrackGraph>())
+        TrackGraphCom(pObj);
 
     Add_Component_Button(pObj);
 
@@ -266,14 +267,13 @@ void CInspector::SplineCom(CGameObject* _pObj)
         if (ImGui::Button("Edit", ImVec2(btnW, 0)))
         {
             pSpline->Set_Edit(!bEdit);
-            g_bEdit = !bEdit;
+            g_bSplineEdit = !bEdit;
             Free_PointSelected();
         }
         if (bEdit)
             ImGui::PopStyleColor();
 
         ImGui::SameLine();
-        ImGui::SetNextItemWidth(btnW);
         if (ImGui::Button("Add", ImVec2(btnW, 0))) {
             pSpline->Add_Point();
         }
@@ -290,7 +290,7 @@ void CInspector::SplineCom(CGameObject* _pObj)
             for(int i=0; i< vecP.size(); ++i){
                 ControlPoint& cp = vecP[i];
                 bool openPoint = ImGui::TreeNodeEx(
-                    (void*)cp.id, flags, "%d", i
+                    (void*)cp.id, flags, "%d", cp.id
                 );
                 ImGui::PushID(cp.id);
                 if (ImGui::BeginPopupContextItem("ControlPoint_Menu")) {
@@ -395,7 +395,7 @@ void CInspector::HeightMapCom(CGameObject* _pObj)
         if (ImGui::Button("Edit", ImVec2(btnW, 0)))
         {
             pHM->Set_Edit(!bEdit);
-            g_bEdit = !bEdit;
+            g_bSplineEdit = !bEdit;
             Free_HMPick();
         }
         if (bEdit)
@@ -636,6 +636,382 @@ void CInspector::TextureCom(CGameObject* _pObj)
     ImGui::PopID();
 }
 
+void CInspector::TrackGraphCom(CGameObject* _pObj)
+{
+    CTrackGraph* pTGraph = _pObj->Get_Component<CTrackGraph>();
+
+    bool open = ImGui::CollapsingHeader("TrackGraph", ImGuiTreeNodeFlags_DefaultOpen);
+
+    ImGui::PushID(pTGraph);
+
+    if (ImGui::BeginPopupContextItem("remove"))  // 직전 아이템 = 이 헤더
+    {
+        if (ImGui::MenuItem("Remove Component")) {
+            _pObj->Remove_Component(pTGraph);
+            ImGui::EndPopup();
+            ImGui::PopID();
+            return;
+        }
+        ImGui::EndPopup();
+    }
+
+    if (open) {
+        TrackGraph_Node(pTGraph);
+
+        TrackGraph_Edge(pTGraph);
+
+        float fSampleUnit = pTGraph->Get_SampleUnit();
+        ImGuiLabel("Sample Unit");
+        if (ImGui::DragFloat("##Sample Unit", &fSampleUnit, 0.25f, 1.f, FLT_MAX))
+        {
+            pTGraph->Set_SampleUnit(fSampleUnit);
+            pTGraph->Compute_Graph();
+        }
+    }
+    ImGui::PopID();
+}
+
+
+void CInspector::TrackGraph_Node(CTrackGraph* pTGraph)
+{
+    char buf[256];
+    float availX = ImGui::GetContentRegionAvail().x;
+    float btnW = availX * 0.4f;
+
+    const bool bNodeEdit = pTGraph->Get_NodeEdit();
+
+    if (bNodeEdit)
+        ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
+    ImGui::SetCursorPosX((availX - btnW * 2) * 0.5f);
+    if (ImGui::Button("Edit Node", ImVec2(btnW, 0)))
+    {
+        pTGraph->Set_NodeEdit(!bNodeEdit);
+        g_bSplineEdit = pTGraph->Get_NodeEdit();
+        Free_PointSelected();
+    }
+    if (bNodeEdit)
+        ImGui::PopStyleColor();
+
+    ImGui::SameLine();
+    if (ImGui::Button("Add Node", ImVec2(btnW, 0))) {
+        pTGraph->Add_Node();
+    }
+
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow
+        | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+    bool openNodes = ImGui::TreeNodeEx(
+        (void*)L"TrackGraph Nodes",
+        flags,
+        "Nodes");
+
+    if (openNodes) {
+        ImGui::Indent();
+        auto& vecTN = pTGraph->Get_Nodes();
+        for (int i = 0; i < vecTN.size(); ++i) {
+            TrackNode& tn = vecTN[i];
+            bool openNode = ImGui::TreeNodeEx(
+                (void*)&tn, flags, "Node %d", tn.id
+            );
+            ImGui::PushID(&tn);
+            if (ImGui::BeginPopupContextItem("TrackGraph_Nodes_Menu")) {
+                if (ImGui::Selectable("Delete")) {
+                    pTGraph->Del_Node(&tn);
+                    i -= 1;
+                    ::Free_PointSelected();
+                    ImGui::EndPopup();
+                    ImGui::PopID();
+                    continue;
+                }
+                ImGui::EndPopup();
+            }
+
+            if (openNode) {
+                _vec3 tr;
+                tr.x = tn.position.x, tr.y = tn.position.y, tr.z = tn.position.z;
+                bool bFinish = tn.bFinish;
+
+                sprintf_s(buf, sizeof(buf), "##pos%d", tn.id);
+                ImGuiLabel("Pos");
+                if (ImGui::DragFloat3(buf, (float*)tr, 0.1f)) {
+                    // Node의 위치가 바뀐다 -> 연결된 엣지의 시작, 끝 지점이 바뀐다
+                    // -> T,R,U가 바뀐다 -> 그래프도 전부 다시 생성
+                    pTGraph->Set_NodePos(&tn, tr);
+                    pTGraph->Compute_Graph();
+                }
+
+                sprintf_s(buf, sizeof(buf), "##bFinsh%d", tn.id);
+                ImGuiLabel("IsFinish");
+                if (ImGui::Checkbox(buf, &bFinish)) {
+                    tn.bFinish = bFinish;
+                }
+            }
+            ImGui::Separator();
+            ImGui::PopID();
+        }
+        ImGui::Unindent();
+    }
+    ImGui::Separator();
+}
+
+void CInspector::TrackGraph_Edge(CTrackGraph* pTGraph)
+{
+    char buf[256];
+    float availX = ImGui::GetContentRegionAvail().x;
+    float btnW = availX * 0.4f;
+
+    ImGui::SetCursorPosX((availX - btnW * 2) * 0.5f);
+    if (ImGui::Button("Add Edge", ImVec2(btnW * 2, 0))) {
+        pTGraph->Add_Edge();
+    }
+
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow
+        | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+    bool openEdges = ImGui::TreeNodeEx(
+        (void*)L"TrackGraph Edges",
+        flags,
+        "Edges");
+
+    if (openEdges) {
+        ImGui::Indent();
+        auto& vecTE = pTGraph->Get_Edges();
+        for (int i = 0; i < vecTE.size(); ++i) {
+            TrackEdge& te = vecTE[i];
+            bool openEdge = ImGui::TreeNodeEx(
+                (void*)&te, flags, "Edge %d", te.id
+            );
+            ImGui::PushID(&te);
+            if (ImGui::BeginPopupContextItem("TrackGraph_Edges_Menu")) {
+                if (ImGui::Selectable("Delete")) {
+                    pTGraph->Del_Edge(&te);
+                    i -= 1;
+                    g_bPointSelected = false;
+                    g_uPointSelected = 0;
+                    ImGui::EndPopup();
+                    ImGui::PopID();
+                    continue;
+                }
+                ImGui::EndPopup();
+            }
+
+            if (openEdge) {
+                const bool bEdgeEdit = pTGraph->Get_EdgeEdit();
+
+                if (bEdgeEdit)
+                    ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
+                ImGui::SetCursorPosX((availX - btnW * 2) * 0.5f);
+                if (ImGui::Button("Edit Edge", ImVec2(btnW, 0)))
+                {
+                    if (g_uGraphEdgeEdit == 0) {
+                        pTGraph->Set_EdgeEdit(te.id);
+                        g_uGraphEdgeEdit = te.id;
+                        Free_PointSelected();
+                    }
+                    else {
+                        pTGraph->Set_EdgeEdit(0);
+                        g_uGraphEdgeEdit = 0;
+                        Free_PointSelected();
+                    }
+                }
+                if (bEdgeEdit)
+                    ImGui::PopStyleColor();
+
+                ImGui::SameLine();
+                if (ImGui::Button("Add Point", ImVec2(btnW, 0))) {
+                    pTGraph->Add_Point(&te);
+                }
+
+                // from 선택
+                sprintf_s(buf, sizeof(buf), "FromNode");
+                ImGui::PushID(buf);
+                ImGuiLabel("FromNode");
+                if(te.fromNode == 0)
+                    sprintf_s(buf, sizeof(buf), "None");
+                else
+                    sprintf_s(buf, sizeof(buf), "Node %d", te.fromNode);
+                if (ImGui::BeginCombo("##FromNode", buf))
+                {
+                    auto& vecTN = pTGraph->Get_Nodes();
+                    for (auto& tn : vecTN)
+                    {
+                        bool selected = te.fromNode == tn.id;
+
+                        sprintf_s(buf, sizeof(buf), "FromNode %d", te.fromNode);
+
+                        ImGui::PushID(buf);
+                        sprintf_s(buf, sizeof(buf), "Node %d", tn.id);
+                        if (ImGui::Selectable(buf, selected))
+                        {
+                            // 이미 선택됐을 때는 교체할 필요 없음
+                            if (!selected)
+                            {
+                                pTGraph->Set_EdgeFrom(&te, &tn);
+                                ImGui::PopID();
+                                break;
+                            }
+                        }
+                        if (selected)
+                            ImGui::SetItemDefaultFocus(); // 열었을 때 현재 항목으로 스크롤
+                        ImGui::PopID();
+                    }
+                    ImGui::EndCombo();
+                }
+                ImGui::PopID();
+
+                // to 선택
+                sprintf_s(buf, sizeof(buf), "ToNode");
+                ImGui::PushID(buf);
+                ImGuiLabel("ToNode");
+                if (te.toNode == 0)
+                    sprintf_s(buf, sizeof(buf), "None");
+                else
+                    sprintf_s(buf, sizeof(buf), "Node %d", te.toNode);
+                if (ImGui::BeginCombo("##FromNode", buf))
+                {
+                    auto& vecTN = pTGraph->Get_Nodes();
+                    for (auto& tn : vecTN)
+                    {
+                        bool selected = te.toNode == tn.id;
+
+                        sprintf_s(buf, sizeof(buf), "ToNode %d", te.toNode);
+
+                        ImGui::PushID(buf);
+                        sprintf_s(buf, sizeof(buf), "Node %d", tn.id);
+                        if (ImGui::Selectable(buf, selected))
+                        {
+                            // 이미 선택됐을 때는 교체할 필요 없음
+                            if (!selected)
+                            {
+                                pTGraph->Set_EdgeTo(&te, &tn);
+                                ImGui::PopID();
+                                break;
+                            }
+                        }
+                        if (selected)
+                            ImGui::SetItemDefaultFocus(); // 열었을 때 현재 항목으로 스크롤
+                        ImGui::PopID();
+                    }
+                    ImGui::EndCombo();
+                }
+                ImGui::PopID();
+
+                TrackGraph_Point(pTGraph, &te);
+
+                float fWidthDefault = te.fWidthDefault;
+                ImGuiLabel("Width Default");
+                if (ImGui::DragFloat("##Width Default", &fWidthDefault, 0.25f, 1.f, FLT_MAX))
+                {
+                    te.fWidthDefault = fWidthDefault;
+                }
+                float fHeightDefault = te.fHeightDefault;
+                ImGuiLabel("Height Default");
+                if (ImGui::DragFloat("##Height Default", &fHeightDefault, 0.25f, 1.f, FLT_MAX))
+                {
+                    te.fHeightDefault = fHeightDefault;
+                }
+                float fCostBias = te.fCostBias;
+                ImGuiLabel("Cost Bias");
+                if (ImGui::DragFloat("##Cost Bias", &fCostBias, 0.25f, 1.f, FLT_MAX))
+                {
+                    te.fCostBias = fCostBias;
+                }
+            }
+            ImGui::Separator();
+            ImGui::PopID();
+        }
+        ImGui::Unindent();
+    }
+    ImGui::Separator();
+}
+
+void CInspector::TrackGraph_Point(CTrackGraph* pTGraph, TrackEdge* _pTE)
+{
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow
+        | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+    bool openPoint = ImGui::TreeNodeEx(
+        (void*)(uintptr_t)_pTE,
+        flags,
+        "Control Points");
+    if (openPoint) {
+        ImGui::Indent();
+        char buf[256];
+        auto& deqP = _pTE->deqControls;
+        for (int i = 0; i < deqP.size(); ++i) {
+            ControlPoint& cp = deqP[i];
+            bool openPoint = ImGui::TreeNodeEx(
+                (void*)&cp, flags, "Point %d", cp.id
+            );
+            ImGui::PushID(&cp);
+            if (ImGui::BeginPopupContextItem("TrackGraph_ControlPoint_Menu")) {
+                if (ImGui::Selectable("Delete")) {
+                    pTGraph->Del_Point(_pTE, &cp);
+                    i -= 1;
+                    g_bPointSelected = false;
+                    g_uPointSelected = 0;
+                    ImGui::EndPopup();
+                    ImGui::PopID();
+                    continue;
+                }
+                ImGui::EndPopup();
+            }
+
+            if (openPoint) {
+                float tr[3];
+                tr[0] = cp.position.x, tr[1] = cp.position.y, tr[2] = cp.position.z;
+                float bank = cp.bank, width = cp.width, depth = cp.depth;
+
+                sprintf_s(buf, sizeof(buf), "##pos%d", cp.id);
+                ImGuiLabel("Pos");
+                if (ImGui::DragFloat3(buf, tr, 0.1f)) {
+                    // CP의 위치가 바뀐다 -> 곡선의 형태가 바뀐다 
+                    // -> T,R,U가 바뀐다 -> 메쉬도 전부 다시 생성
+                    // 최적화 시에는 +- 2 범위의 곡선만 다시 계산
+                    memcpy(&cp.position, tr, sizeof(_vec3));
+                    pTGraph->Compute_Graph();
+                }
+
+                sprintf_s(buf, sizeof(buf), "##bank%d", cp.id);
+                ImGuiLabel("Bank");
+                if (ImGui::DragFloat(buf, &bank, 0.5f, -180.f, 180.f)) {
+                    // 해당 cp의 right로 up과 bank 계산
+                    // R,U,bank만 바뀜 -> 메쉬 다시 생성
+                    // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
+                    pTGraph->Set_Bank(_pTE, &cp, bank);
+                }
+
+                sprintf_s(buf, sizeof(buf), "T : %f, %f, %f", cp.T.x, cp.T.y, cp.T.z);
+                ImGui::Text(buf);
+                sprintf_s(buf, sizeof(buf), "R : %f, %f, %f", cp.R.x, cp.R.y, cp.R.z);
+                ImGui::Text(buf);
+                sprintf_s(buf, sizeof(buf), "U : %f, %f, %f", cp.U.x, cp.U.y, cp.U.z);
+                ImGui::Text(buf);
+
+                sprintf_s(buf, sizeof(buf), "##width%d", cp.id);
+                ImGuiLabel("Width");
+                if (ImGui::DragFloat(buf, &width, 0.1f, 0.f, FLT_MAX)) {
+                    // 해당 cp의 width를 바꾼다
+                    // -> 매쉬 다시 생성
+                    // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
+                    cp.width = width;
+                    pTGraph->Compute_Graph();
+                }
+
+                sprintf_s(buf, sizeof(buf), "##depth%d", cp.id);
+                ImGuiLabel("Depth");
+                if (ImGui::DragFloat(buf, &depth, 0.1f, 0.f, FLT_MAX)) {
+                    // 해당 cp의 width를 바꾼다
+                    // -> 매쉬 다시 생성
+                    // 최적화 시에는 이전/다음 cp 사이의 매쉬만 수정
+                    cp.depth = depth;
+                    pTGraph->Compute_Graph();
+                }
+            }
+            ImGui::Separator();
+            ImGui::PopID();
+        }
+        ImGui::Unindent();
+    }
+}
+
 void CInspector::Add_Component_Button(CGameObject* _pObj)
 {
     ImGui::Spacing();
@@ -668,6 +1044,7 @@ void CInspector::Add_Component_Button(CGameObject* _pObj)
         case CK_MESH:     return "Mesh";
         case CK_COLLIDER: return "Collider";
         case CK_TEXTURE:  return "Texture";
+        case CK_TRACKGRAPH: return "TrackGraph";
         default:                  return "Other";
         }
         };
@@ -707,7 +1084,7 @@ void CInspector::Add_Component_Button(CGameObject* _pObj)
     {
         // 카테고리(1단) → 프로토타입(2단)
         const COMPONENTKIND kinds[] = {
-            CK_MESH, CK_COLLIDER, CK_TEXTURE
+            CK_MESH, CK_COLLIDER, CK_TEXTURE, CK_TRACKGRAPH
         };
 
         for (COMPONENTKIND kind : kinds)

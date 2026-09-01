@@ -43,9 +43,12 @@ extern ImFont*					g_pFontBold;
 extern bool						g_bSelected;
 extern uint32_t					g_uSelected;
 
-extern bool						g_bEdit;
+extern bool						g_bSplineEdit;
 extern bool                     g_bPointSelected;
 extern uint32_t                 g_uPointSelected;
+
+extern bool                     g_bGraphNodeEdit;
+extern EdgeId                   g_uGraphEdgeEdit;
 
 extern bool                     g_bHMPick;
 extern _vec3                    g_vHMPickPos;
@@ -57,41 +60,41 @@ extern ImGuizmo::MODE			g_GizmoMode;
 
 
 inline void Set_ObjSelected(uint32_t id) {
-    if (!g_bEdit) {
+    if (!g_bSplineEdit) {
         g_bSelected = true;
         g_uSelected = id;
     }
 }
 
 inline void Free_ObjSelected() {
-    if (!g_bEdit) {
+    if (!g_bSplineEdit) {
         g_bSelected = false;
         g_uSelected = 0;
     }
 }
 inline void Set_PointSelected(uint32_t id) {
-    if (g_bEdit) {
+    if (g_bSplineEdit) {
         g_bPointSelected = true;
         g_uPointSelected = id;
     }
 }
 
 inline void Free_PointSelected() {
-    if (g_bEdit) {
+    if (g_bSplineEdit) {
         g_bPointSelected = false;
         g_uPointSelected = 0;
     }
 }
 
 inline void Set_HMPick(_vec3 pos) {
-    if (g_bEdit) {
+    if (g_bSplineEdit) {
         g_bHMPick = true;
         g_vHMPickPos = pos;
     }
 }
 
 inline void Free_HMPick() {
-    if (g_bEdit) {
+    if (g_bSplineEdit) {
         g_bHMPick = false;
         g_vHMPickPos = { 0, 0, 0 };
     }
