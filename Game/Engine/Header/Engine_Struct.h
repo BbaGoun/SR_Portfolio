@@ -161,7 +161,9 @@ namespace Engine
 		_vec3			position;
 		NodeId			id;
 		float			s_Global; // s는 전역 진행량(호 길이)라는 뜻
-		bool			bFinish;
+		bool			bStart;		// 시작점
+		bool			bFinish;	// 끝점
+		int				in_Degree;   // 위상 정렬용 진입 차수
 		vector<EdgeId>	vecInEdgeIds, vecOutEdgeIds;
 	}TrackNode;
 
@@ -172,7 +174,7 @@ namespace Engine
 		float			u; // 이 엣지 시작부터의 호장
 		float			s; // 전역 진행량
 		float			halfW, halfH, halfL; // OBB 반 크기
-		float			curvature; // 이 구간의 감속량
+		float			speed; // 이 구간의 감속량
 	}TrackSample;
 
 	typedef struct _tagTrackEdge

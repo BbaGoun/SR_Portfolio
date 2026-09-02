@@ -33,15 +33,15 @@ public:
 	void			Del_Point(TrackEdge* _pTE, ControlPoint* _pCp);
 	void			Set_PointPos(TrackEdge* _pTE, ControlPoint* _pCp, _vec3 newPos);
 
-	void			Compute_Edge(TrackEdge* _pTE);
-	void			Compute_Sample(TrackEdge* _pTE);
 	void			Compute_Graph();
+	void			Finalize_LoadedData();
 
 	void			Set_Bank(TrackEdge* _pTE, ControlPoint* _pCp, float fBank);
 	void			Set_BankByRight(TrackEdge* _pTE, ControlPoint* _pCp, _vec3 vRight);
 	void			Set_WidthDepth(TrackEdge* _pTE, ControlPoint* _pCp, _vec3 vRight, _vec3 vUp);
 
 	void			Render_Points();
+	void			Render_Samples();
 
 	TrackNode*		Get_TrackNode(NodeId id);
 	TrackEdge*		Get_TrackEdge(EdgeId id);
@@ -52,8 +52,11 @@ private:
 	TrackEdge*		Find_TrackEdge(TrackEdge* pTE);
 	ControlPoint*	Find_ControlPoint(TrackEdge* _pTE, ControlPoint* _pCp);
 
+	void			Compute_Edge(TrackEdge* _pTE);
 	void			ComputeV(TrackEdge* _pTE);
 	void			ComputeTRU(TrackEdge* _pTE);
+	void			Compute_Sample(TrackEdge* _pTE);
+	void			Compute_Sample_Speed(TrackEdge* _pTE);
 
 	void			PreRender_Points();
 	void			PostRender_Points();
@@ -100,6 +103,7 @@ protected:
 	bool	m_bNodeEdit = false;
 	EdgeId	m_EdgeEditId = 0;
 	float	m_fSampleUnit = 1.f;
+	float	m_fLapLength;
 
 protected:
 	virtual		void		Free() override;

@@ -117,7 +117,7 @@ void CSceneWindow::Update_Window()
     ImVec2 viewSize = ImGui::GetContentRegionAvail(); // content 영역의 크기
 
     // 투영 행렬 세팅
-    D3DXMatrixPerspectiveFovLH(&m_matProj, D3DXToRadian(45.f), viewSize.x / viewSize.y, 0.1f, 1000.f);
+    D3DXMatrixPerspectiveFovLH(&m_matProj, D3DXToRadian(45.f), viewSize.x / viewSize.y, 0.1f, 100000.f);
     D3DXMatrixInverse(&m_matInvProj, 0, &m_matProj);
 
     ImGuizmo::SetDrawlist();
@@ -287,6 +287,7 @@ void CSceneWindow::Update_Window()
                     if (g_bGraphNodeEdit || g_uGraphEdgeEdit != 0) {
                         Draw_Graph(pObj);
                     }
+                    Draw_GraphOBB(pObj);
                 }
             }
         }
@@ -401,6 +402,15 @@ void CSceneWindow::Draw_Graph(CGameObject* pObj)
     pTGraph->Render_Points();
 }
 
+void CSceneWindow::Draw_GraphOBB(CGameObject* pObj)
+{
+    CTrackGraph* pTGraph = pObj->Get_Component<CTrackGraph>();
+    if (!pTGraph)
+        return;
+
+    pTGraph->Render_Samples();
+}
+
 void CSceneWindow::Object_Pick(const map<const _tchar*, vector<CGameObject*>>& map, _vec3 worldRayOrigin, _vec3 worldRayDir)
 {
     float bestDist = FLT_MAX;
@@ -458,7 +468,7 @@ void CSceneWindow::Spline_Pick(const map<const _tchar*, vector<CGameObject*>>& m
         // Spline 점 피킹
         if (CSpline* pSpline = pSel->Get_Component<CSpline>()) {
             DirectX::BoundingSphere sphere;
-            sphere.Radius = 0.2f;
+            sphere.Radius = 0.25f;
 
             auto& vecP = pSpline->Get_ControlPoints();
             for (int i = 0; i < vecP.size(); ++i) {
@@ -544,7 +554,7 @@ void CSceneWindow::GraphNode_Pick(const map<const _tchar*, vector<CGameObject*>>
         // Graph의 Node 점 피킹
         if (CTrackGraph* pTGraph = pSel->Get_Component<CTrackGraph>()) {
             DirectX::BoundingSphere sphere;
-            sphere.Radius = 0.2f;
+            sphere.Radius = 0.25f;
 
             auto& vecTN = pTGraph->Get_Nodes();
             for (int i = 0; i < vecTN.size(); ++i) {
@@ -581,7 +591,7 @@ void CSceneWindow::GraphPoint_Pick(const map<const _tchar*, vector<CGameObject*>
         // Graph의 Node 점 피킹
         if (CTrackGraph* pTGraph = pSel->Get_Component<CTrackGraph>()) {
             DirectX::BoundingSphere sphere;
-            sphere.Radius = 0.2f;
+            sphere.Radius = 0.25f;
 
             TrackEdge* pTE = pTGraph->Get_TrackEdge(g_uGraphEdgeEdit);
             

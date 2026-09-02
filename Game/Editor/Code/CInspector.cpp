@@ -292,6 +292,10 @@ void CInspector::SplineCom(CGameObject* _pObj)
                 bool openPoint = ImGui::TreeNodeEx(
                     (void*)cp.id, flags, "%d", cp.id
                 );
+                if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+                    ::Set_PointSelected(cp.id);
+                }
+
                 ImGui::PushID(cp.id);
                 if (ImGui::BeginPopupContextItem("ControlPoint_Menu")) {
                     if (ImGui::Selectable("Delete")) {
@@ -656,6 +660,15 @@ void CInspector::TrackGraphCom(CGameObject* _pObj)
     }
 
     if (open) {
+        float availX = ImGui::GetContentRegionAvail().x;
+        float btnW = availX * 0.8f;
+
+        ImGui::SetCursorPosX(((availX - btnW) * 0.5));
+        if (ImGui::Button("Compute Graph", ImVec2(btnW, 0))) {
+            pTGraph->Compute_Graph();
+        }
+        ImGui::Separator();
+
         TrackGraph_Node(pTGraph);
 
         TrackGraph_Edge(pTGraph);
@@ -712,6 +725,10 @@ void CInspector::TrackGraph_Node(CTrackGraph* pTGraph)
             bool openNode = ImGui::TreeNodeEx(
                 (void*)&tn, flags, "Node %d", tn.id
             );
+            if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+                ::Set_PointSelected(tn.id);
+            }
+
             ImGui::PushID(&tn);
             if (ImGui::BeginPopupContextItem("TrackGraph_Nodes_Menu")) {
                 if (ImGui::Selectable("Delete")) {
@@ -729,6 +746,7 @@ void CInspector::TrackGraph_Node(CTrackGraph* pTGraph)
                 _vec3 tr;
                 tr.x = tn.position.x, tr.y = tn.position.y, tr.z = tn.position.z;
                 bool bFinish = tn.bFinish;
+                bool bStart = tn.bStart;
 
                 sprintf_s(buf, sizeof(buf), "##pos%d", tn.id);
                 ImGuiLabel("Pos");
@@ -743,6 +761,12 @@ void CInspector::TrackGraph_Node(CTrackGraph* pTGraph)
                 ImGuiLabel("IsFinish");
                 if (ImGui::Checkbox(buf, &bFinish)) {
                     tn.bFinish = bFinish;
+                }
+
+                sprintf_s(buf, sizeof(buf), "##bStart%d", tn.id);
+                ImGuiLabel("IsStart");
+                if (ImGui::Checkbox(buf, &bStart)) {
+                    tn.bStart = bStart;
                 }
             }
             ImGui::Separator();
@@ -940,6 +964,10 @@ void CInspector::TrackGraph_Point(CTrackGraph* pTGraph, TrackEdge* _pTE)
             bool openPoint = ImGui::TreeNodeEx(
                 (void*)&cp, flags, "Point %d", cp.id
             );
+            if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+                ::Set_PointSelected(cp.id);
+            }
+
             ImGui::PushID(&cp);
             if (ImGui::BeginPopupContextItem("TrackGraph_ControlPoint_Menu")) {
                 if (ImGui::Selectable("Delete")) {

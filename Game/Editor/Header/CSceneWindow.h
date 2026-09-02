@@ -23,6 +23,7 @@ private:
     void Draw_SplinePoints(CGameObject* pObj);
     void Draw_HeightMap(CGameObject* pObj);
     void Draw_Graph(CGameObject* pObj);
+    void Draw_GraphOBB(CGameObject* pObj);
 
     void Object_Pick(const map<const _tchar*, vector<CGameObject*>>& map, _vec3 worldRayOrigin, _vec3 worldRayDir);
     void Spline_Pick(const map<const _tchar*, vector<CGameObject*>>& map, _vec3 worldRayOrigin, _vec3 worldRayDir);
