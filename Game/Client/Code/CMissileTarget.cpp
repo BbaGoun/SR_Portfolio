@@ -23,7 +23,7 @@ HRESULT CMissileTarget::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_iLast_KeyInput	= 0;	// 아무것도 누르지 않았을경우 '0'으로 없음 표시
+	m_iLast_KeyInput	= 0;	
 	m_iAccumulate		= 0;
 
 	m_fSpeed			= 0.f;
@@ -391,8 +391,7 @@ void CMissileTarget::Render_GameObject()
 }
 
 void CMissileTarget::KeyInput(const _float& fDeltaTime)
-{	// 1. 클래스 만들어서 버블 시 화면에 키보드 UI 띄우고 누르는키 표시 되게
-	// 2. 나중에 카트처럼 머리 및 바퀴 움직임 구현
+{
 	CGameObject* pWaterBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_WaterBombBody");
 
 	_vec3 vPos, vFlyPos;
@@ -490,6 +489,27 @@ void CMissileTarget::KeyInput(const _float& fDeltaTime)
 		CreateShieldObject();
 		m_bShieldActive = true;
 		m_bShieldTimer	= true;
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_5))
+	{
+		CreateShieldObject();
+		m_bShieldActive = true;
+		m_bShieldTimer = true;
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_1))
+	{
+		CreateShieldObject();
+		m_bShieldActive = true;
+		m_bShieldTimer = true;
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_3))
+	{
+		CreateShieldObject();
+		m_bShieldActive = true;
+		m_bShieldTimer = true;
 	}
 }
 
@@ -628,7 +648,7 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 			}
 		}
 
-		//else if (wcscmp(wOtherTag, L"Obj_Ufo") == 0)
+		//else if (wcscmp(wOtherTag, L"Obj_Ufo") == 0)	// 머리위로 충돌하고 몇 초 뒤 속도 느리게 아이템 발동 서서히 느려지게 -> 몇초 뒤 복원
 		//{
 		//	if (m_bShieldActive)
 		//		m_bShieldHit = true;

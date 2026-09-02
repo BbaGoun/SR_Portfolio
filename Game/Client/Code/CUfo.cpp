@@ -88,7 +88,7 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	//m_pTransformCom->Set_Pos(vFlyPos);
 ////////////////////////////////////////////////////////////////////////
-// 구현 후 하드코딩 수정
+// 구현 후 하드코딩 수정 -> 도는 부분 for문으로 수정
 	m_fTimer += fFixedDeltaTime;
 
 	if (m_fTimer < 1.85f)
@@ -300,12 +300,13 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);
 	}
 
-	//if (m_fTimer >= 1.90f  && m_fTimer < 2.00f )		// 바디에서 랜더 켜기
-	//{
-	//	m_vSavePos.y -= 1.55f;
-	//	m_pTransformCom->Set_Pos(m_vSavePos);
-	//}
+	if (m_fTimer >= 1.90f  && m_fTimer < 2.00f )		// 바디에서 랜더 켜기
+	{
+		m_vSavePos.y -= 1.55f;
+		m_pTransformCom->Set_Pos(m_vSavePos);
+	}
 
+	// 돌면서 내려가는 것 구현 후 -> 충돌 처리 -> 타겟 속도 느려지게 하기 = 까지 구현되면 1등만 찾아가게 하기
 	_quaternion q;
 
 	m_pTransformCom->GetFollowQuaternion(&vCartLook, &q);
