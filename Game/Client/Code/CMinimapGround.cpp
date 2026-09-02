@@ -23,8 +23,9 @@ HRESULT CMinimapGround::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_pTransformCom->Set_Pos({ -630,0,-340 });
-	m_pTransformCom->Set_Scale({ 2300,2625,1 }); // 일단 스카이박스 크기로 설정
+	m_pTransformCom->Set_Pos({ -440,0,-190 });
+	m_pTransformCom->Set_Scale({ 1232.8,1811.93,1 });
+
 	
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(180), D3DXToRadian(90), 0);
@@ -40,7 +41,7 @@ HRESULT CMinimapGround::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
-
+	fScale = 1;
 	return S_OK;
 }
 
@@ -65,20 +66,19 @@ _int CMinimapGround::Update_GameObject(const _float& fDeltaTime)
 		vPos.x += 10.f;
 
 	if (GetAsyncKeyState('Z'))
-		vScale.x += 10.f;
+		fScale += fDeltaTime;
 	if (GetAsyncKeyState('X'))
-		vScale.x -= 10.f;
-	if (GetAsyncKeyState('C'))
-		vScale.y += 10.f;
-	if (GetAsyncKeyState('V'))
-		vScale.y -= 10.f;
+		fScale -= fDeltaTime;
 
 	
 	m_pTransformCom->Set_Pos(vPos);
-	m_pTransformCom->Set_Scale(vScale);
+	m_pTransformCom->Set_Scale(_vec3({ 1232.8,1811.93,1 }) * fScale);
 
-	//cout << "x: " << vPos.x << "\ty: " << vPos.y << "\tz: " << vPos.z << endl;
-	//cout << "Scale.x: " << vScale.x << "\tScale.y: " << vScale.y << endl;
+	cout << "x: " << vPos.x << "\ty: " << vPos.y << "\tz: " << vPos.z << endl;
+	cout << "Scale.x: " << vScale.x << "\tScale.y: " << vScale.y << endl;
+
+	cout << "fScale: " << fScale << endl;
+	int a;
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -90,10 +90,9 @@ void CMinimapGround::LateUpdate_GameObject(const _float& fDeltaTime)
 void CMinimapGround::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pTextureCom->Set_Texture(0);
 	m_pVIBufferCom->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetTexture(0, nullptr);
 }
 
 CMinimapGround* CMinimapGround::Create(LPDIRECT3DDEVICE9 pGraphicDev)

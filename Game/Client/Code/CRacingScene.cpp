@@ -38,6 +38,7 @@
 #include "CStartCam.h"
 #include "CTrackCam.h"
 #include "CFinishCam.h"
+#include "CSkyDome.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -156,7 +157,7 @@ HRESULT CRacingScene::LoadSceneFromFile()
 
 HRESULT CRacingScene::Ready_RenderTarget()
 {
-	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"Minimap", 250, 400);
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"Minimap", 256, 384);
 	CRenderer::GetInstance()->Ready_BlurRT(m_pGraphicDev);
 	return S_OK;
 }
@@ -305,6 +306,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 			CCameraMgr::GetInstance()->AddRePlayCam(static_cast<CCamera*>(cam));
 	}
 	CCameraMgr::GetInstance()->SetCart(pCart);
+
 	return S_OK;
 }
 
@@ -318,13 +320,22 @@ HRESULT CRacingScene::Ready_Environment_Layer()
 	m_mapLayer.insert({ L"Environment", pEnvironmentLayer });
 
 	CGameObject* pEnvObject = nullptr;
-	pEnvObject = CSkyBox::Create(m_pGraphicDev);
+	
+	
+	//pEnvObject = CSkyBox::Create(m_pGraphicDev);
+	//
+	//if (pEnvObject == nullptr)
+	//	return E_FAIL;
+	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_SkyBox", pEnvObject)))
+	//	return E_FAIL;
+	
+	//CSkyDome
+	pEnvObject = CSkyDome::Create(m_pGraphicDev);
 
 	if (pEnvObject == nullptr)
 		return E_FAIL;
-	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_SkyBox", pEnvObject)))
+	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_SkyDome", pEnvObject)))
 		return E_FAIL;
-
 	return S_OK;
 }
 

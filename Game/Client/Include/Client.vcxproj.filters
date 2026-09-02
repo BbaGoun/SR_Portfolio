@@ -334,8 +334,11 @@
     <Filter Include="02. GameObject\Item\Shield\Shield2">
       <UniqueIdentifier>{d798c48d-f61d-4264-84f6-c3a4b047d43e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Camera\EndCamera">
+    <Filter Include="02. GameObject\Camera\FinishCamera">
       <UniqueIdentifier>{82b289d8-e95a-40fe-9f94-22000c0e3f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\SkyDome">
+      <UniqueIdentifier>{6093aef2-3b67-40bb-b9e2-8742e114afeb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -655,7 +658,10 @@
       <Filter>02. GameObject\Item\Shield\Shield2</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CFinishCam.h">
-      <Filter>02. GameObject\Camera\EndCamera</Filter>
+      <Filter>02. GameObject\Camera\FinishCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSkyDome.h">
+      <Filter>02. GameObject\SkyDome</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -966,7 +972,10 @@
       <Filter>02. GameObject\Item\Shield\Shield2</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CFinishCam.cpp">
-      <Filter>02. GameObject\Camera\EndCamera</Filter>
+      <Filter>02. GameObject\Camera\FinishCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSkyDome.cpp">
+      <Filter>02. GameObject\SkyDome</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

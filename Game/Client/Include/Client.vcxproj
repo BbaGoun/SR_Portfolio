@@ -251,6 +251,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CScene3_StartBtn.h" />
     <ClInclude Include="..\Header\CShield1.h" />
     <ClInclude Include="..\Header\CShield2.h" />
+    <ClInclude Include="..\Header\CSkyDome.h" />
     <ClInclude Include="..\Header\CSpeedLine.h" />
     <ClInclude Include="..\Header\CStartCam.h" />
     <ClInclude Include="..\Header\CTrackCam.h" />
@@ -349,6 +350,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CScene3_StartBtn.cpp" />
     <ClCompile Include="..\Code\CShield1.cpp" />
     <ClCompile Include="..\Code\CShield2.cpp" />
+    <ClCompile Include="..\Code\CSkyDome.cpp" />
     <ClCompile Include="..\Code\CSpeedLine.cpp" />
     <ClCompile Include="..\Code\CStartCam.cpp" />
     <ClCompile Include="..\Code\CTrackCam.cpp" />

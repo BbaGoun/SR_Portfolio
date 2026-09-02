@@ -15,12 +15,13 @@ IMPLEMENT_SINGLETON(CPlayTimeMgr)
 
 CPlayTimeMgr::CPlayTimeMgr()
 {
+	int a;
 	m_fStartTimer	= 0.f;
 	m_fPlayTimer	= 0.f;
 	m_fTimerFlag	= 0.f;
 	m_bStart		= false;
 	m_bPlaying		= false;
-	m_fPlayEndTime	= 5.f;
+	m_fPlayEndTime	= 300000.f;
 }
 
 CPlayTimeMgr::~CPlayTimeMgr()

@@ -1103,13 +1103,17 @@ void CCart::UpdateStartBoost()
 
 void CCart::UpdateBlur(const _float& fDeltaTime)
 {
+	if (CPlayTimeMgr::GetInstance()->GetPlaying() == false)
+	{
+		CRenderer::GetInstance()->SetBlur(false);
+		return;
+	}
 	float fTotalSpeed = D3DXVec3Length(&m_vForce) * m_fSpeed;
 	if (fTotalSpeed > 60.f)
 	{
-		float fBlurPower = (fTotalSpeed - 60) / 140.f;
+		float fBlurPower = (fTotalSpeed - 60) / 100.f;
 		fBlurPower = clampT(fBlurPower, 0.f, 0.8f);
-		cout << fBlurPower << endl;
-		CRenderer::GetInstance()->SetBlurPower(0.8);
+		CRenderer::GetInstance()->SetBlurPower(fBlurPower);
 	}
 	else
 		CRenderer::GetInstance()->SetBlurPower(0.f);

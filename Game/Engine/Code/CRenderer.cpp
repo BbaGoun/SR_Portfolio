@@ -150,10 +150,10 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 		pGraphicDev->GetRenderTarget(0, &pOldRT);
 		pGraphicDev->GetDepthStencilSurface(&pOldDS);
 
-		RTINFO* pInfo = pair.second;   
+		RTINFO* pInfo = pair.second;
 
-		pGraphicDev->SetRenderTarget(0, pInfo->pRTSurface);         
-		pGraphicDev->SetDepthStencilSurface(pInfo->pRTDepthStencil); 
+		pGraphicDev->SetRenderTarget(0, pInfo->pRTSurface);
+		pGraphicDev->SetDepthStencilSurface(pInfo->pRTDepthStencil);
 
 		pGraphicDev->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
 			D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0);
@@ -176,7 +176,7 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 				return vDst.z > vSrc.z;
 			});
 
-		for (auto& pObj : pInfo->RenderList)   
+		for (auto& pObj : pInfo->RenderList)
 			pObj->Render_GameObject();
 
 		pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -320,8 +320,8 @@ void CRenderer::Render_Fog(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
 
 	// 3. 안개의 시작 위치와 끝 위치 설정
-	float fFogStart = 15.0f;  
-	float fFogEnd	= 300.0f; 
+	float fFogStart = 15.0f;
+	float fFogEnd = 300.0f;
 
 	pGraphicDev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)(&fFogStart)));
 	pGraphicDev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&fFogEnd)));
@@ -543,17 +543,19 @@ void CRenderer::RenderBlur(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	DrawFullScreen(pGraphicDev, m_pBlurA->pRTTexture, (_byte)(m_fBlurPower * 255.f));
 
-	// 5. RT 포인터 스왑
+	// 5. 표면 복사
+	pGraphicDev->StretchRect(m_pBlurB->pRTSurface, nullptr, pOldRT, nullptr, D3DTEXF_NONE);
+
+	//DrawFullScreen(pGraphicDev, m_pBlurB->pRTTexture, (_byte)(1.f * 255.f));
+
+	// 6. RT 포인터 스왑
 	swap(m_pBlurA, m_pBlurB);
 
-	// 6. OldRT(백버퍼)로 원상복구 
+	// 7. OldRT(백버퍼)로 원상복구 
 	pGraphicDev->SetRenderTarget(0, pOldRT);
 	pGraphicDev->SetDepthStencilSurface(pOldDS);
 	Safe_Release(pOldRT);
 	Safe_Release(pOldDS);
-
-	// 7. 후 (m_BlurB) 그리기 -> 백버퍼에 현재 씬 + 잔상 이 합쳐진 텍스처가 그려짐
-	DrawFullScreen(pGraphicDev, m_pBlurB->pRTTexture, (_byte)(1.f * 255.f));
 
 	// 8. 파티클 + UI 그리기
 	Render_Particle(pGraphicDev);
@@ -568,7 +570,7 @@ void CRenderer::DrawFullScreen(LPDIRECT3DDEVICE9& pGraphicDev, LPDIRECT3DTEXTURE
 	if (pTexture == nullptr || byAlpha == 0)
 		return;
 
-	VTXSCREEN buffer[8];
+	VTXSCREEN buffer[5];
 
 	_D3DVIEWPORT9 vp;
 	pGraphicDev->GetViewport(&vp);
@@ -576,70 +578,37 @@ void CRenderer::DrawFullScreen(LPDIRECT3DDEVICE9& pGraphicDev, LPDIRECT3DTEXTURE
 	float fHeight = vp.Height;
 
 	D3DXCOLOR dwColor = D3DCOLOR_ARGB(byAlpha, 255, 255, 255);
-	buffer[0] = { {-0.5f,-0.5f,0,1},		dwColor,		{0,0} };
-	buffer[1] = { {fWidth , 0,0,1},			dwColor,		{1,0} };
-	buffer[2] = { {fWidth ,fHeight,0,1},	dwColor,		{1,1} };
-	buffer[3] = { { 0,fHeight ,0,1},		dwColor,		{0,1} };
+	buffer[0] = { {0.f				,0.f			,0,1},	dwColor,		{0,0} };
+	buffer[1] = { {fWidth			,0.f			,0,1},	dwColor,		{1,0} };
+	buffer[2] = { {fWidth			,fHeight		,0,1},	dwColor,		{1,1} };
+	buffer[3] = { {0.f				,fHeight		,0,1},	dwColor,		{0,1} };
 
-	////dwColor = D3DCOLOR_ARGB(byAlpha, 255, 255, 255);
-	//buffer[4] = { {fWidth / 3,	fHeight / 3,	0,1},		dwColor,		{1/3,1/3} };
-	//buffer[5] = { {fWidth *2/ 3,fHeight / 3,	0,1},		dwColor,		{2/3,1/3} };
-	//buffer[6] = { {fWidth *2/ 3,fHeight *2/ 3,	0,1},		dwColor,		{2/3,2/3} };
-	//buffer[7] = { {fWidth / 3,	fHeight *2/ 3,	0,1},		dwColor,		{1/3,2/3} };
+	dwColor = D3DCOLOR_ARGB(0, 255, 255, 255);
+	buffer[4] = { {fWidth * 0.5f	,fHeight * 0.5f	,0,1},	dwColor,		{0.5f,0.5f} };
 
-	INDEX32  indices[10];
+	INDEX32  indices[4];
 
 	indices[0]._0 = 0;
-	indices[0]._1 = 1;
-	indices[0]._2 = 3;
-
-	indices[1]._0 = 3;
-	indices[1]._1 = 1;
-	indices[1]._2 = 2;
-
-	/*indices[0]._0 = 0;
 	indices[0]._1 = 1;
 	indices[0]._2 = 4;
 
 	indices[1]._0 = 4;
 	indices[1]._1 = 1;
-	indices[1]._2 = 5;*/
+	indices[1]._2 = 2;
 
-	//indices[2]._0 = 5;
-	//indices[2]._1 = 1;
-	//indices[2]._2 = 6;
-	//
-	//indices[3]._0 = 6;
-	//indices[3]._1 = 1;
-	//indices[3]._2 = 2;
-	//
-	//indices[4]._0 = 3;
-	//indices[4]._1 = 6;
-	//indices[4]._2 = 2;
-	//
-	//indices[5]._0 = 3;
-	//indices[5]._1 = 7;
-	//indices[5]._2 = 6;
-	//
-	//indices[6]._0 = 3;
-	//indices[6]._1 = 4;
-	//indices[6]._2 = 7;
-	//
-	//indices[7]._0 = 3;
-	//indices[7]._1 = 0;
-	//indices[7]._2 = 4;
-	//
-	//indices[8]._0 = 7;
-	//indices[8]._1 = 4;
-	//indices[8]._2 = 5;
-	//
-	//indices[9]._0 = 7;
-	//indices[9]._1 = 5;
-	//indices[9]._2 = 6;
+	indices[2]._0 = 3;
+	indices[2]._1 = 4;
+	indices[2]._2 = 2;
+
+	indices[3]._0 = 3;
+	indices[3]._1 = 0;
+	indices[3]._2 = 4;
 
 	// 텍스처 설정
 	pGraphicDev->SetTexture(0, pTexture);
 	// 텍스처의 알파값이 아닌 정점의 알파값으로 계산해라
+
+	pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
 	pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
 
 	// z쓰기 끄기
@@ -649,13 +618,15 @@ void CRenderer::DrawFullScreen(LPDIRECT3DDEVICE9& pGraphicDev, LPDIRECT3DTEXTURE
 
 	// FVF설정 및 그리기
 	pGraphicDev->SetFVF(FVF_SCREEN);
-	pGraphicDev->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST, 0, 4, 2,
+
+	pGraphicDev->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST, 0, 5, 4,
 		indices, D3DFMT_INDEX32, buffer, sizeof(VTXSCREEN));
 
-// 복원
-	// 텍스처 끄기
+	// 복원
+		// 텍스처 끄기
 	pGraphicDev->SetTexture(0, nullptr);
 	// 정점의 알파값이 아닌 텍스처의 알파값으로 계산해라
+	pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
 	pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
 	// z쓰기 켜기
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -723,10 +694,10 @@ void CRenderer::FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 	float m[16];
 	memcpy(m, &matProj.m, sizeof(float) * 16);
 	DirectX::XMMATRIX xmMatProj(m);
-	
+
 	DirectX::BoundingFrustum tFrustum;
 	DirectX::BoundingFrustum::CreateFromMatrix(tFrustum, xmMatProj);
-	
+
 	memcpy(m, &matInvView.m, sizeof(float) * 16);
 	DirectX::XMMATRIX xmMatInvView(m);
 

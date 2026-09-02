@@ -45,7 +45,7 @@ HRESULT CFinishCam::Ready_GameObject(const _vec3& pEye,
 	m_fYaw = 0;
 	m_fDistScale = 1;
 	m_fBackDistance = 0.f;
-	m_fDeltaAngle = -60.f;
+	m_fDeltaAngle = -45.f;
 	m_vRotation.y = -45.f;
 	return S_OK;
 }
@@ -63,9 +63,9 @@ void CFinishCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		pTrans->Get_Info(INFO_UP, &vPlayerUp);
 
 		if (m_vRotation.y > -45.f)
-			m_fDeltaAngle = -60.f;
+			m_fDeltaAngle = -45.f;
 		if (m_vRotation.y < -135.f)
-			m_fDeltaAngle = 60.f;
+			m_fDeltaAngle = 45.f;
 
 		m_vRotation.y += m_fDeltaAngle * fFixedDeltaTime;
 		_matrix matRot;
