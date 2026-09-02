@@ -111,7 +111,7 @@ void CSceneWindow::Update_Window()
     ImGui::Text("| Move Speed");
     ImGui::SameLine();
     ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
-    ImGui::SliderFloat("##Move Speed", &m_moveSpeed, 0.1f, 1.f);
+    ImGui::SliderFloat("##Move Speed", &m_moveSpeed, 0.1f, 3.f);
 
     ImVec2 viewPos = ImGui::GetCursorScreenPos(); // content 영역의 좌상단
     ImVec2 viewSize = ImGui::GetContentRegionAvail(); // content 영역의 크기

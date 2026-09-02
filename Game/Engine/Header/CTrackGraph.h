@@ -47,6 +47,29 @@ public:
 	TrackEdge*		Get_TrackEdge(EdgeId id);
 	ControlPoint*	Get_ControlPoint(TrackEdge* _pTE, uint32_t cpId);
 
+public:
+	bool ProjectPosition(
+		const _vec3& worldPosition,
+		const TrackLocator* previous,
+		TrackLocator& outLocator,
+		float* outLateral = nullptr);
+
+	bool EvaluatePose(
+		EdgeId edgeId,
+		float u,
+		TrackPose& outPose);
+
+	/*bool Advance(
+		const TrackLocator& from,
+		float distance,
+		const RoutePlan& route,
+		TrackPose& outPose);
+
+	float GetRouteDistance(
+		const TrackLocator& from,
+		const TrackLocator& to,
+		const RoutePlan& route);*/
+
 private:
 	TrackNode*		Find_TrackNode(TrackNode* pTN);
 	TrackEdge*		Find_TrackEdge(TrackEdge* pTE);
@@ -55,7 +78,11 @@ private:
 	void			Compute_Edge(TrackEdge* _pTE);
 	void			ComputeV(TrackEdge* _pTE);
 	void			ComputeTRU(TrackEdge* _pTE);
+	
 	void			Compute_Sample(TrackEdge* _pTE);
+	void			Make_LUT(TrackEdge* _pTE, vector<ArcLengthEntry>& lut);
+	float			Find_GlobalT(const vector<ArcLengthEntry>& lut, float targetLength);
+	
 	void			Compute_Sample_Speed(TrackEdge* _pTE);
 
 	void			PreRender_Points();

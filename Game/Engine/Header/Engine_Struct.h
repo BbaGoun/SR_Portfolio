@@ -228,6 +228,12 @@ namespace Engine
 		float fHazard;	// Hazard 레지스트리에서 합산
 		float fBias;	// 엣지의 fCostBias;
 	};
+
+	struct ArcLengthEntry
+	{
+		float globalT;  // segmentIndex + localT
+		float length;   // 곡선 시작부터의 누적 거리
+	};
 }
 
 

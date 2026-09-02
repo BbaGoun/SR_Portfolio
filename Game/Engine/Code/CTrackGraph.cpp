@@ -341,7 +341,7 @@ void CTrackGraph::Compute_Graph()
 	// 도착 노드의 설정
 	for (auto& edgeId : pTN_Finish->vecInEdgeIds) {
 		TrackEdge* pTE = Get_TrackEdge(edgeId);
-		pTE->sEnd = m_fSampleUnit;
+		pTE->sEnd = m_fLapLength;
 	}
 
 	for (auto& te : m_vecEdges) {
@@ -729,19 +729,15 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 	if (pTE->fromNode == 0 || pTE->toNode == 0)
 		return;
 
-	TrackNode* pTN_From = Get_TrackNode(pTE->fromNode);
-	TrackNode* pTN_To = Get_TrackNode(pTE->toNode);
+	int n = pTE->deqControls.size();
+
+	vector<ArcLengthEntry> lut;
+	Make_LUT(pTE, lut);
+	pTE->fLength = lut.back().length;
 
 	pTE->vecSamples.clear();
 
-	// 곡선마다 50등분을 하여 거리를 누적할 생각
-	int n = pTE->deqControls.size();
-
-	float splineSum = 0.f;
-	float distSum = 0.f;
-	float dist;
-
-	_vec3 before, cur, dir;
+	_vec3 cur;
 	ControlPoint start, end;
 	_vec3 A, D, vA, vD;
 	float bank, width, depth, rad;
@@ -750,8 +746,6 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 	_matrix matRotBank;
 
 	TrackSample TS;
-	_vec3 beforeSample;
-	_vec3 beforeT_h, T_h;
 
 	// 시작점
 	start = pTE->deqControls.front();
@@ -765,68 +759,50 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 	TS.halfW = width * 0.5f;
 	TS.halfH = depth * 0.5f;
 	// 샘플 유닛보다 조금 더 크게
-	TS.halfL = (m_fSampleUnit * 0.55f);
+	TS.halfL = m_fSampleUnit * 0.55f;
 
 	pTE->vecSamples.push_back(TS);
 
-	before = cur;
-	beforeSample = cur;
-	float spline_t = 0.02f;
+	for (float target = m_fSampleUnit; target < pTE->fLength; target += m_fSampleUnit) {
+		float globalT = Find_GlobalT(lut, target);
 
-	while (spline_t < n - 1) {
-		int index = floor(spline_t);
-		float local_t = spline_t - index;
+		int segment = int(floorf(globalT));
+		float localT = globalT - segment;
 
-		start = pTE->deqControls[index];
-		end = pTE->deqControls[index + 1];
+		start = pTE->deqControls[segment];
+		end = pTE->deqControls[segment + 1];
 		A = start.position; D = end.position;
 		vA = start.V; vD = end.V;
 
-		cur = Cubic_Hermite_Curve(local_t, A, D, vA, vD);
-		dir = cur - before;
-		dist = D3DXVec3Length(&dir);
+		cur = Cubic_Hermite_Curve(localT, A, D, vA, vD);
 
-		splineSum += dist;
-		distSum += dist;
+		T = Cubic_Hermite_Curve_Derivative(localT, A, D, vA, vD);
+		D3DXVec3Normalize(&T, &T);
 
-		// 샘플 생성
-		if (distSum >= m_fSampleUnit) {
-			T = Cubic_Hermite_Curve_Derivative(local_t, A, D, vA, vD);
-			D3DXVec3Normalize(&T, &T);
+		D3DXVec3Cross(&R, &worldUp, &T);
+		D3DXVec3Normalize(&R, &R);
 
-			D3DXVec3Cross(&R, &worldUp, &T);
-			D3DXVec3Normalize(&R, &R);
+		D3DXVec3Cross(&U, &T, &R);
+		D3DXVec3Normalize(&U, &U);
 
-			D3DXVec3Cross(&U, &T, &R);
-			D3DXVec3Normalize(&U, &U);
+		bank = Lerp(localT, start.bank, end.bank);
+		width = Lerp(localT, start.width, end.width);
+		depth = Lerp(localT, start.depth, end.depth);
 
-			bank = Lerp(local_t, start.bank, end.bank);
-			width = Lerp(local_t, start.width, end.width);
-			depth = Lerp(local_t, start.depth, end.depth);
+		rad = D3DXToRadian(bank);
+		D3DXMatrixRotationAxis(&matRotBank, &T, rad);
 
-			rad = D3DXToRadian(bank);
-			D3DXMatrixRotationAxis(&matRotBank, &T, rad);
+		D3DXVec3TransformNormal(&R, &R, &matRotBank);
+		D3DXVec3TransformNormal(&U, &U, &matRotBank);
 
-			D3DXVec3TransformNormal(&R, &R, &matRotBank);
-			D3DXVec3TransformNormal(&U, &U, &matRotBank);
+		TS.position = cur;
+		TS.T = T, TS.R = R, TS.U = U;
 
-			TS.position = cur;
-			TS.T = T, TS.R = R, TS.U = U;
-
-			TS.u = splineSum;
-			TS.halfW = width * 0.5f;
-			TS.halfH = depth * 0.5f;
-			// 샘플 유닛보다 조금 더 크게
-			dir = cur - beforeSample;
-			dist = D3DXVec3Length(&dir);
-			TS.halfL = dist * 0.55f;
-			pTE->vecSamples.push_back(TS);
-
-			distSum -= m_fSampleUnit;
-			beforeSample = cur;
-		}
-		before = cur;
-		spline_t += 0.02f;
+		TS.u = target;
+		TS.halfW = width * 0.5f;
+		TS.halfH = depth * 0.5f;
+		TS.halfL = m_fSampleUnit * 0.55f;
+		pTE->vecSamples.push_back(TS);
 	}
 
 	// 끝점
@@ -837,16 +813,83 @@ void CTrackGraph::Compute_Sample(TrackEdge* _pTE)
 
 	TS.position = cur;
 	TS.T = T, TS.R = R, TS.U = U;
-	TS.u = splineSum;
+	TS.u = pTE->fLength;
 	TS.halfW = width * 0.5f;
 	TS.halfH = depth * 0.5f;
 	// 샘플 유닛보다 조금 더 크게
-	dir = cur - beforeSample;
-	dist = D3DXVec3Length(&dir);
-	TS.halfL = dist * 0.55f;
+	TS.halfL = fmodf(pTE->fLength, m_fSampleUnit) * 0.55f;
 	pTE->vecSamples.push_back(TS);
+}
 
-	pTE->fLength = splineSum;
+void CTrackGraph::Make_LUT(TrackEdge* _pTE, vector<ArcLengthEntry>& lut)
+{
+	int n = _pTE->deqControls.size();
+
+	constexpr int SUBDIVISIONS = 1000;
+	float totalLength = 0.f;
+
+	lut.push_back({ 0.f, 0.f });
+
+	for (int segment = 0; segment < n - 1; ++segment)
+	{
+		const ControlPoint& start = _pTE->deqControls[segment];
+		const ControlPoint& end = _pTE->deqControls[segment + 1];
+
+		_vec3 previous = Cubic_Hermite_Curve(
+			0.f,
+			start.position,
+			end.position,
+			start.V,
+			end.V);
+
+		for (int j = 1; j <= SUBDIVISIONS; ++j)
+		{
+			float localT = static_cast<float>(j) / SUBDIVISIONS;
+
+			_vec3 current = Cubic_Hermite_Curve(
+				localT,
+				start.position,
+				end.position,
+				start.V,
+				end.V);
+
+			_vec3 delta = current - previous;
+			totalLength += D3DXVec3Length(&delta);
+
+			lut.push_back({
+				static_cast<float>(segment) + localT,
+				totalLength
+				});
+
+			previous = current;
+		}
+	}
+}
+
+float CTrackGraph::Find_GlobalT(const vector<ArcLengthEntry>& lut, float targetLength)
+{
+	if (targetLength <= 0.f)
+		return lut.front().globalT;
+
+	if (targetLength >= lut.back().length)
+		return lut.back().globalT;
+
+	auto upper = std::lower_bound(
+		lut.begin(),
+		lut.end(),
+		targetLength,
+		[](const ArcLengthEntry& entry, float value)
+		{
+			return entry.length < value;
+		});
+
+	auto lower = upper - 1;
+
+	float lengthRange = upper->length - lower->length;
+
+	float alpha = (targetLength - lower->length) / lengthRange;
+
+	return Lerp(alpha, lower->globalT, upper->globalT);
 }
 
 void CTrackGraph::Compute_Sample_Speed(TrackEdge* _pTE)
@@ -867,7 +910,7 @@ void CTrackGraph::Compute_Sample_Speed(TrackEdge* _pTE)
 	vector<float> fLocal(n);
 
 	// 각 샘플의 로컬 제한 속력 계산
-	for (int i = 0; i < n-1; ++i) {
+	for (int i = 0; i < n; ++i) {
 		float kappa = 0;
 		if (i != 0) {
 			_vec3 beforeXZ, XZ;
@@ -880,7 +923,7 @@ void CTrackGraph::Compute_Sample_Speed(TrackEdge* _pTE)
 			XZ.y = 0;
 			D3DXVec3Normalize(&XZ, &XZ);
 
-			float du = vecS[i + 1].u - vecS[i].u;
+			float du = vecS[i].u - vecS[i - 1].u;
 
 			kappa = acosf(D3DXVec3Dot(&beforeXZ, &XZ)) / du;
 		}
