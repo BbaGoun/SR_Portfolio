@@ -86,6 +86,8 @@ public:
 	void	Set_SampleUnit(float _fSampleUnit) { m_fSampleUnit = _fSampleUnit; }
 	float	Get_SampleUnit() { return m_fSampleUnit; }
 
+	float	Get_LapLength() { return m_fLapLength; }
+
 	NodeId GenerateNodeId() { return m_uGenerateNodeId++; }
 	EdgeId GenerateEdgeId() { return m_uGenerateEdgeId++; }
 	uint32_t GenerateControlId() { return m_uGenerateControlId++; }

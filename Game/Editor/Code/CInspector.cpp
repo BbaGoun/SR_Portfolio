@@ -662,11 +662,15 @@ void CInspector::TrackGraphCom(CGameObject* _pObj)
     if (open) {
         float availX = ImGui::GetContentRegionAvail().x;
         float btnW = availX * 0.8f;
+        char buf[256];
 
         ImGui::SetCursorPosX(((availX - btnW) * 0.5));
         if (ImGui::Button("Compute Graph", ImVec2(btnW, 0))) {
             pTGraph->Compute_Graph();
         }
+        sprintf_s(buf, sizeof(buf), "LapLength : %f", pTGraph->Get_LapLength());
+        ImGui::Text(buf);
+
         ImGui::Separator();
 
         TrackGraph_Node(pTGraph);
@@ -726,7 +730,8 @@ void CInspector::TrackGraph_Node(CTrackGraph* pTGraph)
                 (void*)&tn, flags, "Node %d", tn.id
             );
             if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-                ::Set_PointSelected(tn.id);
+                if (g_bGraphNodeEdit)
+                    ::Set_PointSelected(tn.id);
             }
 
             ImGui::PushID(&tn);
@@ -768,6 +773,9 @@ void CInspector::TrackGraph_Node(CTrackGraph* pTGraph)
                 if (ImGui::Checkbox(buf, &bStart)) {
                     tn.bStart = bStart;
                 }
+
+                sprintf_s(buf, sizeof(buf), "s_Global : %f", tn.s_Global);
+                ImGui::Text(buf);
             }
             ImGui::Separator();
             ImGui::PopID();
@@ -965,7 +973,8 @@ void CInspector::TrackGraph_Point(CTrackGraph* pTGraph, TrackEdge* _pTE)
                 (void*)&cp, flags, "Point %d", cp.id
             );
             if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-                ::Set_PointSelected(cp.id);
+                if(g_uGraphEdgeEdit != 0)
+                    ::Set_PointSelected(cp.id);
             }
 
             ImGui::PushID(&cp);
