@@ -1506,7 +1506,7 @@ void CCart::UseItem()
 		CreateRainbowObject();
 		break;
 	case Engine::ITEM_UFO:
-		CreateUfoObject();
+		CreateUfoObject(); 
 		break;
 	case Engine::ITEM_WATERFLY:
 		CreateWaterFlyObject();

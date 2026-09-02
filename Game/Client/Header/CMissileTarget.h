@@ -52,6 +52,7 @@ private:
 	_float				m_fMaxSpeed;
 	_float				m_fTimer;
 	_float				m_fShieldTimer;
+	_float				m_fUfoTimer;
 
 	_int				m_iLast_KeyInput;
 	_int				m_iAccumulate;

@@ -26,10 +26,11 @@ HRESULT CMissileTarget::Ready_GameObject()
 	m_iLast_KeyInput	= 0;	
 	m_iAccumulate		= 0;
 
-	m_fSpeed			= 0.f;
+	m_fSpeed			= 1.f;
 	m_fMaxSpeed			= 3.f;
 	m_fTimer			= 0.f;
 	m_fShieldTimer		= 0.f;
+	m_fUfoTimer			= 0.f;
 
 	m_bMissileHit		= false;
 	m_bWaterBombHit		= false;
@@ -72,6 +73,16 @@ HRESULT CMissileTarget::Ready_GameObject()
 
 void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	m_vForce *= 0.98;
+	if (D3DXVec3Length(&m_vForce) < 1.f)
+		m_vForce *= 0;
+
+	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
+
+	_quaternion q;
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+	m_pTransformCom->Set_Quaternion(&q);
+
 	if (m_bMissileHit == false && m_bWaterBombHit == false && m_bWaterFlyHit == false && m_bUfoHit == false)
 		return;
 
@@ -272,86 +283,29 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_pBubble->Get_Transform()->Set_Pos(vPos);
 	}
 
-	// if (m_bUfoHit)
-	// {
-	//	m_fTimer += fFixedDeltaTime;
+	 if (m_bUfoHit)
+	 {
+		 m_fUfoTimer += fFixedDeltaTime;
 
-	//	_vec3 vPos, vFlyPos;
-	//	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		 _vec3 vLook;
+		 m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
-	//	if (m_fTimer < 0.08f)
-	//	{
-	//		vPos.y += m_vForce.y * fFixedDeltaTime;
-	//	}
+		 _float fDirection = D3DXVec3Dot(&vLook, &m_vForce);
+		 // m_vForce *= 0.5;
+		 if (fDirection > 0.f)
+		 {
+			 m_vForce -= vLook * 0.9f;
+		 }
 
-	//	//else if (m_fTimer < 0.08f)
-	//	//{
-	//	//	m_vForce.y = 0;
-	//	//}
+		 else
+			 m_vForce += vLook * 0.9f;
 
-	//	else if (m_fTimer > 0.15f && m_fTimer < 0.40f)
-	//	{
-	//		m_vRotation.x -= D3DXToRadian(100.f) * fFixedDeltaTime;
-	//		m_vRotation.y += D3DXToRadian(100.f) * fFixedDeltaTime;
-
-	//		if (m_vRotation.x <= D3DXToRadian(-25.f))
-	//		{
-	//			m_vRotation.x = D3DXToRadian(-25.f);
-	//		}
-
-	//		if (m_vRotation.y >= D3DXToRadian(25.f))
-	//		{
-	//			m_vRotation.y = D3DXToRadian(25.f);
-	//		}
-	//	}
-
-	//	else if (m_fTimer > 1.0f && m_fTimer < 2.f)
-	//	{
-	//		m_vRotation.x += D3DXToRadian(5.f) * fFixedDeltaTime;
-	//		m_vRotation.y -= D3DXToRadian(5.f) * fFixedDeltaTime;
-
-	//		if (m_vRotation.x >= D3DXToRadian(-20.f))
-	//		{
-	//			m_vRotation.x = D3DXToRadian(-20.f);
-	//		}
-
-	//		if (m_vRotation.y <= D3DXToRadian(20.f))
-	//		{
-	//			m_vRotation.y = D3DXToRadian(20.f);
-	//		}
-
-	//	}
-
-	//	else if (m_fTimer >= 2.f)
-	//	{
-	//		vPos.y -= m_vForce.y * 0.45f * fFixedDeltaTime;
-	//		m_vForce.y -= 5.f * fFixedDeltaTime;
-	//	}
-
-	//	_quaternion q;
-	//	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
-	//	m_pTransformCom->Set_Quaternion(&q);
-
-	//	if (vPos.y <= 0.f)
-	//	{
-	//		vPos.y = 0.f;
-	//		m_vForce.y = 0.f;
-	//		m_vRotation.x = 0.f;
-	//		m_vRotation.y = 0.f;
-	//		m_bUfoHit	   = false;
-	//		m_bWaterBubble = false;
-	//		SetBubbleUI(false);
-	//		m_pBubble->GetLayer()->Delete_GameObject(m_pBubble);
-	//		m_fTimer = 0.f;
-
-	//		_quaternion qReset;
-	//		D3DXQuaternionRotationYawPitchRoll(&qReset, 0.f, 0.f, 0.f);
-	//		m_pTransformCom->Set_Quaternion(&qReset);
-	//	}
-
-	//	m_pTransformCom->Set_Pos(vPos);
-	//	m_pBubble->Get_Transform()->Set_Pos(vPos);
-	//}
+		 if (m_fUfoTimer > 3.f)
+		 {
+			 m_bUfoHit = false;
+			 m_fUfoTimer = 0.f;
+		 }
+	 }
 }
 
 _int CMissileTarget::Update_GameObject(const _float& fDeltaTime)
@@ -441,7 +395,7 @@ void CMissileTarget::KeyInput(const _float& fDeltaTime)
 
 		if (m_iAccumulate >= 12)
 		{
-			vPos.y -= m_vForce.y * 0.45f * fDeltaTime;	// 원래는 픽시드
+			vPos.y -= m_vForce.y * 0.45f * fDeltaTime;	
 			m_vForce.y -= 5.f * fDeltaTime;
 
 			m_pTransformCom->Set_Pos(vPos);
@@ -484,32 +438,51 @@ void CMissileTarget::KeyInput(const _float& fDeltaTime)
 
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_O))
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_O))
 	{
 		CreateShieldObject();
 		m_bShieldActive = true;
 		m_bShieldTimer	= true;
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_5))
-	{
-		CreateShieldObject();
-		m_bShieldActive = true;
-		m_bShieldTimer = true;
-	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_1))
+	const WCHAR* wOtherTag = GetTag();
+	if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)	// 얘만 움직이게
 	{
-		CreateShieldObject();
-		m_bShieldActive = true;
-		m_bShieldTimer = true;
-	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_3))
-	{
-		CreateShieldObject();
-		m_bShieldActive = true;
-		m_bShieldTimer = true;
+		_vec3 vLook, vTempForce, vCross;
+
+		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+		vTempForce = m_vForce;
+
+		vLook.y = 0.f;
+		vTempForce.y = 0.f;
+
+		D3DXVec3Cross(&vCross, &vTempForce, &vLook);
+
+		float fForceLength = D3DXVec3Length(&m_vForce);
+		float fTurnAngle = min(0.8f, fForceLength * 0.04f);
+
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_J))
+		{
+			m_vForce += vLook * 0.8f;
+		}
+
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_N))
+		{
+			m_vForce -= vLook * 0.8f;
+		}
+
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_B))
+		{
+			m_vRotation.y -= D3DXToRadian(fTurnAngle);
+		}
+
+		if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_M))
+		{
+			m_vRotation.y += D3DXToRadian(fTurnAngle);
+		}
 	}
 }
 
@@ -648,36 +621,15 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 			}
 		}
 
-		//else if (wcscmp(wOtherTag, L"Obj_Ufo") == 0)	// 머리위로 충돌하고 몇 초 뒤 속도 느리게 아이템 발동 서서히 느려지게 -> 몇초 뒤 복원
-		//{
-		//	if (m_bShieldActive)
-		//		m_bShieldHit = true;
-		//	else if (m_bUfoHit == false && m_bWaterBubble == false)	// 수정하기
-		//	{
-		//		m_bUfoHit = true;
-		//		m_bWaterBubble = true;
-		//		SetBubbleUI(true);
-		//		m_vForce.y = 120.f;
-		//		m_vRotation.x += D3DXToRadian(0.f);
-		//		m_vRotation.y += D3DXToRadian(0.f);
-
-		//		m_pBubble = CWaterBombBubble::Create(m_pGraphicDev);
-
-		//		if (m_pBubble == nullptr)
-		//			return;
-
-		//		if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", m_pBubble)))
-		//			return;
-
-		//		m_pBubble->SetLayer(m_pLayer);
-
-		//		_vec3 vPos;
-
-		//		m_pTransformCom->Get_Info(INFO_POS, &vPos);
-		//		m_pBubble->Get_Transform()->Set_Pos(vPos);
-		//	}
-		//}
-	//}
+		else if (wcscmp(wOtherTag, L"Obj_Ufo") == 0)
+		{
+			//if (m_bShieldActive)	-> 전자파 밴드로 수정
+			//	m_bShieldHit = true;
+			if (m_bUfoHit == false)
+			{
+				m_bUfoHit = true;
+			}
+		}
 }
 
 CMissileTarget* CMissileTarget::Create(LPDIRECT3DDEVICE9 pGraphicDev)

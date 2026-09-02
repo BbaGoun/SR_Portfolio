@@ -20,16 +20,16 @@ HRESULT CUfo::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_fTimer	= 0.f;
-	m_fSpeed	= 400.f;
-	//m_fAngle		= 0.f;
-	m_fUfoBack  = 0.f;
-	m_fUfoFront = 0.f;
-	m_fUfoRight = 0.f;
-	m_vSavePos  = { 0.f, 0.f, 0.f };
+	m_fTimer	 = 0.f;
+	m_fSpeed	 = 400.f;
+	m_fUfoBack   = 0.f;
+	m_fUfoFront  = 0.f;
+	m_fUfoRight  = 0.f;
+	m_vSavePos   = { 0.f, 0.f, 0.f };
+	m_fAngle	 = 0.f;
 
-	m_bSavePos  = false;
-
+	m_bSavePos	 = false;
+	m_bFollowTag = false;
 	m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
 
 	Engine::CComponent* pComponent = nullptr;
@@ -295,22 +295,48 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		D3DXVec3Normalize(&vDirTarget, &vDirTarget);
 
 		// m_pTransformCom->Move_Pos(&vDirTarget, m_fSpeed, fFixedDeltaTime);
-		m_pTransformCom->Set_Pos(vTargetPos1 += vTargetUp * 15.f);
-
+		// m_pTransformCom->Set_Pos(vTargetPos1 += vTargetUp * 15.f);
+		m_pTransformCom->Set_Pos(vTargetPos1);
 		m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);
 	}
 
-	if (m_fTimer >= 1.90f  && m_fTimer < 2.00f )		// 바디에서 랜더 켜기
+	if (m_fTimer >= 1.85f)		// 바디에서 랜더 켜기
 	{
 		m_vSavePos.y -= 1.55f;
 		m_pTransformCom->Set_Pos(m_vSavePos);
 	}
 
-	// 돌면서 내려가는 것 구현 후 -> 충돌 처리 -> 타겟 속도 느려지게 하기 = 까지 구현되면 1등만 찾아가게 하기
-	_quaternion q;
+	if (m_bFollowTag)
+	{
+		_vec3 vStartPos;
 
-	m_pTransformCom->GetFollowQuaternion(&vCartLook, &q);
-	m_pTransformCom->Set_Quaternion(&q);
+		vStartPos = vTargetPos1 + vTargetUp * 11.f;
+		m_pTransformCom->Set_Pos(vStartPos);
+
+		_quaternion qRot;
+
+		D3DXQuaternionRotationYawPitchRoll(&qRot,D3DXToRadian(-10.f),0.f,0.f);
+
+		m_pTransformCom->Multiple_Quaternion(&qRot);
+	}
+
+	else
+	{
+		_quaternion q;
+
+		m_pTransformCom->GetFollowQuaternion(&vCartLook, &q);
+		m_pTransformCom->Set_Quaternion(&q);
+	}
+
+	if (m_fTimer >= 4.85f)
+	{
+		m_fTimer = 0.f;
+		m_bFollowTag = false;
+		m_pLayer->Delete_GameObject(this);
+	}
+
+	// 3초 뒤 아이템 꺼지고 펄스로 하기
+	// 돌면서 내려가는 것 구현 후 -> 충돌 처리 -> 타겟 속도 느려지게 하기 = 까지 구현되면 1등만 찾아가게 하기
 }
 
 _int CUfo::Update_GameObject(const _float& fTimeDelta)
@@ -349,6 +375,7 @@ void CUfo::TriggerEnter(CCollider* pOtherCollider)
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 	if (wcsncmp(wOtherTag, L"Obj_MissileTarget", 17) == 0)
 	{
+		m_bFollowTag = true;
 		// m_pLayer->Delete_GameObject(this);
 	}
 }
