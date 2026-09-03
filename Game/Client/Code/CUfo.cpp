@@ -6,6 +6,7 @@
 //#include "CUfoTex.h"
 #include "CCollisionMgr.h"
 #include "CCube_Collider.h"
+#include "CMissileTarget.h"
 
 CUfo::CUfo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -20,18 +21,21 @@ HRESULT CUfo::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_fTimer	 = 0.f;
-	m_fSpeed	 = 400.f;
-	m_fUfoBack   = 0.f;
-	m_fUfoFront  = 0.f;
-	m_fUfoRight  = 0.f;
-	m_vSavePos   = { 0.f, 0.f, 0.f };
-	m_vTargetUp  = { 0.f, 1.f, 0.f };
-	m_fAngle	 = 0.f;
+	m_fTimer		= 0.f;
+	m_fSpeed		= 400.f;
+	m_fUfoBack		= 0.f;
+	m_fUfoFront		= 0.f;
+	m_fUfoRight		= 0.f;
+	m_vSavePos		= { 0.f, 0.f, 0.f };
+	m_vTargetUp		= { 0.f, 1.f, 0.f };
+	m_fAngle		= 0.f;
 
-	m_bSavePos	 = false;
-	m_bFollowTag = false;
+	m_bSavePos		= false;
+	m_bFollowTag	= false;
+
 	m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
+
+						 m_pTarget = nullptr;
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -266,31 +270,37 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			&& D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget3)
 			&& D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget4))
 		{
-			vTargetPos = vTargetPos1;
+			// vTargetPos = vTargetPos1;
 			m_vTargetUp = vTargetUp1;
+			m_pTarget = pTarget1;
 		}
 		else if (D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget1)
 			&& D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget3)
 			&& D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget4))
 		{
-			vTargetPos = vTargetPos2;
+			// vTargetPos = vTargetPos2;
 			m_vTargetUp = vTargetUp2;
+			m_pTarget = pTarget2;
 		}
 		else if (D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget1)
 			&& D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget2)
 			&& D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget4))
 		{
-			vTargetPos = vTargetPos3;
+			// vTargetPos = vTargetPos3;
 			m_vTargetUp = vTargetUp3;
+			m_pTarget = pTarget3;
 		}
 		else
 		{
-			vTargetPos = vTargetPos4;
+			// vTargetPos = vTargetPos4;
 			m_vTargetUp = vTargetUp4;
+			m_pTarget = pTarget4;
 		}
 
+		_vec3 vTargetPos;
+
+		m_pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
 		m_pTransformCom->Set_Pos(vTargetPos);
-		m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);
 
 		m_bSavePos = true;
 	}
@@ -303,9 +313,12 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	if (m_bFollowTag)
 	{
-		_vec3 vStartPos;
+		_vec3 vStartPos, vTargetUp, vTargetPos;
 
-		vStartPos = m_vSavePos + m_vTargetUp * 11.f;
+		m_pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+		m_pTarget->Get_Transform()->Get_Info(INFO_UP, &vTargetUp);
+
+		vStartPos = vTargetPos + vTargetUp * 11.f;
 		m_pTransformCom->Set_Pos(vStartPos);
 
 		_quaternion qRot;

@@ -36,8 +36,9 @@ private:
 	Engine::CRcTex*			m_pBufferCom;
 
 
-	_float			m_fSpeed;
-	// _bool			m_bUfoHit;   
+	// _float		m_fSpeed;
+	_float			m_fUfoHitTimer;
+	// _bool		m_bUfoHit;   
   
 
 public:

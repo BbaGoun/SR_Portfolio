@@ -77,6 +77,7 @@ private:
 	_bool				m_bShieldActive;
 	_bool				m_bUfoHit;
 	_bool				m_EmpBandCreate;
+	_bool				m_bEmp_UfoHit;
 
 protected:
 	virtual		void		Free() override;

@@ -6,6 +6,7 @@ namespace Engine
 {
 	class CCube_Collider;
 }
+class CMissileTarget;
 
 class CUfo : public CGameObject
 {
@@ -30,6 +31,7 @@ public:
 
 private:
 	Engine::CCube_Collider* m_pColliderCom;
+	CGameObject*	m_pTarget;
 	_float			m_fTimer;
 	_float			m_fUfoBack;
 	_float			m_fUfoFront;

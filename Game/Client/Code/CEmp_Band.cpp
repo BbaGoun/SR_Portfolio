@@ -18,6 +18,10 @@ CEmp_Band::~CEmp_Band()
 HRESULT CEmp_Band::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
+
+	m_fUfoHitTimer		   = 0.f;
+
+
 	CComponent* pComponent = nullptr;
 
 	m_pTransformCom->Set_Scale({ 1.5f, 1.5f,1.f });
@@ -56,15 +60,24 @@ void CEmp_Band::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	if (pTarget != nullptr && pTarget->GetUfoHit())
 	{
-		_vec3 vUp = { 0.f, 1.f, 0.f };
+		m_fUfoHitTimer += fFixedDeltaTime;
 
-		m_pTransformCom->Move_Pos(&vUp, 5.f, fFixedDeltaTime);
+		if (m_fUfoHitTimer >= 0.5f)
+		{
+			_vec3 vUp = { 0.f, 1.f, 0.f };
+
+			m_pTransformCom->Move_Pos(&vUp, 5.f, fFixedDeltaTime);
+		}
 	}
 	
+	else
+	{
+		m_fUfoHitTimer = 0.f;
+	}
+
 	_quaternion q;
 	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
 	m_pTransformCom->Set_Quaternion(&q);
-
 }
 
 _int CEmp_Band::Update_GameObject(const _float& fDeltaTime)

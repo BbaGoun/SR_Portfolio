@@ -45,8 +45,9 @@ HRESULT CMissileTarget::Ready_GameObject()
 	m_bShieldActive		= false;
 	m_bUfoHit			= false;
 	m_EmpBandCreate		= false;
+	m_bEmp_UfoHit		= false;
 
-	m_pTransformCom->Set_Pos({ -30.f,0.f, 90.f });
+	m_pTransformCom->Set_Pos({ -90.f,0.f, 90.f });
 	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
 
 	m_pBubble = nullptr;
@@ -313,11 +314,18 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		 D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
 		 m_pTransformCom->Set_Quaternion(&q);
 
-		 if (m_fUfoTimer > 3.f)
+		 if (m_bEmp_UfoHit && m_fUfoTimer > 1.f || !m_bEmp_UfoHit && m_fUfoTimer > 3.f)
 		 {
 			 m_bUfoHit = false;
+			 m_bEmp_UfoHit = false;
 			 m_fUfoTimer = 0.f;
 		 }
+
+		 //if (m_fUfoTimer > 3.f)
+		 //{
+			// m_bUfoHit = false;
+			// m_fUfoTimer = 0.f;
+		 //}
 	 }
 }
 
@@ -675,8 +683,9 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 
 		else if (wcscmp(wOtherTag, L"Obj_Ufo") == 0)
 		{
-			//if (m_bShieldActive)	-> 전자파 밴드로 수정
-			//	m_bShieldHit = true;
+			if (m_EmpBandCreate)
+				m_bEmp_UfoHit = true;
+
 			if (m_bUfoHit == false)
 			{
 				m_bUfoHit = true;

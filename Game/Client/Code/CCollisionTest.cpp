@@ -541,7 +541,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_MissileTarget2", pMissileTarget2)))
 		return E_FAIL;
 
-	pMissileTarget2->Get_Transform()->Set_Pos({ -15.f, 0.f, 150.f });
+	pMissileTarget2->Get_Transform()->Set_Pos({ -15.f, 0.f, 80.f });
 
 	// 미사일 타겟3
 	CGameObject* pMissileTarget3 = CMissileTarget::Create(m_pGraphicDev);
