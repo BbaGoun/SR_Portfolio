@@ -41,6 +41,7 @@
     <ClInclude Include="..\Header\CCamera.h" />
     <ClInclude Include="..\Header\CGameUI.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
+    <ClInclude Include="..\Header\CHalfSphere.h" />
     <ClInclude Include="..\Header\CHeightMap.h" />
     <ClInclude Include="..\Header\CInnerBox.h" />
     <ClInclude Include="..\Header\CLayer.h" />
@@ -102,6 +103,7 @@
     <ClCompile Include="..\Code\CCamera.cpp" />
     <ClCompile Include="..\Code\CGameUI.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
+    <ClCompile Include="..\Code\CHalfSphere.cpp" />
     <ClCompile Include="..\Code\CHeightMap.cpp" />
     <ClCompile Include="..\Code\CInnerBox.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />

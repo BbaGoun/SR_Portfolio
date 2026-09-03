@@ -169,6 +169,9 @@
     <Filter Include="04. Component\TrackGraph">
       <UniqueIdentifier>{a64704fb-56e1-4455-af2d-03529f16ac2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\HalfSphere">
+      <UniqueIdentifier>{75949650-08bc-482a-9c97-aeb0f47fb4d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -346,6 +349,9 @@
     <ClInclude Include="..\Header\CTrackGraph.h">
       <Filter>04. Component\TrackGraph</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CHalfSphere.h">
+      <Filter>04. Component\Shape\HalfSphere</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -501,6 +507,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTrackGraph.cpp">
       <Filter>04. Component\TrackGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHalfSphere.cpp">
+      <Filter>04. Component\Shape\HalfSphere</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

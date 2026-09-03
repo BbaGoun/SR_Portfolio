@@ -79,7 +79,6 @@ void CInvenSlotBG::Render_GameObject()
 
 void CInvenSlotBG::SetSelected(bool bSelected)
 {
-	
 	bSelected = m_bSelected;
 	if (m_bSelected == true)
 		m_bSelected = false;

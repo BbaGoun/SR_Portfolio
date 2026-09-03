@@ -22,7 +22,7 @@ CBoostWind::~CBoostWind()
 HRESULT CBoostWind::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Scale({ 16,16,0 });
+	m_pTransformCom->Set_Scale({ 16,16,16 });
 	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));

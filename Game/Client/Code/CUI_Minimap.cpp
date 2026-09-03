@@ -26,6 +26,11 @@ HRESULT CUI_Minimap::Ready_GameObject()
 	m_pTransformCom->Set_Pos({ 500,0,1 });
 	m_pTransformCom->Set_Scale({ 250,300,1 });
 
+
+	//m_pTransformCom->Set_Pos({ 0,0,1 });
+	//m_pTransformCom->Set_Scale({ WINCX,WINCY,1 });
+
+
 	Engine::CComponent* pComponent = nullptr;
 	pComponent = m_pVIBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
