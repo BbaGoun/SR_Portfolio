@@ -21,8 +21,8 @@ CSkyDome::~CSkyDome()
 HRESULT CSkyDome::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Scale({ 1000, 1000, 1000 });
-	m_pTransformCom->Set_Pos({ 0, -300, 0});
+	m_pTransformCom->Set_Scale({ 1500, 1500, 1500 });
+	m_pTransformCom->Set_Pos({ 0, -200, 0});
 
 	CComponent* pComponent = nullptr;
 

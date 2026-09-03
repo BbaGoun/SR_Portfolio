@@ -72,7 +72,7 @@ _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 			m_vRotation.x = 0.f;
 			// 고개 뒤로 x축 회전 -> z축 회전
 			if (m_vRotation.z > -30.f)
-				m_vRotation.z -= 50 * fDeltaTime;
+				m_vRotation.z -= 100 * fDeltaTime;
 			else
 				m_vRotation.z = -30.f;
 
@@ -81,7 +81,7 @@ _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 		{
 			// 고개 원위치
 			if (m_vRotation.z < 0.f)
-				m_vRotation.z += 50 * fDeltaTime;
+				m_vRotation.z += 100 * fDeltaTime;
 			else
 				m_vRotation.z = 0.f;
 			KeyInput(fDeltaTime);

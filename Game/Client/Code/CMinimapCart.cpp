@@ -49,13 +49,17 @@ _int CMinimapCart::Update_GameObject(const _float& fDeltaTime)
 	_vec3 vPos;
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vPos);
 	m_vRotation = pCart->Get_Rotation();
-	D3DXQUATERNION q=pCart->Get_Transform()->Get_WorldQuaternion();
+
+	D3DXQUATERNION q = pCart->Get_Transform()->Get_WorldQuaternion();
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0);
 	m_pTransformCom->Set_Quaternion(&q);
 
 	vPos.y = 0.5f;
-	cout << "MinmapCartY: " << vPos.y << endl;
 	
 	m_pTransformCom->Set_Pos(vPos);
+	//
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//cout << "MinmapCartY: " << vPos.y << endl;
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

@@ -517,7 +517,7 @@ void CCart::UpdateDrift(const _float fDeltaTime)
 	}
 
 	m_vRotation.z = clampT(float(m_vRotation.z), -0.2f, 0.2f);
-	m_pTransformCom->Rotate(QUATER_ROLL, D3DXToDegree(m_vRotation.z));
+
 }
 
 void CCart::UpdateBoost(const _float& fDeltaTime)
@@ -534,7 +534,11 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 	}
 	//cout << m_fShortBoosterTimer << endl;
 	if (m_eBoostState == BOOST_STATE_NORMAL)
+	{
+		if (m_pPlayerHead)
+			m_pPlayerHead->SetBoost(false);
 		return;
+	}
 	m_fSpeed *= m_fBoostCal;
 	SoundMgr::GetInstance().PlaySound(L"Effect/cart/booster.ogg", SOUND_BOOST, 0.4f);
 	if(m_pPlayerHead)
