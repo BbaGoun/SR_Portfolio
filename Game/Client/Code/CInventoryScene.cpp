@@ -12,6 +12,7 @@
 #include "CInvenSlotCart.h"
 #include "CCartBody1.h"
 #include "CInvenSlotBG.h"
+#include "CScene3_Char.h"
 
 CInventoryScene::CInventoryScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -232,7 +233,10 @@ HRESULT CInventoryScene::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"InvenSlotBG2", pUIObject)))
 		return E_FAIL;
 	static_cast<CUI_InvenSlot*>(pUIInvenSlot2)->SetBG(pUIObject);
-	return S_OK;
+
+
+
+
 }
 
 HRESULT CInventoryScene::Ready_Collision_Matrix()

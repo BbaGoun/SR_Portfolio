@@ -21,6 +21,10 @@
 #include "CDInputMgr.h"
 #include "SoundMgr.h"
 
+#include "CUI_PauseMenu.h"
+#include "CPause_MenuBtn.h"
+#include "CPause_ReplayBtn.h"
+
 CStartMenu::CStartMenu(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
 {
@@ -41,12 +45,23 @@ HRESULT CStartMenu::Ready_Scene()
 	if (FAILED(Ready_UI_Layer()))
 		return E_FAIL;
 
+	if (FAILED(Ready_RenderTarget()))
+		return E_FAIL;
+
+
 	SoundMgr::GetInstance().PlayBGM(L"BGM/Main/title.ogg", 0.4f);
 
 	return S_OK;
 }
 
+HRESULT CStartMenu::Ready_RenderTarget()
+{
 
+
+	
+	return S_OK;
+
+}
 
 _int CStartMenu::Update_Scene(const _float& fDeltaTime)
 {
@@ -65,6 +80,8 @@ _int CStartMenu::Update_Scene(const _float& fDeltaTime)
 
 		CManagement::GetInstance()->Request_Scene(pStage);
 	}
+
+
 
 	return iExit;
 }
@@ -172,6 +189,7 @@ HRESULT CStartMenu::Ready_UI_Layer()
 
 	
 
+
 	return S_OK;
 
 
@@ -194,4 +212,5 @@ CStartMenu* CStartMenu::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CStartMenu::Free()
 {
 	CScene::Free();
+
 }

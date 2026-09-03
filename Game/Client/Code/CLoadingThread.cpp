@@ -113,6 +113,8 @@ _uint CLoadingThread::Loading_Stage()
         return E_FAIL;
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Scene3_ColorSet", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Scene/3/Scene3_ColorSet%d.png", 4))))
         return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Scene3_CharBG", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Scene/3/Scene3_CharSetBG%d.png", 3))))
+        return E_FAIL;
 
     //MenuScene1,2,3
 
@@ -120,6 +122,14 @@ _uint CLoadingThread::Loading_Stage()
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_UI_XButton", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Button/Button_X%d.png", 2))))
+        return E_FAIL;
+
+    //PauseMenu
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_UI_PauseMenu", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Pause/PauseMenu.png", 1))))
+        return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Pause_ReplayBtn", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Pause/Pause_ReplayBtn%d.png", 2))))
+        return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Pause_MenuBtn", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Pause/Pause_MenuBtn%d.png", 2))))
         return E_FAIL;
 
     //Stage UI

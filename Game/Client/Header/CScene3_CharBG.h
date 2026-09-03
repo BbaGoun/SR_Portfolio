@@ -6,13 +6,13 @@ namespace Engine
 	class CRcTex;
 	class CTexture;
 }
-class CScene3_ColorSet :
+class CScene3_CharBG :
 	public CGameObject
 {
 private:
-	explicit CScene3_ColorSet(LPDIRECT3DDEVICE9 pGraphicDev, CHAR_COLOR eID);
-	explicit CScene3_ColorSet(const CScene3_ColorSet& rhs);
-	virtual ~CScene3_ColorSet();
+	explicit CScene3_CharBG(LPDIRECT3DDEVICE9 pGraphicDev, CHAR_TYPE eID);
+	explicit CScene3_CharBG(const CScene3_CharBG& rhs);
+	virtual ~CScene3_CharBG();
 
 private:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -24,33 +24,20 @@ private:
 public:
 	void			SetSelected(bool bSelected);//{ bSelected = m_bSelected; };
 	bool	    	GetSelected() { return m_bSelected; }
-	
-	void						Set_Show1(bool bShow) { m_bShow = bShow; };
-	bool						Get_Show1() { return m_bShow; }
-
-	void						Set_Color(CHAR_COLOR COLOR) { m_eColorNum = COLOR; };
-
+	void			SetMouseHover(bool bMouseHover) { m_bMouseHover = bMouseHover; }
 
 private:
 	CRcTex* m_pVIBufferCom;
 	CTexture* m_pTextureCom;
 
-	_vec3	m_vPos1;
-	_vec3   m_vPos2;
-	_vec3	m_vScale;
-
-
-	float			m_fFrame_Red;
-	float			m_fFrame_Green;
+	float			m_fFrame;
 	bool			m_bSelected;
 	bool			m_bMouseHover;
-
+	CHAR_TYPE		m_eSlotNum;
 
 public:
-	static CScene3_ColorSet* Create(LPDIRECT3DDEVICE9 pGraphicDev, CHAR_COLOR eID);
-	CHAR_COLOR	m_eColorNum;
+	static CScene3_CharBG* Create(LPDIRECT3DDEVICE9 pGraphicDev, CHAR_TYPE eID);
 
-	bool		m_bShow;
 
 protected:
 	virtual		void		Free() override;

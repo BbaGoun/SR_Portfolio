@@ -19,6 +19,7 @@ private:
 	HRESULT		Ready_Prototype();
 	HRESULT		Ready_Environment_Layer(const _tchar* pLayerTag);
 	HRESULT		Ready_UI_Layer();
+	HRESULT		Ready_RenderTarget();
 	
 
 

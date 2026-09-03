@@ -1,32 +1,33 @@
 #include "pch.h"
-#include "CUI_InvenSlot.h"
+#include "CScene3_CharSlot.h"
+#include "CScene3_Char.h"
+#include "CScene3_CharBG.h"
 #include "CGameObject.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
-#include "CInvenSlotCart.h"
-#include "CManagement.h"
-#include "CInvenSlotBG.h"
 
-CUI_InvenSlot::CUI_InvenSlot(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)
-	:CGameObject(pGraphicDev),m_eSlotNum(eID)
+#include "CManagement.h"
+
+
+CScene3_CharSlot::CScene3_CharSlot(LPDIRECT3DDEVICE9 pGraphicDev, CHAR_TYPE eID)
+	:CGameObject(pGraphicDev), m_eSlotNum(eID)
 {
 }
 
-CUI_InvenSlot::CUI_InvenSlot(const CUI_InvenSlot& rhs)
+CScene3_CharSlot::CScene3_CharSlot(const CScene3_CharSlot& rhs)
 	:CGameObject(rhs)
 {
 }
 
-CUI_InvenSlot::~CUI_InvenSlot()
+CScene3_CharSlot::~CScene3_CharSlot()
 {
 }
 
-HRESULT CUI_InvenSlot::Ready_GameObject()
+HRESULT CScene3_CharSlot::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-
-	m_pItem = nullptr;
+	m_pChar = nullptr;
 
 	//m_vPos = { 0,100,1 };
 	m_vScale = { 100,150,1 };
@@ -37,35 +38,38 @@ HRESULT CUI_InvenSlot::Ready_GameObject()
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 	if (pComponent == nullptr)
 		return E_FAIL;
+	
 
 
 	Set_Show(false);
-
+	
 	return S_OK;
 }
 
-void CUI_InvenSlot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
+
+void CScene3_CharSlot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 }
 
-_int CUI_InvenSlot::Update_GameObject(const _float& fDeltaTime)
+_int CScene3_CharSlot::Update_GameObject(const _float& fDeltaTime)
 {
 	if (m_bShow == false)
-		return 0 ;
+		return 0;
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
-	CInvenSlotCart* pItem = dynamic_cast<CInvenSlotCart*>(m_pItem);
+	CScene3_Char* pChar = dynamic_cast<CScene3_Char*>(m_pChar);
 
-	CInvenSlotBG* pBG = dynamic_cast<CInvenSlotBG*>(m_pBG);
+	CScene3_CharBG* pBG = dynamic_cast<CScene3_CharBG*>(m_pBG);
 
+	
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	if (CheckCollisionUI(g_hWnd, vPos, m_vScale, m_pGraphicDev))
 	{
-		if (pItem)
+		if (pChar)
 		{
-			pItem->SetTurn(true);
+			pChar->SetTurn(true);
 		}
 		if (m_pBG)
 		{
@@ -74,30 +78,39 @@ _int CUI_InvenSlot::Update_GameObject(const _float& fDeltaTime)
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
 			pBG->SetSelected(true);
+			pChar->Set_Char(m_eSlotNum);
 		}
+		
 	}
 	else
 	{
-		if (pItem)
+		if (pChar)
 		{
-			pItem->SetTurn(false);
+			pChar->SetTurn(false);
 		}
 		if (pBG)
 		{
 			pBG->SetMouseHover(false);
 		}
 	}
+
+
+	if (m_eSlot != m_eSlotNum)// && pChar->Get_Char(m_eSlotNum) == true)
+	{
+		pBG->SetSelected(false);
+	}
+
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CUI_InvenSlot::LateUpdate_GameObject(const _float& fDeltaTime)
+void CScene3_CharSlot::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	if (m_bShow == false)
 		return;
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
-void CUI_InvenSlot::Render_GameObject()
+void CScene3_CharSlot::Render_GameObject()
 {
 	if (m_bShow == false)
 		return;
@@ -105,27 +118,32 @@ void CUI_InvenSlot::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	TCHAR   szFileName[128] = L"";
-	wsprintf(szFileName, L"InvenSlot%d", m_eSlotNum);
-
-	if(CRenderer::GetInstance()->Find_RenderTarget(szFileName))
+	wsprintf(szFileName, L"CharSlot%d", m_eSlotNum);
+	
+	if (CRenderer::GetInstance()->Find_RenderTarget(szFileName))
 		m_pGraphicDev->SetTexture(0, CRenderer::GetInstance()->Find_RenderTarget(szFileName)->pRTTexture);
 	m_pVIBufferCom->Render_Buffer();
+
+
+
+	
 }
 
-CUI_InvenSlot* CUI_InvenSlot::Create(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)
+CScene3_CharSlot* CScene3_CharSlot::Create(LPDIRECT3DDEVICE9 pGraphicDev, CHAR_TYPE eID)
 {
-	CUI_InvenSlot* pObj = new CUI_InvenSlot(pGraphicDev, eID);
+	CScene3_CharSlot* pObj = new CScene3_CharSlot(pGraphicDev, eID);
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{
-		MSG_BOX("CUI_InvenSlot Create Failed");
+		MSG_BOX("CScene3_CharSlot Create Failed");
 		Safe_Release(pObj);
 		return nullptr;
 	}
 	return pObj;
 }
 
-void CUI_InvenSlot::Free()
+void CScene3_CharSlot::Free()
 {
 	CGameObject::Free();
+	
 }
