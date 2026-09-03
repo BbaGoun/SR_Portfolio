@@ -153,6 +153,8 @@ private:
 
 	CPlayerHead*	m_pPlayerHead;
 
+	_float			m_fAimRotationZ;
+
 protected:
 	virtual		void		Free() override;
 };

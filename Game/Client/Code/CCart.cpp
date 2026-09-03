@@ -100,6 +100,7 @@ HRESULT CCart::Ready_GameObject()
 	m_PreQuaternion			= { 0,0,0,1 };
 
 	m_PreQuaternion			= { 0, 0, 0, 1 };
+	m_fAimRotationZ			= 0.f;
 
 	return S_OK;
 }
@@ -1170,15 +1171,6 @@ void CCart::CreateTargetAimObject()
 
 		pTargetAim->SetLayer(m_pLayer);
 	}
-	//_vec3 vPos, vLook;
-	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-
-	//vPos += vLook * 20.f;
-
-	//pTargetAim->Get_Transform()->Set_Pos(vPos);
-
-	//pTargetAim->SetLayer(m_pLayer);
 
 	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 	if (pTarget == nullptr)
@@ -1202,6 +1194,11 @@ void CCart::CreateTargetAimObject()
 	D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 	D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 
+	if (abs(vTargetScreen.x - vAimScreen.x) < 200.f && abs(vTargetScreen.y - vAimScreen.y) < 200.f)
+	{
+		vPos = (vPos + vTarget) * 0.5f;
+	}
+
 	if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
 	{
 		vPos = vTarget;
@@ -1209,35 +1206,12 @@ void CCart::CreateTargetAimObject()
 
 	pTargetAim->Get_Transform()->Set_Pos(vPos);
 
+	m_fAimRotationZ -= 0.05f;
+
 	_quaternion q;
-	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, m_fAimRotationZ);
 
 	pTargetAim->Get_Transform()->Set_Quaternion(&q);
-
-	/*CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
-	_vec3 vPos, vLook, vDir, vTargetPos;
-
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-
-	vPos += vLook * 20.f;
-
-	pTargetAim->Get_Transform()->Set_Pos(vPos);
-	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-
-	vDir = vTargetPos - vPos;
-
-	if (D3DXVec3Length(&vDir) <= 0.001f)
-		return;
-
-	D3DXVec3Normalize(&vDir, &vDir);
-
-	_quaternion qRot;
-
-	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
-
-	pTargetAim->Get_Transform()->Set_Quaternion(&qRot);*/
 }
 
 void CCart::CreateMagnetObject()

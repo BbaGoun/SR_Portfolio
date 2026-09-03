@@ -340,6 +340,7 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		m_fTimer = 0.f;
 		m_bFollowTag = false;
+		m_bSavePos = false;
 		m_pLayer->Delete_GameObject(this);
 	}
 }
