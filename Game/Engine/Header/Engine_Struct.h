@@ -192,6 +192,7 @@ namespace Engine
 
 	typedef struct _tagTrackLocator
 	{
+		_vec3			localPos;
 		EdgeId			edgeId;			// 현재 경로(갈래)
 		int				iSampleIndex;	// 검색 시작점
 		float			u;				// 엣지 로컬 호장
@@ -233,6 +234,13 @@ namespace Engine
 	{
 		float globalT;  // segmentIndex + localT
 		float length;   // 곡선 시작부터의 누적 거리
+	};
+
+	struct CheckInfo {
+		TrackLocator bestLocater;
+		float bestScore = FLT_MAX;
+		bool bFound = false;
+		float bestLateral = 0;
 	};
 }
 

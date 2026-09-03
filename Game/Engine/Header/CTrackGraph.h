@@ -49,8 +49,8 @@ public:
 
 public:
 	bool ProjectPosition(
-		const _vec3& worldPosition,
-		const TrackLocator* previous,
+		const _vec3& worldPos,
+		const TrackLocator& prev,
 		TrackLocator& outLocator,
 		float* outLateral = nullptr);
 
@@ -87,6 +87,13 @@ private:
 
 	void			PreRender_Points();
 	void			PostRender_Points();
+
+	CheckInfo		Recursive_Forward_CheckInside(
+		const _vec3& localPos, const TrackLocator& prev, 
+		int	remainStep, TrackEdge* _pTE, int _iSampleIndex);
+	CheckInfo		Recursive_Back_CheckInside(
+		const _vec3& localPos, const TrackLocator& prev, 
+		int remainStep, TrackEdge* _pTE, int _iSampleIndex);
 
 public:
 	static			CTrackGraph* Create(LPDIRECT3DDEVICE9 pGraphicDev);

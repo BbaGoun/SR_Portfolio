@@ -591,6 +591,134 @@ ControlPoint* CTrackGraph::Get_ControlPoint(TrackEdge* _pTE, uint32_t cpId)
 	return nullptr;
 }
 
+bool CTrackGraph::ProjectPosition(const _vec3& worldPos, const TrackLocator& prev, TrackLocator& outLocator, float* outLateral)
+{
+	_matrix matGraph, matInvGraph;
+	matGraph = *m_pOwner->Get_Transform()->Get_World();
+	D3DXMatrixInverse(&matInvGraph, 0, &matGraph);
+	_vec3 localPos;
+	D3DXVec3TransformCoord(&localPos, &worldPos, &matInvGraph);
+
+	if (prev.bValid && prev.edgeId != 0) {
+		//근처 계산
+		const int range = 5;
+
+		TrackEdge* pTE = Get_TrackEdge(prev.edgeId);
+		int sIndex = prev.iSampleIndex;
+		
+		CheckInfo forwardInfo = Recursive_Forward_CheckInside(localPos, prev, range, pTE, sIndex);
+		CheckInfo backInfo = Recursive_Back_CheckInside(localPos, prev, range, pTE, sIndex);
+
+		if (forwardInfo.bestScore > backInfo.bestScore)
+			forwardInfo = backInfo;
+
+		if (forwardInfo.bFound) {
+			outLocator = forwardInfo.bestLocater;
+			if (outLateral)
+				*outLateral = forwardInfo.bestLateral;
+			return true;
+		}
+	}
+	//전체 계산
+	float bestScore = FLT_MAX;
+	bool bFound = false;
+	float bestLateral;
+	TrackLocator bestLocater;
+
+	for (auto& te : m_vecEdges) {
+		int n = te.vecSamples.size();
+		if (n < 2)
+			continue;
+
+		for (int i = 0; i < n; ++i) {
+			TrackSample& s = te.vecSamples[i];
+
+			_vec3 delta = localPos - s.position;
+			float forward = D3DXVec3Dot(&delta, &s.T);
+			
+			if (fabsf(forward) > s.halfL)
+				continue;
+			if (i == 0 && forward < 0)
+				continue;
+			if (i == n - 1 && forward >= 0)
+				continue;
+
+			int iBegin, iEnd;
+
+			if (forward >= 0)
+				iBegin = i, iEnd = i + 1;
+			else
+				iBegin = i - 1, iEnd = i;
+
+			TrackSample& a = te.vecSamples[iBegin];
+			TrackSample& b = te.vecSamples[iEnd];
+
+			_vec3 segment = b.position - a.position;
+			_vec3 fromA = localPos - a.position;
+
+			float lengthSg = D3DXVec3LengthSq(&segment);
+			float t = 0.f;
+
+			if (lengthSg > FLT_EPSILON)
+				t = D3DXVec3Dot(&fromA, &segment) / lengthSg;
+
+			t = clampT(t, 0.f, 1.f);
+
+			_vec3 projected = a.position + segment * t;
+
+			_vec3 R = a.R + (b.R - a.R) * t;
+			_vec3 U = a.U + (b.U - a.U) * t;
+
+			D3DXVec3Normalize(&R, &R);
+			D3DXVec3Normalize(&U, &U);
+
+			delta = localPos - projected;
+
+			float lateral = D3DXVec3Dot(&delta, &R);
+			float vertical = D3DXVec3Dot(&delta, &U);
+
+			float halfW = Lerp(t, a.halfW, b.halfW);
+			float halfH = Lerp(t, a.halfH, b.halfH);
+
+			bool inside =
+				fabsf(lateral) <= halfW &&
+				fabsf(vertical) <= halfH;
+
+			float LDW = (lateral / halfW);
+			float VDH = (vertical / halfH);
+			float score = LDW * LDW + VDH * VDH;
+
+			if (inside && bestScore > score) {
+				bestScore = score;
+				bFound = true;
+				bestLocater.localPos = localPos;
+				bestLocater.edgeId = te.id;
+				bestLocater.iSampleIndex = iBegin;
+				bestLocater.u = Lerp(t, a.u, b.u);
+				bestLocater.s = Lerp(t, a.s, b.s);
+				bestLocater.iLap = prev.bValid ? prev.iLap : 0;
+				bestLocater.bValid = true;
+				bestLateral = lateral;
+			}
+		}
+		if (bFound) {
+			outLocator = bestLocater;
+			if(outLateral)
+				*outLateral = bestLateral;
+			return true;
+		}
+	}
+
+	outLocator = prev;
+	outLocator.bValid = false;
+	return false;
+}
+
+bool CTrackGraph::EvaluatePose(EdgeId edgeId, float u, TrackPose& outPose)
+{
+	return false;
+}
+
 TrackNode* CTrackGraph::Find_TrackNode(TrackNode* pTN)
 {
 	auto itTN = find_if(m_vecNodes.begin(), m_vecNodes.end(), [&](TrackNode& TN)->bool {
@@ -994,6 +1122,243 @@ void CTrackGraph::PostRender_Points()
 
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+}
+
+CheckInfo CTrackGraph::Recursive_Forward_CheckInside(const _vec3& localPos, const TrackLocator& prev, int remainStep, TrackEdge* _pTE, int _iSampleIndex)
+{
+	CheckInfo info;
+
+	auto& vecS = _pTE->vecSamples;
+	int n = vecS.size();
+	int sIndex = _iSampleIndex;
+
+	TrackSample& s = vecS[sIndex];
+
+	_vec3 delta = localPos - s.position;
+	float forward = D3DXVec3Dot(&delta, &s.T);
+
+	bool hasSegment = !(sIndex == 0 && forward < 0.f) &&
+		!(sIndex == n - 1 && forward >= 0.f);
+
+	if (fabsf(forward) < s.halfL) {
+		if(hasSegment) 
+		{
+			int iBegin, iEnd;
+
+			if (forward >= 0)
+				iBegin = sIndex, iEnd = sIndex + 1;
+			else
+				iBegin = sIndex - 1, iEnd = sIndex;
+
+			TrackSample& a = vecS[iBegin];
+			TrackSample& b = vecS[iEnd];
+
+			_vec3 segment = b.position - a.position;
+			_vec3 fromA = localPos - a.position;
+
+			float lengthSg = D3DXVec3LengthSq(&segment);
+			float t = 0.f;
+
+			if (lengthSg > FLT_EPSILON)
+				t = D3DXVec3Dot(&fromA, &segment) / lengthSg;
+
+			t = clampT(t, 0.f, 1.f);
+
+			_vec3 projected = a.position + segment * t;
+
+			_vec3 R = a.R + (b.R - a.R) * t;
+			_vec3 U = a.U + (b.U - a.U) * t;
+
+			D3DXVec3Normalize(&R, &R);
+			D3DXVec3Normalize(&U, &U);
+
+			delta = localPos - projected;
+
+			float lateral = D3DXVec3Dot(&delta, &R);
+			float vertical = D3DXVec3Dot(&delta, &U);
+
+			float halfW = Lerp(t, a.halfW, b.halfW);
+			float halfH = Lerp(t, a.halfH, b.halfH);
+
+			bool inside =
+				fabsf(lateral) <= halfW &&
+				fabsf(vertical) <= halfH;
+
+			float LDW = (lateral / halfW);
+			float VDH = (vertical / halfH);
+			float score = LDW * LDW + VDH * VDH;
+
+			if (inside && info.bestScore > score) {
+				info.bestScore = score;
+				info.bFound = true;
+				info.bestLocater.localPos = localPos;
+				info.bestLocater.edgeId = _pTE->id;
+				info.bestLocater.iSampleIndex = iBegin;
+				info.bestLocater.u = Lerp(t, a.u, b.u);
+				info.bestLocater.s = Lerp(t, a.s, b.s);
+				info.bestLocater.iLap = prev.iLap;
+
+				delta = localPos - prev.localPos;
+				forward = D3DXVec3Dot(&delta, &s.T);
+				if (prev.s > info.bestLocater.s && forward > 0)
+					info.bestLocater.iLap += 1;
+				else if (prev.s < info.bestLocater.s && forward < 0)
+					info.bestLocater.iLap -= 1;
+
+				info.bestLocater.bValid = true;
+				info.bestLateral = lateral;
+			}
+		}
+	}
+
+	if (remainStep > 0) {
+		bool bNextEdge = _iSampleIndex == n - 1;
+
+		if (!bNextEdge) {
+			// 이 엣지 내
+			CheckInfo nextInfo = Recursive_Forward_CheckInside(localPos, prev, remainStep - 1, _pTE, sIndex + 1);
+			if (nextInfo.bFound) {
+				if (info.bestScore > nextInfo.bestScore) {
+					info = nextInfo;
+				}
+			}
+		}
+		else {
+			// 엣지 간의 이동
+			TrackNode* pTN_To = Get_TrackNode(_pTE->toNode);
+
+			for (EdgeId id : pTN_To->vecOutEdgeIds) {
+				TrackEdge* pTE_To = Get_TrackEdge(id);
+
+				CheckInfo nextInfo = Recursive_Forward_CheckInside(localPos, prev, remainStep - 1, pTE_To, 0);
+				if (nextInfo.bFound) {
+					if (info.bestScore > nextInfo.bestScore) {
+						info = nextInfo;
+					}
+				}
+			}
+		}
+	}
+	return info;
+}
+
+CheckInfo CTrackGraph::Recursive_Back_CheckInside(const _vec3& localPos, const TrackLocator& prev, int remainStep, TrackEdge* _pTE, int _iSampleIndex)
+{
+	CheckInfo info;
+
+	auto& vecS = _pTE->vecSamples;
+	int n = vecS.size();
+	int sIndex = _iSampleIndex;
+
+	TrackSample& s = vecS[sIndex];
+
+	_vec3 delta = localPos - s.position;
+	float forward = D3DXVec3Dot(&delta, &s.T);
+	
+	bool hasSegment = !(sIndex == 0 && forward < 0.f) &&
+		!(sIndex == n - 1 && forward >= 0.f);
+
+	if (fabsf(forward) < s.halfL) {
+		if (hasSegment)
+		{
+			int iBegin, iEnd;
+
+			if (forward >= 0)
+				iBegin = sIndex, iEnd = sIndex + 1;
+			else
+				iBegin = sIndex - 1, iEnd = sIndex;
+
+			TrackSample& a = vecS[iBegin];
+			TrackSample& b = vecS[iEnd];
+
+			_vec3 segment = b.position - a.position;
+			_vec3 fromA = localPos - a.position;
+
+			float lengthSg = D3DXVec3LengthSq(&segment);
+			float t = 0.f;
+
+			if (lengthSg > FLT_EPSILON)
+				t = D3DXVec3Dot(&fromA, &segment) / lengthSg;
+
+			t = clampT(t, 0.f, 1.f);
+
+			_vec3 projected = a.position + segment * t;
+
+			_vec3 R = a.R + (b.R - a.R) * t;
+			_vec3 U = a.U + (b.U - a.U) * t;
+
+			D3DXVec3Normalize(&R, &R);
+			D3DXVec3Normalize(&U, &U);
+
+			delta = localPos - projected;
+
+			float lateral = D3DXVec3Dot(&delta, &R);
+			float vertical = D3DXVec3Dot(&delta, &U);
+
+			float halfW = Lerp(t, a.halfW, b.halfW);
+			float halfH = Lerp(t, a.halfH, b.halfH);
+
+			bool inside =
+				fabsf(lateral) <= halfW &&
+				fabsf(vertical) <= halfH;
+
+			float LDW = (lateral / halfW);
+			float VDH = (vertical / halfH);
+			float score = LDW * LDW + VDH * VDH;
+
+			if (inside && info.bestScore > score) {
+				info.bestScore = score;
+				info.bFound = true;
+				info.bestLocater.localPos = localPos;
+				info.bestLocater.edgeId = _pTE->id;
+				info.bestLocater.iSampleIndex = iBegin;
+				info.bestLocater.u = Lerp(t, a.u, b.u);
+				info.bestLocater.s = Lerp(t, a.s, b.s);
+				info.bestLocater.iLap = prev.iLap;
+
+				delta = localPos - prev.localPos;
+				forward = D3DXVec3Dot(&delta, &s.T);
+				if (prev.s > info.bestLocater.s && forward > 0)
+					info.bestLocater.iLap += 1;
+				else if (prev.s < info.bestLocater.s && forward < 0)
+					info.bestLocater.iLap -= 1;
+
+				info.bestLocater.bValid = true;
+				info.bestLateral = lateral;
+			}
+		}
+	}
+
+	if (remainStep > 0) {
+		bool bNextEdge = _iSampleIndex == 0;
+
+		if (!bNextEdge) {
+			// 이 엣지 내
+			CheckInfo nextInfo = Recursive_Back_CheckInside(localPos, prev, remainStep - 1, _pTE, sIndex - 1);
+			if (nextInfo.bFound) {
+				if (info.bestScore > nextInfo.bestScore) {
+					info = nextInfo;
+				}
+			}
+		}
+		else {
+			// 엣지 간의 이동
+			TrackNode* pTN_From = Get_TrackNode(_pTE->fromNode);
+
+			for (EdgeId id : pTN_From->vecInEdgeIds) {
+				TrackEdge* pTE_From = Get_TrackEdge(id);
+
+				int m = pTE_From->vecSamples.size();
+				CheckInfo nextInfo = Recursive_Back_CheckInside(localPos, prev, remainStep - 1, pTE_From, m - 1);
+				if (nextInfo.bFound) {
+					if (info.bestScore > nextInfo.bestScore) {
+						info = nextInfo;
+					}
+				}
+			}
+		}
+	}
+	return info;
 }
 
 
