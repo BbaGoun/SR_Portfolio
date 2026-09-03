@@ -41,6 +41,7 @@ private:
 	_bool			m_bFollowTag;
 
 	_vec3			m_vSavePos;
+	_vec3		    m_vTargetUp;
 
 public:
 	static CUfo* Create(LPDIRECT3DDEVICE9 pGraphicDev);

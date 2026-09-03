@@ -73,18 +73,17 @@ HRESULT CMissileTarget::Ready_GameObject()
 
 void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	m_vForce *= 0.98;
-	if (D3DXVec3Length(&m_vForce) < 1.f)
-		m_vForce *= 0;
-
-	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
-
-	_quaternion q;
-	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
-	m_pTransformCom->Set_Quaternion(&q);
 
 	if (m_bMissileHit == false && m_bWaterBombHit == false && m_bWaterFlyHit == false && m_bUfoHit == false)
+	{
+		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
+
+		_quaternion q;
+		D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+		m_pTransformCom->Set_Quaternion(&q);
+
 		return;
+	}
 
 	if (m_bMissileHit)
 	{
@@ -285,6 +284,11 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	 if (m_bUfoHit)
 	 {
+		 m_vForce *= 0.98f;
+
+		 if (D3DXVec3Length(&m_vForce) < 1.f)
+			 m_vForce *= 0.f;
+
 		 m_fUfoTimer += fFixedDeltaTime;
 
 		 _vec3 vLook;
@@ -299,6 +303,12 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		 else
 			 m_vForce += vLook * 0.9f;
+		
+		 m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
+
+		 _quaternion q;
+		 D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+		 m_pTransformCom->Set_Quaternion(&q);
 
 		 if (m_fUfoTimer > 3.f)
 		 {

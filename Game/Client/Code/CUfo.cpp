@@ -26,6 +26,7 @@ HRESULT CUfo::Ready_GameObject()
 	m_fUfoFront  = 0.f;
 	m_fUfoRight  = 0.f;
 	m_vSavePos   = { 0.f, 0.f, 0.f };
+	m_vTargetUp  = { 0.f, 1.f, 0.f };
 	m_fAngle	 = 0.f;
 
 	m_bSavePos	 = false;
@@ -53,14 +54,14 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
 
 	CGameObject* pTarget1 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-	//CGameObject* pTarget2 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget2");
-	//CGameObject* pTarget3 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget3");
-	//CGameObject* pTarget4 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget4");
+	CGameObject* pTarget2 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget2");
+	CGameObject* pTarget3 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget3");
+	CGameObject* pTarget4 = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget4");
 
 	_vec3 vFlyPos, vCartPos, vCartUp, vCartLook, vCartRight,
 		vTargetPos1, vTargetPos2, vTargetPos3, vTargetPos4,
 		vDirTarget1, vDirTarget2, vDirTarget3, vDirTarget4,
-		vDirTarget, vTargetUp; // vMovePos;
+		vDirTarget, vTargetUp, vTargetUp1, vTargetUp2, vTargetUp3, vTargetUp4, vTargetPos;
 
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 	pCartBody->Get_Transform()->Get_Info(INFO_UP, &vCartUp);
@@ -68,11 +69,15 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	pCartBody->Get_Transform()->Get_Info(INFO_RIGHT, &vCartRight);
 
 
-	pTarget1->Get_Transform()->Get_Info(INFO_UP, &vTargetUp);
+	pTarget1->Get_Transform()->Get_Info(INFO_UP, &vTargetUp1);
+	pTarget2->Get_Transform()->Get_Info(INFO_UP, &vTargetUp2);
+	pTarget3->Get_Transform()->Get_Info(INFO_UP, &vTargetUp3);
+	pTarget4->Get_Transform()->Get_Info(INFO_UP, &vTargetUp4);
+
 	pTarget1->Get_Transform()->Get_Info(INFO_POS, &vTargetPos1);
-	//pTarget2->Get_Transform()->Get_Info(INFO_POS, &vTargetPos2);
-	//pTarget3->Get_Transform()->Get_Info(INFO_POS, &vTargetPos3);
-	//pTarget4->Get_Transform()->Get_Info(INFO_POS, &vTargetPos4);
+	pTarget2->Get_Transform()->Get_Info(INFO_POS, &vTargetPos2);
+	pTarget3->Get_Transform()->Get_Info(INFO_POS, &vTargetPos3);
+	pTarget4->Get_Transform()->Get_Info(INFO_POS, &vTargetPos4);
 
 	vCartPos += vCartUp * 0.f;
 
@@ -248,59 +253,109 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_fUfoRight -= 0.05f;
 	}
 
+	//if (m_fTimer >= 1.32f && m_bSavePos == false)
+	//{
+	//	m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);
+	//	m_bSavePos = true;
+	//}
+
+
+	//if (m_fTimer >= 1.32f && m_fTimer < 1.85f)	// 안보이는 상태에서 타겟 머리위로 빠르게 이동
+	//{
+	//	vDirTarget1 = vTargetPos1 - m_vSavePos;
+	//	vDirTarget2 = vTargetPos2 - m_vSavePos;
+	//	vDirTarget3 = vTargetPos3 - m_vSavePos;
+	//	vDirTarget4 = vTargetPos4 - m_vSavePos;
+
+	//	// 하드 코딩 수정
+	//	if (D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget2)
+	//		&& D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget3)
+	//		&& D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget4))
+	//	{
+	//		// vDirTarget = vDirTarget1;
+	//		vTargetPos = vTargetPos1;
+	//		m_vTargetUp = vTargetUp1;
+	//	}
+
+	//	else if (D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget1)
+	//		&& D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget3)
+	//		&& D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget4))
+	//	{
+	//		// vDirTarget = vDirTarget2;
+	//		vTargetPos = vTargetPos2;
+	//		m_vTargetUp = vTargetUp2;
+	//	}
+
+	//	else if (D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget1)
+	//		&& D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget2)
+	//		&& D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget4))
+	//	{
+	//		// vDirTarget = vDirTarget3;
+	//		vTargetPos = vTargetPos3;
+	//		m_vTargetUp = vTargetUp3;
+	//	}
+
+	//	else
+	//	{
+	//		// vDirTarget = vDirTarget4;
+	//		vTargetPos = vTargetPos4;
+	//		m_vTargetUp = vTargetUp4;
+	//	}
+
+	//	//if (D3DXVec3Length(&vDirTarget) <= 0.001f)
+	//	//	return;
+
+	//	//D3DXVec3Normalize(&vDirTarget, &vDirTarget);
+
+	//	// m_pTransformCom->Move_Pos(&vDirTarget, m_fSpeed, fFixedDeltaTime);
+	//	// m_pTransformCom->Set_Pos(vTargetPos1 += vTargetUp * 15.f);
+	//	m_pTransformCom->Set_Pos(vTargetPos);
+	//	m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);
+	//}
+
 	if (m_fTimer >= 1.32f && m_bSavePos == false)
 	{
 		m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);
+
+		vDirTarget1 = vTargetPos1 - m_vSavePos;
+		vDirTarget2 = vTargetPos2 - m_vSavePos;
+		vDirTarget3 = vTargetPos3 - m_vSavePos;
+		vDirTarget4 = vTargetPos4 - m_vSavePos;
+
+		if (D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget2)
+			&& D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget3)
+			&& D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget4))
+		{
+			vTargetPos = vTargetPos1;
+			m_vTargetUp = vTargetUp1;
+		}
+		else if (D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget1)
+			&& D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget3)
+			&& D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget4))
+		{
+			vTargetPos = vTargetPos2;
+			m_vTargetUp = vTargetUp2;
+		}
+		else if (D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget1)
+			&& D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget2)
+			&& D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget4))
+		{
+			vTargetPos = vTargetPos3;
+			m_vTargetUp = vTargetUp3;
+		}
+		else
+		{
+			vTargetPos = vTargetPos4;
+			m_vTargetUp = vTargetUp4;
+		}
+
+		m_pTransformCom->Set_Pos(vTargetPos);
+		m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);
+
 		m_bSavePos = true;
 	}
 
-
-	if (m_fTimer >= 1.32f && m_fTimer < 1.85f)	// 안보이는 상태에서 타겟 머리위로 빠르게 이동
-	{
-		vDirTarget1 = vTargetPos1 - m_vSavePos;
-		//vDirTarget2 = vTargetPos2 - m_vSavePos;
-		//vDirTarget3 = vTargetPos3 - m_vSavePos;
-		//vDirTarget4 = vTargetPos4 - m_vSavePos;
-
-		// 하드 코딩 수정
-		//if (D3DXVec3Length(&vDirTarget1) < D3DXVec3Length(&vDirTarget2)
-		//	&& D3DXVec3Length(&vDirTarget1) < D3DXVec3Length(&vDirTarget3)
-		//	&& D3DXVec3Length(&vDirTarget1) < D3DXVec3Length(&vDirTarget4))
-		//{
-			vDirTarget = vDirTarget1;
-		//}
-
-		//else if (D3DXVec3Length(&vDirTarget2) < D3DXVec3Length(&vDirTarget1)
-		//	&& D3DXVec3Length(&vDirTarget2) < D3DXVec3Length(&vDirTarget3)
-		//	&& D3DXVec3Length(&vDirTarget2) < D3DXVec3Length(&vDirTarget4))
-		//{
-		//	vDirTarget = vDirTarget2;
-		//}
-
-		//else if (D3DXVec3Length(&vDirTarget3) < D3DXVec3Length(&vDirTarget1)
-		//	&& D3DXVec3Length(&vDirTarget3) < D3DXVec3Length(&vDirTarget2)
-		//	&& D3DXVec3Length(&vDirTarget3) < D3DXVec3Length(&vDirTarget4))
-		//{
-		//	vDirTarget = vDirTarget3;
-		//}
-
-		//else
-		//{
-		//	vDirTarget = vDirTarget4;
-		//}
-
-		if (D3DXVec3Length(&vDirTarget) <= 0.001f)
-			return;
-
-		D3DXVec3Normalize(&vDirTarget, &vDirTarget);
-
-		// m_pTransformCom->Move_Pos(&vDirTarget, m_fSpeed, fFixedDeltaTime);
-		// m_pTransformCom->Set_Pos(vTargetPos1 += vTargetUp * 15.f);
-		m_pTransformCom->Set_Pos(vTargetPos1);
-		m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);
-	}
-
-	if (m_fTimer >= 1.85f)		// 바디에서 랜더 켜기
+	if (m_fTimer >= 1.85f && m_bFollowTag == false)		// 바디에서 랜더 켜기
 	{
 		m_vSavePos.y -= 1.55f;
 		m_pTransformCom->Set_Pos(m_vSavePos);
@@ -310,7 +365,7 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		_vec3 vStartPos;
 
-		vStartPos = vTargetPos1 + vTargetUp * 11.f;
+		vStartPos = m_vSavePos + m_vTargetUp * 11.f;
 		m_pTransformCom->Set_Pos(vStartPos);
 
 		_quaternion qRot;
@@ -334,9 +389,6 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_bFollowTag = false;
 		m_pLayer->Delete_GameObject(this);
 	}
-
-	// 3초 뒤 아이템 꺼지고 펄스로 하기
-	// 돌면서 내려가는 것 구현 후 -> 충돌 처리 -> 타겟 속도 느려지게 하기 = 까지 구현되면 1등만 찾아가게 하기
 }
 
 _int CUfo::Update_GameObject(const _float& fTimeDelta)
