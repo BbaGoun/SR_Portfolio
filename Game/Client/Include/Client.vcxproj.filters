@@ -279,7 +279,7 @@
     </Filter>
     <Filter Include="02. GameObject\UI\UI_Pause">
       <UniqueIdentifier>{fc986478-46b1-4b43-967d-18668d205bea}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="02. GameObject\Player">
       <UniqueIdentifier>{d8d88e1d-3677-4cde-918f-8d56e0a27b8d}</UniqueIdentifier>
     </Filter>
@@ -632,7 +632,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\CScene3_Char.h">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Character</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\CPlayerHead.h">
       <Filter>02. GameObject\Player\CPlayerHead</Filter>
     </ClInclude>
@@ -665,6 +665,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\CShield2.h">
       <Filter>02. GameObject\Item\Shield\Shield2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_PauseMenu.h">
+      <Filter>02. GameObject\UI\UI_Pause</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPause_ReplayBtn.h">
+      <Filter>02. GameObject\UI\UI_Pause</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPause_MenuBtn.h">
+      <Filter>02. GameObject\UI\UI_Pause</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -949,7 +958,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\CScene3_Char.cpp">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene3%28Menu_Set%29\Character</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\CPlayerHead.cpp">
       <Filter>02. GameObject\Player\CPlayerHead</Filter>
     </ClCompile>
@@ -982,6 +991,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CShield2.cpp">
       <Filter>02. GameObject\Item\Shield\Shield2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_PauseMenu.cpp">
+      <Filter>02. GameObject\UI\UI_Pause</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPause_ReplayBtn.cpp">
+      <Filter>02. GameObject\UI\UI_Pause</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPause_MenuBtn.cpp">
+      <Filter>02. GameObject\UI\UI_Pause</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

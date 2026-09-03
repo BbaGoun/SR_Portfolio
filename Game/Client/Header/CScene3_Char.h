@@ -21,6 +21,8 @@ public:
 public:
 	static CScene3_Char* Create(LPDIRECT3DDEVICE9 pGraphicDev, CHAR_TYPE eID);
 	void						SetTurn(bool bTurn) { m_bTurn = bTurn; }
+	void						Set_Char(CHAR_TYPE pChar) { m_eSlotNum = pChar; }
+	bool						Get_Char(bool pChar) { return m_eSlotNum; }
 
 private:
 	Engine::CQuadrangularPrism* m_pBufferCom;

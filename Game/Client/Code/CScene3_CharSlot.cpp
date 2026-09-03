@@ -78,8 +78,9 @@ _int CScene3_CharSlot::Update_GameObject(const _float& fDeltaTime)
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
 			pBG->SetSelected(true);
-
+			pChar->Set_Char(m_eSlotNum);
 		}
+		
 	}
 	else
 	{
@@ -92,6 +93,13 @@ _int CScene3_CharSlot::Update_GameObject(const _float& fDeltaTime)
 			pBG->SetMouseHover(false);
 		}
 	}
+
+
+	if (m_eSlot != m_eSlotNum)// && pChar->Get_Char(m_eSlotNum) == true)
+	{
+		pBG->SetSelected(false);
+	}
+
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
