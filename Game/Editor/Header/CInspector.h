@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "CWindow.h"
 #include "CGraphicDev.h"
-#include "CCube.h"
+#include "CProtoMgr.h"
 
 class CInspector :
     public CWindow
@@ -24,6 +24,10 @@ private:
     void    HeightMapCom(CGameObject* _pObj);
     void    ColliderComs(CGameObject* _pObj);
     void    TextureCom(CGameObject* _pObj);
+    void    TrackGraphCom(CGameObject* _pObj);
+    void    TrackGraph_Node(CTrackGraph* pTGraph);
+    void    TrackGraph_Edge(CTrackGraph* pTGraph);
+    void    TrackGraph_Point(CTrackGraph* pTGraph, TrackEdge* pTE);
 
     void    Add_Component_Button(CGameObject* pObj);
 

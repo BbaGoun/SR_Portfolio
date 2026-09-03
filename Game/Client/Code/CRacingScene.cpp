@@ -36,6 +36,7 @@
 #include "CUI_EndCountDown.h"
 #include "CPlayTimeMgr.h"
 #include "CStartCam.h"
+#include "CTrackMgr.h"
 #include "CTrackCam.h"
 #include "CFinishCam.h"
 #include "CSkyDome.h"
@@ -58,6 +59,8 @@ HRESULT CRacingScene::Ready_Scene()
 
 HRESULT CRacingScene::PostReady_Scene()
 {
+	Ready_TrackMgr();
+
 	Ready_RenderTarget();
 	Ready_GameLogic_Layer();
 	Ready_Environment_Layer();
@@ -83,6 +86,8 @@ void CRacingScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 	}
 
 	Process_Collision(objects);
+
+	CTrackMgr::GetInstance()->Update_Locator();
 }
 
 _int CRacingScene::Update_Scene(const _float& fDeltaTime)
@@ -153,6 +158,22 @@ HRESULT CRacingScene::LoadSceneFromFile()
 			break;
 	}
 	fclose(fp);
+
+	return S_OK;
+}
+
+HRESULT CRacingScene::Ready_TrackMgr()
+{
+	CGameObject* pGraphObj = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Graph");
+	CTrackMgr::GetInstance()->Register_Track(pGraphObj);
+
+	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	CTrackMgr::GetInstance()->Register_Player(static_cast<CCart*>(pCart));
+	
+	auto& vecBots = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
+	for (auto& pBot : vecBots) {
+		//CTrackMgr::GetInstance()->Register_Bot(static_cast<CCart_Bot*>(pBot));
+	}
 
 	return S_OK;
 }
@@ -548,6 +569,7 @@ void CRacingScene::Free()
 {
 	CRenderer::GetInstance()->Clear_RenderGroup();
 	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
+	CTrackMgr::DestroyInstance();
 	CRenderer::GetInstance()->Delete_BlurRT();
 	CScene::Free();
 }

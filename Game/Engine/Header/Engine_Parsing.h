@@ -119,14 +119,19 @@ namespace Engine
     // COMP, OBJECT, ENDOBJECT 등을 만나면 Unget()을 호출하고 반환.
     inline void ApplyCompProperties(FileReadState& st, CGameObject* pObj, CComponent* pCom)
     {
+        ControlPoint cp = {};
+        VTXTEX vtxTex = {};
+        FACE32 face = {};
+        TrackNode trackNode = {};
+        TrackEdge trackEdge = {};
+        ControlPoint trackControl = {};
+
         wchar_t* t = nullptr;
         while (st.Next(t))
         {
-            ControlPoint cp;
-			VTXTEX vtxTex;
-			FACE32 face;
             float fX = 0.f, fY = 0.f, fZ = 0.f, fW = 0.f;
             int iX = 0, iY = 0, iZ = 0, iW = 0;
+            unsigned int uX = 0, uY = 0, uZ = 0;
             int   trig = 0;
 
             // Transform
@@ -214,6 +219,93 @@ namespace Engine
                 }
             }
 
+            // TrackGraph
+            else if (swscanf_s(t, L"tg_sample_unit=%f", &fX) == 1)
+            {
+                if (CTrackGraph* pTrackGraph = dynamic_cast<CTrackGraph*>(pCom))
+                    pTrackGraph->Set_SampleUnit(fX);
+            }
+            else if (!wcscmp(t, L"TRACK_NODE"))
+            {
+                trackNode = {};
+            }
+            else if (swscanf_s(t, L"tn_id=%u", &uX) == 1)
+            {
+                trackNode.id = static_cast<NodeId>(uX);
+            }
+            else if (swscanf_s(t, L"tn_pos=%f %f %f", &fX, &fY, &fZ) == 3)
+            {
+                trackNode.position = { fX, fY, fZ };
+            }
+            else if (swscanf_s(t, L"tn_start=%d", &iX) == 1)
+            {
+                trackNode.bStart = iX != 0;
+            }
+            else if (swscanf_s(t, L"tn_finish=%d", &iX) == 1)
+            {
+                trackNode.bFinish = iX != 0;
+            }
+            else if (!wcscmp(t, L"END_TRACK_NODE"))
+            {
+                if (CTrackGraph* pTrackGraph = dynamic_cast<CTrackGraph*>(pCom))
+                    pTrackGraph->Get_Nodes().push_back(trackNode);
+            }
+            else if (!wcscmp(t, L"TRACK_EDGE"))
+            {
+                trackEdge = {};
+            }
+            else if (swscanf_s(t, L"te_id=%u", &uX) == 1)
+            {
+                trackEdge.id = static_cast<EdgeId>(uX);
+            }
+            else if (swscanf_s(t, L"te_nodes=%u %u", &uX, &uY) == 2)
+            {
+                trackEdge.fromNode = static_cast<NodeId>(uX);
+                trackEdge.toNode = static_cast<NodeId>(uY);
+            }
+            else if (swscanf_s(t, L"te_default_size=%f %f", &fX, &fY) == 2)
+            {
+                trackEdge.fWidthDefault = fX;
+                trackEdge.fHeightDefault = fY;
+            }
+            else if (swscanf_s(t, L"te_cost_bias=%f", &fX) == 1)
+            {
+                trackEdge.fCostBias = fX;
+            }
+            else if (!wcscmp(t, L"TRACK_CONTROL_POINT"))
+            {
+                trackControl = {};
+            }
+            else if (swscanf_s(t, L"tcp_id=%u", &uX) == 1)
+            {
+                trackControl.id = uX;
+            }
+            else if (swscanf_s(t, L"tcp_pos=%f %f %f", &fX, &fY, &fZ) == 3)
+            {
+                trackControl.position = { fX, fY, fZ };
+            }
+            else if (swscanf_s(t, L"tcp_bank=%f", &fX) == 1)
+            {
+                trackControl.bank = fX;
+            }
+            else if (swscanf_s(t, L"tcp_width=%f", &fX) == 1)
+            {
+                trackControl.width = fX;
+            }
+            else if (swscanf_s(t, L"tcp_depth=%f", &fX) == 1)
+            {
+                trackControl.depth = fX;
+            }
+            else if (!wcscmp(t, L"END_TRACK_CONTROL_POINT"))
+            {
+                trackEdge.deqControls.push_back(trackControl);
+            }
+            else if (!wcscmp(t, L"END_TRACK_EDGE"))
+            {
+                if (CTrackGraph* pTrackGraph = dynamic_cast<CTrackGraph*>(pCom))
+                    pTrackGraph->Get_Edges().push_back(trackEdge);
+            }
+
 			// HeightMap
 			else if (swscanf_s(t, L"m_fEditStrength=%f", &fX) == 1)
 			{
@@ -283,6 +375,9 @@ namespace Engine
         }
         if (CSpline* pSpline = dynamic_cast<CSpline*>(pCom)) {
             pSpline->Compute_Spline();
+        }
+        else if (CTrackGraph* pTrackGraph = dynamic_cast<CTrackGraph*>(pCom)) {
+            pTrackGraph->Finalize_LoadedData();
         }
         else if (CHeightMap* pHM = dynamic_cast<CHeightMap*>(pCom)) {
 			pHM->Ready_BufferByVec();
@@ -430,6 +525,69 @@ namespace Engine
 						writeIndent(pf, depth + 2);
 						fwprintf(pf, L"END_HM_FACE\n");
 					}
+				}
+			}
+			break;
+			case CK_TRACKGRAPH:
+			{
+				CTrackGraph* pTrackGraph = static_cast<CTrackGraph*>(pCom);
+				writeCompHead(L"TrackGraph");
+
+				writeIndent(pf, depth + 2);
+				fwprintf(pf, L"tg_sample_unit=%f\n", pTrackGraph->Get_SampleUnit());
+
+				for (const auto& node : pTrackGraph->Get_Nodes())
+				{
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"TRACK_NODE\n");
+					writeIndent(pf, depth + 3);
+					fwprintf(pf, L"tn_id=%u\n", node.id);
+					writeIndent(pf, depth + 3);
+					fwprintf(pf, L"tn_pos=%f %f %f\n",
+						node.position.x, node.position.y, node.position.z);
+					writeIndent(pf, depth + 3);
+					fwprintf(pf, L"tn_start=%d\n", node.bStart ? 1 : 0);
+					writeIndent(pf, depth + 3);
+					fwprintf(pf, L"tn_finish=%d\n", node.bFinish ? 1 : 0);
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"END_TRACK_NODE\n");
+				}
+
+				for (const auto& edge : pTrackGraph->Get_Edges())
+				{
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"TRACK_EDGE\n");
+					writeIndent(pf, depth + 3);
+					fwprintf(pf, L"te_id=%u\n", edge.id);
+					writeIndent(pf, depth + 3);
+					fwprintf(pf, L"te_nodes=%u %u\n", edge.fromNode, edge.toNode);
+					writeIndent(pf, depth + 3);
+					fwprintf(pf, L"te_default_size=%f %f\n",
+						edge.fWidthDefault, edge.fHeightDefault);
+					writeIndent(pf, depth + 3);
+					fwprintf(pf, L"te_cost_bias=%f\n", edge.fCostBias);
+
+					for (const auto& control : edge.deqControls)
+					{
+						writeIndent(pf, depth + 3);
+						fwprintf(pf, L"TRACK_CONTROL_POINT\n");
+						writeIndent(pf, depth + 4);
+						fwprintf(pf, L"tcp_id=%u\n", control.id);
+						writeIndent(pf, depth + 4);
+						fwprintf(pf, L"tcp_pos=%f %f %f\n",
+							control.position.x, control.position.y, control.position.z);
+						writeIndent(pf, depth + 4);
+						fwprintf(pf, L"tcp_bank=%f\n", control.bank);
+						writeIndent(pf, depth + 4);
+						fwprintf(pf, L"tcp_width=%f\n", control.width);
+						writeIndent(pf, depth + 4);
+						fwprintf(pf, L"tcp_depth=%f\n", control.depth);
+						writeIndent(pf, depth + 3);
+						fwprintf(pf, L"END_TRACK_CONTROL_POINT\n");
+					}
+
+					writeIndent(pf, depth + 2);
+					fwprintf(pf, L"END_TRACK_EDGE\n");
 				}
 			}
 			break;

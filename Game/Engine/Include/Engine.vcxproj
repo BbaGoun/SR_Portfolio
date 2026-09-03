@@ -64,6 +64,7 @@
     <ClInclude Include="..\Header\CTexture.h" />
     <ClInclude Include="..\Header\CTimer.h" />
     <ClInclude Include="..\Header\CTimerMgr.h" />
+    <ClInclude Include="..\Header\CTrackGraph.h" />
     <ClInclude Include="..\Header\CTransform.h" />
     <ClInclude Include="..\Header\CTriangularPrism.h" />
     <ClInclude Include="..\Header\CVIBuffer.h" />
@@ -125,6 +126,7 @@
     <ClCompile Include="..\Code\CTexture.cpp" />
     <ClCompile Include="..\Code\CTimer.cpp" />
     <ClCompile Include="..\Code\CTimerMgr.cpp" />
+    <ClCompile Include="..\Code\CTrackGraph.cpp" />
     <ClCompile Include="..\Code\CTransform.cpp" />
     <ClCompile Include="..\Code\CTriangularPrism.cpp" />
     <ClCompile Include="..\Code\CVIBuffer.cpp" />

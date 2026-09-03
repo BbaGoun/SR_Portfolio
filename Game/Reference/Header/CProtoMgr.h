@@ -13,6 +13,7 @@
 // 컴포넌트
 #include "CTransform.h"
 #include "CTexture.h"
+#include "CTrackGraph.h"
 
 // 버퍼
 #include "CCartBodyCol.h"
