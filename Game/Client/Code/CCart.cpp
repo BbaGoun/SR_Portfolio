@@ -112,27 +112,32 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, m_vRotation.z);
 	m_pTransformCom->Set_Quaternion(&q);
 
-	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
-
-	if(!m_bUpKey)
-		m_vForce *= 0.98;
-	if (m_bDrift)
-		m_vForce *= 0.98;
-
 	float fForceLen = D3DXVec3Length(&m_vForce);
 	if (fForceLen < 1.f)
 		m_vForce *= 0;
 	if (fForceLen >= 80.f)
 		m_vForce = m_vForce / fForceLen * 80.f;
 
+	if (!m_bUpKey)
+		m_vForce *= 0.98;
+	if (m_bDrift)
+		m_vForce *= 0.98;
+
+
+
+
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
+	for (int i = 0; i < 3; ++i)
+	{
+		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 3.f, fFixedDeltaTime);
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		AdjustPosY_Slope(vPos, fFixedDeltaTime);
+		CollisionWall();
+	}
 
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	AdjustPosY_Slope(vPos, fFixedDeltaTime);
-	CollisionWall();
 	UpdateDrift(fFixedDeltaTime);
 }
 
@@ -984,21 +989,18 @@ void CCart::CollisionWall()
 			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 			m_pTransformCom->Set_Pos(vPos + MTV);
 
-			// 2. 법선벡터만큼 밀어내기(들어간 만큼 이라는 것이 없어서 단위벡터만큼 밀어냄)
-
-			//m_vForce += MTV;
-			_vec3 vNewForce = m_vForce;
-			vNewForce = MTV * D3DXVec3Length(&vNewForce);
-			float fForceLength = D3DXVec3Length(&vNewForce);
-			if (fForceLength >= 10)
-				vNewForce = vNewForce * 10 / fForceLength;
-
-			//m_pTransformCom->Set_Pos(vPos + MTV);
-
-			// 3. 튕기기
-			m_vForce += vNewForce;
+			// 2. 가속도에서 벽 쪽으로 들어가는 속도 성분을 제거
+			float inward = D3DXVec3Dot(&m_vForce, &MTV);
+			// MTV가 벽 밖으로 나가는 방향 
+			m_vForce -= MTV * inward;
 			
-			// 4. Gage, Drift 초기화
+			// 3. 조금 튕겨나가도록
+			m_vForce += MTV * 10.f;
+
+			// 4. 힘 약화
+			m_vForce *= 0.99f;
+
+			// 5. Gage, Drift 초기화
 			m_fGainGage = 0;
 			m_bDrift = false;
 		}

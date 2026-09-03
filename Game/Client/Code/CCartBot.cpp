@@ -29,6 +29,7 @@
 #include "CShield2.h"
 #include "CPlayTimeMgr.h"
 #include "CTrackMgr.h"
+#include <CCalculator.h>
 
 CCartBot::CCartBot(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -110,51 +111,72 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	if (!CPlayTimeMgr::GetInstance()->GetPlaying())
 		return;
 
+	m_fOffsetTimer += fFixedDeltaTime;
+	if (m_fOffsetTimer >= m_fOffsetTimerEnd) {
+		m_fOffsetTimer = 0.f;
+		m_fOffsetTimerEnd = 1.f + CCalculator::RandInt() / 99.f * 3.f;
+		
+		m_fLateralOffsetTarget = -0.5f + CCalculator::RandInt() / 99.f;
+		m_fLateralOffsetTarget = clampT(m_fLateralOffsetTarget, -0.25f, 0.25f);
+	}
 
-	// 이전 FixedUpdate에서 Locator가 계산되었으니
-	// 그걸 기반으로 새 Target을 계산
-	// Target을 향하는 vForce를 계산하고
-	// 추가적으로 상황에 따라 vRotation을 계산하자
-	float lookAhead = clampT(D3DXVec3Length(&m_vForce) * m_fSpeed, 40.f, 200.f);
+	m_fLateralOffset = Lerp(fFixedDeltaTime, m_fLateralOffset, m_fLateralOffsetTarget);
+
+	float lookAhead = clampT(D3DXVec3Length(&m_vForce) * m_fSpeed, 5.f, 30.f);
 
 	TrackPose TP = CTrackMgr::GetInstance()->Compute_TargetPose(this, lookAhead);
-
-	if (!TP.bValid)
-		return;
 
 	_vec3 vPos, vLook;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
-	_vec3 dir = TP.position - vPos;
-	D3DXVec3Normalize(&dir, &dir);
+	if (TP.bValid) {
+		TP.position += m_fLateralOffset * TP.R * TP.halfW;
 
-	_vec3 flatLook = vLook;
-	_vec3 flatDir = dir;
-	flatLook.y = 0;
-	flatDir.y = 0;
-	D3DXVec3Normalize(&flatLook, &flatLook);
-	D3DXVec3Normalize(&flatDir, &flatDir);
-	float dot = D3DXVec3Dot(&flatLook, &flatDir);
+		_vec3 dir = TP.position - vPos;
+		D3DXVec3Normalize(&dir, &dir);
 
-	_vec3 cross;
-	D3DXVec3Cross(&cross, &flatLook, &flatDir);
+		_vec3 flatLook = vLook;
+		_vec3 flatDir = dir;
+		flatLook.y = 0;
+		flatDir.y = 0;
+		D3DXVec3Normalize(&flatLook, &flatLook);
+		D3DXVec3Normalize(&flatDir, &flatDir);
+		float dot = D3DXVec3Dot(&flatLook, &flatDir);
 
-	float yawError = atan2f(cross.y, dot);
+		_vec3 cross;
+		D3DXVec3Cross(&cross, &flatLook, &flatDir);
 
-	float maxYawSpeed = D3DXToRadian(90.f); // 초당 90도
-	float maxYawStep = maxYawSpeed * fFixedDeltaTime;
+		float yawError = atan2f(cross.y, dot);
 
-	float yawStep =
-		clampT(yawError, -maxYawStep, maxYawStep);
+		float maxYawSpeed = D3DXToRadian(180.f); // 초당 90도
+		float maxYawStep = maxYawSpeed * fFixedDeltaTime;
 
-	m_vRotation.y += yawStep;
+		float yawStep =
+			clampT(yawError, -maxYawStep, maxYawStep);
 
-	//cout<<"X : "<< dir.x << " Y : " << dir.y << " Z : " << dir.z << "\n";
+		m_vRotation.y += yawStep;
 
-	float acceleration = clampT(TP.speed - D3DXVec3Length(&m_vForce), 0.f, 3.f);
+		float acceleration = TP.speed - D3DXVec3Length(&m_vForce);
 
-	m_vForce += dir * acceleration * fFixedDeltaTime * 200.f;
+		if (acceleration > 0)
+		{
+			float randf = CCalculator::RandInt() / 99.f;
+			m_vForce += dir * acceleration * fFixedDeltaTime;
+		}
+		else {
+			m_vForce *= clampT(1.f + acceleration * fFixedDeltaTime, 0.1f, 1.f);
+		}
+
+		_matrix matRotY;
+		_vec3 vUp;
+		m_pTransformCom->Get_Info(INFO_UP, &vUp);
+		D3DXMatrixRotationAxis(&matRotY, &vUp, yawStep);
+		D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRotY);
+	}
+	else {
+		m_vForce *= 0.9f;
+	}
 
 	UpdateGravity();
 
@@ -163,22 +185,17 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pTransformCom->Set_Quaternion(&q);
 
 	float fForceLen = D3DXVec3Length(&m_vForce);
-	if (fForceLen < 1.f)
-		m_vForce *= 0;
-	if (fForceLen >= 200.f)
-		m_vForce = m_vForce / fForceLen * 200.f;
+	if (fForceLen >= 120.f)
+		m_vForce = m_vForce / fForceLen * 120.f;
 
-	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
+	for (int i = 0; i < 3; ++i) {
+		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 3.f, fFixedDeltaTime);
 
-	if (!m_bUpKey)
-		m_vForce *= 0.98;
-	if (m_bDrift)
-		m_vForce *= 0.98;
-
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	AdjustPosY_Slope(vPos, fFixedDeltaTime);
-	CollisionWall();
-	UpdateDrift(fFixedDeltaTime);
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		AdjustPosY_Slope(vPos, fFixedDeltaTime);
+		CollisionWall();
+		//UpdateDrift(fFixedDeltaTime);
+	}
 }
 
 _int CCartBot::Update_GameObject(const _float& fDeltaTime)
@@ -912,7 +929,6 @@ void CCartBot::CollisionWall()
 	auto& walls = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Wall");
 	if (walls.empty())
 		return;
-	int a = 5;
 
 	// 플레이어의 정보
 	_vec3 vRight, vUp, vLook, vPos;
@@ -1029,21 +1045,18 @@ void CCartBot::CollisionWall()
 			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 			m_pTransformCom->Set_Pos(vPos + MTV);
 
-			// 2. 법선벡터만큼 밀어내기(들어간 만큼 이라는 것이 없어서 단위벡터만큼 밀어냄)
+			// 2. 가속도에서 벽 쪽으로 들어가는 속도 성분을 제거
+			float inward = D3DXVec3Dot(&m_vForce, &MTV);
+			// MTV가 벽 밖으로 나가는 방향 
+			m_vForce -= MTV * inward;
 
-			//m_vForce += MTV;
-			_vec3 vNewForce = m_vForce;
-			vNewForce = MTV * D3DXVec3Length(&vNewForce);
-			float fForceLength = D3DXVec3Length(&vNewForce);
-			if (fForceLength >= 10)
-				vNewForce = vNewForce * 10 / fForceLength;
+			// 3. 조금 튕겨나가도록
+			m_vForce += MTV * 10.f;
 
-			//m_pTransformCom->Set_Pos(vPos + MTV);
+			// 4. 힘 약화
+			m_vForce *= 0.99f;
 
-			// 3. 튕기기
-			m_vForce += vNewForce;
-
-			// 4. Gage, Drift 초기화
+			// 5. Gage, Drift 초기화
 			m_fGainGage = 0;
 			m_bDrift = false;
 		}

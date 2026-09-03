@@ -155,6 +155,11 @@ private:
 	CPlayerHead* m_pPlayerHead;
 	bool			m_bUpKey;
 
+	float			m_fLateralOffsetTarget = 0.f;
+	float			m_fLateralOffset = 0.f;
+	float			m_fOffsetTimer = 0.f;
+	float			m_fOffsetTimerEnd = 2.f;
+
 protected:
 	virtual		void		Free() override;
 };

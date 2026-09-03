@@ -228,6 +228,7 @@ namespace Engine
 		EdgeId	edgeId;
 		float	u, s;
 		float	speed;
+		float	halfW;
 		bool	bValid = false;
 	}TrackPose;
 

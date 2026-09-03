@@ -171,7 +171,7 @@
       pos=-78.852570 0.000000 -402.439209
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999988 1.000000 0.999988
+      scale=0.999989 1.000000 0.999989
   ENDOBJECT
   OBJECT
     type=
@@ -297,7 +297,7 @@
       pos=-275.707092 0.000000 -402.501801
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999910 1.000000 0.999910
+      scale=0.999911 1.000000 0.999911
   ENDOBJECT
   OBJECT
     type=
@@ -327,7 +327,7 @@
       pos=-204.168243 0.000000 -602.490662
       rot=0.000000 -89.990471 0.000000
       quat=0.000000 -0.707048 0.000000 0.707165
-      scale=0.999696 1.000000 0.999696
+      scale=0.999695 1.000000 0.999695
   ENDOBJECT
   OBJECT
     type=
@@ -435,7 +435,7 @@
       pos=-199.048859 0.000000 -602.474243
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999883 1.000000 0.999883
+      scale=0.999884 1.000000 0.999884
   ENDOBJECT
   OBJECT
     type=
@@ -465,7 +465,7 @@
       pos=-249.047943 0.000000 -743.541199
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999961 1.000000 0.999961
+      scale=0.999962 1.000000 0.999962
   ENDOBJECT
   OBJECT
     type=
@@ -495,7 +495,7 @@
       pos=-364.610657 0.000000 -743.538330
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 -0.000000 0.707107
-      scale=0.999878 1.000000 0.999878
+      scale=0.999879 1.000000 0.999879
   ENDOBJECT
   OBJECT
     type=
@@ -525,7 +525,7 @@
       pos=-219.090454 30.000000 -743.544495
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999886 1.000000 0.999886
+      scale=0.999887 1.000000 0.999887
   ENDOBJECT
   OBJECT
     type=
@@ -579,7 +579,7 @@
       pos=-408.984192 30.000000 -743.464172
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999932 1.000000 0.999932
+      scale=0.999933 1.000000 0.999933
   ENDOBJECT
   OBJECT
     type=
@@ -711,7 +711,7 @@
       pos=-562.247742 30.000000 -979.055908
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999928 1.000000 0.999928
+      scale=0.999929 1.000000 0.999929
   ENDOBJECT
   OBJECT
     type=
@@ -777,7 +777,7 @@
       pos=-672.349121 30.000000 -967.245972
       rot=0.000000 -89.999222 0.000000
       quat=0.000000 -0.707102 0.000000 0.707112
-      scale=0.999850 1.000000 0.999850
+      scale=0.999851 1.000000 0.999851
   ENDOBJECT
   OBJECT
     type=
@@ -915,7 +915,7 @@
       pos=-787.915161 60.000000 525.786377
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=1.000005 1.000000 1.000005
+      scale=1.000006 1.000000 1.000006
   ENDOBJECT
   OBJECT
     type=
@@ -975,7 +975,7 @@
       pos=-387.421143 60.000000 525.984314
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999988 1.000000 0.999988
+      scale=0.999989 1.000000 0.999989
   ENDOBJECT
   OBJECT
     type=
@@ -1107,7 +1107,7 @@
       pos=-259.957245 60.000000 380.187622
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999947 1.000000 0.999947
+      scale=0.999948 1.000000 0.999948
   ENDOBJECT
   OBJECT
     type=
@@ -1137,7 +1137,7 @@
       pos=-298.853760 60.000000 380.176361
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999991 1.000000 0.999991
+      scale=0.999992 1.000000 0.999992
   ENDOBJECT
   OBJECT
     type=
@@ -1329,7 +1329,7 @@
       pos=-303.616547 60.000000 380.217682
       rot=0.000000 -89.989822 0.000000
       quat=0.000000 -0.707044 0.000000 0.707170
-      scale=0.999726 1.000000 0.999726
+      scale=0.999727 1.000000 0.999727
   ENDOBJECT
   OBJECT
     type=
@@ -1359,7 +1359,7 @@
       pos=-244.488342 60.000000 260.532684
       rot=0.000000 -89.992256 0.000000
       quat=0.000000 -0.707059 0.000000 0.707154
-      scale=0.999751 1.000000 0.999751
+      scale=0.999750 1.000000 0.999750
   ENDOBJECT
   OBJECT
     type=
@@ -1389,7 +1389,7 @@
       pos=-161.444122 30.000000 260.610565
       rot=0.000000 -89.989822 0.000000
       quat=0.000000 -0.707044 0.000000 0.707170
-      scale=0.999717 1.000000 0.999717
+      scale=0.999718 1.000000 0.999718
   ENDOBJECT
   OBJECT
     type=
@@ -1419,7 +1419,7 @@
       pos=-85.134201 30.000000 260.646088
       rot=0.000000 -89.992905 0.000000
       quat=0.000000 -0.707063 0.000000 0.707150
-      scale=0.999756 1.000000 0.999756
+      scale=0.999755 1.000000 0.999755
   ENDOBJECT
   OBJECT
     type=
@@ -1449,7 +1449,7 @@
       pos=36.062935 0.000000 260.677795
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999853 1.000000 0.999853
+      scale=0.999854 1.000000 0.999854
   ENDOBJECT
   OBJECT
     type=
@@ -1479,7 +1479,7 @@
       pos=54.205418 0.000000 260.663788
       rot=0.000000 -89.990799 0.000000
       quat=0.000000 -0.707050 0.000000 0.707163
-      scale=0.999738 1.000000 0.999738
+      scale=0.999737 1.000000 0.999737
   ENDOBJECT
   OBJECT
     type=
@@ -1509,7 +1509,7 @@
       pos=59.680733 0.000000 260.496155
       rot=0.000000 -89.999870 180.000000
       quat=0.707106 0.000000 0.707107 -0.000000
-      scale=0.999765 0.999654 0.999765
+      scale=0.999764 0.999652 0.999764
   ENDOBJECT
   OBJECT
     type=
@@ -1587,7 +1587,7 @@
       pos=44.533592 0.000000 123.866180
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999875 1.000000 0.999875
+      scale=0.999876 1.000000 0.999876
   ENDOBJECT
   OBJECT
     type=
@@ -1689,6 +1689,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -1704,12 +1705,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=57.298588 4.814831 228.537781
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 0.000000 0.000000
-      scale=0.999939 0.999939 1.000008
+      scale=0.999940 0.999940 1.000009
   ENDOBJECT
   OBJECT
     type=
@@ -1719,6 +1719,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -1788,12 +1789,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=57.289257 4.818830 168.491852
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 0.000000 0.000000
-      scale=0.999917 0.999917 1.000008
+      scale=0.999918 0.999918 1.000009
   ENDOBJECT
   OBJECT
     type=
@@ -1803,6 +1803,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -1872,7 +1873,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=27.784344 4.798307 153.037720
       rot=90.000000 -0.000000 -90.000000
@@ -1887,6 +1887,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -1944,12 +1945,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-17.893248 4.880261 118.202820
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 -0.000000 -0.000000
-      scale=0.999894 0.999894 0.999894
+      scale=0.999895 0.999895 0.999895
   ENDOBJECT
   OBJECT
     type=
@@ -1959,6 +1959,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -1992,12 +1993,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-29.772562 4.929333 -308.912659
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 -0.000000 -0.000000
-      scale=0.999657 0.999657 0.999588
+      scale=0.999658 0.999658 0.999589
   ENDOBJECT
   OBJECT
     type=
@@ -2007,6 +2007,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2052,12 +2053,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-29.813633 4.930652 -286.807678
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999407 0.999407 0.999794
+      scale=0.999408 0.999408 0.999795
   ENDOBJECT
   OBJECT
     type=
@@ -2067,6 +2067,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2118,7 +2119,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-38.317490 4.819870 -352.597748
       rot=90.000000 -0.000000 -90.000000
@@ -2133,6 +2133,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2148,7 +2149,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-72.120598 4.666487 -372.550110
       rot=90.000000 -0.000000 -90.000000
@@ -2163,6 +2163,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2268,7 +2269,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-289.362274 4.658925 -372.762177
       rot=90.000000 -0.000000 -90.000000
@@ -2283,6 +2283,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2352,12 +2353,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-401.628357 4.529151 -502.640686
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999555 0.999555 0.999126
+      scale=0.999556 0.999556 0.999127
   ENDOBJECT
   OBJECT
     type=
@@ -2367,6 +2367,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2442,12 +2443,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-376.170837 4.532385 -592.443909
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999564 0.999564 0.999420
+      scale=0.999565 0.999565 0.999421
   ENDOBJECT
   OBJECT
     type=
@@ -2457,6 +2457,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2502,7 +2503,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-285.232727 4.706658 -631.706482
       rot=-90.000000 -0.000000 -90.000000
@@ -2517,6 +2517,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2598,7 +2599,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-185.368500 4.723771 -633.054443
       rot=-90.000000 -0.000000 -90.000000
@@ -2613,6 +2613,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2676,12 +2677,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-133.862595 4.736108 -672.121216
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999550 0.999550 0.999394
+      scale=0.999551 0.999551 0.999395
   ENDOBJECT
   OBJECT
     type=
@@ -2691,6 +2691,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2784,7 +2785,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-166.673843 4.731575 -708.164368
       rot=90.000000 -0.000000 -90.000000
@@ -2799,6 +2799,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=15.500000
@@ -2814,7 +2815,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-246.922363 4.757681 -713.786011
       rot=-90.000000 -0.000000 -90.000000
@@ -2829,6 +2829,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2874,7 +2875,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-254.068939 4.554286 -713.790161
       rot=90.000000 -0.000000 -90.000000
@@ -2889,6 +2889,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=15.400000
@@ -2904,7 +2905,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-350.385773 30.673405 -713.770691
       rot=90.000000 -0.000000 -90.000000
@@ -2919,6 +2919,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -2964,7 +2965,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-365.387054 34.915970 -713.771973
       rot=90.000000 -0.000000 -90.000000
@@ -2979,6 +2979,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -3066,7 +3067,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-416.977417 34.953079 -711.774475
       rot=90.000000 -0.000000 -90.000000
@@ -3081,6 +3081,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -3132,12 +3133,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-502.446503 34.977821 -775.826172
       rot=180.000000 -0.000000 -90.000198
       quat=-0.707105 0.707108 0.000000 0.000000
-      scale=0.999746 0.999746 0.999805
+      scale=0.999745 0.999745 0.999803
   ENDOBJECT
   OBJECT
     type=
@@ -3147,6 +3147,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -3174,12 +3175,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-510.313843 35.025513 -812.398438
       rot=180.000000 -0.000000 -90.000198
       quat=-0.707106 0.707108 0.000000 0.000000
-      scale=0.999514 0.999514 0.999270
+      scale=0.999515 0.999515 0.999271
   ENDOBJECT
   OBJECT
     type=
@@ -3189,6 +3189,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -3252,12 +3253,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-511.042297 34.872341 -899.398499
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 -0.000000 0.000000
-      scale=0.999967 0.999967 0.999923
+      scale=0.999968 0.999968 0.999924
   ENDOBJECT
   OBJECT
     type=
@@ -3267,6 +3267,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -3336,7 +3337,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-517.588867 34.882149 -929.042603
       rot=90.000000 -0.000000 -90.000000
@@ -3351,6 +3351,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=19.000000
@@ -3366,7 +3367,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-661.227966 34.792507 -949.278503
       rot=90.000000 -0.000000 -90.000000
@@ -3593,7 +3593,7 @@ OBJECT
       pos=-853.088623 50.013424 -862.314636
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999964 0.999964 1.000000
+      scale=0.999965 0.999965 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -3623,7 +3623,7 @@ OBJECT
       pos=-859.544434 54.695316 -804.976013
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999915 0.999915 1.000000
+      scale=0.999916 0.999916 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -3633,6 +3633,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -3726,12 +3727,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-859.508240 54.898804 -799.128296
       rot=0.000000 -0.000000 -89.991928
       quat=-0.000000 0.000000 -0.707057 0.707157
-      scale=0.999757 0.999757 0.999991
+      scale=0.999758 0.999758 0.999991
   ENDOBJECT
   OBJECT
     type=
@@ -3741,6 +3741,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -3774,12 +3775,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-859.375427 76.010002 235.312332
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999898 0.999898 1.000000
+      scale=0.999899 0.999899 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -3789,6 +3789,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=10.000000
@@ -3804,12 +3805,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-859.509460 75.627472 280.663818
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999938 0.999938 1.000000
+      scale=0.999939 0.999939 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -3893,7 +3893,7 @@ OBJECT
       pos=-859.377258 74.830185 290.706909
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999942 0.999942 1.000000
+      scale=0.999943 0.999943 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -3971,7 +3971,7 @@ OBJECT
       pos=-836.720825 70.125298 417.956696
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999958 0.999958 1.000000
+      scale=0.999959 0.999959 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -4089,6 +4089,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -4116,7 +4117,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-688.212463 64.933243 496.022308
       rot=-90.000000 -0.000000 -90.000000
@@ -4131,6 +4131,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -4212,7 +4213,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-368.335144 64.765373 496.009216
       rot=-90.000000 -0.000000 -90.000000
@@ -4227,6 +4227,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -4272,12 +4273,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-289.686279 64.757957 543.820068
       rot=0.000000 -0.000000 -89.991928
       quat=0.000000 0.000000 -0.707057 0.707157
-      scale=0.999756 0.999756 1.000000
+      scale=0.999757 0.999757 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -4287,6 +4287,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -4398,7 +4399,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-282.308655 64.981407 580.701050
       rot=-90.000000 -0.000000 -90.000000
@@ -4413,6 +4413,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -4524,12 +4525,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-172.468079 64.731323 602.527832
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999501 0.999501 0.999293
+      scale=0.999502 0.999502 0.999294
   ENDOBJECT
   OBJECT
     type=
@@ -4539,6 +4539,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -4596,12 +4597,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-162.702087 64.795708 455.120514
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999677 0.999677 0.999640
+      scale=0.999678 0.999678 0.999641
   ENDOBJECT
   OBJECT
     type=
@@ -4611,6 +4611,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -4680,7 +4681,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-209.312744 64.759605 418.191528
       rot=90.000000 -0.000000 -90.000000
@@ -4695,6 +4695,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -4788,7 +4789,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-308.342041 64.765488 409.989532
       rot=90.000000 -0.000000 -90.000000
@@ -4803,6 +4803,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -4890,12 +4891,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-396.001892 64.742470 341.555450
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999772 0.999772 0.999779
+      scale=0.999773 0.999773 0.999780
   ENDOBJECT
   OBJECT
     type=
@@ -4905,6 +4905,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -4974,12 +4975,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-382.966492 64.810936 265.763733
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999876 0.999876 0.999744
+      scale=0.999877 0.999877 0.999745
   ENDOBJECT
   OBJECT
     type=
@@ -4989,6 +4989,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -5028,7 +5029,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-312.217072 64.833389 231.437515
       rot=-90.000000 -0.000000 -90.000000
@@ -5043,6 +5043,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=13.000000
@@ -5058,7 +5059,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-252.252441 64.779869 230.768646
       rot=-90.000000 -0.000000 -90.000000
@@ -5073,6 +5073,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -5088,7 +5089,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-238.066528 64.200203 230.838135
       rot=-90.000000 -0.000000 -90.000000
@@ -5103,6 +5103,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=16.000000
@@ -5118,7 +5119,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-170.165375 39.920124 230.852768
       rot=-90.000000 -0.000000 -90.000000
@@ -5133,6 +5133,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -5148,7 +5149,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-156.644638 34.794697 230.874847
       rot=-90.000000 -0.000000 -90.000000
@@ -5163,6 +5163,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=21.700001
@@ -5178,7 +5179,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-96.670013 34.793289 230.884415
       rot=-90.000000 -0.000000 -90.000000
@@ -5193,6 +5193,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -5208,7 +5209,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-73.614380 34.680485 230.884354
       rot=-90.000000 -0.000000 -90.000000
@@ -5223,6 +5223,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=19.200001
@@ -5238,7 +5239,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=23.235483 9.545053 230.913422
       rot=-90.000000 -0.000000 -90.000000
@@ -5253,6 +5253,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=19.000000
@@ -5268,7 +5269,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=40.908722 4.808705 230.901871
       rot=-90.000000 -0.000000 -90.000000
@@ -5297,6 +5297,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -5312,12 +5313,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=116.964371 4.727839 287.579315
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999904 0.999904 1.000002
+      scale=0.999905 0.999905 1.000003
   ENDOBJECT
   OBJECT
     type=
@@ -5327,6 +5327,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -5342,12 +5343,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=116.827347 4.811144 227.545868
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999879 0.999879 0.999879
+      scale=0.999880 0.999880 0.999880
   ENDOBJECT
   OBJECT
     type=
@@ -5357,6 +5357,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -5432,12 +5433,11 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=116.790977 4.818280 167.509506
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 -0.000000 0.000000
-      scale=0.999855 0.999855 0.999855
+      scale=0.999856 0.999856 0.999856
   ENDOBJECT
   OBJECT
     type=
@@ -5447,6 +5447,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -5474,7 +5475,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=60.333046 4.874554 96.401733
       rot=90.000000 -0.000000 -90.000000
@@ -5489,6 +5489,7 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -5528,7 +5529,6 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
-    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=40.616943 4.878077 94.115105
       rot=90.000000 -0.000000 -90.000000
@@ -5835,7 +5835,7 @@ OBJECT
         pos=0.000000 0.408654 -0.643192
         rot=79.213371 -0.000000 0.000000
         quat=0.637514 0.000000 0.000000 0.770438
-        scale=0.749967 0.099999 0.999955
+        scale=0.749967 0.099999 0.999954
     ENDOBJECT
     OBJECT
       type=
@@ -6234,7 +6234,7 @@ OBJECT
         pos=0.000000 0.408654 -0.643192
         rot=79.213371 -0.000000 0.000000
         quat=0.637514 0.000000 0.000000 0.770438
-        scale=0.749967 0.099999 0.999955
+        scale=0.749967 0.099999 0.999954
     ENDOBJECT
     OBJECT
       type=
@@ -6633,7 +6633,7 @@ OBJECT
         pos=0.000000 0.408654 -0.643192
         rot=79.213371 -0.000000 0.000000
         quat=0.637514 0.000000 0.000000 0.770438
-        scale=0.749967 0.099999 0.999958
+        scale=0.749967 0.099999 0.999957
     ENDOBJECT
     OBJECT
       type=
@@ -6745,7 +6745,7 @@ OBJECT
     pos=10.000000 3.623000 -0.250000
     rot=0.000000 -89.996948 0.000000
     quat=0.000000 -0.707088 0.000000 0.707126
-    scale=0.999915 1.000000 0.999915
+    scale=0.999916 1.000000 0.999916
   OBJECT
     type=
     prefabPath=..\..\..\Resource\Editor\Prefab\Character\bazzi.prefab
@@ -6847,7 +6847,7 @@ OBJECT
             pos=-0.008125 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=1.000000 1.000011 1.000011
+            scale=1.000000 1.000012 1.000012
         ENDOBJECT
         OBJECT
           type=Alpha
@@ -6863,7 +6863,7 @@ OBJECT
             pos=-0.010000 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=0.999961 0.999930 0.999930
+            scale=0.999961 0.999931 0.999931
         ENDOBJECT
       ENDOBJECT
     ENDOBJECT
@@ -7065,7 +7065,7 @@ OBJECT
     pos=-10.000000 3.623000 -0.250000
     rot=0.000000 -89.996948 0.000000
     quat=0.000000 -0.707088 0.000000 0.707126
-    scale=0.999913 1.000000 0.999913
+    scale=0.999914 1.000000 0.999914
   OBJECT
     type=
     prefabPath=..\..\..\Resource\Editor\Prefab\Character\bazzi.prefab
@@ -7167,7 +7167,7 @@ OBJECT
             pos=-0.008125 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=1.000000 1.000009 1.000009
+            scale=1.000000 1.000010 1.000010
         ENDOBJECT
         OBJECT
           type=Alpha
@@ -7183,7 +7183,7 @@ OBJECT
             pos=-0.010000 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=0.999961 0.999928 0.999928
+            scale=0.999961 0.999929 0.999929
         ENDOBJECT
       ENDOBJECT
     ENDOBJECT
@@ -7385,7 +7385,7 @@ OBJECT
     pos=0.000000 3.623000 -0.250000
     rot=180.000000 -89.999962 180.000000
     quat=-0.000000 -0.707107 -0.000000 0.707107
-    scale=0.999914 1.000000 0.999914
+    scale=0.999915 1.000000 0.999915
   OBJECT
     type=
     prefabPath=..\..\..\Resource\Editor\Prefab\Character\bazzi.prefab
@@ -7487,7 +7487,7 @@ OBJECT
             pos=-0.008125 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=1.000000 1.000008 1.000008
+            scale=1.000000 1.000009 1.000009
         ENDOBJECT
         OBJECT
           type=Alpha
@@ -7503,7 +7503,7 @@ OBJECT
             pos=-0.010000 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=0.999961 0.999927 0.999927
+            scale=0.999961 0.999928 0.999928
         ENDOBJECT
       ENDOBJECT
     ENDOBJECT
@@ -7800,287 +7800,287 @@ OBJECT
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=14
-        tcp_pos=-338.493591 31.706827 -742.289978
+        tcp_pos=-338.491974 23.343269 -742.286743
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=15
-        tcp_pos=-424.049622 38.457359 -744.615967
+        tcp_pos=-424.047607 29.842020 -744.611938
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=16
-        tcp_pos=-470.448792 36.987869 -779.185608
+        tcp_pos=-470.447937 30.156584 -779.183899
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=17
-        tcp_pos=-475.876617 36.598293 -832.642517
+        tcp_pos=-475.874817 30.021206 -832.638916
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=18
-        tcp_pos=-481.304443 35.134987 -886.099426
+        tcp_pos=-481.302673 29.951296 -886.095886
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=19
-        tcp_pos=-486.732269 37.542389 -939.556335
+        tcp_pos=-486.730103 29.975218 -939.552002
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=20
-        tcp_pos=-534.239990 39.949783 -974.901062
+        tcp_pos=-534.234863 29.969036 -974.895935
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=21
-        tcp_pos=-620.561035 42.357178 -979.749695
+        tcp_pos=-620.556091 29.973013 -979.744751
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=22
-        tcp_pos=-728.078918 44.764603 -955.740356
+        tcp_pos=-728.074219 35.642086 -955.735657
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=23
-        tcp_pos=-845.650146 47.171967 -903.898804
+        tcp_pos=-845.646729 42.853165 -903.895386
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=24
-        tcp_pos=-890.141113 49.579361 -767.216370
+        tcp_pos=-890.139160 49.816074 -767.214417
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=25
-        tcp_pos=-888.574951 51.986710 -656.770264
+        tcp_pos=-888.571655 48.955608 -656.766968
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=26
-        tcp_pos=-888.253052 54.394089 -404.434937
+        tcp_pos=-888.246948 48.799492 -404.431885
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=27
-        tcp_pos=-887.222656 75.382080 199.547089
+        tcp_pos=-887.216431 70.521324 199.545532
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=28
-        tcp_pos=-877.617493 78.169975 358.871918
+        tcp_pos=-877.605469 66.700928 358.865906
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=29
-        tcp_pos=-831.371826 77.104660 456.122986
+        tcp_pos=-831.361023 65.099052 456.117584
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=30
-        tcp_pos=-754.891235 71.546143 509.186584
+        tcp_pos=-754.880371 61.373703 509.181152
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=31
-        tcp_pos=-611.349426 68.226562 527.392273
+        tcp_pos=-611.345947 60.065365 527.388794
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=32
-        tcp_pos=-512.689209 69.179688 526.066162
+        tcp_pos=-512.685913 60.105057 526.062866
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=33
-        tcp_pos=-368.367584 69.451393 527.535706
+        tcp_pos=-368.364471 60.166401 527.529480
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=34
-        tcp_pos=-318.192688 69.871429 552.595642
+        tcp_pos=-318.191345 60.140270 552.592957
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=35
-        tcp_pos=-290.218445 72.621292 630.520447
+        tcp_pos=-290.217346 59.468418 630.518250
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=36
-        tcp_pos=-185.417191 70.326607 646.956848
+        tcp_pos=-185.416122 60.126842 646.952576
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=37
-        tcp_pos=-114.993423 72.443588 565.575623
+        tcp_pos=-114.992744 60.203602 565.570190
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=38
-        tcp_pos=-127.880516 72.680229 458.161316
+        tcp_pos=-127.880005 60.186226 458.159271
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=39
-        tcp_pos=-217.207733 67.783897 379.755219
+        tcp_pos=-217.206787 60.109680 379.753326
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=40
-        tcp_pos=-307.233459 67.213982 378.581848
+        tcp_pos=-307.231079 59.908504 378.579468
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=41
-        tcp_pos=-363.529816 66.644035 342.312897
+        tcp_pos=-363.527893 60.123165 342.310974
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=42
-        tcp_pos=-346.362000 66.074074 276.486572
+        tcp_pos=-346.360535 60.011528 276.485107
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=43
-        tcp_pos=-287.685669 65.504143 261.471649
+        tcp_pos=-287.690125 60.022350 261.457550
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=44
-        tcp_pos=-204.604019 58.595280 260.486084
+        tcp_pos=-204.603241 46.905148 260.484528
         tcp_bank=0.000000
         tcp_width=70.000000
-        tcp_depth=30.000000
+        tcp_depth=70.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=45
-        tcp_pos=-159.428986 41.340534 260.596375
+        tcp_pos=-159.427887 30.299360 260.594177
         tcp_bank=0.000000
         tcp_width=70.000000
-        tcp_depth=30.000000
+        tcp_depth=70.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=46
-        tcp_pos=-86.186310 41.299740 263.385132
+        tcp_pos=-86.185486 29.989231 263.381836
         tcp_bank=0.000000
         tcp_width=70.000000
-        tcp_depth=30.000000
+        tcp_depth=70.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=47
-        tcp_pos=26.797659 7.264149 259.139191
+        tcp_pos=26.797518 2.970164 259.136932
         tcp_bank=0.000000
         tcp_width=70.000000
-        tcp_depth=30.000000
+        tcp_depth=70.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=48
-        tcp_pos=87.101959 9.851227 257.388031
+        tcp_pos=87.101036 0.172481 257.384369
         tcp_bank=0.000000
         tcp_width=102.900002
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=49
-        tcp_pos=85.543686 9.823776 194.607819
+        tcp_pos=85.543015 0.010848 194.606476
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=50
-        tcp_pos=85.260368 8.560287 157.231140
+        tcp_pos=85.259857 -0.016827 157.230118
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=51
-        tcp_pos=62.811176 8.306958 124.659981
+        tcp_pos=62.810680 0.047875 124.658989
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=52
-        tcp_pos=12.601477 8.053629 111.735123
+        tcp_pos=12.601421 0.368191 111.734680
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=53
-        tcp_pos=0.989532 7.800300 69.581406
+        tcp_pos=0.989529 0.022597 69.581001
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=54
-        tcp_pos=-0.122595 2.735048 18.613058
+        tcp_pos=-0.122595 -0.000696 18.612946
         tcp_bank=0.000000
         tcp_width=70.000000
         tcp_depth=30.000000
