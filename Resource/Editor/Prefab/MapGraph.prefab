@@ -3,7 +3,7 @@
   prefabPath=..\..\..\Resource\Editor\Prefab\MapGraph.prefab
   belong=1
   name=Empty
-  tag=90
+  tag=Obj_Graph
   collisionLayer=0
   cullDistance=0
   COMP kind=TrackGraph proto=Proto_TrackGraph mapTag=Proto_TrackGraph
