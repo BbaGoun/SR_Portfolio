@@ -68,6 +68,10 @@ _uint CLoadingThread::Loading_Stage()
         ,true, L"Sphere")))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_HalfSphere", Engine::CHalfSphere::Create(m_pGraphicDev)
+        , true, L"HalfSphere")))
+        return E_FAIL;
+
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Texture Loading.....................................");
     LeaveCriticalSection(Get_Crt());

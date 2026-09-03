@@ -9,17 +9,19 @@
 #include "SoundMgr.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
-
+#include "CRenderer.h"
+#include "CCameraMgr.h"
 IMPLEMENT_SINGLETON(CPlayTimeMgr)
 
 CPlayTimeMgr::CPlayTimeMgr()
 {
+	int a;
 	m_fStartTimer	= 0.f;
 	m_fPlayTimer	= 0.f;
 	m_fTimerFlag	= 0.f;
 	m_bStart		= false;
 	m_bPlaying		= false;
-	m_fPlayEndTime	= 3000.f;
+	m_fPlayEndTime	= 300000.f;
 }
 
 CPlayTimeMgr::~CPlayTimeMgr()
@@ -41,7 +43,10 @@ void CPlayTimeMgr::UpdateCPlayTimeMgr(const _float& fDeltaTime)
 void CPlayTimeMgr::UpdatePlayTime(const _float& fDeltaTime)
 {
 	if (m_bPlaying)
+	{
+		CRenderer::GetInstance()->SetBlur(true);
 		m_fPlayTimer += fDeltaTime;
+	}
 }
 
 void CPlayTimeMgr::StartCountDown(const _float& fDeltaTime)
@@ -75,7 +80,6 @@ void CPlayTimeMgr::StartCountDown(const _float& fDeltaTime)
 
 void CPlayTimeMgr::EndCoundDown(const _float& fDeltaTime)
 {
-
 	if (m_fPlayTimer < m_fPlayEndTime || m_bPlaying == false)
 		return;
 
@@ -85,6 +89,7 @@ void CPlayTimeMgr::EndCoundDown(const _float& fDeltaTime)
 		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/race_over.flac", SOUND_ENDCOUND, 0.4f);
+		CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FINISH);
 	}
 	else
 	{

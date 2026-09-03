@@ -64,6 +64,17 @@ namespace Engine
 
 	const _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0); // 텍스처의 UV 좌표 값을 FLOAT형 3개로 표현하겠다는 매크로(괄호안의 숫자 0의 의미는 본래 버텍스에 텍스쳐 UV값이 여러개가 올 수 있는데 그중 0번째 값을 지정하겠다는 의미)
 
+	typedef struct tagFullScreen
+	{
+		_vec4		vPosition;
+		_ulong		dwColor;
+		_vec2		vTexUV;
+
+	}VTXSCREEN;
+
+	const _ulong	FVF_SCREEN = D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1; 
+
+
 	// raycast 선 그리기 용 정점
 	typedef struct tagVertexLine
 	{

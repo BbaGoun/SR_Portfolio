@@ -166,6 +166,9 @@
     <Filter Include="04. Component\Shape\MeshRibbon">
       <UniqueIdentifier>{cc39311e-10d7-4f1a-8c54-8a063aef5c63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\HalfSphere">
+      <UniqueIdentifier>{75949650-08bc-482a-9c97-aeb0f47fb4d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -340,6 +343,9 @@
     <ClInclude Include="..\Header\CMeshRibbon.h">
       <Filter>04. Component\Shape\MeshRibbon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CHalfSphere.h">
+      <Filter>04. Component\Shape\HalfSphere</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -492,6 +498,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMeshRibbon.cpp">
       <Filter>04. Component\Shape\MeshRibbon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHalfSphere.cpp">
+      <Filter>04. Component\Shape\HalfSphere</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
