@@ -49,12 +49,17 @@ _int CMinimapCart::Update_GameObject(const _float& fDeltaTime)
 	_vec3 vPos;
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vPos);
 	m_vRotation = pCart->Get_Rotation();
-	D3DXQUATERNION q=pCart->Get_Transform()->Get_WorldQuaternion();
+
+	D3DXQUATERNION q = pCart->Get_Transform()->Get_WorldQuaternion();
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0);
 	m_pTransformCom->Set_Quaternion(&q);
 
-	vPos.y += 0.01f;
+	vPos.y = 0.5f;
 	
 	m_pTransformCom->Set_Pos(vPos);
+	//
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//cout << "MinmapCartY: " << vPos.y << endl;
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -66,25 +71,28 @@ void CMinimapCart::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CMinimapCart::Render_GameObject()
 {
-	//_matrix matOldView, matMinimapView;
-	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matOldView);
-	//
-	//CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
-	//
-	//_vec3 vEye, vAt, vUp,vLook;
-	//pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
-	//pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
-	//pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	//
-	//vEye = vAt + vLook * -15 + vUp * 15;
-	//D3DXMatrixLookAtLH(&matMinimapView, &vEye, &vAt, &vUp);
-	//m_pGraphicDev->SetTransform(D3DTS_VIEW, &matMinimapView);
+	_matrix matOldView, matMinimapView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matOldView);
+
+	_matrix matCamWorld;
+	D3DXMatrixInverse(&matCamWorld, nullptr, &matOldView);
+
+	_vec3 vEye = { matCamWorld._41, matCamWorld._42, matCamWorld._43 };
+	_vec3 vLook = { matCamWorld._31, matCamWorld._32, matCamWorld._33 };
+
+	_vec3 vUp = { 0.f, 1.f, 0.f };
+	_vec3 vNewEye = { vEye.x, 8.5f, vEye.z };
+	_vec3 vAt = vNewEye + vLook * 15;
+
+	_matrix matView;
+	D3DXMatrixLookAtLH(&matMinimapView, &vNewEye, &vAt, &vUp);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matMinimapView);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pGraphicDev->SetTexture(0, nullptr);
 	m_pVIBufferCom->Render_Buffer();
 	
-	//m_pGraphicDev->SetTransform(D3DTS_VIEW, &matOldView);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matOldView);
 }
 
 CMinimapCart* CMinimapCart::Create(LPDIRECT3DDEVICE9 pGraphicDev)
