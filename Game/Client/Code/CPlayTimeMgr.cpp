@@ -63,8 +63,8 @@ void CPlayTimeMgr::StartCountDown(const _float& fDeltaTime)
 		m_fTimerFlag = m_fStartTimer;
 		m_bPlaying = true;
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_go.flac", SOUND_EFFECT1, 0.4f);
-		//CDInputMgr::GetInstance()->BeginRecord(L"../../../RePlay/RePlay4.dat");
-		CDInputMgr::GetInstance()->Load_Record(L"../../../RePlay/RePlay4.dat");
+		//CDInputMgr::GetInstance()->BeginRecord(L"../../../RePlay/RePlay5.dat");
+		CDInputMgr::GetInstance()->Load_Record(L"../../../RePlay/RePlay5.dat");
 	}
 	else if (m_fTimerFlag < 2.f && m_fStartTimer > 2.f)
 	{
