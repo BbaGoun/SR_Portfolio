@@ -42,6 +42,7 @@
 #include "CSkyDome.h"
 #include "CUI_RankBG.h"
 #include "CUI_RankName.h"
+#include "CDInputMgr.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {

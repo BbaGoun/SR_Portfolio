@@ -60,10 +60,10 @@ void CTrackMgr::Update_Locator()
 
 void CTrackMgr::Update_RankingUI()
 {
-	cout << "==========================\n";
-	for (auto& p : m_tempRanking) {
-		cout << "Lap : " << p.second.iLap << " s : " << p.second.s << "\n";
-	}
+	//cout << "==========================\n";
+	//for (auto& p : m_tempRanking) {
+	//	cout << "Lap : " << p.second.iLap << " s : " << p.second.s << "\n";
+	//}
 }
 
 void CTrackMgr::Free()

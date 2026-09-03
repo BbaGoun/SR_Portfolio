@@ -11,6 +11,7 @@
 #include "CUI_EndCountDown.h"
 #include "CRenderer.h"
 #include "CCameraMgr.h"
+#include "CDInputMgr.h"
 IMPLEMENT_SINGLETON(CPlayTimeMgr)
 
 CPlayTimeMgr::CPlayTimeMgr()
@@ -21,7 +22,7 @@ CPlayTimeMgr::CPlayTimeMgr()
 	m_fTimerFlag	= 0.f;
 	m_bStart		= false;
 	m_bPlaying		= false;
-	m_fPlayEndTime	= 300000.f;
+	m_fPlayEndTime	= 30000.f;
 }
 
 CPlayTimeMgr::~CPlayTimeMgr()
@@ -56,10 +57,14 @@ void CPlayTimeMgr::StartCountDown(const _float& fDeltaTime)
 	if (m_fStartTimer > 4.f)
 		return;
 
-	if (m_fStartTimer > 3.f)
+	if (m_fTimerFlag < 3.f && m_fStartTimer > 3.f)
 	{
+		cout << m_fStartTimer << endl;
+		m_fTimerFlag = m_fStartTimer;
 		m_bPlaying = true;
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/count_go.flac", SOUND_EFFECT1, 0.4f);
+		//CDInputMgr::GetInstance()->BeginRecord(L"../../../RePlay/RePlay4.dat");
+		CDInputMgr::GetInstance()->Load_Record(L"../../../RePlay/RePlay4.dat");
 	}
 	else if (m_fTimerFlag < 2.f && m_fStartTimer > 2.f)
 	{
@@ -83,24 +88,25 @@ void CPlayTimeMgr::EndCoundDown(const _float& fDeltaTime)
 	if (m_fPlayTimer < m_fPlayEndTime || m_bPlaying == false)
 		return;
 
-	//if (m_fPlayTimer > m_fPlayEndTime + 10.f && m_bPlaying == true)
-	//{
-	//	m_bPlaying = false;
-	//	SoundMgr::GetInstance().StopSound(SOUND_BOOST);
-	//	SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
-	//	SoundMgr::GetInstance().PlaySound(L"Effect/lab/race_over.flac", SOUND_ENDCOUND, 0.4f);
-	//}
-	//else
-	//{
-	//	for (int i = 0; i < 10; ++i)
-	//	{
-	//		if (m_fTimerFlag < m_fPlayEndTime + float(i) && m_fPlayTimer > m_fPlayEndTime + float(i))
-	//		{
-	//			m_fTimerFlag = m_fPlayTimer;
-	//			SoundMgr::GetInstance().PlaySound(L"Effect/lab/ro_count.flac", SOUND_ENDCOUND, 0.4f);
-	//		}
-	//	}
-	//}
+	if (m_fPlayTimer > m_fPlayEndTime + 10.f && m_bPlaying == true)
+	{
+		m_bPlaying = false;
+		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
+		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
+		SoundMgr::GetInstance().PlaySound(L"Effect/lab/race_over.flac", SOUND_ENDCOUND, 0.4f);
+		//CDInputMgr::GetInstance()->End_Record();
+	}
+	else
+	{
+		for (int i = 0; i < 10; ++i)
+		{
+			if (m_fTimerFlag < m_fPlayEndTime + float(i) && m_fPlayTimer > m_fPlayEndTime + float(i))
+			{
+				m_fTimerFlag = m_fPlayTimer;
+				SoundMgr::GetInstance().PlaySound(L"Effect/lab/ro_count.flac", SOUND_ENDCOUND, 0.4f);
+			}
+		}
+	}
 }
 
 void CPlayTimeMgr::Free()

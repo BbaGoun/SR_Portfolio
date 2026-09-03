@@ -53,6 +53,9 @@ HRESULT CMainApp::Ready_MainApp()
 void CMainApp::FixedUpdate_MainApp(const float& fFixedDeltaTime)
 {
 	m_pManagementClass->FixedUpdate_Scene(fFixedDeltaTime);
+	CDInputMgr::GetInstance()->Load_FixedUpdate();
+	CDInputMgr::GetInstance()->Record_FixedUpdate();
+
 }
 
 int CMainApp::Update_MainApp(const float& fDeltaTime)
@@ -70,8 +73,8 @@ int CMainApp::Update_MainApp(const float& fDeltaTime)
 
 void CMainApp::LateUpdate_MainApp(const float& fDeltaTime)
 {
-	m_pManagementClass->LateUpdate_Scene(fDeltaTime);
 	CDInputMgr::GetInstance()->LateUpdate_InputDev();
+	m_pManagementClass->LateUpdate_Scene(fDeltaTime);
 }
 
 void CMainApp::Render_MainApp()
