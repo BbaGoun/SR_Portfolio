@@ -361,6 +361,9 @@
     <Filter Include="03. Manager\RankMgr">
       <UniqueIdentifier>{d29b7f87-a875-4652-9d62-4445214be037}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Cart\CCartBot">
+      <UniqueIdentifier>{5936d39c-0afd-48e9-a20d-51d67314356a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -714,6 +717,9 @@
     <ClInclude Include="..\Header\CRankMgr.h">
       <Filter>03. Manager\RankMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCartBot.h">
+      <Filter>02. GameObject\Cart\CCartBot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1057,6 +1063,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CRankMgr.cpp">
       <Filter>03. Manager\RankMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCartBot.cpp">
+      <Filter>02. GameObject\Cart\CCartBot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

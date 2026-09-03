@@ -209,7 +209,7 @@ namespace Engine
 		float			u;				// 엣지 로컬 호장
 		float			s;				// 전역 진행량(0~lapLength)
 		int				iLap;			// 진행한 랩 수
-		bool			bValid;			// 터널 밖, 리셋 중
+		bool			bValid = false;	// 터널 밖, 리셋 중
 	}TrackLocator;
 
 	typedef struct _tagHazardRecord
@@ -227,6 +227,8 @@ namespace Engine
 		_vec3	position, T, R, U;
 		EdgeId	edgeId;
 		float	u, s;
+		float	speed;
+		bool	bValid = false;
 	}TrackPose;
 
 	typedef struct _tagRouteNode {

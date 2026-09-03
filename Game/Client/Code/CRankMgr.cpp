@@ -18,16 +18,27 @@ CRankMgr::~CRankMgr()
 
 void CRankMgr::SwapUI(int iDst, int iSrc)
 {
-	//if (iDst >= m_vecChildren.size() || iSrc >= m_vecChildren.size())
-	//	return;
-	//_vec3 vDstPos, vSrcPos;
-	//m_vecChildren[iDst]->Get_Transform()->Get_LocalInfo(INFO_POS, &vDstPos);
-	//m_vecChildren[iSrc]->Get_Transform()->Get_LocalInfo(INFO_POS, &vSrcPos);
-	//
-	//m_vecChildren[iDst]->Get_Transform()->Set_Pos(vSrcPos);
-	//m_vecChildren[iSrc]->Get_Transform()->Set_Pos(vDstPos);
-	//
-	//swap(m_vecChildren[iDst], m_vecChildren[iSrc]);
+	if (iDst >= m_vecRankUIs.size() || iSrc >= m_vecRankUIs.size())
+		return;
+
+	_vec3 vDstPos, vSrcPos;
+	m_vecRankUIs[iDst].second->Get_Transform()->Get_LocalInfo(INFO_POS, &vDstPos);
+	m_vecRankUIs[iSrc].second->Get_Transform()->Get_LocalInfo(INFO_POS, &vSrcPos);
+	
+	m_vecRankUIs[iDst].second->Get_Transform()->Set_Pos(vSrcPos);
+	m_vecRankUIs[iSrc].second->Get_Transform()->Set_Pos(vDstPos);
+	
+	swap(m_vecRankUIs[iDst], m_vecRankUIs[iSrc]);
+}
+
+void CRankMgr::UpdateRank(vector<pair<CGameObject*, TrackLocator>>& vecRank)
+{
+	for (int i = 0; i < vecRank.size(); ++i) {
+		for (int j = 0; j < m_vecRankUIs.size(); ++j) {
+			if (m_vecRankUIs[j].first == vecRank[i].first)
+				SwapUI(i, j);
+		}
+	}
 }
 
 void CRankMgr::Free()

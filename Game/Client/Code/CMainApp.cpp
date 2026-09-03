@@ -59,7 +59,6 @@ int CMainApp::Update_MainApp(const float& fDeltaTime)
 {
 	m_pManagementClass->Change_NextScene();
 
-	CDInputMgr::GetInstance()->Update_InputDev();
 	SoundMgr::GetInstance().Update();
 
 	CPlayTimeMgr::GetInstance()->UpdateCPlayTimeMgr(fDeltaTime);
