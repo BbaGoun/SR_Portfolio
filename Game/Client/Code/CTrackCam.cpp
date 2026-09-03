@@ -40,7 +40,8 @@ HRESULT CTrackCam::Ready_GameObject(const _vec3& pEye,
 
 	if (FAILED(CCamera::Ready_GameObject()))
 		return E_FAIL;
-	m_pTransformCom->Set_Pos(m_vEye);
+	//m_pTransformCom->Set_Pos(m_vEye);
+
 	m_fYaw = 0;
 	m_fDistScale = 1;
 	m_fBackDistance = 0.f;
@@ -52,6 +53,11 @@ void CTrackCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	if (CCameraMgr::GetInstance()->CheckIsMainCamera(this)) {
 		CTransform* pTrans = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart")->Get_Component<CTransform>();
+		
+		// 에디터에서 가져오는 경우 설정 필요
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		m_vEye = vPos;
 
 		if (pTrans == nullptr)
 			return;

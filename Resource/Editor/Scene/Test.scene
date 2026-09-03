@@ -171,7 +171,7 @@
       pos=-78.852570 0.000000 -402.439209
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999972 1.000000 0.999972
+      scale=0.999976 1.000000 0.999976
   ENDOBJECT
   OBJECT
     type=
@@ -297,7 +297,7 @@
       pos=-275.707092 0.000000 -402.501801
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999894 1.000000 0.999894
+      scale=0.999898 1.000000 0.999898
   ENDOBJECT
   OBJECT
     type=
@@ -327,7 +327,7 @@
       pos=-204.168243 0.000000 -602.490662
       rot=0.000000 -89.990471 0.000000
       quat=0.000000 -0.707048 0.000000 0.707165
-      scale=0.999712 1.000000 0.999712
+      scale=0.999708 1.000000 0.999708
   ENDOBJECT
   OBJECT
     type=
@@ -435,7 +435,7 @@
       pos=-199.048859 0.000000 -602.474243
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999867 1.000000 0.999867
+      scale=0.999871 1.000000 0.999871
   ENDOBJECT
   OBJECT
     type=
@@ -465,7 +465,7 @@
       pos=-249.047943 0.000000 -743.541199
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999945 1.000000 0.999945
+      scale=0.999949 1.000000 0.999949
   ENDOBJECT
   OBJECT
     type=
@@ -495,7 +495,7 @@
       pos=-364.610657 0.000000 -743.538330
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 -0.000000 0.707107
-      scale=0.999862 1.000000 0.999862
+      scale=0.999866 1.000000 0.999866
   ENDOBJECT
   OBJECT
     type=
@@ -525,7 +525,7 @@
       pos=-219.090454 30.000000 -743.544495
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999870 1.000000 0.999870
+      scale=0.999874 1.000000 0.999874
   ENDOBJECT
   OBJECT
     type=
@@ -579,7 +579,7 @@
       pos=-408.984192 30.000000 -743.464172
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999916 1.000000 0.999916
+      scale=0.999920 1.000000 0.999920
   ENDOBJECT
   OBJECT
     type=
@@ -711,7 +711,7 @@
       pos=-562.247742 30.000000 -979.055908
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999912 1.000000 0.999912
+      scale=0.999916 1.000000 0.999916
   ENDOBJECT
   OBJECT
     type=
@@ -777,7 +777,7 @@
       pos=-672.349121 30.000000 -967.245972
       rot=0.000000 -89.999222 0.000000
       quat=0.000000 -0.707102 0.000000 0.707112
-      scale=0.999834 1.000000 0.999834
+      scale=0.999838 1.000000 0.999838
   ENDOBJECT
   OBJECT
     type=
@@ -915,7 +915,7 @@
       pos=-787.915161 60.000000 525.786377
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999989 1.000000 0.999989
+      scale=0.999993 1.000000 0.999993
   ENDOBJECT
   OBJECT
     type=
@@ -975,7 +975,7 @@
       pos=-387.421143 60.000000 525.984314
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999972 1.000000 0.999972
+      scale=0.999976 1.000000 0.999976
   ENDOBJECT
   OBJECT
     type=
@@ -1107,7 +1107,7 @@
       pos=-259.957245 60.000000 380.187622
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999931 1.000000 0.999931
+      scale=0.999935 1.000000 0.999935
   ENDOBJECT
   OBJECT
     type=
@@ -1137,7 +1137,7 @@
       pos=-298.853760 60.000000 380.176361
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999975 1.000000 0.999975
+      scale=0.999979 1.000000 0.999979
   ENDOBJECT
   OBJECT
     type=
@@ -1329,7 +1329,7 @@
       pos=-303.616547 60.000000 380.217682
       rot=0.000000 -89.989822 0.000000
       quat=0.000000 -0.707044 0.000000 0.707170
-      scale=0.999710 1.000000 0.999710
+      scale=0.999714 1.000000 0.999714
   ENDOBJECT
   OBJECT
     type=
@@ -1359,7 +1359,7 @@
       pos=-244.488342 60.000000 260.532684
       rot=0.000000 -89.992256 0.000000
       quat=0.000000 -0.707059 0.000000 0.707154
-      scale=0.999767 1.000000 0.999767
+      scale=0.999763 1.000000 0.999763
   ENDOBJECT
   OBJECT
     type=
@@ -1389,7 +1389,7 @@
       pos=-161.444122 30.000000 260.610565
       rot=0.000000 -89.989822 0.000000
       quat=0.000000 -0.707044 0.000000 0.707170
-      scale=0.999701 1.000000 0.999701
+      scale=0.999705 1.000000 0.999705
   ENDOBJECT
   OBJECT
     type=
@@ -1419,7 +1419,7 @@
       pos=-85.134201 30.000000 260.646088
       rot=0.000000 -89.992905 0.000000
       quat=0.000000 -0.707063 0.000000 0.707150
-      scale=0.999772 1.000000 0.999772
+      scale=0.999768 1.000000 0.999768
   ENDOBJECT
   OBJECT
     type=
@@ -1449,7 +1449,7 @@
       pos=36.062935 0.000000 260.677795
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999837 1.000000 0.999837
+      scale=0.999841 1.000000 0.999841
   ENDOBJECT
   OBJECT
     type=
@@ -1479,7 +1479,7 @@
       pos=54.205418 0.000000 260.663788
       rot=0.000000 -89.990799 0.000000
       quat=0.000000 -0.707050 0.000000 0.707163
-      scale=0.999754 1.000000 0.999754
+      scale=0.999750 1.000000 0.999750
   ENDOBJECT
   OBJECT
     type=
@@ -1509,7 +1509,7 @@
       pos=59.680733 0.000000 260.496155
       rot=0.000000 -89.999870 180.000000
       quat=0.707106 0.000000 0.707107 -0.000000
-      scale=0.999781 0.999686 0.999781
+      scale=0.999777 0.999678 0.999777
   ENDOBJECT
   OBJECT
     type=
@@ -1587,7 +1587,7 @@
       pos=44.533592 0.000000 123.866180
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999859 1.000000 0.999859
+      scale=0.999863 1.000000 0.999863
   ENDOBJECT
   OBJECT
     type=
@@ -1708,7 +1708,7 @@ OBJECT
       pos=-29.780828 4.929333 65.782990
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999847 0.999847 1.000000
+      scale=0.999851 0.999851 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -1785,7 +1785,7 @@ OBJECT
       pos=-29.774054 4.930652 -294.405945
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 -0.000000 -0.000000
-      scale=0.999506 0.999506 1.000007
+      scale=0.999510 0.999510 1.000011
   ENDOBJECT
   OBJECT
     type=
@@ -2141,7 +2141,7 @@ OBJECT
       pos=-406.715515 4.786317 -477.420227
       rot=180.000000 -0.000000 90.000031
       quat=0.707107 0.707107 -0.000000 -0.000000
-      scale=1.000003 1.000003 1.000003
+      scale=1.000007 1.000007 1.000007
   ENDOBJECT
   OBJECT
     type=
@@ -2224,7 +2224,7 @@ OBJECT
       pos=-362.038147 4.822966 -605.227112
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 -0.000000 -0.000000
-      scale=0.999755 0.999755 0.999816
+      scale=0.999759 0.999759 0.999820
   ENDOBJECT
   OBJECT
     type=
@@ -2497,7 +2497,7 @@ OBJECT
       pos=-140.487289 4.698148 -661.854370
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 0.000000 0.000000
-      scale=0.999744 0.999744 0.999797
+      scale=0.999748 0.999748 0.999801
   ENDOBJECT
   OBJECT
     type=
@@ -2581,9 +2581,9 @@ OBJECT
   cullDistance=0
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
     pos=0.000000 3.622599 0.250000
-    rot=0.000000 -89.997063 0.000000
+    rot=0.000000 -89.997116 0.000000
     quat=0.000000 -0.707089 0.000000 0.707125
-    scale=0.999971 1.000000 0.999971
+    scale=0.999975 1.000000 0.999975
   OBJECT
     type=
     prefabPath=..\..\..\Resource\Editor\Prefab\Character\bazzi.prefab
@@ -2685,7 +2685,7 @@ OBJECT
             pos=-0.008125 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=1.000000 1.000007 1.000007
+            scale=1.000000 1.000011 1.000011
         ENDOBJECT
         OBJECT
           type=Alpha
@@ -2701,7 +2701,7 @@ OBJECT
             pos=-0.010000 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=0.999961 0.999926 0.999926
+            scale=0.999961 0.999930 0.999930
         ENDOBJECT
       ENDOBJECT
     ENDOBJECT
@@ -2901,7 +2901,7 @@ OBJECT
   cullDistance=0
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
     pos=0.000000 0.550000 0.000000
-    rot=-179.999893 -0.000005 -179.999893
+    rot=-179.999878 -0.000000 -179.999878
     quat=-0.000001 1.000000 -0.000001 -0.000000
     scale=1.000000 1.000000 1.000000
   OBJECT
@@ -3190,7 +3190,7 @@ OBJECT
         pos=0.000000 0.408654 -0.643192
         rot=79.213371 -0.000000 0.000000
         quat=0.637514 0.000000 0.000000 0.770438
-        scale=0.749967 0.099999 0.999960
+        scale=0.749967 0.099999 0.999956
     ENDOBJECT
     OBJECT
       type=
@@ -3257,4 +3257,448 @@ OBJECT
         scale=0.099996 0.499980 0.099998
     ENDOBJECT
   ENDOBJECT
+ENDOBJECT
+OBJECT
+  type=
+  prefabPath=..\..\..\Resource\Editor\Prefab\MapGraph.prefab
+  belong=1
+  name=Empty
+  tag=Obj_Graph
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=TrackGraph proto=Proto_TrackGraph mapTag=Proto_TrackGraph
+    tg_sample_unit=1.000000
+    TRACK_NODE
+      tn_id=1
+      tn_pos=0.000000 0.000000 0.000000
+      tn_start=1
+      tn_finish=1
+    END_TRACK_NODE
+    TRACK_EDGE
+      te_id=1
+      te_nodes=1 1
+      te_default_size=70.000000 30.000000
+      te_cost_bias=0.000000
+      TRACK_CONTROL_POINT
+        tcp_id=1
+        tcp_pos=0.000000 0.000000 0.000000
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=3
+        tcp_pos=0.532100 0.000000 -312.454529
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=4
+        tcp_pos=-22.058334 0.000000 -384.367279
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=5
+        tcp_pos=-87.074905 0.000000 -399.289581
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=6
+        tcp_pos=-249.371155 0.000000 -399.627960
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=7
+        tcp_pos=-357.552185 0.000000 -435.567535
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=8
+        tcp_pos=-375.518036 0.000000 -545.936768
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=9
+        tcp_pos=-301.495911 0.000000 -605.161499
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=10
+        tcp_pos=-165.511932 0.000000 -602.537598
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=11
+        tcp_pos=-107.015862 0.000000 -658.239807
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=12
+        tcp_pos=-144.244797 0.000000 -729.555786
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=13
+        tcp_pos=-253.948959 0.000000 -740.580444
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=14
+        tcp_pos=-338.493591 31.706827 -742.289978
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=15
+        tcp_pos=-424.049622 38.457359 -744.615967
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=16
+        tcp_pos=-470.448792 36.987869 -779.185608
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=17
+        tcp_pos=-475.876617 36.598293 -832.642517
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=18
+        tcp_pos=-481.304443 35.134987 -886.099426
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=19
+        tcp_pos=-486.732269 37.542389 -939.556335
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=20
+        tcp_pos=-534.239990 39.949783 -974.901062
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=21
+        tcp_pos=-620.561035 42.357178 -979.749695
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=22
+        tcp_pos=-728.078918 44.764603 -955.740356
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=23
+        tcp_pos=-845.650146 47.171967 -903.898804
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=24
+        tcp_pos=-890.141113 49.579361 -767.216370
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=25
+        tcp_pos=-888.574951 51.986710 -656.770264
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=26
+        tcp_pos=-888.253052 54.394089 -404.434937
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=27
+        tcp_pos=-887.222656 75.382080 199.547089
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=28
+        tcp_pos=-877.617493 78.169975 358.871918
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=29
+        tcp_pos=-831.371826 77.104660 456.122986
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=30
+        tcp_pos=-754.891235 71.546143 509.186584
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=31
+        tcp_pos=-611.349426 68.226562 527.392273
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=32
+        tcp_pos=-512.689209 69.179688 526.066162
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=33
+        tcp_pos=-368.367584 69.451393 527.535706
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=34
+        tcp_pos=-318.192688 69.871429 552.595642
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=35
+        tcp_pos=-290.218445 72.621292 630.520447
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=36
+        tcp_pos=-185.417191 70.326607 646.956848
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=37
+        tcp_pos=-114.993423 72.443588 565.575623
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=38
+        tcp_pos=-127.880516 72.680229 458.161316
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=39
+        tcp_pos=-217.207733 67.783897 379.755219
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=40
+        tcp_pos=-307.233459 67.213982 378.581848
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=41
+        tcp_pos=-363.529816 66.644035 342.312897
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=42
+        tcp_pos=-346.362000 66.074074 276.486572
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=43
+        tcp_pos=-287.685669 65.504143 261.471649
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=44
+        tcp_pos=-204.604019 58.595280 260.486084
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=45
+        tcp_pos=-159.428986 41.340534 260.596375
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=46
+        tcp_pos=-86.186310 41.299740 263.385132
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=47
+        tcp_pos=26.797659 7.264149 259.139191
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=48
+        tcp_pos=87.101959 9.851227 257.388031
+        tcp_bank=0.000000
+        tcp_width=102.900002
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=49
+        tcp_pos=85.543686 9.823776 194.607819
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=50
+        tcp_pos=85.260368 8.560287 157.231140
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=51
+        tcp_pos=62.811176 8.306958 124.659981
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=52
+        tcp_pos=12.601477 8.053629 111.735123
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=53
+        tcp_pos=0.989532 7.800300 69.581406
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=54
+        tcp_pos=-0.122595 2.735048 18.613058
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=2
+        tcp_pos=0.000000 0.000000 0.000000
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+    END_TRACK_EDGE
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+OBJECT
+  type=TrackCam
+  prefabPath=..\..\..\Resource\Editor\Prefab\TrackCam.prefab
+  belong=1
+  name=TrackCam1
+  tag=TrackCam
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=-28.040373 15.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+ENDOBJECT
+OBJECT
+  type=TrackCam
+  prefabPath=..\..\..\Resource\Editor\Prefab\TrackCam.prefab
+  belong=1
+  name=TrackCam2
+  tag=TrackCam
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=-28.000000 15.000000 -175.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+ENDOBJECT
+OBJECT
+  type=TrackCam
+  prefabPath=..\..\..\Resource\Editor\Prefab\TrackCam.prefab
+  belong=1
+  name=TrackCam3
+  tag=TrackCam
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=-33.991341 14.000000 -350.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
 ENDOBJECT

@@ -340,6 +340,27 @@
     <Filter Include="02. GameObject\Item\Shield\Shield2">
       <UniqueIdentifier>{d798c48d-f61d-4264-84f6-c3a4b047d43e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager\TrackMgr">
+      <UniqueIdentifier>{7df1f21a-f2fe-4895-a15e-76c40c27e07e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Camera\FinishCamera">
+      <UniqueIdentifier>{82b289d8-e95a-40fe-9f94-22000c0e3f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\SkyDome">
+      <UniqueIdentifier>{6093aef2-3b67-40bb-b9e2-8742e114afeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Rank">
+      <UniqueIdentifier>{a6001824-3707-4877-839b-387d793b47b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Rank\UI_RankName">
+      <UniqueIdentifier>{709f53cd-99a3-4dbd-9e64-c7c04d2418f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Rank\UI_RankBG">
+      <UniqueIdentifier>{7be639a1-7fbb-40b4-8014-c11927e9472d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\RankMgr">
+      <UniqueIdentifier>{d29b7f87-a875-4652-9d62-4445214be037}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -675,6 +696,24 @@
     <ClInclude Include="..\Header\CPause_MenuBtn.h">
       <Filter>02. GameObject\UI\UI_Pause</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTrackMgr.h">
+      <Filter>03. Manager\TrackMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFinishCam.h">
+      <Filter>02. GameObject\Camera\FinishCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSkyDome.h">
+      <Filter>02. GameObject\SkyDome</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_RankBG.h">
+      <Filter>02. GameObject\UI\UI_Rank\UI_RankBG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_RankName.h">
+      <Filter>02. GameObject\UI\UI_Rank\UI_RankName</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRankMgr.h">
+      <Filter>03. Manager\RankMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1000,6 +1039,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\CPause_MenuBtn.cpp">
       <Filter>02. GameObject\UI\UI_Pause</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTrackMgr.cpp">
+      <Filter>03. Manager\TrackMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFinishCam.cpp">
+      <Filter>02. GameObject\Camera\FinishCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSkyDome.cpp">
+      <Filter>02. GameObject\SkyDome</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_RankBG.cpp">
+      <Filter>02. GameObject\UI\UI_Rank\UI_RankBG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_RankName.cpp">
+      <Filter>02. GameObject\UI\UI_Rank\UI_RankName</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRankMgr.cpp">
+      <Filter>03. Manager\RankMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

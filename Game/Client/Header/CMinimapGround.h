@@ -28,7 +28,7 @@ private:
 public:
 	static CMinimapGround* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-
+	float fScale;
 
 protected:
 	virtual		void		Free() override;

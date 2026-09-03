@@ -1,17 +1,16 @@
-﻿#pragma once
+#pragma once
 #include "CGameObject.h"
 #include "CTransform.h"
-#include "CAirplane.h"
+#include "CHalfSphere.h"
 #include "CTexture.h"
-#include "CCamera.h"
 
-class CJet :
+class CSkyDome :
 	public CGameObject
 {
 private:
-	explicit CJet(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CJet(const CGameObject& rhs);
-	~CJet() override;
+	explicit CSkyDome(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CSkyDome(const CGameObject& rhs);
+	~CSkyDome() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -20,16 +19,13 @@ public:
 	virtual			void		Render_GameObject() override;
 
 private:
-	void	Key_Input(const _float& fDeltaTime);
 
 private:
-	CAirplane* m_pBufferCom;
-	CCamera* m_pCameraCom;
-
-	_float m_fSpeed;
+	CHalfSphere* m_pBufferCom;
+	CTexture* m_pTextureCom;
 
 public:
-	static CJet* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CSkyDome* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
 	virtual		void		Free() override;

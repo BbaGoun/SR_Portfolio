@@ -64,6 +64,17 @@ namespace Engine
 
 	const _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0); // 텍스처의 UV 좌표 값을 FLOAT형 3개로 표현하겠다는 매크로(괄호안의 숫자 0의 의미는 본래 버텍스에 텍스쳐 UV값이 여러개가 올 수 있는데 그중 0번째 값을 지정하겠다는 의미)
 
+	typedef struct tagFullScreen
+	{
+		_vec4		vPosition;
+		_ulong		dwColor;
+		_vec2		vTexUV;
+
+	}VTXSCREEN;
+
+	const _ulong	FVF_SCREEN = D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1; 
+
+
 	// raycast 선 그리기 용 정점
 	typedef struct tagVertexLine
 	{
@@ -155,6 +166,93 @@ namespace Engine
 
 		list<CGameObject*>		RenderList;
 	}RTINFO;
+
+	typedef struct _tagTrackNode
+	{
+		_vec3			position;
+		NodeId			id;
+		float			s_Global; // s는 전역 진행량(호 길이)라는 뜻
+		bool			bStart;		// 시작점
+		bool			bFinish;	// 끝점
+		int				in_Degree;   // 위상 정렬용 진입 차수
+		vector<EdgeId>	vecInEdgeIds, vecOutEdgeIds;
+	}TrackNode;
+
+	typedef struct _tagTrackSample
+	{
+		_vec3			position;
+		_vec3			T, R, U;
+		float			u; // 이 엣지 시작부터의 호장
+		float			s; // 전역 진행량
+		float			halfW, halfH, halfL; // OBB 반 크기
+		float			speed; // 이 구간의 감속량
+	}TrackSample;
+
+	typedef struct _tagTrackEdge
+	{
+		EdgeId			id;
+		NodeId			fromNode, toNode;
+		float			sStart, sEnd;
+		float			fLength; // 엣지의 실제 길이, sEnd-sStart와 다를 수 있음
+		float			fWidthDefault, fHeightDefault;
+		float			fCostBias;	// 경로 선택의 가중치
+		deque<ControlPoint>		deqControls;
+		vector<TrackSample>		vecSamples;
+	}TrackEdge;
+
+
+	typedef struct _tagTrackLocator
+	{
+		_vec3			localPos;
+		EdgeId			edgeId;			// 현재 경로(갈래)
+		int				iSampleIndex;	// 검색 시작점
+		float			u;				// 엣지 로컬 호장
+		float			s;				// 전역 진행량(0~lapLength)
+		int				iLap;			// 진행한 랩 수
+		bool			bValid;			// 터널 밖, 리셋 중
+	}TrackLocator;
+
+	typedef struct _tagHazardRecord
+	{
+		EdgeId			edgeId;			// 어느 도로인가
+		float			u;				// 그 도로의 어디인가
+		float			lateral;		// R 방향 오프셋
+		float			radius;			// 회피 반경
+		ITEM_TYPE		eType;	// 아이템 타입
+		CGameObject* pOwner;			// 수명 동기화
+	}HazardRecord;
+
+	// Advance, 스폰 용
+	typedef struct _tagTrackPose {
+		_vec3	position, T, R, U;
+		EdgeId	edgeId;
+		float	u, s;
+	}TrackPose;
+
+	typedef struct _tagRouteNode {
+		NodeId	nodeId;
+		EdgeId	viaEdge;
+	};
+
+	typedef struct _tagEdgeCost
+	{
+		float fTime;	// fLength / 예상 속력
+		float fHazard;	// Hazard 레지스트리에서 합산
+		float fBias;	// 엣지의 fCostBias;
+	};
+
+	struct ArcLengthEntry
+	{
+		float globalT;  // segmentIndex + localT
+		float length;   // 곡선 시작부터의 누적 거리
+	};
+
+	struct CheckInfo {
+		TrackLocator bestLocater;
+		float bestScore = FLT_MAX;
+		bool bFound = false;
+		float bestLateral = 0;
+	};
 }
 
 

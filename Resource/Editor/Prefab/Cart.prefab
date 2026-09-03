@@ -297,7 +297,7 @@
         pos=0.000000 0.408654 -0.643192
         rot=79.213371 -0.000000 0.000000
         quat=0.637514 0.000000 0.000000 0.770438
-        scale=0.749967 0.099999 0.999961
+        scale=0.749967 0.099999 0.999960
     ENDOBJECT
     OBJECT
       type=
@@ -362,6 +362,38 @@
         rot=-29.999996 -0.000000 0.000000
         quat=-0.258819 0.000000 0.000000 0.965926
         scale=0.099996 0.499980 0.099998
+    ENDOBJECT
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=24
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_CartWheelCol mapTag=Proto_CartWheelCol
+      COMP kind=Texture proto=Proto_CartExhaustTex mapTag=Proto_CartExhaustTex
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.292937 0.120000 -1.031868
+        rot=0.000000 89.999092 0.000000
+        quat=0.000000 0.707101 0.000000 0.707112
+        scale=0.149990 0.150000 0.149990
+    ENDOBJECT
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=25
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_CartWheelCol mapTag=Proto_CartWheelCol
+      COMP kind=Texture proto=Proto_CartExhaustTex mapTag=Proto_CartExhaustTex
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=-0.293000 0.120000 -1.032000
+        rot=-179.999573 89.999992 -179.999573
+        quat=-0.000000 0.707107 -0.000000 0.707107
+        scale=0.150000 0.150000 0.150000
     ENDOBJECT
   ENDOBJECT
 ENDOBJECT

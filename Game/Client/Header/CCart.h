@@ -36,6 +36,8 @@ public:
 	void			UpdateGravity();
 	void			UpdateMagnet(const _float& fDeltaTime);
 	void			UpdateStartBoost();
+	void			UpdateBlur(const _float& fDeltaTime);
+
 
 	// Get, Set
 	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
