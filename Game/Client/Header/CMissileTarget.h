@@ -6,6 +6,7 @@ namespace Engine
 	class CCube_Collider;
 }
 class CWaterBombBubble;
+class CEmp_Band;
 
 class CMissileTarget : public CGameObject
 {
@@ -21,7 +22,7 @@ public:
 	virtual			void		Render_GameObject() override;
 
 					void		KeyInput(const _float& fDeltaTime);
-					void		CreateShieldObject();
+				
 	virtual			void		CollisionEnter(CCollider* pOtherCollider) override;
 	virtual			void		CollisionExit(CCollider* pOtherCollider) {};
 	virtual			void		CollisionStay(CCollider* pOtherCollider) {};
@@ -29,19 +30,25 @@ public:
 	virtual			void	    TriggerEnter(CCollider* pOtherCollider) override;
 	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
 	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
+	
+					void		CreateShieldObject();
+					void		CreateEmp_BandObject();
+					void		DeleteEmp_BandObject();
+					void		ClearEmpBand();
 
-	bool		GetMissileHit() { return m_bMissileHit; }
-	void		SetMissileHit(bool bMissileHit) { m_bMissileHit = bMissileHit; }
+					bool		GetMissileHit() { return m_bMissileHit; }
+					void		SetMissileHit(bool bMissileHit) { m_bMissileHit = bMissileHit; }
 
-	bool		GetBubbleUI() { return m_bBubbleUI; }
-	void		SetBubbleUI(bool bBubbleState) { m_bBubbleUI = bBubbleState; }
+					bool		GetBubbleUI() { return m_bBubbleUI; }
+					void		SetBubbleUI(bool bBubbleState) { m_bBubbleUI = bBubbleState; }
 
-	bool		GetShieldHit() { return m_bShieldHit; }
-	void		SetShieldHit(bool bShieldState) { m_bShieldHit = bShieldState; }
+					bool		GetShieldHit() { return m_bShieldHit; }
+					void		SetShieldHit(bool bShieldState) { m_bShieldHit = bShieldState; }
 
-	bool		GetShieldActive() { return m_bShieldActive; }
-	void		SetShieldActivet(bool bActiveState) { m_bShieldActive = bActiveState; }
+					bool		GetShieldActive() { return m_bShieldActive; }
+					void		SetShieldActivet(bool bActiveState) { m_bShieldActive = bActiveState; }
 
+					bool		GetUfoHit() { return m_bUfoHit; }
 public:
 	static CMissileTarget* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
@@ -49,6 +56,7 @@ private:
 	Engine::CCartBodyCol* m_pBufferCom;
 	Engine::CCube_Collider* m_pColliderCom;
 	CWaterBombBubble* m_pBubble;
+	CEmp_Band* m_pEmpBand;
 	_float				m_fMaxSpeed;
 	_float				m_fTimer;
 	_float				m_fShieldTimer;
@@ -68,6 +76,7 @@ private:
 	_bool				m_bShieldTimer;
 	_bool				m_bShieldActive;
 	_bool				m_bUfoHit;
+	_bool				m_EmpBandCreate;
 
 protected:
 	virtual		void		Free() override;

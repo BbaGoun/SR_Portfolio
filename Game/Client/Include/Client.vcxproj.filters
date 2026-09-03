@@ -349,6 +349,9 @@
     <Filter Include="02. GameObject\Item\Ufo\UfoBody">
       <UniqueIdentifier>{903ebdc4-f140-4ddd-9975-e82261e7278d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\Target_Emp_Band">
+      <UniqueIdentifier>{c7c06198-0f53-4d28-b3bb-2bf9158ff37f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -678,6 +681,9 @@
     <ClInclude Include="..\Header\CUfoBody.h">
       <Filter>02. GameObject\Item\Ufo\UfoBody</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CEmp_Band.h">
+      <Filter>02. GameObject\Item\Target_Emp_Band</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -997,6 +1003,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUfoBody.cpp">
       <Filter>02. GameObject\Item\Ufo\UfoBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEmp_Band.cpp">
+      <Filter>02. GameObject\Item\Target_Emp_Band</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

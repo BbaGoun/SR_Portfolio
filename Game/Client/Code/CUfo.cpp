@@ -253,66 +253,6 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_fUfoRight -= 0.05f;
 	}
 
-	//if (m_fTimer >= 1.32f && m_bSavePos == false)
-	//{
-	//	m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);
-	//	m_bSavePos = true;
-	//}
-
-
-	//if (m_fTimer >= 1.32f && m_fTimer < 1.85f)	// 안보이는 상태에서 타겟 머리위로 빠르게 이동
-	//{
-	//	vDirTarget1 = vTargetPos1 - m_vSavePos;
-	//	vDirTarget2 = vTargetPos2 - m_vSavePos;
-	//	vDirTarget3 = vTargetPos3 - m_vSavePos;
-	//	vDirTarget4 = vTargetPos4 - m_vSavePos;
-
-	//	// 하드 코딩 수정
-	//	if (D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget2)
-	//		&& D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget3)
-	//		&& D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget4))
-	//	{
-	//		// vDirTarget = vDirTarget1;
-	//		vTargetPos = vTargetPos1;
-	//		m_vTargetUp = vTargetUp1;
-	//	}
-
-	//	else if (D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget1)
-	//		&& D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget3)
-	//		&& D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget4))
-	//	{
-	//		// vDirTarget = vDirTarget2;
-	//		vTargetPos = vTargetPos2;
-	//		m_vTargetUp = vTargetUp2;
-	//	}
-
-	//	else if (D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget1)
-	//		&& D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget2)
-	//		&& D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget4))
-	//	{
-	//		// vDirTarget = vDirTarget3;
-	//		vTargetPos = vTargetPos3;
-	//		m_vTargetUp = vTargetUp3;
-	//	}
-
-	//	else
-	//	{
-	//		// vDirTarget = vDirTarget4;
-	//		vTargetPos = vTargetPos4;
-	//		m_vTargetUp = vTargetUp4;
-	//	}
-
-	//	//if (D3DXVec3Length(&vDirTarget) <= 0.001f)
-	//	//	return;
-
-	//	//D3DXVec3Normalize(&vDirTarget, &vDirTarget);
-
-	//	// m_pTransformCom->Move_Pos(&vDirTarget, m_fSpeed, fFixedDeltaTime);
-	//	// m_pTransformCom->Set_Pos(vTargetPos1 += vTargetUp * 15.f);
-	//	m_pTransformCom->Set_Pos(vTargetPos);
-	//	m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);
-	//}
-
 	if (m_fTimer >= 1.32f && m_bSavePos == false)
 	{
 		m_pTransformCom->Get_Info(INFO_POS, &m_vSavePos);

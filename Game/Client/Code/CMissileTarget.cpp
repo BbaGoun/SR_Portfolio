@@ -9,6 +9,7 @@
 #include "CWaterBombBubble.h"
 #include "CShield1.h"
 #include "CShield2.h"
+#include "CEmp_Band.h"
 
 CMissileTarget::CMissileTarget(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -43,11 +44,13 @@ HRESULT CMissileTarget::Ready_GameObject()
 	m_bShieldTimer		= false;
 	m_bShieldActive		= false;
 	m_bUfoHit			= false;
+	m_EmpBandCreate		= false;
 
 	m_pTransformCom->Set_Pos({ -30.f,0.f, 90.f });
 	m_pTransformCom->Set_Scale({ 1.5f, 1.5f, 1.f });
 
 	m_pBubble = nullptr;
+	m_pEmpBand = nullptr;
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -455,6 +458,22 @@ void CMissileTarget::KeyInput(const _float& fDeltaTime)
 		m_bShieldTimer	= true;
 	}
 
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_K))
+	{
+		if (m_EmpBandCreate == false)
+		{
+			CreateEmp_BandObject();
+			m_EmpBandCreate = true;
+		}
+
+		else
+		{
+			DeleteEmp_BandObject();
+			m_EmpBandCreate = false;
+		}
+		
+	}
+
 
 	const WCHAR* wOtherTag = GetTag();
 	if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)	// 얘만 움직이게
@@ -498,8 +517,6 @@ void CMissileTarget::KeyInput(const _float& fDeltaTime)
 
 void CMissileTarget::CreateShieldObject()
 {
-	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
 	CGameObject* pShield1 = CShield1::Create(m_pGraphicDev);
 
 	if (pShield1 == nullptr)
@@ -508,9 +525,7 @@ void CMissileTarget::CreateShieldObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
 		return;
 
-	//pShield1->SetLayer(m_pLayer);
-	pTarget->Set_Child(pShield1);
-	//Set_Child(pShield1);
+	Set_Child(pShield1);
 
 	CGameObject* pShield2 = CShield2::Create(m_pGraphicDev);
 
@@ -520,9 +535,36 @@ void CMissileTarget::CreateShieldObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
 		return;
 
-	//pShield2->SetLayer(m_pLayer);
-	pTarget->Set_Child(pShield2);
-	//Set_Child(pShield1);
+	Set_Child(pShield2);
+}
+
+void CMissileTarget::CreateEmp_BandObject()
+{
+	m_pEmpBand = CEmp_Band::Create(m_pGraphicDev);
+
+	if (m_pEmpBand == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Emp_Band", m_pEmpBand)))
+		return;
+
+	Set_Child(m_pEmpBand);
+}
+
+void CMissileTarget::DeleteEmp_BandObject()
+{
+	if (m_pEmpBand != nullptr)
+	{
+		// pEmpBand->GetLayer()->Delete_GameObject(pEmpBand);
+		m_pLayer->Delete_GameObject(m_pEmpBand);
+		m_pEmpBand = nullptr;
+	}
+}
+
+void CMissileTarget::ClearEmpBand()
+{
+	m_pEmpBand = nullptr;
+	m_EmpBandCreate = false;
 }
 
 void CMissileTarget::CollisionEnter(CCollider* pOtherCollider)
