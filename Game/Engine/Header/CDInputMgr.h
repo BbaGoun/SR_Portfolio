@@ -71,6 +71,13 @@ public:
 	void	Update_InputDev(void);
 	void	LateUpdate_InputDev(void);
 
+	HRESULT	BeginRecord(const wchar_t* szPath);
+	HRESULT	Load_Record(const wchar_t* szPath);
+	void	End_Record();
+	void	Record_FixedUpdate();
+	void	Load_FixedUpdate();
+	
+
 private:
 	LPDIRECTINPUT8			m_pInputSDK = nullptr;
 
@@ -85,6 +92,13 @@ private:
 	DIMOUSESTATE			m_tBeforeMouseState;
 	DIMOUSESTATE			m_tMouseState;
 
+	FILE*						m_pRecordFile = nullptr;
+	vector<array<_byte, 256>>	m_vecReplay; 
+	DWORD						m_dwReplayCnt = 0;
+	DWORD						m_dwFileSize = 0;
+
+	
+	
 public:
 	virtual void	Free(void);
 

@@ -9,12 +9,12 @@ namespace Engine
 	class CSphere_Collider;
 }
 
-class CCart :  public CGameObject
+class CRePlayCart : public CGameObject
 {
 private:
-	explicit CCart(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CCart(const CGameObject& rhs);
-	virtual ~CCart() override;
+	explicit CRePlayCart(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CRePlayCart(const CGameObject& rhs);
+	virtual ~CRePlayCart() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -25,7 +25,7 @@ public:
 
 
 public:
-	static CCart*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CRePlayCart* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	// KeyInput
 	void			KeyInput(const _float& fDeltaTime);
 
@@ -40,34 +40,34 @@ public:
 
 
 	// Get, Set
-	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
-	void			SetBoost(BOOST_STATE eID)			{ m_eBoostState = eID; }
+	bool			GetBoost() { if (m_eBoostState > 0)return true; else return false; }
+	void			SetBoost(BOOST_STATE eID) { m_eBoostState = eID; }
 
-	bool			GetDrift()							{ return m_bDrift; }
-	void			SetDrift(bool bDrift)				{ m_bDrift = bDrift; }
+	bool			GetDrift() { return m_bDrift; }
+	void			SetDrift(bool bDrift) { m_bDrift = bDrift; }
 
-	bool			GetRainbowUI()						{ return m_bRainbowUI; }
-	void			SetRainbowUI(bool bRainbowState)	{ m_bRainbowUI = bRainbowState; }
+	bool			GetRainbowUI() { return m_bRainbowUI; }
+	void			SetRainbowUI(bool bRainbowState) { m_bRainbowUI = bRainbowState; }
 
 	// bool			GetBubbleUI()						{ return m_bBubbleUI; }
 	// void			SetBubbleUI(bool bBubbleUI)			{ m_bBubbleUI = bBubbleUI; }
 
-	void			SetBanana(bool bBanana)				{ m_bBanana = bBanana; }
-	bool			GetBanana()							{ return m_bBanana; }
+	void			SetBanana(bool bBanana) { m_bBanana = bBanana; }
+	bool			GetBanana() { return m_bBanana; }
 
-	float			GetCurGage()						{ return m_fCurGage; }
+	float			GetCurGage() { return m_fCurGage; }
 
-	float			GetGainGage()						{ return m_fGainGage; }
-	void			SetGainGage(float fGage)			{ m_fGainGage = fGage; }
+	float			GetGainGage() { return m_fGainGage; }
+	void			SetGainGage(float fGage) { m_fGainGage = fGage; }
 
-	ITEM_TYPE		GetFirstSlot()						{ return m_eFirstSlot; }
-	void			SetFirstSlot(ITEM_TYPE eID)			{ m_eFirstSlot = eID; }
+	ITEM_TYPE		GetFirstSlot() { return m_eFirstSlot; }
+	void			SetFirstSlot(ITEM_TYPE eID) { m_eFirstSlot = eID; }
 
-	ITEM_TYPE		GetSecondSlot()						{ return m_eSecondSlot; }
-	void			SetSecondSlot(ITEM_TYPE eID)		{ m_eSecondSlot = eID; }
+	ITEM_TYPE		GetSecondSlot() { return m_eSecondSlot; }
+	void			SetSecondSlot(ITEM_TYPE eID) { m_eSecondSlot = eID; }
 
 
-	bool			GetPlayingState()					{ return m_bPlaying; }
+	bool			GetPlayingState() { return m_bPlaying; }
 
 	// AdjustState
 	void			AdjustPosY_Slope(_vec3 pos, const float fDeltaTime);
@@ -79,15 +79,14 @@ public:
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
-	void			CreateMissileObject();	
+	void			CreateMissileObject();
 	void			CreateMagnetObject();
 	void			CreateWaterBombObject();
 	void			CreateWaterFlyObject();
-	void			CreateTargetAimObject();	
+	void			CreateTargetAimObject();
 	void			CreateMissileAimObject();
 	void			CreateMagnetAimObject();
-	void			CreateShieldObject_();
-	void			CreateUfoObject();
+	void			CreateShieldObject();
 
 	// Item
 	void			GainItem();
@@ -161,14 +160,10 @@ private:
 	float			m_fPreTimer;
 	bool			m_bPlaying;
 
-	CPlayerHead*	m_pPlayerHead;
+	CPlayerHead* m_pPlayerHead;
 	bool			m_bUpKey;
 
 	vector<CGameObject*>	m_vecWheel;
-	bool			m_bCollisionGround = false;
-	bool			m_bCollisionWall = false;
-
-	_float			m_fAimRotationZ;
 
 protected:
 	virtual		void		Free() override;
