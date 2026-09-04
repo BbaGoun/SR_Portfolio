@@ -10,6 +10,7 @@
 #include "CLoadMgr.h"
 #include "SoundMgr.h"
 #include "CPlayTimeMgr.h"
+#include "CRankMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr)
@@ -58,7 +59,6 @@ int CMainApp::Update_MainApp(const float& fDeltaTime)
 {
 	m_pManagementClass->Change_NextScene();
 
-	CDInputMgr::GetInstance()->Update_InputDev();
 	SoundMgr::GetInstance().Update();
 
 	CPlayTimeMgr::GetInstance()->UpdateCPlayTimeMgr(fDeltaTime);
@@ -75,8 +75,6 @@ void CMainApp::LateUpdate_MainApp(const float& fDeltaTime)
 
 void CMainApp::Render_MainApp()
 {
-	CRenderer::GetInstance()->Render_TargetPass(m_pGraphicDev);
-
 	m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 
 	if (CCameraMgr::GetInstance()->GetCamerState() != CAMERA_END) {
@@ -197,6 +195,7 @@ void CMainApp::Free()
 	Safe_Release(m_pGraphicDev);
 	Safe_Release(m_pDeviceClass);
 
+	CRankMgr::DestroyInstance();
 	CPlayTimeMgr::DestroyInstance();
 	CCollisionMgr::DestroyInstance();
 	CFrameMgr::DestroyInstance();

@@ -29,6 +29,7 @@ public:
 private:
 	HRESULT	LoadSceneFromFile();
 
+	HRESULT Ready_TrackMgr();
 	HRESULT	Ready_RenderTarget();
 	HRESULT Ready_GameLogic_Layer();
 	HRESULT Ready_Environment_Layer();

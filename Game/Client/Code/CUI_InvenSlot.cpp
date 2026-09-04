@@ -38,6 +38,7 @@ HRESULT CUI_InvenSlot::Ready_GameObject()
 	if (pComponent == nullptr)
 		return E_FAIL;
 
+
 	Set_Show(false);
 
 	return S_OK;

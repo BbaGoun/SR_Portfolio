@@ -240,6 +240,16 @@ HRESULT CEditorScene::Ready_Layers()
 
 void CEditorScene::OnNewScene()
 {
+	g_bSelected = false;
+	g_uSelected = 0;
+
+	g_bSplineEdit = false;
+	g_bPointSelected = false;
+	g_uPointSelected = 0;
+
+	g_bGraphNodeEdit = false;
+	g_uGraphEdgeEdit = 0;
+
 	Engine::CScene* pScene = CEditorScene::Create(m_pGraphicDev);
 
 	CManagement::GetInstance()->Request_Scene(pScene);
@@ -249,6 +259,16 @@ void CEditorScene::OnSceneLoad()
 {
 	if (!OpenLoadSceneDialog(m_scenePath, MAX_PATH))
 		return;  // 취소
+
+	g_bSelected = false;
+	g_uSelected = 0;
+
+	g_bSplineEdit = false;
+	g_bPointSelected = false;
+	g_uPointSelected = 0;
+
+	g_bGraphNodeEdit = false;
+	g_uGraphEdgeEdit = 0;
 
 	Engine::CScene* pScene = CEditorScene::Create(m_pGraphicDev);
 	pScene->Set_Path(m_scenePath);

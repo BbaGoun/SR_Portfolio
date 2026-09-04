@@ -1,0 +1,134 @@
+﻿OBJECT
+  type=
+  prefabPath=..\..\..\Resource\Editor\Prefab\GraphTest.prefab
+  belong=1
+  name=Empty
+  tag=1
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=TrackGraph proto=Proto_TrackGraph mapTag=Proto_TrackGraph
+    tg_sample_unit=1.000000
+    TRACK_NODE
+      tn_id=1
+      tn_pos=-1.463647 0.000000 22.058290
+      tn_start=1
+      tn_finish=0
+    END_TRACK_NODE
+    TRACK_NODE
+      tn_id=2
+      tn_pos=15.693352 -0.240458 19.157120
+      tn_start=0
+      tn_finish=0
+    END_TRACK_NODE
+    TRACK_NODE
+      tn_id=3
+      tn_pos=13.158453 -0.000000 -25.496246
+      tn_start=0
+      tn_finish=0
+    END_TRACK_NODE
+    TRACK_NODE
+      tn_id=4
+      tn_pos=-4.513102 -0.000000 -25.069328
+      tn_start=0
+      tn_finish=1
+    END_TRACK_NODE
+    TRACK_EDGE
+      te_id=1
+      te_nodes=1 2
+      te_default_size=10.000000 10.000000
+      te_cost_bias=0.000000
+      TRACK_CONTROL_POINT
+        tcp_id=1
+        tcp_pos=-1.463647 0.000000 22.058290
+        tcp_bank=0.000000
+        tcp_width=10.000000
+        tcp_depth=10.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=2
+        tcp_pos=15.693352 -0.240458 19.157120
+        tcp_bank=0.000000
+        tcp_width=10.000000
+        tcp_depth=10.000000
+      END_TRACK_CONTROL_POINT
+    END_TRACK_EDGE
+    TRACK_EDGE
+      te_id=2
+      te_nodes=2 3
+      te_default_size=10.000000 10.000000
+      te_cost_bias=0.000000
+      TRACK_CONTROL_POINT
+        tcp_id=3
+        tcp_pos=15.693352 -0.240458 19.157120
+        tcp_bank=0.000000
+        tcp_width=10.000000
+        tcp_depth=10.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=4
+        tcp_pos=13.158453 -0.000000 -25.496246
+        tcp_bank=0.000000
+        tcp_width=10.000000
+        tcp_depth=10.000000
+      END_TRACK_CONTROL_POINT
+    END_TRACK_EDGE
+    TRACK_EDGE
+      te_id=3
+      te_nodes=2 3
+      te_default_size=10.000000 10.000000
+      te_cost_bias=0.000000
+      TRACK_CONTROL_POINT
+        tcp_id=5
+        tcp_pos=15.693352 -0.240458 19.157120
+        tcp_bank=0.000000
+        tcp_width=10.000000
+        tcp_depth=10.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=9
+        tcp_pos=48.019066 0.000004 14.279944
+        tcp_bank=0.000000
+        tcp_width=10.000000
+        tcp_depth=10.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=10
+        tcp_pos=41.353268 -0.000001 -23.224474
+        tcp_bank=0.000000
+        tcp_width=10.000000
+        tcp_depth=10.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=6
+        tcp_pos=13.158453 -0.000000 -25.496246
+        tcp_bank=0.000000
+        tcp_width=10.000000
+        tcp_depth=10.000000
+      END_TRACK_CONTROL_POINT
+    END_TRACK_EDGE
+    TRACK_EDGE
+      te_id=4
+      te_nodes=3 4
+      te_default_size=10.000000 10.000000
+      te_cost_bias=0.000000
+      TRACK_CONTROL_POINT
+        tcp_id=7
+        tcp_pos=13.158453 -0.000000 -25.496246
+        tcp_bank=0.000000
+        tcp_width=10.000000
+        tcp_depth=10.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=8
+        tcp_pos=-4.513102 -0.000000 -25.069328
+        tcp_bank=0.000000
+        tcp_width=10.000000
+        tcp_depth=10.000000
+      END_TRACK_CONTROL_POINT
+    END_TRACK_EDGE
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+ENDOBJECT

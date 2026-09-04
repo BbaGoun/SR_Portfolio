@@ -13,6 +13,7 @@
 // 컴포넌트
 #include "CTransform.h"
 #include "CTexture.h"
+#include "CTrackGraph.h"
 
 // 버퍼
 #include "CCartBodyCol.h"
@@ -29,6 +30,7 @@
 #include "CSpline.h"
 #include "CHeightMap.h"
 #include "CSphere.h"
+#include "CHalfSphere.h"
 #include "CMeshRibbon.h"
 
 BEGIN(Engine)

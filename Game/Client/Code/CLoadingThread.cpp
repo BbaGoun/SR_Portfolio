@@ -70,6 +70,9 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Cube", Engine::CCube::Create(m_pGraphicDev))))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_HalfSphere", Engine::CHalfSphere::Create(m_pGraphicDev))))
+        return E_FAIL;
+
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Sphere", Engine::CSphere::Create(m_pGraphicDev)
         , true, L"Sphere")))
         return E_FAIL;
@@ -110,6 +113,8 @@ _uint CLoadingThread::Loading_Stage()
         return E_FAIL;
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Scene3_ColorSet", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Scene/3/Scene3_ColorSet%d.png", 4))))
         return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Scene3_CharBG", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Scene/3/Scene3_CharSetBG%d.png", 3))))
+        return E_FAIL;
 
     //MenuScene1,2,3
 
@@ -117,6 +122,14 @@ _uint CLoadingThread::Loading_Stage()
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_UI_XButton", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Button/Button_X%d.png", 2))))
+        return E_FAIL;
+
+    //PauseMenu
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_UI_PauseMenu", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Pause/PauseMenu.png", 1))))
+        return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Pause_ReplayBtn", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Pause/Pause_ReplayBtn%d.png", 2))))
+        return E_FAIL;
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Pause_MenuBtn", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Pause/Pause_MenuBtn%d.png", 2))))
         return E_FAIL;
 
     //Stage UI
@@ -193,13 +206,12 @@ _uint CLoadingThread::Loading_Stage()
         return E_FAIL;
 
     //MinimapGround
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MinimapGround", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/ThumbNail/xt_minimap.png", 1))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MinimapGround", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_hightSpeed/ThumbNail/xt_minimap.png", 1))))
         return E_FAIL;
 
     //MinimapCart
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MinimapCart", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/MinimapCart.png", 1))))
         return E_FAIL;
-
   
 
     // SkidMark Rect
@@ -236,6 +248,19 @@ _uint CLoadingThread::Loading_Stage()
     // UI_EndCountDown
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_EndCountDown", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/EndCountDown/CountDown_%d.png", 11))))
         return E_FAIL;
+
+    // SkyDome
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyDome", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/SkyDome/skydome%d.png", 4))))
+        return E_FAIL;
+
+    // RankRow
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RankRow", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/RankUI/RowMarker/Row%d.png", 8))))
+        return E_FAIL;
+
+    // RankName
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RankName", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/RankUI/Name/Name%d.png", 7))))
+        return E_FAIL;
+
 
     //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BoosterIcon", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item_Boost.png", 1))))
     //    return E_FAIL;
@@ -438,6 +463,30 @@ _uint CLoadingThread::Loading_Stage()
         true, L"RoadCorner2")))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartExhaustTex", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/exhaust%d.png", 2),
+        true, L"CartExhaust")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Sphere_Blue", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Sphere_Blue.png", 1),
+        true, L"Sphere_Blue")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"SignFence1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_hightSpeed/Edited/SignFence1.png", 1),
+        true, L"SignFence1")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"SignFence2", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_hightSpeed/Edited/SignFence2.png", 1),
+        true, L"SignFence2")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"fence00_g", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_hightSpeed/fence00_g.png", 1),
+        true, L"fence00_g")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"fence04", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_hightSpeed/fence04.png", 1),
+        true, L"fence04")))
+        return E_FAIL;
+
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Etc Loading.....................................");
     LeaveCriticalSection(Get_Crt());
@@ -457,6 +506,10 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MeshRibbon", Engine::CMeshRibbon::Create(m_pGraphicDev)
         , true, L"MeshRibbon")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TrackGraph", Engine::CTrackGraph::Create(m_pGraphicDev)
+        , true, L"TrackGraph")))
         return E_FAIL;
 
     EnterCriticalSection(Get_Crt());

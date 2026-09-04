@@ -58,6 +58,9 @@
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
 #include "CBubbleEscape.h"
+#include "CUI_PauseMenu.h"
+#include "CPause_MenuBtn.h"
+#include "CPause_ReplayBtn.h"	
 #include "CPlayTimeMgr.h"
 
 
@@ -731,6 +734,37 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 
 	if (FAILED(pUILayer->Add_GameObject(L"UI_BubbleEscape", pBubbleEscape)))
 		return E_FAIL;
+
+
+
+	//PauseMenu
+
+	CGameObject* pPauseMenu = CUI_PauseMenu::Create(m_pGraphicDev);
+
+	if (pPauseMenu == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pUILayer->Add_GameObject(L"UI_MenuPause", pPauseMenu)))
+		return E_FAIL;
+	pPauseMenu->SetLayer(pUILayer);
+	
+	
+
+
+	pUIObject = CPause_ReplayBtn::Create(m_pGraphicDev);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"Pause_ReplayBtn", pUIObject)))
+		return E_FAIL;
+	//pPauseMenu->Set_Child(pUIObject);
+
+	pUIObject = CPause_MenuBtn::Create(m_pGraphicDev);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"Pause_MenuBtn", pUIObject)))
+		return E_FAIL;
+	//pPauseMenu->Set_Child(pUIObject);
+
 
 	////////////////////////////////////////////////////////////////////////////////
 	//// 임시 쉴드1 UI

@@ -24,9 +24,12 @@ HWND                    g_hWnd = nullptr;
 bool                    g_bSelected = false;
 uint32_t                g_uSelected = 0;
 
-bool                    g_bEdit = false;
+bool                    g_bSplineEdit = false;
 bool                    g_bPointSelected = false;
 uint32_t                g_uPointSelected;
+
+bool                    g_bGraphNodeEdit = false;
+EdgeId                  g_uGraphEdgeEdit = 0;
 
 bool                    g_bHMPick = false;
 _vec3                   g_vHMPickPos;

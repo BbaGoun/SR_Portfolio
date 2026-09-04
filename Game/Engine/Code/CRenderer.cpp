@@ -3,9 +3,12 @@
 #include "CVIBuffer.h"
 IMPLEMENT_SINGLETON(CRenderer)
 
-CRenderer::CRenderer():m_fWidth(0), m_fHeight(0)
+CRenderer::CRenderer()
 {
-	
+	m_pBlurA = nullptr;
+	m_pBlurB = nullptr;
+	m_bBlur = false;
+	m_fBlurPower = 0.7f;
 }
 
 CRenderer::~CRenderer()
@@ -24,24 +27,31 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)
 
 void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 {
-	//Render_TargetPass(pGraphicDev);
+	if (m_bBlur == false || m_pBlurA == nullptr || m_pBlurB == nullptr)
+	{
+		Render_TargetPass(pGraphicDev);
 
-	PreCull(pGraphicDev);
-	PreRender(pGraphicDev);
+		PreCull(pGraphicDev);
+		PreRender(pGraphicDev);
 
-	Render_Priority(pGraphicDev);
-	Render_NonAlpha(pGraphicDev);
+		Render_Priority(pGraphicDev);
+		Render_Fog(pGraphicDev);
+		Render_NonAlpha(pGraphicDev);
 
-	Render_Alpha(pGraphicDev);
-	Render_Skid(pGraphicDev);
-	Render_Trail(pGraphicDev);
+		Render_Alpha(pGraphicDev);
+		Render_Skid(pGraphicDev);
+		Render_Trail(pGraphicDev);
+		Render_Particle(pGraphicDev);
+		Render_NonAlphaUI(pGraphicDev);
+		Render_AlphaUI(pGraphicDev);
 
-	Render_Particle(pGraphicDev);
-	Render_NonAlphaUI(pGraphicDev);
-	Render_AlphaUI(pGraphicDev);
+		PostRender(pGraphicDev);
 
-	PostRender(pGraphicDev);
-
+	}
+	else
+	{
+		RenderBlur(pGraphicDev);
+	}
 	Clear_RenderGroup();
 }
 
@@ -131,39 +141,8 @@ void CRenderer::Add_RenderTargetGroup(const _tchar* pName, CGameObject* pGameObj
 	pGameObject->AddRef();
 }
 
-void CRenderer::Ready_RenderTarget(LPDIRECT3DDEVICE9& pGraphicDev, float fWidth ,float fHeight)
-{
-	// 1. 텍스처 생성
-	m_fWidth = fWidth;
-	m_fHeight = fHeight;
-
-	pGraphicDev->CreateTexture(
-		fWidth, fHeight,		// 미니맵 해상도
-		1,						// 밉맵 레벨 (렌더타겟은 보통 1)
-		D3DUSAGE_RENDERTARGET,  
-		D3DFMT_A8R8G8B8,
-		D3DPOOL_DEFAULT,		// 렌더타겟은 반드시 DEFAULT 풀
-		&m_pRTTexture,
-		nullptr
-	);
-
-	// 2. Surface 뽑아내기
-	m_pRTTexture->GetSurfaceLevel(0, &m_pRTSurface);
-
-	// 3. 스텐실 버퍼 준비
-	pGraphicDev->CreateDepthStencilSurface(
-		fWidth, fHeight,
-		D3DFMT_D24S8,
-		D3DMULTISAMPLE_NONE, 0,
-		TRUE,
-		&m_pRTDepthStencil,
-		nullptr
-	);
-}
-
 void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 {
-
 	for (auto& pair : m_mapRenderTarget)
 	{
 		IDirect3DSurface9* pOldRT = nullptr;
@@ -171,21 +150,20 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 		pGraphicDev->GetRenderTarget(0, &pOldRT);
 		pGraphicDev->GetDepthStencilSurface(&pOldDS);
 
-		RTINFO* pInfo = pair.second;   
+		RTINFO* pInfo = pair.second;
 
-		pGraphicDev->SetRenderTarget(0, pInfo->pRTSurface);         
-		pGraphicDev->SetDepthStencilSurface(pInfo->pRTDepthStencil); 
+		pGraphicDev->SetRenderTarget(0, pInfo->pRTSurface);
+		pGraphicDev->SetDepthStencilSurface(pInfo->pRTDepthStencil);
 
 		pGraphicDev->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
 			D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0);
 
-		pGraphicDev->BeginScene();
 
-		if (CCameraMgr::GetInstance()->GetCamerState() != CAMERA_END) {
-			CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo();
-			pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
-			pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
-		}
+		//if (CCameraMgr::GetInstance()->GetCamerState() != CAMERA_END) {
+		//	CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo();
+		//	pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
+		//	pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
+		//}
 
 		//if(wcsncmp(pair.first, L"InvenSlot", 9) == 0)
 		//	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
@@ -198,11 +176,10 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 				return vDst.z > vSrc.z;
 			});
 
-		for (auto& pObj : pInfo->RenderList)   
+		for (auto& pObj : pInfo->RenderList)
 			pObj->Render_GameObject();
 
 		pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-		pGraphicDev->EndScene();
 
 		pGraphicDev->SetRenderTarget(0, pOldRT);
 		pGraphicDev->SetDepthStencilSurface(pOldDS);
@@ -334,6 +311,24 @@ void CRenderer::Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
+void CRenderer::Render_Fog(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, 0xFFB0C4DE); // ARGB 중 RGB만 사용
+
+	// 2. 픽셀 안개 모드를 선형(Linear) 공식으로 설정
+	pGraphicDev->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
+
+	// 3. 안개의 시작 위치와 끝 위치 설정
+	float fFogStart = 15.0f;
+	float fFogEnd = 300.0f;
+
+	pGraphicDev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)(&fFogStart)));
+	pGraphicDev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&fFogEnd)));
+
+	//pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
+}
+
 void CRenderer::Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	if (CCameraMgr::GetInstance()->GetMainCamera())
@@ -348,6 +343,7 @@ void CRenderer::Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 	//pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
 	//pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 
+	pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 254);
 	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
@@ -414,6 +410,228 @@ void CRenderer::Delete_RenderTarget(const _tchar* pName)
 	}
 }
 
+void CRenderer::Delete_BlurRT()
+{
+	if (m_pBlurA)
+	{
+		Safe_Release(m_pBlurA->pRTTexture);
+		Safe_Release(m_pBlurA->pRTSurface);
+		Safe_Release(m_pBlurA->pRTDepthStencil);
+		delete m_pBlurA;
+	}
+	if (m_pBlurB)
+	{
+		Safe_Release(m_pBlurB->pRTTexture);
+		Safe_Release(m_pBlurB->pRTSurface);
+		Safe_Release(m_pBlurB->pRTDepthStencil);
+		delete m_pBlurB;
+	}
+}
+
+HRESULT CRenderer::Ready_BlurRT(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	if (FAILED(Ready_BlurA(pGraphicDev)))
+		return E_FAIL;
+	if (FAILED(Ready_BlurB(pGraphicDev)))
+		return E_FAIL;
+	return S_OK;
+}
+
+HRESULT CRenderer::Ready_BlurA(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	m_pBlurA = new RenderTargetInfo;
+	m_pBlurA->fWidth = WINCX;
+	m_pBlurA->fHeight = WINCY;
+
+	if (FAILED(pGraphicDev->CreateTexture(
+		m_pBlurA->fWidth, m_pBlurA->fHeight, 1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8,
+		D3DPOOL_DEFAULT,
+		&m_pBlurA->pRTTexture,
+		nullptr)))
+	{
+		delete m_pBlurA;
+		return E_FAIL;
+	}
+
+	m_pBlurA->pRTTexture->GetSurfaceLevel(0, &m_pBlurA->pRTSurface);
+
+	if (FAILED(pGraphicDev->CreateDepthStencilSurface(
+		m_pBlurA->fWidth, m_pBlurA->fHeight,
+		D3DFMT_D24S8,
+		D3DMULTISAMPLE_NONE, 0,
+		TRUE,
+		&m_pBlurA->pRTDepthStencil,
+		nullptr)))
+	{
+		Safe_Release(m_pBlurA->pRTTexture);
+		Safe_Release(m_pBlurA->pRTSurface);
+		delete m_pBlurA;
+		return E_FAIL;
+	}
+}
+
+HRESULT CRenderer::Ready_BlurB(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	m_pBlurB = new RenderTargetInfo;
+	m_pBlurB->fWidth = WINCX;
+	m_pBlurB->fHeight = WINCY;
+
+	if (FAILED(pGraphicDev->CreateTexture(
+		m_pBlurB->fWidth, m_pBlurB->fHeight, 1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8,
+		D3DPOOL_DEFAULT,
+		&m_pBlurB->pRTTexture,
+		nullptr)))
+	{
+		delete m_pBlurB;
+		return E_FAIL;
+	}
+
+	m_pBlurB->pRTTexture->GetSurfaceLevel(0, &m_pBlurB->pRTSurface);
+
+	if (FAILED(pGraphicDev->CreateDepthStencilSurface(
+		m_pBlurB->fWidth, m_pBlurB->fHeight,
+		D3DFMT_D24S8,
+		D3DMULTISAMPLE_NONE, 0,
+		TRUE,
+		&m_pBlurB->pRTDepthStencil,
+		nullptr)))
+	{
+		Safe_Release(m_pBlurB->pRTTexture);
+		Safe_Release(m_pBlurB->pRTSurface);
+		delete m_pBlurB;
+		return E_FAIL;
+	}
+}
+
+void CRenderer::RenderBlur(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	Render_TargetPass(pGraphicDev);
+
+	PreCull(pGraphicDev);
+	PreRender(pGraphicDev);
+
+	// 1. 이전 RT 저장
+	IDirect3DSurface9* pOldRT = nullptr;
+	IDirect3DSurface9* pOldDS = nullptr;
+	pGraphicDev->GetRenderTarget(0, &pOldRT);
+	pGraphicDev->GetDepthStencilSurface(&pOldDS);
+
+	// 2. 현재 씬을 그릴 RT(m_BlurB) 설정 
+	pGraphicDev->SetRenderTarget(0, m_pBlurB->pRTSurface);
+	pGraphicDev->SetDepthStencilSurface(m_pBlurB->pRTDepthStencil);
+
+	pGraphicDev->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+		D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
+
+	// 3. 현재 씬 그리기 (UI전까지)
+	Render_Priority(pGraphicDev);
+	Render_Fog(pGraphicDev);
+	Render_NonAlpha(pGraphicDev);
+
+	Render_Alpha(pGraphicDev);
+	Render_Skid(pGraphicDev);
+	Render_Trail(pGraphicDev);
+
+	// 4. 이전 프레임RT(m_BlurA) 덮어쓰기
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	DrawFullScreen(pGraphicDev, m_pBlurA->pRTTexture, (_byte)(m_fBlurPower * 255.f));
+
+	// 5. 표면 복사
+	pGraphicDev->StretchRect(m_pBlurB->pRTSurface, nullptr, pOldRT, nullptr, D3DTEXF_NONE);
+
+	//DrawFullScreen(pGraphicDev, m_pBlurB->pRTTexture, (_byte)(1.f * 255.f));
+
+	// 6. RT 포인터 스왑
+	swap(m_pBlurA, m_pBlurB);
+
+	// 7. OldRT(백버퍼)로 원상복구 
+	pGraphicDev->SetRenderTarget(0, pOldRT);
+	pGraphicDev->SetDepthStencilSurface(pOldDS);
+	Safe_Release(pOldRT);
+	Safe_Release(pOldDS);
+
+	// 8. 파티클 + UI 그리기
+	Render_Particle(pGraphicDev);
+	Render_NonAlphaUI(pGraphicDev);
+	Render_AlphaUI(pGraphicDev);
+
+	PostRender(pGraphicDev);
+}
+
+void CRenderer::DrawFullScreen(LPDIRECT3DDEVICE9& pGraphicDev, LPDIRECT3DTEXTURE9 pTexture, _byte byAlpha)
+{
+	if (pTexture == nullptr || byAlpha == 0)
+		return;
+
+	VTXSCREEN buffer[5];
+
+	_D3DVIEWPORT9 vp;
+	pGraphicDev->GetViewport(&vp);
+	float fWidth = vp.Width;
+	float fHeight = vp.Height;
+
+	D3DXCOLOR dwColor = D3DCOLOR_ARGB(byAlpha, 255, 255, 255);
+	buffer[0] = { {0.f				,0.f			,0,1},	dwColor,		{0,0} };
+	buffer[1] = { {fWidth			,0.f			,0,1},	dwColor,		{1,0} };
+	buffer[2] = { {fWidth			,fHeight		,0,1},	dwColor,		{1,1} };
+	buffer[3] = { {0.f				,fHeight		,0,1},	dwColor,		{0,1} };
+
+	dwColor = D3DCOLOR_ARGB(0, 255, 255, 255);
+	buffer[4] = { {fWidth * 0.5f	,fHeight * 0.5f	,0,1},	dwColor,		{0.5f,0.5f} };
+
+	INDEX32  indices[4];
+
+	indices[0]._0 = 0;
+	indices[0]._1 = 1;
+	indices[0]._2 = 4;
+
+	indices[1]._0 = 4;
+	indices[1]._1 = 1;
+	indices[1]._2 = 2;
+
+	indices[2]._0 = 3;
+	indices[2]._1 = 4;
+	indices[2]._2 = 2;
+
+	indices[3]._0 = 3;
+	indices[3]._1 = 0;
+	indices[3]._2 = 4;
+
+	// 텍스처 설정
+	pGraphicDev->SetTexture(0, pTexture);
+	// 텍스처의 알파값이 아닌 정점의 알파값으로 계산해라
+
+	pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+	pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+
+	// z쓰기 끄기
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	// 안개 끄기
+	pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
+
+	// FVF설정 및 그리기
+	pGraphicDev->SetFVF(FVF_SCREEN);
+
+	pGraphicDev->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST, 0, 5, 4,
+		indices, D3DFMT_INDEX32, buffer, sizeof(VTXSCREEN));
+
+	// 복원
+		// 텍스처 끄기
+	pGraphicDev->SetTexture(0, nullptr);
+	// 정점의 알파값이 아닌 텍스처의 알파값으로 계산해라
+	pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+	pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+	// z쓰기 켜기
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
 void CRenderer::PreCull(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	DistanceCulling(pGraphicDev);
@@ -476,10 +694,10 @@ void CRenderer::FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 	float m[16];
 	memcpy(m, &matProj.m, sizeof(float) * 16);
 	DirectX::XMMATRIX xmMatProj(m);
-	
+
 	DirectX::BoundingFrustum tFrustum;
 	DirectX::BoundingFrustum::CreateFromMatrix(tFrustum, xmMatProj);
-	
+
 	memcpy(m, &matInvView.m, sizeof(float) * 16);
 	DirectX::XMMATRIX xmMatInvView(m);
 
@@ -542,7 +760,12 @@ void CRenderer::PostRender(LPDIRECT3DDEVICE9& pGraphicDev)
 	}
 }
 
-
+void CRenderer::SetBlur(bool bBlur)
+{
+	m_bBlur = bBlur;
+	//if (m_bBlur == false)
+	//	m_fBlurPower = 0.7f; // 투명도 초기화
+}
 void CRenderer::OnLostDevice()
 {
 	for (auto& pair : m_mapRenderTarget)
@@ -552,6 +775,13 @@ void CRenderer::OnLostDevice()
 		Safe_Release(pInfo->pRTSurface);
 		Safe_Release(pInfo->pRTDepthStencil);
 	}
+	Safe_Release(m_pBlurB->pRTTexture);
+	Safe_Release(m_pBlurB->pRTSurface);
+	Safe_Release(m_pBlurB->pRTDepthStencil);
+
+	Safe_Release(m_pBlurA->pRTTexture);
+	Safe_Release(m_pBlurA->pRTSurface);
+	Safe_Release(m_pBlurA->pRTDepthStencil);
 }
 void CRenderer::OnResetDevice(LPDIRECT3DDEVICE9& pGraphicDev)
 {
@@ -577,6 +807,42 @@ void CRenderer::OnResetDevice(LPDIRECT3DDEVICE9& pGraphicDev)
 			&pInfo->pRTDepthStencil,
 			nullptr);
 	}
+	pGraphicDev->CreateTexture(
+		m_pBlurB->fWidth, m_pBlurB->fHeight, 1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8,
+		D3DPOOL_DEFAULT,
+		&m_pBlurB->pRTTexture,
+		nullptr);
+
+	m_pBlurB->pRTTexture->GetSurfaceLevel(0, &m_pBlurB->pRTSurface);
+
+	pGraphicDev->CreateDepthStencilSurface(
+		m_pBlurB->fWidth, m_pBlurB->fHeight,
+		D3DFMT_D24S8,
+		D3DMULTISAMPLE_NONE, 0,
+		TRUE,
+		&m_pBlurB->pRTDepthStencil,
+		nullptr);
+
+
+	pGraphicDev->CreateTexture(
+		m_pBlurA->fWidth, m_pBlurA->fHeight, 1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_A8R8G8B8,
+		D3DPOOL_DEFAULT,
+		&m_pBlurA->pRTTexture,
+		nullptr);
+
+	m_pBlurA->pRTTexture->GetSurfaceLevel(0, &m_pBlurA->pRTSurface);
+
+	pGraphicDev->CreateDepthStencilSurface(
+		m_pBlurA->fWidth, m_pBlurA->fHeight,
+		D3DFMT_D24S8,
+		D3DMULTISAMPLE_NONE, 0,
+		TRUE,
+		&m_pBlurA->pRTDepthStencil,
+		nullptr);
 }
 
 

@@ -1,0 +1,406 @@
+﻿OBJECT
+  type=
+  prefabPath=..\..\..\Resource\Editor\Prefab\MapGraph.prefab
+  belong=1
+  name=Empty
+  tag=Obj_Graph
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=TrackGraph proto=Proto_TrackGraph mapTag=Proto_TrackGraph
+    tg_sample_unit=1.000000
+    TRACK_NODE
+      tn_id=1
+      tn_pos=0.000000 0.000000 0.000000
+      tn_start=1
+      tn_finish=1
+    END_TRACK_NODE
+    TRACK_EDGE
+      te_id=1
+      te_nodes=1 1
+      te_default_size=70.000000 30.000000
+      te_cost_bias=0.000000
+      TRACK_CONTROL_POINT
+        tcp_id=1
+        tcp_pos=0.000000 0.000000 0.000000
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=3
+        tcp_pos=0.532100 0.000000 -312.454529
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=4
+        tcp_pos=-22.058334 0.000000 -384.367279
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=5
+        tcp_pos=-87.074905 0.000000 -399.289581
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=6
+        tcp_pos=-249.371155 0.000000 -399.627960
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=7
+        tcp_pos=-357.552185 0.000000 -435.567535
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=8
+        tcp_pos=-375.518036 0.000000 -545.936768
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=9
+        tcp_pos=-301.495911 0.000000 -605.161499
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=10
+        tcp_pos=-165.511932 0.000000 -602.537598
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=11
+        tcp_pos=-107.015862 0.000000 -658.239807
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=12
+        tcp_pos=-144.244797 0.000000 -729.555786
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=13
+        tcp_pos=-253.948959 0.000000 -740.580444
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=14
+        tcp_pos=-338.491974 23.343269 -742.286743
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=15
+        tcp_pos=-424.047607 29.842020 -744.611938
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=16
+        tcp_pos=-470.447937 30.156584 -779.183899
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=17
+        tcp_pos=-475.874817 30.021206 -832.638916
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=18
+        tcp_pos=-481.302673 29.951296 -886.095886
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=19
+        tcp_pos=-486.730103 29.975218 -939.552002
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=20
+        tcp_pos=-534.234863 29.969036 -974.895935
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=21
+        tcp_pos=-620.556091 29.973013 -979.744751
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=22
+        tcp_pos=-728.074219 35.642086 -955.735657
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=23
+        tcp_pos=-845.646729 42.853165 -903.895386
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=24
+        tcp_pos=-890.139160 49.816074 -767.214417
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=25
+        tcp_pos=-888.571655 48.955608 -656.766968
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=26
+        tcp_pos=-888.246948 48.799492 -404.431885
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=27
+        tcp_pos=-887.216431 70.521324 199.545532
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=28
+        tcp_pos=-877.605469 66.700928 358.865906
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=29
+        tcp_pos=-831.361023 65.099052 456.117584
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=30
+        tcp_pos=-754.880371 61.373703 509.181152
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=31
+        tcp_pos=-611.345947 60.065365 527.388794
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=32
+        tcp_pos=-512.685913 60.105057 526.062866
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=33
+        tcp_pos=-368.364471 60.166401 527.529480
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=34
+        tcp_pos=-318.191345 60.140270 552.592957
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=35
+        tcp_pos=-290.217346 59.468418 630.518250
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=36
+        tcp_pos=-185.416122 60.126842 646.952576
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=37
+        tcp_pos=-114.992744 60.203602 565.570190
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=38
+        tcp_pos=-127.880005 60.186226 458.159271
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=39
+        tcp_pos=-217.206787 60.109680 379.753326
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=40
+        tcp_pos=-307.231079 59.908504 378.579468
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=41
+        tcp_pos=-363.527893 60.123165 342.310974
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=42
+        tcp_pos=-346.360535 60.011528 276.485107
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=43
+        tcp_pos=-287.690125 60.022350 261.457550
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=44
+        tcp_pos=-204.603241 46.905148 260.484528
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=70.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=45
+        tcp_pos=-159.427887 30.299360 260.594177
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=70.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=46
+        tcp_pos=-86.185486 29.989231 263.381836
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=70.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=47
+        tcp_pos=26.797518 2.970164 259.136932
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=70.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=48
+        tcp_pos=87.101036 0.172481 257.384369
+        tcp_bank=0.000000
+        tcp_width=102.900002
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=49
+        tcp_pos=85.543015 0.010848 194.606476
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=50
+        tcp_pos=85.259857 -0.016827 157.230118
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=51
+        tcp_pos=62.810680 0.047875 124.658989
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=52
+        tcp_pos=12.601421 0.368191 111.734680
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=53
+        tcp_pos=0.989529 0.022597 69.581001
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=54
+        tcp_pos=-0.122595 -0.000696 18.612946
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=2
+        tcp_pos=0.000000 0.000000 0.000000
+        tcp_bank=0.000000
+        tcp_width=70.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+    END_TRACK_EDGE
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+ENDOBJECT

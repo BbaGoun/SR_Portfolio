@@ -30,12 +30,14 @@ public:
 	void			KeyInput(const _float& fDeltaTime);
 
 	// Update
-	void			UpdateDrift();
+	void			UpdateDrift(const _float fDeltaTime);
 	void			UpdateBoost(const _float& fDeltaTime);
 	void			UpdateThunder();
 	void			UpdateGravity();
 	void			UpdateMagnet(const _float& fDeltaTime);
 	void			UpdateStartBoost();
+	void			UpdateBlur(const _float& fDeltaTime);
+
 
 	// Get, Set
 	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
@@ -89,6 +91,7 @@ public:
 
 	// Item
 	void			GainItem();
+	void			GainBoost();
 	void			UseItem();
 	void			UseAimItem();
 	void			UseMissileItem();
@@ -152,6 +155,10 @@ private:
 	bool			m_bPlaying;
 
 	CPlayerHead*	m_pPlayerHead;
+	bool			m_bUpKey;
+
+	bool			m_bCollisionGround = false;
+	bool			m_bCollisionWall = false;
 
 	_float			m_fAimRotationZ;
 

@@ -16,6 +16,9 @@
 #include "CScene3_ColorBtn.h"
 #include "CScene3_ColorSetBG.h"
 #include "CScene3_ColorSet.h"
+#include "CScene3_CharSlot.h"
+#include "CScene3_CharBG.h"
+#include "CScene3_Char.h"
 #include "CUI_UnderBar.h"
 #include "CUI_XButton.h"
 #include "CScene3_Map_ForestValley.h"
@@ -135,6 +138,8 @@ HRESULT CMenu_Set::Ready_RenderTarget()
 	
 		CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"InvenSlot0", 250, 400);
 		CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"InvenSlot1", 250, 400);
+		CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"CharSlot0", 200, 200);
+		CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"CharSlot1", 200, 200);
 		return S_OK;
 	
 }
@@ -245,7 +250,56 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	static_cast<CUI_InvenSlot*>(pUIInvenSlot2)->SetItem(pUIObject);
 	
+	CGameObject* pUICharSlot = CScene3_CharSlot::Create(m_pGraphicDev, CHAR_BAZZI);
+	if (pUICharSlot == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"CharSlot1", pUICharSlot)))
+		return E_FAIL;
+	pUICharSlot->Get_Transform()->Set_Pos({ -275, 100, 1 });
+	pUICharSlot->Get_Transform()->Set_Scale({ 200,200,1 });
+
+	pUIObject = CScene3_CharBG::Create(m_pGraphicDev, CHAR_BAZZI);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"CharSlotBG", pUIObject)))
+		return E_FAIL;
+	static_cast<CScene3_CharSlot*>(pUICharSlot)->SetBG(pUIObject);
 	
+	pUIObject = CScene3_Char::Create(m_pGraphicDev, CHAR_BAZZI);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"CharSlotChar", pUIObject)))
+		return E_FAIL;
+	static_cast<CScene3_CharSlot*>(pUICharSlot)->SetChar(pUIObject);
+
+
+
+
+
+
+
+	CGameObject* pUICharSlot2 = CScene3_CharSlot::Create(m_pGraphicDev, CHAR_DAO);
+	if (pUICharSlot == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"CharSlot2", pUICharSlot2)))
+		return E_FAIL;
+	pUICharSlot2->Get_Transform()->Set_Pos({ -100, 100, 1 });
+	pUICharSlot2->Get_Transform()->Set_Scale({ 200,200,1 });
+
+	pUIObject = CScene3_CharBG::Create(m_pGraphicDev, CHAR_DAO);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"CharSlotBG2", pUIObject)))
+		return E_FAIL;
+	static_cast<CScene3_CharSlot*>(pUICharSlot2)->SetBG(pUIObject);
+
+	pUIObject = CScene3_Char::Create(m_pGraphicDev, CHAR_DAO);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"CharSlotChar2", pUIObject)))
+		return E_FAIL;
+	static_cast<CScene3_CharSlot*>(pUICharSlot2)->SetChar(pUIObject);
+
 	
 	pUIObject = CUI_UnderBar::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
@@ -285,4 +339,6 @@ void CMenu_Set::Free()
 	CRenderer::GetInstance()->Clear_RenderGroup();
 	CRenderer::GetInstance()->Delete_RenderTarget(L"InvenSlot0");
 	CRenderer::GetInstance()->Delete_RenderTarget(L"InvenSlot1");
+	CRenderer::GetInstance()->Delete_RenderTarget(L"CharSlot0");
+	CRenderer::GetInstance()->Delete_RenderTarget(L"CharSlot1");
 }

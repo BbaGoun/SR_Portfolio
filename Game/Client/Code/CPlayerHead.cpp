@@ -5,6 +5,7 @@
 #include "CDInputMgr.h"
 #include "CCart.h"
 #include "CCameraMgr.h"
+#include "CPlayTimeMgr.h"
 CPlayerHead::CPlayerHead(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -23,18 +24,6 @@ HRESULT CPlayerHead::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 	Engine::CComponent* pComponent = nullptr;
-
-	//pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
-	//if (nullptr == pComponent)
-	//	return E_FAIL;
-	//pComponent->Set_Owner(this);
-	//m_mapComponent.insert({ L"Com_Buffer", pComponent });
-	//
-	//pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterJet"));
-	//if (nullptr == pComponent)
-	//	return E_FAIL;
-	//
-	//m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	m_bBoost		= false;
 	m_eCartDirType	= DIR_FORWARD;
@@ -56,6 +45,13 @@ void CPlayerHead::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+	if (CPlayTimeMgr::GetInstance()->GetPlaying() == false)
+	{
+		m_vRotation.x = 0.f;
+		m_vRotation.z = 0.f;
+		m_vRotation.y = 0.f;
+		return 0;
+	}
 
 	if (m_eCartDirType == DIR_FORWARD)
 	{
@@ -64,7 +60,7 @@ _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 			m_vRotation.x = 0.f;
 			// 고개 뒤로 x축 회전 -> z축 회전
 			if (m_vRotation.z > -30.f)
-				m_vRotation.z -= 50 * fDeltaTime;
+				m_vRotation.z -= 100 * fDeltaTime;
 			else
 				m_vRotation.z = -30.f;
 
@@ -73,12 +69,12 @@ _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 		{
 			// 고개 원위치
 			if (m_vRotation.z < 0.f)
-				m_vRotation.z += 50 * fDeltaTime;
+				m_vRotation.z += 100 * fDeltaTime;
 			else
 				m_vRotation.z = 0.f;
 			KeyInput(fDeltaTime);
 		}
-
+		// 뒤돌기
 		if (m_vRotation.y < 0.f)
 		{
 			m_vRotation.y += 180 * fDeltaTime;
@@ -91,6 +87,8 @@ _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 	else
 	{
 		m_vRotation.x = 0.f;
+		m_vRotation.z = 0.f;
+		// 앞 보기
 		if (m_vRotation.y > -160.f)
 		{
 			m_vRotation.y -= 180 * fDeltaTime;
@@ -141,7 +139,6 @@ void CPlayerHead::KeyInput(const _float& fDeltaTime)
 			m_vRotation.x -= 50 * fDeltaTime;
 		else
 			m_vRotation.x = 0.f;
-
 	}
 }
 
