@@ -257,7 +257,7 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		else if (m_fTimer >= 2.f)
 		{
-			vPos.y -= m_vForce.y * 0.45f * fFixedDeltaTime;
+			vPos.y -= m_vForce.y * 0.45f * fFixedDeltaTime;		
 			m_vForce.y -= 5.f * fFixedDeltaTime;
 		}
 
