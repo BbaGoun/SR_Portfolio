@@ -421,13 +421,13 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle) * m_eDirection;
 
-				m_vRotation.z += fDeltaTime * 0.2f;
+				m_vRotation.z += -fDeltaTime * 0.2f;
 			}
 			else
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle * 0.5f) * m_eDirection;
 
-				m_vRotation.z += fDeltaTime * 0.2f;
+				m_vRotation.z += -fDeltaTime * 0.2f;
 				//if (m_vRotation.z > 0)
 				//	m_vRotation.z = 0;
 			}
@@ -438,13 +438,13 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			{
 				m_vRotation.y += D3DXToRadian(fTurnAngle) * m_eDirection;
 
-				m_vRotation.z += -fDeltaTime * 0.2f;
+				m_vRotation.z += fDeltaTime * 0.2f;
 			}
 			else
 			{
 				m_vRotation.y += D3DXToRadian(fTurnAngle * 0.5f) * m_eDirection;
 
-				m_vRotation.z += -fDeltaTime * 0.2f;
+				m_vRotation.z += fDeltaTime * 0.2f;
 				//if (m_vRotation.z < 0)
 				//	m_vRotation.z = 0;
 			}
@@ -793,13 +793,17 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 				// 경사면에 맞게 카트 몸체 회전
 				_vec3 vCartUp;
 				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
-				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+				float fRadian = acosf(clampT(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal), -1.f, 1.f));
 
 				_vec3 vAxis;
 				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
 
-				D3DXQUATERNION q;
-				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+				D3DXQUATERNION q = { 0, 0, 0, 1 };
+
+				if (D3DXVec3LengthSq(&vAxis) > FLT_EPSILON) {
+					D3DXVec3Normalize(&vAxis, &vAxis);
+					D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+				}
 
 				if (fabsf(m_vTerrainNormal.y) >= 0.999f)
 				{
@@ -1141,7 +1145,7 @@ void CCart::UpdateBlur(const _float& fDeltaTime)
 	if (fTotalSpeed > 60.f)
 	{
 		float fBlurPower = (fTotalSpeed - 60) / 100.f;
-		fBlurPower = clampT(fBlurPower, 0.f, 0.8f);
+		fBlurPower = clampT(fBlurPower, 0.f, 0.85f);
 		CRenderer::GetInstance()->SetBlurPower(fBlurPower);
 	}
 	else

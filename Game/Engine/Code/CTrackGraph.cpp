@@ -1097,7 +1097,7 @@ void CTrackGraph::Compute_Sample_Speed(TrackEdge* _pTE)
 	float aBrake = 375.f; 
 	
 	// aAccel = (목표속력² - 현재속력²) / (2 × 증가거리)
-	float aAccel = 50.f; 
+	float aAccel = 100.f; 
 	float kUp = 0.7f; // 오르막에서 목표 속력을 깎는 정도
 
 	auto& vecS = pTE->vecSamples;

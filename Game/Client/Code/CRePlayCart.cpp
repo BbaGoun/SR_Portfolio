@@ -389,8 +389,6 @@ void CRePlayCart::KeyInput(const _float& fDeltaTime)
 		m_pPlayerHead->SetCartDirType(m_eDirection);
 	SetWheelDir();
 
-
-
 	if (m_bDrift == true)
 	{
 		_vec3 vTempForce, vCross;

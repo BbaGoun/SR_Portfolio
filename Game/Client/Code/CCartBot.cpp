@@ -133,6 +133,7 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	if (TP.bValid) {
 		TP.position += m_fLateralOffset * TP.R * TP.halfW;
+		TP.position.y += 0.5f; // 카트가 박히지 않도록
 
 		_vec3 dir = TP.position - vPos;
 		D3DXVec3Normalize(&dir, &dir);
@@ -156,23 +157,23 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		float yawStep =
 			clampT(yawError, -maxYawStep, maxYawStep);
 
-		//if (fabsf(yawStep) >= D3DXToRadian(15.f) * fFixedDeltaTime) {
-		//	if (yawStep >= 0) {
-		//		m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, 20.f);
-		//		m_vRotation.z = clampT(m_vRotation.z, -20.f, 20.f);
-		//	}
-		//	else {
-		//		m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, -20.f);
-		//		m_vRotation.z = clampT(m_vRotation.z, -20.f, 20.f);
-		//	}
+		if (fabsf(yawStep) >= D3DXToRadian(15.f) * fFixedDeltaTime) {
+			if (yawStep >= 0) {
+				m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, D3DXToRadian(15.f));
+				m_vRotation.z = clampT(m_vRotation.z, D3DXToRadian(-15.f), D3DXToRadian(15.f));
+			}
+			else {
+				m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, D3DXToRadian(-15.f));
+				m_vRotation.z = clampT(m_vRotation.z, D3DXToRadian(-15.f), D3DXToRadian(15.f));
+			}
 
-		//	m_bDrift = true;
-		//}
-		//else {
-		//	m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, 0.f);
-		//	m_vRotation.z = clampT(m_vRotation.z, -20.f, 20.f);
-		//	m_bDrift = false;
-		//}
+			m_bDrift = true;
+		}
+		else {
+			m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, 0.f);
+			m_vRotation.z = clampT(m_vRotation.z, D3DXToRadian(-15.f), D3DXToRadian(15.f));
+			m_bDrift = false;
+		}
 
 		m_vRotation.y += yawStep;
 
@@ -206,6 +207,7 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	float fForceLen = D3DXVec3Length(&m_vForce);
 	if (fForceLen >= 120.f)
 		m_vForce = m_vForce / fForceLen * 120.f;
+	SetWheelForceLen();
 
 	for (int i = 0; i < 3; ++i) {
 		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 3.f, fFixedDeltaTime);
@@ -852,14 +854,18 @@ void CCartBot::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 				// 경사면에 맞게 카트 몸체 회전
 				_vec3 vCartUp;
 				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
-				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+				float fRadian = acosf(clampT(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal), -1.f, 1.f));
 
 				_vec3 vAxis;
 				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
 
-				D3DXQUATERNION q;
-				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+				D3DXQUATERNION q = { 0, 0, 0, 1 };
 
+				if (D3DXVec3LengthSq(&vAxis) > FLT_EPSILON) {
+					D3DXVec3Normalize(&vAxis, &vAxis);
+					D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+				}
+				int a;
 				if (fabsf(m_vTerrainNormal.y) >= 0.999f)
 				{
 					++m_iFlatFrameCnt;
