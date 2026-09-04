@@ -25,10 +25,16 @@ public:
 	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
 	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
 
+
+	void			SetTarget(CGameObject* pTarget) { m_pTarget = pTarget; }
+	CGameObject*	GetTarget() { return m_pTarget; }
+
 private:
-	CRcTex*				 m_pBufferCom;
-	CTexture*			 m_pTextureCom;
-	CCube_Collider*		 m_pColliderCom;
+	CRcTex*				m_pBufferCom;
+	CTexture*			m_pTextureCom;
+	CCube_Collider*		m_pColliderCom;
+
+	CGameObject*		m_pTarget = nullptr;
 
 public:
 	static CTargetAim* Create(LPDIRECT3DDEVICE9 pGraphicDev);
