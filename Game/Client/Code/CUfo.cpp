@@ -271,7 +271,7 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			&& D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget4))
 		{
 			// vTargetPos = vTargetPos1;
-			m_vTargetUp = vTargetUp1;
+			// m_vTargetUp = vTargetUp1;
 			m_pTarget = pTarget1;
 		}
 		else if (D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget1)
@@ -279,7 +279,7 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			&& D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget4))
 		{
 			// vTargetPos = vTargetPos2;
-			m_vTargetUp = vTargetUp2;
+			// m_vTargetUp = vTargetUp2;
 			m_pTarget = pTarget2;
 		}
 		else if (D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget1)
@@ -287,13 +287,13 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			&& D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget4))
 		{
 			// vTargetPos = vTargetPos3;
-			m_vTargetUp = vTargetUp3;
+			// m_vTargetUp = vTargetUp3;
 			m_pTarget = pTarget3;
 		}
 		else
 		{
 			// vTargetPos = vTargetPos4;
-			m_vTargetUp = vTargetUp4;
+			// m_vTargetUp = vTargetUp4;
 			m_pTarget = pTarget4;
 		}
 
