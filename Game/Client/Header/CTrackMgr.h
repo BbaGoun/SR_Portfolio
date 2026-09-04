@@ -3,7 +3,7 @@
 #include "Engine_Define.h"
 #include "Engine_Parsing.h"
 #include "CCart.h"
-//#include "CCartBot.h"
+#include "CCartBot.h"
 #include "CTrackGraph.h"
 
 class CTrackMgr :
@@ -18,16 +18,17 @@ private:
 public:
     void Register_Track(CGameObject* pGraphObj);
     void Register_Player(CCart* pPlayer);
-    //void Register_Bot(CCartBot* pBot);   
+    void Register_Bot(CCartBot* pBot);   
 
     void Update_Locator();
+    TrackPose Compute_TargetPose(CGameObject* pObj, float lookAhead);
 private:
     void Update_RankingUI();
 
 private:
     CTrackGraph* m_pTGraph;
     vector<pair<CCart*, TrackLocator>> m_vecPlayer;
-    //vector<pair<CCartBot*, TrackLocator>> m_vecBot;
+    vector<pair<CCartBot*, TrackLocator>> m_vecBot;
     vector<pair<CGameObject*, TrackLocator>> m_tempRanking;
 
 private:

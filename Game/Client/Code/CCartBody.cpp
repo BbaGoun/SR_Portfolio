@@ -10,7 +10,8 @@
 #include "CCollisionMgr.h"
 #include "CMissileTarget.h"
 #include "CCollisionStarEffect.h"
-#include <SoundMgr.h>
+#include "SoundMgr.h"
+#include "CCartBot.h"
 
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -167,25 +168,47 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 }
 void CCartBody::BananaSpin(const _float& fDeltaTime)
 {
-	CCart* pCart = dynamic_cast<CCart*>(m_pParent);
-	bool bCartBananaSpin = pCart->GetBanana();
-	if (bCartBananaSpin == false)
-		return;
-	if (m_bBananaSpinState == false && bCartBananaSpin == true)
-	{
-		_vec3 vCartForce = pCart->Get_Force();
-		m_fSpinSpeed = pCart->Get_Speed() * D3DXVec3Length(&vCartForce);
-		m_fSpinSpeed = m_fSpinSpeed / 50 + 2;
-		if (m_fSpinSpeed <= 1)m_fSpinSpeed++;
+	if (CCart* pCart = dynamic_cast<CCart*>(m_pParent)) {
+		bool bCartBananaSpin = pCart->GetBanana();
+		if (bCartBananaSpin == false)
+			return;
+		if (m_bBananaSpinState == false && bCartBananaSpin == true)
+		{
+			_vec3 vCartForce = pCart->Get_Force();
+			m_fSpinSpeed = pCart->Get_Speed() * D3DXVec3Length(&vCartForce);
+			m_fSpinSpeed = m_fSpinSpeed / 50 + 2;
+			if (m_fSpinSpeed <= 1)m_fSpinSpeed++;
+		}
+		m_fSpinSpeed *= 0.98;
+		m_bBananaSpinState = true;
+		m_vRotation.y += 300 * m_fSpinSpeed * fDeltaTime;
+		if (m_vRotation.y > 1080 * m_fSpinSpeed)
+		{
+			m_vRotation.y = 0;
+			pCart->SetBanana(false);
+			m_bBananaSpinState = false;
+		}
 	}
-	m_fSpinSpeed *= 0.98;
-	m_bBananaSpinState = true;
-	m_vRotation.y += 300 * m_fSpinSpeed * fDeltaTime;
-	if (m_vRotation.y > 1080 * m_fSpinSpeed)
-	{
-		m_vRotation.y = 0;
-		pCart->SetBanana(false);
-		m_bBananaSpinState = false;
+	else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent)) {
+		bool bCartBananaSpin = pCartBot->GetBanana();
+		if (bCartBananaSpin == false)
+			return;
+		if (m_bBananaSpinState == false && bCartBananaSpin == true)
+		{
+			_vec3 vCartForce = pCartBot->Get_Force();
+			m_fSpinSpeed = pCartBot->Get_Speed() * D3DXVec3Length(&vCartForce);
+			m_fSpinSpeed = m_fSpinSpeed / 50 + 2;
+			if (m_fSpinSpeed <= 1)m_fSpinSpeed++;
+		}
+		m_fSpinSpeed *= 0.98;
+		m_bBananaSpinState = true;
+		m_vRotation.y += 300 * m_fSpinSpeed * fDeltaTime;
+		if (m_vRotation.y > 1080 * m_fSpinSpeed)
+		{
+			m_vRotation.y = 0;
+			pCartBot->SetBanana(false);
+			m_bBananaSpinState = false;
+		}
 	}
 }
 
