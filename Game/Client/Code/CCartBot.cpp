@@ -29,7 +29,8 @@
 #include "CShield2.h"
 #include "CPlayTimeMgr.h"
 #include "CTrackMgr.h"
-#include <CCalculator.h>
+#include "CCalculator.h"
+#include "CWheel.h"
 
 CCartBot::CCartBot(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -465,6 +466,7 @@ void CCartBot::KeyInput(const _float& fDeltaTime)
 		m_eDirection = DIR_REVERSE;
 	if (m_pPlayerHead)
 		m_pPlayerHead->SetCartDirType(m_eDirection);
+	SetWheelDir();
 
 	if (m_bDrift == true)
 	{
@@ -1225,6 +1227,41 @@ void CCartBot::OutputCarState()
 	}
 }
 
+void CCartBot::AddWheel()
+{
+	for (auto& pFirstChild : m_vecChildren)
+	{
+		if (dynamic_cast<CCartBody*>(pFirstChild) != nullptr)
+		{
+			for (auto& pSecondChild : pFirstChild->Get_Children())
+			{
+				if (dynamic_cast<CWheel*>(pSecondChild) != nullptr)
+				{
+					m_vecWheel.push_back(pSecondChild);
+				}
+			}
+			return;
+		}
+	}
+}
+
+void CCartBot::SetWheelForceLen()
+{
+	for (auto& pWheel : m_vecWheel)
+		static_cast<CWheel*>(pWheel)->SetCartForceLen(D3DXVec3Length(&m_vForce) * m_fSpeed);
+}
+
+void CCartBot::SetWheelDir()
+{
+	for (auto& pWheel : m_vecWheel)
+		static_cast<CWheel*>(pWheel)->SetCartDir(m_eDirection);
+}
+
+void CCartBot::SetWheelTurn(WHEEL_TURN eTurn)
+{
+	for (auto& pWheel : m_vecWheel)
+		static_cast<CWheel*>(pWheel)->SetWheelTurn(eTurn);
+}
 
 void CCartBot::CreateMissileObject()
 {
