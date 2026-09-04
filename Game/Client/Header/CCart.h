@@ -79,7 +79,7 @@ public:
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
-	void			CreateMissileObject();	
+	void			CreateMissileObject(CGameObject* pTarget);
 	void			CreateMagnetObject();
 	void			CreateWaterBombObject();
 	void			CreateWaterFlyObject();
