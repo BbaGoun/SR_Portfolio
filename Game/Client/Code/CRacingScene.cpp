@@ -214,6 +214,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 		static_cast<CCartBot*>(vecCartBot[i])->SetPlayerHead(vecBotHead[i]);
 
 		vecCartBody[i]->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
+		static_cast<CCartBot*>(vecCartBody[i])->AddWheel();
 	}
 
 // 이펙트

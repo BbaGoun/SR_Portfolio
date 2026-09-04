@@ -73,6 +73,11 @@ HRESULT CWheel::Ready_GameObject()
 	m_fScale = 1.f;
 	m_fRayMinDist = 0.99f;
 
+	m_fCartForceLen = 0.f;
+	m_eCartDirection = DIR_FORWARD;
+	m_eWheelTurn = TURN_END;
+	m_fDistSum = 0.f;
+
 	return S_OK;
 }
 
@@ -183,9 +188,9 @@ void CWheel::UpdateWheelRot(const _float& fDeltaTime)
 		return;
 	}
 	if (m_eWheelTurn == TURN_LEFT && m_eWheelType < WHEEL_BL)
-		m_vRotation.y = -45;
+		m_vRotation.y = D3DXToRadian(-45);
 	else if (m_eWheelTurn == TURN_RIGHT && m_eWheelType < WHEEL_BL)
-		m_vRotation.y = 45;
+		m_vRotation.y = D3DXToRadian(45);
 	else
 		m_vRotation.y = 0;
 }
