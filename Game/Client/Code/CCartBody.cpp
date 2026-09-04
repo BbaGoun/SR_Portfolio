@@ -34,7 +34,10 @@ HRESULT CCartBody::Ready_GameObject()
 	m_bBananaSpinState		= false;
 	m_bThunderSpinState		= false;
 	m_bThunderTimerOnOff	= false;
-
+	m_bShieldHit			= false;
+	m_bShieldTimer			= false;
+	m_bShieldActive			= false;
+	m_fShieldTimer			= 0.f;
 	m_fScale				= 1.f;
 	m_fThunderTimer			= 0.f;
 
@@ -71,6 +74,25 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CCartBody::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+
+	if (m_bShieldActive == true)
+	{
+		m_bShieldTimer = true;
+	}
+
+	if (m_bShieldTimer == true && m_bShieldActive == true)
+	{
+		m_fShieldTimer += fDeltaTime;
+
+		if (m_fShieldTimer >= 2.f)
+		{
+			m_bShieldHit = false;
+			m_bShieldActive = false;
+			m_bShieldTimer = false;
+			m_fShieldTimer = 0.f;
+		}
+	}
+
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -143,20 +165,25 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 	CCart* pCart = dynamic_cast<CCart*>(m_pParent);
 	if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
 	{
-		if (pCart->GetRainbowUI() == false)
+		if (m_bShieldActive)
+			m_bShieldHit = true;
+		else if (pCart->GetRainbowUI() == false)
 			pCart->SetRainbowUI(true);
 	}
-	if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
+	else if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
 	{
-		if (pCart->GetBanana() == false)
+		if (m_bShieldActive)
+			m_bShieldHit = true;
+		else if (pCart->GetBanana() == false)
 		{
 			SoundMgr::GetInstance().PlaySound(L"Effect/Item_banana/Bananatrapped.ogg", SOUND_BANANA, 0.4f);
 			pCart->SetBanana(true);
 			pCart->SetBoost(BOOST_STATE_NORMAL);
 		}
 	}
-	if (wcsncmp(wOtherTag, L"Obj_ItemBox", 11) == 0)
+	else if (wcsncmp(wOtherTag, L"Obj_ItemBox", 11) == 0)
 	{
+
 		CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
 		if (pItemBox->GetShow() == true)
 		{

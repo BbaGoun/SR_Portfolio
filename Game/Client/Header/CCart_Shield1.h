@@ -8,14 +8,13 @@ namespace Engine
 	class CSphere;
 }
 
-
-class CShield2 :
+class CCart_Shield1 :
 	public CGameObject
 {
 private:
-	explicit CShield2(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CShield2(const CGameObject& rhs);
-	~CShield2() override;
+	explicit CCart_Shield1(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CCart_Shield1(const CGameObject& rhs);
+	~CCart_Shield1() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -33,7 +32,7 @@ private:
 	float	m_fTimer;
 
 public:
-	static CShield2* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CCart_Shield1* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
 	virtual		void		Free() override;

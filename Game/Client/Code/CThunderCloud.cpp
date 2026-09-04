@@ -63,14 +63,30 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 	
 	if (m_bCreateThunder == false && m_fThunderDelayTimer > 1.5f)
 	{
-		if (pCartBody->GetThunderTimerOnOff() == false)
-		{
-			pCartBody->SetThunderTimerOnOff(true);
-			m_fFrame = 1;
-		}
+		//if (pCartBody->GetThunderTimerOnOff() == false)
+		//{
+		//	pCartBody->SetThunderTimerOnOff(true);
+		//	m_fFrame = 1;
+		//}
+
 		CreateThunder();
-		CreateThunderPlayerEffect();
-		CreateThunderFloorEffect();
+	
+		if (pCartBody->GetShieldActive())
+			pCartBody->SetShieldHit(true);
+
+		else 
+		{
+			if (pCartBody->GetThunderTimerOnOff() == false)
+			{
+				pCartBody->SetThunderTimerOnOff(true);
+				m_fFrame = 1;
+			}
+
+			CreateThunderPlayerEffect();
+			CreateThunderFloorEffect();
+		}
+		// CreateThunderPlayerEffect();
+		// CreateThunderFloorEffect();
 	}
 	else if(m_bCreateThunder == true)
 	{

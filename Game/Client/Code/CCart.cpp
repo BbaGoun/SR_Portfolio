@@ -25,9 +25,11 @@
 #include "SoundMgr.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
-#include "CShield1.h"
-#include "CShield2.h"
 #include "CPlayTimeMgr.h"
+#include "CCart_Shield1.h"
+#include "CCart_Shield2.h"
+#include "CUfo.h"
+#include "CUfoBody.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -98,6 +100,7 @@ HRESULT CCart::Ready_GameObject()
 	m_PreQuaternion			= { 0,0,0,1 };
 
 	m_PreQuaternion			= { 0, 0, 0, 1 };
+	m_fAimRotationZ			= 0.f;
 
 	m_bUpKey				= false;
 
@@ -264,9 +267,14 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateWaterFlyObject();
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_O))
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
 	{
-		CreateShieldObject();
+		CreateShieldObject_();
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_L))
+	{
+		CreateUfoObject();
 	}
 
 	// ShortBooster
@@ -1229,15 +1237,6 @@ void CCart::CreateTargetAimObject()
 
 		pTargetAim->SetLayer(m_pLayer);
 	}
-	//_vec3 vPos, vLook;
-	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-
-	//vPos += vLook * 20.f;
-
-	//pTargetAim->Get_Transform()->Set_Pos(vPos);
-
-	//pTargetAim->SetLayer(m_pLayer);
 
 	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 	if (pTarget == nullptr)
@@ -1261,6 +1260,11 @@ void CCart::CreateTargetAimObject()
 	D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 	D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 
+	if (abs(vTargetScreen.x - vAimScreen.x) < 200.f && abs(vTargetScreen.y - vAimScreen.y) < 200.f)
+	{
+		vPos = (vPos + vTarget) * 0.5f;
+	}
+
 	if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
 	{
 		vPos = vTarget;
@@ -1268,35 +1272,12 @@ void CCart::CreateTargetAimObject()
 
 	pTargetAim->Get_Transform()->Set_Pos(vPos);
 
+	m_fAimRotationZ -= 0.05f;
+
 	_quaternion q;
-	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, m_fAimRotationZ);
 
 	pTargetAim->Get_Transform()->Set_Quaternion(&q);
-
-	/*CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
-	_vec3 vPos, vLook, vDir, vTargetPos;
-
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-
-	vPos += vLook * 20.f;
-
-	pTargetAim->Get_Transform()->Set_Pos(vPos);
-	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-
-	vDir = vTargetPos - vPos;
-
-	if (D3DXVec3Length(&vDir) <= 0.001f)
-		return;
-
-	D3DXVec3Normalize(&vDir, &vDir);
-
-	_quaternion qRot;
-
-	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
-
-	pTargetAim->Get_Transform()->Set_Quaternion(&qRot);*/
 }
 
 void CCart::CreateMagnetObject()
@@ -1457,11 +1438,9 @@ void CCart::CreateMagnetAimObject()
 	}
 }
 
-void CCart::CreateShieldObject()
+void CCart::CreateShieldObject_()
 {
-	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
-
-	CGameObject* pShield1 = CShield1::Create(m_pGraphicDev);
+	CGameObject* pShield1 = CCart_Shield1::Create(m_pGraphicDev);
 
 	if (pShield1 == nullptr)
 		return;
@@ -1469,10 +1448,9 @@ void CCart::CreateShieldObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
 		return;
 
-	pShield1->SetLayer(m_pLayer);
-	pCart->Set_Child(pShield1);
+	Set_Child(pShield1);
 
-	CGameObject* pShield2 = CShield2::Create(m_pGraphicDev);
+	CGameObject* pShield2 = CCart_Shield2::Create(m_pGraphicDev);
 
 	if (pShield2 == nullptr)
 		return;
@@ -1480,15 +1458,36 @@ void CCart::CreateShieldObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
 		return;
 
-	pShield2->SetLayer(m_pLayer);
-	pCart->Set_Child(pShield2);
+	Set_Child(pShield2);
 
-	//_vec3 vPos, vPos1, vPos2;
+	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
 
-	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	pCartBody->SetShieldActive(true);
+}
 
-	//pShield1->Get_Transform()->Set_Pos(vPos);
-	//pShield2->Get_Transform()->Set_Pos(vPos);
+void CCart::CreateUfoObject()
+{
+	CGameObject* pUfo = CUfo::Create(m_pGraphicDev);
+
+	if (pUfo == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Ufo", pUfo)))
+		return;
+
+	pUfo->SetLayer(m_pLayer);
+
+
+	CGameObject* pUfoBody = CUfoBody::Create(m_pGraphicDev);
+
+	if (pUfoBody == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_UfoBody", pUfoBody)))
+		return;
+
+	pUfoBody->SetLayer(m_pLayer);
+	pUfo->Set_Child(pUfoBody);
 }
 
 void CCart::CreateMissileAimObject()
@@ -1559,6 +1558,7 @@ void CCart::UseItem()
 		CreateRainbowObject();
 		break;
 	case Engine::ITEM_UFO:
+		CreateUfoObject(); 
 		break;
 	case Engine::ITEM_WATERFLY:
 		CreateWaterFlyObject();

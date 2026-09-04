@@ -86,7 +86,8 @@ public:
 	void			CreateTargetAimObject();	
 	void			CreateMissileAimObject();
 	void			CreateMagnetAimObject();
-	void			CreateShieldObject();
+	void			CreateShieldObject_();
+	void			CreateUfoObject();
 
 	// Item
 	void			GainItem();
@@ -158,6 +159,8 @@ private:
 
 	bool			m_bCollisionGround = false;
 	bool			m_bCollisionWall = false;
+
+	_float			m_fAimRotationZ;
 
 protected:
 	virtual		void		Free() override;
