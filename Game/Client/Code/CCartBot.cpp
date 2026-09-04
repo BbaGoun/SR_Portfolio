@@ -1,5 +1,5 @@
-ï»¿#include "pch.h"
-#include "CCart.h"
+#include "pch.h"
+#include "CCartBot.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
@@ -25,91 +25,177 @@
 #include "SoundMgr.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
+#include "CShield1.h"
+#include "CShield2.h"
 #include "CPlayTimeMgr.h"
-#include "CWheel.h"
-#include "CCart_Shield1.h"
-#include "CCart_Shield2.h"
-#include "CUfo.h"
-#include "CUfoBody.h"
+#include "CTrackMgr.h"
+#include <CCalculator.h>
 
-CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
+CCartBot::CCartBot(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
 {
 }
 
-CCart::CCart(const CGameObject& rhs)
+CCartBot::CCartBot(const CGameObject& rhs)
 	:CGameObject(rhs)
 {
 }
 
-CCart::~CCart()
+CCartBot::~CCartBot()
 {
 }
 
-HRESULT CCart::Ready_GameObject()
+HRESULT CCartBot::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_vForce				= { 0,0,0 };
+	m_vForce = { 0,0,0 };
 
-	m_fSpeed				= 1.f;
-	m_fMaxSpeed				= 3.f;
-	
-	m_bDrift				= false;
-	m_fLookForceAngle		= 0.f;
+	m_fSpeed = 1.f;
+	m_fMaxSpeed = 3.f;
 
-	m_fBoostTurnAngle		= 0.5f;
-	m_fNormalTurnAngle		= 0.8f;
-	m_fDriftTurnAngle		= 2.0f;
+	m_bDrift = false;
+	m_fLookForceAngle = 0.f;
 
-	m_bRainbowUI			= false;
+	m_fBoostTurnAngle = 0.5f;
+	m_fNormalTurnAngle = 0.8f;
+	m_fDriftTurnAngle = 2.0f;
+
+	m_bRainbowUI = false;
 	// m_bBubbleUI				= false;
-	m_bBanana				= false;
-	m_bThunder				= false;
-	m_bMagnet				= false;
-	m_bUseItem				= false;
+	m_bBanana = false;
+	m_bThunder = false;
+	m_bMagnet = false;
+	m_bUseItem = false;
 
-	m_fMagnetTimer			= 0.f;
-	m_fBananaTimer			= 0.f;
+	m_fMagnetTimer = 0.f;
+	m_fBananaTimer = 0.f;
 
-	m_fCurGage				= 0.f;
-	m_fGainGage				= 0.f;
+	m_fCurGage = 0.f;
+	m_fGainGage = 0.f;
 
-	m_fBoostItemCnt			= 0.f;
+	m_fBoostItemCnt = 0.f;
 
-	m_fShortBoosterTimer	= 0.f;
+	m_fShortBoosterTimer = 0.f;
 
-	m_eCartState			= CART_STATE_GROUND;
-	m_eBoostState			= BOOST_STATE_NORMAL;
-	m_vTerrainNormal		= { 0,1,0 };
-	m_fAirTime				= 0.f;
+	m_eCartState = CART_STATE_GROUND;
+	m_eBoostState = BOOST_STATE_NORMAL;
+	m_vTerrainNormal = { 0,1,0 };
+	m_fAirTime = 0.f;
 
-	m_eFirstSlot			= ITEM_END;
-	m_eSecondSlot			= ITEM_END;
+	m_eFirstSlot = ITEM_END;
+	m_eSecondSlot = ITEM_END;
 
-	m_eDirection			= DIR_FORWARD;
-	m_iFlatFrameCnt			= 0;
-	m_vBananaSpinStartLook	= { 0,0,0 };
+	m_eDirection = DIR_FORWARD;
+	m_iFlatFrameCnt = 0;
+	m_vBananaSpinStartLook = { 0,0,0 };
 
-	m_bCanShortBoost		= true;
-	m_bShortBoosterTimerOnOff	= false;
-	m_bPlaying				= false;
+	m_bCanShortBoost = true;
+	m_bShortBoosterTimerOnOff = false;
+	m_bPlaying = false;
 
-	m_fPlayTimer			= 0.f;
-	m_fPreTimer				= 0.f;
+	m_fPlayTimer = 0.f;
+	m_fPreTimer = 0.f;
 
-	m_pPlayerHead			= nullptr;
-	m_PreQuaternion			= { 0,0,0,1 };
+	m_pPlayerHead = nullptr;
+	m_PreQuaternion = { 0,0,0,1 };
 
-	m_PreQuaternion			= { 0, 0, 0, 1 };
-	m_fAimRotationZ			= 0.f;
+	m_PreQuaternion = { 0, 0, 0, 1 };
 
-	m_bUpKey				= false;
+	m_bUpKey = false;
 
 	return S_OK;
 }
 
-void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
+void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	if (!CPlayTimeMgr::GetInstance()->GetPlaying())
+		return;
+
+	m_fOffsetTimer += fFixedDeltaTime;
+	if (m_fOffsetTimer >= m_fOffsetTimerEnd) {
+		m_fOffsetTimer = 0.f;
+		m_fOffsetTimerEnd = 1.f + CCalculator::RandInt() / 99.f * 3.f;
+		
+		m_fLateralOffsetTarget = -0.5f + CCalculator::RandInt() / 99.f;
+		m_fLateralOffsetTarget = clampT(m_fLateralOffsetTarget, -0.25f, 0.25f);
+	}
+
+	m_fLateralOffset = Lerp(fFixedDeltaTime, m_fLateralOffset, m_fLateralOffsetTarget);
+
+	float lookAhead = clampT(D3DXVec3Length(&m_vForce) * m_fSpeed, 5.f, 30.f);
+
+	TrackPose TP = CTrackMgr::GetInstance()->Compute_TargetPose(this, lookAhead);
+
+	_vec3 vPos, vLook;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	if (TP.bValid) {
+		TP.position += m_fLateralOffset * TP.R * TP.halfW;
+
+		_vec3 dir = TP.position - vPos;
+		D3DXVec3Normalize(&dir, &dir);
+
+		_vec3 flatLook = vLook;
+		_vec3 flatDir = dir;
+		flatLook.y = 0;
+		flatDir.y = 0;
+		D3DXVec3Normalize(&flatLook, &flatLook);
+		D3DXVec3Normalize(&flatDir, &flatDir);
+		float dot = D3DXVec3Dot(&flatLook, &flatDir);
+
+		_vec3 cross;
+		D3DXVec3Cross(&cross, &flatLook, &flatDir);
+
+		float yawError = atan2f(cross.y, dot);
+
+		float maxYawSpeed = D3DXToRadian(180.f); // ÃÊ´ç 90µµ
+		float maxYawStep = maxYawSpeed * fFixedDeltaTime;
+
+		float yawStep =
+			clampT(yawError, -maxYawStep, maxYawStep);
+
+		//if (fabsf(yawStep) >= D3DXToRadian(15.f) * fFixedDeltaTime) {
+		//	if (yawStep >= 0) {
+		//		m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, 20.f);
+		//		m_vRotation.z = clampT(m_vRotation.z, -20.f, 20.f);
+		//	}
+		//	else {
+		//		m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, -20.f);
+		//		m_vRotation.z = clampT(m_vRotation.z, -20.f, 20.f);
+		//	}
+
+		//	m_bDrift = true;
+		//}
+		//else {
+		//	m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, 0.f);
+		//	m_vRotation.z = clampT(m_vRotation.z, -20.f, 20.f);
+		//	m_bDrift = false;
+		//}
+
+		m_vRotation.y += yawStep;
+
+		float acceleration = TP.speed - D3DXVec3Length(&m_vForce);
+
+		if (acceleration > 0)
+		{
+			float randf = CCalculator::RandInt() / 99.f;
+			m_vForce += dir * acceleration * fFixedDeltaTime;
+		}
+		else {
+			m_vForce *= clampT(1.f + acceleration * fFixedDeltaTime, 0.1f, 1.f);
+		}
+
+		_matrix matRotY;
+		_vec3 vUp;
+		m_pTransformCom->Get_Info(INFO_UP, &vUp);
+		D3DXMatrixRotationAxis(&matRotY, &vUp, yawStep);
+		D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRotY);
+	}
+	else {
+		m_vForce *= 0.9f;
+	}
+
 	UpdateGravity();
 
 	D3DXQUATERNION q;
@@ -117,62 +203,51 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pTransformCom->Set_Quaternion(&q);
 
 	float fForceLen = D3DXVec3Length(&m_vForce);
-	if (fForceLen < 1.f)
-		m_vForce *= 0;
-	if (fForceLen >= 80.f)
-		m_vForce = m_vForce / fForceLen * 80.f;
-	SetWheelForceLen();
+	if (fForceLen >= 120.f)
+		m_vForce = m_vForce / fForceLen * 120.f;
 
-	if (!m_bUpKey)
-		m_vForce *= 0.98;
-	if (m_bDrift)
-		m_vForce *= 0.98;
-
-	_vec3 vLook;
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-
-	for (int i = 0; i < 3; ++i)
-	{
+	for (int i = 0; i < 3; ++i) {
 		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 3.f, fFixedDeltaTime);
-		_vec3 vPos;
+
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
 		if(!m_bCollisionGround)
 			AdjustPosY_Slope(vPos, fFixedDeltaTime);
-		if(!m_bCollisionWall)
+		if (!m_bCollisionWall)
 			CollisionWall();
 	}
-
-	UpdateDrift(fFixedDeltaTime);
+	//UpdateDrift(fFixedDeltaTime);
 
 	m_bCollisionGround = false;
 	m_bCollisionWall = false;
 }
 
-_int CCart::Update_GameObject(const _float& fDeltaTime)
+_int CCartBot::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 
 	m_bPlaying = CPlayTimeMgr::GetInstance()->GetPlaying();
 
-	UpdateStartBoost();
-	KeyInput(fDeltaTime);
-	UpdateBoost(fDeltaTime);
-	UpdateThunder();
-	UpdateMagnet(fDeltaTime);
-	UpdateBlur(fDeltaTime);
+	//UpdateStartBoost();
+	//KeyInput(fDeltaTime);
+	//UpdateBoost(fDeltaTime);
+	//UpdateThunder();
+	//UpdateMagnet(fDeltaTime);
+	//UpdateBlur(fDeltaTime);
+	//OutputCarState();
+	//cout << m_vTerrainNormal.x << "\t" << m_vTerrainNormal.y << "\t" << m_vTerrainNormal.z << endl;
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CCart::LateUpdate_GameObject(const _float& fDeltaTime)
+void CCartBot::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 
 
-CCart* CCart::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CCartBot* CCartBot::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CCart* pObj = new CCart(pGraphicDev);
+	CCartBot* pObj = new CCartBot(pGraphicDev);
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{
@@ -183,18 +258,10 @@ CCart* CCart::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pObj;
 }
 
-void CCart::KeyInput(const _float& fDeltaTime)
+void CCartBot::KeyInput(const _float& fDeltaTime)
 {
 	if (m_bBanana == true)
 		return;
-
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
-		SetWheelTurn(TURN_LEFT);
-	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
-		SetWheelTurn(TURN_RIGHT);
-	else
-		SetWheelTurn(TURN_END);
-
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
@@ -240,8 +307,8 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateTargetAimObject();
 	}
-	
-	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E)) 
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E))
 	{
 		CreateMissileAimObject();
 	}
@@ -272,14 +339,9 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateWaterFlyObject();
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_O))
 	{
-		CreateShieldObject_();
-	}
-
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_L))
-	{
-		CreateUfoObject();
+		CreateShieldObject();
 	}
 
 	// ShortBooster
@@ -297,7 +359,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		m_bUpKey = false;
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))	// ì¡°ì¤€X ì•„ì´í…œ
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LCONTROL))	// Á¶ÁØX ¾ÆÀÌÅÛ
 	{
 		if (m_eFirstSlot != ITEM_ROCKET && m_eFirstSlot != ITEM_MAGNET)
 		{
@@ -317,7 +379,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))	// ì¡°ì¤€O ì•„ì´í…œ
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LCONTROL))	// Á¶ÁØO ¾ÆÀÌÅÛ
 	{
 		if (m_bUseItem == false)
 		{
@@ -333,7 +395,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		//}
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_LCONTROL))	// ë°œì‚¬
+	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_LCONTROL))	// ¹ß»ç
 	{
 		if (m_bUseItem == false)
 		{
@@ -383,29 +445,26 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		return;
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LSHIFT)
-		&&(CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT) || CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
-		&& m_eCartState == CART_STATE_GROUND 
+		&& (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT) || CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+		&& m_eCartState == CART_STATE_GROUND
 		&& m_bPlaying == true)
 	{
 		m_bDrift = true;
 	}
 
-	if (m_bThunder == true )
+	if (m_bThunder == true)
 		return;
 
 	float fForceLength = D3DXVec3Length(&m_vForce);
 	if (fForceLength < 1.0f)
 		return;
 
-	if (D3DXVec3Dot(&m_vForce, &vLook) > 0)	// m_vForceì™€ vLookì˜ ë‚´ì ê°’ìœ¼ë¡œ ì „ì§„í›„ì§„ íŒë‹¨
+	if (D3DXVec3Dot(&m_vForce, &vLook) > 0)	// m_vForce¿Í vLookÀÇ ³»Àû°ªÀ¸·Î ÀüÁøÈÄÁø ÆÇ´Ü
 		m_eDirection = DIR_FORWARD;
 	else
 		m_eDirection = DIR_REVERSE;
-	if(m_pPlayerHead)
+	if (m_pPlayerHead)
 		m_pPlayerHead->SetCartDirType(m_eDirection);
-	SetWheelDir();
-	
-	
 
 	if (m_bDrift == true)
 	{
@@ -476,22 +535,19 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			D3DXMatrixRotationY(&matRot, D3DXToRadian(fTurnAngle));
 			D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
 		}
-
 	}
 }
 
-void CCart::UpdateDrift(const _float fDeltaTime)
+void CCartBot::UpdateDrift(const _float fDeltaTime)
 {
 	if (m_bPlaying == false)
 	{
 		m_vRotation.z = 0;
 		m_bDrift = false;
-		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
 		return;
 	}
 	if (m_bDrift == true)
 	{
-		SoundMgr::GetInstance().PlaySound(L"Effect/cart/drift.ogg", SOUND_DRIFT, 0.4f);
 
 		_vec3 vLook, vTempForce;
 		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
@@ -520,7 +576,7 @@ void CCart::UpdateDrift(const _float fDeltaTime)
 				m_fCurGage = 0;
 				//++m_fBoostItemCnt;
 				GainBoost();
-				
+
 			}
 			m_fGainGage = 0;
 			//m_vRotation.z = 0;
@@ -547,7 +603,7 @@ void CCart::UpdateDrift(const _float fDeltaTime)
 
 }
 
-void CCart::UpdateBoost(const _float& fDeltaTime)
+void CCartBot::UpdateBoost(const _float& fDeltaTime)
 {
 	if (m_bShortBoosterTimerOnOff == true)
 	{
@@ -568,7 +624,7 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 	}
 	m_fSpeed *= m_fBoostCal;
 	SoundMgr::GetInstance().PlaySound(L"Effect/cart/booster.ogg", SOUND_BOOST, 0.4f);
-	if(m_pPlayerHead)
+	if (m_pPlayerHead)
 		m_pPlayerHead->SetBoost(true);
 	if (m_eBoostState == BOOST_STATE_SHORT_BOOST)
 	{
@@ -585,24 +641,24 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 	{
 		m_eBoostState = BOOST_STATE_NORMAL;
 		m_fSpeed = 1;
-		if(m_pPlayerHead)
+		if (m_pPlayerHead)
 			m_pPlayerHead->SetBoost(false);
 		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 	}
 }
 
-void CCart::CreateRainbowObject()
+void CCartBot::CreateRainbowObject()
 {
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_cloud/born.ogg", SOUND_CLOUD, 0.4f);
 	CGameObject* pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
 
 	if (nullptr == pGameObject)
-		return ;
+		return;
 
 	if (FAILED(m_pLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
-		return ;
+		return;
 
-	_vec3 vPos,vLook;
+	_vec3 vPos, vLook;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 	vPos += vLook * 100;
@@ -614,7 +670,7 @@ void CCart::CreateRainbowObject()
 	pGameObject->SetLayer(m_pLayer);
 }
 
-void CCart::CreateBananaObject()
+void CCartBot::CreateBananaObject()
 {
 	CGameObject* pGameObject = CBanana::Create(m_pGraphicDev);
 
@@ -633,7 +689,7 @@ void CCart::CreateBananaObject()
 	pGameObject->SetLayer(m_pLayer);
 }
 
-void CCart::CreateThunderCloudObject()
+void CCartBot::CreateThunderCloudObject()
 {
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_thunderbolt/ThunderCloud.ogg", SOUND_THUNDERCLOUD, 0.4f);
 	CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev);
@@ -654,19 +710,19 @@ void CCart::CreateThunderCloudObject()
 	pGameObject->SetLayer(m_pLayer);
 }
 
-void CCart::UpdateThunder()
+void CCartBot::UpdateThunder()
 {
-	CCartBody* pCartBody  = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
-	
+	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+
 	m_bThunder = pCartBody->GetThunderSpinState();
 
 	if (m_bThunder == true)
 	{
-		// ë¶€ìŠ¤í„° ë„ê¸°
+		// ºÎ½ºÅÍ ²ô±â
 		m_eBoostState = BOOST_STATE_NORMAL;
 		m_fSpeed = 1;
 		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
-		// ë“œë¦¬íŠ¸í”„ ì¢…ë£Œ + ê²Œì´ì§€ ê³„ì‚°
+		// µå¸®Æ®ÇÁ Á¾·á + °ÔÀÌÁö °è»ê
 		m_bDrift = false;
 		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
 		m_fCurGage += m_fGainGage;
@@ -677,12 +733,12 @@ void CCart::UpdateThunder()
 		}
 		m_fGainGage = 0;
 		m_vRotation.z = 0;
-		// ì†ë„ ê°ì†Œ
+		// ¼Óµµ °¨¼Ò
 		m_vForce *= 0.98;
 	}
 }
 
-void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
+void CCartBot::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 {
 	auto& tracks = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Track");
 	if (tracks.empty())
@@ -690,49 +746,49 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 
 	CCube_Collider* pCol = Get_ComponentSpread<CCube_Collider>();
 
-	// Referenceê°€ ì•„ë‹ˆë¼ ê°’ ë³µì‚¬ (ë³€í™˜ì„ í•˜ë‹¤ë³´ë‹ˆ ê°’ ë³µì‚¬)
+	// Reference°¡ ¾Æ´Ï¶ó °ª º¹»ç (º¯È¯À» ÇÏ´Ùº¸´Ï °ª º¹»ç)
 	DirectX::BoundingOrientedBox OBB = pCol->Get_Info();
 
-	// ê³„ì‚°ì— ì“°ê¸° ìœ„í•´ ë²¡í„° ì¤€ë¹„
+	// °è»ê¿¡ ¾²±â À§ÇØ º¤ÅÍ ÁØºñ
 	_vec3 vCartOldCenter = ToVec3(OBB.Center);
 	_quaternion qCart = ToQuaternion(OBB.Orientation);
 	_vec3 extends = ToVec3(OBB.Extents);
 
-	// ë³€í™˜ë  ê²°ê³¼ë¥¼ ë‹´ì„ ë²¡í„°
+	// º¯È¯µÉ °á°ú¸¦ ´ãÀ» º¤ÅÍ
 	_vec3 vCartModelCenter;
 	_quaternion qCartModel;
 
 	float fGroundY = 0.f;
 	float fMinRayDist = FLT_MAX;
 	bool bFind = false;
-	// ì§€í˜•ë“¤ ì¤‘ ì–´ë–¤ ì§€í˜•ê³¼ ì¶©ëŒí–ˆëŠ”ì§€ í™•ì¸ í›„ fGroundY, m_vTerrainNormalê°’ì´ êµ¬í•´ì§
+	// ÁöÇüµé Áß ¾î¶² ÁöÇü°ú Ãæµ¹Çß´ÂÁö È®ÀÎ ÈÄ fGroundY, m_vTerrainNormal°ªÀÌ ±¸ÇØÁü
 	for (auto& track : tracks) {
 		CSpline* pSpline = track->Get_Component<CSpline>();
 		DirectX::BoundingBox box = *pSpline->GetBoundingBox();
 
-		// splineì˜ ëª¨ë¸ ìŠ¤í˜ì´ìŠ¤ë¡œ ë³´ë‚´ê¸° ìœ„í•œ ì—­í–‰ë ¬
+		// splineÀÇ ¸ğµ¨ ½ºÆäÀÌ½º·Î º¸³»±â À§ÇÑ ¿ªÇà·Ä
 		_matrix matTrack, matInvTrack;
 		matTrack = *track->Get_Transform()->Get_World();
 		D3DXMatrixInverse(&matInvTrack, 0, &matTrack);
 
-		// OBBì˜ íšŒì „ì„ splineì˜ ëª¨ë¸ ìŠ¤í˜ì´ìŠ¤ë¡œ ë³´ë‚´ê¸° ìœ„í•œ ì—­ ì¿¼í„°ë‹ˆì–¸
+		// OBBÀÇ È¸ÀüÀ» splineÀÇ ¸ğµ¨ ½ºÆäÀÌ½º·Î º¸³»±â À§ÇÑ ¿ª ÄõÅÍ´Ï¾ğ
 		_quaternion qTrack, qInvTrack;
 		qTrack = track->Get_Transform()->Get_WorldQuaternion();
 		D3DXQuaternionInverse(&qInvTrack, &qTrack);
 
-		// í”Œë ˆì´ì–´ì˜ ë°•ìŠ¤ ì½œë¼ì´ë”ë¥¼ splineì˜ ëª¨ë¸ ìŠ¤í˜ì´ìŠ¤ë¡œ ë³´ë‚¸ë‹¤.
-		// ë°•ìŠ¤ ì½œë¼ì´ë”ì˜ Center/Orientationë¥¼ ë³€í™˜í•´ì„œ ë‹¤ì‹œ ë„£ëŠ” ë°©ì‹
+		// ÇÃ·¹ÀÌ¾îÀÇ ¹Ú½º Äİ¶óÀÌ´õ¸¦ splineÀÇ ¸ğµ¨ ½ºÆäÀÌ½º·Î º¸³½´Ù.
+		// ¹Ú½º Äİ¶óÀÌ´õÀÇ Center/Orientation¸¦ º¯È¯ÇØ¼­ ´Ù½Ã ³Ö´Â ¹æ½Ä
 		D3DXVec3TransformCoord(&vCartModelCenter, &vCartOldCenter, &matInvTrack);
 		qCartModel = qCart * qInvTrack;
 		OBB.Center = ToXMFLOAT3(vCartModelCenter);
 		OBB.Orientation = ToXMFLOAT4(qCartModel);
 
-		// íŠ¸ë™ì˜ boundingboxì™€ í”Œë ˆì´ì–´ì˜ ì½œë¼ì´ë”ê°€ ë‹¿ëŠ”ì§€ ê²€ì‚¬
+		// Æ®·¢ÀÇ boundingbox¿Í ÇÃ·¹ÀÌ¾îÀÇ Äİ¶óÀÌ´õ°¡ ´ê´ÂÁö °Ë»ç
 		bool bCheckCollision = box.Intersects(OBB);
 		if (bCheckCollision == false)
 			continue;
 
-		// ì¶©ëŒí•œ ì§€í˜•ì„ ì°¾ì•˜ë‹¤ë©´ ì´ì œ splineì´ ê°–ê³  ìˆëŠ” ë©´ì— ëŒ€í•´ì„œ raycastë¡œ ì§€í˜•ì—ìˆëŠ” í‰ë©´ í•˜ë‚˜ ì°¾ê¸°
+		// Ãæµ¹ÇÑ ÁöÇüÀ» Ã£¾Ò´Ù¸é ÀÌÁ¦ splineÀÌ °®°í ÀÖ´Â ¸é¿¡ ´ëÇØ¼­ raycast·Î ÁöÇü¿¡ÀÖ´Â Æò¸é ÇÏ³ª Ã£±â
 		vector<VTXTEX> vecVertices = pSpline->GetVertices();
 		vector<FACE32> vecFaces = pSpline->GetFaces();
 
@@ -763,7 +819,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 			D3DXVec3TransformCoord(&vWorldPos, &vLocalPos, &matTrack);
 			fGroundY = vWorldPos.y;
 
-			// ë²•ì„  êµ¬í•˜ê¸°
+			// ¹ı¼± ±¸ÇÏ±â
 			_vec3 vLocalNormal = { plane.a, plane.b, plane.c };
 			_matrix matNormal;
 			D3DXMatrixTranspose(&matNormal, &matInvTrack);
@@ -774,16 +830,16 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 				m_vTerrainNormal *= -1;
 		}
 	}
-	// forë¬¸ì´ ëë‚˜ë©´ fGroundY, m_vTerrainNormalê°’ì´ êµ¬í•´ì§
-	// ì´í›„ë¶€í„°ëŠ” CartStateê°±ì‹ 
+	// for¹®ÀÌ ³¡³ª¸é fGroundY, m_vTerrainNormal°ªÀÌ ±¸ÇØÁü
+	// ÀÌÈÄºÎÅÍ´Â CartState°»½Å
 	_vec3 vCartPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vCartPos);
 	if (bFind)
 	{
-		m_bCollisionGround = true;
+		m_bCollisionWall = true;
 		float fDeltaY = vCartPos.y - fGroundY;
-		// m_eCart_State ì—…ë°ì´íŠ¸
-		if (m_eCartState == CART_STATE_GROUND) // Ground ìœ ì§€
+		// m_eCart_State ¾÷µ¥ÀÌÆ®
+		if (m_eCartState == CART_STATE_GROUND) // Ground À¯Áö
 		{
 			if (fDeltaY < 0.09f)
 			{
@@ -791,7 +847,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 				m_eCartState = CART_STATE_GROUND;
 				m_pTransformCom->Set_Pos({ vCartPos.x, fGroundY, vCartPos.z });
 
-				// ê²½ì‚¬ë©´ì— ë§ê²Œ ì¹´íŠ¸ ëª¸ì²´ íšŒì „
+				// °æ»ç¸é¿¡ ¸Â°Ô Ä«Æ® ¸öÃ¼ È¸Àü
 				_vec3 vCartUp;
 				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
 				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
@@ -814,17 +870,17 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 					m_iFlatFrameCnt = 0;
 				}
 			}
-			else // ì í”„ ì‹œì‘ 
+			else // Á¡ÇÁ ½ÃÀÛ 
 			{
 				m_eCartState = CART_STATE_AIR;
 				m_fAirTime += fDeltaTime;
 			}
 		}
-		else if (m_eCartState == CART_STATE_AIR) // ì°©ì§€
+		else if (m_eCartState == CART_STATE_AIR) // ÂøÁö
 		{
 			if (fDeltaY <= 0.1f)
 			{
-				if (m_fAirTime > 0.3f)//ê³µì¤‘ì— ë– ìˆëŠ” ì‹œê°„
+				if (m_fAirTime > 0.3f)//°øÁß¿¡ ¶°ÀÖ´Â ½Ã°£
 				{
 					CDustLandingEffect* pDustLandingEffect = dynamic_cast<CDustLandingEffect*>
 						(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"DustLandingEffect"));
@@ -834,7 +890,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 				m_eCartState = CART_STATE_GROUND;
 				m_pTransformCom->Set_Pos({ vCartPos.x, fGroundY, vCartPos.z });
 
-				// ê²½ì‚¬ë©´ì— ë§ê²Œ ì¹´íŠ¸ ëª¸ì²´ íšŒì „
+				// °æ»ç¸é¿¡ ¸Â°Ô Ä«Æ® ¸öÃ¼ È¸Àü
 				_vec3 vCartUp;
 				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
 				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
@@ -850,14 +906,14 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 				else
 					m_PreQuaternion = q;
 			}
-			else // ì í”„ ìœ ì§€
+			else // Á¡ÇÁ À¯Áö
 			{
 				m_eCartState = CART_STATE_AIR;
 				m_fAirTime += fDeltaTime;
 			}
 		}
 	}
-	else //ë§µ ì „ì²´ë¥¼ ì§€í˜•ìœ¼ë¡œ ë®ìœ¼ë©´ else ë¶€ë¶„ì€ í•„ìš” ì—†ì„ë“¯?
+	else //¸Ê ÀüÃ¼¸¦ ÁöÇüÀ¸·Î µ¤À¸¸é else ºÎºĞÀº ÇÊ¿ä ¾øÀ»µí?
 	{
 		if (vCartOldCenter.y <= 0.f)
 		{
@@ -890,14 +946,13 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 	}
 }
 
-void CCart::CollisionWall()
+void CCartBot::CollisionWall()
 {
 	auto& walls = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Wall");
 	if (walls.empty())
 		return;
-	int a = 5;
 
-	// í”Œë ˆì´ì–´ì˜ ì •ë³´
+	// ÇÃ·¹ÀÌ¾îÀÇ Á¤º¸
 	_vec3 vRight, vUp, vLook, vPos;
 	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
 	m_pTransformCom->Get_Info(INFO_UP, &vUp);
@@ -906,62 +961,62 @@ void CCart::CollisionWall()
 
 	CCube_Collider* pCol = Get_ComponentSpread<CCube_Collider>();
 
-	// Referenceê°€ ì•„ë‹ˆë¼ ê°’ ë³µì‚¬ (ë³€í™˜ì„ í•˜ë‹¤ë³´ë‹ˆ ê°’ ë³µì‚¬)
+	// Reference°¡ ¾Æ´Ï¶ó °ª º¹»ç (º¯È¯À» ÇÏ´Ùº¸´Ï °ª º¹»ç)
 	DirectX::BoundingOrientedBox OBB = pCol->Get_Info();
 
-	// ê³„ì‚°ì— ì“°ê¸° ìœ„í•´ ë²¡í„° ì¤€ë¹„
+	// °è»ê¿¡ ¾²±â À§ÇØ º¤ÅÍ ÁØºñ
 	_vec3 vCartOldCenter = ToVec3(OBB.Center);
 	_quaternion qCart = ToQuaternion(OBB.Orientation);
 	_vec3 extends = ToVec3(OBB.Extents);
 
-	// ë³€í™˜ë  ê²°ê³¼ë¥¼ ë‹´ì„ ë²¡í„°
+	// º¯È¯µÉ °á°ú¸¦ ´ãÀ» º¤ÅÍ
 	_vec3 vCartModelCenter;
 	_quaternion qCartModel;
 
-	// ë²½ë“¤ ì¤‘ ì–´ë–¤ ë²½ê³¼ ì¶©ëŒí–ˆëŠ”ì§€ í™•ì¸
+	// º®µé Áß ¾î¶² º®°ú Ãæµ¹Çß´ÂÁö È®ÀÎ
 	for (auto& wall : walls) {
 		CSpline* pSpline = wall->Get_Component<CSpline>();
 		DirectX::BoundingBox box = *pSpline->GetBoundingBox();
 
-		// OBBì˜ ì¤‘ì‹¬ì„ splineì˜ ëª¨ë¸ ìŠ¤í˜ì´ìŠ¤ë¡œ ë³´ë‚´ê¸° ìœ„í•œ ì—­í–‰ë ¬
+		// OBBÀÇ Áß½ÉÀ» splineÀÇ ¸ğµ¨ ½ºÆäÀÌ½º·Î º¸³»±â À§ÇÑ ¿ªÇà·Ä
 		_matrix matTrack, matInvTrack;
 		matTrack = *wall->Get_Transform()->Get_World();
 		D3DXMatrixInverse(&matInvTrack, 0, &matTrack);
 
-		// OBBì˜ íšŒì „ì„ splineì˜ ëª¨ë¸ ìŠ¤í˜ì´ìŠ¤ë¡œ ë³´ë‚´ê¸° ìœ„í•œ ì—­ ì¿¼í„°ë‹ˆì–¸
+		// OBBÀÇ È¸ÀüÀ» splineÀÇ ¸ğµ¨ ½ºÆäÀÌ½º·Î º¸³»±â À§ÇÑ ¿ª ÄõÅÍ´Ï¾ğ
 		_quaternion qTrack, qInvTrack;
 		qTrack = wall->Get_Transform()->Get_WorldQuaternion();
 		D3DXQuaternionInverse(&qInvTrack, &qTrack);
 
-		// í”Œë ˆì´ì–´ì˜ ë°•ìŠ¤ ì½œë¼ì´ë”ë¥¼ splineì˜ ëª¨ë¸ ìŠ¤í˜ì´ìŠ¤ë¡œ ë³´ë‚¸ë‹¤.
-		// ë°•ìŠ¤ ì½œë¼ì´ë”ì˜ Center/Orientationë¥¼ ë³€í™˜í•´ì„œ ë‹¤ì‹œ ë„£ëŠ” ë°©ì‹
+		// ÇÃ·¹ÀÌ¾îÀÇ ¹Ú½º Äİ¶óÀÌ´õ¸¦ splineÀÇ ¸ğµ¨ ½ºÆäÀÌ½º·Î º¸³½´Ù.
+		// ¹Ú½º Äİ¶óÀÌ´õÀÇ Center/Orientation¸¦ º¯È¯ÇØ¼­ ´Ù½Ã ³Ö´Â ¹æ½Ä
 		D3DXVec3TransformCoord(&vCartModelCenter, &vCartOldCenter, &matInvTrack);
 		qCartModel = qCart * qInvTrack;
 		OBB.Center = ToXMFLOAT3(vCartModelCenter);
 		OBB.Orientation = ToXMFLOAT4(qCartModel);
 
-		// ë²½ì˜ boundingboxì™€ í”Œë ˆì´ì–´ì˜ ì½œë¼ì´ë”ê°€ ë‹¿ëŠ”ì§€ ê²€ì‚¬
+		// º®ÀÇ boundingbox¿Í ÇÃ·¹ÀÌ¾îÀÇ Äİ¶óÀÌ´õ°¡ ´ê´ÂÁö °Ë»ç
 		bool bCheckCollision = box.Intersects(OBB);
 		if (bCheckCollision == false)
 			continue;
 
-		// ì¶©ëŒí•œ ë²½ì„ ì°¾ì•˜ë‹¤ë©´ ì´ì œ splineì´ ê°–ê³  ìˆëŠ” ì‚¼ê°í˜•(ë©´)ì— ëŒ€í•´ì„œ intersectë¡œ ì¶©ëŒí•œ í‰ë©´ í•˜ë‚˜ ì°¾ê¸°
+		// Ãæµ¹ÇÑ º®À» Ã£¾Ò´Ù¸é ÀÌÁ¦ splineÀÌ °®°í ÀÖ´Â »ï°¢Çü(¸é)¿¡ ´ëÇØ¼­ intersect·Î Ãæµ¹ÇÑ Æò¸é ÇÏ³ª Ã£±â
 		vector<VTXTEX> vecVertices = pSpline->GetVertices();
 		vector<FACE32> vecFaces = pSpline->GetFaces();
-		
+
 		bool bCollision = false;
 		_vec3 MTV;
 		float closestDist = FLT_MAX;
 
 		for (int i = 0; i < vecFaces.size(); ++i)
 		{
-			// ë¡œì»¬ì—ì„œì˜ ì •ì 
+			// ·ÎÄÃ¿¡¼­ÀÇ Á¤Á¡
 			_vec3 p0 = vecVertices[vecFaces[i].indices._0].vPosition;
 			_vec3 p1 = vecVertices[vecFaces[i].indices._1].vPosition;
 			_vec3 p2 = vecVertices[vecFaces[i].indices._2].vPosition;
 
-			// ì§€í˜•ì˜ ì–‘ ëì˜ ê²½ìš°, ì‚¼ê°í˜•ì´ ë„ˆë¬´ ì‘ì•„ì„œ ì™¸ì ì´ ë¶ˆê°€ëŠ¥í•œ ê²½ìš°ê°€ ìƒê¹€
-			// ì´ëŸ¬í•œ ì‚¼ê°í˜•ì€ Intersects ì‹œ ì—ëŸ¬ê°€ ë°œìƒí•˜ë©°, ë²•ì„ ì„ ê³„ì‚°í•  ìˆ˜ ì—†ìœ¼ë¯€ë¡œ ìŠ¤í‚µ
+			// ÁöÇüÀÇ ¾ç ³¡ÀÇ °æ¿ì, »ï°¢ÇüÀÌ ³Ê¹« ÀÛ¾Æ¼­ ¿ÜÀûÀÌ ºÒ°¡´ÉÇÑ °æ¿ì°¡ »ı±è
+			// ÀÌ·¯ÇÑ »ï°¢ÇüÀº Intersects ½Ã ¿¡·¯°¡ ¹ß»ıÇÏ¸ç, ¹ı¼±À» °è»êÇÒ ¼ö ¾øÀ¸¹Ç·Î ½ºÅµ
 			_vec3 e1 = p1 - p0;
 			_vec3 e2 = p2 - p0;
 			_vec3 n;
@@ -972,17 +1027,17 @@ void CCart::CollisionWall()
 			if (!OBB.Intersects(ToXMVec(p0), ToXMVec(p1), ToXMVec(p2)))
 				continue;
 
-			// ì¶©ëŒì‹œ
-			// 1. ë²•ì„ ë²¡í„° ìƒì„±(ì¹´íŠ¸ë¥¼ ë°”ë¼ë³´ëŠ” ë°©í–¥ì˜ ë²•ì„ ë²¡í„°)
-			// ë¡œì»¬ -> ì›”ë“œë¡œ ë³€í™˜
+			// Ãæµ¹½Ã
+			// 1. ¹ı¼±º¤ÅÍ »ı¼º(Ä«Æ®¸¦ ¹Ù¶óº¸´Â ¹æÇâÀÇ ¹ı¼±º¤ÅÍ)
+			// ·ÎÄÃ -> ¿ùµå·Î º¯È¯
 			D3DXVec3TransformCoord(&p0, &p0, &matTrack);
 			D3DXVec3TransformCoord(&p1, &p1, &matTrack);
 			D3DXVec3TransformCoord(&p2, &p2, &matTrack);
 			D3DXPLANE plane;
 			D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
-			
-			_vec3 normal = { plane.a,plane.b,plane.c }; 
-			
+
+			_vec3 normal = { plane.a,plane.b,plane.c };
+
 			float r = extends.x * fabsf(D3DXVec3Dot(&normal, &vRight))
 				+ extends.y * fabsf(D3DXVec3Dot(&normal, &vUp))
 				+ extends.z * fabsf(D3DXVec3Dot(&normal, &vLook));
@@ -991,19 +1046,19 @@ void CCart::CollisionWall()
 				+ plane.b * vCartOldCenter.y
 				+ plane.c * vCartOldCenter.z + plane.d);
 
-			// ì¶©ëŒì„ í•˜ì§€ ì•ŠìŒ
+			// Ãæµ¹À» ÇÏÁö ¾ÊÀ½
 			if (s > r)
 				continue;
 
-			// ìµœë‹¨ê±°ë¦¬ í‰ë©´ê³¼ì˜ MTVë¥¼ êµ¬í•¨
+			// ÃÖ´Ü°Å¸® Æò¸é°úÀÇ MTV¸¦ ±¸ÇÔ
 			if (s < closestDist) {
 				bCollision = true;
 				closestDist = s;
 				MTV = (r - s) * normal;
-				//ë²•ì„ ë²¡í„°ì— -1ì„ ê³±í•˜ëƒ ë§ˆëƒë¥¼ ê²°ì •í•¨
-				if (plane.a * vCartOldCenter.x 
-					+ plane.b * vCartOldCenter.y 
-					+ plane.c * vCartOldCenter.z 
+				//¹ı¼±º¤ÅÍ¿¡ -1À» °öÇÏ³Ä ¸¶³Ä¸¦ °áÁ¤ÇÔ
+				if (plane.a * vCartOldCenter.x
+					+ plane.b * vCartOldCenter.y
+					+ plane.c * vCartOldCenter.z
 					+ plane.d < 0)
 					MTV *= -1;
 			}
@@ -1013,55 +1068,55 @@ void CCart::CollisionWall()
 			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 			m_pTransformCom->Set_Pos(vPos + MTV);
 
-			// 2. ê°€ì†ë„ì—ì„œ ë²½ ìª½ìœ¼ë¡œ ë“¤ì–´ê°€ëŠ” ì†ë„ ì„±ë¶„ì„ ì œê±°
+			// 2. °¡¼Óµµ¿¡¼­ º® ÂÊÀ¸·Î µé¾î°¡´Â ¼Óµµ ¼ººĞÀ» Á¦°Å
 			float inward = D3DXVec3Dot(&m_vForce, &MTV);
-			// MTVê°€ ë²½ ë°–ìœ¼ë¡œ ë‚˜ê°€ëŠ” ë°©í–¥ 
+			// MTV°¡ º® ¹ÛÀ¸·Î ³ª°¡´Â ¹æÇâ 
 			m_vForce -= MTV * inward;
-			
-			// 3. ì¡°ê¸ˆ íŠ•ê²¨ë‚˜ê°€ë„ë¡
+
+			// 3. Á¶±İ Æ¨°Ü³ª°¡µµ·Ï
 			m_vForce += MTV * 10.f;
 
-			// 4. í˜ ì•½í™”
-			m_vForce *= 0.99f;
+			// 4. Èû ¾àÈ­
+			m_vForce *= 0.97f;
 
-			// 5. Gage, Drift ì´ˆê¸°í™”
+			// 5. Gage, Drift ÃÊ±âÈ­
 			m_fGainGage = 0;
 			m_bDrift = false;
 		}
 	}
 }
 
-void CCart::UpdateGravity()
+void CCartBot::UpdateGravity()
 {
 	/*
-	ì¤‘ë ¥ -> ì§€ë©´ì˜ -Look , -Up ì„±ë¶„ìœ¼ë¡œ ë¶„í•´(íˆ¬ì˜ìœ¼ë¡œ ë¶„í•´)
-              ì§€ë©´ì˜  -Look = (ì§€ë©´ ë²•ì„  x ì§€ë©´ì˜ Right)
-              ì§€ë©´ì˜ - Up    = -Normal
+	Áß·Â -> Áö¸éÀÇ -Look , -Up ¼ººĞÀ¸·Î ºĞÇØ(Åõ¿µÀ¸·Î ºĞÇØ)
+			  Áö¸éÀÇ  -Look = (Áö¸é ¹ı¼± x Áö¸éÀÇ Right)
+			  Áö¸éÀÇ - Up    = -Normal
 	*/
 
 	_vec3 vGravity = { 0,-0.98f,0 };
 	_vec3 vCartUp, vPlaneRight, vPlaneLook;
 	float fSize;
-	
+
 	switch (m_eCartState)
 	{
 	case Engine::CART_STATE_GROUND:
 		if (m_vTerrainNormal != _vec3({ 0,1,0 }))
 		{
-			// í‰ë©´ì˜ Rightë²¡í„°
+			// Æò¸éÀÇ Rightº¤ÅÍ
 			m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
 			D3DXVec3Cross(&vPlaneRight, &m_vTerrainNormal, &vCartUp);
 
-			// í‰ë©´ì˜ Look
+			// Æò¸éÀÇ Look
 			D3DXVec3Cross(&vPlaneLook, &vPlaneRight, &m_vTerrainNormal);
 
-			// ì¤‘ë ¥ì˜ ì„±ë¶„ ì¤‘ì— -Look ë°©í–¥ì˜ ì„±ë¶„ë§Œ ë°›ê¸°
-			// -Lookë²¡í„°ì— Gravity íˆ¬ì˜í•´ì„œ -Look ë°©í–¥ì˜ í¬ê¸° êµ¬í•˜ê¸°
+			// Áß·ÂÀÇ ¼ººĞ Áß¿¡ -Look ¹æÇâÀÇ ¼ººĞ¸¸ ¹Ş±â
+			// -Lookº¤ÅÍ¿¡ Gravity Åõ¿µÇØ¼­ -Look ¹æÇâÀÇ Å©±â ±¸ÇÏ±â
 			D3DXVec3Normalize(&vPlaneLook, &vPlaneLook);
 			vPlaneLook *= -1;
 			fSize = D3DXVec3Dot(&vPlaneLook, &vGravity);
 
-			// êµ¬í•œ í¬ê¸°ì— -Look ë°©í–¥ë²¡í„° ê³±í•´ì„œ vForceì— ì ìš©
+			// ±¸ÇÑ Å©±â¿¡ -Look ¹æÇâº¤ÅÍ °öÇØ¼­ vForce¿¡ Àû¿ë
 			m_vForce += fSize * vPlaneLook;
 		}
 		else
@@ -1070,7 +1125,7 @@ void CCart::UpdateGravity()
 		}
 		break;
 	case Engine::CART_STATE_AIR:
-		// ì¤‘ë ¥ ì „ë¶€ ë‹¤ ë°›ê¸°
+		// Áß·Â ÀüºÎ ´Ù ¹Ş±â
 		m_vForce += vGravity;
 		break;
 	case Engine::CART_STATE_LANDING:
@@ -1082,7 +1137,7 @@ void CCart::UpdateGravity()
 	}
 }
 
-void CCart::UpdateMagnet(const _float& fDeltaTime)
+void CCartBot::UpdateMagnet(const _float& fDeltaTime)
 {
 	if (m_bMagnet == true)
 	{
@@ -1103,13 +1158,13 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 
 		_float fDirection = D3DXVec3Dot(&vLook, &vDir);
 
-		if (fDirection < -0.5 || fDirection > 0.5)		// ê·¸ ë°©í–¥ì´ ì¹´íŠ¸ ê¸°ì¤€ ì•/ë’¤ ë°©í–¥ì¸ì§€ í™•ì¸
+		if (fDirection < -0.5 || fDirection > 0.5)		// ±× ¹æÇâÀÌ Ä«Æ® ±âÁØ ¾Õ/µÚ ¹æÇâÀÎÁö È®ÀÎ
 		{
 			m_vForce += vDir * 2.f;
 			//vDir += m_vForce * 2.f;
 		}
 
-		m_fMagnetTimer += fDeltaTime;					// 3.5ì´ˆ ì§€ë‚˜ë©´ m_bMagnet = falseë¡œ ì¢…ë£Œ
+		m_fMagnetTimer += fDeltaTime;					// 3.5ÃÊ Áö³ª¸é m_bMagnet = false·Î Á¾·á
 
 		if (m_fMagnetTimer > 3.5f)
 		{
@@ -1120,7 +1175,7 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 	}
 }
 
-void CCart::UpdateStartBoost()
+void CCartBot::UpdateStartBoost()
 {
 	m_fPreTimer = m_fPlayTimer;
 	m_fPlayTimer = CPlayTimeMgr::GetInstance()->GetPlayTimer();
@@ -1131,7 +1186,7 @@ void CCart::UpdateStartBoost()
 	}
 }
 
-void CCart::UpdateBlur(const _float& fDeltaTime)
+void CCartBot::UpdateBlur(const _float& fDeltaTime)
 {
 	if (CPlayTimeMgr::GetInstance()->GetPlaying() == false)
 	{
@@ -1149,7 +1204,7 @@ void CCart::UpdateBlur(const _float& fDeltaTime)
 		CRenderer::GetInstance()->SetBlurPower(0.f);
 }
 
-void CCart::OutputCarState()
+void CCartBot::OutputCarState()
 {
 	switch (m_eCartState)
 	{
@@ -1170,44 +1225,8 @@ void CCart::OutputCarState()
 	}
 }
 
-void CCart::AddWheel()
-{
-	for (auto& pFirstChild : m_vecChildren)
-	{
-		if (dynamic_cast<CCartBody*>(pFirstChild) != nullptr)
-		{
-			for (auto& pSecondChild : pFirstChild->Get_Children())
-			{
-				if (dynamic_cast<CWheel*>(pSecondChild) != nullptr)
-				{
-					m_vecWheel.push_back(pSecondChild);
-				}
-			}
-			return;
-		}
-	}
-}
 
-void CCart::SetWheelForceLen()
-{
-	for (auto& pWheel : m_vecWheel)
-		static_cast<CWheel*>(pWheel)->SetCartForceLen(D3DXVec3Length(&m_vForce) * m_fSpeed);
-}
-
-void CCart::SetWheelDir()
-{
-	for (auto& pWheel : m_vecWheel)
-		static_cast<CWheel*>(pWheel)->SetCartDir(m_eDirection);
-}
-
-void CCart::SetWheelTurn(WHEEL_TURN eTurn)
-{
-	for (auto& pWheel : m_vecWheel)
-		static_cast<CWheel*>(pWheel)->SetWheelTurn(eTurn);
-}
-
-
-void CCart::CreateMissileObject()	
+void CCartBot::CreateMissileObject()
 {
 	CGameObject* pMissile = CMissile::Create(m_pGraphicDev);
 
@@ -1241,7 +1260,7 @@ void CCart::CreateMissileObject()
 
 
 
-	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic",L"Obj_MissileTarget");
+	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 
 	_vec3 vPos, vLook, vTargetPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -1266,15 +1285,15 @@ void CCart::CreateMissileObject()
 	pMissile->Get_Transform()->Set_Quaternion(&qRot);
 }
 
-void CCart::CreateTargetAimObject()	
+void CCartBot::CreateTargetAimObject()
 {
 	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
 
-	if (nullptr == pTargetAim)		// ì¡°ì¤€ì„  ì´ ì—†ì„ë•Œ ì¶”ê°€
+	if (nullptr == pTargetAim)		// Á¶ÁØ¼± ÀÌ ¾øÀ»¶§ Ãß°¡
 	{
 		pTargetAim = CTargetAim::Create(m_pGraphicDev);
 
-		if (nullptr == pTargetAim)	// Create í–ˆëŠ”ë° ìƒì„± ì‹¤íŒ¨ ì‹œ ë¦¬í„´
+		if (nullptr == pTargetAim)	// Create Çß´Âµ¥ »ı¼º ½ÇÆĞ ½Ã ¸®ÅÏ
 			return;
 
 		if (FAILED(m_pLayer->Add_GameObject(L"Obj_TargetAim", pTargetAim)))
@@ -1282,6 +1301,15 @@ void CCart::CreateTargetAimObject()
 
 		pTargetAim->SetLayer(m_pLayer);
 	}
+	//_vec3 vPos, vLook;
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	//vPos += vLook * 20.f;
+
+	//pTargetAim->Get_Transform()->Set_Pos(vPos);
+
+	//pTargetAim->SetLayer(m_pLayer);
 
 	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 	if (pTarget == nullptr)
@@ -1305,11 +1333,6 @@ void CCart::CreateTargetAimObject()
 	D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 	D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 
-	if (abs(vTargetScreen.x - vAimScreen.x) < 200.f && abs(vTargetScreen.y - vAimScreen.y) < 200.f)
-	{
-		vPos = (vPos + vTarget) * 0.5f;
-	}
-
 	if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
 	{
 		vPos = vTarget;
@@ -1317,15 +1340,38 @@ void CCart::CreateTargetAimObject()
 
 	pTargetAim->Get_Transform()->Set_Pos(vPos);
 
-	m_fAimRotationZ -= 0.05f;
-
 	_quaternion q;
-	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, m_fAimRotationZ);
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
 
 	pTargetAim->Get_Transform()->Set_Quaternion(&q);
+
+	/*CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+
+	_vec3 vPos, vLook, vDir, vTargetPos;
+
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+	vPos += vLook * 20.f;
+
+	pTargetAim->Get_Transform()->Set_Pos(vPos);
+	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+
+	vDir = vTargetPos - vPos;
+
+	if (D3DXVec3Length(&vDir) <= 0.001f)
+		return;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	_quaternion qRot;
+
+	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
+
+	pTargetAim->Get_Transform()->Set_Quaternion(&qRot);*/
 }
 
-void CCart::CreateMagnetObject()
+void CCartBot::CreateMagnetObject()
 {
 	CGameObject* pMagnetBody = CMagnetBody::Create(m_pGraphicDev);
 
@@ -1372,7 +1418,7 @@ void CCart::CreateMagnetObject()
 	pMagnetBody->Get_Transform()->Set_Pos(vPos);
 }
 
-void CCart::CreateWaterBombObject()
+void CCartBot::CreateWaterBombObject()
 {
 	// CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
 	CWaterBomb* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
@@ -1420,7 +1466,7 @@ void CCart::CreateWaterBombObject()
 	//pWaterBombBubble->SetLayer(m_pLayer);
 }
 
-void CCart::CreateWaterFlyObject()
+void CCartBot::CreateWaterFlyObject()
 {
 	CGameObject* pWaterFly = CWaterFly::Create(m_pGraphicDev);
 
@@ -1431,7 +1477,7 @@ void CCart::CreateWaterFlyObject()
 		return;
 
 	pWaterFly->SetLayer(m_pLayer);
-	
+
 
 	CGameObject* pWaterFlyBody = CWaterFlyBody::Create(m_pGraphicDev);
 
@@ -1455,7 +1501,7 @@ void CCart::CreateWaterFlyObject()
 	//pWaterBombBubble->SetLayer(m_pLayer);
 }
 
-void CCart::CreateMagnetAimObject()
+void CCartBot::CreateMagnetAimObject()
 {
 	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
 	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
@@ -1483,9 +1529,11 @@ void CCart::CreateMagnetAimObject()
 	}
 }
 
-void CCart::CreateShieldObject_()
+void CCartBot::CreateShieldObject()
 {
-	CGameObject* pShield1 = CCart_Shield1::Create(m_pGraphicDev);
+	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+
+	CGameObject* pShield1 = CShield1::Create(m_pGraphicDev);
 
 	if (pShield1 == nullptr)
 		return;
@@ -1493,9 +1541,10 @@ void CCart::CreateShieldObject_()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
 		return;
 
-	Set_Child(pShield1);
+	pShield1->SetLayer(m_pLayer);
+	pCart->Set_Child(pShield1);
 
-	CGameObject* pShield2 = CCart_Shield2::Create(m_pGraphicDev);
+	CGameObject* pShield2 = CShield2::Create(m_pGraphicDev);
 
 	if (pShield2 == nullptr)
 		return;
@@ -1503,39 +1552,18 @@ void CCart::CreateShieldObject_()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
 		return;
 
-	Set_Child(pShield2);
+	pShield2->SetLayer(m_pLayer);
+	pCart->Set_Child(pShield2);
 
-	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+	//_vec3 vPos, vPos1, vPos2;
 
-	pCartBody->SetShieldActive(true);
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	//pShield1->Get_Transform()->Set_Pos(vPos);
+	//pShield2->Get_Transform()->Set_Pos(vPos);
 }
 
-void CCart::CreateUfoObject()
-{
-	CGameObject* pUfo = CUfo::Create(m_pGraphicDev);
-
-	if (pUfo == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Ufo", pUfo)))
-		return;
-
-	pUfo->SetLayer(m_pLayer);
-
-
-	CGameObject* pUfoBody = CUfoBody::Create(m_pGraphicDev);
-
-	if (pUfoBody == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_UfoBody", pUfoBody)))
-		return;
-
-	pUfoBody->SetLayer(m_pLayer);
-	pUfo->Set_Child(pUfoBody);
-}
-
-void CCart::CreateMissileAimObject()
+void CCartBot::CreateMissileAimObject()
 {
 	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
 	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
@@ -1562,7 +1590,7 @@ void CCart::CreateMissileAimObject()
 		m_pLayer->Delete_GameObject(pTargetAim);
 	}
 }
-void CCart::GainItem()
+void CCartBot::GainItem()
 {
 	if (m_eFirstSlot == ITEM_END)
 	{
@@ -1575,7 +1603,7 @@ void CCart::GainItem()
 	}
 }
 
-void CCart::GainBoost()
+void CCartBot::GainBoost()
 {
 	if (m_eFirstSlot == ITEM_END)
 	{
@@ -1588,7 +1616,7 @@ void CCart::GainBoost()
 	}
 }
 
-void CCart::UseItem()
+void CCartBot::UseItem()
 {
 	switch (m_eFirstSlot)
 	{
@@ -1603,7 +1631,6 @@ void CCart::UseItem()
 		CreateRainbowObject();
 		break;
 	case Engine::ITEM_UFO:
-		CreateUfoObject(); 
 		break;
 	case Engine::ITEM_WATERFLY:
 		CreateWaterFlyObject();
@@ -1627,7 +1654,7 @@ void CCart::UseItem()
 	}
 }
 
-void CCart::UseAimItem()
+void CCartBot::UseAimItem()
 {
 	switch (m_eFirstSlot)
 	{
@@ -1641,7 +1668,7 @@ void CCart::UseAimItem()
 	}
 }
 
-void CCart::UseMissileItem()
+void CCartBot::UseMissileItem()
 {
 	CreateMissileAimObject();
 
@@ -1649,7 +1676,7 @@ void CCart::UseMissileItem()
 	m_eSecondSlot = ITEM_END;
 }
 
-void CCart::UseMagnetItem()
+void CCartBot::UseMagnetItem()
 {
 	CreateMagnetAimObject();
 
@@ -1657,7 +1684,7 @@ void CCart::UseMagnetItem()
 	m_eSecondSlot = ITEM_END;
 }
 
-void CCart::Free()
+void CCartBot::Free()
 {
 	CGameObject::Free();
 }

@@ -128,6 +128,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             _float fFixed_DeltaTime;
             int fixedStep = CTimerMgr::GetInstance()->Get_FixedStep(L"Timer_FPS60", &fFixed_DeltaTime);
 
+            CDInputMgr::GetInstance()->Update_InputDev();
 
             for(int i=0; i<fixedStep; ++i)
                 pMainApp->FixedUpdate_MainApp(fFixed_DeltaTime);

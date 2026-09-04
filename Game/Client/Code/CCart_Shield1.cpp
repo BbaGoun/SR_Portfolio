@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CShield2.h"
+#include "CCart_Shield1.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
 #include "CTexture.h"
@@ -7,21 +7,21 @@
 #include "CManagement.h"
 #include "CCart.h"
 #include "SoundMgr.h"
-#include "CMissileTarget.h"
+#include "CCartBody.h"
 
-CShield2::CShield2(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
+CCart_Shield1::CCart_Shield1(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
 }
 
-CShield2::CShield2(const CGameObject& rhs) : CGameObject(rhs)
+CCart_Shield1::CCart_Shield1(const CGameObject& rhs) : CGameObject(rhs)
 {
 }
 
-CShield2::~CShield2()
+CCart_Shield1::~CCart_Shield1()
 {
 }
 
-HRESULT CShield2::Ready_GameObject()
+HRESULT CCart_Shield1::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
@@ -30,7 +30,7 @@ HRESULT CShield2::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 	m_pTransformCom->Set_Pos({ 0.f,0.f,0.f });
-	m_pTransformCom->Set_Scale({ 12.f, 12.0f, 12.0f });
+	m_pTransformCom->Set_Scale({ 15.5f, 13.8f, 15.5f });
 
 	pComponent = m_pBufferCom = dynamic_cast<CSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Sphere"));
 	if (nullptr == pComponent)
@@ -38,6 +38,7 @@ HRESULT CShield2::Ready_GameObject()
 
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
+
 
 	//pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RainBow_NonAlpha"));
 	//pComponent->Set_Owner(this);
@@ -47,7 +48,7 @@ HRESULT CShield2::Ready_GameObject()
 	return S_OK;
 }
 
-_int CShield2::Update_GameObject(const _float& fDeltaTime)
+_int CCart_Shield1::Update_GameObject(const _float& fDeltaTime)
 {
 	// CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
@@ -57,13 +58,13 @@ _int CShield2::Update_GameObject(const _float& fDeltaTime)
 
 	if (m_pParent != nullptr)
 	{
-		m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
+		m_pTransformCom->Set_Pos({ 0.f, -5.f, 0.f });
 	}
 
-	CMissileTarget* pTarget = dynamic_cast<CMissileTarget*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget"));
+	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
 
 
-	if (pTarget != nullptr && pTarget->GetShieldHit() == true && pTarget->GetShieldActive() == true)
+	if (pCartBody != nullptr && pCartBody->GetShieldHit() == false && pCartBody->GetShieldActive() == true)
 		m_bCurState = true;
 
 	else
@@ -72,13 +73,21 @@ _int CShield2::Update_GameObject(const _float& fDeltaTime)
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CShield2::LateUpdate_GameObject(const _float& fDeltaTime)
+void CCart_Shield1::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
-void CShield2::Render_GameObject()
+void CCart_Shield1::Render_GameObject()
 {
+	// 	if (m_bCurState == true)
+	// 	{
+	// m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+
+	// m_pTextureCom->Set_Texture(0);
+	// m_pBufferCom->Render_Buffer();
+	// 	}
+
 	if (m_bCurState == true)
 	{
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
@@ -87,8 +96,7 @@ void CShield2::Render_GameObject()
 
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-		// m_pTextureCom->Set_Texture(0);
-
+		//m_pTextureCom->Set_Texture(0);
 		m_pGraphicDev->SetTexture(0, nullptr);
 
 		m_pBufferCom->Render_Buffer();
@@ -96,16 +104,16 @@ void CShield2::Render_GameObject()
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
- 	}
+	}
 }
 
-CShield2* CShield2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CCart_Shield1* CCart_Shield1::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CShield2* pObj = new CShield2(pGraphicDev);
+	CCart_Shield1* pObj = new CCart_Shield1(pGraphicDev);
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{
-		MSG_BOX("CShield2 Create Failed");
+		MSG_BOX("CCart_Shield1 Create Failed");
 		Safe_Release(pObj);
 		return nullptr;
 	}
@@ -113,7 +121,7 @@ CShield2* CShield2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pObj;
 }
 
-void CShield2::Free()
+void CCart_Shield1::Free()
 {
 	CGameObject::Free();
 }

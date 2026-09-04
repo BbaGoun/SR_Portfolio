@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CShield2.h"
+#include "CCart_Shield2.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
 #include "CTexture.h"
@@ -7,21 +7,21 @@
 #include "CManagement.h"
 #include "CCart.h"
 #include "SoundMgr.h"
-#include "CMissileTarget.h"
+#include "CCartBody.h"
 
-CShield2::CShield2(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
+CCart_Shield2::CCart_Shield2(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
 }
 
-CShield2::CShield2(const CGameObject& rhs) : CGameObject(rhs)
+CCart_Shield2::CCart_Shield2(const CGameObject& rhs) : CGameObject(rhs)
 {
 }
 
-CShield2::~CShield2()
+CCart_Shield2::~CCart_Shield2()
 {
 }
 
-HRESULT CShield2::Ready_GameObject()
+HRESULT CCart_Shield2::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
@@ -47,7 +47,7 @@ HRESULT CShield2::Ready_GameObject()
 	return S_OK;
 }
 
-_int CShield2::Update_GameObject(const _float& fDeltaTime)
+_int CCart_Shield2::Update_GameObject(const _float& fDeltaTime)
 {
 	// CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
@@ -60,10 +60,10 @@ _int CShield2::Update_GameObject(const _float& fDeltaTime)
 		m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
 	}
 
-	CMissileTarget* pTarget = dynamic_cast<CMissileTarget*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget"));
+	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
 
 
-	if (pTarget != nullptr && pTarget->GetShieldHit() == true && pTarget->GetShieldActive() == true)
+	if (pCartBody != nullptr && pCartBody->GetShieldHit() == true && pCartBody->GetShieldActive() == true)
 		m_bCurState = true;
 
 	else
@@ -72,12 +72,12 @@ _int CShield2::Update_GameObject(const _float& fDeltaTime)
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CShield2::LateUpdate_GameObject(const _float& fDeltaTime)
+void CCart_Shield2::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
-void CShield2::Render_GameObject()
+void CCart_Shield2::Render_GameObject()
 {
 	if (m_bCurState == true)
 	{
@@ -96,16 +96,16 @@ void CShield2::Render_GameObject()
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
- 	}
+	}
 }
 
-CShield2* CShield2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CCart_Shield2* CCart_Shield2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CShield2* pObj = new CShield2(pGraphicDev);
+	CCart_Shield2* pObj = new CCart_Shield2(pGraphicDev);
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{
-		MSG_BOX("CShield2 Create Failed");
+		MSG_BOX("CCart_Shield2 Create Failed");
 		Safe_Release(pObj);
 		return nullptr;
 	}
@@ -113,7 +113,7 @@ CShield2* CShield2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pObj;
 }
 
-void CShield2::Free()
+void CCart_Shield2::Free()
 {
 	CGameObject::Free();
 }

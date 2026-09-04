@@ -13,11 +13,12 @@ private:
 	~CRankMgr() override;
 
 public:
-	void		AddUI(CGameObject* pRankUI, int iNum) { m_vecRankUIs.push_back({ pRankUI,iNum }); }
+	void		AddUI(CGameObject* pTargetObj, CGameObject* pRankUI) { m_vecRankUIs.push_back({ pTargetObj, pRankUI }); }
 	void		SwapUI(int iDst, int iSrc);
-	void		UpdateRank(vector<pair<CGameObject*, int >>);
+	void		UpdateRank(vector<pair<CGameObject*, TrackLocator>>& vecRank);
+
 private:
-	vector<pair<CGameObject*, int >>	m_vecRankUIs;
+	vector<pair<CGameObject*, CGameObject*>>	m_vecRankUIs;
 
 private:
 	void Free() override;

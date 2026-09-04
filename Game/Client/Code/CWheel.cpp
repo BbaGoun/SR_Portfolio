@@ -7,6 +7,7 @@
 #include "CCart.h"
 #include "CLand3.h"
 #include "CSkidMark.h"
+#include "CCartBot.h"
 
 CWheel::CWheel(LPDIRECT3DDEVICE9 pGraphicDev, WHEEL_TYPE eType)
 	:CGameObject(pGraphicDev),m_eWheelType(eType)
@@ -78,49 +79,82 @@ HRESULT CWheel::Ready_GameObject()
 void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	m_pColliderCom->Set_Extents(m_vColliderSize * m_fScale);
+  
+	if (CCart* pCart = dynamic_cast<CCart*>(m_pParent->Get_Parent())) {
+    if (m_eCartDirection == DIR_FORWARD)
+      m_vRotation.x += m_fCartForceLen * fFixedDeltaTime;
+    else
+		  m_vRotation.x -= m_fCartForceLen * fFixedDeltaTime;
 
-	CCart* pCart = dynamic_cast<CCart*>(m_pParent->Get_Parent());
-	//_vec3 vParentForce = pCart->Get_Force();
-	//float fParentForceLen = D3DXVec3Length(&vParentForce);
-	//
-	//_vec3 vPlayerLook;
-	//pCart->Get_Transform()->Get_Info(INFO_LOOK, &vPlayerLook);
+		D3DXQUATERNION q;
+		D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
+		m_pTransformCom->Set_Quaternion(&q);
 
-	if (m_eCartDirection == DIR_FORWARD)
-		m_vRotation.x += m_fCartForceLen * fFixedDeltaTime;
-	else
-		m_vRotation.x -= m_fCartForceLen * fFixedDeltaTime;
+		if (m_eWheelType < WHEEL_BL)
+			return;
 
-	D3DXQUATERNION q;
-	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
-	m_pTransformCom->Set_Quaternion(&q);
-
-	if (m_eWheelType < WHEEL_BL)
-		return;
-
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	_vec3 originPos = vPos;
-	if (pCart->GetDrift())
-	{
-		_vec3 vDeltaPos;
-		vDeltaPos = vPos - m_vPrePos;
-		m_fDistSum += D3DXVec3Length(&vDeltaPos);
-		if (m_fDistSum >= 0.5f && CheckInTerrain())
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		_vec3 originPos = vPos;
+		if (pCart->GetDrift())
 		{
-			m_fDistSum = 0;
+			_vec3 vDeltaPos;
+			vDeltaPos = vPos - m_vPrePos;
+			m_fDistSum += D3DXVec3Length(&vDeltaPos);
+			if (m_fDistSum >= 0.5f && CheckInTerrain())
+			{
+				m_fDistSum = 0;
 
-			CreateSkidMark();
-			CreateDriftTrail();
+				CreateSkidMark();
+				CreateDriftTrail();
+			}
 		}
+		else
+		{
+			m_pSkidMark = nullptr;
+			m_pDriftTrail = nullptr;
+			m_fDistSum = 0;
+		}
+		m_vPrePos = vPos;
 	}
-	else
-	{
-		m_pSkidMark = nullptr;
-		m_pDriftTrail = nullptr;
-		m_fDistSum = 0;
+	
+	else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent->Get_Parent())) {
+    if (m_eCartDirection == DIR_FORWARD)
+      m_vRotation.x += m_fCartForceLen * fFixedDeltaTime;
+    else
+		  m_vRotation.x -= m_fCartForceLen * fFixedDeltaTime;
+
+		D3DXQUATERNION q;
+		D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
+		m_pTransformCom->Set_Quaternion(&q);
+
+		if (m_eWheelType < WHEEL_BL)
+			return;
+
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		_vec3 originPos = vPos;
+		if (pCartBot->GetDrift())
+		{
+			_vec3 vDeltaPos;
+			vDeltaPos = vPos - m_vPrePos;
+			m_fDistSum += D3DXVec3Length(&vDeltaPos);
+			if (m_fDistSum >= 0.5f && CheckInTerrain())
+			{
+				m_fDistSum = 0;
+
+				CreateSkidMark();
+				CreateDriftTrail();
+			}
+		}
+		else
+		{
+			m_pSkidMark = nullptr;
+			m_pDriftTrail = nullptr;
+			m_fDistSum = 0;
+		}
+		m_vPrePos = vPos;
 	}
-	m_vPrePos = vPos;
 }
 
 _int CWheel::Update_GameObject(const _float& fDeltaTime)
