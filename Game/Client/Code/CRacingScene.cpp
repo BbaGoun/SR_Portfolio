@@ -45,6 +45,7 @@
 #include "CDInputMgr.h"
 #include "CRankMgr.h"
 #include "CCartBot.h"
+#include "CUI_Laps.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -62,6 +63,7 @@ HRESULT CRacingScene::Ready_Scene()
 
 HRESULT CRacingScene::PostReady_Scene()
 {
+	CTrackMgr::GetInstance()->Set_MaxLap(1);
 	Ready_TrackMgr();
 
 	Ready_RenderTarget();
@@ -442,13 +444,6 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_Button", pUIObject)))
 		return E_FAIL;
 
-	// UI_Timer
-	pUIObject = CUI_Timer::Create(m_pGraphicDev);
-	if (nullptr == pUIObject)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
-		return E_FAIL;
-
 	// UI_ItemSlot
 	pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
@@ -560,6 +555,20 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	pUI_RankBG->Set_Child(pUIObject);
 	
 	CRankMgr::GetInstance()->AddUI(vecCartBot[1], pUI_RankBG);
+
+	// UI_Laps
+	pUIObject = CUI_Laps::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Lap", pUIObject)))
+		return E_FAIL;
+
+	// UI_Timer
+	pUIObject = CUI_Timer::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
+		return E_FAIL;
 
 	return S_OK;
 }

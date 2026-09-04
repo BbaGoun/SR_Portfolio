@@ -118,7 +118,7 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_fOffsetTimerEnd = 1.f + CCalculator::RandInt() / 99.f * 3.f;
 		
 		m_fLateralOffsetTarget = -0.5f + CCalculator::RandInt() / 99.f;
-		m_fLateralOffsetTarget = clampT(m_fLateralOffsetTarget, -0.25f, 0.25f);
+		m_fLateralOffsetTarget = clampT(m_fLateralOffsetTarget, -0.35f, 0.35f);
 	}
 
 	m_fLateralOffset = Lerp(fFixedDeltaTime, m_fLateralOffset, m_fLateralOffsetTarget);
@@ -131,7 +131,7 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
-	if (TP.bValid) {
+	if (TP.bValid && m_bActive) {
 		TP.position += m_fLateralOffset * TP.R * TP.halfW;
 		TP.position.y += 0.5f; // 카트가 박히지 않도록
 
@@ -195,7 +195,7 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRotY);
 	}
 	else {
-		m_vForce *= 0.9f;
+		m_vForce *= 0.98f;
 	}
 
 	UpdateGravity();

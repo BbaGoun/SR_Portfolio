@@ -152,6 +152,12 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 
+	if (!m_bActive) {
+		m_bDrift = false;
+		m_bUpKey = false;
+		return 0;
+	}
+
 	m_bPlaying = CPlayTimeMgr::GetInstance()->GetPlaying();
 
 	UpdateStartBoost();

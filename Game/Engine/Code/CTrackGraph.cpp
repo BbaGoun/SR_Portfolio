@@ -601,7 +601,7 @@ bool CTrackGraph::ProjectPosition(const _vec3& worldPos, const TrackLocator& pre
 
 	if (prev.bValid && prev.edgeId != 0) {
 		//근처 계산
-		const int range = 5;
+		const int range = 10;
 
 		TrackEdge* pTE = Get_TrackEdge(prev.edgeId);
 		int sIndex = prev.iSampleIndex;
@@ -696,7 +696,7 @@ bool CTrackGraph::ProjectPosition(const _vec3& worldPos, const TrackLocator& pre
 				bestLocater.iSampleIndex = iBegin;
 				bestLocater.u = Lerp(t, a.u, b.u);
 				bestLocater.s = Lerp(t, a.s, b.s);
-				bestLocater.iLap = prev.bValid ? prev.iLap : 0;
+				bestLocater.iLap = prev.iLap;
 				bestLocater.bValid = true;
 				bestLateral = lateral;
 			}
@@ -1268,9 +1268,9 @@ CheckInfo CTrackGraph::Recursive_Forward_CheckInside(const _vec3& localPos, cons
 
 				delta = localPos - prev.localPos;
 				forward = D3DXVec3Dot(&delta, &s.T);
-				if (prev.s > info.bestLocater.s && forward > 0)
+				if (prev.s - info.bestLocater.s > m_fLapLength * 0.5f && forward > 0)
 					info.bestLocater.iLap += 1;
-				else if (prev.s < info.bestLocater.s && forward < 0)
+				else if (info.bestLocater.s - prev.s >= m_fLapLength * 0.5f && forward < 0)
 					info.bestLocater.iLap -= 1;
 
 				info.bestLocater.bValid = true;
