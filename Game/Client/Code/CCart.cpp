@@ -134,11 +134,16 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 3.f, fFixedDeltaTime);
 		_vec3 vPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
-		AdjustPosY_Slope(vPos, fFixedDeltaTime);
-		CollisionWall();
+		if(!m_bCollisionGround)
+			AdjustPosY_Slope(vPos, fFixedDeltaTime);
+		if(!m_bCollisionWall)
+			CollisionWall();
 	}
 
 	UpdateDrift(fFixedDeltaTime);
+
+	m_bCollisionGround = false;
+	m_bCollisionWall = false;
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
@@ -758,6 +763,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 	m_pTransformCom->Get_Info(INFO_POS, &vCartPos);
 	if (bFind)
 	{
+		m_bCollisionGround = true;
 		float fDeltaY = vCartPos.y - fGroundY;
 		// m_eCart_State 업데이트
 		if (m_eCartState == CART_STATE_GROUND) // Ground 유지
@@ -986,6 +992,7 @@ void CCart::CollisionWall()
 			}
 		}
 		if (bCollision) {
+			m_bCollisionWall = true;
 			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 			m_pTransformCom->Set_Pos(vPos + MTV);
 

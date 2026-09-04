@@ -155,6 +155,24 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		float yawStep =
 			clampT(yawError, -maxYawStep, maxYawStep);
 
+		//if (fabsf(yawStep) >= D3DXToRadian(15.f) * fFixedDeltaTime) {
+		//	if (yawStep >= 0) {
+		//		m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, 20.f);
+		//		m_vRotation.z = clampT(m_vRotation.z, -20.f, 20.f);
+		//	}
+		//	else {
+		//		m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, -20.f);
+		//		m_vRotation.z = clampT(m_vRotation.z, -20.f, 20.f);
+		//	}
+
+		//	m_bDrift = true;
+		//}
+		//else {
+		//	m_vRotation.z = Lerp(fFixedDeltaTime, m_vRotation.z, 0.f);
+		//	m_vRotation.z = clampT(m_vRotation.z, -20.f, 20.f);
+		//	m_bDrift = false;
+		//}
+
 		m_vRotation.y += yawStep;
 
 		float acceleration = TP.speed - D3DXVec3Length(&m_vForce);
@@ -192,10 +210,15 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 3.f, fFixedDeltaTime);
 
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
-		AdjustPosY_Slope(vPos, fFixedDeltaTime);
-		CollisionWall();
-		//UpdateDrift(fFixedDeltaTime);
+		if(!m_bCollisionGround)
+			AdjustPosY_Slope(vPos, fFixedDeltaTime);
+		if (!m_bCollisionWall)
+			CollisionWall();
 	}
+	//UpdateDrift(fFixedDeltaTime);
+
+	m_bCollisionGround = false;
+	m_bCollisionWall = false;
 }
 
 _int CCartBot::Update_GameObject(const _float& fDeltaTime)
@@ -521,12 +544,10 @@ void CCartBot::UpdateDrift(const _float fDeltaTime)
 	{
 		m_vRotation.z = 0;
 		m_bDrift = false;
-		SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
 		return;
 	}
 	if (m_bDrift == true)
 	{
-		SoundMgr::GetInstance().PlaySound(L"Effect/cart/drift.ogg", SOUND_DRIFT, 0.4f);
 
 		_vec3 vLook, vTempForce;
 		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
@@ -815,6 +836,7 @@ void CCartBot::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 	m_pTransformCom->Get_Info(INFO_POS, &vCartPos);
 	if (bFind)
 	{
+		m_bCollisionWall = true;
 		float fDeltaY = vCartPos.y - fGroundY;
 		// m_eCart_State 업데이트
 		if (m_eCartState == CART_STATE_GROUND) // Ground 유지
@@ -1042,6 +1064,7 @@ void CCartBot::CollisionWall()
 			}
 		}
 		if (bCollision) {
+			m_bCollisionWall = true;
 			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 			m_pTransformCom->Set_Pos(vPos + MTV);
 
@@ -1054,7 +1077,7 @@ void CCartBot::CollisionWall()
 			m_vForce += MTV * 10.f;
 
 			// 4. 힘 약화
-			m_vForce *= 0.99f;
+			m_vForce *= 0.97f;
 
 			// 5. Gage, Drift 초기화
 			m_fGainGage = 0;

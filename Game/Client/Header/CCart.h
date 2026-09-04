@@ -156,6 +156,9 @@ private:
 	CPlayerHead*	m_pPlayerHead;
 	bool			m_bUpKey;
 
+	bool			m_bCollisionGround = false;
+	bool			m_bCollisionWall = false;
+
 protected:
 	virtual		void		Free() override;
 };

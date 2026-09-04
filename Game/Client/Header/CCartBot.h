@@ -160,6 +160,9 @@ private:
 	float			m_fOffsetTimer = 0.f;
 	float			m_fOffsetTimerEnd = 2.f;
 
+	bool			m_bCollisionGround = false;
+	bool			m_bCollisionWall = false;
+
 protected:
 	virtual		void		Free() override;
 };
