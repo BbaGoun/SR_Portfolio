@@ -1179,6 +1179,7 @@ void CCart::AddWheel()
 			{
 				if (dynamic_cast<CWheel*>(pSecondChild) != nullptr)
 				{
+					pSecondChild->Set_CollisionLayer(CL_LAYER2);
 					m_vecWheel.push_back(pSecondChild);
 				}
 			}
