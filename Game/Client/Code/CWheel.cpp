@@ -78,6 +78,8 @@ HRESULT CWheel::Ready_GameObject()
 	m_eWheelTurn = TURN_END;
 	m_fDistSum = 0.f;
 
+	Set_CollisionLayer(CL_CART_WHEEL);
+
 	return S_OK;
 }
 

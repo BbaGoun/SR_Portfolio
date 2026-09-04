@@ -567,7 +567,7 @@ HRESULT CRacingScene::Ready_UI_Layer()
 HRESULT CRacingScene::Ready_Collision_Matrix()
 {
 	Set_CollisionMatrix(CL_DEFAULT, CL_LAYER1, false);
-	Set_CollisionMatrix(CL_LAYER2, CL_LAYER2, false);
+	Set_CollisionMatrix(CL_CART_WHEEL, CL_CART_WHEEL, false);
 
 	return S_OK;
 }
