@@ -38,7 +38,7 @@ HRESULT CScene3_CharSlot::Ready_GameObject()
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 	if (pComponent == nullptr)
 		return E_FAIL;
-	
+
 
 
 	Set_Show(false);
@@ -59,12 +59,14 @@ _int CScene3_CharSlot::Update_GameObject(const _float& fDeltaTime)
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	CScene3_Char* pChar = dynamic_cast<CScene3_Char*>(m_pChar);
-
 	CScene3_CharBG* pBG = dynamic_cast<CScene3_CharBG*>(m_pBG);
 
-	
+
+
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	
 	if (CheckCollisionUI(g_hWnd, vPos, m_vScale, m_pGraphicDev))
 	{
 		if (pChar)
@@ -77,11 +79,14 @@ _int CScene3_CharSlot::Update_GameObject(const _float& fDeltaTime)
 		}
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
+		
 			pBG->SetSelected(true);
-			pChar->Set_Char(m_eSlotNum);
+			Set_Slot(m_eSelectSlot);
+		
+
 		}
 		
-	}
+	}		
 	else
 	{
 		if (pChar)
@@ -91,17 +96,18 @@ _int CScene3_CharSlot::Update_GameObject(const _float& fDeltaTime)
 		if (pBG)
 		{
 			pBG->SetMouseHover(false);
+
 		}
+		
+		
 	}
 
 
-	if (m_eSlot != m_eSlotNum)// && pChar->Get_Char(m_eSlotNum) == true)
-	{
-		pBG->SetSelected(false);
-	}
+
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
+
 
 void CScene3_CharSlot::LateUpdate_GameObject(const _float& fDeltaTime)
 {

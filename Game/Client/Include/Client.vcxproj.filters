@@ -361,6 +361,9 @@
     <Filter Include="03. Manager\RankMgr">
       <UniqueIdentifier>{d29b7f87-a875-4652-9d62-4445214be037}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager\CSlotMgr">
+      <UniqueIdentifier>{3b7b33a3-72b5-49b7-98a9-f5874903879b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -550,9 +553,6 @@
       <Filter>02. GameObject\UI\UI_SceneButton</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CScene2_ForestValley.h">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CScene2_ClockTower.h">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMenu_Set.h">
@@ -894,9 +894,6 @@
       <Filter>02. GameObject\UI\UI_SceneButton</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CScene2_ForestValley.cpp">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScene2_ClockTower.cpp">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMenu_Set.cpp">
