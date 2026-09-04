@@ -214,6 +214,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 		static_cast<CCartBot*>(vecCartBot[i])->SetPlayerHead(vecBotHead[i]);
 
 		vecCartBody[i]->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
+		static_cast<CCartBot*>(vecCartBody[i])->AddWheel();
 	}
 
 // 이펙트
@@ -566,6 +567,7 @@ HRESULT CRacingScene::Ready_UI_Layer()
 HRESULT CRacingScene::Ready_Collision_Matrix()
 {
 	Set_CollisionMatrix(CL_DEFAULT, CL_LAYER1, false);
+	Set_CollisionMatrix(CL_CART_WHEEL, CL_CART_WHEEL, false);
 
 	return S_OK;
 }

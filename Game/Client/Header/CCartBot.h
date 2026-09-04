@@ -78,7 +78,7 @@ public:
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
-	void			CreateMissileObject();
+	void			CreateMissileObject(CGameObject* pTarget);
 	void			CreateMagnetObject();
 	void			CreateWaterBombObject();
 	void			CreateWaterFlyObject();
@@ -100,6 +100,13 @@ public:
 
 	// SetPlayerHead
 	void			SetPlayerHead(CGameObject* pPlayerHead) { m_pPlayerHead = static_cast<CPlayerHead*>(pPlayerHead); }
+
+	// Wheel
+	void			AddWheel();
+	void			SetWheelForceLen();
+	void			SetWheelDir();
+	void			SetWheelTurn(WHEEL_TURN eTurn);
+
 
 private:
 	_float			m_fMaxSpeed;
@@ -160,9 +167,12 @@ private:
 	float			m_fOffsetTimer = 0.f;
 	float			m_fOffsetTimerEnd = 2.f;
 
+	vector<CGameObject*>	m_vecWheel;
+
 	bool			m_bCollisionGround = false;
 	bool			m_bCollisionWall = false;
 
+	_float			m_fAimRotationZ;
 protected:
 	virtual		void		Free() override;
 };

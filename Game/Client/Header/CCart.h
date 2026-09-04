@@ -79,7 +79,7 @@ public:
 	void			CreateRainbowObject();
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
-	void			CreateMissileObject();	
+	void			CreateMissileObject(CGameObject* pTarget);
 	void			CreateMagnetObject();
 	void			CreateWaterBombObject();
 	void			CreateWaterFlyObject();
@@ -103,7 +103,7 @@ public:
 	// SetPlayerHead
 	void			SetPlayerHead(CGameObject* pPlayerHead) { m_pPlayerHead = static_cast<CPlayerHead*>(pPlayerHead); }
 
-	// Whell
+	// Wheel
 	void			AddWheel();
 	void			SetWheelForceLen();
 	void			SetWheelDir();
@@ -165,6 +165,7 @@ private:
 	bool			m_bUpKey;
 
 	vector<CGameObject*>	m_vecWheel;
+
 	bool			m_bCollisionGround = false;
 	bool			m_bCollisionWall = false;
 
