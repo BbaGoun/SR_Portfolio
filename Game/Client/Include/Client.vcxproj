@@ -237,6 +237,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CPlayer.h" />
     <ClInclude Include="..\Header\CPlayerHead.h" />
     <ClInclude Include="..\Header\CPlayTimeMgr.h" />
+    <ClInclude Include="..\Header\CRePlayCart.h" />
+    <ClInclude Include="..\Header\CRePlayScene.h" />
     <ClInclude Include="..\Header\CScene1_Replay.h" />
     <ClInclude Include="..\Header\CScene1_Speed.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -342,6 +344,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CPlayer.cpp" />
     <ClCompile Include="..\Code\CPlayerHead.cpp" />
     <ClCompile Include="..\Code\CPlayTimeMgr.cpp" />
+    <ClCompile Include="..\Code\CRePlayCart.cpp" />
+    <ClCompile Include="..\Code\CRePlayScene.cpp" />
     <ClCompile Include="..\Code\CScene1_Replay.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>

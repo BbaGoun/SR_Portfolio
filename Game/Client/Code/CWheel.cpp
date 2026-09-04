@@ -80,16 +80,16 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pColliderCom->Set_Extents(m_vColliderSize * m_fScale);
 
 	CCart* pCart = dynamic_cast<CCart*>(m_pParent->Get_Parent());
-	_vec3 vParentForce = pCart->Get_Force();
-	float fParentForceLen = D3DXVec3Length(&vParentForce);
+	//_vec3 vParentForce = pCart->Get_Force();
+	//float fParentForceLen = D3DXVec3Length(&vParentForce);
+	//
+	//_vec3 vPlayerLook;
+	//pCart->Get_Transform()->Get_Info(INFO_LOOK, &vPlayerLook);
 
-	_vec3 vPlayerLook;
-	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vPlayerLook);
-
-	if (D3DXVec3Dot(&vPlayerLook, &vParentForce) >= 0)
-		m_vRotation.x += fParentForceLen * fFixedDeltaTime;
+	if (m_eCartDirection == DIR_FORWARD)
+		m_vRotation.x += m_fCartForceLen * fFixedDeltaTime;
 	else
-		m_vRotation.x -= fParentForceLen * fFixedDeltaTime;
+		m_vRotation.x -= m_fCartForceLen * fFixedDeltaTime;
 
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
@@ -97,7 +97,6 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	if (m_eWheelType < WHEEL_BL)
 		return;
-
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -127,7 +126,7 @@ void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CWheel::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-	KeyInput(fDeltaTime);
+	UpdateWheelRot(fDeltaTime);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -142,27 +141,19 @@ void CWheel::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 }
 
-void CWheel::KeyInput(const _float& fDeltaTime)
+void CWheel::UpdateWheelRot(const _float& fDeltaTime)
 {
-	_vec3 vParentForce = m_pParent->Get_Parent()->Get_Force();
-	float fParentForceLen = D3DXVec3Length(&vParentForce);
-	if (fParentForceLen > 5.0f)
+	if (m_fCartForceLen > 5.0f)
 	{
 		m_vRotation.y = 0;
 		return;
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT)&& m_eWheelType < WHEEL_BL)
-	{
+	if (m_eWheelTurn == TURN_LEFT && m_eWheelType < WHEEL_BL)
 		m_vRotation.y = -45;
-	}
-	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT) && m_eWheelType < WHEEL_BL)
-	{
+	else if (m_eWheelTurn == TURN_RIGHT && m_eWheelType < WHEEL_BL)
 		m_vRotation.y = 45;
-	}
 	else
-	{
 		m_vRotation.y = 0;
-	}
 }
 
 void CWheel::ResetPrePos()

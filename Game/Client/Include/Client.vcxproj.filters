@@ -361,6 +361,12 @@
     <Filter Include="03. Manager\RankMgr">
       <UniqueIdentifier>{d29b7f87-a875-4652-9d62-4445214be037}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\RePlayCart">
+      <UniqueIdentifier>{54bdf8f2-8e7f-426c-8c59-76d91f43c181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\RePlay">
+      <UniqueIdentifier>{e50661f9-6b22-4b07-9f6a-3cf7b1003406}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -714,6 +720,12 @@
     <ClInclude Include="..\Header\CRankMgr.h">
       <Filter>03. Manager\RankMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CRePlayCart.h">
+      <Filter>02. GameObject\RePlayCart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRePlayScene.h">
+      <Filter>01. Scene\RePlay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1057,6 +1069,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CRankMgr.cpp">
       <Filter>03. Manager\RankMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRePlayCart.cpp">
+      <Filter>02. GameObject\RePlayCart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRePlayScene.cpp">
+      <Filter>01. Scene\RePlay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

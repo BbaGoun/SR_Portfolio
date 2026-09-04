@@ -310,6 +310,19 @@ void CHierarchy::Draw_TreeNode(CGameObject* pObj)
 
                 m_uOpenGuid = pObj->GetGuid();
             }
+            if (ImGui::Selectable("Create AlphaEmpty Child")) {
+                CGameObject* pChild = CAlphaEmpty::Create(m_pGraphicDev);
+                pChild->SetName(L"AlphaEmpty");
+                uint64_t guid = CManagement::GetInstance()->GenerateGuid();
+                pChild->SetGuid(guid);
+                pObj->Set_Child(pChild);
+
+                wstring s = std::to_wstring(guid);
+                CManagement::GetInstance()->Add_GameObject(L"Default", s.c_str(), pChild);
+                ::Set_ObjSelected(guid);
+
+                m_uOpenGuid = pObj->GetGuid();
+            }
             if (ImGui::Selectable("Rename")) {
                 m_bRenaming = true;
                 m_uRenameGuid = pObj->GetGuid();
@@ -342,6 +355,16 @@ void CHierarchy::RightClick_PopUp()
         {
             CGameObject* obj = CEmpty::Create(m_pGraphicDev);
             obj->SetName(L"Empty");
+            uint64_t guid = CManagement::GetInstance()->GenerateGuid();
+            obj->SetGuid(guid);
+
+            wstring s = std::to_wstring(guid);
+            CManagement::GetInstance()->Add_GameObject(L"Default", s.c_str(), obj);
+            ::Set_ObjSelected(guid);
+        }
+        if (ImGui::Selectable("Create AlphaEmpty Child")) {
+            CGameObject* obj = CAlphaEmpty::Create(m_pGraphicDev);
+            obj->SetName(L"AlphaEmpty");
             uint64_t guid = CManagement::GetInstance()->GenerateGuid();
             obj->SetGuid(guid);
 

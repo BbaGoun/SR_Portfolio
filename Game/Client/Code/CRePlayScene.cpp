@@ -1,5 +1,5 @@
-ï»¿#include "pch.h"
-#include "CRacingScene.h"
+#include "pch.h"
+#include "CRePlayScene.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -44,21 +44,21 @@
 #include "CUI_RankName.h"
 #include "CDInputMgr.h"
 
-CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
+CRePlayScene::CRePlayScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
 }
 
-CRacingScene::~CRacingScene()
+CRePlayScene::~CRePlayScene()
 {
 }
 
-HRESULT CRacingScene::Ready_Scene()
+HRESULT CRePlayScene::Ready_Scene()
 {
 	LoadSceneFromFile();
 	return S_OK;
 }
 
-HRESULT CRacingScene::PostReady_Scene()
+HRESULT CRePlayScene::PostReady_Scene()
 {
 	Ready_TrackMgr();
 
@@ -72,16 +72,16 @@ HRESULT CRacingScene::PostReady_Scene()
 	return S_OK;
 }
 
-void CRacingScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
+void CRePlayScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 {
-	CDInputMgr::GetInstance()->Record_FixedUpdate();
+	CDInputMgr::GetInstance()->Load_FixedUpdate();
 	CScene::FixedUpdate_Scene(fFixedDeltaTime);
 
 	auto map = Get_GameObjects(L"GameLogic");
 
 	vector<CGameObject*> objects;
 	objects.reserve(1000);
-	for (auto& p : map){
+	for (auto& p : map) {
 		for (auto& pObj : p.second)
 			if (pObj->Get_Component<CCollider>())
 				objects.push_back(pObj);
@@ -92,38 +92,38 @@ void CRacingScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 	CTrackMgr::GetInstance()->Update_Locator();
 }
 
-_int CRacingScene::Update_Scene(const _float& fDeltaTime)
+_int CRePlayScene::Update_Scene(const _float& fDeltaTime)
 {
 	_int iExit = CScene::Update_Scene(fDeltaTime);
 	CCameraMgr::GetInstance()->UpdateClosedRePlayCam();
 	return iExit;
 }
 
-void CRacingScene::LateUpdate_Scene(const _float& fDeltaTime)
+void CRePlayScene::LateUpdate_Scene(const _float& fDeltaTime)
 {
 	CScene::LateUpdate_Scene(fDeltaTime);
 }
 
-void CRacingScene::Render_Scene()
+void CRePlayScene::Render_Scene()
 {
 	//CScene::Render_Scene();
 }
 
-void CRacingScene::OnLostDevice()
+void CRePlayScene::OnLostDevice()
 {
 	CScene::OnLostDevice();
 	CRenderer::GetInstance()->OnLostDevice();
 }
 
-void CRacingScene::OnResetDevice()
+void CRePlayScene::OnResetDevice()
 {
 	CScene::OnResetDevice();
 	CRenderer::GetInstance()->OnResetDevice(m_pGraphicDev);
 }
 
-HRESULT CRacingScene::LoadSceneFromFile()
+HRESULT CRePlayScene::LoadSceneFromFile()
 {
-	// ì¼ë‹¨ ë„£ì–´ë‘ê¸°
+	// ÀÏ´Ü ³Ö¾îµÎ±â
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)
@@ -164,14 +164,14 @@ HRESULT CRacingScene::LoadSceneFromFile()
 	return S_OK;
 }
 
-HRESULT CRacingScene::Ready_TrackMgr()
+HRESULT CRePlayScene::Ready_TrackMgr()
 {
 	CGameObject* pGraphObj = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Graph");
 	CTrackMgr::GetInstance()->Register_Track(pGraphObj);
 
 	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
 	CTrackMgr::GetInstance()->Register_Player(static_cast<CCart*>(pCart));
-	
+
 	auto& vecBots = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
 	for (auto& pBot : vecBots) {
 		//CTrackMgr::GetInstance()->Register_Bot(static_cast<CCart_Bot*>(pBot));
@@ -180,14 +180,14 @@ HRESULT CRacingScene::Ready_TrackMgr()
 	return S_OK;
 }
 
-HRESULT CRacingScene::Ready_RenderTarget()
+HRESULT CRePlayScene::Ready_RenderTarget()
 {
 	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"Minimap", 256, 384);
 	CRenderer::GetInstance()->Ready_BlurRT(m_pGraphicDev);
 	return S_OK;
 }
 
-HRESULT CRacingScene::Ready_GameLogic_Layer()
+HRESULT CRePlayScene::Ready_GameLogic_Layer()
 {
 	CGameObject* pGameObject = nullptr;
 	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
@@ -201,52 +201,52 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 
 	pCartBody->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
 
-// ì´íŽ™íŠ¸
-	// ## ë¶€ìŠ¤í„° ì™¼ìª½1 ë°”ëžŒ ì´íŽ™íŠ¸
+	// ÀÌÆåÆ®
+		// ## ºÎ½ºÅÍ ¿ÞÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
-	
+
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
 	pCart->Set_ChildWithoutTune(pGameObject);
-	
-	// ## ë¶€ìŠ¤í„° ì™¼ìª½2 ë°”ëžŒ ì´íŽ™íŠ¸
+
+	// ## ºÎ½ºÅÍ ¿ÞÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
 	// BoostWindL2
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
-	
+
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
 	pCart->Set_ChildWithoutTune(pGameObject);
-	
-	// ## ë¶€ìŠ¤í„° ì˜¤ë¥¸ìª½1 ë°”ëžŒ ì´íŽ™íŠ¸
+
+	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
 	// BoostWindR1
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
-	
+
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
 	pCart->Set_ChildWithoutTune(pGameObject);
-	// ## ë¶€ìŠ¤í„° ì˜¤ë¥¸ìª½2 ë°”ëžŒ ì´íŽ™íŠ¸
+	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
-	
+
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
 	pCart->Set_ChildWithoutTune(pGameObject);
-	
-	// ## ë¶€ìŠ¤í„° ì œíŠ¸ ì´íŽ™íŠ¸
+
+	// ## ºÎ½ºÅÍ Á¦Æ® ÀÌÆåÆ®
 	// BoostJet
 	pGameObject = CBoostJet::Create(m_pGraphicDev);
-	
+
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
 	pCartBody->Set_ChildWithoutTune(pGameObject);
 
-// íŒŒí‹°í´
-	// ì—°ê¸° ì´íŽ™íŠ¸
-	// SpeedLine
+	// ÆÄÆ¼Å¬
+		// ¿¬±â ÀÌÆåÆ®
+		// SpeedLine
 	pGameObject = CSpeedLine::Create(m_pGraphicDev);
 
 	if (pGameObject == nullptr)
@@ -254,31 +254,31 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SpeedLine", pGameObject);
 	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
 
-// Particle
-	// SmokeParticle
+	// Particle
+		// SmokeParticle
 	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
-	
+
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
-	// ì°©ì§€ì‹œ ë¨¼ì§€ ì´íŽ™íŠ¸
+	// ÂøÁö½Ã ¸ÕÁö ÀÌÆåÆ®
 	// DustParticle
 	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
 
-//Camera
-	//// # í”Œë ˆì´ì–´ ë”°ë¼ë‹¤ë‹ˆëŠ” 3ì¸ì¹­ ì¹´ë©”ë¼
+	//Camera
+		//// # ÇÃ·¹ÀÌ¾î µû¶ó´Ù´Ï´Â 3ÀÎÄª Ä«¸Þ¶ó
 	_vec3 vEye, vAt, vUp, vLook;
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
 	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
 	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
 	vEye = vAt + (vUp * 8.5f) + (vLook * -15.f);
 	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45.f));
-	
+
 	if (pGameObject == nullptr)
 		return E_FAIL;
 
@@ -286,7 +286,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
-	
+
 	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
 		return E_FAIL;
 
@@ -328,7 +328,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	auto& Cameras = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"TrackCam");
 	if (!Cameras.empty())
 	{
-		for(auto cam : Cameras)
+		for (auto cam : Cameras)
 			CCameraMgr::GetInstance()->AddRePlayCam(static_cast<CCamera*>(cam));
 	}
 	CCameraMgr::GetInstance()->SetCart(pCart);
@@ -336,7 +336,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	return S_OK;
 }
 
-HRESULT CRacingScene::Ready_Environment_Layer()
+HRESULT CRePlayScene::Ready_Environment_Layer()
 {
 	CLayer* pEnvironmentLayer = CLayer::Create();
 
@@ -346,15 +346,15 @@ HRESULT CRacingScene::Ready_Environment_Layer()
 	m_mapLayer.insert({ L"Environment", pEnvironmentLayer });
 
 	CGameObject* pEnvObject = nullptr;
-	
-	
+
+
 	//pEnvObject = CSkyBox::Create(m_pGraphicDev);
 	//
 	//if (pEnvObject == nullptr)
 	//	return E_FAIL;
 	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_SkyBox", pEnvObject)))
 	//	return E_FAIL;
-	
+
 	//CSkyDome
 	pEnvObject = CSkyDome::Create(m_pGraphicDev);
 
@@ -366,7 +366,7 @@ HRESULT CRacingScene::Ready_Environment_Layer()
 }
 
 
-HRESULT CRacingScene::Ready_UI_Layer()
+HRESULT CRePlayScene::Ready_UI_Layer()
 {
 	CLayer* pUILayer = CLayer::Create();
 
@@ -454,7 +454,7 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"PreviewCart", pUIObject)))
 		return E_FAIL;
 
-	// ë¯¸ë‹ˆë§µ Cart
+	// ¹Ì´Ï¸Ê Cart
 	pUIObject = CMinimapCart::Create(m_pGraphicDev);
 
 	if (nullptr == pUIObject)
@@ -482,15 +482,15 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_EndCountDown", pUIObject)))
 		return E_FAIL;
-//Rank
-	//// CUI_RankBoard
-	//CGameObject* pRankBoard = CUI_RankBoard::Create(m_pGraphicDev);
-	//if (nullptr == pRankBoard)
-	//	return E_FAIL;
-	//if (FAILED(pUILayer->Add_GameObject(L"UI_RankBoard", pRankBoard)))
-	//	return E_FAIL;
+	//Rank
+		//// CUI_RankBoard
+		//CGameObject* pRankBoard = CUI_RankBoard::Create(m_pGraphicDev);
+		//if (nullptr == pRankBoard)
+		//	return E_FAIL;
+		//if (FAILED(pUILayer->Add_GameObject(L"UI_RankBoard", pRankBoard)))
+		//	return E_FAIL;
 
-	// CUI_RankBG
+		// CUI_RankBG
 	CGameObject* pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_PLAYER, MARK_RED);
 	if (nullptr == pUI_RankBG)
 		return E_FAIL;
@@ -499,7 +499,7 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	pUI_RankBG->Get_Transform()->Set_Pos({ -500,50,2 });
 
 	// CUI_RankName
-	pUIObject = CUI_RankName::Create(m_pGraphicDev,NAME_PLAYER);
+	pUIObject = CUI_RankName::Create(m_pGraphicDev, NAME_PLAYER);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_RankPlayerName", pUIObject)))
@@ -544,31 +544,31 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	pUIObject->Get_Transform()->Set_Pos({ -500,-20,1 });
 	pUI_RankBG->Set_Child(pUIObject);
 	//pRankBoard->Set_Child(pUI_RankBG);
-	
+
 	return S_OK;
 }
 
-HRESULT CRacingScene::Ready_Collision_Matrix()
+HRESULT CRePlayScene::Ready_Collision_Matrix()
 {
 	Set_CollisionMatrix(CL_DEFAULT, CL_LAYER1, false);
 
 	return S_OK;
 }
 
-CRacingScene* CRacingScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, MAP_ID eID)
+CRePlayScene* CRePlayScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, MAP_ID eID)
 {
-	CRacingScene* pScene = new CRacingScene(pGraphicDev);
+	CRePlayScene* pScene = new CRePlayScene(pGraphicDev);
 	pScene->m_eMapId = eID;
 
 	if (FAILED(pScene->Ready_Scene())) {
-		MSG_BOX("CRacingScene Create Failed");
+		MSG_BOX("CRePlayScene Create Failed");
 		Safe_Release(pScene);
 		return nullptr;
 	}
 	return pScene;
 }
 
-void CRacingScene::Free()
+void CRePlayScene::Free()
 {
 	CRenderer::GetInstance()->Clear_RenderGroup();
 	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");

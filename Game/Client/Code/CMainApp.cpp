@@ -53,8 +53,6 @@ HRESULT CMainApp::Ready_MainApp()
 void CMainApp::FixedUpdate_MainApp(const float& fFixedDeltaTime)
 {
 	m_pManagementClass->FixedUpdate_Scene(fFixedDeltaTime);
-	CDInputMgr::GetInstance()->Load_FixedUpdate();
-	CDInputMgr::GetInstance()->Record_FixedUpdate();
 
 }
 

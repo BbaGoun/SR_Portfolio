@@ -1,12 +1,13 @@
 #pragma once
 #include "CScene.h"
 
-class CRacingScene :
-    public CScene
+
+class CRePlayScene :
+	public CScene
 {
 private:
-	explicit CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev);
-	~CRacingScene() override;
+	explicit CRePlayScene(LPDIRECT3DDEVICE9 pGraphicDev);
+	~CRePlayScene() override;
 
 public:
 	virtual			HRESULT		Ready_Scene() override;
@@ -30,7 +31,7 @@ private:
 	HRESULT Ready_Collision_Matrix();
 
 public:
-	static CRacingScene* Create(LPDIRECT3DDEVICE9 pGraphicDev, MAP_ID eID);
+	static CRePlayScene* Create(LPDIRECT3DDEVICE9 pGraphicDev, MAP_ID eID);
 
 private:
 	MAP_ID m_eMapId = MAP_END;
