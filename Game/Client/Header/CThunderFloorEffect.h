@@ -6,7 +6,7 @@
 class CThunderFloorEffect : public CGameObject
 {
 private:
-	explicit CThunderFloorEffect(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CThunderFloorEffect(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget);
 	explicit CThunderFloorEffect(const CGameObject& rhs);
 	~CThunderFloorEffect() override;
 
@@ -20,11 +20,11 @@ private:
 	CRcTex* m_pBufferCom;
 	CTexture* m_pTextureCom;
 
-	float	m_fTimer;
-	float	m_fFrame;
-
+	float			m_fTimer;
+	float			m_fFrame;
+	CGameObject*	m_pTarget;
 public:
-	static CThunderFloorEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CThunderFloorEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget);
 
 protected:
 	virtual		void		Free() override;

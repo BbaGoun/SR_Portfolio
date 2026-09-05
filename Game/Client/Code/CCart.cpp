@@ -31,6 +31,9 @@
 #include "CCart_Shield2.h"
 #include "CUfo.h"
 #include "CUfoBody.h"
+#include "CShield1.h"
+#include "CShield2.h"
+#include "CFindOthersMgr.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -119,8 +122,11 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	float fForceLen = D3DXVec3Length(&m_vForce);
 	if (fForceLen < 1.f)
 		m_vForce *= 0;
-	if (fForceLen >= 80.f)
+	if (m_bMagnet == false && fForceLen >= 80.f)
 		m_vForce = m_vForce / fForceLen * 80.f;
+	if (m_bMagnet == true && fForceLen >= 120.f)
+		m_vForce = m_vForce / fForceLen * 120.f;
+
 	SetWheelForceLen();
 
 	if (!m_bUpKey)
@@ -623,10 +629,11 @@ void CCart::CreateBananaObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Banana", pGameObject)))
 		return;
 
-	_vec3 vPos, vLook;
+	_vec3 vPos, vLook, vUp;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	vPos -= vLook * 10;
+	m_pTransformCom->Get_Info(INFO_UP, &vUp);
+	vPos -= vLook * 10 - vUp;
 	pGameObject->Get_Transform()->Set_Pos(vPos);
 
 	pGameObject->SetLayer(m_pLayer);
@@ -635,22 +642,27 @@ void CCart::CreateBananaObject()
 void CCart::CreateThunderCloudObject()
 {
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_thunderbolt/ThunderCloud.ogg", SOUND_THUNDERCLOUD, 0.4f);
-	CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev);
+	vector<CGameObject*> vecOthers = CFindOthersMgr::GetInstance()->GetOtherCart(this);
 
-	if (nullptr == pGameObject)
-		return;
+	for (auto& pOther : vecOthers)
+	{
+		CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev, pOther);
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_ThunderCloud", pGameObject)))
-		return;
+		if (nullptr == pGameObject)
+			return;
 
-	_vec3 vRight, vLook, vPos;
-	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	vPos += +vRight * 10 + _vec3({ 0,13,0 }) - vLook * 10;
-	pGameObject->Get_Transform()->Set_Pos(vPos);
+		if (FAILED(m_pLayer->Add_GameObject(L"Obj_ThunderCloud", pGameObject)))
+			return;
 
-	pGameObject->SetLayer(m_pLayer);
+		_vec3 vRight, vLook, vPos;
+		m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		vPos += +vRight * 10 + _vec3({ 0,13,0 }) - vLook * 10;
+		pGameObject->Get_Transform()->Set_Pos(vPos);
+
+		pGameObject->SetLayer(m_pLayer);
+	}
 }
 
 void CCart::UpdateThunder()
@@ -1089,7 +1101,7 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 {
 	if (m_bMagnet == true)
 	{
-		CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+		CGameObject* pTarget = m_pMagnetTarget;
 
 		_vec3 vPos, vLook, vTargetPos, vDir;
 
@@ -1118,7 +1130,7 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 		{
 			m_bMagnet = false;
 			m_fMagnetTimer = 0.f;
-
+			m_pMagnetTarget = nullptr;
 		}
 	}
 }
@@ -1337,8 +1349,6 @@ void CCart::CreateMagnetObject()
 
 	pMagnetBody->SetLayer(m_pLayer);
 
-	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
 	_vec3 vPos, vMagnetPos, vLook, vDir, vUp, vTargetPos;
 
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -1349,7 +1359,6 @@ void CCart::CreateMagnetObject()
 	// vPos += vUp * 7.f;
 
 	pMagnetBody->Get_Transform()->Set_Pos(vPos);
-	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
 
 	vDir = vTargetPos - vPos;
 
@@ -1458,26 +1467,17 @@ void CCart::CreateWaterFlyObject()
 void CCart::CreateMagnetAimObject()
 {
 	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
-	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 
-	if (nullptr != pTargetAim && nullptr != pTarget)
+	if (nullptr != pTargetAim)//&& nullptr != pTarget
 	{
 		_vec3 vAimPos, vTargetPos, vDir;
 
-		pTargetAim->Get_Transform()->Get_Info(INFO_POS, &vAimPos);
-		pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-
-		vDir = vTargetPos - vAimPos;
-
-		if (D3DXVec3Length(&vDir) < 0.1f)
+		CGameObject* pTarget = static_cast<CTargetAim*>(pTargetAim)->GetTarget();
+		if (pTarget != nullptr)
 		{
-			CGameObject* pMagnet = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MagnetBody");
-
-			if (nullptr == pMagnet)
-			{
-				m_bMagnet = true;
-				CreateMagnetObject();
-			}
+			m_bMagnet = true;
+			m_pMagnetTarget = pTarget;
+			CreateMagnetObject();
 		}
 		m_pLayer->Delete_GameObject(pTargetAim);
 	}
@@ -1485,29 +1485,30 @@ void CCart::CreateMagnetAimObject()
 
 void CCart::CreateShieldObject_()
 {
-	CGameObject* pShield1 = CCart_Shield1::Create(m_pGraphicDev);
-
-	if (pShield1 == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
-		return;
-
-	Set_Child(pShield1);
-
-	CGameObject* pShield2 = CCart_Shield2::Create(m_pGraphicDev);
-
-	if (pShield2 == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
-		return;
-
-	Set_Child(pShield2);
-
-	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
-
-	pCartBody->SetShieldActive(true);
+	static_cast<CShield1*>(m_pShield1)->SetShow(true);
+	//CGameObject* pShield1 = CCart_Shield1::Create(m_pGraphicDev);
+	//
+	//if (pShield1 == nullptr)
+	//	return;
+	//
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
+	//	return;
+	//
+	//Set_Child(pShield1);
+	//
+	//CGameObject* pShield2 = CCart_Shield2::Create(m_pGraphicDev);
+	//
+	//if (pShield2 == nullptr)
+	//	return;
+	//
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
+	//	return;
+	//
+	//Set_Child(pShield2);
+	//
+	//CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+	//
+	//pCartBody->SetShieldActive(true);
 }
 
 void CCart::CreateUfoObject()

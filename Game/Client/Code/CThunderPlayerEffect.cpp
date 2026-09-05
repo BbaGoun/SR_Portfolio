@@ -7,7 +7,9 @@
 #include "CManagement.h"
 #include "CCameraMgr.h"
 
-CThunderPlayerEffect::CThunderPlayerEffect(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
+CThunderPlayerEffect::CThunderPlayerEffect(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget) 
+	: CGameObject(pGraphicDev)
+	,m_pTarget(pTarget)
 {
 }
 
@@ -42,9 +44,9 @@ HRESULT CThunderPlayerEffect::Ready_GameObject()
 
 _int CThunderPlayerEffect::Update_GameObject(const _float& fDeltaTime)
 {
-	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
+	//CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
 	_vec3 vCartBodyPos, vDir;
-	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartBodyPos);
+	m_pTarget->Get_Transform()->Get_Info(INFO_POS, &vCartBodyPos);
 
 	m_pTransformCom->Set_Pos({ vCartBodyPos.x,vCartBodyPos.y,vCartBodyPos.z});
 
@@ -73,9 +75,9 @@ void CThunderPlayerEffect::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 }
 
-CThunderPlayerEffect* CThunderPlayerEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CThunderPlayerEffect* CThunderPlayerEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget)
 {
-	CThunderPlayerEffect* pObj = new CThunderPlayerEffect(pGraphicDev);
+	CThunderPlayerEffect* pObj = new CThunderPlayerEffect(pGraphicDev, pTarget);
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{

@@ -388,6 +388,12 @@
     <Filter Include="02. GameObject\Cart\CCartBot">
       <UniqueIdentifier>{5936d39c-0afd-48e9-a20d-51d67314356a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\BoostEffect\BoostAura">
+      <UniqueIdentifier>{462f873a-75fa-41a2-adb7-0a6a7286b237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\FindOthersMgr">
+      <UniqueIdentifier>{f07fabf1-8963-43b3-b90c-f887a71e4da9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -765,6 +771,12 @@
     <ClInclude Include="..\Header\CCartBot.h">
       <Filter>02. GameObject\Cart\CCartBot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CBoostAura.h">
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostAura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFindOthersMgr.h">
+      <Filter>03. Manager\FindOthersMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1132,6 +1144,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCartBot.cpp">
       <Filter>02. GameObject\Cart\CCartBot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoostAura.cpp">
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostAura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFindOthersMgr.cpp">
+      <Filter>03. Manager\FindOthersMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

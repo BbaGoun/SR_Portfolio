@@ -45,7 +45,9 @@
 #include "CDInputMgr.h"
 #include "CRankMgr.h"
 #include "CCartBot.h"
-
+#include "CBoostAura.h"
+#include "CShield1.h"
+#include "CShield2.h"
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
 }
@@ -254,11 +256,34 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	// ## 부스터 제트 이펙트
 	// BoostJet
 	pGameObject = CBoostJet::Create(m_pGraphicDev);
-	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
 	pCartBody->Set_ChildWithoutTune(pGameObject);
+
+	// ## 부스터 제트 아우리
+	// BoostAura
+	pGameObject = CBoostAura::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostAura", pGameObject);
+	pCartBody->Set_ChildWithoutTune(pGameObject);
+
+	// Shield1,2
+	pGameObject = CShield1::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"PlayerShield1", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	static_cast<CCart*>(pCart)->SetShield1(pGameObject);
+
+	pGameObject = CShield2::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"PlayerShield2", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	static_cast<CCart*>(pCart)->SetShield2(pGameObject);
+
 
 // 파티클
 	// 연기 이펙트
