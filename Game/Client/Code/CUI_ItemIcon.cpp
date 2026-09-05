@@ -39,7 +39,7 @@ HRESULT CUI_ItemIcon::Ready_GameObject()
 	if (pComponent == nullptr)
 		return E_FAIL;
 	pComponent = m_pTextureCom2 = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_ItemSlotChangeTexture"));
-	m_mapComponent.insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture2", pComponent });
 	if (pComponent == nullptr)
 		return E_FAIL;
 	

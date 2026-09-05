@@ -232,7 +232,7 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 			if (pItemBox->GetShow() == true)
 			{
 				SoundMgr::GetInstance().PlaySound(L"Effect/ItemGain/eaten.ogg", SOUND_ITEMGAIN, 0.4f);
-				pCart->GainItem();
+				pCartBot->GainItem();
 				pItemBox->SetShow(false);
 			}
 		}
