@@ -37,6 +37,7 @@ public:
 	void			UpdateMagnet(const _float& fDeltaTime);
 	void			UpdateStartBoost();
 	void			UpdateBlur(const _float& fDeltaTime);
+	void			UpdateBubble(const _float& fDeltaTime);
 
 	// Get, Set
 	bool			GetBoost() { if (m_eBoostState > 0)return true; else return false; }
@@ -107,6 +108,21 @@ public:
 	void			SetWheelDir();
 	void			SetWheelTurn(WHEEL_TURN eTurn);
 
+	// Shield
+	void			SetShield1(CGameObject* pShield1) { m_pShield1 = pShield1; }
+	void			SetShield2(CGameObject* pShield2) { m_pShield2 = pShield2; }
+
+	CGameObject*	GetShield1() { return m_pShield1; }
+	CGameObject*	GetShield2() { return m_pShield2; }
+
+	//Missile
+	void			SetMissileHit(bool bHit)	{ m_bMissileHit = bHit; }
+	bool			GetMissileHit()				{ return m_bMissileHit; }
+
+	//Bubble
+	void			SetBubble(bool bBubble) { if (m_bBubble == false) m_bBubble = true; }
+	bool			GetBubble() { return m_bBubble; }
+	void			SetBubble(CGameObject* pBubble) { m_pBubble = pBubble; }
 
 private:
 	_float			m_fMaxSpeed;
@@ -173,6 +189,16 @@ private:
 	bool			m_bCollisionWall = false;
 
 	_float			m_fAimRotationZ;
+
+
+	CGameObject*	m_pShield1 = nullptr;
+	CGameObject*	m_pShield2 = nullptr;
+
+	bool			m_bMissileHit = false;
+	bool			m_bBubble = false;
+	float			m_fBubbleTimer = 0.f;
+	CGameObject*	m_pBubble = nullptr;
+
 protected:
 	virtual		void		Free() override;
 };

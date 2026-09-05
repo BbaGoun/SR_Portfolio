@@ -58,6 +58,7 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	m_pColliderCom->Set_Extents(m_vColliderSize * m_fScale);
 
+	UpdateMissileHit(fFixedDeltaTime);
 	BananaSpin(fFixedDeltaTime); 
 	ThunderSpin(fFixedDeltaTime);
 	ThunderTimerUpdate(fFixedDeltaTime);
@@ -66,8 +67,8 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(m_vRotation.y), D3DXToRadian(m_vRotation.x), D3DXToRadian(m_vRotation.z));
 	m_pTransformCom->Set_Quaternion(&q);
 	
-	// _vec3 vScale = m_pTransformCom->Get_Scale();
-	// m_pTransformCom->Set_Scale(vScale * m_fScale);
+	//_vec3 vScale = m_pTransformCom->Get_Scale();
+	//m_pTransformCom->Set_Scale(vScale * m_fScale);
 
 	//m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
 	//m_pTransformCom->Set_Pos({ 0,0.1f,0 });
@@ -118,7 +119,7 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 					pStarParticle->ResetParticle();
 				}
 			}
-			// MTV ¿˚øÎ
+			// MTV Ï†ÅÏö©
 			_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
 				static_cast<CCube_Collider*>(pOtherCollider), Get_Component<CCube_Collider>());
 
@@ -127,11 +128,11 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 			_vec3 vNewForce = vParentForce;
 			vNewForce *= vParentSpeed;
 
-			// 2. ∞°º”µµø°º≠ √Êµπ¬ ¿∏∑Œ µÈæÓ∞°¥¬ º”µµ º∫∫–øÔ ¡Ÿ¿Ã±‚
+			// 2. Í∞ÄÏÜçÎèÑÏóêÏÑú Ï∂©ÎèåÏ™ΩÏúºÎ°ú Îì§Ïñ¥Í∞ÄÎäî ÏÜçÎèÑ ÏÑ±Î∂ÑÏö∏ Ï§ÑÏù¥Í∏∞
 			_vec3 MTV_n;
 			D3DXVec3Normalize(&MTV_n, &MTV);
 			float inward = D3DXVec3Dot(&vNewForce, &MTV_n);
-			// MTV∞° ∫Æ π€¿∏∑Œ ≥™∞°¥¬ πÊ«‚ 
+			// MTVÍ∞Ä Î≤Ω Î∞ñÏúºÎ°ú ÎÇòÍ∞ÄÎäî Î∞©Ìñ• 
 
 			if(inward < 0)
 				vNewForce -= MTV_n * inward;
@@ -147,7 +148,7 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 		}
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////// ≈◊Ω∫∆ÆøÎ  Obj_MissileTarget
+	//////////////////////////////////////////////////////////////////////////////////// ÌÖåÏä§Ìä∏Ïö©  Obj_MissileTarget
 	if (wcsncmp(wOtherTag, L"Obj_MissileTarget", 17) == 0)
 	{
 		_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
@@ -164,27 +165,28 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-	if (CCart* pCart = dynamic_cast<CCart*>(m_pParent)) {
-		CGameObject* pShield = pCart->GetShield1();
-
+	if (CCart* pCart = dynamic_cast<CCart*>(m_pParent))
+	{
+		bool bShield = static_cast<CShield1*>(pCart->GetShield1())->GetShow();
+		bool bShield2 = static_cast<CShield2*>(pCart->GetShield2())->GetShow();
 		if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
 		{
-			if (pShield)
+			if (bShield || bShield2)
 			{
 				static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
 				static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
-				m_bShieldHit = true;
 			}
 			else if (pCart->GetRainbowUI() == false)
+			{
 				pCart->SetRainbowUI(true);
+			}
 		}
 		else if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
 		{
-			if (pShield)
+			if (bShield || bShield2)
 			{
 				static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
 				static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
-				m_bShieldHit = true;
 			}
 			else if (pCart->GetBanana() == false)
 			{
@@ -193,7 +195,7 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 				pCart->SetBoost(BOOST_STATE_NORMAL);
 			}
 		}
-		if (wcscmp(wOtherTag, L"Obj_ItemBox") == 0)
+		else if (wcsncmp(wOtherTag, L"Obj_ItemBox", 11) == 0)
 		{
 			CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
 			if (pItemBox->GetShow() == true)
@@ -204,23 +206,14 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 			}
 		}
 	}
-	else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent)) {
-		/*CGameObject* pShield = pCartBot->GetShield1();
-
-		if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
+	else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent))
+	{
+		bool bShield = static_cast<CShield1*>(pCartBot->GetShield1())->GetShow();
+		bool bShield2 = static_cast<CShield2*>(pCartBot->GetShield2())->GetShow();
+		
+		if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
 		{
-			if (pShield)
-			{
-				static_cast<CShield1*>(pCartBot->GetShield1())->SetShow(false);
-				static_cast<CShield2*>(pCartBot->GetShield2())->SetShow(true);
-				m_bShieldHit = true;
-			}
-			else if (pCart->GetRainbowUI() == false)
-				pCartBot->SetRainbowUI(true);
-		}*/
-		/*else if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
-		{
-			if (pShield)
+			if (bShield || bShield2)
 			{
 				static_cast<CShield1*>(pCartBot->GetShield1())->SetShow(false);
 				static_cast<CShield2*>(pCartBot->GetShield2())->SetShow(true);
@@ -228,19 +221,18 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 			}
 			else if (pCartBot->GetBanana() == false)
 			{
-				SoundMgr::GetInstance().PlaySound(L"Effect/Item_banana/Bananatrapped.ogg", SOUND_BANANA, 0.4f);
 				pCartBot->SetBanana(true);
 				pCartBot->SetBoost(BOOST_STATE_NORMAL);
 			}
-		}*/
-		if (wcscmp(wOtherTag, L"Obj_ItemBox") == 0)
+		}
+		else if (wcsncmp(wOtherTag, L"Obj_ItemBox", 11) == 0)
 		{
-			int a;
+		
 			CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
 			if (pItemBox->GetShow() == true)
 			{
 				SoundMgr::GetInstance().PlaySound(L"Effect/ItemGain/eaten.ogg", SOUND_ITEMGAIN, 0.4f);
-				pCartBot->GainItem();
+				pCart->GainItem();
 				pItemBox->SetShow(false);
 			}
 		}
@@ -330,6 +322,38 @@ void CCartBody::ThunderTimerUpdate(const _float& fDeltaTime)
 	{
 		m_bThunderTimerOnOff = false;
 		m_fThunderTimer = 0.f;
+	}
+}
+
+void CCartBody::UpdateMissileHit(const _float& fDeltaTime)
+{
+	if (m_bMissileHit == false)
+	{
+		return;
+	}
+	m_pParent->Set_Force({ 0,0,0 });
+	m_pParent->Set_Rotation({ 0,0,0 });
+	m_fMissileTimer += fDeltaTime;
+
+	_vec3 vPos;
+	m_pTransformCom->Get_LocalInfo(INFO_POS, &vPos);
+	m_vRotation.x += 720.f * fDeltaTime;
+	
+
+	m_vForce.y -= 15.f * fDeltaTime;
+	cout << m_vForce.x << "\t" << m_vForce.y << "\t" << m_vForce.z << endl;
+	//m_pTransformCom->Set_Pos(vPos);
+	m_pTransformCom->Move_Pos(&m_vForce,1,fDeltaTime);
+	if (m_vForce.y <-20.f)//vPos.y < 0.5f
+	{
+		m_vRotation.x = 0.f;
+		m_pTransformCom->Set_Pos({ 0,0.5f,0 });
+		m_fMissileTimer = 0.f;
+		m_bMissileHit = false;
+		if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent))
+			pCartBot->SetMissileHit(false);
+		//else if(CCart* pCart = dynamic_cast<CCart*>(m_pParent))
+			
 	}
 }
 

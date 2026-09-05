@@ -30,7 +30,7 @@ private:
 	CTexture* m_pTextureCom;
 
 	float	m_fFrame = 0;
-	bool	m_bShow;
+	bool	m_bShow = false;
 	float	m_fTimer;
 
 public:

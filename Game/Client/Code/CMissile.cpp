@@ -6,6 +6,11 @@
 #include "CMissileTex.h"
 #include "CCollisionMgr.h"
 #include "CCube_Collider.h"
+#include <CCartBody.h>
+#include <CCart.h>
+#include <CShield1.h>
+#include <CShield2.h>
+#include <CCartBot.h>
 
 CMissile::CMissile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -140,6 +145,45 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	}
 	else
 	{
+		CCartBody* pCartBody = nullptr;
+		for (auto& pChild : m_pTarget->Get_Children())
+		{
+			if (pCartBody = dynamic_cast<CCartBody*>(pChild))
+			{
+				break;
+			}
+		}
+		if (CCart* pCart = dynamic_cast<CCart*>(m_pTarget))
+		{
+			CShield1* pShield = static_cast<CShield1*>(pCart->GetShield1());
+			CShield2* pShield2 = static_cast<CShield2*>(pCart->GetShield1());
+			if (pShield->GetShow() || pShield2->GetShow())
+			{
+				pShield->SetShow(false);
+				pShield2->SetShow(true);
+			}
+			else
+			{
+				static_cast<CCartBody*>(pCartBody)->SetMissileHit(true);
+			}
+		}
+		else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pTarget))
+		{
+			CShield1* pShield = static_cast<CShield1*>(pCartBot->GetShield1());
+			CShield2* pShield2 = static_cast<CShield2*>(pCartBot->GetShield1());
+			if (pShield->GetShow() || pShield2->GetShow())
+			{
+				pShield->SetShow(false);
+				pShield2->SetShow(true);
+			}
+			else
+			{
+				static_cast<CCartBody*>(pCartBody)->SetMissileHit(true);
+				pCartBody->Set_Force({ 0,20,0 });
+				pCartBot->Set_Force({ 0,0,0 });
+				pCartBot->SetMissileHit(true);
+			}
+		}
 		vector<CGameObject*> vecChildren = Get_Children();
 		for (auto& pChild : vecChildren)
 		{

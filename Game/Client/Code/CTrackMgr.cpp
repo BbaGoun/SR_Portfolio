@@ -168,10 +168,10 @@ TrackPose CTrackMgr::Compute_TargetPose(CGameObject* pObj, float lookAhead, bool
 void CTrackMgr::Update_RankingUI()
 {
 	CRankMgr::GetInstance()->UpdateRank(m_tempRanking);
-	cout << "==========================\n";
-	for (auto& p : m_vecPlayer) {
-		cout << "Lap : " << p.second.iLap << " s : " << p.second.s << "\n";
-	}
+	//cout << "==========================\n";
+	//for (auto& p : m_vecPlayer) {
+	//	cout << "Lap : " << p.second.iLap << " s : " << p.second.s << "\n";
+	//}
 }
 
 void CTrackMgr::Update_LapUI()
