@@ -1098,7 +1098,7 @@ void CTrackGraph::Compute_Sample_Speed(TrackEdge* _pTE)
 	
 	// aAccel = (목표속력² - 현재속력²) / (2 × 증가거리)
 	float aAccel = 100.f; 
-	float kUp = 0.7f; // 오르막에서 목표 속력을 깎는 정도
+	float kUp = 1.f; // 오르막에서 목표 속력을 깎는 정도
 
 	auto& vecS = pTE->vecSamples;
 	int n = vecS.size();
@@ -1386,9 +1386,9 @@ CheckInfo CTrackGraph::Recursive_Back_CheckInside(const _vec3& localPos, const T
 
 				delta = localPos - prev.localPos;
 				forward = D3DXVec3Dot(&delta, &s.T);
-				if (prev.s > info.bestLocater.s && forward > 0)
+				if (prev.s - info.bestLocater.s > m_fLapLength * 0.5f && forward > 0)
 					info.bestLocater.iLap += 1;
-				else if (prev.s < info.bestLocater.s && forward < 0)
+				else if (info.bestLocater.s - prev.s >= m_fLapLength * 0.5f && forward < 0)
 					info.bestLocater.iLap -= 1;
 
 				info.bestLocater.bValid = true;

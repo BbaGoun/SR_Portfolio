@@ -46,6 +46,7 @@
 #include "CRankMgr.h"
 #include "CCartBot.h"
 #include "CUI_Laps.h"
+#include "CCollisionStarEffect.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -280,6 +281,13 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
+
+	// 충돌시 나오는 별 이펙트
+	pGameObject = CCollisionStarEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"CollisionStarEffect", pGameObject);
+	pCartBody->Set_Child(pGameObject);
 
 	// 착지시 먼지 이펙트
 	// DustParticle

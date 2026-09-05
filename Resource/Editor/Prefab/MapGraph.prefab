@@ -2,7 +2,7 @@
   type=
   prefabPath=..\..\..\Resource\Editor\Prefab\MapGraph.prefab
   belong=1
-  name=Empty
+  name=Graph
   tag=Obj_Graph
   collisionLayer=0
   cullDistance=0

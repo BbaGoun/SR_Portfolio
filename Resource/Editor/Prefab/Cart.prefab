@@ -7,9 +7,9 @@
   collisionLayer=0
   cullDistance=0
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-    pos=0.000000 0.000000 0.000000
-    rot=0.000000 -0.000000 0.000000
-    quat=0.000000 0.000000 0.000000 1.000000
+    pos=0.000000 0.550000 -0.500000
+    rot=180.000000 -0.000000 180.000000
+    quat=-0.000000 1.000000 -0.000000 -0.000000
     scale=1.000000 1.000000 1.000000
   OBJECT
     type=Obj_CartBody
@@ -21,13 +21,13 @@
     cullDistance=0
     COMP kind=CubeCollider proto=Proto_CubeCollider mapTag=Proto_CubeCollider
       trigger=0
-      offset=0.000000 0.300000 -0.100000
-      extents=1.000000 0.500000 1.000000
+      offset=0.000000 1.600000 0.000000
+      extents=2.500000 2.000000 3.000000
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=0.000000 0.000000 0.000000
       rot=0.000000 -0.000000 0.000000
       quat=0.000000 0.000000 0.000000 1.000000
-      scale=1.200000 1.000000 1.000000
+      scale=3.600000 3.000000 3.000000
     OBJECT
       type=
       prefabPath=
@@ -297,7 +297,7 @@
         pos=0.000000 0.408654 -0.643192
         rot=79.213371 -0.000000 0.000000
         quat=0.637514 0.000000 0.000000 0.770438
-        scale=0.749967 0.099999 0.999960
+        scale=0.749967 0.099999 0.999953
     ENDOBJECT
     OBJECT
       type=
@@ -375,7 +375,7 @@
       COMP kind=Texture proto=Proto_CartExhaustTex mapTag=Proto_CartExhaustTex
       COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
         pos=0.292937 0.120000 -1.031868
-        rot=0.000000 89.999092 0.000000
+        rot=0.000000 89.999054 0.000000
         quat=0.000000 0.707101 0.000000 0.707112
         scale=0.149990 0.150000 0.149990
     ENDOBJECT
@@ -391,7 +391,7 @@
       COMP kind=Texture proto=Proto_CartExhaustTex mapTag=Proto_CartExhaustTex
       COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
         pos=-0.293000 0.120000 -1.032000
-        rot=-179.999573 89.999992 -179.999573
+        rot=180.000000 89.999962 180.000000
         quat=-0.000000 0.707107 -0.000000 0.707107
         scale=0.150000 0.150000 0.150000
     ENDOBJECT
