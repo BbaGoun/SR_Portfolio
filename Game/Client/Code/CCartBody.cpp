@@ -134,19 +134,12 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 			if(inward < 0)
 				vNewForce -= MTV_n * inward;
 
-			_vec3 vOtherForce = pOtherCollider->Get_Owner()->Get_Parent()->Get_Force();
-			float vOtherSpeed = pOtherCollider->Get_Owner()->Get_Parent()->Get_Speed();
-			vOtherForce *= vOtherSpeed;
-
-			float otherInward = D3DXVec3Dot(&vOtherForce, &MTV_n);
-
-			if (otherInward > 0)
-				vNewForce += MTV_n * otherInward;
+			vNewForce += MTV;
 
 			_vec3 vPos;
 			m_pParent->Get_Transform()->Get_Info(INFO_POS, &vPos);
 
-			m_pParent->Set_Force(vNewForce / vParentSpeed);
+			m_pParent->Set_Force(vNewForce);
 			m_pParent->Get_Transform()->Set_Pos(vPos + MTV);
 			//m_pParent->Set_CollisionTick(1);
 		}

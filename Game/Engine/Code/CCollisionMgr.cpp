@@ -157,87 +157,81 @@ _vec3 CCollisionMgr::GetMTVCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 	_vec3 vPos;
 	_vec3 MTV = { 0,0,0 };
 	pSrcTransform->Get_Info(INFO_POS, &vPos);
-	if (fY <= fX && fY <= fZ)
-	{
-		vPos.y += vDS.y * fY;
-	}
-	else
-	{
-		// 1. 축 정리
-		vector<_vec3> vAxis;
-		_vec3 vDstAxis, vSrcAxis;
 
-		memcpy(&vDstAxis, &(pDstTransform->Get_World()->m[0][0]), sizeof(_vec3));
-		vAxis.push_back(*D3DXVec3Normalize(&vDstAxis, &vDstAxis));
+	// 1. 축 정리
+	vector<_vec3> vAxis;
+	_vec3 vDstAxis, vSrcAxis;
 
-		memcpy(&vSrcAxis, &(pSrcTransform->Get_World()->m[2][0]), sizeof(_vec3));
-		vAxis.push_back(*D3DXVec3Normalize(&vSrcAxis, &vSrcAxis));
+	memcpy(&vDstAxis, &(pDstTransform->Get_World()->m[0][0]), sizeof(_vec3));
+	vAxis.push_back(*D3DXVec3Normalize(&vDstAxis, &vDstAxis));
+
+	memcpy(&vSrcAxis, &(pSrcTransform->Get_World()->m[2][0]), sizeof(_vec3));
+	vAxis.push_back(*D3DXVec3Normalize(&vSrcAxis, &vSrcAxis));
 
 
-		// 2. 투영
-		_vec3 vDstPos = ToVec3(dynamic_cast<CCube_Collider*>(pDst)->Get_Info().Center);
-		_vec3 vSrcPos = ToVec3(dynamic_cast<CCube_Collider*>(pSrc)->Get_Info().Center);
+	// 2. 투영
+	_vec3 vDstPos = ToVec3(dynamic_cast<CCube_Collider*>(pDst)->Get_Info().Center);
+	_vec3 vSrcPos = ToVec3(dynamic_cast<CCube_Collider*>(pSrc)->Get_Info().Center);
 
-		_matrix	matDstWorld, matSrcWorld;
-		_vec3 vRight, vUp, vLook, vDstScale, vSrcScale;
+	_matrix	matDstWorld, matSrcWorld;
+	_vec3 vRight, vUp, vLook, vDstScale, vSrcScale;
 
-		vDstScale = ToVec3(dynamic_cast<CCube_Collider*>(pDst)->Get_Info().Extents);
-		vSrcScale = ToVec3(dynamic_cast<CCube_Collider*>(pSrc)->Get_Info().Extents);
+	vDstScale = ToVec3(dynamic_cast<CCube_Collider*>(pDst)->Get_Info().Extents);
+	vSrcScale = ToVec3(dynamic_cast<CCube_Collider*>(pSrc)->Get_Info().Extents);
 		
-		float fMin = FLT_MAX;
-		for (auto Axis : vAxis)
+	float fMin = FLT_MAX;
+	for (auto Axis : vAxis)
+	{
+		// 중심좌표 투영
+		float fDstCenter = D3DXVec3Dot(&vDstPos, &Axis);
+		float fSrcCenter = D3DXVec3Dot(&vSrcPos, &Axis);
+		float fDistance	 = fabsf(fDstCenter - fSrcCenter);
+
+		// 반지름 투영
+		matDstWorld = *(pDstTransform->Get_World());
+
+		memcpy(&vRight, &matDstWorld.m[0][0], sizeof(_vec3));
+		memcpy(&vUp,	&matDstWorld.m[1][0], sizeof(_vec3));
+		memcpy(&vLook,	&matDstWorld.m[2][0], sizeof(_vec3));
+
+		D3DXVec3Normalize(&vRight,	&vRight);
+		D3DXVec3Normalize(&vUp,		&vUp);
+		D3DXVec3Normalize(&vLook,	&vLook);
+
+		vRight	*= vDstScale.x;
+		vUp		*= vDstScale.y;
+		vLook	*= vDstScale.z;
+
+		float fDstRadius = fabs(D3DXVec3Dot(&vRight, &Axis))
+							+ fabs(D3DXVec3Dot(&vUp, &Axis))
+							+ fabs(D3DXVec3Dot(&vLook, &Axis));
+
+		matSrcWorld = *(pSrcTransform->Get_World());
+		memcpy(&vRight, &matSrcWorld.m[0][0], sizeof(_vec3));
+		memcpy(&vUp, &matSrcWorld.m[1][0], sizeof(_vec3));
+		memcpy(&vLook, &matSrcWorld.m[2][0], sizeof(_vec3));
+
+		D3DXVec3Normalize(&vRight, &vRight);
+		D3DXVec3Normalize(&vUp, &vUp);
+		D3DXVec3Normalize(&vLook, &vLook);
+
+		vRight *= vSrcScale.x;
+		vUp *= vSrcScale.y;
+		vLook *= vSrcScale.z;
+
+		float fSrcRadius = fabs(D3DXVec3Dot(&vRight, &Axis))
+							+ fabs(D3DXVec3Dot(&vUp, &Axis))
+							+ fabs(D3DXVec3Dot(&vLook, &Axis));
+
+		if (fMin > fDstRadius + fSrcRadius - fDistance)
 		{
-			// 중심좌표 투영
-			float fDstCenter = D3DXVec3Dot(&vDstPos, &Axis);
-			float fSrcCenter = D3DXVec3Dot(&vSrcPos, &Axis);
-			float fDistance	 = fabsf(fDstCenter - fSrcCenter);
+			fMin = fDstRadius + fSrcRadius - fDistance;
+			_vec3 vDir = vSrcPos - vDstPos;
 
-			// 반지름 투영
-			matDstWorld = *(pDstTransform->Get_World());
+			if (D3DXVec3Dot(&vDir, &Axis) < 0.f)
+				Axis *= -1.f;
 
-			memcpy(&vRight, &matDstWorld.m[0][0], sizeof(_vec3));
-			memcpy(&vUp,	&matDstWorld.m[1][0], sizeof(_vec3));
-			memcpy(&vLook,	&matDstWorld.m[2][0], sizeof(_vec3));
-
-			D3DXVec3Normalize(&vRight,	&vRight);
-			D3DXVec3Normalize(&vUp,		&vUp);
-			D3DXVec3Normalize(&vLook,	&vLook);
-
-			vRight	*= vDstScale.x;
-			vUp		*= vDstScale.y;
-			vLook	*= vDstScale.z;
-
-			float fDstRadius = fabs(D3DXVec3Dot(&vRight, &Axis))
-							 + fabs(D3DXVec3Dot(&vUp, &Axis))
-							 + fabs(D3DXVec3Dot(&vLook, &Axis));
-
-			matSrcWorld = *(pSrcTransform->Get_World());
-			memcpy(&vRight, &matSrcWorld.m[0][0], sizeof(_vec3));
-			memcpy(&vUp, &matSrcWorld.m[1][0], sizeof(_vec3));
-			memcpy(&vLook, &matSrcWorld.m[2][0], sizeof(_vec3));
-
-			D3DXVec3Normalize(&vRight, &vRight);
-			D3DXVec3Normalize(&vUp, &vUp);
-			D3DXVec3Normalize(&vLook, &vLook);
-
-			vRight *= vSrcScale.x;
-			vUp *= vSrcScale.y;
-			vLook *= vSrcScale.z;
-
-			float fSrcRadius = fabs(D3DXVec3Dot(&vRight, &Axis))
-							 + fabs(D3DXVec3Dot(&vUp, &Axis))
-							 + fabs(D3DXVec3Dot(&vLook, &Axis));
-
-			if (fMin > fDstRadius + fSrcRadius - fDistance)
-			{
-				fMin = fDstRadius + fSrcRadius - fDistance;
-				_vec3 vDir = vSrcPos - vDstPos;
-
-				if (D3DXVec3Dot(&vDir, &Axis) < 0.f)
-					Axis *= -1.f;
-
-				MTV = Axis * fMin;
-			}
+			MTV = Axis * fMin;
 		}
 	}
 	return MTV;

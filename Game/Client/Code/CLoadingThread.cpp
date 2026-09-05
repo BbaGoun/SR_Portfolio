@@ -530,6 +530,9 @@ _uint CLoadingThread::Loading_Stage()
         true, L"fence04")))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"F_mtree00_1_1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/Edited/F_mtree00_1_1.png", 1),
+        true, L"F_mtree00_1_1")))
+
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Etc Loading.....................................");
     LeaveCriticalSection(Get_Crt());

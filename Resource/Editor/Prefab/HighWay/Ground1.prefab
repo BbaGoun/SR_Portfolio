@@ -1,0 +1,16 @@
+﻿OBJECT
+  type=
+  prefabPath=..\..\..\Resource\Editor\Prefab\HighWay\Ground1.prefab
+  belong=1
+  name=Ground1
+  tag=162
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Texture proto=Proto_tilegrass_128_03 mapTag=Proto_tilegrass_128_03
+  COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=-507.157990 -1.000000 -48.609833
+    rot=89.999870 -0.000000 0.000000
+    quat=0.707106 0.000000 0.000000 0.707108
+    scale=2500.000000 2499.972900 0.999968
+ENDOBJECT

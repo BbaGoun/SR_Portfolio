@@ -1,0 +1,254 @@
+﻿OBJECT
+  type=
+  prefabPath=..\..\..\Resource\Editor\Prefab\HighWay\Tree.prefab
+  belong=1
+  name=Tree
+  tag=181
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree1
+    tag=156
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-34.655479 15.011657 1.234759
+      rot=0.000000 -89.999870 0.000000
+      quat=0.000000 -0.707106 0.000000 0.707108
+      scale=19.998524 20.000000 19.998526
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree2
+    tag=157
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-34.911041 14.854310 -23.141617
+      rot=0.000000 -89.999870 0.000000
+      quat=0.000000 -0.707106 0.000000 0.707108
+      scale=19.999975 20.000000 19.999977
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree3
+    tag=158
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-34.886795 14.935539 26.071089
+      rot=180.000000 -89.999962 180.000000
+      quat=0.000000 -0.707107 0.000000 0.707107
+      scale=19.997654 20.000000 19.997658
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree4
+    tag=165
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-35.319389 13.768243 -117.462135
+      rot=0.000000 -89.996300 0.000000
+      quat=0.000000 -0.707084 0.000000 0.707129
+      scale=19.997337 19.999998 19.997337
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree5
+    tag=173
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-35.238850 13.742863 -176.769089
+      rot=0.000000 -89.997437 0.000000
+      quat=0.000000 -0.707091 0.000000 0.707122
+      scale=19.998173 19.999998 19.998173
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree6
+    tag=180
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-35.166275 13.458420 -254.153458
+      rot=0.000000 -89.996468 0.000000
+      quat=0.000000 -0.707085 0.000000 0.707128
+      scale=19.997448 19.999998 19.997448
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree7
+    tag=185
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-35.233150 13.200253 -292.209412
+      rot=0.000000 -89.995491 0.000000
+      quat=0.000000 -0.707079 0.000000 0.707134
+      scale=19.996670 19.999998 19.996670
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree8
+    tag=188
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-35.144611 13.147078 -327.272095
+      rot=0.000000 -82.726250 0.000000
+      quat=0.000000 -0.660829 0.000000 0.750536
+      scale=19.997744 19.999998 19.997744
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree9
+    tag=189
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-38.329269 12.902261 -345.181610
+      rot=0.000000 -73.561699 0.000000
+      quat=0.000000 -0.598756 0.000000 0.800931
+      scale=19.998833 19.999998 19.998833
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree10
+    tag=190
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-48.326778 12.542440 -358.874969
+      rot=0.000000 -42.335899 0.000000
+      quat=0.000000 -0.361103 0.000000 0.932526
+      scale=19.999477 19.999998 19.999477
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree11
+    tag=191
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-64.111816 13.048565 -367.101929
+      rot=0.000000 -16.040022 0.000000
+      quat=0.000000 -0.139519 0.000000 0.990219
+      scale=20.000000 20.000000 20.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree12
+    tag=192
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-81.628914 12.711873 -368.824921
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=20.000000 20.000000 20.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree13
+    tag=209
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-292.628052 11.516037 -370.619263
+      rot=0.000000 -6.580256 0.000000
+      quat=0.000000 -0.057392 0.000000 0.998352
+      scale=19.999964 20.000000 19.999964
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree14
+    tag=212
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-317.202484 11.398046 -375.772766
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=20.000019 20.000000 20.000019
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Tree15
+    tag=219
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-399.753479 9.347100 -440.875793
+      rot=0.000000 -62.294182 0.000000
+      quat=0.000000 -0.517237 0.000000 0.855842
+      scale=19.999992 20.000000 19.999992
+  ENDOBJECT
+ENDOBJECT
