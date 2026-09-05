@@ -32,6 +32,7 @@ public:
 	void			Add_Point(TrackEdge* _pTE);
 	void			Del_Point(TrackEdge* _pTE, ControlPoint* _pCp);
 	void			Set_PointPos(TrackEdge* _pTE, ControlPoint* _pCp, _vec3 newPos);
+	void			Insert_Point(TrackEdge* _pTE, ControlPoint* _pCp);
 
 	void			Compute_Graph();
 	void			Finalize_LoadedData();
@@ -59,16 +60,11 @@ public:
 		float u,
 		TrackPose& outPose);
 
-	/*bool Advance(
-		const TrackLocator& from,
-		float distance,
-		const RoutePlan& route,
-		TrackPose& outPose);
-
-	float GetRouteDistance(
-		const TrackLocator& from,
-		const TrackLocator& to,
-		const RoutePlan& route);*/
+	bool EvaluatePoseWithDodge(
+		const TrackLocator& prev,
+		float u,
+		TrackPose& outPose,
+		const list<HazardRecord>& hazards);
 
 private:
 	TrackNode*		Find_TrackNode(TrackNode* pTN);

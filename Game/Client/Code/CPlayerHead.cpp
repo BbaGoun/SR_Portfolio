@@ -23,7 +23,7 @@ CPlayerHead::~CPlayerHead()
 HRESULT CPlayerHead::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	Engine::CComponent* pComponent = nullptr;
+	//Engine::CComponent* pComponent = nullptr;
 
 	m_bBoost		= false;
 	m_eCartDirType	= DIR_FORWARD;

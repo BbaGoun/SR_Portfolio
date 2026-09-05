@@ -518,7 +518,7 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	if (pBox == nullptr)
 		return E_FAIL;
 	pBox->Get_Transform()->Set_Pos({ -200.f, 1.f, 0.f });
-	pBox->Set_CollisionLayer(CL_LAYER1);
+	//pBox->Set_CollisionLayer(CL_LAYER1);
 
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"Obj_CollisionBox2", pBox)))
 		return E_FAIL;
@@ -790,7 +790,7 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 
 HRESULT CCollisionTest::Ready_Collision_Matrix()
 {
-	Set_CollisionMatrix(CL_DEFAULT, CL_LAYER1, false);
+	//Set_CollisionMatrix(CL_DEFAULT, CL_LAYER1, false);
 
 	return S_OK;
 }

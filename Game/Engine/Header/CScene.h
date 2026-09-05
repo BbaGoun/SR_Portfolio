@@ -51,7 +51,7 @@ private:
 
 public:
 	virtual			HRESULT		Ready_Scene();
-	virtual			HRESULT		PostReady_Scene() { return S_OK; }
+	virtual			HRESULT		PostReady_Scene();
 	virtual			void		FixedUpdate_Scene(const _float& fFixedDeltaTime);
 	virtual			_int		Update_Scene(const _float& fDeltaTime);
 	virtual			void		LateUpdate_Scene(const _float& fDeltaTime);

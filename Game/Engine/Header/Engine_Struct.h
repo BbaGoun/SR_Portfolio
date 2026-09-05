@@ -226,8 +226,8 @@ namespace Engine
 		float			u;				// 그 도로의 어디인가
 		float			lateral;		// R 방향 오프셋
 		float			radius;			// 회피 반경
-		ITEM_TYPE		eType;	// 아이템 타입
-		CGameObject* pOwner;			// 수명 동기화
+		ITEM_TYPE		eType;			// 아이템 타입
+		CGameObject*	pOwner;			// 설치된 오브젝트 주소
 	}HazardRecord;
 
 	// Advance, 스폰 용
@@ -238,19 +238,8 @@ namespace Engine
 		float	speed;
 		float	halfW;
 		bool	bValid = false;
+		bool	bDodge = false;
 	}TrackPose;
-
-	typedef struct _tagRouteNode {
-		NodeId	nodeId;
-		EdgeId	viaEdge;
-	};
-
-	typedef struct _tagEdgeCost
-	{
-		float fTime;	// fLength / 예상 속력
-		float fHazard;	// Hazard 레지스트리에서 합산
-		float fBias;	// 엣지의 fCostBias;
-	};
 
 	struct ArcLengthEntry
 	{

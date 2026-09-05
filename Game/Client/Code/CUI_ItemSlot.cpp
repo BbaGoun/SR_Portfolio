@@ -36,10 +36,7 @@ HRESULT CUI_ItemSlot::Ready_GameObject()
 		return E_FAIL;
 
 	
-
 	return S_OK;
-
-
 }
 
 void CUI_ItemSlot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)

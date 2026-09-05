@@ -136,14 +136,15 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	float lookAhead = clampT(D3DXVec3Length(&m_vForce) * m_fSpeed, 5.f, 30.f);
 
-	TrackPose TP = CTrackMgr::GetInstance()->Compute_TargetPose(this, lookAhead);
+	TrackPose TP = CTrackMgr::GetInstance()->Compute_TargetPose(this, lookAhead, true);
 
 	_vec3 vPos, vLook;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
 	if (TP.bValid && m_bActive) {
-		TP.position += m_fLateralOffset * TP.R * TP.halfW;
+		if(!TP.bDodge)
+			TP.position += m_fLateralOffset * TP.R * TP.halfW;
 		TP.position.y += 0.5f; // 카트가 박히지 않도록
 
 		_vec3 dir = TP.position - vPos;
@@ -238,6 +239,8 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	m_bCollisionGround = false;
 	m_bCollisionWall = false;
+
+	//CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
 }
 
 _int CCartBot::Update_GameObject(const _float& fDeltaTime)

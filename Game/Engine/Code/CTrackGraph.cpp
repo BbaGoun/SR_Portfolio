@@ -236,6 +236,37 @@ void CTrackGraph::Set_PointPos(TrackEdge* _pTE, ControlPoint* _pCp, _vec3 newPos
 	pCp->position = newPos;
 }
 
+void CTrackGraph::Insert_Point(TrackEdge* _pTE, ControlPoint* _pCp)
+{
+	TrackEdge* pTE = Find_TrackEdge(_pTE);
+	if (!pTE)
+		return;
+
+	if (pTE->fromNode == 0 || pTE->toNode == 0)
+		return;
+
+	if (_pCp->id == pTE->deqControls.front().id)
+		return;
+
+	ControlPoint cp;
+	cp.id = GenerateControlId();
+	cp.position = { _pCp->position.x, _pCp->position.y, _pCp->position.z};
+	cp.bank = 0;
+	cp.width = pTE->fWidthDefault;
+	cp.depth = pTE->fHeightDefault;
+
+	auto itCp = find_if(_pTE->deqControls.begin(), _pTE->deqControls.end(), [&](ControlPoint& cp)->bool {
+		return cp.id == _pCp->id;
+		});
+
+	if (itCp == _pTE->deqControls.end())
+		return;
+
+	pTE->deqControls.insert(itCp, cp);
+
+	Compute_Graph();
+}
+
 void CTrackGraph::Finalize_LoadedData()
 {
 	NodeId maxNodeId = 0;
@@ -778,6 +809,116 @@ bool CTrackGraph::EvaluatePose(const TrackLocator& prev, float u, TrackPose& out
 		}
 	}
 	
+	return false;
+}
+
+bool CTrackGraph::EvaluatePoseWithDodge(const TrackLocator& prev, float u, TrackPose& outPose, const list<HazardRecord>& hazards)
+{
+	if (!prev.bValid)
+		return false;
+
+	TrackEdge* pTE = Get_TrackEdge(prev.edgeId);
+	float localU = prev.u + u;
+
+	while (localU > pTE->fLength) {
+		localU -= pTE->fLength;
+		TrackNode* pTN = Get_TrackNode(pTE->toNode);
+		float maxBias = -FLT_MAX;
+		for (EdgeId id : pTN->vecOutEdgeIds) {
+			TrackEdge* pTE_To = Get_TrackEdge(id);
+			if (maxBias < pTE_To->fCostBias) {
+				maxBias = pTE_To->fCostBias;
+				pTE = pTE_To;
+			}
+		}
+	}
+
+	int n = pTE->vecSamples.size();
+	for (int i = 1; i < n; ++i) {
+		TrackSample& b = pTE->vecSamples[i];
+		TrackSample& a = pTE->vecSamples[i - 1];
+
+		if (a.u < localU && localU <= b.u) {
+			_vec3 segment = b.position - a.position;
+			float segmentU = b.u - a.u;
+
+			float deltaU = localU - a.u;
+
+			float t = clampT(deltaU / segmentU, 0.f, 1.f);
+
+			_vec3 R = a.R + (b.R - a.R) * t;
+			_vec3 U = a.U + (b.U - a.U) * t;
+			_vec3 T = a.T + (b.T - a.T) * t;
+
+			D3DXVec3Normalize(&R, &R);
+			D3DXVec3Normalize(&U, &U);
+			D3DXVec3Normalize(&T, &T);
+
+			float halfW = Lerp(t, a.halfW, b.halfW);
+
+			// 좌우 범위
+			pair<float, float> range = { -halfW, halfW };
+			bool bDodge = false;
+
+			for (auto& HR : hazards) {
+				if (pTE->id != HR.edgeId)
+					continue;
+				if (HR.u - localU > 0.f && HR.u - localU < HR.radius) {
+					float clearance = HR.radius + 1.5f;
+					float leftCandidate = HR.lateral - clearance;
+					float rightCandidate = HR.lateral + clearance;
+
+					float safeHalfW = halfW - 1.5f;
+					leftCandidate = clampT(leftCandidate, -safeHalfW, safeHalfW);
+					rightCandidate = clampT(leftCandidate, -safeHalfW, safeHalfW);
+
+					_vec3 leftPos = a.position + segment * t + R * leftCandidate;
+					_vec3 leftDelta = leftPos - prev.localPos;
+					_vec3 rightPos = a.position + segment * t + R * leftCandidate;
+					_vec3 rightDelta = rightPos - prev.localPos;
+					
+					float leftLength = D3DXVec3LengthSq(&leftDelta);
+					float rightLength = D3DXVec3LengthSq(&rightDelta);
+
+					// 왼쪽으로 피하기
+					if (leftLength < rightLength)
+					{
+						// 범위가 더 축소
+						if(range.second > leftCandidate)
+							range.second = leftCandidate;
+					}
+					else if (leftLength >= rightLength)
+					{
+						// 범위가 더 축소
+						if(range.first < rightCandidate)
+							range.first = rightCandidate;
+					}
+					bDodge = true;
+				}
+			}
+			float dodgeLateral = (range.first + range.second) * 0.5f;
+			_vec3 localPos = a.position + segment * t + R * dodgeLateral;
+			_vec3 worldPos;
+			D3DXVec3TransformCoord(&worldPos, &localPos, m_pOwner->Get_Transform()->Get_World());
+
+			float s_global = Lerp(t, a.s, b.s);
+			float speed = Lerp(t, a.speed, b.speed);
+
+			outPose.position = worldPos;
+			outPose.R = R;
+			outPose.U = U;
+			outPose.T = T;
+			outPose.edgeId = pTE->id;
+			outPose.u = localU;
+			outPose.s = s_global;
+			outPose.bValid = true;
+			outPose.halfW = halfW;
+			outPose.speed = speed;
+			outPose.bDodge = true;
+			return true;
+		}
+	}
+
 	return false;
 }
 

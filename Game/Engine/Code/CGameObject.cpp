@@ -233,6 +233,12 @@ HRESULT CGameObject::Ready_GameObject()
     return S_OK;
 }
 
+void CGameObject::FixedUpdate_GameObject(const _float& fFixedDeltaTime) {
+    for (auto& pComponent : m_mapComponent)
+        pComponent.second->FixedUpdate_Component(fFixedDeltaTime);
+}
+
+
 _int CGameObject::Update_GameObject(const _float& fDeltaTime)
 {
     for (auto& pComponent : m_mapComponent)

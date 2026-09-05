@@ -67,6 +67,8 @@ HRESULT CRacingScene::Ready_Scene()
 
 HRESULT CRacingScene::PostReady_Scene()
 {
+	CScene::PostReady_Scene();
+
 	CTrackMgr::GetInstance()->Set_MaxLap(1);
 	Ready_TrackMgr();
 
@@ -142,7 +144,7 @@ HRESULT CRacingScene::LoadSceneFromFile()
 	const _tchar* path = nullptr;
 	switch (m_eMapId) {
 	case MAP_TEST:
-		path = L"../Bin/Resource/Editor/Scene/Test.scene";
+		path = L"../Bin/Resource/Editor/Scene/ItemScene.scene";
 		break;
 	case MAP_FOREST:
 		break;
@@ -633,8 +635,13 @@ HRESULT CRacingScene::Ready_UI_Layer()
 
 HRESULT CRacingScene::Ready_Collision_Matrix()
 {
-	Set_CollisionMatrix(CL_DEFAULT, CL_LAYER1, false);
+	Set_CollisionMatrix(CL_ITEM_BOX, CL_ITEM_BOX, false);
+	Set_CollisionMatrix(CL_ITEM_BOX, CL_CART_WHEEL, false);
+	Set_CollisionMatrix(CL_ITEM_BOX, CL_ITEM, false);
 	Set_CollisionMatrix(CL_CART_WHEEL, CL_CART_WHEEL, false);
+	Set_CollisionMatrix(CL_CART_WHEEL, CL_ITEM, false);
+	Set_CollisionMatrix(CL_CART_WHEEL, CL_CART_BODY, false);
+	Set_CollisionMatrix(CL_ITEM, CL_ITEM, false);
 
 	return S_OK;
 }

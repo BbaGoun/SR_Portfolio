@@ -43,23 +43,21 @@ HRESULT CCartBody::Ready_GameObject()
 	m_fScale				= 1.f;
 	m_fThunderTimer			= 0.f;
 
-	Engine::CComponent* pComponent = nullptr;
+	Set_CollisionLayer(CL_CART_BODY);
 
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-
-	//m_vColliderSize = { 2.5f,1.5f,5.f };
-	//m_pColliderCom->Set_Extents(m_vColliderSize);
-	
-	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetIsTrigger(false);
-	m_mapComponent.insert({ L"Com_Collider", pComponent });
 	return S_OK;
+}
+
+void CCartBody::PostReady_GameObject()
+{
+	m_pColliderCom = Get_Component<CCube_Collider>();
+	m_vColliderSize = m_pColliderCom->Get_Extents();
 }
 
 void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	m_pColliderCom->Set_Extents(m_vColliderSize * m_fScale);
+
 	UpdateMissileHit(fFixedDeltaTime);
 	BananaSpin(fFixedDeltaTime); 
 	ThunderSpin(fFixedDeltaTime);
@@ -74,6 +72,8 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	//m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
 	//m_pTransformCom->Set_Pos({ 0,0.1f,0 });
+
+	//CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
 }
 
 _int CCartBody::Update_GameObject(const _float& fDeltaTime)
@@ -112,30 +112,32 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 			if (isPlayer) {
 				SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 				// StarEffect
-				if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 60)
+				if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 0)
 				{
 					CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
 						(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
 					pStarParticle->ResetParticle();
 				}
 			}
-			// MTV Àû¿ë
+			// MTV ì ìš©
 			_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
-				static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
+				static_cast<CCube_Collider*>(pOtherCollider), Get_Component<CCube_Collider>());
+
+			MTV.y = 0;
 
 			_vec3 vNewForce = vParentForce;
 			vNewForce *= vParentSpeed;
 
-			// 2. °¡¼Óµµ¿¡¼­ Ãæµ¹ÂÊÀ¸·Î µé¾î°¡´Â ¼Óµµ ¼ººĞ¿ï ÁÙÀÌ±â
+			// 2. ê°€ì†ë„ì—ì„œ ì¶©ëŒìª½ìœ¼ë¡œ ë“¤ì–´ê°€ëŠ” ì†ë„ ì„±ë¶„ìš¸ ì¤„ì´ê¸°
 			_vec3 MTV_n;
 			D3DXVec3Normalize(&MTV_n, &MTV);
 			float inward = D3DXVec3Dot(&vNewForce, &MTV_n);
-			// MTV°¡ º® ¹ÛÀ¸·Î ³ª°¡´Â ¹æÇâ 
+			// MTVê°€ ë²½ ë°–ìœ¼ë¡œ ë‚˜ê°€ëŠ” ë°©í–¥ 
 
 			if(inward < 0)
 				vNewForce -= MTV_n * inward;
-
-			vNewForce += MTV;
+			else
+				vNewForce += MTV;
 
 			_vec3 vPos;
 			m_pParent->Get_Transform()->Get_Info(INFO_POS, &vPos);
@@ -146,7 +148,7 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 		}
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////// Å×½ºÆ®¿ë  Obj_MissileTarget
+	//////////////////////////////////////////////////////////////////////////////////// í…ŒìŠ¤íŠ¸ìš©  Obj_MissileTarget
 	if (wcsncmp(wOtherTag, L"Obj_MissileTarget", 17) == 0)
 	{
 		_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
@@ -235,6 +237,8 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 			}
 		}
 	}
+	
+	
 }
 void CCartBody::BananaSpin(const _float& fDeltaTime)
 {
