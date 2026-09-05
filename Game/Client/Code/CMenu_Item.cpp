@@ -11,7 +11,6 @@
 #include "CLoading.h"
 
 #include "CScene2_ForestValley.h"
-#include "CScene2_ClockTower.h"
 #include "CUI_UnderBar.h"
 #include "CUI_XButton.h"
 
@@ -127,12 +126,6 @@ HRESULT CMenu_Item::Ready_UI_Layer()
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"CScene2_ForestValley", pUIObject)))
-		return E_FAIL;
-
-	pUIObject = CScene2_ClockTower::Create(m_pGraphicDev);
-	if (nullptr == pUIObject)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"CScene2_ClockTower", pUIObject)))
 		return E_FAIL;
 
 	pUIObject = CUI_UnderBar::Create(m_pGraphicDev);
