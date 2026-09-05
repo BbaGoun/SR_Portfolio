@@ -24,15 +24,21 @@ HRESULT CWaterBombBody::Ready_GameObject()
 	m_pTransformCom->Set_Scale({ 20.f, 20.f, 20.f });
 	m_fTimer = 0.f;
 
+	m_pTextureCom = nullptr;
+
 	Engine::CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Sphere"));
+	pComponent = m_pBufferCom = dynamic_cast<CHalfSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_HalfSphere"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 
 	pComponent->Set_Owner(this);
 
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
+
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_WaterBombBody"));
+	pComponent->Set_Owner(this);
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	return S_OK;
 }
@@ -81,7 +87,7 @@ _int CWaterBombBody::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_fTimer > 1.75f)
 	{
-		CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
+		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
 	}
 	//CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
 
@@ -97,17 +103,17 @@ void CWaterBombBody::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	// m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	//m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	// m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 

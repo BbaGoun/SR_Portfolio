@@ -5,7 +5,7 @@
 
 namespace Engine
 {
-	class CSphere;
+	class CHalfSphere;
 }
 
 class CShield1 :
@@ -25,7 +25,7 @@ public:
 private:
 
 private:
-	CSphere* m_pBufferCom;
+	CHalfSphere* m_pBufferCom;
 	CTexture* m_pTextureCom;
 
 	bool	m_bCurState;

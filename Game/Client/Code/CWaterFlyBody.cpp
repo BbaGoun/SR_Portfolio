@@ -5,6 +5,7 @@
 #include "CManagement.h"
 //#include "CWaterBombTex.h"
 #include "CCollisionMgr.h"
+#include "CRcTex.h"
 #include "CCube_Collider.h"
 
 CWaterFlyBody::CWaterFlyBody(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -19,21 +20,28 @@ CWaterFlyBody::~CWaterFlyBody()
 HRESULT CWaterFlyBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	// m_pTransformCom->Set_Pos({ 0.f,0.f,0.f });
-	m_pTransformCom->Set_Scale({ 0.4f, 0.9f, 0.f });
+	m_pTransformCom->Set_Pos({ 0.f,-1000.f,0.f });
+	m_pTransformCom->Set_Scale({ 5.4f, 5.9f, 0.f });
 
 	m_fTimer = 0.f;
+	m_fFrame = 0.f;
+
+	m_pTextureCom = nullptr;
 
 	Engine::CComponent* pComponent = nullptr;
 
-	// 임시 반구
-	pComponent = m_pBufferCom = dynamic_cast<CCartBodyCol*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CartBodyCol"));
+
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 
 	pComponent->Set_Owner(this);
 
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
+
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_WaterFlyEffect"));
+	pComponent->Set_Owner(this);
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	return S_OK;
 }
@@ -51,7 +59,13 @@ _int CWaterFlyBody::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
+	m_fFrame += 105.f * fTimeDelta;
+
+	if (m_fFrame >= 3.f)
+		m_fFrame = 0.f;
+
+
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
 
 	return iExit;
 }
@@ -65,17 +79,17 @@ void CWaterFlyBody::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	// m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	//m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(m_fFrame);
 
 	m_pBufferCom->Render_Buffer();
 
 	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	// m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 

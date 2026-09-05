@@ -27,7 +27,7 @@ public:
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	const map<const _tchar*, CComponent*>& Get_ComponentMap() { return m_mapComponent; }
 
- 	CTransform* Get_Transform() { return m_pTransformCom; }
+  	CTransform* Get_Transform() { return m_pTransformCom; }
 	CComponent* Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
 	void	Remove_Component(CComponent* _pCom);
 

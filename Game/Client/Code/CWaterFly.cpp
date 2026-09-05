@@ -6,6 +6,7 @@
 //#include "CWaterFlyTex.h"
 #include "CCollisionMgr.h"
 #include "CCube_Collider.h"
+#include "CCameraMgr.h"
 
 CWaterFly::CWaterFly(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -30,7 +31,7 @@ HRESULT CWaterFly::Ready_GameObject()
 
 	m_bSavePos		= false;
 
-	m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
+	m_pTransformCom->Set_Pos({ 0.f, -1000.f, 0.f });
 
 	Engine::CComponent* pComponent = nullptr;
 
@@ -240,6 +241,10 @@ void CWaterFly::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CWaterFly::Render_GameObject()
 {
+	_matrix	matWorld, matView;
+	matView = CCameraMgr::GetInstance()->GetCameraInfo().matView;
+	m_pTransformCom->Set_Billboard(&matView);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	//m_pTextureCom->Set_Texture(0);

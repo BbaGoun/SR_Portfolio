@@ -38,20 +38,7 @@ HRESULT CWaterBombBubble::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
-
-	 // 임시 물방울 충돌처리
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-
-	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->Set_Extents({ 1.7f, 1.7f, 1.7f });
-	m_pColliderCom->Set_Offset({ 0.f, 0.f, 0.f });
-
-	m_mapComponent.insert({ L"Com_Collider", pComponent });
-
-	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RainBow_Alpha"));
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_WaterBombBubble"));
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
@@ -88,7 +75,7 @@ _int CWaterBombBubble::Update_GameObject(const _float& fDeltaTime)
 {
 	//if (m_fTimer > 1.6f)
 	//{
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
 	//}
 
 	return CGameObject::Update_GameObject(fDeltaTime);
@@ -103,17 +90,17 @@ void CWaterBombBubble::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	// m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	//m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	// m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	// m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CWaterBombBubble::CollisionEnter(CCollider* pOtherCollider)

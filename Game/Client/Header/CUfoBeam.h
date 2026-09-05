@@ -4,15 +4,16 @@
 
 namespace Engine
 {
-	class CHalfSphere;		
+	class CCartBodyCol;
 	class CTexture;
+	class CRcTex;
 }
 
-class CWaterBombBody : public CGameObject
+class CUfoBeam : public CGameObject
 {
 private:
-	explicit CWaterBombBody(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CWaterBombBody() override;
+	explicit CUfoBeam(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CUfoBeam() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject()									  override;
@@ -22,12 +23,16 @@ public:
 	virtual			void		Render_GameObject()									  override;
 
 private:
-	Engine::CHalfSphere*	m_pBufferCom;
+	//Engine::CCartBodyCol* m_pBufferCom;
+	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
-	_float	m_fTimer;
+
+	_float			m_fTimer;
+	_float			m_fFrame;
+
 
 public:
-	static CWaterBombBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CUfoBeam* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
 	virtual void	Free() override;

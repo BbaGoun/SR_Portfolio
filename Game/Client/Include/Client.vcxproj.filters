@@ -388,6 +388,9 @@
     <Filter Include="02. GameObject\Cart\CCartBot">
       <UniqueIdentifier>{5936d39c-0afd-48e9-a20d-51d67314356a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\Ufo\UfoBeam">
+      <UniqueIdentifier>{8b9f2a74-6dc9-4329-be03-ec3b7508174a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -765,6 +768,9 @@
     <ClInclude Include="..\Header\CCartBot.h">
       <Filter>02. GameObject\Cart\CCartBot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUfoBeam.h">
+      <Filter>02. GameObject\Item\Ufo\UfoBeam</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1132,6 +1138,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCartBot.cpp">
       <Filter>02. GameObject\Cart\CCartBot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUfoBeam.cpp">
+      <Filter>02. GameObject\Item\Ufo\UfoBeam</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

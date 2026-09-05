@@ -88,7 +88,12 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		_vec3 vMoveDir = vBoxOrbit - vMissilePos;
 		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
+
+		_vec3 vForwardDir = vDir;
+		D3DXVec3Normalize(&vForwardDir, &vForwardDir);
+
 		vMoveDir += vDir * 0.01f;
+
 
 		_vec3 vLookDir = vBoxPos - vMissilePos;
 		vLookDir.y = 0;
@@ -107,6 +112,8 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_pTransformCom->GetFollowRotation(&vLookDir, &matRot2);		
 
 		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed ,fFixedDeltaTime);
+		m_pTransformCom->Move_Pos(&vAxis, 400.f, fFixedDeltaTime);
+
 	}
 	else if(fDistance > 1.f)
 	{
