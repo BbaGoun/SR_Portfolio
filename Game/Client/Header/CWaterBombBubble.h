@@ -6,7 +6,8 @@
 
 namespace Engine
 {
-	class CSphere;		
+	class CSphere;
+	class CRcTex;
 }
 
 class CWaterBombBubble : public CGameObject
@@ -34,7 +35,7 @@ public:
 private:
 	CSphere* m_pBufferCom;
 	CTexture* m_pTextureCom;
-	CCube_Collider* m_pColliderCom;
+	CRcTex* m_pColliderCom;
 	// CRcTex* m_pBufferCom;
 	_float	m_fTimer;
 	// _float			m_fSpeed;

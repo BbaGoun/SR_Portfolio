@@ -4,7 +4,9 @@
 
 namespace Engine
 {
-	class CCartBodyCol;		
+	class CCartBodyCol;	
+	class CTexture;
+	class CRcTex;
 }
 
 class CUfoBody : public CGameObject
@@ -21,8 +23,13 @@ public:
 	virtual			void		Render_GameObject()									  override;
 
 private:
-	Engine::CCartBodyCol* m_pBufferCom;
-	_float	m_fTimer;
+	//Engine::CCartBodyCol* m_pBufferCom;
+	Engine::CRcTex*		m_pBufferCom;
+	Engine::CTexture* m_pTextureCom;
+
+	_float			m_fTimer;
+	_float			m_fFrame;
+
 
 public:
 	static CUfoBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);

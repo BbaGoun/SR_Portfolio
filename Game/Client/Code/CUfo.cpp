@@ -7,6 +7,7 @@
 #include "CCollisionMgr.h"
 #include "CCube_Collider.h"
 #include "CMissileTarget.h"
+#include "CCameraMgr.h"
 
 CUfo::CUfo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -33,7 +34,7 @@ HRESULT CUfo::Ready_GameObject()
 	m_bSavePos		= false;
 	m_bFollowTag	= false;
 
-	m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
+	m_pTransformCom->Set_Pos({ 0.f, -1000.f, 0.f });
 
 						 m_pTarget = nullptr;
 
@@ -271,7 +272,7 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			&& D3DXVec3Length(&vDirTarget1) > D3DXVec3Length(&vDirTarget4))
 		{
 			// vTargetPos = vTargetPos1;
-			m_vTargetUp = vTargetUp1;
+			// m_vTargetUp = vTargetUp1;
 			m_pTarget = pTarget1;
 		}
 		else if (D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget1)
@@ -279,7 +280,7 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			&& D3DXVec3Length(&vDirTarget2) > D3DXVec3Length(&vDirTarget4))
 		{
 			// vTargetPos = vTargetPos2;
-			m_vTargetUp = vTargetUp2;
+			// m_vTargetUp = vTargetUp2;
 			m_pTarget = pTarget2;
 		}
 		else if (D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget1)
@@ -287,13 +288,13 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			&& D3DXVec3Length(&vDirTarget3) > D3DXVec3Length(&vDirTarget4))
 		{
 			// vTargetPos = vTargetPos3;
-			m_vTargetUp = vTargetUp3;
+			// m_vTargetUp = vTargetUp3;
 			m_pTarget = pTarget3;
 		}
 		else
 		{
 			// vTargetPos = vTargetPos4;
-			m_vTargetUp = vTargetUp4;
+			// m_vTargetUp = vTargetUp4;
 			m_pTarget = pTarget4;
 		}
 
@@ -321,11 +322,11 @@ void CUfo::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		vStartPos = vTargetPos + vTargetUp * 11.f;
 		m_pTransformCom->Set_Pos(vStartPos);
 
-		_quaternion qRot;
+		//_quaternion qRot;
 
-		D3DXQuaternionRotationYawPitchRoll(&qRot,D3DXToRadian(-10.f),0.f,0.f);
+		//D3DXQuaternionRotationYawPitchRoll(&qRot,D3DXToRadian(-10.f),0.f,0.f);
 
-		m_pTransformCom->Multiple_Quaternion(&qRot);
+		//m_pTransformCom->Multiple_Quaternion(&qRot);
 	}
 
 	else
@@ -362,6 +363,10 @@ void CUfo::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CUfo::Render_GameObject()
 {
+	_matrix	matWorld, matView;
+	matView = CCameraMgr::GetInstance()->GetCameraInfo().matView;
+	m_pTransformCom->Set_Billboard(&matView);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	//m_pTextureCom->Set_Texture(0);

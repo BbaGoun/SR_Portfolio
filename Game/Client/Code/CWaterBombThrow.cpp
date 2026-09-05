@@ -5,6 +5,7 @@
 #include "CTexture.h"
 #include "CRenderer.h"
 #include "CManagement.h"
+#include "CCameraMgr.h"
 
 CWaterBombThrow::CWaterBombThrow(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -26,11 +27,13 @@ HRESULT CWaterBombThrow::Ready_GameObject()
 
 	m_fThrowHeight = 0.f;
 	 
-	m_pTransformCom->Set_Pos({ 0.f,5.f,0.f });
+	m_pTransformCom->Set_Pos({ 0.f,-1000.f, 0.f });
 
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Scale({ 1.7f , 1.7f, 0.f });
+	m_pTextureCom = nullptr; 
+
+	m_pTransformCom->Set_Scale({ 2.7f , 5.7f, 0.f });
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	if (nullptr == pComponent)
 		return E_FAIL;
@@ -38,10 +41,9 @@ HRESULT CWaterBombThrow::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
-
-	//pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RainBow_Alpha"));
-	//pComponent->Set_Owner(this);
-	//m_mapComponent.insert({ L"Com_Texture", pComponent });
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_ThrowWaterBomb"));
+	pComponent->Set_Owner(this);
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	return S_OK;
 }
@@ -96,15 +98,19 @@ void CWaterBombThrow::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CWaterBombThrow::Render_GameObject()
 {
+	_matrix	matWorld, matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pTransformCom->Set_Billboard(&matView);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	// m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 
-	// m_pTextureCom->Set_Texture(0);
-	m_pBufferCom->Render_Buffer();
+	 m_pTextureCom->Set_Texture(0);
+	 m_pBufferCom->Render_Buffer();
 	//m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	// m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CWaterBombThrow::CollisionEnter(CCollider* pOtherCollider)

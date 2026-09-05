@@ -438,27 +438,27 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 		return E_FAIL;
 	///////////////////////////////////////////////////////////////////////////////////////
 	// 테스트용 다이나믹 카메라
-	//_vec3 vEye = { 0.f, 30.f, -30.f };
-	//_vec3 vAt = { 0.f, 0.f, 100.f };
-	//_vec3 vUp = { 0.f, 1.f, 0.f };
+	/*_vec3 vEye = { 0.f, 30.f, -30.f };
+	_vec3 vAt = { 0.f, 0.f, 100.f };
+	_vec3 vUp = { 0.f, 1.f, 0.f };
 
-	//CGameObject* pDynamicCam =
-	//	CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
+	CGameObject* pDynamicCam =
+		CDynamicCamera::Create(m_pGraphicDev, &vEye, &vAt, &vUp);
 
-	//if (pDynamicCam == nullptr)
-	//	return E_FAIL;
+	if (pDynamicCam == nullptr)
+		return E_FAIL;
 
-	//if (FAILED(pGameObjectLayer->Add_GameObject(
-	//	L"Obj_DynamicCamera", pDynamicCam)))
-	//	return E_FAIL;
+	if (FAILED(pGameObjectLayer->Add_GameObject(
+		L"Obj_DynamicCamera", pDynamicCam)))
+		return E_FAIL;
 
-	//if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(
-	//	CAMERA_DYNAMIC,
-	//	static_cast<CCamera*>(pDynamicCam))))
-	//	return E_FAIL;
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(
+		CAMERA_DYNAMIC,
+		static_cast<CCamera*>(pDynamicCam))))
+		return E_FAIL;
 
-	//if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
-	//	return E_FAIL;
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_DYNAMIC)))
+		return E_FAIL;*/
 	///////////////////////////////////////////////////////////////////////////////////////
 	
 	// # 트랙

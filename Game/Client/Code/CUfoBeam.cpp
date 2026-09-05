@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CUfoBody.h"
+#include "CUfoBeam.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CManagement.h"
@@ -7,20 +7,20 @@
 #include "CCollisionMgr.h"
 #include "CCube_Collider.h"
 
-CUfoBody::CUfoBody(LPDIRECT3DDEVICE9 pGraphicDev)
+CUfoBeam::CUfoBeam(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
 }
 
-CUfoBody::~CUfoBody()
+CUfoBeam::~CUfoBeam()
 {
 }
 
-HRESULT CUfoBody::Ready_GameObject()
+HRESULT CUfoBeam::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	 m_pTransformCom->Set_Pos({ 0.f,-1000.f,0.f });
-	 m_pTransformCom->Set_Scale({ 8.5f, 8.2f, 0.35f });
+	m_pTransformCom->Set_Pos({ 0.f,-1000.f,0.f });
+	m_pTransformCom->Set_Scale({ 7.5f, 9.7f, 0.35f });
 	// m_pTransformCom->Set_Scale({ 1.5f, 1.2f, 1.35f });
 
 	m_fTimer = 0.f;
@@ -45,14 +45,14 @@ HRESULT CUfoBody::Ready_GameObject()
 
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
-	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_UfoEffect"));
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BeamEffect"));
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	return S_OK;
 }
 
-void CUfoBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
+void CUfoBeam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	//m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
 
@@ -64,7 +64,7 @@ void CUfoBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	if (m_pParent != nullptr)
 	{
-		m_pTransformCom->Set_Pos({ 0.f, 5.f, 0.f });
+		m_pTransformCom->Set_Pos({ 0.f, -1.5f, 0.f });
 	}
 
 	m_fTimer += fFixedDeltaTime;
@@ -72,7 +72,7 @@ void CUfoBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pTransformCom->Set_Scale(vScale);
 }
 
-_int CUfoBody::Update_GameObject(const _float& fTimeDelta)
+_int CUfoBeam::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
@@ -80,13 +80,13 @@ _int CUfoBody::Update_GameObject(const _float& fTimeDelta)
 
 	m_fFrame += 15.f * fTimeDelta;
 
-	if (m_fFrame >= 7.f)
+	if (m_fFrame >= 5.f)
 		m_fFrame = 0.f;
 
-	if (m_fTimer <= 1.32f)
-	{
-		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
-	}
+	//if (m_fTimer <= 1.32f)
+	//{
+	//	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
+	//}
 
 	if (m_fTimer >= 1.85f)
 	{
@@ -96,12 +96,12 @@ _int CUfoBody::Update_GameObject(const _float& fTimeDelta)
 	return iExit;
 }
 
-void CUfoBody::LateUpdate_GameObject(const _float& fTimeDelta)
+void CUfoBeam::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
 }
 
-void CUfoBody::Render_GameObject()
+void CUfoBeam::Render_GameObject()
 {
 	//_matrix	matWorld, matView;
 	//matView = CCameraMgr::GetInstance()->GetCameraInfo().matView;
@@ -123,9 +123,9 @@ void CUfoBody::Render_GameObject()
 }
 
 
-CUfoBody* CUfoBody::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CUfoBeam* CUfoBeam::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CUfoBody* pUfoBody = new CUfoBody(pGraphicDev);
+	CUfoBeam* pUfoBody = new CUfoBeam(pGraphicDev);
 
 	if (FAILED(pUfoBody->Ready_GameObject()))
 	{
@@ -137,7 +137,7 @@ CUfoBody* CUfoBody::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pUfoBody;
 }
 
-void CUfoBody::Free()
+void CUfoBeam::Free()
 {
 	CGameObject::Free();
 }

@@ -268,6 +268,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CStartCam.h" />
     <ClInclude Include="..\Header\CTrackCam.h" />
     <ClInclude Include="..\Header\CUfo.h" />
+    <ClInclude Include="..\Header\CUfoBeam.h" />
     <ClInclude Include="..\Header\CUfoBody.h" />
     <ClInclude Include="..\Header\CTrackMgr.h" />
     <ClInclude Include="..\Header\CUI_EndCountDown.h" />
@@ -396,6 +397,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CStartCam.cpp" />
     <ClCompile Include="..\Code\CTrackCam.cpp" />
     <ClCompile Include="..\Code\CUfo.cpp" />
+    <ClCompile Include="..\Code\CUfoBeam.cpp" />
     <ClCompile Include="..\Code\CUfoBody.cpp" />
     <ClCompile Include="..\Code\CTrackMgr.cpp" />
     <ClCompile Include="..\Code\CUI_EndCountDown.cpp" />

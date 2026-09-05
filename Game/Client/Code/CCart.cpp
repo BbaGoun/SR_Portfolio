@@ -31,6 +31,7 @@
 #include "CCart_Shield2.h"
 #include "CUfo.h"
 #include "CUfoBody.h"
+#include "CUfoBeam.h"
 #include "CCollisionStarEffect.h"
 #include "CShield1.h"
 #include "CShield2.h"
@@ -1562,6 +1563,17 @@ void CCart::CreateUfoObject()
 
 	pUfoBody->SetLayer(m_pLayer);
 	pUfo->Set_Child(pUfoBody);
+
+	CGameObject* pUfoBeam = CUfoBeam::Create(m_pGraphicDev);
+
+	if (pUfoBeam == nullptr)
+		return;
+
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_UfoBeam", pUfoBeam)))
+		return;
+
+	pUfoBeam->SetLayer(m_pLayer);
+	pUfo->Set_Child(pUfoBeam);
 }
 
 void CCart::CreateMissileAimObject()

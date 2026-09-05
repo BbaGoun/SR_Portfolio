@@ -30,9 +30,9 @@ HRESULT CCart_Shield1::Ready_GameObject()
 
 	CComponent* pComponent = nullptr;
 	m_pTransformCom->Set_Pos({ 0.f,0.f,0.f });
-	m_pTransformCom->Set_Scale({ 15.5f, 13.8f, 15.5f });
+	m_pTransformCom->Set_Scale({ 10.5f, 03.4f, 10.5f });
 
-	pComponent = m_pBufferCom = dynamic_cast<CSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Sphere"));
+	pComponent = m_pBufferCom = dynamic_cast<CHalfSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_HalfSphere"));
 	if (nullptr == pComponent)
 		return E_FAIL;
 
@@ -58,7 +58,7 @@ _int CCart_Shield1::Update_GameObject(const _float& fDeltaTime)
 
 	if (m_pParent != nullptr)
 	{
-		m_pTransformCom->Set_Pos({ 0.f, -5.f, 0.f });
+		m_pTransformCom->Set_Pos({ 0.f, -1.5f, 0.f });
 	}
 
 	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));

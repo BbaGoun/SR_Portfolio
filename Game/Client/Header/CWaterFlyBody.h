@@ -4,7 +4,8 @@
 
 namespace Engine
 {
-	class CCartBodyCol;		// 물파리 임시
+	class CTexture;
+	class CRcTex;
 }
 
 class CWaterFlyBody : public CGameObject
@@ -21,8 +22,10 @@ public:
 	virtual			void		Render_GameObject()									  override;
 
 private:
-	Engine::CCartBodyCol* m_pBufferCom;
-	_float	m_fTimer;
+	Engine::CRcTex* m_pBufferCom;
+	Engine::CTexture* m_pTextureCom;
+			_float	m_fTimer;
+			_float	m_fFrame;
 
 public:
 	static CWaterFlyBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);

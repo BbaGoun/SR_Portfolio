@@ -4,6 +4,12 @@
 #include "CTexture.h"
 #include "CCube_Collider.h"
 
+namespace Engine
+{
+	class CTexture;
+
+}
+
 class CWaterBombThrow : public CGameObject
 {
 private:

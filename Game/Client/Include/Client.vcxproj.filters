@@ -391,6 +391,9 @@
     <Filter Include="02. GameObject\Cart\CCartBot">
       <UniqueIdentifier>{5936d39c-0afd-48e9-a20d-51d67314356a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\Ufo\UfoBeam">
+      <UniqueIdentifier>{8b9f2a74-6dc9-4329-be03-ec3b7508174a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\Cart\Effect\BoostEffect\BoostAura">
       <UniqueIdentifier>{462f873a-75fa-41a2-adb7-0a6a7286b237}</UniqueIdentifier>
     </Filter>
@@ -771,6 +774,9 @@
     <ClInclude Include="..\Header\CCartBot.h">
       <Filter>02. GameObject\Cart\CCartBot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUfoBeam.h">
+      <Filter>02. GameObject\Item\Ufo\UfoBeam</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CBoostAura.h">
       <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostAura</Filter>
     </ClInclude>
@@ -1141,6 +1147,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCartBot.cpp">
       <Filter>02. GameObject\Cart\CCartBot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUfoBeam.cpp">
+      <Filter>02. GameObject\Item\Ufo\UfoBeam</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBoostAura.cpp">
       <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostAura</Filter>
