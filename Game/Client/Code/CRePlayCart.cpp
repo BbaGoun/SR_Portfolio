@@ -1432,27 +1432,27 @@ void CRePlayCart::CreateWaterBombObject()
 
 void CRePlayCart::CreateWaterFlyObject()
 {
-	CGameObject* pWaterFly = CWaterFly::Create(m_pGraphicDev);
-
-	if (pWaterFly == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFly", pWaterFly)))
-		return;
-
-	pWaterFly->SetLayer(m_pLayer);
-
-
-	CGameObject* pWaterFlyBody = CWaterFlyBody::Create(m_pGraphicDev);
-
-	if (pWaterFlyBody == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFlyBody", pWaterFlyBody)))
-		return;
-
-	pWaterFlyBody->SetLayer(m_pLayer);
-	pWaterFly->Set_Child(pWaterFlyBody);
+	//CGameObject* pWaterFly = CWaterFly::Create(m_pGraphicDev);
+	//
+	//if (pWaterFly == nullptr)
+	//	return;
+	//
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFly", pWaterFly)))
+	//	return;
+	//
+	//pWaterFly->SetLayer(m_pLayer);
+	//
+	//
+	//CGameObject* pWaterFlyBody = CWaterFlyBody::Create(m_pGraphicDev);
+	//
+	//if (pWaterFlyBody == nullptr)
+	//	return;
+	//
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFlyBody", pWaterFlyBody)))
+	//	return;
+	//
+	//pWaterFlyBody->SetLayer(m_pLayer);
+	//pWaterFly->Set_Child(pWaterFlyBody);
 
 	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
 

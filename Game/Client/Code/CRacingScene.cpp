@@ -47,7 +47,7 @@
 #include "CCartBot.h"
 #include "CUI_Laps.h"
 #include "CCollisionStarEffect.h"
-
+#include "CWaterBombBubble.h"
 #include "CBoostAura.h"
 #include "CShield1.h"
 #include "CShield2.h"
@@ -273,7 +273,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostAura", pGameObject);
 	pCartBody->Set_ChildWithoutTune(pGameObject);
 
-	// Shield1,2
+	// Player Shield1,2
 	pGameObject = CShield1::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -288,6 +288,30 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	pCart->Set_ChildWithoutTune(pGameObject);
 	static_cast<CCart*>(pCart)->SetShield2(pGameObject);
 
+	// Bot Shield1,2 , Bubble
+	for (auto& pCartBot:vecCartBot) {
+		pGameObject = CShield1::Create(m_pGraphicDev);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BotShield1", pGameObject);
+		pCartBot->Set_ChildWithoutTune(pGameObject);
+		static_cast<CCartBot*>(pCartBot)->SetShield1(pGameObject);
+
+		pGameObject = CShield2::Create(m_pGraphicDev);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BotShield2", pGameObject);
+		pCartBot->Set_ChildWithoutTune(pGameObject);
+		static_cast<CCartBot*>(pCartBot)->SetShield2(pGameObject);
+
+		pGameObject = CWaterBombBubble::Create(m_pGraphicDev);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BotBubble", pGameObject);
+		static_cast<CCartBot*>(pCartBot)->SetBubble(pGameObject);
+
+	}
 
 // 파티클
 	// 연기 이펙트
