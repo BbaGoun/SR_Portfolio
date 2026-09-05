@@ -25,18 +25,6 @@ HRESULT CPlayerHead::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 	Engine::CComponent* pComponent = nullptr;
 
-	//pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
-	//if (nullptr == pComponent)
-	//	return E_FAIL;
-	//pComponent->Set_Owner(this);
-	//m_mapComponent.insert({ L"Com_Buffer", pComponent });
-	//
-	//pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_BoosterJet"));
-	//if (nullptr == pComponent)
-	//	return E_FAIL;
-	//
-	//m_mapComponent.insert({ L"Com_Texture", pComponent });
-
 	m_bBoost		= false;
 	m_eCartDirType	= DIR_FORWARD;
 

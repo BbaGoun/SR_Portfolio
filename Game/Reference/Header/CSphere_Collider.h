@@ -22,12 +22,16 @@ public:
 	DirectX::BoundingSphere& Get_Info()		{ return m_tBoundingSphere; }
 
 	void		Set_Center(_vec3 vPos)		{ m_tBoundingSphere.Center = ToXMFLOAT3(vPos); }
-	void		Set_Radius(float fRadius)	{ m_tBoundingSphere.Radius = max(0.01f, fRadius); }
+	void		Set_Radius(float fRadius)	{ 
+		m_fRadius = max(0.01f, fRadius);
+		m_tBoundingSphere.Radius = m_fRadius;
+	}
 
 	virtual		CComponent* Clone();
 
 private:
 	DirectX::BoundingSphere	m_tBoundingSphere;
+	float m_fRadius = 1.f;
 
 private:
 	virtual		void		Free();

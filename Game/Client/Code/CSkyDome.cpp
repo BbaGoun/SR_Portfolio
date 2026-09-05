@@ -21,7 +21,7 @@ CSkyDome::~CSkyDome()
 HRESULT CSkyDome::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Scale({ 1500, 1500, 1500 });
+	m_pTransformCom->Set_Scale({ 1000.f, 1000, 1000 });
 	m_pTransformCom->Set_Pos({ 0, -200, 0});
 
 	CComponent* pComponent = nullptr;
@@ -47,10 +47,11 @@ _int CSkyDome::Update_GameObject(const _float& fDeltaTime)
 
 void CSkyDome::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-	//CCamera* p_Camera = CCameraMgr::GetInstance()->GetMainCamera();
-	//_vec3 pos;
-	//p_Camera->Get_Transform()->Get_Info(INFO_POS, &pos);
-	//m_pTransformCom->Set_Pos(pos);
+	CCamera* p_Camera = CCameraMgr::GetInstance()->GetMainCamera();
+	_vec3 pos;
+	p_Camera->Get_Transform()->Get_Info(INFO_POS, &pos);
+	pos.y -= 200.f;
+	m_pTransformCom->Set_Pos(pos);
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 

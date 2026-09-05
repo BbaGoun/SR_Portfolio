@@ -7,7 +7,9 @@
 #include "CManagement.h"
 #include "CCameraMgr.h"
 
-CThunderFloorEffect::CThunderFloorEffect(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
+CThunderFloorEffect::CThunderFloorEffect(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget) 
+	: CGameObject(pGraphicDev)
+	,m_pTarget(pTarget)
 {
 }
 
@@ -45,10 +47,10 @@ HRESULT CThunderFloorEffect::Ready_GameObject()
 
 _int CThunderFloorEffect::Update_GameObject(const _float& fDeltaTime)
 {
-	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	//CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
 	_vec3 vCartPos,vCarLook, vPos, vDir;
-	pCart->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
-	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vCarLook);
+	m_pTarget->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
+	m_pTarget->Get_Transform()->Get_Info(INFO_LOOK, &vCarLook);
 
 	m_vRotation.y += fDeltaTime;
 	D3DXQUATERNION q;
@@ -79,9 +81,9 @@ void CThunderFloorEffect::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 }
 
-CThunderFloorEffect* CThunderFloorEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CThunderFloorEffect* CThunderFloorEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget)
 {
-	CThunderFloorEffect* pObj = new CThunderFloorEffect(pGraphicDev);
+	CThunderFloorEffect* pObj = new CThunderFloorEffect(pGraphicDev, pTarget);
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{

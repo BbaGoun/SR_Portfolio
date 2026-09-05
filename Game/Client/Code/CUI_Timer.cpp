@@ -23,30 +23,29 @@ CUI_Timer::~CUI_Timer()
 HRESULT CUI_Timer::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Pos({ 500.f, 200.f, 10.f });
-	m_pTransformCom->Set_Scale({ 24.f,33.f,0.f });
-	
 
 	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pVIBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
+	if (pComponent == nullptr)
+		return E_FAIL;
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
+	
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_NumberTexture"));
 	if (pComponent == nullptr)
 		return E_FAIL;
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_TimerTexture"));
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
-	if (pComponent == nullptr)
-		return E_FAIL;
 	
 
-	m_fFrame_1 = 0;
-	m_fFrame_10 = 0;
-	m_fFrame_60 = 0;
-	m_fFrame_600 = 0;
+	m_iMilli_1 = 0;
+	m_iMilli_10 = 0;
+	m_iSecond_1 = 0;
+	m_iSecond_10 = 0;
+	m_iMin_1 = 0;
+	m_iMin_10 = 0;
 
+	
 	return S_OK;
-
-
 }
 
 void CUI_Timer::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
@@ -57,39 +56,7 @@ _int CUI_Timer::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
-	int fTime		= CPlayTimeMgr::GetInstance()->GetPlayTimer();
-	int fMinut		= fTime / 60;
-	int fSec		= fTime % 60;
-
-	m_fFrame_10		= fSec / 10;
-	m_fFrame_1		= fSec % 10;
-
-	m_fFrame_600	= fMinut / 10;
-	m_fFrame_60		= fMinut % 10;
-
-	//m_fFrame_1 += fDeltaTime;
-	//if (m_fFrame_1 >= 10)
-	//{
-	//	m_fFrame_1 = 0;
-	//	m_fFrame_10++;
-	//}
-	//
-	//if (m_fFrame_10 >= 6)
-	//{
-	//	m_fFrame_10 = 0;
-	//	m_fFrame_60++;
-	//}
-	//
-	//if (m_fFrame_60 >= 10)
-	//{
-	//	m_fFrame_60 = 0;
-	//	m_fFrame_600++;
-	//}
-
-
 	return CGameObject::Update_GameObject(fDeltaTime);
-
-
 }
 
 void CUI_Timer::LateUpdate_GameObject(const _float& fDeltaTime)
@@ -99,27 +66,70 @@ void CUI_Timer::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CUI_Timer::Render_GameObject()
 {
+	m_pTransformCom->Set_Scale({ 100.f,48.f, 1.f });
+	m_pTransformCom->Set_Pos({ 400.f, 200.f, 10.f });
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	m_pTextureCom->Set_Texture(13);
+	m_pVIBufferCom->Render_Buffer();
+
+	// m_iMin_10;
+	m_pTransformCom->Set_Scale({ 20.f,28.f,1.f });
+	m_pTransformCom->Set_Pos({ 470.f, 200.f, 10.f });
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	m_pTextureCom->Set_Texture(m_iMin_10);
+	m_pVIBufferCom->Render_Buffer();
+
+	// m_iMin_1;
+	m_pTransformCom->Set_Pos({ 490.f, 200.f, 10.f });
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	m_pTextureCom->Set_Texture(m_iMin_1);
+	m_pVIBufferCom->Render_Buffer();
+
+	// 콜론
+	m_pTransformCom->Set_Pos({ 510.f, 200.f, 10.f });
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	m_pTextureCom->Set_Texture(11);
+	m_pVIBufferCom->Render_Buffer();
+
+	// m_iSecond_10;
+	m_pTransformCom->Set_Pos({ 530.f, 200.f, 10.f });
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	m_pTextureCom->Set_Texture(m_iSecond_10);
+	m_pVIBufferCom->Render_Buffer();
+
+	// m_iSecond_1;
 	m_pTransformCom->Set_Pos({ 550.f, 200.f, 10.f });
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pTextureCom->Set_Texture(m_fFrame_1);
+	m_pTextureCom->Set_Texture(m_iSecond_1);
 	m_pVIBufferCom->Render_Buffer();
-	
-	m_pTransformCom->Set_Pos({ 520.f, 200.f, 10.f });
+
+	// 콜론
+	m_pTransformCom->Set_Pos({ 570.f, 200.f, 10.f });
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pTextureCom->Set_Texture(m_fFrame_10);
+	m_pTextureCom->Set_Texture(11);
 	m_pVIBufferCom->Render_Buffer();
 
-	m_pTransformCom->Set_Pos({ 460.f, 200.f, 10.f });
+	// m_iMilli_10;
+	m_pTransformCom->Set_Pos({ 590.f, 200.f, 10.f });
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pTextureCom->Set_Texture(m_fFrame_60);
+	m_pTextureCom->Set_Texture(m_iMilli_10);
 	m_pVIBufferCom->Render_Buffer();
 
-	m_pTransformCom->Set_Pos({ 430.f, 200.f, 10.f });
+	// m_iMilli_1;
+	m_pTransformCom->Set_Pos({ 610.f, 200.f, 10.f });
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pTextureCom->Set_Texture(m_fFrame_600);
+	m_pTextureCom->Set_Texture(m_iMilli_1);
 	m_pVIBufferCom->Render_Buffer();
+}
 
-
+void CUI_Timer::Set_Timer(float _fPlayTime)
+{
+	m_iMin_10 = int(floor(_fPlayTime / 600.f));
+	m_iMin_1 = int(floor(_fPlayTime / 60.f)) - 10 * m_iMin_10;
+	m_iSecond_10 = int(floor(_fPlayTime / 10.f)) - 6 * m_iMin_1 - 60 * m_iMin_10;
+	m_iSecond_1 = int(floor(_fPlayTime / 1.f)) - 10 * m_iSecond_10 + 60 * m_iMin_1 - 600 * m_iMin_10;
+	m_iMilli_10 = int(floor(fmodf(_fPlayTime, 1.f) / 0.1f));
+	m_iMilli_1 = int(floor(fmodf(_fPlayTime, 1.f) / 0.01f)) - 10 * m_iMilli_10;
 }
 
 CUI_Timer* CUI_Timer::Create(LPDIRECT3DDEVICE9 pGraphicDev)

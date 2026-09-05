@@ -11,7 +11,7 @@
 #include "SoundMgr.h"
 #include "CPlayTimeMgr.h"
 #include "CRankMgr.h"
-
+#include "CFindOthersMgr.h"
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr)
 	, m_pManagementClass(CManagement::GetInstance())
@@ -53,13 +53,13 @@ HRESULT CMainApp::Ready_MainApp()
 void CMainApp::FixedUpdate_MainApp(const float& fFixedDeltaTime)
 {
 	m_pManagementClass->FixedUpdate_Scene(fFixedDeltaTime);
+
 }
 
 int CMainApp::Update_MainApp(const float& fDeltaTime)
 {
 	m_pManagementClass->Change_NextScene();
 
-	CDInputMgr::GetInstance()->Update_InputDev();
 	SoundMgr::GetInstance().Update();
 
 	CPlayTimeMgr::GetInstance()->UpdateCPlayTimeMgr(fDeltaTime);
@@ -70,8 +70,8 @@ int CMainApp::Update_MainApp(const float& fDeltaTime)
 
 void CMainApp::LateUpdate_MainApp(const float& fDeltaTime)
 {
-	m_pManagementClass->LateUpdate_Scene(fDeltaTime);
 	CDInputMgr::GetInstance()->LateUpdate_InputDev();
+	m_pManagementClass->LateUpdate_Scene(fDeltaTime);
 }
 
 void CMainApp::Render_MainApp()
@@ -196,6 +196,7 @@ void CMainApp::Free()
 	Safe_Release(m_pGraphicDev);
 	Safe_Release(m_pDeviceClass);
 
+	CFindOthersMgr::DestroyInstance();
 	CRankMgr::DestroyInstance();
 	CPlayTimeMgr::DestroyInstance();
 	CCollisionMgr::DestroyInstance();

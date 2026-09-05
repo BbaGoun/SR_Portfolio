@@ -331,14 +331,32 @@
     <Filter Include="02. GameObject\Item\Water\BubbleEscapeUI">
       <UniqueIdentifier>{2a125e2a-30a6-4f5f-8aa1-11c9a81c3b98}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\Shield">
+    <Filter Include="02. GameObject\Item\Target_Shield">
       <UniqueIdentifier>{5480403e-f12f-4e41-b08a-635c6f76a5e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\Shield\Shield1">
+    <Filter Include="02. GameObject\Item\Target_Shield\Target_Shield1">
       <UniqueIdentifier>{80458ce3-0693-430b-ba34-e5be29104e2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\Shield\Shield2">
+    <Filter Include="02. GameObject\Item\Target_Shield\Target_Shield2">
       <UniqueIdentifier>{d798c48d-f61d-4264-84f6-c3a4b047d43e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Cart_Shield">
+      <UniqueIdentifier>{13e119e0-720f-4274-a7e0-4da6deb29987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Cart_Shield\Cart_Shield1">
+      <UniqueIdentifier>{282ad70b-6ccc-4dda-945f-d5b9c33c13e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Cart_Shield\Cart_Shield2">
+      <UniqueIdentifier>{c7648e81-929b-4f85-a3fa-c7946d740b6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Ufo">
+      <UniqueIdentifier>{a8308ac2-1c01-4d0d-9bb2-dd3a5d7fa208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Ufo\UfoBody">
+      <UniqueIdentifier>{903ebdc4-f140-4ddd-9975-e82261e7278d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Target_Emp_Band">
+      <UniqueIdentifier>{c7c06198-0f53-4d28-b3bb-2bf9158ff37f}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Manager\TrackMgr">
       <UniqueIdentifier>{7df1f21a-f2fe-4895-a15e-76c40c27e07e}</UniqueIdentifier>
@@ -363,6 +381,21 @@
     </Filter>
     <Filter Include="03. Manager\CSlotMgr">
       <UniqueIdentifier>{3b7b33a3-72b5-49b7-98a9-f5874903879b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\RePlayCart">
+      <UniqueIdentifier>{54bdf8f2-8e7f-426c-8c59-76d91f43c181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\RePlay">
+      <UniqueIdentifier>{e50661f9-6b22-4b07-9f6a-3cf7b1003406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\CCartBot">
+      <UniqueIdentifier>{5936d39c-0afd-48e9-a20d-51d67314356a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\BoostEffect\BoostAura">
+      <UniqueIdentifier>{462f873a-75fa-41a2-adb7-0a6a7286b237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\FindOthersMgr">
+      <UniqueIdentifier>{f07fabf1-8963-43b3-b90c-f887a71e4da9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -682,10 +715,25 @@
       <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShield1.h">
-      <Filter>02. GameObject\Item\Shield\Shield1</Filter>
+      <Filter>02. GameObject\Item\Target_Shield\Target_Shield1</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShield2.h">
-      <Filter>02. GameObject\Item\Shield\Shield2</Filter>
+      <Filter>02. GameObject\Item\Target_Shield\Target_Shield2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCart_Shield1.h">
+      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCart_Shield2.h">
+      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUfo.h">
+      <Filter>02. GameObject\Item\Ufo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUfoBody.h">
+      <Filter>02. GameObject\Item\Ufo\UfoBody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CEmp_Band.h">
+      <Filter>02. GameObject\Item\Target_Emp_Band</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CUI_PauseMenu.h">
       <Filter>02. GameObject\UI\UI_Pause</Filter>
@@ -713,6 +761,21 @@
     </ClInclude>
     <ClInclude Include="..\Header\CRankMgr.h">
       <Filter>03. Manager\RankMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRePlayCart.h">
+      <Filter>02. GameObject\RePlayCart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRePlayScene.h">
+      <Filter>01. Scene\RePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCartBot.h">
+      <Filter>02. GameObject\Cart\CCartBot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoostAura.h">
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostAura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFindOthersMgr.h">
+      <Filter>03. Manager\FindOthersMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1023,10 +1086,25 @@
       <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShield1.cpp">
-      <Filter>02. GameObject\Item\Shield\Shield1</Filter>
+      <Filter>02. GameObject\Item\Target_Shield\Target_Shield1</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShield2.cpp">
-      <Filter>02. GameObject\Item\Shield\Shield2</Filter>
+      <Filter>02. GameObject\Item\Target_Shield\Target_Shield2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCart_Shield1.cpp">
+      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCart_Shield2.cpp">
+      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUfo.cpp">
+      <Filter>02. GameObject\Item\Ufo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUfoBody.cpp">
+      <Filter>02. GameObject\Item\Ufo\UfoBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEmp_Band.cpp">
+      <Filter>02. GameObject\Item\Target_Emp_Band</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUI_PauseMenu.cpp">
       <Filter>02. GameObject\UI\UI_Pause</Filter>
@@ -1054,6 +1132,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\CRankMgr.cpp">
       <Filter>03. Manager\RankMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRePlayCart.cpp">
+      <Filter>02. GameObject\RePlayCart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRePlayScene.cpp">
+      <Filter>01. Scene\RePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCartBot.cpp">
+      <Filter>02. GameObject\Cart\CCartBot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoostAura.cpp">
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostAura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFindOthersMgr.cpp">
+      <Filter>03. Manager\FindOthersMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
