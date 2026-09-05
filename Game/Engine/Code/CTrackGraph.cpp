@@ -236,6 +236,37 @@ void CTrackGraph::Set_PointPos(TrackEdge* _pTE, ControlPoint* _pCp, _vec3 newPos
 	pCp->position = newPos;
 }
 
+void CTrackGraph::Insert_Point(TrackEdge* _pTE, ControlPoint* _pCp)
+{
+	TrackEdge* pTE = Find_TrackEdge(_pTE);
+	if (!pTE)
+		return;
+
+	if (pTE->fromNode == 0 || pTE->toNode == 0)
+		return;
+
+	if (_pCp->id == pTE->deqControls.front().id)
+		return;
+
+	ControlPoint cp;
+	cp.id = GenerateControlId();
+	cp.position = { _pCp->position.x, _pCp->position.y, _pCp->position.z};
+	cp.bank = 0;
+	cp.width = pTE->fWidthDefault;
+	cp.depth = pTE->fHeightDefault;
+
+	auto itCp = find_if(_pTE->deqControls.begin(), _pTE->deqControls.end(), [&](ControlPoint& cp)->bool {
+		return cp.id == _pCp->id;
+		});
+
+	if (itCp == _pTE->deqControls.end())
+		return;
+
+	pTE->deqControls.insert(itCp, cp);
+
+	Compute_Graph();
+}
+
 void CTrackGraph::Finalize_LoadedData()
 {
 	NodeId maxNodeId = 0;

@@ -38,10 +38,6 @@ HRESULT CBox::Ready_GameObject()
 	return S_OK;
 }
 
-void CBox::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
-{
-}
-
 _int CBox::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);

@@ -24,11 +24,7 @@ HRESULT CSphere_Collider::Ready_CSphere_Collider()
 	return S_OK;
 }
 
-_int CSphere_Collider::Update_Component(const _float& fTimeDelta)
-{
-	return 0;
-}
-void CSphere_Collider::LateUpdate_Component(const _float& fTimeDelta)
+void CSphere_Collider::FixedUpdate_Component(const _float& fFixedDeltaTime)
 {
 	CTransform* pOwnerTransfrom = (m_pOwner->Get_Transform());
 
@@ -37,6 +33,14 @@ void CSphere_Collider::LateUpdate_Component(const _float& fTimeDelta)
 	vOwnerPos += m_vOffset;
 
 	m_tBoundingSphere.Center = ToXMFLOAT3(vOwnerPos);
+}
+
+_int CSphere_Collider::Update_Component(const _float& fTimeDelta)
+{
+	return 0;
+}
+void CSphere_Collider::LateUpdate_Component(const _float& fTimeDelta)
+{
 }
 
 void CSphere_Collider::Render_Component(D3DXCOLOR color)

@@ -161,6 +161,8 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	m_bCollisionGround = false;
 	m_bCollisionWall = false;
+
+	//CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
@@ -1044,7 +1046,7 @@ void CCart::CollisionWall()
 
 			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 			// StarEffect
-			if (D3DXVec3Length(&m_vForce) * m_fSpeed >= 60)
+			if (D3DXVec3Length(&m_vForce) * m_fSpeed >= 40)
 			{
 				CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
 					(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));

@@ -231,6 +231,8 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	m_bCollisionGround = false;
 	m_bCollisionWall = false;
+
+	//CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
 }
 
 _int CCartBot::Update_GameObject(const _float& fDeltaTime)

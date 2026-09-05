@@ -335,7 +335,6 @@ _uint CLoadingThread::Loading_Stage()
         true, L"WaterBomb")))
         return E_FAIL;
 
-
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"ThrowWaterBomb", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item/WaterBomb/ThrowWaterBomb.png", 1),
         true, L"ThrowWaterBomb")))
         return E_FAIL;

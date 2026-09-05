@@ -11,6 +11,7 @@ private:
 	virtual ~CSphere_Collider();
 
 public:
+	virtual void FixedUpdate_Component(const _float& fFixedDeltaTime) override;
 	virtual _int Update_Component(const _float& fTimeDelta);
 	virtual void LateUpdate_Component(const _float& fTimeDelta) override;
 	virtual void Render_Component(D3DXCOLOR color) override;

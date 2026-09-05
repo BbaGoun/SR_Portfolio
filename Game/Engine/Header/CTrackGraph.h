@@ -32,6 +32,7 @@ public:
 	void			Add_Point(TrackEdge* _pTE);
 	void			Del_Point(TrackEdge* _pTE, ControlPoint* _pCp);
 	void			Set_PointPos(TrackEdge* _pTE, ControlPoint* _pCp, _vec3 newPos);
+	void			Insert_Point(TrackEdge* _pTE, ControlPoint* _pCp);
 
 	void			Compute_Graph();
 	void			Finalize_LoadedData();

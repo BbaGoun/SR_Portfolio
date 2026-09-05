@@ -298,7 +298,7 @@
         pos=0.000000 0.408654 -0.643192
         rot=79.213371 -0.000000 0.000000
         quat=0.637514 0.000000 0.000000 0.770438
-        scale=0.749967 0.099999 0.999947
+        scale=0.749967 0.099999 0.999946
     ENDOBJECT
     OBJECT
       type=
@@ -408,7 +408,7 @@ OBJECT
   cullDistance=0
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
     pos=-10.000000 0.550000 -0.500000
-    rot=-179.999985 -0.000000 -179.999985
+    rot=180.000000 -0.000000 180.000000
     quat=-0.000000 1.000000 -0.000000 0.000000
     scale=1.000000 1.000000 1.000000
   OBJECT
@@ -698,7 +698,7 @@ OBJECT
         pos=0.000000 0.408654 -0.643192
         rot=79.213371 -0.000000 0.000000
         quat=0.637514 0.000000 0.000000 0.770438
-        scale=0.749967 0.099999 0.999947
+        scale=0.749967 0.099999 0.999946
     ENDOBJECT
     OBJECT
       type=
@@ -1098,7 +1098,7 @@ OBJECT
         pos=0.000000 0.408654 -0.643192
         rot=79.213371 -0.000000 0.000000
         quat=0.637514 0.000000 0.000000 0.770438
-        scale=0.749967 0.099999 0.999950
+        scale=0.749967 0.099999 0.999949
     ENDOBJECT
     OBJECT
       type=
@@ -1210,7 +1210,7 @@ OBJECT
     pos=10.000000 3.623000 -0.250000
     rot=0.000000 -89.996948 0.000000
     quat=0.000000 -0.707088 0.000000 0.707126
-    scale=0.999923 1.000000 0.999923
+    scale=0.999924 1.000000 0.999924
   OBJECT
     type=
     prefabPath=..\..\..\Resource\Editor\Prefab\Character\bazzi.prefab
@@ -1312,7 +1312,7 @@ OBJECT
             pos=-0.008125 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=1.000000 1.000019 1.000019
+            scale=1.000000 1.000020 1.000020
         ENDOBJECT
         OBJECT
           type=Alpha
@@ -1328,7 +1328,7 @@ OBJECT
             pos=-0.010000 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=0.999961 0.999938 0.999938
+            scale=0.999961 0.999939 0.999939
         ENDOBJECT
       ENDOBJECT
     ENDOBJECT
@@ -1530,7 +1530,7 @@ OBJECT
     pos=-10.000000 3.623000 -0.250000
     rot=0.000000 -89.996948 0.000000
     quat=0.000000 -0.707088 0.000000 0.707126
-    scale=0.999921 1.000000 0.999921
+    scale=0.999922 1.000000 0.999922
   OBJECT
     type=
     prefabPath=..\..\..\Resource\Editor\Prefab\Character\bazzi.prefab
@@ -1632,7 +1632,7 @@ OBJECT
             pos=-0.008125 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=1.000000 1.000017 1.000017
+            scale=1.000000 1.000018 1.000018
         ENDOBJECT
         OBJECT
           type=Alpha
@@ -1648,7 +1648,7 @@ OBJECT
             pos=-0.010000 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=0.999961 0.999936 0.999936
+            scale=0.999961 0.999937 0.999937
         ENDOBJECT
       ENDOBJECT
     ENDOBJECT
@@ -1850,7 +1850,7 @@ OBJECT
     pos=0.000000 3.623000 -0.250000
     rot=180.000000 -89.999962 180.000000
     quat=-0.000000 -0.707107 -0.000000 0.707107
-    scale=0.999922 1.000000 0.999922
+    scale=0.999923 1.000000 0.999923
   OBJECT
     type=
     prefabPath=..\..\..\Resource\Editor\Prefab\Character\bazzi.prefab
@@ -1952,7 +1952,7 @@ OBJECT
             pos=-0.008125 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=1.000000 1.000016 1.000016
+            scale=1.000000 1.000017 1.000017
         ENDOBJECT
         OBJECT
           type=Alpha
@@ -1968,7 +1968,7 @@ OBJECT
             pos=-0.010000 0.000000 0.000000
             rot=-89.999870 -0.000000 0.000000
             quat=-0.707106 0.000000 0.000000 0.707108
-            scale=0.999961 0.999935 0.999935
+            scale=0.999961 0.999936 0.999936
         ENDOBJECT
       ENDOBJECT
     ENDOBJECT
@@ -2320,29 +2320,50 @@ OBJECT
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
+        tcp_id=55
+        tcp_pos=-663.417786 29.988485 -962.588379
+        tcp_bank=0.000000
+        tcp_width=30.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
         tcp_id=22
-        tcp_pos=-699.249023 33.187397 -961.169983
+        tcp_pos=-728.358521 33.187389 -959.524475
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=23
-        tcp_pos=-818.014587 41.090099 -927.318298
+        tcp_pos=-808.381409 41.090092 -934.888794
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=24
-        tcp_pos=-872.023132 47.186401 -858.268738
+        tcp_pos=-858.068298 47.126987 -884.323730
+        tcp_bank=0.000000
+        tcp_width=30.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=57
+        tcp_pos=-874.772644 48.347595 -835.270874
+        tcp_bank=0.000000
+        tcp_width=30.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=56
+        tcp_pos=-874.775452 49.688457 -802.558167
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=25
-        tcp_pos=-888.567566 49.833599 -768.391235
+        tcp_pos=-889.091980 49.833450 -739.692749
         tcp_bank=0.000000
         tcp_width=50.000000
         tcp_depth=30.000000
@@ -2362,22 +2383,36 @@ OBJECT
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
+        tcp_id=58
+        tcp_pos=-874.739319 70.527458 286.548431
+        tcp_bank=0.000000
+        tcp_width=30.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
         tcp_id=28
-        tcp_pos=-871.489929 68.323936 318.120270
+        tcp_pos=-871.243530 67.374466 337.518982
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=29
-        tcp_pos=-831.361023 65.099052 456.117584
+        tcp_pos=-837.323486 65.096420 442.571655
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=30
-        tcp_pos=-754.880371 61.373703 509.181152
+        tcp_pos=-780.899719 62.943069 499.169739
+        tcp_bank=0.000000
+        tcp_width=30.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=59
+        tcp_pos=-689.774475 60.065315 511.858307
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
@@ -2737,7 +2772,7 @@ OBJECT
       pos=-78.852570 0.000000 -402.439209
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999997 1.000000 0.999997
+      scale=0.999998 1.000000 0.999998
   ENDOBJECT
   OBJECT
     type=
@@ -2863,7 +2898,7 @@ OBJECT
       pos=-275.707092 0.000000 -402.501801
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999919 1.000000 0.999919
+      scale=0.999920 1.000000 0.999920
   ENDOBJECT
   OBJECT
     type=
@@ -2893,7 +2928,7 @@ OBJECT
       pos=-204.168243 0.000000 -602.490662
       rot=0.000000 -89.990471 0.000000
       quat=0.000000 -0.707048 0.000000 0.707165
-      scale=0.999687 1.000000 0.999687
+      scale=0.999686 1.000000 0.999686
   ENDOBJECT
   OBJECT
     type=
@@ -3001,7 +3036,7 @@ OBJECT
       pos=-199.048859 0.000000 -602.474243
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999892 1.000000 0.999892
+      scale=0.999893 1.000000 0.999893
   ENDOBJECT
   OBJECT
     type=
@@ -3031,7 +3066,7 @@ OBJECT
       pos=-249.047943 0.000000 -743.541199
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999970 1.000000 0.999970
+      scale=0.999971 1.000000 0.999971
   ENDOBJECT
   OBJECT
     type=
@@ -3061,7 +3096,7 @@ OBJECT
       pos=-364.610657 0.000000 -743.538330
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 -0.000000 0.707107
-      scale=0.999887 1.000000 0.999887
+      scale=0.999888 1.000000 0.999888
   ENDOBJECT
   OBJECT
     type=
@@ -3091,7 +3126,7 @@ OBJECT
       pos=-219.090454 30.000000 -743.544495
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999895 1.000000 0.999895
+      scale=0.999896 1.000000 0.999896
   ENDOBJECT
   OBJECT
     type=
@@ -3145,7 +3180,7 @@ OBJECT
       pos=-408.984192 30.000000 -743.464172
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999941 1.000000 0.999941
+      scale=0.999942 1.000000 0.999942
   ENDOBJECT
   OBJECT
     type=
@@ -3277,7 +3312,7 @@ OBJECT
       pos=-562.247742 30.000000 -979.055908
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999937 1.000000 0.999937
+      scale=0.999938 1.000000 0.999938
   ENDOBJECT
   OBJECT
     type=
@@ -3343,7 +3378,7 @@ OBJECT
       pos=-672.349121 30.000000 -967.245972
       rot=0.000000 -89.999222 0.000000
       quat=0.000000 -0.707102 0.000000 0.707112
-      scale=0.999859 1.000000 0.999859
+      scale=0.999860 1.000000 0.999860
   ENDOBJECT
   OBJECT
     type=
@@ -3481,7 +3516,7 @@ OBJECT
       pos=-787.915161 60.000000 525.786377
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=1.000014 1.000000 1.000014
+      scale=1.000015 1.000000 1.000015
   ENDOBJECT
   OBJECT
     type=
@@ -3541,7 +3576,7 @@ OBJECT
       pos=-387.421143 60.000000 525.984314
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999997 1.000000 0.999997
+      scale=0.999998 1.000000 0.999998
   ENDOBJECT
   OBJECT
     type=
@@ -3673,7 +3708,7 @@ OBJECT
       pos=-259.957245 60.000000 380.187622
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999956 1.000000 0.999956
+      scale=0.999957 1.000000 0.999957
   ENDOBJECT
   OBJECT
     type=
@@ -3703,7 +3738,7 @@ OBJECT
       pos=-298.853760 60.000000 380.176361
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=1.000000 1.000000 1.000000
+      scale=1.000001 1.000000 1.000001
   ENDOBJECT
   OBJECT
     type=
@@ -3895,7 +3930,7 @@ OBJECT
       pos=-303.616547 60.000000 380.217682
       rot=0.000000 -89.989822 0.000000
       quat=0.000000 -0.707044 0.000000 0.707170
-      scale=0.999735 1.000000 0.999735
+      scale=0.999736 1.000000 0.999736
   ENDOBJECT
   OBJECT
     type=
@@ -3925,7 +3960,7 @@ OBJECT
       pos=-244.488342 60.000000 260.532684
       rot=0.000000 -89.992256 0.000000
       quat=0.000000 -0.707059 0.000000 0.707154
-      scale=0.999742 1.000000 0.999742
+      scale=0.999741 1.000000 0.999741
   ENDOBJECT
   OBJECT
     type=
@@ -3955,7 +3990,7 @@ OBJECT
       pos=-161.444122 30.000000 260.610565
       rot=0.000000 -89.989822 0.000000
       quat=0.000000 -0.707044 0.000000 0.707170
-      scale=0.999726 1.000000 0.999726
+      scale=0.999727 1.000000 0.999727
   ENDOBJECT
   OBJECT
     type=
@@ -3985,7 +4020,7 @@ OBJECT
       pos=-85.134201 30.000000 260.646088
       rot=0.000000 -89.992905 0.000000
       quat=0.000000 -0.707063 0.000000 0.707151
-      scale=0.999761 1.000000 0.999761
+      scale=0.999762 1.000000 0.999762
   ENDOBJECT
   OBJECT
     type=
@@ -4015,7 +4050,7 @@ OBJECT
       pos=36.062935 0.000000 260.620667
       rot=0.000000 -89.990471 0.000000
       quat=0.000000 -0.707048 0.000000 0.707165
-      scale=0.999746 1.000000 0.999746
+      scale=0.999745 1.000000 0.999745
   ENDOBJECT
   OBJECT
     type=
@@ -4045,7 +4080,7 @@ OBJECT
       pos=54.205418 0.000000 260.663788
       rot=0.000000 -89.990799 0.000000
       quat=0.000000 -0.707050 0.000000 0.707163
-      scale=0.999729 1.000000 0.999729
+      scale=0.999728 1.000000 0.999728
   ENDOBJECT
   OBJECT
     type=
@@ -4075,7 +4110,7 @@ OBJECT
       pos=59.680733 0.000000 260.496155
       rot=0.000000 -89.999870 180.000000
       quat=0.707106 0.000000 0.707107 -0.000000
-      scale=0.999756 0.999636 0.999756
+      scale=0.999755 0.999634 0.999755
   ENDOBJECT
   OBJECT
     type=
@@ -4153,7 +4188,7 @@ OBJECT
       pos=44.533592 0.000000 123.866180
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999884 1.000000 0.999884
+      scale=0.999885 1.000000 0.999885
   ENDOBJECT
   OBJECT
     type=
@@ -4275,7 +4310,7 @@ OBJECT
       pos=57.298588 4.814831 228.537781
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 0.000000 0.000000
-      scale=0.999948 0.999948 1.000017
+      scale=0.999949 0.999949 1.000018
   ENDOBJECT
   OBJECT
     type=
@@ -4359,7 +4394,7 @@ OBJECT
       pos=57.289257 4.818830 168.491852
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 0.000000 0.000000
-      scale=0.999926 0.999926 1.000017
+      scale=0.999927 0.999927 1.000018
   ENDOBJECT
   OBJECT
     type=
@@ -4515,7 +4550,7 @@ OBJECT
       pos=-17.893248 4.880261 118.202820
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 -0.000000 -0.000000
-      scale=0.999903 0.999903 0.999903
+      scale=0.999904 0.999904 0.999904
   ENDOBJECT
   OBJECT
     type=
@@ -4563,7 +4598,7 @@ OBJECT
       pos=-29.772562 4.929333 -308.912659
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 -0.000000 -0.000000
-      scale=0.999666 0.999666 0.999597
+      scale=0.999667 0.999667 0.999598
   ENDOBJECT
   OBJECT
     type=
@@ -4623,7 +4658,7 @@ OBJECT
       pos=-29.813633 4.930652 -286.807678
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999416 0.999416 0.999803
+      scale=0.999417 0.999417 0.999804
   ENDOBJECT
   OBJECT
     type=
@@ -4923,7 +4958,7 @@ OBJECT
       pos=-401.628357 4.529151 -502.640686
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999564 0.999564 0.999135
+      scale=0.999565 0.999565 0.999136
   ENDOBJECT
   OBJECT
     type=
@@ -5013,7 +5048,7 @@ OBJECT
       pos=-376.170837 4.532385 -592.443909
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999573 0.999573 0.999429
+      scale=0.999574 0.999574 0.999430
   ENDOBJECT
   OBJECT
     type=
@@ -5247,7 +5282,7 @@ OBJECT
       pos=-133.862595 4.736108 -672.121216
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999559 0.999559 0.999403
+      scale=0.999560 0.999560 0.999404
   ENDOBJECT
   OBJECT
     type=
@@ -5703,7 +5738,7 @@ OBJECT
       pos=-502.446503 34.977821 -775.826172
       rot=180.000000 -0.000000 -90.000198
       quat=-0.707105 0.707108 0.000000 0.000000
-      scale=0.999737 0.999737 0.999787
+      scale=0.999736 0.999736 0.999785
   ENDOBJECT
   OBJECT
     type=
@@ -5745,7 +5780,7 @@ OBJECT
       pos=-510.313843 35.025513 -812.398438
       rot=180.000000 -0.000000 -90.000198
       quat=-0.707106 0.707108 0.000000 0.000000
-      scale=0.999523 0.999523 0.999279
+      scale=0.999524 0.999524 0.999280
   ENDOBJECT
   OBJECT
     type=
@@ -5823,7 +5858,7 @@ OBJECT
       pos=-511.042297 34.872341 -899.398499
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 -0.000000 0.000000
-      scale=0.999976 0.999976 0.999932
+      scale=0.999977 0.999977 0.999933
   ENDOBJECT
   OBJECT
     type=
@@ -5947,7 +5982,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -6077,6 +6111,7 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-669.384094 34.880722 -949.223572
       rot=-90.000000 -0.000000 90.000000
@@ -6091,7 +6126,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -6155,11 +6189,12 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-853.088623 50.013424 -862.314636
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999973 0.999973 1.000000
+      scale=0.999974 0.999974 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -6169,7 +6204,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=6.300000
@@ -6185,11 +6219,12 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-859.544434 54.695316 -804.976013
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999924 0.999924 1.000000
+      scale=0.999925 0.999925 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -6297,7 +6332,7 @@ OBJECT
       pos=-859.508240 54.898804 -799.128296
       rot=0.000000 -0.000000 -89.991928
       quat=-0.000000 0.000000 -0.707057 0.707157
-      scale=0.999766 0.999766 0.999991
+      scale=0.999767 0.999767 0.999991
   ENDOBJECT
   OBJECT
     type=
@@ -6345,7 +6380,7 @@ OBJECT
       pos=-859.375427 76.010002 235.312332
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999907 0.999907 1.000000
+      scale=0.999908 0.999908 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -6375,7 +6410,7 @@ OBJECT
       pos=-859.509460 75.627472 280.663818
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999947 0.999947 1.000000
+      scale=0.999948 0.999948 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -6385,7 +6420,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -6455,11 +6489,12 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-859.377258 74.830185 290.706909
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999951 0.999951 1.000000
+      scale=0.999952 0.999952 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -6469,7 +6504,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -6533,11 +6567,12 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-836.720825 70.125298 417.956696
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999967 0.999967 1.000000
+      scale=0.999968 0.999968 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -6547,7 +6582,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -6611,6 +6645,7 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-776.148315 68.471352 482.260895
       rot=90.000000 -0.000000 90.000000
@@ -6625,7 +6660,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=10.500000
@@ -6641,6 +6675,7 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-698.939270 65.159630 496.019440
       rot=90.000000 -0.000000 90.000000
@@ -6843,7 +6878,7 @@ OBJECT
       pos=-289.686279 64.757957 543.820068
       rot=0.000000 -0.000000 -89.991928
       quat=0.000000 0.000000 -0.707057 0.707157
-      scale=0.999765 0.999765 1.000000
+      scale=0.999766 0.999766 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -7095,7 +7130,7 @@ OBJECT
       pos=-172.468079 64.731323 602.527832
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999510 0.999510 0.999302
+      scale=0.999511 0.999511 0.999303
   ENDOBJECT
   OBJECT
     type=
@@ -7167,7 +7202,7 @@ OBJECT
       pos=-162.702087 64.795708 455.120514
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999686 0.999686 0.999649
+      scale=0.999687 0.999687 0.999650
   ENDOBJECT
   OBJECT
     type=
@@ -7461,7 +7496,7 @@ OBJECT
       pos=-396.001892 64.742470 341.555450
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999781 0.999781 0.999788
+      scale=0.999782 0.999782 0.999789
   ENDOBJECT
   OBJECT
     type=
@@ -7545,7 +7580,7 @@ OBJECT
       pos=-382.966492 64.810936 265.763733
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999885 0.999885 0.999753
+      scale=0.999886 0.999886 0.999754
   ENDOBJECT
   OBJECT
     type=
@@ -7883,7 +7918,7 @@ OBJECT
       pos=116.964371 4.727839 287.579315
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999913 0.999913 1.000011
+      scale=0.999914 0.999914 1.000012
   ENDOBJECT
   OBJECT
     type=
@@ -7913,7 +7948,7 @@ OBJECT
       pos=116.827347 4.811144 227.545868
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999888 0.999888 0.999888
+      scale=0.999889 0.999889 0.999889
   ENDOBJECT
   OBJECT
     type=
@@ -8003,7 +8038,7 @@ OBJECT
       pos=116.790977 4.818280 167.509506
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 -0.000000 0.000000
-      scale=0.999864 0.999864 0.999864
+      scale=0.999865 0.999865 0.999865
   ENDOBJECT
   OBJECT
     type=
@@ -8135,7 +8170,7 @@ OBJECT
       pos=30.920322 4.861435 79.409615
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999955 0.999955 1.000010
+      scale=0.999956 0.999956 1.000011
   ENDOBJECT
   OBJECT
     type=
@@ -8165,7 +8200,7 @@ OBJECT
       pos=29.867693 4.862977 59.500450
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999904 0.999904 1.000010
+      scale=0.999905 0.999905 1.000011
   ENDOBJECT
   OBJECT
     type=
@@ -8261,7 +8296,7 @@ OBJECT
       pos=29.753960 4.864587 -320.544037
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999843 0.999843 1.000010
+      scale=0.999844 0.999844 1.000011
   ENDOBJECT
   OBJECT
     type=
@@ -8603,7 +8638,7 @@ OBJECT
       pos=-334.202637 4.879670 -459.586029
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999899 0.999899 1.000009
+      scale=0.999900 0.999900 1.000010
   ENDOBJECT
   OBJECT
     type=
@@ -9041,7 +9076,7 @@ OBJECT
       pos=-77.123375 4.769499 -657.593933
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999907 0.999907 1.000009
+      scale=0.999908 0.999908 1.000010
   ENDOBJECT
   OBJECT
     type=
@@ -9137,7 +9172,7 @@ OBJECT
       pos=-109.916397 4.821434 -746.882324
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 -0.000000 0.000000
-      scale=0.999954 0.999954 1.000009
+      scale=0.999955 0.999955 1.000010
   ENDOBJECT
   OBJECT
     type=
@@ -9479,7 +9514,7 @@ OBJECT
       pos=-439.262451 34.789139 -789.554321
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999893 0.999893 1.000009
+      scale=0.999894 0.999894 1.000010
   ENDOBJECT
   OBJECT
     type=
@@ -9509,7 +9544,7 @@ OBJECT
       pos=-451.254639 34.769173 -826.062317
       rot=180.000000 -0.000000 -89.999870
       quat=0.707107 -0.707106 0.000000 -0.000000
-      scale=0.999690 0.999690 0.999690
+      scale=0.999689 0.999689 0.999688
   ENDOBJECT
   OBJECT
     type=
@@ -9641,7 +9676,7 @@ OBJECT
       pos=-451.297058 34.775375 -906.126892
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999961 0.999961 1.000009
+      scale=0.999962 0.999962 1.000010
   ENDOBJECT
   OBJECT
     type=
@@ -9783,7 +9818,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence04 mapTag=fence04
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=8.000000
@@ -9799,11 +9833,12 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence04 mapTag=fence04
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-666.861572 34.892601 -981.374695
       rot=180.000000 -0.000000 90.000031
       quat=0.707107 0.707107 -0.000000 -0.000000
-      scale=0.999957 0.999957 1.000009
+      scale=0.999958 0.999958 1.000010
   ENDOBJECT
   OBJECT
     type=
@@ -9813,7 +9848,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -9913,6 +9947,7 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-669.496399 34.931877 -978.807861
       rot=-90.000000 -0.000000 90.000000
@@ -9927,7 +9962,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -9961,11 +9995,12 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-874.917847 49.324879 -884.326904
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999856 0.999856 1.000000
+      scale=0.999857 0.999857 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -9975,7 +10010,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=7.500000
@@ -9991,11 +10025,12 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-889.056824 54.513195 -806.670837
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999931 0.999931 1.000000
+      scale=0.999932 0.999932 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -10005,7 +10040,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence04 mapTag=fence04
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=8.000000
@@ -10021,6 +10055,7 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence04 mapTag=fence04
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-891.564331 54.524834 -801.337524
       rot=-90.000000 -0.000000 90.000000
@@ -10097,7 +10132,7 @@ OBJECT
       pos=-919.063232 54.770332 -799.047913
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999907 0.999907 1.000000
+      scale=0.999908 0.999908 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -10127,7 +10162,7 @@ OBJECT
       pos=-919.080139 75.670586 280.102539
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999976 0.999976 1.000000
+      scale=0.999977 0.999977 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -10137,7 +10172,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence04 mapTag=fence04
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=8.000000
@@ -10153,6 +10187,7 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence04 mapTag=fence04
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-891.302429 74.941437 288.223389
       rot=-90.000000 -0.000000 90.000000
@@ -10167,7 +10202,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -10249,11 +10283,12 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-888.918335 74.939423 290.896942
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999917 0.999917 1.000000
+      scale=0.999918 0.999918 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -10263,7 +10298,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -10357,11 +10391,12 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-855.216980 70.222534 445.296173
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 -0.000000 0.707107 0.707107
-      scale=0.999962 0.999962 1.000000
+      scale=0.999963 0.999963 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -10371,7 +10406,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -10471,6 +10505,7 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-783.161743 67.608826 512.477295
       rot=90.000000 -0.000000 90.000000
@@ -10485,7 +10520,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=17.200001
@@ -10501,6 +10535,7 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-705.221497 65.502411 525.551025
       rot=90.000000 -0.000000 90.000000
@@ -10515,7 +10550,6 @@ OBJECT
     tag=Wall
     collisionLayer=0
     cullDistance=0
-    COMP kind=Texture proto=fence04 mapTag=fence04
     COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
       SampleUnit=1.000000
       TextureUnit=20.000000
@@ -10531,11 +10565,12 @@ OBJECT
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
+    COMP kind=Texture proto=fence04 mapTag=fence04
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-690.508728 64.753189 527.984375
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999942 0.999942 1.000000
+      scale=0.999943 0.999943 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -10715,7 +10750,7 @@ OBJECT
       pos=-350.575623 64.820091 559.944031
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999927 0.999927 1.000000
+      scale=0.999928 0.999928 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -10817,7 +10852,7 @@ OBJECT
       pos=-342.755188 64.875725 597.288269
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999871 0.999871 1.000000
+      scale=0.999872 0.999872 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -10883,7 +10918,7 @@ OBJECT
       pos=-302.022766 64.270416 663.684875
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999872 0.999872 1.000000
+      scale=0.999873 0.999873 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -11339,7 +11374,7 @@ OBJECT
       pos=-98.028587 64.825844 601.886902
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999922 0.999922 1.000007
+      scale=0.999923 0.999923 1.000008
   ENDOBJECT
   OBJECT
     type=
@@ -11615,7 +11650,7 @@ OBJECT
       pos=-334.901733 64.833496 334.085388
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999855 0.999855 1.000007
+      scale=0.999856 0.999856 1.000008
   ENDOBJECT
   OBJECT
     type=
@@ -11962,7 +11997,7 @@ OBJECT
     pos=-507.157990 -1.000000 -48.609833
     rot=89.999870 -0.000000 0.000000
     quat=0.707106 0.000000 0.000000 0.707108
-    scale=2500.000000 2499.975830 0.999970
+    scale=2500.000000 2499.977295 0.999971
 ENDOBJECT
 OBJECT
   type=
@@ -11989,7 +12024,7 @@ OBJECT
       pos=-53.734482 18.863621 -51.576286
       rot=89.997391 -84.506912 -89.997406
       quat=0.033883 -0.706293 -0.033883 0.706296
-      scale=19.999498 19.999979 19.999155
+      scale=19.999498 19.999981 19.999153
     OBJECT
       type=
       prefabPath=
@@ -12019,7 +12054,7 @@ OBJECT
       pos=-53.738010 18.952581 -73.517914
       rot=89.993294 -85.320923 -89.993301
       quat=0.028865 -0.706514 -0.028865 0.706521
-      scale=19.999706 19.999977 19.995474
+      scale=19.999712 19.999977 19.995481
     OBJECT
       type=
       prefabPath=
@@ -12049,7 +12084,7 @@ OBJECT
       pos=-53.760715 18.980713 -95.085541
       rot=89.983681 -85.630127 -89.983597
       quat=0.026959 -0.706585 -0.026958 0.706600
-      scale=19.999376 19.999964 19.997326
+      scale=19.999367 19.999964 19.997314
     OBJECT
       type=
       prefabPath=
@@ -12079,7 +12114,7 @@ OBJECT
       pos=-51.861969 13.811485 -139.200516
       rot=89.983231 -85.479538 -89.875542
       quat=0.028551 -0.706522 -0.027223 0.706591
-      scale=20.000107 19.999912 19.999889
+      scale=20.000114 19.999912 19.999897
     OBJECT
       type=
       prefabPath=
@@ -12109,7 +12144,7 @@ OBJECT
       pos=-51.935390 13.814339 -159.109100
       rot=86.152023 -85.572365 -85.991234
       quat=0.028242 -0.704707 -0.026259 0.708450
-      scale=20.000467 19.999989 19.998907
+      scale=20.000479 19.999989 19.998919
     OBJECT
       type=
       prefabPath=
@@ -12139,7 +12174,7 @@ OBJECT
       pos=-49.566593 19.056013 -193.107010
       rot=86.790550 -85.164597 -89.989082
       quat=0.010100 -0.705364 -0.049534 0.707040
-      scale=19.999687 19.999989 19.999817
+      scale=19.999680 19.999989 19.999807
     OBJECT
       type=
       prefabPath=
@@ -12167,9 +12202,9 @@ OBJECT
     cullDistance=0
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-49.379089 19.238291 -213.733551
-      rot=89.996750 -85.646126 -94.061043
+      rot=89.996750 -85.646118 -94.061043
       quat=0.001787 -0.707103 -0.051899 0.705202
-      scale=20.000158 19.999977 20.000170
+      scale=20.000183 19.999977 20.000195
     OBJECT
       type=
       prefabPath=
@@ -12199,7 +12234,7 @@ OBJECT
       pos=-49.326057 19.213070 -234.094376
       rot=89.988525 -85.544090 -93.857140
       quat=0.003624 -0.707092 -0.051323 0.705248
-      scale=19.999653 19.999994 19.999430
+      scale=19.999674 19.999992 19.999449
     OBJECT
       type=
       prefabPath=
@@ -12229,7 +12264,7 @@ OBJECT
       pos=-48.722610 13.748142 -274.118805
       rot=89.988556 -85.426422 -89.988487
       quat=0.028215 -0.706538 -0.028214 0.706550
-      scale=19.999672 20.000019 19.998444
+      scale=19.999691 20.000019 19.998463
     OBJECT
       type=
       prefabPath=
@@ -12259,7 +12294,7 @@ OBJECT
       pos=-49.468266 0.761532 -308.621552
       rot=89.963318 -85.759697 -89.963234
       quat=0.026160 -0.706606 -0.026159 0.706639
-      scale=19.999525 20.000027 19.998919
+      scale=19.999512 20.000027 19.998905
     OBJECT
       type=
       prefabPath=
@@ -12349,7 +12384,7 @@ OBJECT
       pos=-143.750412 13.823269 -356.593994
       rot=0.000000 -0.000000 -4.865531
       quat=0.000000 0.000000 -0.042447 0.999099
-      scale=20.000000 20.000000 20.000000
+      scale=19.999998 19.999998 20.000000
     OBJECT
       type=
       prefabPath=
@@ -12527,9 +12562,9 @@ OBJECT
     cullDistance=0
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-347.881226 0.771771 -374.822083
-      rot=2.733573 -27.956720 -5.815204
+      rot=2.733574 -27.956722 -5.815204
       quat=0.010867 -0.242350 -0.043455 0.969154
-      scale=19.999969 19.999968 19.999968
+      scale=19.999966 19.999969 19.999968
     OBJECT
       type=
       prefabPath=
@@ -12559,7 +12594,7 @@ OBJECT
       pos=-370.089722 0.542638 -388.948151
       rot=3.439546 -35.837959 -5.861213
       quat=0.012795 -0.308591 -0.039403 0.950292
-      scale=20.000004 19.999990 19.999989
+      scale=20.000004 19.999992 19.999989
     OBJECT
       type=
       prefabPath=
@@ -12619,7 +12654,7 @@ OBJECT
       pos=-419.203003 0.000000 -457.949036
       rot=18.978117 -75.975250 -19.517742
       quat=0.025153 -0.620309 -0.031763 0.783311
-      scale=19.999996 20.000004 19.999844
+      scale=20.000011 20.000004 19.999859
     OBJECT
       type=
       prefabPath=
@@ -12695,7 +12730,7 @@ OBJECT
       pos=-34.655479 15.011657 1.234759
       rot=0.000000 -89.999870 0.000000
       quat=0.000000 -0.707106 0.000000 0.707108
-      scale=19.998547 20.000000 19.998549
+      scale=19.998558 20.000000 19.998560
   ENDOBJECT
   OBJECT
     type=
@@ -12711,7 +12746,7 @@ OBJECT
       pos=-34.911041 14.854310 -23.141617
       rot=0.000000 -89.999870 0.000000
       quat=0.000000 -0.707106 0.000000 0.707108
-      scale=19.999998 20.000000 20.000000
+      scale=20.000010 20.000000 20.000011
   ENDOBJECT
   OBJECT
     type=
@@ -12727,7 +12762,7 @@ OBJECT
       pos=-34.886795 14.935539 26.071089
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=19.997677 20.000000 19.997681
+      scale=19.997688 20.000000 19.997692
   ENDOBJECT
   OBJECT
     type=
@@ -12743,7 +12778,7 @@ OBJECT
       pos=-35.319389 13.768243 -117.462135
       rot=0.000000 -89.996300 0.000000
       quat=0.000000 -0.707084 0.000000 0.707129
-      scale=19.997307 19.999998 19.997307
+      scale=19.997292 19.999998 19.997292
   ENDOBJECT
   OBJECT
     type=
@@ -12759,7 +12794,7 @@ OBJECT
       pos=-35.238850 13.742863 -176.769089
       rot=0.000000 -89.997437 0.000000
       quat=0.000000 -0.707091 0.000000 0.707122
-      scale=19.998142 19.999998 19.998142
+      scale=19.998127 19.999998 19.998127
   ENDOBJECT
   OBJECT
     type=
@@ -12775,7 +12810,7 @@ OBJECT
       pos=-35.166275 13.458420 -254.153458
       rot=0.000000 -89.996468 0.000000
       quat=0.000000 -0.707085 0.000000 0.707128
-      scale=19.997417 19.999998 19.997417
+      scale=19.997402 19.999998 19.997402
   ENDOBJECT
   OBJECT
     type=
@@ -12791,7 +12826,7 @@ OBJECT
       pos=-35.233150 13.200253 -292.209412
       rot=0.000000 -89.995491 0.000000
       quat=0.000000 -0.707079 0.000000 0.707134
-      scale=19.996639 19.999998 19.996639
+      scale=19.996624 19.999998 19.996624
   ENDOBJECT
   OBJECT
     type=
@@ -12807,7 +12842,7 @@ OBJECT
       pos=-35.144611 13.147078 -327.272095
       rot=0.000000 -82.726250 0.000000
       quat=0.000000 -0.660829 0.000000 0.750536
-      scale=19.997721 19.999998 19.997721
+      scale=19.997709 19.999998 19.997709
   ENDOBJECT
   OBJECT
     type=
@@ -12823,7 +12858,7 @@ OBJECT
       pos=-38.329269 12.902261 -345.181610
       rot=0.000000 -73.561699 0.000000
       quat=0.000000 -0.598756 0.000000 0.800931
-      scale=19.998812 19.999998 19.998812
+      scale=19.998802 19.999998 19.998802
   ENDOBJECT
   OBJECT
     type=
@@ -12919,6 +12954,6 @@ OBJECT
       pos=-399.753479 9.347100 -440.875793
       rot=0.000000 -62.294182 0.000000
       quat=0.000000 -0.517237 0.000000 0.855842
-      scale=19.999983 20.000000 19.999983
+      scale=19.999979 20.000000 19.999979
   ENDOBJECT
 ENDOBJECT

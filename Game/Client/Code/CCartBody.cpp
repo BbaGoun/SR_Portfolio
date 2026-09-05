@@ -43,18 +43,18 @@ HRESULT CCartBody::Ready_GameObject()
 	m_fScale				= 1.f;
 	m_fThunderTimer			= 0.f;
 
-	Engine::CComponent* pComponent = nullptr;
+	//Engine::CComponent* pComponent = nullptr;
 
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	if (nullptr == pComponent)
-		return E_FAIL;
+	//pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
+	//if (nullptr == pComponent)
+	//	return E_FAIL;
 
-	//m_vColliderSize = { 2.5f,1.5f,5.f };
-	//m_pColliderCom->Set_Extents(m_vColliderSize);
-	
-	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetIsTrigger(false);
-	m_mapComponent.insert({ L"Com_Collider", pComponent });
+	////m_vColliderSize = { 2.5f,1.5f,5.f };
+	////m_pColliderCom->Set_Extents(m_vColliderSize);
+	//
+	//m_pColliderCom->Set_Owner(this);
+	//m_pColliderCom->SetIsTrigger(false);
+	//m_mapComponent.insert({ L"Com_Collider", pComponent });
 	return S_OK;
 }
 
@@ -73,6 +73,8 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	//m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
 	//m_pTransformCom->Set_Pos({ 0,0.1f,0 });
+
+	//CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
 }
 
 _int CCartBody::Update_GameObject(const _float& fDeltaTime)
@@ -111,7 +113,7 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 			if (isPlayer) {
 				SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 				// StarEffect
-				if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 60)
+				if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 40)
 				{
 					CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
 						(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
@@ -120,7 +122,9 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 			}
 			// MTV Àû¿ë
 			_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
-				static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
+				static_cast<CCube_Collider*>(pOtherCollider), Get_Component<CCube_Collider>());
+
+			MTV.y = 0;
 
 			_vec3 vNewForce = vParentForce;
 			vNewForce *= vParentSpeed;
@@ -133,8 +137,8 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 
 			if(inward < 0)
 				vNewForce -= MTV_n * inward;
-
-			vNewForce += MTV;
+			else
+				vNewForce += MTV;
 
 			_vec3 vPos;
 			m_pParent->Get_Transform()->Get_Info(INFO_POS, &vPos);
