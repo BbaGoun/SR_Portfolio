@@ -712,7 +712,7 @@ void CCartBot::CreateBananaObject()
 void CCartBot::CreateThunderCloudObject()
 {
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_thunderbolt/ThunderCloud.ogg", SOUND_THUNDERCLOUD, 0.4f);
-	CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev);
+	CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev,this);
 
 	if (nullptr == pGameObject)
 		return;

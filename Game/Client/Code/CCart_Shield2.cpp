@@ -29,8 +29,8 @@ HRESULT CCart_Shield2::Ready_GameObject()
 	m_bCurState = false;
 
 	CComponent* pComponent = nullptr;
-	m_pTransformCom->Set_Pos({ 0.f,0.f,0.f });
-	m_pTransformCom->Set_Scale({ 12.f, 12.0f, 12.0f });
+	m_pTransformCom->Set_Pos({ 0.f,3.f,0.f });
+	m_pTransformCom->Set_Scale({ 6.f, 6.0f, 6.0f });
 
 	pComponent = m_pBufferCom = dynamic_cast<CSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Sphere"));
 	if (nullptr == pComponent)

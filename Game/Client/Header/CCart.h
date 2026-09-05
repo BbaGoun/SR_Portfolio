@@ -69,6 +69,8 @@ public:
 
 	bool			GetPlayingState()					{ return m_bPlaying; }
 
+	CGameObject*	GetMagnetTarget()					{ return m_pMagnetTarget; }
+
 	// AdjustState
 	void			AdjustPosY_Slope(_vec3 pos, const float fDeltaTime);
 
@@ -108,6 +110,13 @@ public:
 	void			SetWheelForceLen();
 	void			SetWheelDir();
 	void			SetWheelTurn(WHEEL_TURN eTurn);
+
+	// Shield
+	void			SetShield1(CGameObject* pShield1) { m_pShield1 = pShield1; }
+	void			SetShield2(CGameObject* pShield2) { m_pShield2 = pShield2; }
+
+	CGameObject*	GetShield1() { return m_pShield1; }
+	CGameObject*	GetShield2() { return m_pShield2; }
 
 
 private:
@@ -170,7 +179,10 @@ private:
 	bool			m_bCollisionWall = false;
 
 	_float			m_fAimRotationZ;
+	CGameObject*	m_pMagnetTarget = nullptr;
 
+	CGameObject*	m_pShield1 = nullptr;
+	CGameObject*	m_pShield2 = nullptr;
 protected:
 	virtual		void		Free() override;
 };

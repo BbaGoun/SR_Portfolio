@@ -12,6 +12,8 @@
 #include "CCollisionStarEffect.h"
 #include "SoundMgr.h"
 #include "CCartBot.h"
+#include <CShield1.h>
+#include <CShield2.h>
 
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -66,7 +68,9 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(m_vRotation.y), D3DXToRadian(m_vRotation.x), D3DXToRadian(m_vRotation.z));
 	m_pTransformCom->Set_Quaternion(&q);
 	
-	//m_pTransformCom->Set_Scale({ m_fScale,m_fScale,m_fScale });
+	// _vec3 vScale = m_pTransformCom->Get_Scale();
+	// m_pTransformCom->Set_Scale(vScale * m_fScale);
+
 	//m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
 	//m_pTransformCom->Set_Pos({ 0,0.1f,0 });
 }
@@ -74,24 +78,6 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CCartBody::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-
-	if (m_bShieldActive == true)
-	{
-		m_bShieldTimer = true;
-	}
-
-	if (m_bShieldTimer == true && m_bShieldActive == true)
-	{
-		m_fShieldTimer += fDeltaTime;
-
-		if (m_fShieldTimer >= 2.f)
-		{
-			m_bShieldHit = false;
-			m_bShieldActive = false;
-			m_bShieldTimer = false;
-			m_fShieldTimer = 0.f;
-		}
-	}
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -184,17 +170,27 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 	CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+	CGameObject* pShield = pCart->GetShield1();
+
 	if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
 	{
-		if (m_bShieldActive)
+		if (pShield)
+		{
+			static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
+			static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
 			m_bShieldHit = true;
+		}
 		else if (pCart->GetRainbowUI() == false)
 			pCart->SetRainbowUI(true);
 	}
 	else if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
 	{
-		if (m_bShieldActive)
+		if (pShield)
+		{
+			static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
+			static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
 			m_bShieldHit = true;
+		}
 		else if (pCart->GetBanana() == false)
 		{
 			SoundMgr::GetInstance().PlaySound(L"Effect/Item_banana/Bananatrapped.ogg", SOUND_BANANA, 0.4f);
@@ -264,6 +260,8 @@ void CCartBody::ThunderSpin(const _float& fDeltaTime)
 {
 	if (m_bThunderSpinState == false)
 		return;
+	_vec3 vParentForce = m_pParent->Get_Force();
+	m_pParent->Set_Force(vParentForce * 0.95f);
 	m_vRotation.y += 720 * fDeltaTime;
 	if (m_vRotation.y > 720)
 	{
@@ -285,10 +283,10 @@ void CCartBody::ThunderTimerUpdate(const _float& fDeltaTime)
 
 	m_fThunderTimer += fDeltaTime;
 
-	if (m_fScale > 0.5)
+	if (m_fScale > 0.8)
 		m_fScale -= fDeltaTime;
 	else
-		m_fScale = 0.5f;
+		m_fScale = 0.8f;
 
 	if (m_fThunderTimer > 5.f)
 	{
