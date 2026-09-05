@@ -171,7 +171,7 @@
       pos=-78.852570 0.000000 -402.439209
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999986 1.000000 0.999986
+      scale=0.999994 1.000000 0.999994
   ENDOBJECT
   OBJECT
     type=
@@ -297,7 +297,7 @@
       pos=-275.707092 0.000000 -402.501801
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999908 1.000000 0.999908
+      scale=0.999916 1.000000 0.999916
   ENDOBJECT
   OBJECT
     type=
@@ -327,7 +327,7 @@
       pos=-204.168243 0.000000 -602.490662
       rot=0.000000 -89.990471 0.000000
       quat=0.000000 -0.707048 0.000000 0.707165
-      scale=0.999698 1.000000 0.999698
+      scale=0.999690 1.000000 0.999690
   ENDOBJECT
   OBJECT
     type=
@@ -435,7 +435,7 @@
       pos=-199.048859 0.000000 -602.474243
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999881 1.000000 0.999881
+      scale=0.999889 1.000000 0.999889
   ENDOBJECT
   OBJECT
     type=
@@ -465,7 +465,7 @@
       pos=-249.047943 0.000000 -743.541199
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999959 1.000000 0.999959
+      scale=0.999967 1.000000 0.999967
   ENDOBJECT
   OBJECT
     type=
@@ -495,7 +495,7 @@
       pos=-364.610657 0.000000 -743.538330
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 -0.000000 0.707107
-      scale=0.999876 1.000000 0.999876
+      scale=0.999884 1.000000 0.999884
   ENDOBJECT
   OBJECT
     type=
@@ -525,7 +525,7 @@
       pos=-219.090454 30.000000 -743.544495
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999884 1.000000 0.999884
+      scale=0.999892 1.000000 0.999892
   ENDOBJECT
   OBJECT
     type=
@@ -579,7 +579,7 @@
       pos=-408.984192 30.000000 -743.464172
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999930 1.000000 0.999930
+      scale=0.999938 1.000000 0.999938
   ENDOBJECT
   OBJECT
     type=
@@ -711,7 +711,7 @@
       pos=-562.247742 30.000000 -979.055908
       rot=180.000000 -89.999962 180.000000
       quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999926 1.000000 0.999926
+      scale=0.999934 1.000000 0.999934
   ENDOBJECT
   OBJECT
     type=
@@ -777,7 +777,7 @@
       pos=-672.349121 30.000000 -967.245972
       rot=0.000000 -89.999222 0.000000
       quat=0.000000 -0.707102 0.000000 0.707112
-      scale=0.999848 1.000000 0.999848
+      scale=0.999856 1.000000 0.999856
   ENDOBJECT
   OBJECT
     type=
@@ -915,7 +915,7 @@
       pos=-787.915161 60.000000 525.786377
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=1.000003 1.000000 1.000003
+      scale=1.000011 1.000000 1.000011
   ENDOBJECT
   OBJECT
     type=
@@ -975,7 +975,7 @@
       pos=-387.421143 60.000000 525.984314
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999986 1.000000 0.999986
+      scale=0.999994 1.000000 0.999994
   ENDOBJECT
   OBJECT
     type=
@@ -1107,7 +1107,7 @@
       pos=-259.957245 60.000000 380.187622
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999945 1.000000 0.999945
+      scale=0.999953 1.000000 0.999953
   ENDOBJECT
   OBJECT
     type=
@@ -1137,7 +1137,7 @@
       pos=-298.853760 60.000000 380.176361
       rot=180.000000 89.999962 180.000000
       quat=-0.000000 0.707107 -0.000000 0.707107
-      scale=0.999989 1.000000 0.999989
+      scale=0.999997 1.000000 0.999997
   ENDOBJECT
   OBJECT
     type=
@@ -1329,7 +1329,7 @@
       pos=-303.616547 60.000000 380.217682
       rot=0.000000 -89.989822 0.000000
       quat=0.000000 -0.707044 0.000000 0.707170
-      scale=0.999724 1.000000 0.999724
+      scale=0.999732 1.000000 0.999732
   ENDOBJECT
   OBJECT
     type=
@@ -1359,7 +1359,7 @@
       pos=-244.488342 60.000000 260.532684
       rot=0.000000 -89.992256 0.000000
       quat=0.000000 -0.707059 0.000000 0.707154
-      scale=0.999753 1.000000 0.999753
+      scale=0.999745 1.000000 0.999745
   ENDOBJECT
   OBJECT
     type=
@@ -1389,7 +1389,7 @@
       pos=-161.444122 30.000000 260.610565
       rot=0.000000 -89.989822 0.000000
       quat=0.000000 -0.707044 0.000000 0.707170
-      scale=0.999715 1.000000 0.999715
+      scale=0.999723 1.000000 0.999723
   ENDOBJECT
   OBJECT
     type=
@@ -1418,7 +1418,7 @@
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=-85.134201 30.000000 260.646088
       rot=0.000000 -89.992905 0.000000
-      quat=0.000000 -0.707063 0.000000 0.707150
+      quat=0.000000 -0.707063 0.000000 0.707151
       scale=0.999758 1.000000 0.999758
   ENDOBJECT
   OBJECT
@@ -1446,10 +1446,10 @@
         cp_depth=10.000000
       END_CONTROL_POINT
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-      pos=36.062935 0.000000 260.677795
-      rot=180.000000 -89.999962 180.000000
-      quat=0.000000 -0.707107 0.000000 0.707107
-      scale=0.999851 1.000000 0.999851
+      pos=36.062935 0.000000 260.620667
+      rot=0.000000 -89.990471 0.000000
+      quat=0.000000 -0.707048 0.000000 0.707165
+      scale=0.999749 1.000000 0.999749
   ENDOBJECT
   OBJECT
     type=
@@ -1479,7 +1479,7 @@
       pos=54.205418 0.000000 260.663788
       rot=0.000000 -89.990799 0.000000
       quat=0.000000 -0.707050 0.000000 0.707163
-      scale=0.999740 1.000000 0.999740
+      scale=0.999732 1.000000 0.999732
   ENDOBJECT
   OBJECT
     type=
@@ -1509,7 +1509,7 @@
       pos=59.680733 0.000000 260.496155
       rot=0.000000 -89.999870 180.000000
       quat=0.707106 0.000000 0.707107 -0.000000
-      scale=0.999767 0.999658 0.999767
+      scale=0.999759 0.999642 0.999759
   ENDOBJECT
   OBJECT
     type=
@@ -1587,7 +1587,7 @@
       pos=44.533592 0.000000 123.866180
       rot=180.000000 89.999962 180.000000
       quat=0.000000 0.707107 0.000000 0.707107
-      scale=0.999873 1.000000 0.999873
+      scale=0.999881 1.000000 0.999881
   ENDOBJECT
   OBJECT
     type=
@@ -1709,7 +1709,7 @@ OBJECT
       pos=57.298588 4.814831 228.537781
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 0.000000 0.000000
-      scale=0.999937 0.999937 1.000006
+      scale=0.999945 0.999945 1.000014
   ENDOBJECT
   OBJECT
     type=
@@ -1793,7 +1793,7 @@ OBJECT
       pos=57.289257 4.818830 168.491852
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 0.000000 0.000000
-      scale=0.999915 0.999915 1.000006
+      scale=0.999923 0.999923 1.000014
   ENDOBJECT
   OBJECT
     type=
@@ -1949,7 +1949,7 @@ OBJECT
       pos=-17.893248 4.880261 118.202820
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 -0.000000 -0.000000
-      scale=0.999892 0.999892 0.999892
+      scale=0.999900 0.999900 0.999900
   ENDOBJECT
   OBJECT
     type=
@@ -1997,7 +1997,7 @@ OBJECT
       pos=-29.772562 4.929333 -308.912659
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 -0.000000 -0.000000
-      scale=0.999655 0.999655 0.999586
+      scale=0.999663 0.999663 0.999594
   ENDOBJECT
   OBJECT
     type=
@@ -2057,7 +2057,7 @@ OBJECT
       pos=-29.813633 4.930652 -286.807678
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999405 0.999405 0.999792
+      scale=0.999413 0.999413 0.999800
   ENDOBJECT
   OBJECT
     type=
@@ -2357,7 +2357,7 @@ OBJECT
       pos=-401.628357 4.529151 -502.640686
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999553 0.999553 0.999124
+      scale=0.999561 0.999561 0.999132
   ENDOBJECT
   OBJECT
     type=
@@ -2447,7 +2447,7 @@ OBJECT
       pos=-376.170837 4.532385 -592.443909
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999562 0.999562 0.999418
+      scale=0.999570 0.999570 0.999426
   ENDOBJECT
   OBJECT
     type=
@@ -2681,7 +2681,7 @@ OBJECT
       pos=-133.862595 4.736108 -672.121216
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999548 0.999548 0.999392
+      scale=0.999556 0.999556 0.999400
   ENDOBJECT
   OBJECT
     type=
@@ -3137,7 +3137,7 @@ OBJECT
       pos=-502.446503 34.977821 -775.826172
       rot=180.000000 -0.000000 -90.000198
       quat=-0.707105 0.707108 0.000000 0.000000
-      scale=0.999748 0.999748 0.999809
+      scale=0.999740 0.999740 0.999793
   ENDOBJECT
   OBJECT
     type=
@@ -3179,7 +3179,7 @@ OBJECT
       pos=-510.313843 35.025513 -812.398438
       rot=180.000000 -0.000000 -90.000198
       quat=-0.707106 0.707108 0.000000 0.000000
-      scale=0.999512 0.999512 0.999268
+      scale=0.999520 0.999520 0.999276
   ENDOBJECT
   OBJECT
     type=
@@ -3257,7 +3257,7 @@ OBJECT
       pos=-511.042297 34.872341 -899.398499
       rot=180.000000 -0.000000 -90.000031
       quat=-0.707107 0.707107 -0.000000 0.000000
-      scale=0.999965 0.999965 0.999921
+      scale=0.999973 0.999973 0.999929
   ENDOBJECT
   OBJECT
     type=
@@ -3593,7 +3593,7 @@ OBJECT
       pos=-853.088623 50.013424 -862.314636
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999962 0.999962 1.000000
+      scale=0.999970 0.999970 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -3623,7 +3623,7 @@ OBJECT
       pos=-859.544434 54.695316 -804.976013
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999913 0.999913 1.000000
+      scale=0.999921 0.999921 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -3731,7 +3731,7 @@ OBJECT
       pos=-859.508240 54.898804 -799.128296
       rot=0.000000 -0.000000 -89.991928
       quat=-0.000000 0.000000 -0.707057 0.707157
-      scale=0.999755 0.999755 0.999991
+      scale=0.999763 0.999763 0.999991
   ENDOBJECT
   OBJECT
     type=
@@ -3779,7 +3779,7 @@ OBJECT
       pos=-859.375427 76.010002 235.312332
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999896 0.999896 1.000000
+      scale=0.999904 0.999904 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -3809,7 +3809,7 @@ OBJECT
       pos=-859.509460 75.627472 280.663818
       rot=0.000000 -0.000000 -90.000031
       quat=0.000000 0.000000 -0.707107 0.707107
-      scale=0.999936 0.999936 1.000000
+      scale=0.999944 0.999944 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -3893,7 +3893,7 @@ OBJECT
       pos=-859.377258 74.830185 290.706909
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999940 0.999940 1.000000
+      scale=0.999948 0.999948 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -3971,7 +3971,7 @@ OBJECT
       pos=-836.720825 70.125298 417.956696
       rot=0.000000 -0.000000 90.000031
       quat=0.000000 0.000000 0.707107 0.707107
-      scale=0.999956 0.999956 1.000000
+      scale=0.999964 0.999964 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -4277,7 +4277,7 @@ OBJECT
       pos=-289.686279 64.757957 543.820068
       rot=0.000000 -0.000000 -89.991928
       quat=0.000000 0.000000 -0.707057 0.707157
-      scale=0.999754 0.999754 1.000000
+      scale=0.999762 0.999762 1.000000
   ENDOBJECT
   OBJECT
     type=
@@ -4529,7 +4529,7 @@ OBJECT
       pos=-172.468079 64.731323 602.527832
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999499 0.999499 0.999291
+      scale=0.999507 0.999507 0.999299
   ENDOBJECT
   OBJECT
     type=
@@ -4601,7 +4601,7 @@ OBJECT
       pos=-162.702087 64.795708 455.120514
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999675 0.999675 0.999638
+      scale=0.999683 0.999683 0.999646
   ENDOBJECT
   OBJECT
     type=
@@ -4895,7 +4895,7 @@ OBJECT
       pos=-396.001892 64.742470 341.555450
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999770 0.999770 0.999777
+      scale=0.999778 0.999778 0.999785
   ENDOBJECT
   OBJECT
     type=
@@ -4979,7 +4979,7 @@ OBJECT
       pos=-382.966492 64.810936 265.763733
       rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 0.000000
-      scale=0.999874 0.999874 0.999742
+      scale=0.999882 0.999882 0.999750
   ENDOBJECT
   OBJECT
     type=
@@ -5302,7 +5302,7 @@ OBJECT
       SampleUnit=1.000000
       TextureUnit=20.000000
       CONTROL_POINT
-        cp_pos=0.000000 0.000000 -2.500000
+        cp_pos=-0.056345 0.000000 -2.494385
         cp_bank=0.000000
         cp_width=10.000000
         cp_depth=10.000000
@@ -5315,9 +5315,9 @@ OBJECT
       END_CONTROL_POINT
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=116.964371 4.727839 287.579315
-      rot=-179.999985 0.000000 -89.999977
+      rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999902 0.999902 1.000000
+      scale=0.999910 0.999910 1.000008
   ENDOBJECT
   OBJECT
     type=
@@ -5345,9 +5345,9 @@ OBJECT
       END_CONTROL_POINT
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=116.827347 4.811144 227.545868
-      rot=-179.999985 0.000000 -89.999962
+      rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 0.000000 -0.000000
-      scale=0.999877 0.999877 0.999877
+      scale=0.999885 0.999885 0.999885
   ENDOBJECT
   OBJECT
     type=
@@ -5435,9 +5435,9 @@ OBJECT
       END_CONTROL_POINT
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=116.790977 4.818280 167.509506
-      rot=179.999985 -0.000000 -89.999962
+      rot=180.000000 -0.000000 -90.000031
       quat=0.707107 -0.707107 -0.000000 0.000000
-      scale=0.999853 0.999853 0.999853
+      scale=0.999861 0.999861 0.999861
   ENDOBJECT
   OBJECT
     type=
@@ -5477,7 +5477,7 @@ OBJECT
       END_CONTROL_POINT
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=60.333046 4.874554 96.401733
-      rot=90.000008 -0.000000 -90.000000
+      rot=90.000000 -0.000000 -90.000000
       quat=0.500000 -0.500000 -0.500000 0.500000
       scale=1.000000 1.000000 1.000000
   ENDOBJECT
@@ -5512,42 +5512,4847 @@ OBJECT
         cp_depth=10.000000
       END_CONTROL_POINT
       CONTROL_POINT
-        cp_pos=0.000972 -15.706001 10.076643
-        cp_bank=0.000000
-        cp_width=10.000000
-        cp_depth=10.000000
-      END_CONTROL_POINT
-      CONTROL_POINT
-        cp_pos=0.001728 -23.093063 10.721918
-        cp_bank=0.000000
-        cp_width=10.000000
-        cp_depth=10.000000
-      END_CONTROL_POINT
-      CONTROL_POINT
-        cp_pos=0.002719 -32.195217 10.883556
+        cp_pos=0.000972 -12.177856 9.689697
         cp_bank=0.000000
         cp_width=10.000000
         cp_depth=10.000000
       END_CONTROL_POINT
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=40.616943 4.878077 94.115105
-      rot=90.000008 -0.000000 -90.000000
+      rot=90.000000 -0.000000 -90.000000
       quat=0.500000 -0.500000 -0.500000 0.500000
       scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail60
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000224 0.538948 1.684074
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000528 0.882864 5.868149
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000866 1.039129 10.052223
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001364 1.063375 17.529701
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=30.920322 4.861435 79.409615
+      rot=180.000000 -0.000000 -90.000031
+      quat=0.707107 -0.707107 0.000000 -0.000000
+      scale=0.999952 0.999952 1.000007
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail61
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.089966 377.506348
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=29.867693 4.862977 59.500450
+      rot=180.000000 -0.000000 -90.000031
+      quat=0.707107 -0.707107 0.000000 -0.000000
+      scale=0.999901 0.999901 1.000007
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail62
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.155827 3.391235
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.466593 8.825165
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000044 1.531284 18.463348
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000089 3.051641 28.101532
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000147 5.179085 37.739716
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000207 8.409029 47.377899
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000268 12.656889 57.016083
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000369 18.417316 66.680237
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000477 25.791588 76.347382
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.003397 33.968807 84.779907
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.007272 42.146027 91.533539
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.010809 52.986629 98.326752
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=29.753960 4.864587 -320.544037
+      rot=180.000000 -0.000000 -90.000031
+      quat=0.707107 -0.707107 0.000000 -0.000000
+      scale=0.999840 0.999840 1.000007
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail63
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 -2.546570 2.500908
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000075 -6.414124 11.025629
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000151 -9.500885 19.550352
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000226 -11.637909 28.075380
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000762 -12.579193 35.124802
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001299 -13.124146 42.174225
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001930 -13.284302 55.080330
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-25.770857 4.874027 -418.923706
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail64
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000350 -0.005432 177.578308
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-83.395538 4.877989 -432.206909
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail65
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000060 0.000000 6.867645
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000419 -0.122650 12.782990
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001254 -0.411163 18.698334
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.002811 -1.136841 24.613678
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.004865 -2.102142 30.529022
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.008026 -3.604187 36.444366
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.011337 -5.861115 42.359711
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.015159 -8.687988 48.275055
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.019319 -11.977905 54.190399
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.023866 -15.721436 60.105774
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.029387 -20.559906 66.122681
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.035088 -24.896210 70.755920
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-263.352142 4.883461 -432.209686
+      rot=90.000000 -0.000000 -90.000000
+      quat=-0.500000 0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail66
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000237 -0.108856 -2.518158
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000306 3.507172 1.562714
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000455 6.507996 5.884277
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000826 9.179108 10.379608
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001269 10.466919 12.944733
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001731 11.600861 15.511078
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.002218 12.429688 18.079010
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.002764 13.568329 23.943726
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.003866 14.913757 36.885376
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.005044 15.241699 44.338104
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.006516 14.741394 51.809601
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.008561 13.742828 60.882233
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.010771 12.746582 66.416656
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.013123 11.217194 71.061005
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.015811 8.357300 76.752960
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.018649 4.728180 82.462982
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.036469 0.905548 87.208954
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.054465 -3.365631 91.314423
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.072566 -6.984222 94.460114
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.090764 -10.602814 97.326263
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.109019 -14.221405 99.686737
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.127543 -17.022003 101.369171
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-334.202637 4.879670 -459.586029
+      rot=180.000000 -0.000000 -90.000031
+      quat=0.707107 -0.707107 0.000000 -0.000000
+      scale=0.999896 0.999896 1.000006
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail67
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000087 -0.050781 -2.462372
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000157 2.622559 2.289581
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000257 5.013794 7.041534
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000446 7.039551 11.793488
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000719 8.608398 16.545441
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001289 9.768250 21.297394
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.002041 10.653625 26.049347
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000106 11.319885 30.801453
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.001576 11.697266 35.045288
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.003354 11.790466 40.305664
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.004867 11.792175 55.359955
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-314.780426 4.745720 -560.921448
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail68
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000199 0.000000 57.529190
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001007 1.348877 77.504166
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-257.009857 4.749281 -572.721375
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail69
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000121 0.725830 2.503860
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000367 1.551636 7.511749
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000913 2.490967 12.529114
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001286 3.557251 17.541153
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001753 4.783691 22.556183
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.002270 6.220398 27.572830
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.001904 7.859070 32.598969
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.005942 9.717407 37.629440
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.009792 11.899597 42.665924
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.013511 14.322144 47.706635
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.017150 17.169250 52.748604
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.020635 20.367554 57.793053
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.028797 25.060486 64.344429
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.026840 29.944092 70.312508
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-177.065765 4.766957 -574.093201
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail70
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000162 3.937866 1.773621
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000375 8.525208 6.048050
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000635 13.725525 10.225182
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000979 19.932800 14.404999
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001466 26.611633 18.218719
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.002058 33.367249 21.466194
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.002730 40.112610 24.119347
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.003519 46.843018 26.178154
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.004610 51.041443 27.174507
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-104.302383 4.780632 -604.052124
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail71
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.012606 -0.878181 2.483032
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.025109 -1.496414 7.466064
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.037534 -1.811943 12.449097
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.049884 -1.839600 17.432129
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.062126 -1.581154 22.415161
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.074335 -1.035133 27.398193
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.079043 -0.191330 32.375977
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.083646 0.965363 37.353760
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.088127 2.398071 42.331543
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.092543 4.151947 47.309326
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.096929 6.258675 52.287109
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.034802 8.559906 57.148438
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.034193 11.224976 62.009766
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.008861 14.320160 66.871094
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.030292 17.852226 71.732422
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.005011 21.974609 76.593750
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.027431 26.698898 81.355652
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.049504 32.667717 86.716492
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-77.123375 4.769499 -657.593933
+      rot=180.000000 -0.000000 -90.000031
+      quat=0.707107 -0.707107 0.000000 -0.000000
+      scale=0.999904 0.999904 1.000006
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail72
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=-0.000063 -0.035301 -2.468445
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.000538 3.810890 0.622864
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.001082 8.025658 3.714172
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.001795 12.512444 6.706055
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.002544 17.294914 9.551086
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.003386 22.798874 12.396118
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.004296 29.001144 15.141479
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.005255 35.388779 17.505432
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.006249 41.776428 19.501099
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.007297 48.164078 21.163025
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.008395 54.553345 22.549316
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.009634 62.435867 24.010193
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.010931 73.477020 25.578369
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-109.916397 4.821434 -746.882324
+      rot=180.000000 -0.000000 -90.000031
+      quat=0.707107 -0.707107 -0.000000 0.000000
+      scale=0.999951 0.999951 1.000006
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail73
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000043 -0.408325 2.498611
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000195 -0.678284 7.497223
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000369 -0.776733 12.495834
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.009099 -0.807861 17.496017
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-185.962372 4.829521 -772.473755
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail74
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000299 0.000000 37.613571
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-205.857361 4.838161 -773.283325
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail75
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=7.800000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 -0.028381 5.314713
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-245.888153 4.832706 -773.304260
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail76
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.241188 0.000000 -3.772964
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-25.700886 0.019409 92.900131
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-253.887985 4.827417 -773.312805
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail77
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=15.500000
+      CONTROL_POINT
+        cp_pos=0.233288 0.000000 -3.710907
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-3.821705 0.000000 11.263000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-350.355103 30.713146 -773.299377
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail78
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.032207 0.016663 37.595734
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-365.432220 34.764839 -773.322021
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail79
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001156 -0.265015 7.490753
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.003506 -0.638733 10.555664
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.006458 -1.613892 13.615753
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.009960 -2.731140 16.671448
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.014908 -5.279724 22.168610
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.020538 -7.447815 25.592285
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.028103 -10.657227 29.994049
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.037170 -13.852600 33.796936
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-405.457947 34.793373 -773.302673
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail80
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=-0.000732 -0.067322 -2.468628
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.000904 3.965698 1.529236
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.003429 7.058716 5.536804
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.007572 9.327667 9.570251
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.013302 10.626831 13.569458
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.016689 11.178467 17.656921
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.020077 11.728973 24.647217
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.024364 12.027161 33.964478
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-439.262451 34.789139 -789.554321
+      rot=180.000000 -0.000000 -90.000031
+      quat=0.707107 -0.707107 0.000000 -0.000000
+      scale=0.999890 0.999890 1.000006
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail81
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.002991 0.032104 77.488831
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-451.254639 34.769173 -826.062317
+      rot=180.000000 -0.000000 -89.999870
+      quat=0.707107 -0.707106 0.000000 -0.000000
+      scale=0.999693 0.999693 0.999696
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail82
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.223480 4.232910
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.860809 10.965820
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.009167 1.616425 17.709961
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.019581 2.399200 23.123352
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.029995 3.439880 28.536743
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.040409 4.840454 33.950134
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.055645 6.509705 39.363831
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.070881 8.516235 44.777527
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.086117 10.888733 50.191223
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.101353 13.762817 55.604919
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.116589 17.181671 61.018616
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.131084 21.289276 66.432312
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.146038 26.032623 71.846008
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.160992 31.506989 77.259705
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.175945 37.846313 82.673401
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.190849 45.010437 87.713928
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.205173 53.148651 92.138245
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.220982 57.837677 94.276733
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-451.297058 34.775375 -906.126892
+      rot=180.000000 -0.000000 -90.000031
+      quat=0.707107 -0.707107 0.000000 -0.000000
+      scale=0.999958 0.999958 1.000006
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail83
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000507 -2.009399 2.499969
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.001877 -3.637024 7.499908
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.003593 -4.976990 12.499847
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.005550 -6.098206 17.499786
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.007896 -7.001892 22.499725
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.010880 -7.654175 27.499664
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.014149 -8.067627 32.499603
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.018635 -8.285522 36.429169
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-511.658905 34.936680 -1000.502502
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail84
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.018066 97.533447
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-550.481873 34.900330 -1008.816895
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail85
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=19.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 16.288269
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-650.552368 34.883385 -1008.822266
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail86
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence04 mapTag=fence04
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=8.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.002319 26.305847 27.269409
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-666.861572 34.892601 -981.374695
+      rot=180.000000 -0.000000 90.000031
+      quat=0.707107 0.707107 -0.000000 -0.000000
+      scale=0.999954 0.999954 1.000006
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail87
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.710571
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.474091 -0.223694 2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.990414 -0.597839 7.710571
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=1.501194 -1.032654 12.921143
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=1.965450 -1.552490 18.131714
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=3.683434 -3.078552 37.001343
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=5.363018 -4.963135 56.857544
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=6.786587 -7.802795 76.645325
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=7.976048 -11.971680 96.056824
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=8.890232 -17.337830 115.383118
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=9.765518 -24.839539 133.867004
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=10.639294 -34.966064 151.138855
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=11.513069 -46.928833 167.094238
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=12.448536 -60.077637 182.092041
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=13.542896 -74.980408 195.575134
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=14.895748 -92.191040 205.459473
+        cp_bank=0.290522
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-669.496399 34.931877 -978.807861
+      rot=-90.000000 -0.000000 90.000000
+      quat=-0.500000 -0.500000 0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail88
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.560574 -0.030090 -2.309448
+        cp_bank=-9.845858
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=2.038719 8.505249 16.192200
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=3.262119 12.482849 35.398193
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=4.260105 13.843689 55.223206
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=5.259693 14.111328 75.225525
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-874.917847 49.324879 -884.326904
+      rot=0.000000 -0.000000 90.000031
+      quat=0.000000 0.000000 0.707107 0.707107
+      scale=0.999853 0.999853 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail89
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=7.500000
+      CONTROL_POINT
+        cp_pos=0.064308 0.000000 -2.491211
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.396626 0.007935 4.870972
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-889.056824 54.513195 -806.670837
+      rot=0.000000 -0.000000 90.000031
+      quat=0.000000 0.000000 0.707107 0.707107
+      scale=0.999928 0.999928 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail90
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence04 mapTag=fence04
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=8.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.000637 -26.535645 27.550720
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-891.564331 54.524834 -801.337524
+      rot=-90.000000 -0.000000 90.000000
+      quat=0.500000 0.500000 -0.500000 -0.500000
+      scale=1.000000 0.999999 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail91
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=1.146347 -0.005493 157.348511
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=1.424351 -0.028076 317.188477
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.023876 -0.000183 477.628845
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-5.023399 0.000061 638.069214
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-12.087906 -0.010742 798.498535
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-19.289268 -0.049194 958.900208
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-21.433075 0.020752 1049.226318
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-21.021721 -0.087769 1077.081299
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-919.063232 54.770332 -799.047913
+      rot=0.000000 -0.000000 -90.000031
+      quat=0.000000 0.000000 -0.707107 0.707107
+      scale=0.999904 0.999904 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail92
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=11.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.894615 0.031921 8.428619
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-919.080139 75.670586 280.102539
+      rot=0.000000 -0.000000 -90.000031
+      quat=0.000000 0.000000 -0.707107 0.707107
+      scale=0.999973 0.999973 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail93
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence04 mapTag=fence04
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=8.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.391090 26.362854 27.593018
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-891.302429 74.941437 288.223389
+      rot=-90.000000 -0.000000 90.000000
+      quat=-0.500000 -0.500000 0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail94
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.816124 -0.167725 10.636658
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.581169 -0.580139 23.773315
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-2.223801 -1.357788 36.909973
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-2.854561 -2.684937 50.007904
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-3.328140 -4.732544 63.105835
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-3.609222 -7.085754 76.203766
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-3.890305 -9.807434 89.301697
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-4.116554 -12.983154 102.407471
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-4.339424 -16.834900 115.526764
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-4.565895 -21.576538 128.631653
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-4.676674 -27.803772 141.736572
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-4.744553 -33.700195 151.962311
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-888.918335 74.939423 290.896942
+      rot=0.000000 -0.000000 90.000031
+      quat=0.000000 0.000000 0.707107 0.707107
+      scale=0.999914 0.999914 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail95
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.029106 -3.117981 2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.056557 -6.504456 7.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.057579 -9.994080 12.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.126282 -13.643982 17.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.207108 -17.485107 22.522278
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.286636 -21.427917 27.544556
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.420776 -25.610657 32.566833
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.553238 -30.174927 37.589111
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.746246 -35.218567 42.611389
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.955261 -40.473206 47.282776
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.260750 -46.268555 52.021973
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.596611 -52.661926 56.761169
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.984764 -59.577637 61.500366
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-2.626305 -69.667664 67.761139
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-855.216980 70.222534 445.296173
+      rot=0.000000 -0.000000 90.000031
+      quat=0.000000 -0.000000 0.707107 0.707107
+      scale=0.999959 0.999959 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail96
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.001656 0.574280 -2.500000
+        cp_bank=7.811660
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.157684 2.741455 2.350464
+        cp_bank=2.847046
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.589462 5.071594 7.500000
+        cp_bank=3.134843
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.884193 6.874817 12.576538
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.110497 8.598877 17.653076
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.253464 9.962402 22.729614
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.352463 10.942444 27.806152
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.453896 11.583740 32.882690
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.488411 12.005737 37.959229
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.543266 12.205872 43.035767
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.563988 12.320923 48.112305
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.583710 12.483582 53.188843
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.693932 12.613525 58.265381
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.789810 12.833008 63.341919
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.967361 12.919128 68.418457
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-2.147453 13.002502 75.524597
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-783.161743 67.608826 512.477295
+      rot=90.000000 -0.000000 90.000000
+      quat=0.500000 0.500000 0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail97
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence00_g mapTag=fence00_g
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=17.200001
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.566948 0.049194 14.732422
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-705.221497 65.502411 525.551025
+      rot=90.000000 -0.000000 90.000000
+      quat=0.500000 0.500000 0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail98
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=fence04 mapTag=fence04
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=-2.434809
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.474121 -26.391296 27.636414
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-690.508728 64.753189 527.984375
+      rot=0.000000 -0.000000 90.000031
+      quat=0.000000 0.000000 0.707107 0.707107
+      scale=0.999939 0.999939 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail99
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.005524 -0.092468 297.488708
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-688.064087 64.838287 555.557617
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail100
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.084518 0.000000 8.892181
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.022346 0.000000 20.287567
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.053017 -0.380066 29.321014
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.026695 -1.872009 37.329651
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-388.073822 64.832962 555.663391
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail101
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.002594 -2.353760
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 2.561920 -1.626648
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 3.976257 0.052612
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 4.989899 1.731873
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 5.499023 3.411133
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.098534 5.665039 5.090393
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.117363 5.741272 6.769653
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.139153 5.777679 8.448914
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.160942 5.814087 10.128174
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.147835 5.897522 14.724243
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.106819 6.181030 19.320312
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.094528 6.476349 24.043091
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.091324 6.941803 28.768188
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.080658 7.729156 34.774780
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-350.575623 64.820091 559.944031
+      rot=0.000000 -0.000000 -90.000031
+      quat=0.000000 0.000000 -0.707107 0.707107
+      scale=0.999924 0.999924 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail102
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=-0.001846 -0.112030 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.047523 0.893921 2.475708
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.128685 2.145905 7.441528
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.156181 3.793854 12.567932
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.279739 5.661438 17.666077
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.393860 7.708923 22.764954
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.540047 9.924500 27.666260
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.644318 12.391785 32.615967
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.743347 15.457672 37.845276
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.843842 19.450684 43.773010
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.887669 24.304718 49.693542
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.855278 30.232422 55.583862
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.753052 35.461334 59.870178
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.627617 40.729065 63.835754
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-342.755188 64.875725 597.288269
+      rot=0.000000 -0.000000 -90.000031
+      quat=0.000000 0.000000 -0.707107 0.707107
+      scale=0.999868 0.999868 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail103
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000725 0.021362 -2.543823
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.086525 3.759644 -0.004028
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.154556 7.318878 2.169617
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.261711 11.276215 4.503296
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.385460 17.182465 7.672607
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.484024 23.376404 10.592896
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.513695 28.256073 12.650818
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.578209 35.667938 15.212280
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-302.022766 64.270416 663.684875
+      rot=0.000000 -0.000000 -90.000031
+      quat=0.000000 0.000000 -0.707107 0.707107
+      scale=0.999869 0.999869 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail104
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=-0.063118 0.009338 -2.504669
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.090324 -1.383972 2.454468
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.118195 -2.501587 7.311371
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.113785 -3.461487 12.313568
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.103188 -4.175476 17.293396
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.111641 -4.746216 22.197479
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.112160 -5.226013 27.152161
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.113617 -5.458313 32.044861
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.114311 -5.596375 36.878418
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.093979 -5.595703 41.714203
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.082138 -5.409302 46.527710
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.076889 -5.065247 51.307465
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.066910 -4.519104 56.153320
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.066994 -3.772095 60.936768
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.039032 -2.895813 65.725037
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.012131 -1.778748 70.504730
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.023399 -0.171936 76.358902
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.012970 1.742249 82.300980
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.004784 3.796875 88.009232
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.026741 6.112732 93.712906
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.011604 8.634888 99.407822
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.021461 12.021057 105.950226
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.021660 16.080627 112.767776
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.021896 20.648315 119.625015
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.011665 25.842834 126.426300
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.015427 31.717529 133.274094
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.001457 36.920898 138.786346
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.014191 42.541443 144.156891
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.017189 48.320862 149.155487
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.020187 54.364685 153.814682
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.040466 64.190002 160.232819
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.073395 74.708252 165.815186
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-263.839691 64.766060 679.041138
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail105
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.035805 -2.233467 2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.061310 -4.275253 7.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.075958 -6.076942 12.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.105080 -7.705605 17.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.117226 -9.165215 22.480286
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.135002 -10.470596 27.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.158958 -11.538376 32.519714
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.164948 -12.432190 37.539429
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.190407 -13.221130 42.559143
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.205582 -13.864143 47.578857
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.220757 -14.383026 52.598572
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.205376 -14.744194 57.686523
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.238045 -15.078728 62.774475
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.266357 -15.281990 67.862427
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.297951 -15.401192 75.284363
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.329544 -15.267586 82.706299
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.361137 -14.834152 90.128235
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.392731 -14.126991 97.550171
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.448517 -13.148460 104.972107
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.490005 -11.872955 112.394043
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.494156 -10.290077 119.806396
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.454498 -8.331978 127.218750
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.388168 -5.953560 134.631104
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.292542 -3.135193 142.043457
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.184402 0.035904 149.455811
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.076263 3.565636 156.868164
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.005089 7.398804 164.280518
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.009651 11.613205 171.692871
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.040833 16.336761 179.105225
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.047676 21.613693 186.514465
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.034447 27.437607 193.929932
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.027290 33.947853 201.345276
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.018433 41.364662 208.831421
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.014206 49.705513 216.317566
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.004562 58.096977 222.985626
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.005081 67.282295 229.027679
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.029617 83.103996 237.451111
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-98.028587 64.825844 601.886902
+      rot=180.000000 -0.000000 -90.000031
+      quat=0.707107 -0.707107 0.000000 -0.000000
+      scale=0.999919 0.999919 1.000004
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail106
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 -2.120300 2.494415
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 -4.062622 7.767105
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.015518 -5.810791 13.289261
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.011360 -7.391602 18.811417
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.003838 -8.824615 24.333572
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.003807 -10.037231 29.855728
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.009476 -11.227142 35.803452
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.004295 -12.198914 41.751175
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.000504 -12.868988 47.698914
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.003288 -13.366302 55.603439
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-183.666977 64.808212 364.447083
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail107
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.026489 -0.182831 2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.021935 -0.435394 7.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.017380 -0.646454 23.414749
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.012825 -0.718109 39.327469
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.008270 -0.652161 57.394394
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-241.900055 64.822693 351.061096
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail108
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.017914 3.723114
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 -0.774048 9.938751
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 -2.248199 16.150848
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 -4.268036 21.866333
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 -9.447632 29.284485
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 -13.846069 32.991119
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-301.850403 64.810860 350.411407
+      rot=90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 -0.500000 0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail109
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 -0.020569 -2.419128
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.005753 2.503326 2.445740
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.011314 4.590790 7.522034
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.015106 6.256927 14.231079
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.017120 5.019745 19.824707
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.019035 2.797241 25.420105
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.020927 -0.267517 31.021423
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.020988 -6.808350 36.631500
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.020309 -13.354675 40.480652
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.019157 -20.773041 42.583984
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-334.901733 64.833496 334.085388
+      rot=180.000000 -0.000000 -90.000031
+      quat=0.707107 -0.707107 0.000000 -0.000000
+      scale=0.999852 0.999852 1.000004
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail110
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.939026 3.783478
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 1.248199 7.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.002991 1.190033 12.498749
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.005981 1.190430 21.158203
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.008972 1.191650 36.150116
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.011963 1.198059 57.463333
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-311.679657 64.854729 291.504211
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail111
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=12.500000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.011871 9.777084
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-251.758194 64.845680 290.288818
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail112
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=-28.513000 -0.045898 -80.175262
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-1.217000 -0.037170 -4.888458
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-160.133850 35.994190 290.373383
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail113
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=8.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.133636 -2.503754
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=2.703000 -0.000214 5.058701
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-162.604126 37.283005 290.510986
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail114
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.002899 57.506905
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-156.708221 34.802494 290.417511
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail115
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=22.000000
+      CONTROL_POINT
+        cp_pos=-0.002048 -0.011627 -2.725769
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 0.027222 19.061676
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-96.373192 34.803581 290.414185
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail116
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=-24.750999 -0.052704 -2.410660
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.336840 -0.095459 94.455566
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-73.723969 9.930067 290.360687
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=0.999999 0.999999 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail117
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=19.600000
+      CONTROL_POINT
+        cp_pos=0.248760 0.001678 -2.500105
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=5.105000 -0.004456 16.374161
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=23.242010 9.819835 290.469452
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail118
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence1 mapTag=SignFence1
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=18.500000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=-0.054242 0.227692 15.842033
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=40.984039 4.747834 290.401215
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=1.000000 1.000000 1.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Guardrail119
+    tag=Wall
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Texture proto=SignFence2 mapTag=SignFence2
+    COMP kind=Mesh proto=Proto_Spline mapTag=Proto_Spline
+      SampleUnit=1.000000
+      TextureUnit=20.000000
+      CONTROL_POINT
+        cp_pos=0.000000 0.000000 -2.500000
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+      CONTROL_POINT
+        cp_pos=0.000000 -0.007141 57.436131
+        cp_bank=0.000000
+        cp_width=10.000000
+        cp_depth=10.000000
+      END_CONTROL_POINT
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=59.415504 4.732432 290.198975
+      rot=-90.000000 -0.000000 -90.000000
+      quat=0.500000 -0.500000 0.500000 -0.500000
+      scale=0.999745 0.999745 0.999745
   ENDOBJECT
 ENDOBJECT
 OBJECT
   type=
   prefabPath=
   belong=0
-  name=Empty
-  tag=3
+  name=Ground1
+  tag=162
   collisionLayer=0
   cullDistance=0
-  COMP kind=Mesh proto=Proto_CartBodyCol mapTag=Proto_CartBodyCol
+  COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+  COMP kind=Texture proto=Proto_tilegrass_128_03 mapTag=Proto_tilegrass_128_03
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-    pos=0.000000 0.000000 0.012082
+    pos=-507.157990 -1.000000 -48.609833
+    rot=89.999863 -0.000000 0.000000
+    quat=0.707106 0.000000 0.000000 0.707108
+    scale=2500.000000 2499.971436 0.999967
+ENDOBJECT
+OBJECT
+  type=
+  prefabPath=
+  belong=0
+  name=Tree
+  tag=181
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
     rot=0.000000 -0.000000 0.000000
     quat=0.000000 0.000000 0.000000 1.000000
     scale=1.000000 1.000000 1.000000
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree1
+    tag=156
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-34.655479 15.011657 1.234759
+      rot=0.000000 -89.999863 0.000000
+      quat=0.000000 -0.707106 0.000000 0.707108
+      scale=19.998512 20.000000 19.998514
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree2
+    tag=157
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-34.911041 14.854310 -23.141617
+      rot=0.000000 -89.999863 0.000000
+      quat=0.000000 -0.707106 0.000000 0.707108
+      scale=19.999964 20.000000 19.999966
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree3
+    tag=158
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-34.886795 14.935539 26.071089
+      rot=180.000000 -89.999969 180.000000
+      quat=0.000000 -0.707107 0.000000 0.707107
+      scale=19.997643 20.000000 19.997646
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree4
+    tag=165
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-35.319389 13.768243 -117.462135
+      rot=0.000000 -89.996384 0.000000
+      quat=0.000000 -0.707084 0.000000 0.707129
+      scale=19.997353 19.999998 19.997353
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree5
+    tag=173
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-35.238850 13.742863 -176.769089
+      rot=0.000000 -89.997459 0.000000
+      quat=0.000000 -0.707091 0.000000 0.707122
+      scale=19.998188 19.999998 19.998188
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree6
+    tag=180
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-35.166275 13.458420 -254.153458
+      rot=0.000000 -89.996529 0.000000
+      quat=0.000000 -0.707085 0.000000 0.707128
+      scale=19.997463 19.999998 19.997463
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree7
+    tag=185
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-35.233150 13.200253 -292.209412
+      rot=0.000000 -89.995522 0.000000
+      quat=0.000000 -0.707079 0.000000 0.707134
+      scale=19.996685 19.999998 19.996685
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree8
+    tag=188
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-35.144611 13.147078 -327.272095
+      rot=0.000000 -82.726295 0.000000
+      quat=0.000000 -0.660829 0.000000 0.750536
+      scale=19.997757 19.999998 19.997757
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree9
+    tag=189
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-38.329269 12.902261 -345.181610
+      rot=0.000000 -73.561707 0.000000
+      quat=0.000000 -0.598756 0.000000 0.800931
+      scale=19.998844 19.999998 19.998844
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree10
+    tag=190
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-48.326778 12.542440 -358.874969
+      rot=0.000000 -42.335880 0.000000
+      quat=0.000000 -0.361103 0.000000 0.932526
+      scale=19.999477 19.999998 19.999477
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree11
+    tag=191
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-64.111816 13.048565 -367.101929
+      rot=0.000000 -16.040039 0.000000
+      quat=0.000000 -0.139519 0.000000 0.990219
+      scale=20.000002 20.000000 20.000002
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree12
+    tag=192
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-81.628914 12.711873 -368.824921
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=20.000000 20.000000 20.000000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree13
+    tag=209
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-292.628052 11.516037 -370.619263
+      rot=0.000000 -6.580214 0.000000
+      quat=0.000000 -0.057392 0.000000 0.998352
+      scale=19.999964 20.000000 19.999964
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree14
+    tag=212
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-317.202484 11.398046 -375.772766
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=20.000019 20.000000 20.000019
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=0
+    name=Tree15
+    tag=219
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+    COMP kind=Texture proto=F_mtree00_1_1 mapTag=F_mtree00_1_1
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-399.753479 9.347100 -440.875793
+      rot=0.000000 -62.294224 0.000000
+      quat=0.000000 -0.517237 0.000000 0.855842
+      scale=19.999996 20.000000 19.999996
+  ENDOBJECT
+ENDOBJECT
+OBJECT
+  type=
+  prefabPath=
+  belong=0
+  name=House
+  tag=182
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=1.000000 1.000000 1.000000
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House1
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-53.734482 18.863621 -51.576286
+      rot=89.997498 -84.506912 -89.997513
+      quat=0.033883 -0.706293 -0.033883 0.706296
+      scale=19.999498 19.999973 19.999161
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House2
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-53.738010 18.952581 -73.517914
+      rot=89.993294 -85.320923 -89.993301
+      quat=0.028865 -0.706514 -0.028865 0.706521
+      scale=19.999689 19.999977 19.995451
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House3
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-53.760715 18.980713 -95.085541
+      rot=89.983543 -85.630127 -89.983459
+      quat=0.026959 -0.706585 -0.026958 0.706600
+      scale=19.999405 19.999964 19.997360
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House4
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-51.861969 13.811485 -139.200516
+      rot=89.983360 -85.479538 -89.875671
+      quat=0.028551 -0.706522 -0.027223 0.706591
+      scale=20.000082 19.999912 19.999866
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House5
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-51.935390 13.814339 -159.109100
+      rot=86.151932 -85.572372 -85.991158
+      quat=0.028242 -0.704707 -0.026259 0.708450
+      scale=20.000433 19.999989 19.998873
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000178 -0.001917 -0.000066
+        rot=-0.000000 0.000001 4.494628
+        quat=-0.000000 0.000000 0.039213 0.999231
+        scale=0.999995 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House6
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-49.566593 19.056013 -193.107010
+      rot=86.790886 -85.164589 -89.989410
+      quat=0.010100 -0.705364 -0.049534 0.707040
+      scale=19.999710 19.999989 19.999846
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House7
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-49.379089 19.238291 -213.733551
+      rot=89.995857 -85.646103 -94.060165
+      quat=0.001787 -0.707103 -0.051899 0.705202
+      scale=20.000084 19.999977 20.000095
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House8
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-49.326057 19.213070 -234.094376
+      rot=89.987511 -85.544083 -93.856079
+      quat=0.003624 -0.707092 -0.051323 0.705248
+      scale=19.999596 20.000000 19.999372
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House9
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-48.722610 13.748142 -274.118805
+      rot=89.987701 -85.426437 -89.987701
+      quat=0.028215 -0.706538 -0.028214 0.706550
+      scale=19.999615 20.000019 19.998386
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House10
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-49.468266 0.761532 -308.621552
+      rot=89.964249 -85.759628 -89.964195
+      quat=0.026160 -0.706606 -0.026159 0.706639
+      scale=19.999565 20.000027 19.998959
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House11
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-99.110794 13.798951 -356.706604
+      rot=0.000000 -0.000000 -4.813772
+      quat=0.000000 0.000000 -0.041996 0.999118
+      scale=20.000126 20.000126 20.000000
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House12
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-118.998024 13.974277 -356.701416
+      rot=0.000000 -0.000000 -5.166147
+      quat=0.000000 0.000000 -0.045068 0.998984
+      scale=19.999958 19.999958 20.000000
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House13
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-143.750412 13.823269 -356.593994
+      rot=0.000000 -0.000000 -4.865551
+      quat=0.000000 0.000000 -0.042447 0.999099
+      scale=20.000006 20.000006 20.000000
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House14
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-163.621933 13.959185 -356.581787
+      rot=0.000000 -0.000000 -4.880667
+      quat=0.000000 0.000000 -0.042579 0.999093
+      scale=20.000000 20.000000 20.000000
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House15
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-190.551437 1.178536 -356.807404
+      rot=0.000000 -0.000000 -4.784284
+      quat=0.000000 0.000000 -0.041739 0.999129
+      scale=20.000019 20.000019 20.000000
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=-0.053932 0.643231 0.000000
+        rot=0.000000 -0.000000 4.494627
+        quat=0.000000 0.000000 0.039213 0.999231
+        scale=1.000002 2.000004 1.000009
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House16
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-220.540863 0.000000 -357.057831
+      rot=0.000000 -0.000000 -3.198644
+      quat=0.000000 0.000000 -0.027910 0.999610
+      scale=20.000000 20.000000 20.000000
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.276318 0.072074 0.000000
+        rot=0.000000 -0.000000 3.331239
+        quat=0.000000 0.000000 0.029066 0.999578
+        scale=0.999999 1.999998 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House17
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-240.011703 0.933478 -357.206757
+      rot=0.000000 -0.000000 -4.750081
+      quat=0.000000 0.000000 -0.041440 0.999141
+      scale=20.000027 20.000027 20.000000
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House18
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-266.213928 0.000000 -352.110443
+      rot=0.000000 -0.000000 -3.198634
+      quat=0.000000 0.000000 -0.027910 0.999610
+      scale=20.000000 20.000000 20.000000
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.083631 0.059763 -0.255491
+        rot=0.000000 -0.000000 2.875773
+        quat=0.000000 0.000000 0.025093 0.999685
+        scale=0.999989 1.999978 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House19
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-347.881226 0.771771 -374.822083
+      rot=2.733525 -27.956694 -5.815218
+      quat=0.010867 -0.242350 -0.043455 0.969154
+      scale=19.999975 19.999962 19.999973
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=-0.029844 -0.002641 0.046399
+        rot=-0.000048 -0.000013 4.494627
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=0.999999 1.999981 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House20
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-370.089722 0.542638 -388.948151
+      rot=3.439595 -35.837914 -5.861222
+      quat=0.012795 -0.308591 -0.039403 0.950292
+      scale=20.000004 19.999985 19.999994
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=-0.285084 -0.022728 0.028458
+        rot=0.007909 -1.772694 4.494405
+        quat=0.000676 -0.015454 0.039207 0.999111
+        scale=0.999934 1.999972 0.999928
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House21
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-397.452850 1.381840 -414.428528
+      rot=6.058932 -52.158226 -7.655230
+      quat=0.018058 -0.441187 -0.036693 0.896483
+      scale=19.999973 19.999996 19.999996
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House22
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-419.203003 0.000000 -457.949036
+      rot=18.978148 -75.975212 -19.517742
+      quat=0.025153 -0.620309 -0.031763 0.783311
+      scale=19.999956 20.000004 19.999798
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=..\..\..\Resource\Editor\Prefab\HouseTest1.prefab
+    belong=1
+    name=House23
+    tag=5
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-423.714600 0.447554 -524.322571
+      rot=140.583633 -81.945198 -143.511093
+      quat=0.012525 -0.744290 -0.048561 0.665971
+      scale=20.000122 20.000000 20.000118
+    OBJECT
+      type=
+      prefabPath=
+      belong=1
+      name=Empty
+      tag=2
+      collisionLayer=0
+      cullDistance=0
+      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+      COMP kind=Texture proto=Proto_HouseTexture mapTag=Proto_HouseTexture
+      COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+        pos=0.000000 0.000000 0.000000
+        rot=0.000000 -0.000000 4.494631
+        quat=-0.000000 -0.000000 0.039213 0.999231
+        scale=1.000000 2.000000 1.000008
+    ENDOBJECT
+  ENDOBJECT
 ENDOBJECT
