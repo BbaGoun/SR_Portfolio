@@ -31,6 +31,7 @@
 #include "CCart_Shield2.h"
 #include "CUfo.h"
 #include "CUfoBody.h"
+#include "CCollisionStarEffect.h"
 #include "CShield1.h"
 #include "CShield2.h"
 #include "CFindOthersMgr.h"
@@ -113,6 +114,13 @@ HRESULT CCart::Ready_GameObject()
 
 void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	m_iCollisionTick = max(0, m_iCollisionTick - 1);
+
+	if (!CPlayTimeMgr::GetInstance()->GetPlaying()) {
+		m_iCollisionTick = 0;
+		return;
+	}
+
 	UpdateGravity();
 
 	D3DXQUATERNION q;
@@ -157,6 +165,13 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CCart::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+
+	if (!m_bActive) {
+		m_bDrift = false;
+		m_bUpKey = false;
+		m_eBoostState = BOOST_STATE_NORMAL;
+		return 0;
+	}
 
 	m_bPlaying = CPlayTimeMgr::GetInstance()->GetPlaying();
 
@@ -1025,19 +1040,32 @@ void CCart::CollisionWall()
 		}
 		if (bCollision) {
 			m_bCollisionWall = true;
+
 			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
+			// StarEffect
+			if (D3DXVec3Length(&m_vForce) * m_fSpeed >= 60)
+			{
+				CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
+					(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
+				pStarParticle->ResetParticle();
+			}
+
 			m_pTransformCom->Set_Pos(vPos + MTV);
 
 			// 2. 가속도에서 벽 쪽으로 들어가는 속도 성분을 제거
-			float inward = D3DXVec3Dot(&m_vForce, &MTV);
+			_vec3 MTV_n;
+			D3DXVec3Normalize(&MTV_n, &MTV);
+			float inward = D3DXVec3Dot(&m_vForce, &MTV_n);
+
 			// MTV가 벽 밖으로 나가는 방향 
-			m_vForce -= MTV * inward;
-			
+			if (inward < 0)
+				m_vForce -= MTV_n * inward;
+
 			// 3. 조금 튕겨나가도록
-			m_vForce += MTV * 10.f;
+			m_vForce += MTV_n * 10.f;
 
 			// 4. 힘 약화
-			m_vForce *= 0.99f;
+			m_vForce *= 0.98f;
 
 			// 5. Gage, Drift 초기화
 			m_fGainGage = 0;

@@ -98,37 +98,58 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 {
 	const _tchar* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 
-	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
+	if (wcscmp(wOtherTag, L"Obj_CartBody") == 0 || wcscmp(wOtherTag, L"Obj_CartBotBody") == 0)
 	{
-		SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
-		_vec3 vParentForce = m_pParent->Get_Force();
-		float vParentSpeed = m_pParent->Get_Speed();
-		// StarEffect
-		if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 30)
-		{
-			CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
-				(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
-			pStarParticle->ResetParticle();
+		if (m_pParent->Get_CollisionTick() == 0) {
+			bool isPlayer = false;
+			CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+			if (pCart)
+				isPlayer = true;
+
+			_vec3 vParentForce = m_pParent->Get_Force();
+			float vParentSpeed = m_pParent->Get_Speed();
+			if (isPlayer) {
+				SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
+				// StarEffect
+				if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 60)
+				{
+					CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
+						(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
+					pStarParticle->ResetParticle();
+				}
+			}
+			// MTV 적용
+			_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
+				static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
+
+			_vec3 vNewForce = vParentForce;
+			vNewForce *= vParentSpeed;
+
+			// 2. 가속도에서 충돌쪽으로 들어가는 속도 성분울 줄이기
+			_vec3 MTV_n;
+			D3DXVec3Normalize(&MTV_n, &MTV);
+			float inward = D3DXVec3Dot(&vNewForce, &MTV_n);
+			// MTV가 벽 밖으로 나가는 방향 
+
+			if(inward < 0)
+				vNewForce -= MTV_n * inward;
+
+			_vec3 vOtherForce = pOtherCollider->Get_Owner()->Get_Parent()->Get_Force();
+			float vOtherSpeed = pOtherCollider->Get_Owner()->Get_Parent()->Get_Speed();
+			vOtherForce *= vOtherSpeed;
+
+			float otherInward = D3DXVec3Dot(&vOtherForce, &MTV_n);
+
+			if (otherInward > 0)
+				vNewForce += MTV_n * otherInward;
+
+			_vec3 vPos;
+			m_pParent->Get_Transform()->Get_Info(INFO_POS, &vPos);
+
+			m_pParent->Set_Force(vNewForce / vParentSpeed);
+			m_pParent->Get_Transform()->Set_Pos(vPos + MTV);
+			//m_pParent->Set_CollisionTick(1);
 		}
-		// MTV 적용
-		_vec3 MTV =  CCollisionMgr::GetInstance()->GetMTVCubevsCube(
-			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
-		CCart* pCart = dynamic_cast<CCart*>(m_pParent);
-
-		// 살짝 뒤로 튕기기
-		_vec3 vNewForce = pCart->Get_Force();
-		vNewForce = MTV * D3DXVec3Length(&vNewForce) * 1.5f;
-		float fForceLength = D3DXVec3Length(&vNewForce);
-		if (fForceLength >= 30)
-			vNewForce = vNewForce * 30 / fForceLength;
-	
-		_vec3 vPos;
-		pCart->Get_Transform()->Get_Info(INFO_POS, &vPos);
-
-		pCart->Add_Force(vNewForce);
-		pCart->Get_Transform()->Set_Pos(vPos+MTV);
-		pCart->SetGainGage(0.f);	// m_fGainGage = 0.f;
-		pCart->SetDrift(false);		// m_bDrift = false;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////// 테스트용  Obj_MissileTarget

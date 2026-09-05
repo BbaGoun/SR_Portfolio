@@ -22,18 +22,21 @@ private:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+public:
+	void			Set_LapInfo(int _iCurLap, int _iMaxLap) { 
+		if(m_iCurLap < _iCurLap)
+			m_iCurLap = _iCurLap; 
+		m_iMaxLap = _iMaxLap; }
+
 private:
 	Engine::CRcTex* m_pVIBufferCom;
 	Engine::CTexture* m_pTextureCom;
 
-	_float		m_fFrame_Cur;
-	_float		m_fFrame_Entire;
-
+	int m_iCurLap = 0;
+	int m_iMaxLap = 2;
 
 public:
 	static CUI_Laps* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
-
 
 protected:
 	virtual		void		Free() override;

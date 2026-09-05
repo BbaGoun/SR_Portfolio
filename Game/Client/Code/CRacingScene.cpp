@@ -45,6 +45,9 @@
 #include "CDInputMgr.h"
 #include "CRankMgr.h"
 #include "CCartBot.h"
+#include "CUI_Laps.h"
+#include "CCollisionStarEffect.h"
+
 #include "CBoostAura.h"
 #include "CShield1.h"
 #include "CShield2.h"
@@ -64,6 +67,7 @@ HRESULT CRacingScene::Ready_Scene()
 
 HRESULT CRacingScene::PostReady_Scene()
 {
+	CTrackMgr::GetInstance()->Set_MaxLap(1);
 	Ready_TrackMgr();
 
 	Ready_RenderTarget();
@@ -304,6 +308,13 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
+	// 충돌시 나오는 별 이펙트
+	pGameObject = CCollisionStarEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"CollisionStarEffect", pGameObject);
+	pCartBody->Set_Child(pGameObject);
+
 	// 착지시 먼지 이펙트
 	// DustParticle
 	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
@@ -467,13 +478,6 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_Button", pUIObject)))
 		return E_FAIL;
 
-	// UI_Timer
-	pUIObject = CUI_Timer::Create(m_pGraphicDev);
-	if (nullptr == pUIObject)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
-		return E_FAIL;
-
 	// UI_ItemSlot
 	pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
@@ -585,6 +589,20 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	pUI_RankBG->Set_Child(pUIObject);
 	
 	CRankMgr::GetInstance()->AddUI(vecCartBot[1], pUI_RankBG);
+
+	// UI_Laps
+	pUIObject = CUI_Laps::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Lap", pUIObject)))
+		return E_FAIL;
+
+	// UI_Timer
+	pUIObject = CUI_Timer::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
+		return E_FAIL;
 
 	return S_OK;
 }
