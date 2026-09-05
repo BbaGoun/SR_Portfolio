@@ -86,7 +86,7 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	//m_pTransformCom->Set_Pos(vFlyPos);
 ////////////////////////////////////////////////////////////////////////
-// 구현 후 하드코딩 수정
+ // 구현 후 하드코딩 수정
 	m_fTimer += fFixedDeltaTime;
 	if (m_fTimer < 1.20f)
 	{
@@ -175,7 +175,7 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_vSavePos = vFlyPos;
 		m_bSavePos = true;
 	}
-
+	////////////////////////////////////////////////////////////////////////////////////////////////
 	if (m_fTimer > 1.20f)
 	{
 		vDirTarget1 = vTargetPos1 - m_vSavePos;
@@ -217,6 +217,45 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		m_pTransformCom->Move_Pos(&vDirTarget, m_fSpeed, fFixedDeltaTime);
 	}
+
+	vDirTarget1 = vTargetPos1 - m_vSavePos;
+	vDirTarget2 = vTargetPos2 - m_vSavePos;
+	vDirTarget3 = vTargetPos3 - m_vSavePos;
+	vDirTarget4 = vTargetPos4 - m_vSavePos;
+
+	// 하드 코딩 수정
+	if (D3DXVec3Length(&vDirTarget1) < D3DXVec3Length(&vDirTarget2) 
+		&& D3DXVec3Length(&vDirTarget1) <  D3DXVec3Length(&vDirTarget3)
+		&& D3DXVec3Length(&vDirTarget1) < D3DXVec3Length(&vDirTarget4))
+	{
+		vDirTarget = vDirTarget1;
+	}
+
+	else if (D3DXVec3Length(&vDirTarget2) < D3DXVec3Length(&vDirTarget1) 
+		&& D3DXVec3Length(&vDirTarget2) < D3DXVec3Length(&vDirTarget3)
+		&& D3DXVec3Length(&vDirTarget2) < D3DXVec3Length(&vDirTarget4))
+	{
+		vDirTarget = vDirTarget2;
+	}
+
+	else if (D3DXVec3Length(&vDirTarget3) < D3DXVec3Length(&vDirTarget1)
+		&& D3DXVec3Length(&vDirTarget3) < D3DXVec3Length(&vDirTarget2)
+		&& D3DXVec3Length(&vDirTarget3) < D3DXVec3Length(&vDirTarget4))
+	{
+		vDirTarget = vDirTarget3;
+	}
+
+	else
+	{
+		vDirTarget = vDirTarget4;
+	}
+
+	if (D3DXVec3Length(&vDirTarget) <= 0.001f)
+		return;
+
+	D3DXVec3Normalize(&vDirTarget, &vDirTarget);
+
+	m_pTransformCom->Move_Pos(&vDirTarget, m_fSpeed, fFixedDeltaTime);
 
 	_quaternion q;
 

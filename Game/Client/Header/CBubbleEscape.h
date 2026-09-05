@@ -25,6 +25,7 @@ private:
 
 	bool	m_bCurState;
 	float	m_fTimer;
+	_float	m_fFrame;
 
 public:
 	static CBubbleEscape* Create(LPDIRECT3DDEVICE9 pGraphicDev);

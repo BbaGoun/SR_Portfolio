@@ -63,7 +63,6 @@
 #include "CPause_ReplayBtn.h"	
 #include "CPlayTimeMgr.h"
 
-
 CCollisionTest::CCollisionTest(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
 }
@@ -726,17 +725,6 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_EndCountDown", pUIObject)))
 		return E_FAIL;
 
-	// 임시 버블 공격시 키보드 UI
-	CGameObject* pBubbleEscape = CBubbleEscape::Create(m_pGraphicDev);
-
-	if (pBubbleEscape == nullptr)
-		return E_FAIL;
-
-	if (FAILED(pUILayer->Add_GameObject(L"UI_BubbleEscape", pBubbleEscape)))
-		return E_FAIL;
-
-
-
 	//PauseMenu
 
 	CGameObject* pPauseMenu = CUI_PauseMenu::Create(m_pGraphicDev);
@@ -748,7 +736,13 @@ HRESULT CCollisionTest::Ready_UI_Layer()
 		return E_FAIL;
 	pPauseMenu->SetLayer(pUILayer);
 	
-	
+	CGameObject* pBubbleEscape = CBubbleEscape::Create(m_pGraphicDev);
+
+	if (pBubbleEscape == nullptr)
+		return E_FAIL;
+
+	if (FAILED(pUILayer->Add_GameObject(L"UI_BubbleEscape", pBubbleEscape)))
+		return E_FAIL;
 
 
 	pUIObject = CPause_ReplayBtn::Create(m_pGraphicDev);

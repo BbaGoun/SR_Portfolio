@@ -8,6 +8,7 @@
 #include "CCart.h"
 #include "SoundMgr.h"
 #include "CMissileTarget.h"
+#include "CCameraMgr.h"
 
 CBubbleEscape::CBubbleEscape(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -26,29 +27,29 @@ HRESULT CBubbleEscape::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 
 	CComponent* pComponent = nullptr;
-	m_pTransformCom->Set_Pos({ 0,15,1 });
-	m_pTransformCom->Set_Scale({ 200, 160, 1 });
+	m_pTransformCom->Set_Pos({ 0.f,-10.f,1.f });
+	m_pTransformCom->Set_Scale({ 100.f, 100.f, 1.f });
 
+	m_fFrame = 0.f;
+	m_fTimer = 0.f;
+	m_bCurState = false;
 
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
-	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RainBow_NonAlpha"));
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_KeyBoardEffect"));
 	pComponent->Set_Owner(this);
 
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
-
-	m_fTimer = 0;
-	m_bCurState = false;
 
 	return S_OK;
 }
 
 _int CBubbleEscape::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
 	CMissileTarget* pTarget4 = dynamic_cast<CMissileTarget*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget4"));
 
@@ -58,6 +59,11 @@ _int CBubbleEscape::Update_GameObject(const _float& fDeltaTime)
 
 	else
 		m_bCurState = false;
+
+	m_fFrame += 10.f * fDeltaTime;
+
+	if (m_fFrame >= 2.f)
+		m_fFrame = 0.f;
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -71,9 +77,13 @@ void CBubbleEscape::Render_GameObject()
 {
 	if (m_bCurState == true)
 	{
+		_matrix	matWorld, matView;
+		matView = CCameraMgr::GetInstance()->GetCameraInfo().matView;
+		m_pTransformCom->Set_Billboard(&matView);
+
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-		m_pTextureCom->Set_Texture(0);
+		m_pTextureCom->Set_Texture(m_fFrame);
 		m_pBufferCom->Render_Buffer();
 	}
 }

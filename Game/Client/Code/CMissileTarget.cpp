@@ -642,7 +642,7 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 				if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", m_pBubble)))
 					return;
 
-				m_pBubble->SetLayer(m_pLayer);
+				// m_pBubble->SetLayer(m_pLayer);
 
 				_vec3 vPos;
 
@@ -672,8 +672,7 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 				if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", m_pBubble)))
 					return;
 
-				m_pBubble->SetLayer(m_pLayer);
-
+				// m_pBubble->SetLayer(m_pLayer);
 				_vec3 vPos;
 
 				m_pTransformCom->Get_Info(INFO_POS, &vPos);

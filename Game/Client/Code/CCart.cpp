@@ -294,10 +294,10 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateWaterFlyObject();
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
-	{
-		CreateShieldObject_();
-	}
+	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
+	//{
+	//	CreateShieldObject_();
+	//}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_L))
 	{
