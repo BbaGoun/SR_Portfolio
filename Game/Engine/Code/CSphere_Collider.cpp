@@ -48,11 +48,17 @@ void CSphere_Collider::Render_Component(D3DXCOLOR color)
 	LPD3DXMESH pSphere;
 	D3DXCreateSphere(m_pGraphicDev, m_tBoundingSphere.Radius, 16, 16, &pSphere, NULL);
 	// 오염을 방지하여 복사
-	_matrix matWorld = *m_pOwner->Get_Transform()->Get_World();
-	matWorld.m[3][0] += m_vOffset.x;
-	matWorld.m[3][1] += m_vOffset.y;
-	matWorld.m[3][2] += m_vOffset.z;
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+	_matrix matTrans;
+	D3DXMatrixIdentity(&matTrans);
+	_vec3 vPos;
+	m_pOwner->Get_Transform()->Get_Info(INFO_POS, &vPos);
+
+	memcpy(&matTrans.m[3], &vPos, sizeof(_vec3));
+
+	matTrans.m[3][0] += m_vOffset.x;
+	matTrans.m[3][1] += m_vOffset.y;
+	matTrans.m[3][2] += m_vOffset.z;
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matTrans);
 
 	// 1. 와이어 모드 켜기
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);

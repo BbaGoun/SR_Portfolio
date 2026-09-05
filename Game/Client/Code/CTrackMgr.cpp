@@ -4,6 +4,7 @@
 #include "CRankMgr.h"
 #include "CUI_Laps.h"
 #include "CPlayTimeMgr.h"
+#include "CManagement.h"
 
 IMPLEMENT_SINGLETON(CTrackMgr)
 
@@ -38,6 +39,48 @@ void CTrackMgr::Register_Bot(CCartBot* pBot)
 	TL.bValid = false;
 
 	m_vecBot.push_back({ pBot, TL });
+}
+
+void CTrackMgr::Register_Hazard(CGameObject* pObj, ITEM_TYPE eID)
+{
+	_vec3 vPos;
+	pObj->Get_Transform()->Get_Info(INFO_POS, &vPos);
+
+	TrackLocator prevPL;
+
+	TrackLocator TL;
+	float lateral;
+	if (!m_pTGraph->ProjectPosition(vPos, prevPL, TL, &lateral)) {
+		pObj->GetLayer()->Delete_GameObject(pObj);
+		return;
+	}
+
+	HazardRecord HR;
+	HR.edgeId = TL.edgeId;
+	HR.u = TL.u;
+	HR.lateral = lateral;
+	HR.eType = eID;
+	HR.pOwner = pObj;
+
+	switch (eID) {
+	case ITEM_BANANA:
+		HR.radius = 3.f;
+		break;
+	}
+
+	m_hazardRecords.push_back(HR);
+}
+
+void CTrackMgr::Delete_Hazard(CGameObject* pObj)
+{
+	auto it = find_if(m_hazardRecords.begin(), m_hazardRecords.end(), [&](HazardRecord HR)->bool {
+		return HR.pOwner == pObj;
+		});
+
+	if (it == m_hazardRecords.end())
+		return;
+
+	m_hazardRecords.erase(it);
 }
 
 void CTrackMgr::Update_Locator()
@@ -103,7 +146,7 @@ void CTrackMgr::Update_Locator()
 	Update_LapUI();
 }
 
-TrackPose CTrackMgr::Compute_TargetPose(CGameObject* pObj, float lookAhead)
+TrackPose CTrackMgr::Compute_TargetPose(CGameObject* pObj, float lookAhead, bool bDodge)
 {
 	TrackPose TP;
 
@@ -114,7 +157,10 @@ TrackPose CTrackMgr::Compute_TargetPose(CGameObject* pObj, float lookAhead)
 	if (it == m_tempRanking.end())
 		return TP;
 
-	m_pTGraph->EvaluatePose(it->second, lookAhead, TP);
+	if (bDodge)
+		m_pTGraph->EvaluatePoseWithDodge(it->second, lookAhead, TP, m_hazardRecords);
+	else
+		m_pTGraph->EvaluatePose(it->second, lookAhead, TP);
 
 	return TP;
 }

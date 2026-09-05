@@ -26,9 +26,12 @@ private:
 private:
 	Engine::CRcTex*		m_pVIBufferCom;
 	Engine::CTexture*	m_pTextureCom;
+	Engine::CTexture*	m_pTextureCom2;
 
-	ITEM_TYPE			m_eFirstSlot;
-	ITEM_TYPE			m_eSecondSlot;
+	ITEM_TYPE			m_eFirstSlot = ITEM_END;
+	ITEM_TYPE			m_eSecondSlot = ITEM_END;
+	bool				m_bSlotChange = false;
+	int					m_iSlotChangeAnim = 0;
 
 public:
 	static CUI_ItemIcon* Create(LPDIRECT3DDEVICE9 pGraphicDev);

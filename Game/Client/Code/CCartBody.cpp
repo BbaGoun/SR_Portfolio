@@ -43,23 +43,21 @@ HRESULT CCartBody::Ready_GameObject()
 	m_fScale				= 1.f;
 	m_fThunderTimer			= 0.f;
 
-	//Engine::CComponent* pComponent = nullptr;
+	Set_CollisionLayer(CL_CART_BODY);
 
-	//pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	//if (nullptr == pComponent)
-	//	return E_FAIL;
-
-	////m_vColliderSize = { 2.5f,1.5f,5.f };
-	////m_pColliderCom->Set_Extents(m_vColliderSize);
-	//
-	//m_pColliderCom->Set_Owner(this);
-	//m_pColliderCom->SetIsTrigger(false);
-	//m_mapComponent.insert({ L"Com_Collider", pComponent });
 	return S_OK;
+}
+
+void CCartBody::PostReady_GameObject()
+{
+	m_pColliderCom = Get_Component<CCube_Collider>();
+	m_vColliderSize = m_pColliderCom->Get_Extents();
 }
 
 void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	m_pColliderCom->Set_Extents(m_vColliderSize * m_fScale);
+
 	BananaSpin(fFixedDeltaTime); 
 	ThunderSpin(fFixedDeltaTime);
 	ThunderTimerUpdate(fFixedDeltaTime);
@@ -113,7 +111,7 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 			if (isPlayer) {
 				SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 				// StarEffect
-				if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 40)
+				if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 0)
 				{
 					CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
 						(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
@@ -166,46 +164,89 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-	CCart* pCart = dynamic_cast<CCart*>(m_pParent);
-	CGameObject* pShield = pCart->GetShield1();
+	if (CCart* pCart = dynamic_cast<CCart*>(m_pParent)) {
+		CGameObject* pShield = pCart->GetShield1();
 
-	if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
-	{
-		if (pShield)
+		if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
 		{
-			static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
-			static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
-			m_bShieldHit = true;
+			if (pShield)
+			{
+				static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
+				static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
+				m_bShieldHit = true;
+			}
+			else if (pCart->GetRainbowUI() == false)
+				pCart->SetRainbowUI(true);
 		}
-		else if (pCart->GetRainbowUI() == false)
-			pCart->SetRainbowUI(true);
+		else if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
+		{
+			if (pShield)
+			{
+				static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
+				static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
+				m_bShieldHit = true;
+			}
+			else if (pCart->GetBanana() == false)
+			{
+				SoundMgr::GetInstance().PlaySound(L"Effect/Item_banana/Bananatrapped.ogg", SOUND_BANANA, 0.4f);
+				pCart->SetBanana(true);
+				pCart->SetBoost(BOOST_STATE_NORMAL);
+			}
+		}
+		if (wcscmp(wOtherTag, L"Obj_ItemBox") == 0)
+		{
+			CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
+			if (pItemBox->GetShow() == true)
+			{
+				SoundMgr::GetInstance().PlaySound(L"Effect/ItemGain/eaten.ogg", SOUND_ITEMGAIN, 0.4f);
+				pCart->GainItem();
+				pItemBox->SetShow(false);
+			}
+		}
 	}
-	else if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
-	{
-		if (pShield)
-		{
-			static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
-			static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
-			m_bShieldHit = true;
-		}
-		else if (pCart->GetBanana() == false)
-		{
-			SoundMgr::GetInstance().PlaySound(L"Effect/Item_banana/Bananatrapped.ogg", SOUND_BANANA, 0.4f);
-			pCart->SetBanana(true);
-			pCart->SetBoost(BOOST_STATE_NORMAL);
-		}
-	}
-	else if (wcsncmp(wOtherTag, L"Obj_ItemBox", 11) == 0)
-	{
+	else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent)) {
+		/*CGameObject* pShield = pCartBot->GetShield1();
 
-		CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
-		if (pItemBox->GetShow() == true)
+		if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
 		{
-			SoundMgr::GetInstance().PlaySound(L"Effect/ItemGain/eaten.ogg", SOUND_ITEMGAIN, 0.4f);
-			pCart->GainItem();
-			pItemBox->SetShow(false);
+			if (pShield)
+			{
+				static_cast<CShield1*>(pCartBot->GetShield1())->SetShow(false);
+				static_cast<CShield2*>(pCartBot->GetShield2())->SetShow(true);
+				m_bShieldHit = true;
+			}
+			else if (pCart->GetRainbowUI() == false)
+				pCartBot->SetRainbowUI(true);
+		}*/
+		/*else if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
+		{
+			if (pShield)
+			{
+				static_cast<CShield1*>(pCartBot->GetShield1())->SetShow(false);
+				static_cast<CShield2*>(pCartBot->GetShield2())->SetShow(true);
+				m_bShieldHit = true;
+			}
+			else if (pCartBot->GetBanana() == false)
+			{
+				SoundMgr::GetInstance().PlaySound(L"Effect/Item_banana/Bananatrapped.ogg", SOUND_BANANA, 0.4f);
+				pCartBot->SetBanana(true);
+				pCartBot->SetBoost(BOOST_STATE_NORMAL);
+			}
+		}*/
+		if (wcscmp(wOtherTag, L"Obj_ItemBox") == 0)
+		{
+			int a;
+			CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
+			if (pItemBox->GetShow() == true)
+			{
+				SoundMgr::GetInstance().PlaySound(L"Effect/ItemGain/eaten.ogg", SOUND_ITEMGAIN, 0.4f);
+				pCartBot->GainItem();
+				pItemBox->SetShow(false);
+			}
 		}
 	}
+	
+	
 }
 void CCartBody::BananaSpin(const _float& fDeltaTime)
 {

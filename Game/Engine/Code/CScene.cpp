@@ -122,6 +122,12 @@ HRESULT CScene::Ready_Scene()
 {
     return S_OK;
 }
+HRESULT	CScene::PostReady_Scene() {
+    for (auto& pLayer : m_mapLayer)
+        pLayer.second->PostReady_Layer();
+
+    return S_OK;
+}
 
 void CScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 {
@@ -163,6 +169,7 @@ void CScene::Process_Collision(const vector<CGameObject*>& vecObjects)
             // 같은 오브젝트 무시
             if (pObj1 == pObj2)
                 continue;
+
             // 충돌 레이어 검사
             COLLISION_LAYER CL1, CL2;
             CL1 = pObj1->Get_CollisionLayer();
@@ -174,7 +181,8 @@ void CScene::Process_Collision(const vector<CGameObject*>& vecObjects)
 
                 for (auto& col1 : colliders1) {
                     for (auto& col2 : colliders2) {
-                        CCollisionMgr::GetInstance()->Collision(col1, col2);
+                        if(col1->Get_Active() && col2->Get_Active())
+                            CCollisionMgr::GetInstance()->Collision(col1, col2);
                     }
                 }
             }

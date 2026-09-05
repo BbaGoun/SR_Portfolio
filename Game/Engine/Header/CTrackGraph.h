@@ -60,16 +60,11 @@ public:
 		float u,
 		TrackPose& outPose);
 
-	/*bool Advance(
-		const TrackLocator& from,
-		float distance,
-		const RoutePlan& route,
-		TrackPose& outPose);
-
-	float GetRouteDistance(
-		const TrackLocator& from,
-		const TrackLocator& to,
-		const RoutePlan& route);*/
+	bool EvaluatePoseWithDodge(
+		const TrackLocator& prev,
+		float u,
+		TrackPose& outPose,
+		const list<HazardRecord>& hazards);
 
 private:
 	TrackNode*		Find_TrackNode(TrackNode* pTN);

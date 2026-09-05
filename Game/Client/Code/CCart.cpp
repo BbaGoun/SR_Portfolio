@@ -36,6 +36,7 @@
 #include "CShield1.h"
 #include "CShield2.h"
 #include "CFindOthersMgr.h"
+#include "CTrackMgr.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -239,6 +240,12 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		else if (m_eFirstSlot != ITEM_END)
 		{
 			m_eSecondSlot = ITEM_TYPE(rand() % ITEM_END);
+		}
+	}
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LMENU)) {
+		if (m_eFirstSlot != ITEM_END && m_eSecondSlot != ITEM_END) {
+			swap(m_eFirstSlot, m_eSecondSlot);
+			m_bSlotChange = true;
 		}
 	}
 
@@ -653,8 +660,7 @@ void CCart::CreateBananaObject()
 	m_pTransformCom->Get_Info(INFO_UP, &vUp);
 	vPos -= vLook * 10 - vUp;
 	pGameObject->Get_Transform()->Set_Pos(vPos);
-
-	pGameObject->SetLayer(m_pLayer);
+	CTrackMgr::GetInstance()->Register_Hazard(pGameObject, ITEM_BANANA);
 }
 
 void CCart::CreateThunderCloudObject()
@@ -1046,7 +1052,7 @@ void CCart::CollisionWall()
 
 			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 			// StarEffect
-			if (D3DXVec3Length(&m_vForce) * m_fSpeed >= 40)
+			if (D3DXVec3Length(&m_vForce) * m_fSpeed >= 0)
 			{
 				CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
 					(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));

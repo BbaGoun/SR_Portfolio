@@ -66,6 +66,8 @@ public:
 	ITEM_TYPE		GetSecondSlot()						{ return m_eSecondSlot; }
 	void			SetSecondSlot(ITEM_TYPE eID)		{ m_eSecondSlot = eID; }
 
+	bool			GetSlotChange()						{ return m_bSlotChange; }
+	void			SetSlotChange(bool _b)				{ m_bSlotChange = _b; }
 
 	bool			GetPlayingState()					{ return m_bPlaying; }
 
@@ -160,6 +162,7 @@ private:
 
 	ITEM_TYPE		m_eFirstSlot;
 	ITEM_TYPE		m_eSecondSlot;
+	bool			m_bSlotChange = false;
 
 	DIRECTION_TYPE	m_eDirection;
 	int				m_iFlatFrameCnt;

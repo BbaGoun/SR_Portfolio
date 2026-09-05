@@ -19,9 +19,11 @@ public:
     void    Register_Track(CGameObject* pGraphObj);
     void    Register_Player(CCart* pPlayer);
     void    Register_Bot(CCartBot* pBot);   
+    void    Register_Hazard(CGameObject* pObj, ITEM_TYPE eID);
+    void    Delete_Hazard(CGameObject* pObj);
 
     void    Update_Locator();
-    TrackPose Compute_TargetPose(CGameObject* pObj, float lookAhead);
+    TrackPose Compute_TargetPose(CGameObject* pObj, float lookAhead, bool bDodge);
     void    Set_MaxLap(int _iMaxLap) { m_iMaxLap = _iMaxLap; }
 
 private:
@@ -33,6 +35,7 @@ private:
     vector<pair<CCart*, TrackLocator>> m_vecPlayer;
     vector<pair<CCartBot*, TrackLocator>> m_vecBot;
     vector<pair<CGameObject*, TrackLocator>> m_tempRanking;
+    list<HazardRecord> m_hazardRecords;
 
     int m_iMaxLap;
     bool m_bAlreadyGoal = false;

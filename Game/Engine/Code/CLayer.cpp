@@ -273,6 +273,17 @@ HRESULT CLayer::Ready_Layer()
 	return S_OK;
 }
 
+HRESULT CLayer::PostReady_Layer()
+{
+	for (auto& p : m_mapObject)
+	{
+		for (auto& pObj : p.second) {
+			pObj->PostReady_GameObject();
+		}
+	}
+	return S_OK;
+}
+
 void CLayer::FixedUpdate_Layer(const _float& fFixedDeltaTime)
 {
 	for (auto& p : m_mapObject)

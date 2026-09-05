@@ -27,49 +27,49 @@ HRESULT CWheel::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	switch (m_eWheelType)
-	{
-	case Engine::WHEEL_FL:
-		m_pTransformCom->Set_Pos({-2.5f ,1, 6 });
-		break;
-	case Engine::WHEEL_FR:
-		m_pTransformCom->Set_Pos({ 2.5f,1, 6 });
-		break;
-	case Engine::WHEEL_BL:
-		m_pTransformCom->Set_Pos({ -2.5f,1,0 });
-		break;								
-	case Engine::WHEEL_BR:					
-		m_pTransformCom->Set_Pos({ 2.5f ,1,0 });
-		break;
-	case Engine::WHEEL_END:
-		break;
-	default:
-		break;
-	}
+	//switch (m_eWheelType)
+	//{
+	//case Engine::WHEEL_FL:
+	//	m_pTransformCom->Set_Pos({-2.5f ,1, 6 });
+	//	break;
+	//case Engine::WHEEL_FR:
+	//	m_pTransformCom->Set_Pos({ 2.5f,1, 6 });
+	//	break;
+	//case Engine::WHEEL_BL:
+	//	m_pTransformCom->Set_Pos({ -2.5f,1,0 });
+	//	break;								
+	//case Engine::WHEEL_BR:					
+	//	m_pTransformCom->Set_Pos({ 2.5f ,1,0 });
+	//	break;
+	//case Engine::WHEEL_END:
+	//	break;
+	//default:
+	//	break;
+	//}
 
-	Engine::CComponent* pComponent = nullptr;
+	//Engine::CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CCartWheelCol*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CartWheelCol"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-	pComponent->Set_Owner(this);
-	m_mapComponent.insert({ L"Com_Buffer", pComponent });
+	//pComponent = m_pBufferCom = dynamic_cast<CCartWheelCol*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CartWheelCol"));
+	//if (nullptr == pComponent)
+	//	return E_FAIL;
+	//pComponent->Set_Owner(this);
+	//m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
-	pComponent = CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CartWheelTex");
-	pComponent->Set_Owner(this);
-	m_mapComponent.insert({ L"Com_Tex", pComponent });
+	//pComponent = CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CartWheelTex");
+	//pComponent->Set_Owner(this);
+	//m_mapComponent.insert({ L"Com_Tex", pComponent });
 
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-	
-	m_vColliderSize = { 0.4f,1.f,1.f };
-	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetIsTrigger(false);
-	m_pColliderCom->Set_Extents(m_vColliderSize);
-	m_mapComponent.insert({ L"Com_Collider", pComponent });
+	//pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
+	//if (nullptr == pComponent)
+	//	return E_FAIL;
+	//
+	//m_vColliderSize = { 0.4f,1.f,1.f };
+	//m_pColliderCom->Set_Owner(this);
+	//m_pColliderCom->SetIsTrigger(false);
+	//m_pColliderCom->Set_Extents(m_vColliderSize);
+	//m_mapComponent.insert({ L"Com_Collider", pComponent });
 
-
+	int a;
 	m_fScale = 1.f;
 	m_fRayMinDist = 0.99f;
 
@@ -81,6 +81,13 @@ HRESULT CWheel::Ready_GameObject()
 	Set_CollisionLayer(CL_CART_WHEEL);
 
 	return S_OK;
+}
+
+void CWheel::PostReady_GameObject()
+{
+	m_pBufferCom = Get_Component<CCartWheelCol>();
+	m_pColliderCom = Get_Component<CCube_Collider>();
+	m_vColliderSize = m_pColliderCom->Get_Extents();
 }
 
 void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)

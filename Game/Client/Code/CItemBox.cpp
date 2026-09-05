@@ -26,37 +26,25 @@ HRESULT CItemBox::Ready_GameObject()
 
 	Engine::CComponent* pComponent = nullptr;
 
-	//m_pTransformCom->Set_Pos({-200,0,-200});
-	m_pTransformCom->Set_Scale({ 5,5,5 });
-
-	pComponent = m_pBufferCom = dynamic_cast<CInnerBox*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_InnerBox"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-	pComponent->Set_Owner(this);
-	m_mapComponent.insert({ L"Com_Buffer", pComponent });
-
-
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-
-	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->Set_Extents({ 5,5,5 });
-
-	m_mapComponent.insert({ L"Com_Collider", pComponent });
-
-
-	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_V_ItemBoxTexture"));
-	pComponent->Set_Owner(this);
-
-	m_mapComponent.insert({ L"Com_Texture", pComponent });
-
 	m_fTimer	= 0.f;
 	m_bShow		= true;
 	m_fSpeed	= 5.f;
+	m_vForce	= { 0, 1, 0 };
+
+	Set_CollisionLayer(CL_ITEM_BOX);
 
 	return S_OK;
+}
+
+void CItemBox::PostReady_GameObject()
+{
+	m_pBufferCom = Get_Component<CInnerBox>();
+	m_pTextureCom = Get_Component<CTexture>();
+	m_pColliderCom; Get_Component<CSphere_Collider>();
+
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_vOrigin = vPos;
 }
 
 void CItemBox::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
@@ -64,10 +52,12 @@ void CItemBox::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
-	if (vPos.y < 5)
-		m_vForce.y = 1;
-	else if (vPos.y > 10)
+	float deltaY = vPos.y - m_vOrigin.y;
+
+	if (deltaY > 2.f)
 		m_vForce.y = -1;
+	else if (deltaY < -2.f)
+		m_vForce.y = 1;
 
 	m_vRotation.y += 0.5f * fFixedDeltaTime;
 	m_vRotation.x += 0.5f * fFixedDeltaTime; 
@@ -88,7 +78,7 @@ _int CItemBox::Update_GameObject(const _float& fDeltaTime)
 	if (m_fTimer > 5.f)
 	{
 		m_fTimer = 0.f;
-		m_bShow = true;
+		SetShow(true);
 	}
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -106,18 +96,13 @@ void CItemBox::Render_GameObject()
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 		m_pTextureCom->Set_Texture(0);
 		m_pBufferCom->Render_Buffer();
-		m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
+		//m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	}
 }
 
 void CItemBox::TriggerEnter(CCollider* pOtherCollider)
 {
-	//const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-	//if (wcsncmp(wOtherTag, L"Obj_CartBody", 12) == 0)
-	//{
-	//	m_bShow = false;
-	//}
 }
 CItemBox* CItemBox::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
