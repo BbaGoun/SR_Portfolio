@@ -63,11 +63,7 @@ HRESULT CMenu_Set::Ready_Scene()
 _int CMenu_Set::Update_Scene(const _float& fDeltaTime)
 {
 	_int iExit = CScene::Update_Scene(fDeltaTime);
-	//CScene3_ColorSetBG* pSetBG = static_cast<CScene3_ColorSetBG*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_ColorSetBG"));
-	//if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
-	//{
-	//	pSetBG->Set_Show(false);
-	//}
+
 
 	return iExit;
 }
@@ -285,6 +281,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	pUICharSlot2->Get_Transform()->Set_Pos({ -100, 100, 1 });
 	pUICharSlot2->Get_Transform()->Set_Scale({ 200,200,1 });
+	
 
 	pUIObject = CScene3_CharBG::Create(m_pGraphicDev, CHAR_DAO);
 	if (pUIObject == nullptr)
@@ -317,6 +314,8 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 
 
 }
+
+
 
 CMenu_Set* CMenu_Set::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

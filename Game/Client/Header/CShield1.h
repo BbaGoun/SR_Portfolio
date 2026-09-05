@@ -22,13 +22,15 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
-private:
+	void			SetShow(bool bShow) { m_bShow = bShow; }
+	bool			GetShow()			{ return m_bShow; }
 
 private:
 	CHalfSphere* m_pBufferCom;
 	CTexture* m_pTextureCom;
 
-	bool	m_bCurState;
+	float	m_fFrame = 0;
+	bool	m_bShow;
 	float	m_fTimer;
 
 public:

@@ -184,7 +184,7 @@ _vec3 CCollisionMgr::GetMTVCubevsCube(CCube_Collider* pDst, CCube_Collider* pSrc
 		vDstScale = ToVec3(dynamic_cast<CCube_Collider*>(pDst)->Get_Info().Extents);
 		vSrcScale = ToVec3(dynamic_cast<CCube_Collider*>(pSrc)->Get_Info().Extents);
 		
-		float fMin = 123456789;
+		float fMin = FLT_MAX;
 		for (auto Axis : vAxis)
 		{
 			// 중심좌표 투영

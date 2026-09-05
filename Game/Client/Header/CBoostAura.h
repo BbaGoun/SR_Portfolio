@@ -1,15 +1,17 @@
 #pragma once
 #include "CGameObject.h"
-#include "CRcTex.h"
-#include "CTexture.h"
-
-class CScene2_ClockTower :
-	public CGameObject
+#include "Engine_Enum.h"
+namespace Engine
+{
+	class CTexture;
+	class CRcTex;
+}
+class CBoostAura : public CGameObject
 {
 private:
-	explicit CScene2_ClockTower(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CScene2_ClockTower(const CGameObject& rhs);
-	~CScene2_ClockTower() override;
+	explicit CBoostAura(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CBoostAura(const CGameObject& rhs);
+	virtual ~CBoostAura() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -18,18 +20,16 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
-private:
-	CRcTex* m_pBufferCom;
-	CTexture* m_pTextureCom;
-
-	float	m_fFrame;
-	_vec3	m_vPos;
-	_vec3	m_vScale;
 public:
-	static CScene2_ClockTower* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CBoostAura* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
+	Engine::CRcTex* m_pBufferCom;
+	Engine::CTexture* m_pTextureCom;
+
+	float				m_fFrame = 0;
 
 protected:
 	virtual		void		Free() override;
 };
-
 

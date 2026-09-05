@@ -11,7 +11,7 @@
 #include "SoundMgr.h"
 #include "CPlayTimeMgr.h"
 #include "CRankMgr.h"
-
+#include "CFindOthersMgr.h"
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr)
 	, m_pManagementClass(CManagement::GetInstance())
@@ -196,6 +196,7 @@ void CMainApp::Free()
 	Safe_Release(m_pGraphicDev);
 	Safe_Release(m_pDeviceClass);
 
+	CFindOthersMgr::DestroyInstance();
 	CRankMgr::DestroyInstance();
 	CPlayTimeMgr::DestroyInstance();
 	CCollisionMgr::DestroyInstance();

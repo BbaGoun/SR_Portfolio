@@ -6,7 +6,7 @@
 class CThunderPlayerEffect : public CGameObject
 {
 private:
-	explicit CThunderPlayerEffect(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CThunderPlayerEffect(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget);
 	explicit CThunderPlayerEffect(const CGameObject& rhs);
 	~CThunderPlayerEffect() override;
 
@@ -17,15 +17,16 @@ public:
 	virtual			void		Render_GameObject() override;
 
 private:
-	CRcTex* m_pBufferCom;
-	CTexture* m_pTextureCom;
+	CRcTex*		m_pBufferCom;
+	CTexture*	m_pTextureCom;
 
-	float	m_fTimer;
-	float	m_fFrame;
-	float	m_fSize;
+	float			m_fTimer;
+	float			m_fFrame;
+	float			m_fSize;
+	CGameObject*	m_pTarget;
 
 public:
-	static CThunderPlayerEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CThunderPlayerEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget);
 
 protected:
 	virtual		void		Free() override;

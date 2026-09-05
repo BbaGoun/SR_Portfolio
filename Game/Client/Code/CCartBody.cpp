@@ -12,6 +12,8 @@
 #include "CCollisionStarEffect.h"
 #include "SoundMgr.h"
 #include "CCartBot.h"
+#include <CShield1.h>
+#include <CShield2.h>
 
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -66,7 +68,9 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(m_vRotation.y), D3DXToRadian(m_vRotation.x), D3DXToRadian(m_vRotation.z));
 	m_pTransformCom->Set_Quaternion(&q);
 	
-	//m_pTransformCom->Set_Scale({ m_fScale,m_fScale,m_fScale });
+	// _vec3 vScale = m_pTransformCom->Get_Scale();
+	// m_pTransformCom->Set_Scale(vScale * m_fScale);
+
 	//m_pColliderCom->Set_Extents(m_vColliderSize *m_fScale);
 	//m_pTransformCom->Set_Pos({ 0,0.1f,0 });
 }
@@ -74,24 +78,6 @@ void CCartBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CCartBody::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-
-	if (m_bShieldActive == true)
-	{
-		m_bShieldTimer = true;
-	}
-
-	if (m_bShieldTimer == true && m_bShieldActive == true)
-	{
-		m_fShieldTimer += fDeltaTime;
-
-		if (m_fShieldTimer >= 2.f)
-		{
-			m_bShieldHit = false;
-			m_bShieldActive = false;
-			m_bShieldTimer = false;
-			m_fShieldTimer = 0.f;
-		}
-	}
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -112,37 +98,58 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 {
 	const _tchar* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 
-	if (wcsncmp(wOtherTag, L"Obj_CollisionBox", 16) == 0)
+	if (wcscmp(wOtherTag, L"Obj_CartBody") == 0 || wcscmp(wOtherTag, L"Obj_CartBotBody") == 0)
 	{
-		SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
-		_vec3 vParentForce = m_pParent->Get_Force();
-		float vParentSpeed = m_pParent->Get_Speed();
-		// StarEffect
-		if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 30)
-		{
-			CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
-				(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
-			pStarParticle->ResetParticle();
+		if (m_pParent->Get_CollisionTick() == 0) {
+			bool isPlayer = false;
+			CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+			if (pCart)
+				isPlayer = true;
+
+			_vec3 vParentForce = m_pParent->Get_Force();
+			float vParentSpeed = m_pParent->Get_Speed();
+			if (isPlayer) {
+				SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
+				// StarEffect
+				if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 60)
+				{
+					CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
+						(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
+					pStarParticle->ResetParticle();
+				}
+			}
+			// MTV 적용
+			_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
+				static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
+
+			_vec3 vNewForce = vParentForce;
+			vNewForce *= vParentSpeed;
+
+			// 2. 가속도에서 충돌쪽으로 들어가는 속도 성분울 줄이기
+			_vec3 MTV_n;
+			D3DXVec3Normalize(&MTV_n, &MTV);
+			float inward = D3DXVec3Dot(&vNewForce, &MTV_n);
+			// MTV가 벽 밖으로 나가는 방향 
+
+			if(inward < 0)
+				vNewForce -= MTV_n * inward;
+
+			_vec3 vOtherForce = pOtherCollider->Get_Owner()->Get_Parent()->Get_Force();
+			float vOtherSpeed = pOtherCollider->Get_Owner()->Get_Parent()->Get_Speed();
+			vOtherForce *= vOtherSpeed;
+
+			float otherInward = D3DXVec3Dot(&vOtherForce, &MTV_n);
+
+			if (otherInward > 0)
+				vNewForce += MTV_n * otherInward;
+
+			_vec3 vPos;
+			m_pParent->Get_Transform()->Get_Info(INFO_POS, &vPos);
+
+			m_pParent->Set_Force(vNewForce / vParentSpeed);
+			m_pParent->Get_Transform()->Set_Pos(vPos + MTV);
+			//m_pParent->Set_CollisionTick(1);
 		}
-		// MTV 적용
-		_vec3 MTV =  CCollisionMgr::GetInstance()->GetMTVCubevsCube(
-			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
-		CCart* pCart = dynamic_cast<CCart*>(m_pParent);
-
-		// 살짝 뒤로 튕기기
-		_vec3 vNewForce = pCart->Get_Force();
-		vNewForce = MTV * D3DXVec3Length(&vNewForce) * 1.5f;
-		float fForceLength = D3DXVec3Length(&vNewForce);
-		if (fForceLength >= 30)
-			vNewForce = vNewForce * 30 / fForceLength;
-	
-		_vec3 vPos;
-		pCart->Get_Transform()->Get_Info(INFO_POS, &vPos);
-
-		pCart->Add_Force(vNewForce);
-		pCart->Get_Transform()->Set_Pos(vPos+MTV);
-		pCart->SetGainGage(0.f);	// m_fGainGage = 0.f;
-		pCart->SetDrift(false);		// m_bDrift = false;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////// 테스트용  Obj_MissileTarget
@@ -163,17 +170,27 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 	CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+	CGameObject* pShield = pCart->GetShield1();
+
 	if (wcsncmp(wOtherTag, L"Rainbow_Cloud", 13) == 0)
 	{
-		if (m_bShieldActive)
+		if (pShield)
+		{
+			static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
+			static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
 			m_bShieldHit = true;
+		}
 		else if (pCart->GetRainbowUI() == false)
 			pCart->SetRainbowUI(true);
 	}
 	else if (wcsncmp(wOtherTag, L"Obj_Banana", 10) == 0)
 	{
-		if (m_bShieldActive)
+		if (pShield)
+		{
+			static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
+			static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
 			m_bShieldHit = true;
+		}
 		else if (pCart->GetBanana() == false)
 		{
 			SoundMgr::GetInstance().PlaySound(L"Effect/Item_banana/Bananatrapped.ogg", SOUND_BANANA, 0.4f);
@@ -243,6 +260,8 @@ void CCartBody::ThunderSpin(const _float& fDeltaTime)
 {
 	if (m_bThunderSpinState == false)
 		return;
+	_vec3 vParentForce = m_pParent->Get_Force();
+	m_pParent->Set_Force(vParentForce * 0.95f);
 	m_vRotation.y += 720 * fDeltaTime;
 	if (m_vRotation.y > 720)
 	{
@@ -264,10 +283,10 @@ void CCartBody::ThunderTimerUpdate(const _float& fDeltaTime)
 
 	m_fThunderTimer += fDeltaTime;
 
-	if (m_fScale > 0.5)
+	if (m_fScale > 0.8)
 		m_fScale -= fDeltaTime;
 	else
-		m_fScale = 0.5f;
+		m_fScale = 0.8f;
 
 	if (m_fThunderTimer > 5.f)
 	{

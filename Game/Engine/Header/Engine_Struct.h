@@ -216,7 +216,7 @@ namespace Engine
 		int				iSampleIndex;	// 검색 시작점
 		float			u;				// 엣지 로컬 호장
 		float			s;				// 전역 진행량(0~lapLength)
-		int				iLap;			// 진행한 랩 수
+		int				iLap = 0;		// 진행한 랩 수
 		bool			bValid = false;	// 터널 밖, 리셋 중
 	}TrackLocator;
 

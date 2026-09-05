@@ -106,6 +106,9 @@ public:
 	void			Set_CullEnable(bool _b) { m_bCullEnable = _b; }
 	bool			Get_CullEnable() { return m_bCullEnable; }
 
+	void			Set_CollisionTick(int _i) { m_iCollisionTick = _i; }
+	int				Get_CollisionTick() { return m_iCollisionTick; }
+
 	virtual			void		OnLostDevice();
 	virtual			void		OnResetDevice();
 
@@ -113,7 +116,7 @@ protected:
 	_tchar									m_prefabPath[MAX_PATH] = L"\0";
 	bool									m_bBelongPrefab = false;
 
-	uint32_t								m_uGuid;
+	uint32_t								m_uGuid = 0;
 	WCHAR									m_wType[256] = L"\0";
 	WCHAR									m_wName[256] = L"\0";
 	WCHAR									m_wTag[256] = L"\0";
@@ -141,6 +144,7 @@ protected:
 
 	bool									m_bActive = true;
 	bool									m_bCullEnable = true;
+	int										m_iCollisionTick = 0;
 
 private:
 	CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);

@@ -109,8 +109,12 @@ HRESULT CCartBot::Ready_GameObject()
 
 void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	if (!CPlayTimeMgr::GetInstance()->GetPlaying())
+	m_iCollisionTick = max(0, m_iCollisionTick - 1);
+
+	if (!CPlayTimeMgr::GetInstance()->GetPlaying()) {
+		m_iCollisionTick = 0;
 		return;
+	}
 
 	m_fOffsetTimer += fFixedDeltaTime;
 	if (m_fOffsetTimer >= m_fOffsetTimerEnd) {
@@ -118,7 +122,7 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_fOffsetTimerEnd = 1.f + CCalculator::RandInt() / 99.f * 3.f;
 		
 		m_fLateralOffsetTarget = -0.5f + CCalculator::RandInt() / 99.f;
-		m_fLateralOffsetTarget = clampT(m_fLateralOffsetTarget, -0.25f, 0.25f);
+		m_fLateralOffsetTarget = clampT(m_fLateralOffsetTarget, -0.35f, 0.35f);
 	}
 
 	m_fLateralOffset = Lerp(fFixedDeltaTime, m_fLateralOffset, m_fLateralOffsetTarget);
@@ -131,7 +135,7 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
-	if (TP.bValid) {
+	if (TP.bValid && m_bActive) {
 		TP.position += m_fLateralOffset * TP.R * TP.halfW;
 		TP.position.y += 0.5f; // 카트가 박히지 않도록
 
@@ -181,10 +185,15 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		if (acceleration > 0)
 		{
-			float randf = CCalculator::RandInt() / 99.f;
+			if (acceleration > D3DXVec3Length(&m_vForce) * 1.5f)
+				m_eBoostState = BOOST_STATE_LONG_BOOST;
+			else
+				m_eBoostState = BOOST_STATE_NORMAL;
 			m_vForce += dir * acceleration * fFixedDeltaTime;
 		}
 		else {
+			m_eBoostState = BOOST_STATE_NORMAL;
+
 			m_vForce *= clampT(1.f + acceleration * fFixedDeltaTime, 0.1f, 1.f);
 		}
 
@@ -195,7 +204,7 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRotY);
 	}
 	else {
-		m_vForce *= 0.9f;
+		m_vForce *= 0.98f;
 	}
 
 	UpdateGravity();
@@ -230,9 +239,16 @@ _int CCartBot::Update_GameObject(const _float& fDeltaTime)
 
 	m_bPlaying = CPlayTimeMgr::GetInstance()->GetPlaying();
 
+	if (!m_bActive) {
+		m_bDrift = false;
+		m_bUpKey = false;
+		m_eBoostState = BOOST_STATE_NORMAL;
+		return 0;
+	}
+
 	//UpdateStartBoost();
 	//KeyInput(fDeltaTime);
-	//UpdateBoost(fDeltaTime);
+	UpdateBoost(fDeltaTime);
 	//UpdateThunder();
 	//UpdateMagnet(fDeltaTime);
 	//UpdateBlur(fDeltaTime);
@@ -627,7 +643,7 @@ void CCartBot::UpdateBoost(const _float& fDeltaTime)
 		return;
 	}
 	m_fSpeed *= m_fBoostCal;
-	SoundMgr::GetInstance().PlaySound(L"Effect/cart/booster.ogg", SOUND_BOOST, 0.4f);
+	//SoundMgr::GetInstance().PlaySound(L"Effect/cart/booster.ogg", SOUND_BOOST, 0.4f);
 	if (m_pPlayerHead)
 		m_pPlayerHead->SetBoost(true);
 	if (m_eBoostState == BOOST_STATE_SHORT_BOOST)
@@ -647,7 +663,7 @@ void CCartBot::UpdateBoost(const _float& fDeltaTime)
 		m_fSpeed = 1;
 		if (m_pPlayerHead)
 			m_pPlayerHead->SetBoost(false);
-		SoundMgr::GetInstance().StopSound(SOUND_BOOST);
+		//SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 	}
 }
 
@@ -696,7 +712,7 @@ void CCartBot::CreateBananaObject()
 void CCartBot::CreateThunderCloudObject()
 {
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_thunderbolt/ThunderCloud.ogg", SOUND_THUNDERCLOUD, 0.4f);
-	CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev);
+	CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev,this);
 
 	if (nullptr == pGameObject)
 		return;
@@ -1077,15 +1093,18 @@ void CCartBot::CollisionWall()
 			m_pTransformCom->Set_Pos(vPos + MTV);
 
 			// 2. 가속도에서 벽 쪽으로 들어가는 속도 성분을 제거
-			float inward = D3DXVec3Dot(&m_vForce, &MTV);
+			_vec3 MTV_n;
+			D3DXVec3Normalize(&MTV_n, &MTV);
+			float inward = D3DXVec3Dot(&m_vForce, &MTV_n);
 			// MTV가 벽 밖으로 나가는 방향 
-			m_vForce -= MTV * inward;
+			if (inward < 0)
+				m_vForce -= MTV_n * inward;
 
 			// 3. 조금 튕겨나가도록
-			m_vForce += MTV * 10.f;
+			m_vForce += MTV_n * 10.f;
 
 			// 4. 힘 약화
-			m_vForce *= 0.97f;
+			m_vForce *= 0.98f;
 
 			// 5. Gage, Drift 초기화
 			m_fGainGage = 0;

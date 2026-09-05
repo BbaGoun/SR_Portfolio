@@ -379,6 +379,9 @@
     <Filter Include="03. Manager\RankMgr">
       <UniqueIdentifier>{d29b7f87-a875-4652-9d62-4445214be037}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager\CSlotMgr">
+      <UniqueIdentifier>{3b7b33a3-72b5-49b7-98a9-f5874903879b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\RePlayCart">
       <UniqueIdentifier>{54bdf8f2-8e7f-426c-8c59-76d91f43c181}</UniqueIdentifier>
     </Filter>
@@ -390,6 +393,12 @@
     </Filter>
     <Filter Include="02. GameObject\Item\Ufo\UfoBeam">
       <UniqueIdentifier>{8b9f2a74-6dc9-4329-be03-ec3b7508174a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\BoostEffect\BoostAura">
+      <UniqueIdentifier>{462f873a-75fa-41a2-adb7-0a6a7286b237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\FindOthersMgr">
+      <UniqueIdentifier>{f07fabf1-8963-43b3-b90c-f887a71e4da9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -582,9 +591,6 @@
     <ClInclude Include="..\Header\CScene2_ForestValley.h">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CScene2_ClockTower.h">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CMenu_Set.h">
       <Filter>01. Scene\Menu\Menu_Set%28ForestValley%29</Filter>
     </ClInclude>
@@ -771,6 +777,12 @@
     <ClInclude Include="..\Header\CUfoBeam.h">
       <Filter>02. GameObject\Item\Ufo\UfoBeam</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CBoostAura.h">
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostAura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFindOthersMgr.h">
+      <Filter>03. Manager\FindOthersMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -951,9 +963,6 @@
       <Filter>02. GameObject\UI\UI_SceneButton</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CScene2_ForestValley.cpp">
-      <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScene2_ClockTower.cpp">
       <Filter>02. GameObject\UI\UI_SceneButton\Scene2%28Menu_Item%29</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMenu_Set.cpp">
@@ -1141,6 +1150,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUfoBeam.cpp">
       <Filter>02. GameObject\Item\Ufo\UfoBeam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoostAura.cpp">
+      <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostAura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CFindOthersMgr.cpp">
+      <Filter>03. Manager\FindOthersMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

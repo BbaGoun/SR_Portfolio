@@ -70,6 +70,14 @@ void CScene3_Map_ForestValley::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CScene3_Map_ForestValley::Render_GameObject()
 {
+
+	m_pTransformCom->Set_Pos({ 216.f, 10.f, 10.f });
+	m_pTransformCom->Set_Scale({ 585,520,1 });
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+	m_pTextureCom->Set_Texture(2);
+	m_pBufferCom->Render_Buffer();
+
+
 	m_pTransformCom->Set_Pos({ -250.f, -150.f, 10.f });
 	m_pTransformCom->Set_Scale({ 200,160,1 });
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
@@ -82,11 +90,7 @@ void CScene3_Map_ForestValley::Render_GameObject()
 	m_pTextureCom->Set_Texture(1);
 	m_pBufferCom->Render_Buffer();
 
-	m_pTransformCom->Set_Pos({ 216.f, 30.f, 10.f });
-	m_pTransformCom->Set_Scale({ 585,520,1 });
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pTextureCom->Set_Texture(2);
-	m_pBufferCom->Render_Buffer();
+
 }
 
 CScene3_Map_ForestValley* CScene3_Map_ForestValley::Create(LPDIRECT3DDEVICE9 pGraphicDev)

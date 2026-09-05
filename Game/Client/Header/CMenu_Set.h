@@ -20,10 +20,14 @@ private:
 	HRESULT		Ready_Environment_Layer(const _tchar* pLayerTag);
 	HRESULT		Ready_UI_Layer();
 	HRESULT		Ready_RenderTarget();
-
-
 public:
-	//HRESULT		Ready_RenderTarget();
+	void SetChar(CGameObject* pChar) { m_pChar = pChar; }
+	void SetBG(CGameObject* pBG) { m_pBG = pBG; }
+public:
+	void		Selected_Slot(CGameObject* pSlot) { pSlot = m_pSlots; };
+	void		Select_Cart();
+
+
 
 private:
 
@@ -32,6 +36,12 @@ private:
 
 public:
 	static CMenu_Set* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	//vector<CScene3_CharSlot*> m_vSlots;
+	
+	CGameObject* m_pChar;
+	CGameObject* m_pBG;
+
+	CGameObject* m_pSlots;
 
 private:
 	virtual void Free();
