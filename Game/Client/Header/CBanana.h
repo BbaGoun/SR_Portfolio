@@ -3,7 +3,8 @@
 namespace Engine
 {
 	class CCube_Collider;
-	class CInnerBox;
+	class CSphere_Collider;
+	class CRcTex;
 	class CTexture;
 }
 class CBanana : public CGameObject
@@ -28,10 +29,9 @@ public:
 	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
 
 private:
-	CInnerBox* m_pBufferCom;
-	CTexture* m_pTextureCom;
-	CCube_Collider* m_pColliderCom;
-
+	CRcTex*				m_pBufferCom;
+	CTexture*			m_pTextureCom;
+	CSphere_Collider*	m_pColliderCom;
 
 public:
 	static CBanana* Create(LPDIRECT3DDEVICE9 pGraphicDev);

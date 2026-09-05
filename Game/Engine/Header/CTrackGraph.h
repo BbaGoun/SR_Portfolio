@@ -55,7 +55,7 @@ public:
 		float* outLateral = nullptr);
 
 	bool EvaluatePose(
-		EdgeId edgeId,
+		const TrackLocator& prev,
 		float u,
 		TrackPose& outPose);
 

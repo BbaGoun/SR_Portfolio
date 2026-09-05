@@ -4,7 +4,8 @@
 
 namespace Engine
 {
-	class CSphere;		
+	class CHalfSphere;		
+	class CTexture;
 }
 
 class CWaterBombBody : public CGameObject
@@ -21,7 +22,8 @@ public:
 	virtual			void		Render_GameObject()									  override;
 
 private:
-	Engine::CSphere* m_pBufferCom;
+	Engine::CHalfSphere*	m_pBufferCom;
+	Engine::CTexture* m_pTextureCom;
 	_float	m_fTimer;
 
 public:

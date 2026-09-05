@@ -264,8 +264,16 @@ _uint CLoadingThread::Loading_Stage()
         true, L"Black")))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartFrontNumber", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/CartFrontNumber.png", 1),
-        true, L"CartFrontNumber")))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartFrontNumber9", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/CartFrontNumber9.png", 1),
+        true, L"CartFrontNumber9")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartFrontNumber8", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/CartFrontNumber8.png", 1),
+        true, L"CartFrontNumber8")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartFrontNumber7", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/CartFrontNumber7.png", 1),
+        true, L"CartFrontNumber7")))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartBolt", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/CartBolt.png", 1),
@@ -278,6 +286,10 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Red", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Red.png", 1),
         true, L"Red")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Sphere_Blue", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Sphere_Blue.png", 1),
+        true, L"Sphere_Blue")))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_White", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/White.png", 1),
@@ -318,6 +330,14 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"F_mtree00_1_1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/Edited/F_mtree00_1_1.png", 1),
         true, L"F_mtree00_1_1")))
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"WaterBomb", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item/WaterBomb/WaterBomb.png", 1),
+        true, L"WaterBomb")))
+        return E_FAIL;
+
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"ThrowWaterBomb", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item/WaterBomb/ThrowWaterBomb.png", 1),
+        true, L"ThrowWaterBomb")))
         return E_FAIL;
 
     EnterCriticalSection(Get_Crt());

@@ -1,0 +1,62 @@
+﻿OBJECT
+  type=Obj_Missile
+  prefabPath=..\..\..\Resource\Editor\Prefab\Missile.prefab
+  belong=1
+  name=Empty
+  tag=Obj_Missile
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_HalfSphere mapTag=Proto_HalfSphere
+  COMP kind=Texture proto=Proto_LampTexture1 mapTag=Proto_LampTexture1
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.244332 0.549616 0.018082
+    rot=149.603363 51.802013 139.938187
+    quat=0.189754 0.854800 0.077173 0.476817
+    scale=0.868849 0.746175 0.779632
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=27
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_CartWheelCol mapTag=Proto_CartWheelCol
+    COMP kind=Texture proto=fence04 mapTag=fence04
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.000008 -0.451250 0.002693
+      rot=-1.067623 -0.479177 91.359779
+      quat=-0.003518 -0.009587 0.715383 0.698658
+      scale=2.403753 0.443200 0.501635
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=29
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_TriangularPrism mapTag=Proto_TriangularPrism
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.143252 -0.600120 -0.691462
+      rot=-175.806473 -15.068662 178.473587
+      quat=0.008399 0.990679 -0.034523 -0.131504
+      scale=0.120574 0.218711 0.219298
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=30
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_TriangularPrism mapTag=Proto_TriangularPrism
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.191911 -0.571959 0.678990
+      rot=-3.499363 16.972118 -5.937785
+      quat=-0.022519 0.148866 -0.046703 0.987497
+      scale=0.121119 0.218213 0.218741
+  ENDOBJECT
+ENDOBJECT

@@ -118,6 +118,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_Global");
         _float fGlobal_TimeDelta = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_Global");
 
+
+        CDInputMgr::GetInstance()->Update_InputDev();
+
         if (CFrameMgr::GetInstance()->IsPermit_Call(L"Frame60", fGlobal_TimeDelta))
         {
             CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_FPS60");
@@ -125,6 +128,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             _float fFixed_DeltaTime;
             int fixedStep = CTimerMgr::GetInstance()->Get_FixedStep(L"Timer_FPS60", &fFixed_DeltaTime);
 
+            CDInputMgr::GetInstance()->Update_InputDev();
 
             for(int i=0; i<fixedStep; ++i)
                 pMainApp->FixedUpdate_MainApp(fFixed_DeltaTime);

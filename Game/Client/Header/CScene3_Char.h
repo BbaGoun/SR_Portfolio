@@ -21,13 +21,14 @@ public:
 public:
 	static CScene3_Char* Create(LPDIRECT3DDEVICE9 pGraphicDev, CHAR_TYPE eID);
 	void						SetTurn(bool bTurn) { m_bTurn = bTurn; }
-	void						Set_Char(CHAR_TYPE pChar) { m_eSlotNum = pChar; }
-	bool						Get_Char(bool pChar) { return m_eSlotNum; }
+	void						Set_Char(CHAR_TYPE pChar) { m_eSelectedChar = pChar; }
+	bool						Get_Char() { return m_eSelectedChar; }
 
 private:
 	Engine::CQuadrangularPrism* m_pBufferCom;
 	bool						m_bTurn;
-	CHAR_TYPE	m_eSlotNum;
+	CHAR_TYPE	m_eSelectedChar;
+	CHAR_TYPE   m_eSlotNum;
 
 protected:
 	virtual		void		Free() override;

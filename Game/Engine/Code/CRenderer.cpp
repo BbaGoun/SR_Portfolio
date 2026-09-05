@@ -578,10 +578,10 @@ void CRenderer::DrawFullScreen(LPDIRECT3DDEVICE9& pGraphicDev, LPDIRECT3DTEXTURE
 	float fHeight = vp.Height;
 
 	D3DXCOLOR dwColor = D3DCOLOR_ARGB(byAlpha, 255, 255, 255);
-	buffer[0] = { {0.f				,0.f			,0,1},	dwColor,		{0,0} };
-	buffer[1] = { {fWidth			,0.f			,0,1},	dwColor,		{1,0} };
-	buffer[2] = { {fWidth			,fHeight		,0,1},	dwColor,		{1,1} };
-	buffer[3] = { {0.f				,fHeight		,0,1},	dwColor,		{0,1} };
+	buffer[0] = { {-0.5f			,-0.5f			,0,1},	dwColor,		{0,0} };
+	buffer[1] = { {fWidth+0.5f		,-0.5f			,0,1},	dwColor,		{1,0} };
+	buffer[2] = { {fWidth+0.5f		,fHeight+0.5f	,0,1},	dwColor,		{1,1} };
+	buffer[3] = { {-0.5f				,fHeight+0.5f	,0,1},	dwColor,		{0,1} };
 
 	dwColor = D3DCOLOR_ARGB(0, 255, 255, 255);
 	buffer[4] = { {fWidth * 0.5f	,fHeight * 0.5f	,0,1},	dwColor,		{0.5f,0.5f} };

@@ -7,6 +7,7 @@
 #include "CCart.h"
 #include "CLand3.h"
 #include "CSkidMark.h"
+#include "CCartBot.h"
 
 CWheel::CWheel(LPDIRECT3DDEVICE9 pGraphicDev, WHEEL_TYPE eType)
 	:CGameObject(pGraphicDev),m_eWheelType(eType)
@@ -72,62 +73,101 @@ HRESULT CWheel::Ready_GameObject()
 	m_fScale = 1.f;
 	m_fRayMinDist = 0.99f;
 
+	m_fCartForceLen = 0.f;
+	m_eCartDirection = DIR_FORWARD;
+	m_eWheelTurn = TURN_END;
+	m_fDistSum = 0.f;
+
+	Set_CollisionLayer(CL_CART_WHEEL);
+
 	return S_OK;
 }
 
 void CWheel::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	m_pColliderCom->Set_Extents(m_vColliderSize * m_fScale);
+  
+	if (CCart* pCart = dynamic_cast<CCart*>(m_pParent->Get_Parent())) {
+    if (m_eCartDirection == DIR_FORWARD)
+      m_vRotation.x += m_fCartForceLen * fFixedDeltaTime;
+    else
+		  m_vRotation.x -= m_fCartForceLen * fFixedDeltaTime;
 
-	CCart* pCart = dynamic_cast<CCart*>(m_pParent->Get_Parent());
-	_vec3 vParentForce = pCart->Get_Force();
-	float fParentForceLen = D3DXVec3Length(&vParentForce);
+		D3DXQUATERNION q;
+		D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
+		m_pTransformCom->Set_Quaternion(&q);
 
-	_vec3 vPlayerLook;
-	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vPlayerLook);
+		if (m_eWheelType < WHEEL_BL)
+			return;
 
-	if (D3DXVec3Dot(&vPlayerLook, &vParentForce) >= 0)
-		m_vRotation.x += fParentForceLen * fFixedDeltaTime;
-	else
-		m_vRotation.x -= fParentForceLen * fFixedDeltaTime;
-
-	D3DXQUATERNION q;
-	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
-	m_pTransformCom->Set_Quaternion(&q);
-
-	if (m_eWheelType < WHEEL_BL)
-		return;
-
-
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	_vec3 originPos = vPos;
-	if (pCart->GetDrift())
-	{
-		_vec3 vDeltaPos;
-		vDeltaPos = vPos - m_vPrePos;
-		m_fDistSum += D3DXVec3Length(&vDeltaPos);
-		if (m_fDistSum >= 0.5f && CheckInTerrain())
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		_vec3 originPos = vPos;
+		if (pCart->GetDrift())
 		{
-			m_fDistSum = 0;
+			_vec3 vDeltaPos;
+			vDeltaPos = vPos - m_vPrePos;
+			m_fDistSum += D3DXVec3Length(&vDeltaPos);
+			if (m_fDistSum >= 0.5f && CheckInTerrain())
+			{
+				m_fDistSum = 0;
 
-			CreateSkidMark();
-			CreateDriftTrail();
+				CreateSkidMark();
+				CreateDriftTrail();
+			}
 		}
+		else
+		{
+			m_pSkidMark = nullptr;
+			m_pDriftTrail = nullptr;
+			m_fDistSum = 0;
+		}
+		m_vPrePos = vPos;
 	}
-	else
-	{
-		m_pSkidMark = nullptr;
-		m_pDriftTrail = nullptr;
-		m_fDistSum = 0;
+	
+	else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent->Get_Parent())) {
+    if (m_eCartDirection == DIR_FORWARD)
+      m_vRotation.x += m_fCartForceLen * fFixedDeltaTime;
+    else
+		  m_vRotation.x -= m_fCartForceLen * fFixedDeltaTime;
+
+		D3DXQUATERNION q;
+		D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, 0.f);
+		m_pTransformCom->Set_Quaternion(&q);
+
+		if (m_eWheelType < WHEEL_BL)
+			return;
+
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		_vec3 originPos = vPos;
+		if (pCartBot->GetDrift())
+		{
+			_vec3 vDeltaPos;
+			vDeltaPos = vPos - m_vPrePos;
+			m_fDistSum += D3DXVec3Length(&vDeltaPos);
+			if (m_fDistSum >= 0.5f && CheckInTerrain())
+			{
+				m_fDistSum = 0;
+
+				CreateSkidMark();
+				CreateDriftTrail();
+			}
+		}
+		else
+		{
+			m_pSkidMark = nullptr;
+			m_pDriftTrail = nullptr;
+			m_fDistSum = 0;
+		}
+		m_vPrePos = vPos;
 	}
-	m_vPrePos = vPos;
 }
 
 _int CWheel::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-	KeyInput(fDeltaTime);
+	UpdateWheelRot(fDeltaTime);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -142,27 +182,19 @@ void CWheel::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 }
 
-void CWheel::KeyInput(const _float& fDeltaTime)
+void CWheel::UpdateWheelRot(const _float& fDeltaTime)
 {
-	_vec3 vParentForce = m_pParent->Get_Parent()->Get_Force();
-	float fParentForceLen = D3DXVec3Length(&vParentForce);
-	if (fParentForceLen > 5.0f)
+	if (m_fCartForceLen > 5.0f)
 	{
 		m_vRotation.y = 0;
 		return;
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT)&& m_eWheelType < WHEEL_BL)
-	{
-		m_vRotation.y = -45;
-	}
-	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT) && m_eWheelType < WHEEL_BL)
-	{
-		m_vRotation.y = 45;
-	}
+	if (m_eWheelTurn == TURN_LEFT && m_eWheelType < WHEEL_BL)
+		m_vRotation.y = D3DXToRadian(-45);
+	else if (m_eWheelTurn == TURN_RIGHT && m_eWheelType < WHEEL_BL)
+		m_vRotation.y = D3DXToRadian(45);
 	else
-	{
 		m_vRotation.y = 0;
-	}
 }
 
 void CWheel::ResetPrePos()

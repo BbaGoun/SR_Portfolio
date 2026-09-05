@@ -1,5 +1,6 @@
 #pragma once
 #include "CGameObject.h"
+#include "CMenu_Set.h"
 
 namespace Engine
 {
@@ -24,8 +25,15 @@ private:
 public:
 	void SetChar(CGameObject* pChar) { m_pChar = pChar; }
 	void SetBG(CGameObject* pBG) { m_pBG = pBG; }
+
+	void	Set_Slot(CHAR_TYPE eSlot) { m_eSelectSlot = eSlot; }
+
+
+
 	void	Set_Show(bool bShow) { m_bShow = bShow; };
 	bool	Get_Show() { return m_bShow; }
+
+
 
 private:
 	Engine::CRcTex* m_pVIBufferCom;
@@ -40,10 +48,12 @@ public:
 
 	bool			m_bShow;
 
+
 	CGameObject* m_pChar;
 	CGameObject* m_pBG;
+	
 	CHAR_TYPE	m_eSlotNum;
-	CHAR_TYPE	m_eSlot;
+	CHAR_TYPE m_eSelectSlot;
 
 protected:
 	virtual		void		Free() override;

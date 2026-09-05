@@ -12,8 +12,13 @@
 #include "CThunderFloorEffect.h"
 #include "CCartBody.h"
 #include "SoundMgr.h"
+#include <CShield1.h>
+#include <CShield2.h>
+#include <CCartBot.h>
 
-CThunderCloud::CThunderCloud(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
+CThunderCloud::CThunderCloud(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget) 
+	: CGameObject(pGraphicDev)
+	,m_pTarget(pTarget)
 {
 }
 
@@ -53,7 +58,18 @@ HRESULT CThunderCloud::Ready_GameObject()
 
 _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 {
-	CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+	CCartBody* pCartBody = nullptr;
+	CCart* pCart = dynamic_cast<CCart*>(m_pTarget);
+	CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pTarget);
+
+	for (auto& pChild : m_pTarget->Get_Children())
+	{
+		if (dynamic_cast<CCartBody*>(pChild))
+		{
+			pCartBody = dynamic_cast<CCartBody*>(pChild);
+		}
+	}
+	
 	_vec3 vCartPos, vPos, vDir;
 	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 	m_pTransformCom->Get_Info(INFO_POS,&vPos);
@@ -63,14 +79,41 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 	
 	if (m_bCreateThunder == false && m_fThunderDelayTimer > 1.5f)
 	{
-		if (pCartBody->GetThunderTimerOnOff() == false)
-		{
-			pCartBody->SetThunderTimerOnOff(true);
-			m_fFrame = 1;
-		}
+		//if (pCartBody->GetThunderTimerOnOff() == false)
+		//{
+		//	pCartBody->SetThunderTimerOnOff(true);
+		//	m_fFrame = 1;
+		//}
+
 		CreateThunder();
-		CreateThunderPlayerEffect();
-		CreateThunderFloorEffect();
+
+		if (pCart && pCart->GetShield1())
+		{
+			static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
+			static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
+
+		}
+		//else if (pCartBot && pCartBot->GetShield1())
+		//{
+		//	static_cast<CShield1*>(pCartBot->GetShield1())->SetShow(false);
+		//	static_cast<CShield2*>(pCartBot->GetShield2())->SetShow(true);
+		//}
+		//if (pCartBody->GetShieldActive())
+		//	pCartBody->SetShieldHit(true);
+
+		else 
+		{
+			if (pCartBody->GetThunderTimerOnOff() == false)
+			{
+				pCartBody->SetThunderTimerOnOff(true);
+				m_fFrame = 1;
+			}
+
+			CreateThunderPlayerEffect();
+			CreateThunderFloorEffect();
+		}
+		// CreateThunderPlayerEffect();
+		// CreateThunderFloorEffect();
 	}
 	else if(m_bCreateThunder == true)
 	{
@@ -119,9 +162,9 @@ void CThunderCloud::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 }
 
-CThunderCloud* CThunderCloud::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CThunderCloud* CThunderCloud::Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget)
 {
-	CThunderCloud* pObj = new CThunderCloud(pGraphicDev);
+	CThunderCloud* pObj = new CThunderCloud(pGraphicDev,pTarget);
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{
@@ -146,15 +189,16 @@ void CThunderCloud::CreateThunder()
 
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	vPos.y -= 5.f;
 	m_pThunder->Get_Transform()->Set_Pos(vPos);
-
+	Set_ChildTuneDefault(m_pThunder);
 	m_pThunder->SetLayer(m_pLayer);
 }
 
 void CThunderCloud::CreateThunderPlayerEffect()
 {
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_thunderbolt/ThunderPlayer.ogg", SOUND_THUNDERPLAYER, 0.4f);
-	m_pThunderPlayerEffect = CThunderPlayerEffect::Create(m_pGraphicDev);
+	m_pThunderPlayerEffect = CThunderPlayerEffect::Create(m_pGraphicDev, m_pTarget);
 
 	if (nullptr == m_pThunderPlayerEffect)
 		return;
@@ -167,7 +211,7 @@ void CThunderCloud::CreateThunderPlayerEffect()
 
 void CThunderCloud::CreateThunderFloorEffect()
 {
-	m_pThunderFloorEffect = CThunderFloorEffect::Create(m_pGraphicDev);
+	m_pThunderFloorEffect = CThunderFloorEffect::Create(m_pGraphicDev, m_pTarget);
 
 	if (nullptr == m_pThunderFloorEffect)
 		return;

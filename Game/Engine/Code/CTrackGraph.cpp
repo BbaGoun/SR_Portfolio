@@ -601,7 +601,7 @@ bool CTrackGraph::ProjectPosition(const _vec3& worldPos, const TrackLocator& pre
 
 	if (prev.bValid && prev.edgeId != 0) {
 		//근처 계산
-		const int range = 5;
+		const int range = 10;
 
 		TrackEdge* pTE = Get_TrackEdge(prev.edgeId);
 		int sIndex = prev.iSampleIndex;
@@ -696,7 +696,7 @@ bool CTrackGraph::ProjectPosition(const _vec3& worldPos, const TrackLocator& pre
 				bestLocater.iSampleIndex = iBegin;
 				bestLocater.u = Lerp(t, a.u, b.u);
 				bestLocater.s = Lerp(t, a.s, b.s);
-				bestLocater.iLap = prev.bValid ? prev.iLap : 0;
+				bestLocater.iLap = prev.iLap;
 				bestLocater.bValid = true;
 				bestLateral = lateral;
 			}
@@ -714,8 +714,70 @@ bool CTrackGraph::ProjectPosition(const _vec3& worldPos, const TrackLocator& pre
 	return false;
 }
 
-bool CTrackGraph::EvaluatePose(EdgeId edgeId, float u, TrackPose& outPose)
+bool CTrackGraph::EvaluatePose(const TrackLocator& prev, float u, TrackPose& outPose)
 {
+	if (!prev.bValid)
+		return false;
+	
+	TrackEdge* pTE = Get_TrackEdge(prev.edgeId);
+	float localU = prev.u + u;
+	
+	while (localU > pTE->fLength) {
+		localU -= pTE->fLength;
+		TrackNode* pTN = Get_TrackNode(pTE->toNode);
+		float maxBias = -FLT_MAX;
+		for (EdgeId id : pTN->vecOutEdgeIds) {
+			TrackEdge* pTE_To = Get_TrackEdge(id);
+			if (maxBias < pTE_To->fCostBias) {
+				maxBias = pTE_To->fCostBias;
+				pTE = pTE_To;
+			}
+		}
+	}
+
+	int n = pTE->vecSamples.size();
+	for (int i = 1; i < n; ++i) {
+		TrackSample& b = pTE->vecSamples[i];
+		TrackSample& a = pTE->vecSamples[i - 1];
+
+		if (a.u < localU && localU <= b.u) {
+			_vec3 segment = b.position - a.position;
+			float segmentU = b.u - a.u;
+
+			float deltaU = localU - a.u;
+
+			float t = clampT(deltaU / segmentU, 0.f, 1.f);
+
+			_vec3 R = a.R + (b.R - a.R) * t;
+			_vec3 U = a.U + (b.U - a.U) * t;
+			_vec3 T = a.T + (b.T - a.T) * t;
+
+			D3DXVec3Normalize(&R, &R);
+			D3DXVec3Normalize(&U, &U);
+			D3DXVec3Normalize(&T, &T);
+
+			_vec3 localPos = a.position + segment * t;
+			_vec3 worldPos;
+			D3DXVec3TransformCoord(&worldPos, &localPos, m_pOwner->Get_Transform()->Get_World());
+
+			float s_global = Lerp(t, a.s, b.s);
+			float speed = Lerp(t, a.speed, b.speed);
+			float halfW = Lerp(t, a.halfW, b.halfW);
+
+			outPose.position = worldPos;
+			outPose.R = R;
+			outPose.U = U;
+			outPose.T = T;
+			outPose.edgeId = pTE->id;
+			outPose.u = localU;
+			outPose.s = s_global;
+			outPose.bValid = true;
+			outPose.halfW = halfW;
+			outPose.speed = speed;
+			return true;
+		}
+	}
+	
 	return false;
 }
 
@@ -1026,10 +1088,16 @@ void CTrackGraph::Compute_Sample_Speed(TrackEdge* _pTE)
 	if (!pTE)
 		return;
 
-	float fMax = 80.f, fMin = 20.f; // 평지 상하한
-	float aLat = 1.f; // 코너에서 버티는 횡가속도
-	float aBrake = 1.f; // 미리 줄일 때 쓰는 감속 크기
-	float aAccel = 1.f; // 코너 출구에서 올리는 상한
+	float fMax = 120.f, fMin = 40.f; // 평지 상하한
+	
+	// aLat = 원하는 코너 속력² / 코너 반경
+	float aLat = 75.f;
+	
+	// aBrake = (현재속력² - 목표속력²) / (2 × 감속거리)
+	float aBrake = 375.f; 
+	
+	// aAccel = (목표속력² - 현재속력²) / (2 × 증가거리)
+	float aAccel = 100.f; 
 	float kUp = 1.f; // 오르막에서 목표 속력을 깎는 정도
 
 	auto& vecS = pTE->vecSamples;
@@ -1200,9 +1268,9 @@ CheckInfo CTrackGraph::Recursive_Forward_CheckInside(const _vec3& localPos, cons
 
 				delta = localPos - prev.localPos;
 				forward = D3DXVec3Dot(&delta, &s.T);
-				if (prev.s > info.bestLocater.s && forward > 0)
+				if (prev.s - info.bestLocater.s > m_fLapLength * 0.5f && forward > 0)
 					info.bestLocater.iLap += 1;
-				else if (prev.s < info.bestLocater.s && forward < 0)
+				else if (info.bestLocater.s - prev.s >= m_fLapLength * 0.5f && forward < 0)
 					info.bestLocater.iLap -= 1;
 
 				info.bestLocater.bValid = true;
@@ -1318,9 +1386,9 @@ CheckInfo CTrackGraph::Recursive_Back_CheckInside(const _vec3& localPos, const T
 
 				delta = localPos - prev.localPos;
 				forward = D3DXVec3Dot(&delta, &s.T);
-				if (prev.s > info.bestLocater.s && forward > 0)
+				if (prev.s - info.bestLocater.s > m_fLapLength * 0.5f && forward > 0)
 					info.bestLocater.iLap += 1;
-				else if (prev.s < info.bestLocater.s && forward < 0)
+				else if (info.bestLocater.s - prev.s >= m_fLapLength * 0.5f && forward < 0)
 					info.bestLocater.iLap -= 1;
 
 				info.bestLocater.bValid = true;

@@ -5,7 +5,7 @@
 class CThunderCloud : public CGameObject
 {
 private:
-	explicit CThunderCloud(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CThunderCloud(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget);
 	explicit CThunderCloud(const CGameObject& rhs);
 	~CThunderCloud() override;
 
@@ -24,12 +24,13 @@ private:
 	bool	m_bClosed;
 	bool	m_bCreateThunder;
 
-	CGameObject* m_pThunder;
-	CGameObject* m_pThunderPlayerEffect;
-	CGameObject* m_pThunderFloorEffect;
+	CGameObject*	m_pTarget;
+	CGameObject*	m_pThunder;
+	CGameObject*	m_pThunderPlayerEffect;
+	CGameObject*	m_pThunderFloorEffect;
 
 public:
-	static CThunderCloud* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CThunderCloud* Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget);
 
 	void	CreateThunder();
 	void	CreateThunderPlayerEffect();

@@ -19,18 +19,18 @@ HRESULT CMissileTex::Ready_Buffer()
 	// VTXCUBE는 스카이박스를 만들기 위한 용도로 3차원 UV값을 갖는데, 일반적인 물체는 사용하지 않는 포멧
 	// 직접 색을 지정하려면 VTXCOL를 쓰고, 텍스처를 입히고 싶으면 VTXTEX를 사용
 
-	m_dwVtxSize = sizeof(VTXCUBE);
+	m_dwVtxSize = sizeof(VTXMISSILE);
 	m_dwVtxCnt = 32;
 	m_dwTriCnt = 48;
 
-	m_dwFVF = FVF_CUBE;
+	m_dwFVF = FVF_MISSILE;
 	m_dwIdxCnt = 144;
 	m_IdxFmt = D3DFMT_INDEX32;
 
 	if (FAILED(CVIBuffer::Ready_Buffer()))
 		return E_FAIL;
 
-	VTXCUBE* pVertex = NULL;
+	VTXMISSILE* pVertex = NULL;
 
 	// &pVertex : 버텍스 버퍼에 저장된 버텍스 중 첫번째 버텍스의 주소를 얻어옴
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
@@ -38,106 +38,106 @@ HRESULT CMissileTex::Ready_Buffer()
 
 	// 몸통
 	pVertex[0].vPosition = { -0.1f,  0.1f,  0.2f };
-	pVertex[0].vTexUV = pVertex[0].vPosition;
+	pVertex[0].dwColor = D3DCOLOR_XRGB(255, 255, 255);
 
 	pVertex[1].vPosition = { 0.1f,  0.1f,  0.2f };
-	pVertex[1].vTexUV = pVertex[1].vPosition;
+	pVertex[1].dwColor = D3DCOLOR_XRGB(255, 255, 255);
 
 	pVertex[2].vPosition = { 0.1f, -0.1f,  0.2f };
-	pVertex[2].vTexUV = pVertex[2].vPosition;
+	pVertex[2].dwColor = D3DCOLOR_XRGB(255, 255, 255);
 
 	pVertex[3].vPosition = { -0.1f, -0.1f,  0.2f };
-	pVertex[3].vTexUV = pVertex[3].vPosition;
+	pVertex[3].dwColor = D3DCOLOR_XRGB(255, 255, 255);
 
 	pVertex[4].vPosition = { -0.1f,  0.1f, -0.15f };
-	pVertex[4].vTexUV = pVertex[4].vPosition;
+	pVertex[4].dwColor = D3DCOLOR_XRGB(255, 255, 255);
 
 	pVertex[5].vPosition = { 0.1f,  0.1f, -0.15f };
-	pVertex[5].vTexUV = pVertex[5].vPosition;
+	pVertex[5].dwColor = D3DCOLOR_XRGB(255, 255, 255);
 
 	pVertex[6].vPosition = { 0.1f, -0.1f, -0.15f };
-	pVertex[6].vTexUV = pVertex[6].vPosition;
+	pVertex[6].dwColor = D3DCOLOR_XRGB(255, 255, 255);
 
 	pVertex[7].vPosition = { -0.1f, -0.1f, -0.15f };
-	pVertex[7].vTexUV = pVertex[7].vPosition;
+	pVertex[7].dwColor = D3DCOLOR_XRGB(255, 255, 255);
 
 
 	// 왼쪽 날개
 	pVertex[8].vPosition = { -0.2f,  0.05f,  0.05f };
-	pVertex[8].vTexUV = pVertex[8].vPosition;
+	pVertex[8].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[9].vPosition = { -0.1f,  0.05f,  0.05f };
-	pVertex[9].vTexUV = pVertex[9].vPosition;
+	pVertex[9].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[10].vPosition = { -0.1f, -0.05f,  0.05f };
-	pVertex[10].vTexUV = pVertex[10].vPosition;
+	pVertex[10].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[11].vPosition = { -0.2f, -0.05f,  0.05f };
-	pVertex[11].vTexUV = pVertex[11].vPosition;
+	pVertex[11].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[12].vPosition = { -0.2f,  0.05f, -0.1f };
-	pVertex[12].vTexUV = pVertex[12].vPosition;
+	pVertex[12].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[13].vPosition = { -0.1f,  0.05f, -0.1f };
-	pVertex[13].vTexUV = pVertex[13].vPosition;
+	pVertex[13].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[14].vPosition = { -0.1f, -0.05f, -0.1f };
-	pVertex[14].vTexUV = pVertex[14].vPosition;
+	pVertex[14].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[15].vPosition = { -0.2f, -0.05f, -0.1f };
-	pVertex[15].vTexUV = pVertex[15].vPosition;
+	pVertex[15].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 
 	// 오른쪽 날개
 	pVertex[16].vPosition = { 0.1f,  0.05f,  0.05f };
-	pVertex[16].vTexUV = pVertex[16].vPosition;
+	pVertex[16].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[17].vPosition = { 0.2f,  0.05f,  0.05f };
-	pVertex[17].vTexUV = pVertex[17].vPosition;
+	pVertex[17].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[18].vPosition = { 0.2f, -0.05f,  0.05f };
-	pVertex[18].vTexUV = pVertex[18].vPosition;
+	pVertex[18].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[19].vPosition = { 0.1f, -0.05f,  0.05f };
-	pVertex[19].vTexUV = pVertex[19].vPosition;
+	pVertex[19].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[20].vPosition = { 0.1f,  0.05f, -0.1f };
-	pVertex[20].vTexUV = pVertex[20].vPosition;
+	pVertex[20].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[21].vPosition = { 0.2f,  0.05f, -0.1f };
-	pVertex[21].vTexUV = pVertex[21].vPosition;
+	pVertex[21].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[22].vPosition = { 0.2f, -0.05f, -0.1f };
-	pVertex[22].vTexUV = pVertex[22].vPosition;
+	pVertex[22].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 	pVertex[23].vPosition = { 0.1f, -0.05f, -0.1f };
-	pVertex[23].vTexUV = pVertex[23].vPosition;
+	pVertex[23].dwColor = D3DCOLOR_XRGB(0, 0, 255);
 
 
 	// 뒤쪽 작은 사각형
 	pVertex[24].vPosition = { -0.05f,  0.05f, -0.15f };
-	pVertex[24].vTexUV = pVertex[24].vPosition;
+	pVertex[24].dwColor = D3DCOLOR_XRGB(80, 80, 80);
 
 	pVertex[25].vPosition = { 0.05f,  0.05f, -0.15f };
-	pVertex[25].vTexUV = pVertex[25].vPosition;
+	pVertex[25].dwColor = D3DCOLOR_XRGB(80, 80, 80);
 
 	pVertex[26].vPosition = { 0.05f, -0.05f, -0.15f };
-	pVertex[26].vTexUV = pVertex[26].vPosition;
+	pVertex[26].dwColor = D3DCOLOR_XRGB(80, 80, 80);
 
 	pVertex[27].vPosition = { -0.05f, -0.05f, -0.15f };
-	pVertex[27].vTexUV = pVertex[27].vPosition;
+	pVertex[27].dwColor = D3DCOLOR_XRGB(80, 80, 80);
 
 	pVertex[28].vPosition = { -0.05f,  0.05f, -0.25f };
-	pVertex[28].vTexUV = pVertex[28].vPosition;
+	pVertex[28].dwColor = D3DCOLOR_XRGB(80, 80, 80);
 
 	pVertex[29].vPosition = { 0.05f,  0.05f, -0.25f };
-	pVertex[29].vTexUV = pVertex[29].vPosition;
+	pVertex[29].dwColor = D3DCOLOR_XRGB(80, 80, 80);
 
 	pVertex[30].vPosition = { 0.05f, -0.05f, -0.25f };
-	pVertex[30].vTexUV = pVertex[30].vPosition;
+	pVertex[30].dwColor = D3DCOLOR_XRGB(80, 80, 80);
 
 	pVertex[31].vPosition = { -0.05f, -0.05f, -0.25f };
-	pVertex[31].vTexUV = pVertex[31].vPosition;
+	pVertex[31].dwColor = D3DCOLOR_XRGB(80, 80, 80);
 
 
 	_float fScale = 10.f;
@@ -145,7 +145,6 @@ HRESULT CMissileTex::Ready_Buffer()
 	for (_uint i = 0; i < m_dwVtxCnt; ++i)
 	{
 		pVertex[i].vPosition *= fScale;
-		pVertex[i].vTexUV = pVertex[i].vPosition;
 	}
 
 	m_pVB->Unlock();

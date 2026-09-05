@@ -64,6 +64,14 @@ namespace Engine
 
 	const _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0); // 텍스처의 UV 좌표 값을 FLOAT형 3개로 표현하겠다는 매크로(괄호안의 숫자 0의 의미는 본래 버텍스에 텍스쳐 UV값이 여러개가 올 수 있는데 그중 0번째 값을 지정하겠다는 의미)
 
+	typedef struct tagVertexMissileColor
+	{
+		_vec3		vPosition;
+		_ulong		dwColor;
+
+	}VTXMISSILE;
+
+	const _ulong	FVF_MISSILE = D3DFVF_XYZ | D3DFVF_DIFFUSE;
 	typedef struct tagFullScreen
 	{
 		_vec4		vPosition;
@@ -208,8 +216,8 @@ namespace Engine
 		int				iSampleIndex;	// 검색 시작점
 		float			u;				// 엣지 로컬 호장
 		float			s;				// 전역 진행량(0~lapLength)
-		int				iLap;			// 진행한 랩 수
-		bool			bValid;			// 터널 밖, 리셋 중
+		int				iLap = 0;		// 진행한 랩 수
+		bool			bValid = false;	// 터널 밖, 리셋 중
 	}TrackLocator;
 
 	typedef struct _tagHazardRecord
@@ -227,6 +235,9 @@ namespace Engine
 		_vec3	position, T, R, U;
 		EdgeId	edgeId;
 		float	u, s;
+		float	speed;
+		float	halfW;
+		bool	bValid = false;
 	}TrackPose;
 
 	typedef struct _tagRouteNode {
