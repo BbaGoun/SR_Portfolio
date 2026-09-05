@@ -153,7 +153,7 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 			vOtherForce *= vOtherSpeed;
 
 			float otherInward = D3DXVec3Dot(&vOtherForce, &MTV_n);
-
+			int a;
 			if (otherInward > 0)
 				vNewForce += MTV_n * otherInward;
 
