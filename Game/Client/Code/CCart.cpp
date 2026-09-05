@@ -115,6 +115,13 @@ HRESULT CCart::Ready_GameObject()
 
 void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	if (m_bMissileHit == true)
+		return;
+
+	UpdateBubble(fFixedDeltaTime);
+	if (m_bBubble == true)
+		return;
+
 	m_iCollisionTick = max(0, m_iCollisionTick - 1);
 
 	if (!CPlayTimeMgr::GetInstance()->GetPlaying()) {
@@ -207,7 +214,7 @@ CCart* CCart::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CCart::KeyInput(const _float& fDeltaTime)
 {
-	if (m_bBanana == true)
+	if (m_bBanana == true || m_bMissileHit == true || m_bBubble == true)
 		return;
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
@@ -1193,6 +1200,33 @@ void CCart::UpdateBlur(const _float& fDeltaTime)
 		CRenderer::GetInstance()->SetBlurPower(0.f);
 }
 
+void CCart::UpdateBubble(const _float& fDeltaTime)
+{
+	if (m_bBubble == false)
+		return;
+	static_cast<CWaterBombBubble*>(m_pBubble)->SetShow(true);
+	m_fBubbleTimer += fDeltaTime;
+	if (m_fBubbleTimer <= 1.f)
+		m_vForce = _vec3({ 0,1,0 }) * m_fBubbleTimer * 15;
+	else if (m_fBubbleTimer <= 1.5f)
+		m_vForce = { 0,0,0 };
+	else if (m_fBubbleTimer <= 2.5f)
+		m_vForce = _vec3({ 0,-1,0 }) * (m_fBubbleTimer - 1.5f) * 15;
+	else
+	{
+		m_vForce = { 0,0,0 };
+		m_bBubble = false;
+		m_fBubbleTimer = 0.f;
+		static_cast<CWaterBombBubble*>(m_pBubble)->SetShow(false);
+	}
+	m_pTransformCom->Move_Pos(&m_vForce, 1, fDeltaTime);
+
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	vPos.y += 3.f;
+	m_pBubble->Get_Transform()->Set_Pos(vPos);
+}
+
 void CCart::OutputCarState()
 {
 	switch (m_eCartState)
@@ -1460,7 +1494,9 @@ void CCart::CreateWaterBombObject()
 
 void CCart::CreateWaterFlyObject()
 {
-	CGameObject* pWaterFly = CWaterFly::Create(m_pGraphicDev);
+	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBot");
+
+	CGameObject* pWaterFly = CWaterFly::Create(m_pGraphicDev, pTarget);
 
 	if (pWaterFly == nullptr)
 		return;
@@ -1468,20 +1504,10 @@ void CCart::CreateWaterFlyObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFly", pWaterFly)))
 		return;
 
-	pWaterFly->SetLayer(m_pLayer);
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	pWaterFly->Get_Transform()->Set_Pos(vPos);
 	
-
-	CGameObject* pWaterFlyBody = CWaterFlyBody::Create(m_pGraphicDev);
-
-	if (pWaterFlyBody == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFlyBody", pWaterFlyBody)))
-		return;
-
-	pWaterFlyBody->SetLayer(m_pLayer);
-	pWaterFly->Set_Child(pWaterFlyBody);
-
 	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
 
 	//if (pWaterBombBubble == nullptr)

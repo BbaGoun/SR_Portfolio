@@ -87,7 +87,7 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 
 		CreateThunder();
 
-		if (pCart && pCart->GetShield1())
+		if (pCart && (pCart->GetShield1()))
 		{
 			static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
 			static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
@@ -100,15 +100,13 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 		//}
 		//if (pCartBody->GetShieldActive())
 		//	pCartBody->SetShieldHit(true);
-
-		else 
+		else if(pCart && !pCart->GetShield1() && !pCart->GetShield2() )
 		{
 			if (pCartBody->GetThunderTimerOnOff() == false)
 			{
 				pCartBody->SetThunderTimerOnOff(true);
 				m_fFrame = 1;
 			}
-
 			CreateThunderPlayerEffect();
 			CreateThunderFloorEffect();
 		}
