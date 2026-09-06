@@ -17,6 +17,8 @@ public:
 	static void DrawRayLine(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vStart, _vec3 vEnd, D3DXCOLOR color);
 
 	static int RandInt();
+
+	static RGB HSVtoRGB(float h, float s, float v);
 };
 
 template<int N>

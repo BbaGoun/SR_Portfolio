@@ -104,7 +104,7 @@ void CVIBuffer::UpdateMinMaxVtx(_vec3 position)
 
 CComponent* CVIBuffer::Clone()
 {
-	CComponent* pComp(this);
+	CComponent* pComp = new CVIBuffer(*this);
 
 	return pComp;
 }

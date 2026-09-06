@@ -1246,6 +1246,8 @@ void CCartBot::UpdateBubble(const _float& fDeltaTime)
 		return;
 	static_cast<CWaterBombBubble*>(m_pBubble)->SetShow(true);
 	m_fBubbleTimer += fDeltaTime;
+
+
 	if (m_fBubbleTimer <= 1.f)
 		m_vForce = _vec3({ 0,1,0 }) * m_fBubbleTimer * 15;
 	else if (m_fBubbleTimer <= 1.5f)
@@ -1257,6 +1259,7 @@ void CCartBot::UpdateBubble(const _float& fDeltaTime)
 		m_vForce = { 0,0,0 };
 		m_bBubble = false;
 		m_fBubbleTimer = 0.f;
+		m_vRotation.z = 0.f;
 		static_cast<CWaterBombBubble*>(m_pBubble)->SetShow(false);
 	}
 	m_pTransformCom->Move_Pos(&m_vForce, 1, fDeltaTime);
@@ -1265,6 +1268,10 @@ void CCartBot::UpdateBubble(const _float& fDeltaTime)
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	vPos.y += 3.f;
 	m_pBubble->Get_Transform()->Set_Pos(vPos);
+
+	m_vRotation.z = 0.1f;
+	m_pTransformCom->Rotate(QUATER_ROLL, m_vRotation.z);
+	
 }
 void CCartBot::OutputCarState()
 {

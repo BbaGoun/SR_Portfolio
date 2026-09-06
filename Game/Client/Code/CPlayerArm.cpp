@@ -1,48 +1,48 @@
 #include "pch.h"
-#include "CPlayerHead.h"
+#include "CPlayerArm.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
 #include "CCart.h"
 #include "CCameraMgr.h"
 #include "CPlayTimeMgr.h"
-CPlayerHead::CPlayerHead(LPDIRECT3DDEVICE9 pGraphicDev)
+CPlayerArm::CPlayerArm(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
 }
 
-CPlayerHead::CPlayerHead(const CGameObject& rhs)
+CPlayerArm::CPlayerArm(const CGameObject& rhs)
 	:CGameObject(rhs)
 {
 }
 
-CPlayerHead::~CPlayerHead()
+CPlayerArm::~CPlayerArm()
 {
 }
 
-HRESULT CPlayerHead::Ready_GameObject()
+HRESULT CPlayerArm::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 	//Engine::CComponent* pComponent = nullptr;
 
-	m_bBoost		= false;
-	m_eCartDirType	= DIR_FORWARD;
+	m_bBoost = false;
+	m_eCartDirType = DIR_FORWARD;
 
 	//m_vRotation.y = -90.f;
 	return S_OK;
 }
 
-void CPlayerHead::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
+void CPlayerArm::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	D3DXQUATERNION q;
-	D3DXQuaternionRotationYawPitchRoll(&q, 
-										D3DXToRadian(m_vRotation.y),
-										D3DXToRadian(m_vRotation.x), 
-										D3DXToRadian(m_vRotation.z));
+	D3DXQuaternionRotationYawPitchRoll(&q,
+		D3DXToRadian(m_vRotation.y),
+		D3DXToRadian(m_vRotation.x),
+		D3DXToRadian(m_vRotation.z));
 	m_pTransformCom->Set_Quaternion(&q);
 }
 
-_int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
+_int CPlayerArm::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	if (CPlayTimeMgr::GetInstance()->GetPlayTimer() > CPlayTimeMgr::GetInstance()->GetPlayTimer() + 10.f)
@@ -56,61 +56,28 @@ _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 
 	if (m_eCartDirType == DIR_FORWARD)
 	{
-		if (m_bBoost == true)
-		{
-			m_vRotation.x = 0.f;
-			// 고개 뒤로 x축 회전 -> z축 회전
-			if (m_vRotation.z > -30.f)
-				m_vRotation.z -= 100 * fDeltaTime;
-			else
-				m_vRotation.z = -30.f;
-
-		}
-		else
-		{
-			// 고개 원위치
-			if (m_vRotation.z < 0.f)
-				m_vRotation.z += 100 * fDeltaTime;
-			else
-				m_vRotation.z = 0.f;
-			KeyInput(fDeltaTime);
-		}
-		// 뒤돌기
-		if (m_vRotation.y < 0.f)
-			m_vRotation.y += 180 * fDeltaTime;
-		else
-			m_vRotation.y = 0.f;
+		KeyInput(fDeltaTime);
 	}
 	else
 	{
+		// 후진(팔 원위치)
 		m_vRotation.x = 0.f;
-		m_vRotation.z = 0.f;
-		// 앞 보기
-		if (m_vRotation.y > -160.f)
-		{
-			m_vRotation.y -= 180 * fDeltaTime;
-		}
-		else
-		{
-			m_vRotation.y = -160.f;
-		}
-
 	}
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
-void CPlayerHead::LateUpdate_GameObject(const _float& fDeltaTime)
+void CPlayerArm::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
-void CPlayerHead::Render_GameObject()
+void CPlayerArm::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 }
-void CPlayerHead::KeyInput(const _float& fDeltaTime)
+void CPlayerArm::KeyInput(const _float& fDeltaTime)
 {
 	if (m_bKeyInput == false)
 		return;
@@ -119,15 +86,12 @@ void CPlayerHead::KeyInput(const _float& fDeltaTime)
 		// 고개 왼쪽
 		if (m_vRotation.x > -20.f)
 			m_vRotation.x -= 50 * fDeltaTime;
-		// 위치 이동
 	}
 	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 	{
 		// 고개 오른쪽
 		if (m_vRotation.x < 20.f)
 			m_vRotation.x += 50 * fDeltaTime;
-
-		// 위치 이동
 	}
 	else
 	{
@@ -141,20 +105,20 @@ void CPlayerHead::KeyInput(const _float& fDeltaTime)
 	}
 }
 
-CPlayerHead* CPlayerHead::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CPlayerArm* CPlayerArm::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CPlayerHead* pObj = new CPlayerHead(pGraphicDev);
+	CPlayerArm* pObj = new CPlayerArm(pGraphicDev);
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{
-		MSG_BOX("CPlayerHead Create Failed");
+		MSG_BOX("CPlayerArm Create Failed");
 		Safe_Release(pObj);
 		return nullptr;
 	}
 	return pObj;
 }
 
-void CPlayerHead::Free()
+void CPlayerArm::Free()
 {
 	CGameObject::Free();
 }

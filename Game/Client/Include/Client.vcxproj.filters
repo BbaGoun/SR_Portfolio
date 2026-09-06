@@ -400,6 +400,15 @@
     <Filter Include="03. Manager\FindOthersMgr">
       <UniqueIdentifier>{f07fabf1-8963-43b3-b90c-f887a71e4da9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\MiniMap\MinimapCartBot">
+      <UniqueIdentifier>{915ff3c6-392b-40e4-9555-e77ddaa0ac06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\ItemGainEffect">
+      <UniqueIdentifier>{88c585dd-79cc-4493-a201-83b3d4f939be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Player\CPlayerArm">
+      <UniqueIdentifier>{21314f21-108b-46e9-9914-cf627f20c7b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -783,6 +792,15 @@
     <ClInclude Include="..\Header\CFindOthersMgr.h">
       <Filter>03. Manager\FindOthersMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMinimapCartBot.h">
+      <Filter>02. GameObject\MiniMap\MinimapCartBot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemGainEffect.h">
+      <Filter>02. GameObject\Cart\Effect\ItemGainEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerArm.h">
+      <Filter>02. GameObject\Player\CPlayerArm</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1156,6 +1174,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CFindOthersMgr.cpp">
       <Filter>03. Manager\FindOthersMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMinimapCartBot.cpp">
+      <Filter>02. GameObject\MiniMap\MinimapCartBot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemGainEffect.cpp">
+      <Filter>02. GameObject\Cart\Effect\ItemGainEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerArm.cpp">
+      <Filter>02. GameObject\Player\CPlayerArm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

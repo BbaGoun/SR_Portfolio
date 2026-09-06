@@ -6,12 +6,12 @@ namespace Engine
 	class CTexture;
 	class CRcTex;
 }
-class CPlayerHead : public CGameObject
+class CPlayerArm : public CGameObject
 {
 private:
-	explicit CPlayerHead(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CPlayerHead(const CGameObject& rhs);
-	virtual ~CPlayerHead() override;
+	explicit CPlayerArm(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CPlayerArm(const CGameObject& rhs);
+	virtual ~CPlayerArm() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
@@ -24,8 +24,9 @@ public:
 	void		SetCartDirType(DIRECTION_TYPE eCartDirType) { m_eCartDirType = eCartDirType; }
 	void		KeyInput(const _float& fDeltaTime);
 	void		SetKeyInput(bool bKeyInput) { m_bKeyInput = bKeyInput; }
+
 public:
-	static CPlayerHead* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CPlayerArm* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	float				m_fFrame = 0;
@@ -33,6 +34,7 @@ private:
 	bool				m_bBoost;
 	DIRECTION_TYPE		m_eCartDirType;
 	bool				m_bKeyInput = true;
+
 protected:
 	virtual		void		Free() override;
 };

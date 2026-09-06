@@ -100,7 +100,10 @@ public:
 	void			OutputCarState();
 
 	// SetPlayerHead
-	void			SetPlayerHead(CGameObject* pPlayerHead) { m_pPlayerHead = static_cast<CPlayerHead*>(pPlayerHead); }
+	void			SetPlayerHead(CGameObject* pPlayerHead) { 
+		m_pPlayerHead = static_cast<CPlayerHead*>(pPlayerHead); 
+		m_pPlayerHead->SetKeyInput(false);
+	}
 
 	// Wheel
 	void			AddWheel();

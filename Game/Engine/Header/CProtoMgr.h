@@ -32,6 +32,7 @@
 #include "CSphere.h"
 #include "CHalfSphere.h"
 #include "CMeshRibbon.h"
+#include "CCircleCol.h"
 
 BEGIN(Engine)
 

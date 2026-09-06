@@ -48,7 +48,6 @@
 #include "CWaterBombBody.h"
 #include "CWaterBomb.h"
 #include "CWaterBombThrow.h"
-#include "CCollisionStarEffect.h"
 #include "CDriftSpark.h"
 #include "CWaterBombBubble.h"
 #include "CDynamicCamera.h"
@@ -371,7 +370,6 @@ HRESULT CCollisionTest::Ready_GameLogic_Layer()
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
 	// 충돌시 나오는 별 이펙트
-	pGameObject = CCollisionStarEffect::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	if (FAILED(pGameObjectLayer->Add_GameObject(L"CollisionStarEffect", pGameObject)))

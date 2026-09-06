@@ -9,6 +9,7 @@
 #include "CPlayer.h"
 #include "CTrackCam.h"
 #include "CItemBox.h"
+#include "CPlayerArm.h"
 
 IMPLEMENT_SINGLETON(CLoadMgr)
 
@@ -30,7 +31,7 @@ void CLoadMgr::ReadyCreateMap() {
 	
 	m_createMap[L"Obj_Player"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CPlayer::Create(pGraphicDev); };
 	m_createMap[L"Obj_PlayerHead"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CPlayerHead::Create(pGraphicDev); };
-	m_createMap[L"Obj_PlayerArm"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CEmpty::Create(pGraphicDev); };
+	m_createMap[L"Obj_PlayerArm"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CPlayerArm::Create(pGraphicDev); };
 	
 	m_createMap[L"CWheelFL"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CWheel::Create(pGraphicDev,WHEEL_FL); };
 	m_createMap[L"CWheelFR"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CWheel::Create(pGraphicDev,WHEEL_FR); };

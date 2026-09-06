@@ -172,6 +172,12 @@
     <Filter Include="04. Component\Shape\HalfSphere">
       <UniqueIdentifier>{75949650-08bc-482a-9c97-aeb0f47fb4d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\CircleCol">
+      <UniqueIdentifier>{be99450a-dfb1-4d80-abd1-465c0c04e7f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. PSystem\ItemGainParticle">
+      <UniqueIdentifier>{6a91a954-567e-46f4-8c26-ab97a8be88ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -352,6 +358,12 @@
     <ClInclude Include="..\Header\CHalfSphere.h">
       <Filter>04. Component\Shape\HalfSphere</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCircleCol.h">
+      <Filter>04. Component\Shape\CircleCol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemGainParticle.h">
+      <Filter>06. PSystem\ItemGainParticle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -510,6 +522,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CHalfSphere.cpp">
       <Filter>04. Component\Shape\HalfSphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCircleCol.cpp">
+      <Filter>04. Component\Shape\CircleCol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemGainParticle.cpp">
+      <Filter>06. PSystem\ItemGainParticle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

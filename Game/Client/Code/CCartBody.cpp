@@ -9,11 +9,12 @@
 #include "CItemBox.h"
 #include "CCollisionMgr.h"
 #include "CMissileTarget.h"
-#include "CCollisionStarEffect.h"
 #include "SoundMgr.h"
 #include "CCartBot.h"
-#include <CShield1.h>
-#include <CShield2.h>
+#include "CShield1.h"
+#include "CShield2.h"
+#include "CCollisionStarEffect.h"
+#include "CItemGainEffect.h"
 
 CCartBody::CCartBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -203,6 +204,10 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 				SoundMgr::GetInstance().PlaySound(L"Effect/ItemGain/eaten.ogg", SOUND_ITEMGAIN, 0.4f);
 				pCart->GainItem();
 				pItemBox->SetShow(false);
+
+				CItemGainEffect* pItemGainEffect = dynamic_cast<CItemGainEffect*>
+					(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"ItemGainEffect"));
+				pItemGainEffect->ResetParticle();
 			}
 		}
 	}
@@ -339,9 +344,7 @@ void CCartBody::UpdateMissileHit(const _float& fDeltaTime)
 	m_pTransformCom->Get_LocalInfo(INFO_POS, &vPos);
 	m_vRotation.x += 720.f * fDeltaTime;
 	
-
 	m_vForce.y -= 15.f * fDeltaTime;
-	cout << m_vForce.x << "\t" << m_vForce.y << "\t" << m_vForce.z << endl;
 	//m_pTransformCom->Set_Pos(vPos);
 	m_pTransformCom->Move_Pos(&m_vForce,1,fDeltaTime);
 	if (m_vForce.y <-20.f)//vPos.y < 0.5f
@@ -353,7 +356,6 @@ void CCartBody::UpdateMissileHit(const _float& fDeltaTime)
 		if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent))
 			pCartBot->SetMissileHit(false);
 		//else if(CCart* pCart = dynamic_cast<CCart*>(m_pParent))
-			
 	}
 }
 

@@ -12,9 +12,9 @@
 #include "CThunderFloorEffect.h"
 #include "CCartBody.h"
 #include "SoundMgr.h"
-#include <CShield1.h>
-#include <CShield2.h>
-#include <CCartBot.h>
+#include "CShield1.h"
+#include "CShield2.h"
+#include "CCartBot.h"
 
 CThunderCloud::CThunderCloud(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget) 
 	: CGameObject(pGraphicDev)
@@ -59,8 +59,8 @@ HRESULT CThunderCloud::Ready_GameObject()
 _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 {
 	CCartBody* pCartBody = nullptr;
-	CCart* pCart = dynamic_cast<CCart*>(m_pTarget);
-	CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pTarget);
+	
+	
 
 	for (auto& pChild : m_pTarget->Get_Children())
 	{
@@ -87,29 +87,61 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 
 		CreateThunder();
 
-		if (pCart && (pCart->GetShield1()))
+		if (CCart* pCart = dynamic_cast<CCart*>(m_pTarget))
 		{
-			static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
-			static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
-
+			CShield1* pShield1 = static_cast<CShield1*>(pCart->GetShield1());
+			CShield2* pShield2 = static_cast<CShield2*>(pCart->GetShield2());
+			if (pShield1->GetShow()	|| pShield2->GetShow() )
+			{
+				pShield1->SetShow(false);
+				pShield2->SetShow(true);
+			}
+			else if (!pShield1->GetShow() && !pShield2->GetShow())
+			{
+				if (pCartBody->GetThunderTimerOnOff() == false)
+				{
+					pCartBody->SetThunderTimerOnOff(true);
+					m_fFrame = 1;
+				}
+				CreateThunderPlayerEffect();
+				CreateThunderFloorEffect();
+			}
+		}
+		else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pTarget))
+		{
+			CShield1* pShield1 = static_cast<CShield1*>(pCartBot->GetShield1());
+			CShield2* pShield2 = static_cast<CShield2*>(pCartBot->GetShield2());
+			if (pShield1->GetShow() || pShield2->GetShow())
+			{
+				pShield1->SetShow(false);
+				pShield2->SetShow(true);
+			}
+			else if (!pShield1->GetShow() && !pShield2->GetShow())
+			{
+				if (pCartBody->GetThunderTimerOnOff() == false)
+				{
+					pCartBody->SetThunderTimerOnOff(true);
+					m_fFrame = 1;
+				}
+				CreateThunderPlayerEffect();
+				CreateThunderFloorEffect();
+			}
 		}
 		//else if (pCartBot && pCartBot->GetShield1())
 		//{
 		//	static_cast<CShield1*>(pCartBot->GetShield1())->SetShow(false);
 		//	static_cast<CShield2*>(pCartBot->GetShield2())->SetShow(true);
 		//}
-		//if (pCartBody->GetShieldActive())
-		//	pCartBody->SetShieldHit(true);
-		else if(pCart && !pCart->GetShield1() && !pCart->GetShield2() )
-		{
-			if (pCartBody->GetThunderTimerOnOff() == false)
-			{
-				pCartBody->SetThunderTimerOnOff(true);
-				m_fFrame = 1;
-			}
-			CreateThunderPlayerEffect();
-			CreateThunderFloorEffect();
-		}
+		//else if(pCart && !pCart->GetShield1() && !pCart->GetShield2() )
+		//{
+		//	if (pCartBody->GetThunderTimerOnOff() == false)
+		//	{
+		//		pCartBody->SetThunderTimerOnOff(true);
+		//		m_fFrame = 1;
+		//	}
+		//	CreateThunderPlayerEffect();
+		//	CreateThunderFloorEffect();
+		//}
 		// CreateThunderPlayerEffect();
 		// CreateThunderFloorEffect();
 	}
@@ -129,10 +161,10 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 		}
 		if (pCartBody->GetThunderSpinState() == false)
 		{
-			m_pLayer->Delete_GameObject(this);
 			m_pLayer->Delete_GameObject(m_pThunder);
 			m_pLayer->Delete_GameObject(m_pThunderFloorEffect);
 			m_pLayer->Delete_GameObject(m_pThunderPlayerEffect);
+			m_pLayer->Delete_GameObject(this);
 		}
 	}
 	
