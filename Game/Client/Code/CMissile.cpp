@@ -11,6 +11,7 @@
 #include <CShield1.h>
 #include <CShield2.h>
 #include <CCartBot.h>
+#include <SoundMgr.h>
 
 CMissile::CMissile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -164,7 +165,11 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			}
 			else
 			{
+				SoundMgr::GetInstance().PlaySound(L"Effect/Item_rocket/exploding.ogg", SOUND_MISSILE, 0.4f);
 				static_cast<CCartBody*>(pCartBody)->SetMissileHit(true);
+				pCartBody->Set_Force({ 0,20,0 });
+				pCart->Set_Force({ 0,0,0 });
+				pCart->SetMissileHit(true);
 			}
 		}
 		else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pTarget))
@@ -178,6 +183,7 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			}
 			else
 			{
+				SoundMgr::GetInstance().PlaySound(L"Effect/Item_rocket/exploding.ogg", SOUND_MISSILE, 0.4f);
 				static_cast<CCartBody*>(pCartBody)->SetMissileHit(true);
 				pCartBody->Set_Force({ 0,20,0 });
 				pCartBot->Set_Force({ 0,0,0 });

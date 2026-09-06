@@ -67,6 +67,8 @@ public:
 	ITEM_TYPE		GetSecondSlot() { return m_eSecondSlot; }
 	void			SetSecondSlot(ITEM_TYPE eID) { m_eSecondSlot = eID; }
 
+	void			SetLateralOffset(float _f) { 
+		m_fLateralOffset = _f; m_fLateralOffsetTarget = _f;}
 
 	bool			GetPlayingState() { return m_bPlaying; }
 

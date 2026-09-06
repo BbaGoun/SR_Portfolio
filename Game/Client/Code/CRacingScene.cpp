@@ -186,8 +186,21 @@ HRESULT CRacingScene::Ready_TrackMgr()
 	CTrackMgr::GetInstance()->Register_Player(static_cast<CCart*>(pCart));
 	
 	auto& vecBots = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
-	for (auto& pBot : vecBots) {
-		CTrackMgr::GetInstance()->Register_Bot(static_cast<CCartBot*>(pBot));
+	for (int i = 0; i < vecBots.size(); ++i) {
+		CCartBot* pCartBot = static_cast<CCartBot*>(vecBots[i]);
+		switch (i) {
+		case 0:
+			pCartBot->SetLateralOffset(-0.5f);
+			break;
+		case 1:
+			pCartBot->SetLateralOffset(-0.25f);
+			break;
+		case 2:
+			pCartBot->SetLateralOffset(0.5f);
+			break;
+		}
+
+		CTrackMgr::GetInstance()->Register_Bot(pCartBot);
 	}
 
 	return S_OK;

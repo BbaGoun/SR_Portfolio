@@ -14,7 +14,6 @@
 #include "CLand3.h"
 #include "CThunderCloud.h"
 #include "CCartBody.h"
-#include "CMagnetBody.h"
 #include "CWaterBomb.h"
 #include "CWaterBombBody.h"
 #include "CWaterBombThrow.h"
@@ -37,6 +36,8 @@
 #include "CFindOthersMgr.h"
 #include "CTrackMgr.h"
 #include "CCollisionStarEffect.h"
+#include "CMagnet.h"
+#include <CMagnetBody.h>
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -1441,46 +1442,22 @@ void CCart::CreateTargetAimObject()
 
 void CCart::CreateMagnetObject()
 {
-	CGameObject* pMagnetBody = CMagnetBody::Create(m_pGraphicDev);
+	CGameObject* pMagnet = CMagnet::Create(m_pGraphicDev, this);
 
-	if (nullptr == pMagnetBody)
+	if (nullptr == pMagnet)
 		return;
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_MagnetBody", pMagnetBody)))
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Magnet", pMagnet)))
 		return;
 
-	pMagnetBody->SetLayer(m_pLayer);
-
-	_vec3 vPos, vMagnetPos, vLook, vDir, vUp, vTargetPos;
-
+	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	m_pTransformCom->Get_Info(INFO_UP, &vUp);
+	vPos.y += 5;
+	pMagnet->Get_Transform()->Set_Pos(vPos);
 
-	// vPos += vLook * 2.f;
-	// vPos += vUp * 7.f;
-
-	pMagnetBody->Get_Transform()->Set_Pos(vPos);
-
-	vDir = vTargetPos - vPos;
-
-	if (D3DXVec3Length(&vDir) <= 0.001f)
-		return;
-
-	D3DXVec3Normalize(&vDir, &vDir);
-
-	_quaternion qRot;
-
-	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
-
-	pMagnetBody->Get_Transform()->Set_Quaternion(&qRot);
-
-	if (nullptr != pMagnetBody)
-	{
-		vMagnetPos = vPos;
-	}
-
-	pMagnetBody->Get_Transform()->Set_Pos(vPos);
+	CMagnetBody* pBody = CMagnetBody::Create(m_pGraphicDev);
+	m_pLayer->Add_GameObject(L"Obj_MagnetBody", pBody);
+	pMagnet->Set_ChildWithoutTune(pBody);
 }
 
 void CCart::CreateWaterBombObject()
@@ -1499,7 +1476,7 @@ void CCart::CreateWaterBombObject()
 
 void CCart::CreateWaterFlyObject()
 {
-	SoundMgr::GetInstance().PlaySound(L"Effect/Item_waterbombFly/firing.ogg", SOUND_WATERFLY, 0.4f);
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_waterbombFly/firing.mp3", SOUND_WATERFLY, 0.4f);
 
 	CGameObject* pTarget = CTrackMgr::GetInstance()->Get_Forward(this);
 	if (pTarget == nullptr)
