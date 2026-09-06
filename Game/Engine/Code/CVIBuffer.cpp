@@ -8,7 +8,7 @@ CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev):CComponent(pGraphicDev)
 , m_pVtxDecl(nullptr)
 , m_dwIdxCnt(0), m_IdxFmt(D3DFMT_INDEX32)
 , m_minVtx({ FLT_MAX, FLT_MAX, FLT_MAX })
-, m_maxVtx({ FLT_MIN, FLT_MIN, FLT_MIN })
+, m_maxVtx({ -FLT_MAX, -FLT_MAX, -FLT_MAX })
 {
 	m_eID = ID_STATIC;
 	m_eKind = CK_MESH;

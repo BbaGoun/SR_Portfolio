@@ -4,7 +4,7 @@
 
 namespace Engine
 {
-	class CInnerBox;
+	class COuterBox;
 	class CTexture;
 	class CSphere_Collider;
 }
@@ -38,7 +38,7 @@ public:
 	static CItemBox* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	Engine::CInnerBox* m_pBufferCom;
+	Engine::COuterBox* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CSphere_Collider* m_pColliderCom;
 

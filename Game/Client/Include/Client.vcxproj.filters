@@ -409,6 +409,9 @@
     <Filter Include="02. GameObject\Player\CPlayerArm">
       <UniqueIdentifier>{21314f21-108b-46e9-9914-cf627f20c7b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI\UI_Rank\UI_RankNumber">
+      <UniqueIdentifier>{5570ec89-7304-4a56-b7c0-394479e573e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -801,6 +804,9 @@
     <ClInclude Include="..\Header\CPlayerArm.h">
       <Filter>02. GameObject\Player\CPlayerArm</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI_RankNumber.h">
+      <Filter>02. GameObject\UI\UI_Rank\UI_RankNumber</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1183,6 +1189,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerArm.cpp">
       <Filter>02. GameObject\Player\CPlayerArm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_RankNumber.cpp">
+      <Filter>02. GameObject\UI\UI_Rank\UI_RankNumber</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

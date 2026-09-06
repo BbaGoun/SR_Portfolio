@@ -178,6 +178,9 @@
     <Filter Include="06. PSystem\ItemGainParticle">
       <UniqueIdentifier>{6a91a954-567e-46f4-8c26-ab97a8be88ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\OuterBox">
+      <UniqueIdentifier>{e62485eb-2aee-487b-a5ea-f60243b7ac67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -364,6 +367,9 @@
     <ClInclude Include="..\Header\CItemGainParticle.h">
       <Filter>06. PSystem\ItemGainParticle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\COuterBox.h">
+      <Filter>04. Component\Shape\OuterBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -528,6 +534,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CItemGainParticle.cpp">
       <Filter>06. PSystem\ItemGainParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\COuterBox.cpp">
+      <Filter>04. Component\Shape\OuterBox</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -50,6 +50,11 @@ HRESULT CBanana::Ready_GameObject()
 	return S_OK;
 }
 
+void CBanana::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
+{
+	CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
+}
+
 _int CBanana::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);

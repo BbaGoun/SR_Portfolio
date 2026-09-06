@@ -93,7 +93,7 @@ HRESULT CHeightMap::Ready_Buffer()
 	}
 
 	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
-	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+	m_maxVtx = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(vertices[i].vPosition);
@@ -158,7 +158,7 @@ void CHeightMap::Adjust_Itv()
 	}
 
 	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
-	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+	m_maxVtx = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(vertices[i].vPosition);
@@ -242,7 +242,7 @@ HRESULT CHeightMap::Ready_BufferByVec()
 	}
 
 	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
-	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+	m_maxVtx = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(vertices[i].vPosition);
@@ -294,7 +294,7 @@ void CHeightMap::Render_Points()
 		m_pTexNormal->Set_Texture(0);
 
 	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
-	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+	m_maxVtx = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 	LPDIRECT3DVERTEXBUFFER9 _pVB;
 	m_pGraphicDev->CreateVertexBuffer(
@@ -416,7 +416,7 @@ void CHeightMap::Adjust_Edit()
 	}
 
 	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
-	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+	m_maxVtx = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(vertices[i].vPosition);

@@ -21,6 +21,7 @@
 #include "CRcTex.h"
 #include "CPyramid.h"
 #include "CInnerBox.h"
+#include "COuterBox.h"
 #include "CTerrain2.h"
 #include "CTerrain3.h"
 #include "CCube.h"

@@ -24,7 +24,6 @@ public:
 private:
 	Engine::CHalfSphere*	m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
-	_float	m_fTimer;
 
 public:
 	static CWaterBombBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);

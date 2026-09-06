@@ -11,7 +11,6 @@
 #include "CUI_Rainbow.h"
 #include "CUI_BoosterBar.h"
 #include "CUI_BoosterBG.h"
-#include "CUI_Button.h"
 #include "CUI_Timer.h"
 #include "CUI_ItemSlot.h"
 #include "CUI_ItemIcon.h"
@@ -53,6 +52,8 @@
 #include "CMinimapCartBot.h"
 #include "CCollisionStarEffect.h"
 #include "CItemGainEffect.h"
+#include "CUI_RankNumber.h"
+
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
 }
@@ -89,7 +90,7 @@ void CRacingScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
 	CDInputMgr::GetInstance()->Record_FixedUpdate();
 	CScene::FixedUpdate_Scene(fFixedDeltaTime);
 
-	auto map = Get_GameObjects(L"GameLogic");
+	auto& map = Get_GameObjects(L"GameLogic");
 
 	vector<CGameObject*> objects;
 	objects.reserve(1000);
@@ -209,10 +210,10 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
 	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
 
-	pCartBody->Set_ChildTuneDefault(pPlayer);
 	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
 	static_cast<CCart*>(pCart)->AddWheel();
 
+	pCartBody->Set_ChildTuneDefault(pPlayer);
 	pCartBody->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
 
 	auto& vecCartBot = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
@@ -222,11 +223,11 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	auto& vecBotHead = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_BotHead");
 
 	for (int i = 0; i < vecCartBot.size(); ++i) {
-		vecCartBody[i]->Set_ChildTuneDefault(vecBot[i]);
 		static_cast<CCartBot*>(vecCartBot[i])->SetPlayerHead(vecBotHead[i]);
-
+		static_cast<CCartBot*>(vecCartBot[i])->AddWheel();
+		
+		vecCartBody[i]->Set_ChildTuneDefault(vecBot[i]);
 		vecCartBody[i]->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
-		static_cast<CCartBot*>(vecCartBody[i])->AddWheel();
 	}
 
 // 이펙트
@@ -293,6 +294,12 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"PlayerShield2", pGameObject);
 	pCart->Set_ChildWithoutTune(pGameObject);
 	static_cast<CCart*>(pCart)->SetShield2(pGameObject);
+
+	pGameObject = CWaterBombBubble::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BotBubble", pGameObject);
+	static_cast<CCart*>(pCart)->SetBubble(pGameObject);
 
 	// Bot Shield1,2 , Bubble
 	for (auto& pCartBot:vecCartBot) {
@@ -508,13 +515,6 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
 		return E_FAIL;
 
-	// UI_Button
-	pUIObject = CUI_Button::Create(m_pGraphicDev);
-	if (nullptr == pUIObject)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"UI_Button", pUIObject)))
-		return E_FAIL;
-
 	// UI_ItemSlot
 	pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
@@ -528,6 +528,13 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
 		return E_FAIL;
+	CUI_ItemIcon* pItemIcon = static_cast<CUI_ItemIcon*>(pUIObject);
+	pItemIcon->Set_PosFirst({ -505.f, 300.f, 4.f });
+	pItemIcon->Set_ScaleFirst({ 80.f,80.f,0.f });
+	pItemIcon->Set_PosSecond({ -585.f, 310.f, 4.f });
+	pItemIcon->Set_ScaleSecond({ 60.f,60.f,0.f });
+	CCart* pCart = static_cast<CCart*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart"));
+	pItemIcon->Set_Player(pCart);
 
 	// CUI_Minimap
 	pUIObject = CUI_Minimap::Create(m_pGraphicDev);
@@ -566,66 +573,148 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		return E_FAIL;
 	
 	//Rank=============
+	pUIObject = CUI_RankNumber::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankNumber", pUIObject)))
+		return E_FAIL;
+	static_cast<CUI_RankNumber*>(pUIObject)->Set_Player(pCart);
 
-	// CUI_RankBG
+	// 플레이어 BG
 	CGameObject* pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_PLAYER, MARK_RED);
 	if (nullptr == pUI_RankBG)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_RankPlayerBG", pUI_RankBG)))
 		return E_FAIL;
-	pUI_RankBG->Get_Transform()->Set_Pos({ -500,50,2 });
+	pUI_RankBG->Get_Transform()->Set_Pos({ -525,50,2 });
 
-	// CUI_RankName
+	// 플레이어 이름
 	pUIObject = CUI_RankName::Create(m_pGraphicDev,NAME_PLAYER);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_RankPlayerName", pUIObject)))
 		return E_FAIL;
-	pUIObject->Get_Transform()->Set_Pos({ -500,50,1 });
+	pUIObject->Get_Transform()->Set_Pos({ -525,50,1 });
 	pUI_RankBG->Set_Child(pUIObject);
 
-	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	// 플레이어 아이템
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
+	pUI_RankBG->Set_Child(pUIObject);
+	pItemIcon = static_cast<CUI_ItemIcon*>(pUIObject);
+	pItemIcon->Set_PosFirst({ 0.3f, 0, -0.1f });
+	pItemIcon->Set_ScaleFirst({ 30.f/ 200.f,30.f/ 34.f,0.f });
+	pItemIcon->Set_PosSecond({ 0.41f, 0, -0.1f });
+	pItemIcon->Set_ScaleSecond({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_Player(pCart);
+
 	CRankMgr::GetInstance()->AddUI(pCart, pUI_RankBG);
 
-	// CUI_RankBGBazzi
-	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_YELLOW);
+	// 봇 BG 1
+	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_BLUE);
 	if (nullptr == pUI_RankBG)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_RankBazziBG", pUI_RankBG)))
 		return E_FAIL;
-	pUI_RankBG->Get_Transform()->Set_Pos({ -500,15,2 });
+	pUI_RankBG->Get_Transform()->Set_Pos({ -525,15,2 });
 
-	// CUI_RankNameBazzi
+	// 봇 이름 1
 	pUIObject = CUI_RankName::Create(m_pGraphicDev, STUPID_BAZZI);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_RankStupidBazzi", pUIObject)))
 		return E_FAIL;
-	pUIObject->Get_Transform()->Set_Pos({ -500,15,1 });
+	pUIObject->Get_Transform()->Set_Pos({ -525,15,1 });
 	pUI_RankBG->Set_Child(pUIObject);
 
-	// 순위 확인용 임시
+	// 봇 아이템 1
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
+	pUI_RankBG->Set_Child(pUIObject);
+	pItemIcon = static_cast<CUI_ItemIcon*>(pUIObject);
+	pItemIcon->Set_PosFirst({ 0.3f, 0, -0.1f });
+	pItemIcon->Set_ScaleFirst({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_PosSecond({ 0.41f, 0, -0.1f });
+	pItemIcon->Set_ScaleSecond({ 30.f / 200.f,30.f / 34.f,0.f });
+
+	// 봇 연결
 	auto& vecCartBot = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
 	CRankMgr::GetInstance()->AddUI(vecCartBot[0], pUI_RankBG);
+	pItemIcon->Set_Bot(static_cast<CCartBot*>(vecCartBot[0]));
 
-	// CUI_RankBGDao
-	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_BLUE);
+	// 봇 BG2
+	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_YELLOW);
 	if (nullptr == pUI_RankBG)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_RankDaoBG", pUI_RankBG)))
 		return E_FAIL;
-	pUI_RankBG->Get_Transform()->Set_Pos({ -500,-20,2 });
+	pUI_RankBG->Get_Transform()->Set_Pos({ -525,-20,2 });
 
-	// CUI_RankNameDao
+	// 봇 이름2
 	pUIObject = CUI_RankName::Create(m_pGraphicDev, SMART_DAO);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_RankSmartDao", pUIObject)))
 		return E_FAIL;
-	pUIObject->Get_Transform()->Set_Pos({ -500,-20,1 });
+	pUIObject->Get_Transform()->Set_Pos({ -525,-20,1 });
 	pUI_RankBG->Set_Child(pUIObject);
 	
+	// 봇 아이템 2
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
+	pUI_RankBG->Set_Child(pUIObject);
+	pItemIcon = static_cast<CUI_ItemIcon*>(pUIObject);
+	pItemIcon->Set_PosFirst({ 0.3f, 0, -0.1f });
+	pItemIcon->Set_ScaleFirst({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_PosSecond({ 0.41f, 0, -0.1f });
+	pItemIcon->Set_ScaleSecond({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_Bot(static_cast<CCartBot*>(vecCartBot[1]));
+
+	// 봇 연결
 	CRankMgr::GetInstance()->AddUI(vecCartBot[1], pUI_RankBG);
+
+	// 봇 BG3
+	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_GRAY);
+	if (nullptr == pUI_RankBG)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankDaoBG", pUI_RankBG)))
+		return E_FAIL;
+	pUI_RankBG->Get_Transform()->Set_Pos({ -525,-55,2 });
+
+	// 봇 이름3
+	pUIObject = CUI_RankName::Create(m_pGraphicDev, STUPID_UNI);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankSmartDao", pUIObject)))
+		return E_FAIL;
+	pUIObject->Get_Transform()->Set_Pos({ -525,-55,1 });
+	pUI_RankBG->Set_Child(pUIObject);
+	
+	// 봇 아이템 3
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
+	pUI_RankBG->Set_Child(pUIObject);
+	pItemIcon = static_cast<CUI_ItemIcon*>(pUIObject);
+	pItemIcon->Set_PosFirst({ 0.3f, 0, -0.1f });
+	pItemIcon->Set_ScaleFirst({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_PosSecond({ 0.41f, 0, -0.1f });
+	pItemIcon->Set_ScaleSecond({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_Bot(static_cast<CCartBot*>(vecCartBot[2]));
+
+	// 봇 연결
+	CRankMgr::GetInstance()->AddUI(vecCartBot[2], pUI_RankBG);
 
 	// UI_Laps
 	pUIObject = CUI_Laps::Create(m_pGraphicDev);
