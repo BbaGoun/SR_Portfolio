@@ -285,7 +285,7 @@ void CSpline::Render_Points()
 		m_pTexNormal->Set_Texture(0);
 
 	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
-	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+	m_maxVtx = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 	LPDIRECT3DVERTEXBUFFER9 _pVB;
 	m_pGraphicDev->CreateVertexBuffer(

@@ -26,6 +26,9 @@ public:
     TrackPose Compute_TargetPose(CGameObject* pObj, float lookAhead, bool bDodge);
     void    Set_MaxLap(int _iMaxLap) { m_iMaxLap = _iMaxLap; }
 
+    int     Get_Rank(CGameObject* pObj);
+    CGameObject* Get_Forward(CGameObject* pObj);
+
 private:
     void Update_RankingUI();
     void Update_LapUI();

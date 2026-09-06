@@ -304,11 +304,6 @@ _int CLayer::Update_Layer(const _float& fDeltaTime)
 	{
 		for (auto& pObj : p.second) {
 			iResult = pObj->Update_GameObject(fDeltaTime);
-
-			if (iResult & 0x80000000) {
-				PostProcess_Delete();
-				return iResult;
-			}
 		}
 	}
 

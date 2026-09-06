@@ -753,16 +753,32 @@ bool CTrackGraph::EvaluatePose(const TrackLocator& prev, float u, TrackPose& out
 	TrackEdge* pTE = Get_TrackEdge(prev.edgeId);
 	float localU = prev.u + u;
 	
-	while (localU > pTE->fLength) {
-		localU -= pTE->fLength;
-		TrackNode* pTN = Get_TrackNode(pTE->toNode);
-		float maxBias = -FLT_MAX;
-		for (EdgeId id : pTN->vecOutEdgeIds) {
-			TrackEdge* pTE_To = Get_TrackEdge(id);
-			if (maxBias < pTE_To->fCostBias) {
-				maxBias = pTE_To->fCostBias;
-				pTE = pTE_To;
+	if (u > 0) {
+		while (localU > pTE->fLength) {
+			localU -= pTE->fLength;
+			TrackNode* pTN = Get_TrackNode(pTE->toNode);
+			float maxBias = -FLT_MAX;
+			for (EdgeId id : pTN->vecOutEdgeIds) {
+				TrackEdge* pTE_To = Get_TrackEdge(id);
+				if (maxBias < pTE_To->fCostBias) {
+					maxBias = pTE_To->fCostBias;
+					pTE = pTE_To;
+				}
 			}
+		}
+	}
+	else if (u < 0) {
+		while (localU < 0) {
+			TrackNode* pTN = Get_TrackNode(pTE->fromNode);
+			float maxBias = -FLT_MAX;
+			for (EdgeId id : pTN->vecInEdgeIds) {
+				TrackEdge* pTE_From = Get_TrackEdge(id);
+				if (maxBias < pTE_From->fCostBias) {
+					maxBias = pTE_From->fCostBias;
+					pTE = pTE_From;
+				}
+			}
+			localU += pTE->fLength;
 		}
 	}
 

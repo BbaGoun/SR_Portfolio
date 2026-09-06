@@ -2,7 +2,7 @@
 #include "CItemBox.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
-#include "CInnerBox.h"
+#include "COuterBox.h"
 #include "CCart.h"
 #include "CManagement.h"
 
@@ -38,7 +38,7 @@ HRESULT CItemBox::Ready_GameObject()
 
 void CItemBox::PostReady_GameObject()
 {
-	m_pBufferCom = Get_Component<CInnerBox>();
+	m_pBufferCom = Get_Component<COuterBox>();
 	m_pTextureCom = Get_Component<CTexture>();
 	m_pColliderCom; Get_Component<CSphere_Collider>();
 
@@ -55,9 +55,9 @@ void CItemBox::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	float deltaY = vPos.y - m_vOrigin.y;
 
 	if (deltaY > 2.f)
-		m_vForce.y = -1;
+		m_vForce.y = -0.5f;
 	else if (deltaY < -2.f)
-		m_vForce.y = 1;
+		m_vForce.y = 0.5f;
 
 	m_vRotation.y += 0.5f * fFixedDeltaTime;
 	m_vRotation.x += 0.5f * fFixedDeltaTime; 
@@ -92,12 +92,10 @@ void CItemBox::Render_GameObject()
 {
 	if (m_bShow)
 	{
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 		m_pTextureCom->Set_Texture(0);
 		m_pBufferCom->Render_Buffer();
 		//m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	}
 }
 

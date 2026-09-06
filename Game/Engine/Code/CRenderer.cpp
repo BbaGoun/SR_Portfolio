@@ -641,10 +641,10 @@ void CRenderer::PreCull(LPDIRECT3DDEVICE9& pGraphicDev)
 void CRenderer::DistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	_vec3 vCamPos;
-	_matrix matView;
+	_matrix matView, matInvView;
 	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	memcpy(&vCamPos, &matView.m[3], sizeof(_vec3));
-	vCamPos *= -1;
+	D3DXMatrixInverse(&matInvView, 0, &matView);
+	memcpy(&vCamPos, &matInvView.m[3], sizeof(_vec3));
 
 	float fCullDistance, dist;
 	_vec3 vObjPos;

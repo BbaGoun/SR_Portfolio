@@ -52,6 +52,8 @@ HRESULT CScene::Add_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag, C
 
     if (FAILED(m_mapLayer.find(pLayerTag)->second->Add_GameObject(pObjTag, pGameObject)))
         return E_FAIL;
+
+    return S_OK;
 }
 
 const map<const _tchar*, vector<CGameObject*>>& CScene::Get_GameObjects(const _tchar* pLayerTag)

@@ -386,7 +386,7 @@ void CMeshRibbon::Append_Quad()
 	m_pVB->Unlock();
 
 	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
-	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+	m_maxVtx = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(m_deqVertices[i].vPosition);
@@ -448,7 +448,7 @@ void CMeshRibbon::Delete_Line()
 	m_deqVertices.push_back({});
 
 	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
-	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+	m_maxVtx = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(m_deqVertices[i].vPosition);
@@ -502,7 +502,7 @@ void CMeshRibbon::Delete_Quad()
 	m_deqVertices.push_back({});
 
 	m_minVtx = { FLT_MAX, FLT_MAX, FLT_MAX };
-	m_maxVtx = { FLT_MIN, FLT_MIN, FLT_MIN };
+	m_maxVtx = { -FLT_MAX, -FLT_MAX, -FLT_MAX };
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(m_deqVertices[i].vPosition);

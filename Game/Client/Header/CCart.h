@@ -80,7 +80,7 @@ public:
 	void			CollisionWall();
 
 	// CreateObject
-	void			CreateRainbowObject();
+	void			CreateCloudObject();
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
 	void			CreateMissileObject(CGameObject* pTarget);

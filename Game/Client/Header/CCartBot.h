@@ -1,6 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 #include "Engine_Enum.h"
+#include "Client_Enum.h"
 #include "CPlayerHead.h"
 
 namespace Engine

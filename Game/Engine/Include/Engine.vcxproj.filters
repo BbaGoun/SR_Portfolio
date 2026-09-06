@@ -172,6 +172,9 @@
     <Filter Include="04. Component\Shape\HalfSphere">
       <UniqueIdentifier>{75949650-08bc-482a-9c97-aeb0f47fb4d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\Shape\OuterBox">
+      <UniqueIdentifier>{e62485eb-2aee-487b-a5ea-f60243b7ac67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -352,6 +355,9 @@
     <ClInclude Include="..\Header\CHalfSphere.h">
       <Filter>04. Component\Shape\HalfSphere</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\COuterBox.h">
+      <Filter>04. Component\Shape\OuterBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -510,6 +516,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CHalfSphere.cpp">
       <Filter>04. Component\Shape\HalfSphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\COuterBox.cpp">
+      <Filter>04. Component\Shape\OuterBox</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

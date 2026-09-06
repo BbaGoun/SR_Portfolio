@@ -7,7 +7,7 @@
   collisionLayer=0
   cullDistance=0
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-    pos=0.000000 0.000000 0.000000
+    pos=0.000000 0.000000 -110.000000
     rot=0.000000 -0.000000 0.000000
     quat=0.000000 0.000000 0.000000 1.000000
     scale=1.000000 1.000000 1.000000
@@ -19,7 +19,7 @@
     tag=Obj_ItemBox
     collisionLayer=0
     cullDistance=0
-    COMP kind=Mesh proto=Proto_InnerBox mapTag=Proto_InnerBox
+    COMP kind=Mesh proto=Proto_OuterBox mapTag=Proto_OuterBox
     COMP kind=Texture proto=Proto_V_ItemBoxTexture mapTag=Proto_V_ItemBoxTexture
     COMP kind=SphereCollider proto=Proto_SphereCollider mapTag=Proto_SphereCollider
       trigger=1
@@ -39,7 +39,7 @@
     tag=Obj_ItemBox
     collisionLayer=0
     cullDistance=0
-    COMP kind=Mesh proto=Proto_InnerBox mapTag=Proto_InnerBox
+    COMP kind=Mesh proto=Proto_OuterBox mapTag=Proto_OuterBox
     COMP kind=Texture proto=Proto_V_ItemBoxTexture mapTag=Proto_V_ItemBoxTexture
     COMP kind=SphereCollider proto=Proto_SphereCollider mapTag=Proto_SphereCollider
       trigger=1
@@ -59,7 +59,7 @@
     tag=Obj_ItemBox
     collisionLayer=0
     cullDistance=0
-    COMP kind=Mesh proto=Proto_InnerBox mapTag=Proto_InnerBox
+    COMP kind=Mesh proto=Proto_OuterBox mapTag=Proto_OuterBox
     COMP kind=Texture proto=Proto_V_ItemBoxTexture mapTag=Proto_V_ItemBoxTexture
     COMP kind=SphereCollider proto=Proto_SphereCollider mapTag=Proto_SphereCollider
       trigger=1
@@ -79,7 +79,7 @@
     tag=Obj_ItemBox
     collisionLayer=0
     cullDistance=0
-    COMP kind=Mesh proto=Proto_InnerBox mapTag=Proto_InnerBox
+    COMP kind=Mesh proto=Proto_OuterBox mapTag=Proto_OuterBox
     COMP kind=Texture proto=Proto_V_ItemBoxTexture mapTag=Proto_V_ItemBoxTexture
     COMP kind=SphereCollider proto=Proto_SphereCollider mapTag=Proto_SphereCollider
       trigger=1
@@ -99,7 +99,7 @@
     tag=Obj_ItemBox
     collisionLayer=0
     cullDistance=0
-    COMP kind=Mesh proto=Proto_InnerBox mapTag=Proto_InnerBox
+    COMP kind=Mesh proto=Proto_OuterBox mapTag=Proto_OuterBox
     COMP kind=Texture proto=Proto_V_ItemBoxTexture mapTag=Proto_V_ItemBoxTexture
     COMP kind=SphereCollider proto=Proto_SphereCollider mapTag=Proto_SphereCollider
       trigger=1

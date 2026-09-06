@@ -41,6 +41,10 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_InnerBox", Engine::CInnerBox::Create(m_pGraphicDev))))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_OuterBox", Engine::COuterBox::Create(m_pGraphicDev)
+        , true, L"OuterBox")))
+        return E_FAIL;
+
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartWheelCol", Engine::CCartWheelCol::Create(m_pGraphicDev))))
         return E_FAIL;
 
@@ -106,8 +110,6 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Scene3_KartBtn", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Scene/3/Scene3_Kart%d.png", 2))))
         return E_FAIL;
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Scene3_ColorBtn", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Scene/3/Scene3_Color%d.png", 2))))
-        return E_FAIL;
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Scene3_Map_ForestValley", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Scene/3/Scene3_Map_ForestValley%d.png", 3))))
         return E_FAIL;
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Scene3_ColorSetBG", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Scene/3/Scene3_ColorSetBG.png", 1))))
         return E_FAIL;
@@ -196,11 +198,11 @@ _uint CLoadingThread::Loading_Stage()
         return E_FAIL;
 
     // TargetAim
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TargetAimTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/crosshaira.png", 1))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_TargetAimTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/crosshair_%d.png", 3))))
         return E_FAIL;
 
     // Numbers
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_NumberTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/RacingInfoUI/Big/Time_%d.png", 14))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_NumberTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/RacingInfoUI/Big/Time_%d.png", 18))))
         return E_FAIL;
 
     // ItemIcon
@@ -223,7 +225,6 @@ _uint CLoadingThread::Loading_Stage()
     //MinimapCart
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_MinimapCart", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/MinimapCart.png", 1))))
         return E_FAIL;
-    int a;
 
     // SkidMark Rect
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkidMark", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Effect/SkidMark/SkidMark.png", 1))))
@@ -302,14 +303,6 @@ _uint CLoadingThread::Loading_Stage()
 
     // 에디터에서 오는 것들
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_WoodenFenceTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/Edited/WoodenFenceTest1.png", 1),
-        true, L"WoodenFence")))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_WoodenBoxTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_clockTower/Edited/WoodenBox1.png", 1),
-        true, L"WoodenBox")))
-        return E_FAIL;
-
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_HouseTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/dds/HouseTex.dds", 1),
         true, L"House")))
         return E_FAIL;
@@ -366,20 +359,8 @@ _uint CLoadingThread::Loading_Stage()
         true, L"SplinePointEdit")))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_F_road00", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Terrain/F_road00.png", 1),
-        true, L"F_road00")))
-        return E_FAIL;
-
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_StartFlag", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/Edited/StartFlag1.png", 1),
         true, L"StartFlag")))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_WoodenBridge", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/Edited/WoodenBridgeTest1.png", 1),
-        true, L"WoodenBridge")))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_F_ston02_1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/F_ston02_1.png", 1),
-        true, L"F_ston02_1")))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_cement_12", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_ClockTower/cement_12.png", 1),
@@ -426,14 +407,6 @@ _uint CLoadingThread::Loading_Stage()
         true, L"tilegrass_128_03")))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_WaterTest1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/Edited/WaterTest1.png", 1),
-        true, L"WaterTest1")))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_F_ cliff04", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/F_ cliff04.png", 1),
-        true, L"F_ cliff04")))
-        return E_FAIL;
-
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BrightBlue", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Color/BrightBlue.png", 1),
         true, L"BrightBlue")))
         return E_FAIL;
@@ -464,6 +437,10 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartFrontNumber7", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/CartFrontNumber7.png", 1),
         true, L"CartFrontNumber7")))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartFrontNumber6", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/CartFrontNumber6.png", 1),
+        true, L"CartFrontNumber6")))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CartBolt", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/CartBolt.png", 1),
@@ -514,6 +491,10 @@ _uint CLoadingThread::Loading_Stage()
         true, L"Sphere_Blue")))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Sphere_Yellow", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Sphere_Yellow.png", 1),
+        true, L"Sphere_Yellow")))
+        return E_FAIL;
+
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"SignFence1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/village_hightSpeed/Edited/SignFence1.png", 1),
         true, L"SignFence1")))
         return E_FAIL;
@@ -536,6 +517,8 @@ _uint CLoadingThread::Loading_Stage()
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"F_mtree00_1_1", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Map/forest_valley/Edited/F_mtree00_1_1.png", 1),
         true, L"F_mtree00_1_1")))
+        return E_FAIL;
+
 
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Etc Loading.....................................");
