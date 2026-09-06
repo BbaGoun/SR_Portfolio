@@ -195,6 +195,20 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 				pCart->SetBoost(BOOST_STATE_NORMAL);
 			}
 		}
+		else if (wcsncmp(wOtherTag, L"Obj_WaterBomb", 13) == 0)
+		{
+			if (bShield || bShield2)
+			{
+				static_cast<CShield1*>(pCart->GetShield1())->SetShow(false);
+				static_cast<CShield2*>(pCart->GetShield2())->SetShow(true);
+			}
+			else if (pCart->GetBubble() == false)
+			{
+				SoundMgr::GetInstance().PlaySound(L"Effect/Item_waterBomb/trapped.ogg", SOUND_WATERBOMB, 0.4f);
+				pCart->SetBubble(true);
+				pCart->SetBoost(BOOST_STATE_NORMAL);
+			}
+		}
 		else if (wcsncmp(wOtherTag, L"Obj_ItemBox", 11) == 0)
 		{
 			CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
@@ -225,9 +239,22 @@ void CCartBody::TriggerEnter(CCollider* pOtherCollider)
 				pCartBot->SetBoost(BOOST_STATE_NORMAL);
 			}
 		}
+		else if (wcsncmp(wOtherTag, L"Obj_WaterBomb", 13) == 0)
+		{
+			if (bShield || bShield2)
+			{
+				static_cast<CShield1*>(pCartBot->GetShield1())->SetShow(false);
+				static_cast<CShield2*>(pCartBot->GetShield2())->SetShow(true);
+			}
+			else if (pCartBot->GetBubble() == false)
+			{
+				SoundMgr::GetInstance().PlaySound(L"Effect/Item_waterBomb/trapped.ogg", SOUND_WATERBOMB, 0.4f);
+				pCartBot->SetBubble(true);
+				pCartBot->SetBoost(BOOST_STATE_NORMAL);
+			}
+		}
 		else if (wcsncmp(wOtherTag, L"Obj_ItemBox", 11) == 0)
 		{
-		
 			CItemBox* pItemBox = dynamic_cast<CItemBox*>(pOtherCollider->Get_Owner());
 			if (pItemBox->GetShow() == true)
 			{

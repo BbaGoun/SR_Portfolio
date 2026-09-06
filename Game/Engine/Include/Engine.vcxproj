@@ -49,6 +49,7 @@
     <ClInclude Include="..\Header\CManagement.h" />
     <ClInclude Include="..\Header\CMeshRibbon.h" />
     <ClInclude Include="..\Header\CMissileTex.h" />
+    <ClInclude Include="..\Header\COuterBox.h" />
     <ClInclude Include="..\Header\CPyramid.h" />
     <ClInclude Include="..\Header\CQuadrangularPrism.h" />
     <ClInclude Include="..\Header\CRcTex.h" />
@@ -111,6 +112,7 @@
     <ClCompile Include="..\Code\CManagement.cpp" />
     <ClCompile Include="..\Code\CMeshRibbon.cpp" />
     <ClCompile Include="..\Code\CMissileTex.cpp" />
+    <ClCompile Include="..\Code\COuterBox.cpp" />
     <ClCompile Include="..\Code\CPyramid.cpp" />
     <ClCompile Include="..\Code\CQuadrangularPrism.cpp" />
     <ClCompile Include="..\Code\CRcTex.cpp" />

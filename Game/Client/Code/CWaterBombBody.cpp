@@ -19,24 +19,26 @@ CWaterBombBody::~CWaterBombBody()
 HRESULT CWaterBombBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Pos({ 0.f,0.f,0.f });
+
 	// m_pTransformCom->Set_Scale({ 0.f, 3.5f, 0.f });
-	m_pTransformCom->Set_Scale({ 20.f, 20.f, 20.f });
-	m_fTimer = 0.f;
+	m_pTransformCom->Set_Scale({ 0.f, 0.f, 0.f });
 
 	m_pTextureCom = nullptr;
 
 	Engine::CComponent* pComponent = nullptr;
 
+
+	// 버퍼
 	pComponent = m_pBufferCom = dynamic_cast<CHalfSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_HalfSphere"));
 	if (nullptr == pComponent)
 		return E_FAIL;
-
 	pComponent->Set_Owner(this);
-
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
+	// 텍스처
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_WaterBombBody"));
+	if (nullptr == pComponent)
+		return E_FAIL;
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
@@ -45,51 +47,14 @@ HRESULT CWaterBombBody::Ready_GameObject()
 
 void CWaterBombBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	// CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
-
-	// _vec3 vScale, vCartLook, vCartPos;
-	// vScale = m_pTransformCom->Get_Scale();
-	//pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
-	// pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
-
-	// m_pTransformCom->Set_Pos(vCartPos);
-
-	_vec3 vScale = m_pTransformCom->Get_Scale();
-
-	if (m_pParent != nullptr)
-	{
-		m_pTransformCom->Set_Pos({ 0.f, 0.f, 0.f });
-	}
-
-	m_fTimer += fFixedDeltaTime;	
-
-	if (m_fTimer > 1.6f)
-	{
-		if (vScale.x < 120.f && vScale.y < 120.f && vScale.z < 120.f)
-		{
-			vScale.x += 380.f * fFixedDeltaTime;
-			vScale.y += 380.f * fFixedDeltaTime;
-			vScale.z += 380.f * fFixedDeltaTime;
-		}
-	}
-	
-	if (m_fTimer > 3.5f)		
-	{
-		m_pLayer->Delete_GameObject(this);
-	}
-
-	m_pTransformCom->Set_Scale(vScale);
+	CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
 }
 
 _int CWaterBombBody::Update_GameObject(const _float& fTimeDelta)
 {
 	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
 
-	if (m_fTimer > 1.75f)
-	{
-		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
-	}
-	//CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
 
 	return iExit;
 }

@@ -1028,7 +1028,7 @@ void CRePlayCart::UpdateGravity()
 
 	switch (m_eCartState)
 	{
-	case Engine::CART_STATE_GROUND:
+	case CART_STATE_GROUND:
 		if (m_vTerrainNormal != _vec3({ 0,1,0 }))
 		{
 			// 평면의 Right벡터
@@ -1052,13 +1052,13 @@ void CRePlayCart::UpdateGravity()
 			m_vForce.y = 0;
 		}
 		break;
-	case Engine::CART_STATE_AIR:
+	case CART_STATE_AIR:
 		// 중력 전부 다 받기
 		m_vForce += vGravity;
 		break;
-	case Engine::CART_STATE_LANDING:
+	case CART_STATE_LANDING:
 		break;
-	case Engine::CART_STATE_END:
+	case CART_STATE_END:
 		break;
 	default:
 		break;
@@ -1136,16 +1136,16 @@ void CRePlayCart::OutputCarState()
 {
 	switch (m_eCartState)
 	{
-	case Engine::CART_STATE_GROUND:
+	case CART_STATE_GROUND:
 		cout << "CART_STATE_GROUND" << endl;
 		break;
-	case Engine::CART_STATE_AIR:
+	case CART_STATE_AIR:
 		cout << "CART_STATE_AIR" << endl;
 		break;
-	case Engine::CART_STATE_LANDING:
+	case CART_STATE_LANDING:
 		cout << "CART_STATE_LANDING" << endl;
 		break;
-	case Engine::CART_STATE_END:
+	case CART_STATE_END:
 		cout << "CART_STATE_GROUND" << endl;
 		break;
 	default:
@@ -1395,7 +1395,6 @@ void CRePlayCart::CreateWaterBombObject()
 
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	pWaterBomb->Set_ThrowLook(vLook);
 	pWaterBomb->SetLayer(m_pLayer);
 
 	CGameObject* pWaterBombBody = CWaterBombBody::Create(m_pGraphicDev);
@@ -1584,28 +1583,28 @@ void CRePlayCart::UseItem()
 {
 	switch (m_eFirstSlot)
 	{
-	case Engine::ITEM_BOOSTER:
+	case ITEM_BOOSTER:
 		m_eBoostState = BOOST_STATE_LONG_BOOST;
 		m_fBoostCal = 1.015f;
 		break;
-	case Engine::ITEM_THUNDER:
+	case ITEM_THUNDER:
 		CreateThunderCloudObject();
 		break;
-	case Engine::ITEM_CLOUD:
+	case ITEM_CLOUD:
 		CreateRainbowObject();
 		break;
-	case Engine::ITEM_UFO:
+	case ITEM_UFO:
 		break;
-	case Engine::ITEM_WATERFLY:
+	case ITEM_WATERFLY:
 		CreateWaterFlyObject();
 		break;
-	case Engine::ITEM_BANANA:
+	case ITEM_BANANA:
 		CreateBananaObject();
 		break;
-	case Engine::ITEM_WATERBOMB:
+	case ITEM_WATERBOMB:
 		CreateWaterBombObject();
 		break;
-	case Engine::ITEM_END:
+	case ITEM_END:
 		break;
 	default:
 		break;
@@ -1622,11 +1621,11 @@ void CRePlayCart::UseAimItem()
 {
 	switch (m_eFirstSlot)
 	{
-	case Engine::ITEM_ROCKET:
+	case ITEM_ROCKET:
 		CreateTargetAimObject();
 		break;
 
-	case Engine::ITEM_MAGNET:
+	case ITEM_MAGNET:
 		CreateTargetAimObject();
 		break;
 	}

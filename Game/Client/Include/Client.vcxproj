@@ -315,6 +315,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CRankMgr.h" />
     <ClInclude Include="..\Header\CUI_RankName.h" />
     <ClInclude Include="..\Header\CUI_RankBG.h" />
+    <ClInclude Include="..\Header\CUI_RankNumber.h" />
     <ClInclude Include="..\Header\CUI_StartCountDown.h" />
     <ClInclude Include="..\Header\CUI_Timer.h" />
     <ClInclude Include="..\Header\CUI_UnderBar.h" />
@@ -410,6 +411,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CRankMgr.cpp" />
     <ClCompile Include="..\Code\CUI_RankName.cpp" />
     <ClCompile Include="..\Code\CUI_RankBG.cpp" />
+    <ClCompile Include="..\Code\CUI_RankNumber.cpp" />
     <ClCompile Include="..\Code\CUI_StartCountDown.cpp" />
     <ClCompile Include="..\Code\CUI_UnderBar.cpp" />
     <ClCompile Include="..\Code\CUI_XButton.cpp" />

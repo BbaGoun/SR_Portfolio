@@ -21,6 +21,8 @@ CTrackMgr::~CTrackMgr()
 void CTrackMgr::Register_Track(CGameObject* pGraphObj)
 {
 	m_pTGraph = pGraphObj->Get_Component<CTrackGraph>();
+	if (m_pTGraph)
+		m_pTGraph->AddRef();
 }
 
 void CTrackMgr::Register_Player(CCart* pPlayer)
@@ -59,7 +61,6 @@ void CTrackMgr::Register_Hazard(CGameObject* pObj, ITEM_TYPE eID)
 	HR.edgeId = TL.edgeId;
 	HR.u = TL.u;
 	HR.lateral = lateral;
-	HR.eType = eID;
 	HR.pOwner = pObj;
 
 	switch (eID) {
@@ -165,6 +166,33 @@ TrackPose CTrackMgr::Compute_TargetPose(CGameObject* pObj, float lookAhead, bool
 	return TP;
 }
 
+int CTrackMgr::Get_Rank(CGameObject* pObj)
+{
+	int rank = 0;
+
+	for (int i = 0; i < m_tempRanking.size(); ++i) {
+		if (m_tempRanking[i].first == pObj)
+		{
+			rank = i;
+			break;
+		}
+	}
+
+	return rank;
+}
+
+CGameObject* CTrackMgr::Get_Forward(CGameObject* pObj)
+{
+	auto it = find_if(m_tempRanking.begin(), m_tempRanking.end(), [&](pair<CGameObject*, TrackLocator> p)->bool {
+		return p.first == pObj;
+		});
+
+	if (it == m_tempRanking.end() || it == m_tempRanking.begin())
+		return nullptr;
+
+	return (*(it - 1)).first;
+}
+
 void CTrackMgr::Update_RankingUI()
 {
 	CRankMgr::GetInstance()->UpdateRank(m_tempRanking);
@@ -185,4 +213,5 @@ void CTrackMgr::Update_LapUI()
 
 void CTrackMgr::Free()
 {
+	Safe_Release(m_pTGraph);
 }

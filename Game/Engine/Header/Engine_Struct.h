@@ -226,7 +226,6 @@ namespace Engine
 		float			u;				// 그 도로의 어디인가
 		float			lateral;		// R 방향 오프셋
 		float			radius;			// 회피 반경
-		ITEM_TYPE		eType;			// 아이템 타입
 		CGameObject*	pOwner;			// 설치된 오브젝트 주소
 	}HazardRecord;
 

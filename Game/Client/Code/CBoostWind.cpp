@@ -34,7 +34,7 @@ HRESULT CBoostWind::Ready_GameObject()
 	D3DXQUATERNION q;
 	switch (m_eBoosterID)
 	{
-	case Engine::WIND_L1:
+	case WIND_L1:
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(-60), 0, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
 		m_pTransformCom->Set_Pos({ -4,2,6 });
@@ -42,7 +42,7 @@ HRESULT CBoostWind::Ready_GameObject()
 		if (nullptr == pComponent)
 			return E_FAIL;
 		break;
-	case Engine::WIND_L2:
+	case WIND_L2:
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(-30), 0, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
 		m_pTransformCom->Set_Pos({ -6,2,6 });
@@ -50,7 +50,7 @@ HRESULT CBoostWind::Ready_GameObject()
 		if (nullptr == pComponent)
 			return E_FAIL;
 		break;
-	case Engine::WIND_R1:
+	case WIND_R1:
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(60), 0, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
 		m_pTransformCom->Set_Pos({ 4,2,6 });
@@ -58,7 +58,7 @@ HRESULT CBoostWind::Ready_GameObject()
 		if (nullptr == pComponent)
 			return E_FAIL;
 		break;
-	case Engine::WIND_R2:
+	case WIND_R2:
 		D3DXQuaternionRotationYawPitchRoll(&q, D3DXToRadian(30), 0, 0.f);
 		m_pTransformCom->Set_Quaternion(&q);
 		m_pTransformCom->Set_Pos({ 6,2,6 });

@@ -400,6 +400,9 @@
     <Filter Include="03. Manager\FindOthersMgr">
       <UniqueIdentifier>{f07fabf1-8963-43b3-b90c-f887a71e4da9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\UI\UI_Rank\UI_RankNumber">
+      <UniqueIdentifier>{5570ec89-7304-4a56-b7c0-394479e573e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -783,6 +786,9 @@
     <ClInclude Include="..\Header\CFindOthersMgr.h">
       <Filter>03. Manager\FindOthersMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI_RankNumber.h">
+      <Filter>02. GameObject\UI\UI_Rank\UI_RankNumber</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1156,6 +1162,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CFindOthersMgr.cpp">
       <Filter>03. Manager\FindOthersMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_RankNumber.cpp">
+      <Filter>02. GameObject\UI\UI_Rank\UI_RankNumber</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

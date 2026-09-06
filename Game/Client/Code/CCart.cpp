@@ -137,7 +137,7 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pTransformCom->Set_Quaternion(&q);
 
 	float fForceLen = D3DXVec3Length(&m_vForce);
-	if (fForceLen < 1.f)
+	if (fForceLen < 0.97f)
 		m_vForce *= 0;
 	if (m_bMagnet == false && fForceLen >= 80.f)
 		m_vForce = m_vForce / fForceLen * 80.f;
@@ -154,9 +154,9 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 2; ++i)
 	{
-		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 3.f, fFixedDeltaTime);
+		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 2.f, fFixedDeltaTime);
 		_vec3 vPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
 		if(!m_bCollisionGround)
@@ -266,7 +266,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Q))
 	{
-		CreateRainbowObject();
+		CreateCloudObject();
 	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
@@ -628,9 +628,10 @@ void CCart::UpdateBoost(const _float& fDeltaTime)
 	}
 }
 
-void CCart::CreateRainbowObject()
+void CCart::CreateCloudObject()
 {
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_cloud/born.ogg", SOUND_CLOUD, 0.4f);
+	
 	CGameObject* pGameObject = CRainbow_Cloud::Create(m_pGraphicDev);
 
 	if (nullptr == pGameObject)
@@ -639,20 +640,32 @@ void CCart::CreateRainbowObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Rainbow_Cloud", pGameObject)))
 		return ;
 
-	_vec3 vPos,vLook;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	vPos += vLook * 100;
-	pGameObject->Get_Transform()->Set_Pos(vPos);
+	TrackPose TP = CTrackMgr::GetInstance()->Compute_TargetPose(this, -10, false);
 
-	D3DXQUATERNION q;
-	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+	if (!TP.bValid) {
+		pGameObject->GetLayer()->Delete_GameObject(pGameObject);
+		return;
+	}
+
+	TP.position.y += 10.f;
+
+	pGameObject->Get_Transform()->Set_Pos(TP.position);
+
+	_matrix	matRot;
+	D3DXMatrixIdentity(&matRot);
+	memcpy(&matRot.m[0], &TP.R, sizeof(_vec3));
+	memcpy(&matRot.m[1], &TP.U, sizeof(_vec3));
+	memcpy(&matRot.m[2], &TP.T, sizeof(_vec3));
+
+	_quaternion q;
+	D3DXQuaternionRotationMatrix(&q, &matRot);
 	pGameObject->Get_Transform()->Set_Quaternion(&q);
-	pGameObject->SetLayer(m_pLayer);
 }
 
 void CCart::CreateBananaObject()
 {
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_banana/firing.ogg", SOUND_BANANA, 0.4f);
+
 	CGameObject* pGameObject = CBanana::Create(m_pGraphicDev);
 
 	if (nullptr == pGameObject)
@@ -1104,7 +1117,7 @@ void CCart::UpdateGravity()
 	
 	switch (m_eCartState)
 	{
-	case Engine::CART_STATE_GROUND:
+	case CART_STATE_GROUND:
 		if (m_vTerrainNormal != _vec3({ 0,1,0 }))
 		{
 			// 평면의 Right벡터
@@ -1128,13 +1141,13 @@ void CCart::UpdateGravity()
 			m_vForce.y = 0;
 		}
 		break;
-	case Engine::CART_STATE_AIR:
+	case CART_STATE_AIR:
 		// 중력 전부 다 받기
 		m_vForce += vGravity;
 		break;
-	case Engine::CART_STATE_LANDING:
+	case CART_STATE_LANDING:
 		break;
-	case Engine::CART_STATE_END:
+	case CART_STATE_END:
 		break;
 	default:
 		break;
@@ -1239,16 +1252,16 @@ void CCart::OutputCarState()
 {
 	switch (m_eCartState)
 	{
-	case Engine::CART_STATE_GROUND:
+	case CART_STATE_GROUND:
 		cout << "CART_STATE_GROUND" << endl;
 		break;
-	case Engine::CART_STATE_AIR:
+	case CART_STATE_AIR:
 		cout << "CART_STATE_AIR" << endl;
 		break;
-	case Engine::CART_STATE_LANDING:
+	case CART_STATE_LANDING:
 		cout << "CART_STATE_LANDING" << endl;
 		break;
-	case Engine::CART_STATE_END:
+	case CART_STATE_END:
 		cout << "CART_STATE_GROUND" << endl;
 		break;
 	default:
@@ -1366,6 +1379,9 @@ void CCart::CreateTargetAimObject()
 	//CGameObject* pTarget = nullptr;
 	_vec3 vPos;
 	auto& vecCartBot = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
+	bool	bFind = false;
+	CTargetAim* pAim = static_cast<CTargetAim*>(pTargetAim);
+
 	for (auto& pTarget : vecCartBot)
 	{
 		_vec3 vLook, vTarget, vAimScreen, vTargetScreen;
@@ -1386,18 +1402,29 @@ void CCart::CreateTargetAimObject()
 
 		D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 		D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj, &tCam.matView, &matWorld);
-
+		
 		if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
 		{
+			SoundMgr::GetInstance().PlaySound(L"Effect/Item_rocket/ontarget.ogg", SOUND_TARGETAIM, 0.4f);
 			vPos = vTarget;
-			static_cast<CTargetAim*>(pTargetAim)->SetTarget(pTarget);
+			pAim->SetTarget(pTarget);
+			pAim->SetAimState(AIM_TARGET);
+			bFind = true;
 			break;
 		}
 		if (abs(vTargetScreen.x - vAimScreen.x) < 200.f && abs(vTargetScreen.y - vAimScreen.y) < 200.f)
 		{
+			SoundMgr::GetInstance().PlaySound(L"Effect/Item_rocket/inrange.ogg", SOUND_TARGETAIM, 0.4f);
 			vPos = (vPos + vTarget) * 0.5f;
+			pAim->SetAimState(AIM_CLOSE);
+			bFind = true;
 			break;
 		}
+	}
+	if(!bFind) 
+	{
+		pAim->SetTarget(nullptr);
+		pAim->SetAimState(AIM_NONE);
 	}
 	pTargetAim->Get_Transform()->Set_Pos(vPos);
 	
@@ -1454,55 +1481,25 @@ void CCart::CreateMagnetObject()
 
 void CCart::CreateWaterBombObject()
 {
-	// CGameObject* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
-	CWaterBomb* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
-
-	if (pWaterBomb == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBomb", pWaterBomb)))
-		return;
-
-	_vec3 vLook;
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	pWaterBomb->Set_ThrowLook(vLook);
-	pWaterBomb->SetLayer(m_pLayer);
-
-	CGameObject* pWaterBombBody = CWaterBombBody::Create(m_pGraphicDev);
-
-	if (pWaterBombBody == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBody", pWaterBombBody)))
-		return;
-
-	pWaterBombBody->SetLayer(m_pLayer);
-	pWaterBomb->Set_Child(pWaterBombBody);
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_waterBomb/firing.ogg", SOUND_WATERBOMB, 0.4f);
 
 	CGameObject* pWaterBombThrow = CWaterBombThrow::Create(m_pGraphicDev);
+	Set_Child(pWaterBombThrow);
 
 	if (pWaterBombThrow == nullptr)
 		return;
 
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombThrow", pWaterBombThrow)))
 		return;
-
-	pWaterBombThrow->SetLayer(m_pLayer);
-
-	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
-
-	//if (pWaterBombBubble == nullptr)
-	//	return;
-
-	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
-	//	return;
-
-	//pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateWaterFlyObject()
 {
-	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBot");
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_waterbombFly/firing.ogg", SOUND_WATERFLY, 0.4f);
+
+	CGameObject* pTarget = CTrackMgr::GetInstance()->Get_Forward(this);
+	if (pTarget == nullptr)
+		return; 
 
 	CGameObject* pWaterFly = CWaterFly::Create(m_pGraphicDev, pTarget);
 
@@ -1515,16 +1512,6 @@ void CCart::CreateWaterFlyObject()
 	_vec3 vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	pWaterFly->Get_Transform()->Set_Pos(vPos);
-	
-	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
-
-	//if (pWaterBombBubble == nullptr)
-	//	return;
-
-	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBubble", pWaterBombBubble)))
-	//	return;
-
-	//pWaterBombBubble->SetLayer(m_pLayer);
 }
 
 void CCart::CreateMagnetAimObject()
@@ -1548,6 +1535,8 @@ void CCart::CreateMagnetAimObject()
 
 void CCart::CreateShieldObject_()
 {
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_shield/shield.ogg", SOUND_SHIELD, 0.4f);
+
 	static_cast<CShield1*>(m_pShield1)->SetShow(true);
 	//CGameObject* pShield1 = CCart_Shield1::Create(m_pGraphicDev);
 	//
@@ -1671,29 +1660,29 @@ void CCart::UseItem()
 {
 	switch (m_eFirstSlot)
 	{
-	case Engine::ITEM_BOOSTER:
+	case ITEM_BOOSTER:
 		m_eBoostState = BOOST_STATE_LONG_BOOST;
 		m_fBoostCal = 1.015f;
 		break;
-	case Engine::ITEM_THUNDER:
+	case ITEM_THUNDER:
 		CreateThunderCloudObject();
 		break;
-	case Engine::ITEM_CLOUD:
-		CreateRainbowObject();
+	case ITEM_CLOUD:
+		CreateCloudObject();
 		break;
-	case Engine::ITEM_UFO:
+	case ITEM_UFO:
 		CreateUfoObject(); 
 		break;
-	case Engine::ITEM_WATERFLY:
+	case ITEM_WATERFLY:
 		CreateWaterFlyObject();
 		break;
-	case Engine::ITEM_BANANA:
+	case ITEM_BANANA:
 		CreateBananaObject();
 		break;
-	case Engine::ITEM_WATERBOMB:
+	case ITEM_WATERBOMB:
 		CreateWaterBombObject();
 		break;
-	case Engine::ITEM_END:
+	case ITEM_END:
 		break;
 	default:
 		break;
@@ -1710,11 +1699,11 @@ void CCart::UseAimItem()
 {
 	switch (m_eFirstSlot)
 	{
-	case Engine::ITEM_ROCKET:
+	case ITEM_ROCKET:
 		CreateTargetAimObject();
 		break;
 
-	case Engine::ITEM_MAGNET:
+	case ITEM_MAGNET:
 		CreateTargetAimObject();
 		break;
 	}
