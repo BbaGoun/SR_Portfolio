@@ -409,8 +409,26 @@
     <Filter Include="02. GameObject\Player\CPlayerArm">
       <UniqueIdentifier>{21314f21-108b-46e9-9914-cf627f20c7b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\SideMirror">
+      <UniqueIdentifier>{1484ca9d-cbf4-46de-a60a-f6964e22a73b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\SideMirror\LeftMirror">
+      <UniqueIdentifier>{dcc0af8e-3648-4ba4-8c7f-e5ef4d4e2764}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\SideMirror\RightMirror">
+      <UniqueIdentifier>{be71b370-0d95-4ac1-af8e-c207c1a29c18}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\UI\UI_Rank\UI_RankNumber">
-      <UniqueIdentifier>{5570ec89-7304-4a56-b7c0-394479e573e4}</UniqueIdentifier>
+      <UniqueIdentifier>{298b0ec6-e950-430a-a3b3-7096bac2b901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_LeftSideMirror">
+      <UniqueIdentifier>{10a79eb4-c780-4448-8424-53f729473af7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_LeftSideMirror\UI_SideMirrorFrame">
+      <UniqueIdentifier>{c14cc359-fb0b-4c8f-beff-6213399a061a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Camera\LeftSideMirrorCamera">
+      <UniqueIdentifier>{8f13bd50-1bce-4028-b1d3-f041a3a017bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -804,8 +822,20 @@
     <ClInclude Include="..\Header\CPlayerArm.h">
       <Filter>02. GameObject\Player\CPlayerArm</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CLeftMirror.h">
+      <Filter>02. GameObject\SideMirror\LeftMirror</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CUI_RankNumber.h">
       <Filter>02. GameObject\UI\UI_Rank\UI_RankNumber</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_SideMirrorFrame.h">
+      <Filter>02. GameObject\UI\UI_LeftSideMirror\UI_SideMirrorFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_LeftSideMirror.h">
+      <Filter>02. GameObject\UI\UI_LeftSideMirror</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLeftSideMirrorCam.h">
+      <Filter>02. GameObject\Camera\LeftSideMirrorCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1190,8 +1220,20 @@
     <ClCompile Include="..\Code\CPlayerArm.cpp">
       <Filter>02. GameObject\Player\CPlayerArm</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CLeftMirror.cpp">
+      <Filter>02. GameObject\SideMirror\LeftMirror</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CUI_RankNumber.cpp">
       <Filter>02. GameObject\UI\UI_Rank\UI_RankNumber</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_SideMirrorFrame.cpp">
+      <Filter>02. GameObject\UI\UI_LeftSideMirror\UI_SideMirrorFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_LeftSideMirror.cpp">
+      <Filter>02. GameObject\UI\UI_LeftSideMirror</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLeftSideMirrorCam.cpp">
+      <Filter>02. GameObject\Camera\LeftSideMirrorCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

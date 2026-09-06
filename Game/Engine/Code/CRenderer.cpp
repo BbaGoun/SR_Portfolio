@@ -25,8 +25,20 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)
 	pGameObject->AddRef();
 }
 
+void CRenderer::Add_LeftMirrorRenderGroup(RENDERID eID, CGameObject* pGameObject)
+{
+	if (RENDER_END <= eID || nullptr == pGameObject)
+		return;
+
+	m_LeftMirrorRenderGroup[eID].push_back(pGameObject);
+	pGameObject->AddRef();
+}
+
 void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 {
+	if(m_bRenderLeftMirror == true)
+		RenderLeftSideMirrorGroup(pGraphicDev);
+
 	if (m_bBlur == false || m_pBlurA == nullptr || m_pBlurB == nullptr)
 	{
 		Render_TargetPass(pGraphicDev);
@@ -46,7 +58,6 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 		Render_AlphaUI(pGraphicDev);
 
 		PostRender(pGraphicDev);
-
 	}
 	else
 	{
@@ -381,6 +392,142 @@ void CRenderer::Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CRenderer::LeftMirrorRender_Priority(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	for (auto& pObj : m_LeftMirrorRenderGroup[RENDER_PRIORITY])
+		pObj->Render_GameObject();
+}
+
+void CRenderer::LeftMirrorRender_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 254);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	for (auto& pObj : m_LeftMirrorRenderGroup[RENDER_NONALPHA])
+		pObj->Render_GameObject();
+
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+}
+
+void CRenderer::LeftMirrorRender_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	for (auto& pObj : m_LeftMirrorRenderGroup[RENDER_ALPHA])
+	{
+		pObj->Compute_ViewZ();
+	}
+
+	m_LeftMirrorRenderGroup[RENDER_ALPHA].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+		});
+	for (auto& pObj : m_LeftMirrorRenderGroup[RENDER_ALPHA])
+		pObj->Render_GameObject();
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CRenderer::LeftMirrorRender_Skid(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	for (auto& pObj : m_LeftMirrorRenderGroup[RENDER_SKID])
+	{
+		pObj->Compute_ViewZ();
+	}
+
+	m_LeftMirrorRenderGroup[RENDER_SKID].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+		});
+	for (auto& pObj : m_LeftMirrorRenderGroup[RENDER_SKID])
+		pObj->Render_GameObject();
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CRenderer::LeftMirrorRender_Trail(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	//pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
+
+	for (auto& pObj : m_LeftMirrorRenderGroup[RENDER_TRAIL])
+		pObj->Compute_ViewZ();
+
+	m_LeftMirrorRenderGroup[RENDER_TRAIL].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
+		{
+			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
+		});
+	for (auto& pObj : m_LeftMirrorRenderGroup[RENDER_TRAIL])
+		pObj->Render_GameObject();
+
+	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CRenderer::LeftMirrorRender_Particle(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+	for (auto& pObj : m_LeftMirrorRenderGroup[RENDER_PARTICLE])
+		pObj->Render_GameObject();
+
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CRenderer::LeftMirrorRender_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	if (CCameraMgr::GetInstance()->GetMainCamera())
+	{
+		_matrix matView, matProj;
+		D3DXMatrixIdentity(&matView);
+		pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+		D3DXMatrixOrthoLH(&matProj, (float)WINCX, (float)WINCY, 1.f, 1000.f);
+
+		pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+	}
+	//pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
+	//pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+
+	pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+
+	for (auto& pObj : m_LeftMirrorRenderGroup[RENDER_NONALPHAUI])
+		pObj->Render_GameObject();
+
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 
 RTINFO* CRenderer::Find_RenderTarget(const _tchar* pName)
@@ -742,6 +889,116 @@ void CRenderer::FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
 	}
 }
 
+void CRenderer::LeftMirrorPreCull(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	LeftMirrorDistanceCulling(pGraphicDev);
+	LeftMirrorFrustumCulling(pGraphicDev);
+}
+
+void CRenderer::LeftMirrorDistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	_vec3 vCamPos;
+	_matrix matView;
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	memcpy(&vCamPos, &matView.m[3], sizeof(_vec3));
+	vCamPos *= -1;
+
+	float fCullDistance, dist;
+	_vec3 vObjPos;
+	for (size_t i = 0; i < RENDER_PARTICLE; ++i)
+	{
+		for (auto it = m_LeftMirrorRenderGroup[i].begin(); it != m_LeftMirrorRenderGroup[i].end();) {
+			if (*it == nullptr) {
+				Safe_Release((*it));
+				it = m_LeftMirrorRenderGroup[i].erase(it);
+				continue;
+			}
+
+			if (!(*it)->Get_CullEnable()) {
+				++it;
+				continue;
+			}
+
+			fCullDistance = (*it)->Get_CullDistance();
+			if (fCullDistance == 0) {
+				++it;
+				continue;
+			}
+
+			(*it)->Get_Transform()->Get_Info(INFO_POS, &vObjPos);
+			_vec3 dir = vObjPos - vCamPos;
+			dist = D3DXVec3Length(&dir);
+			if (dist >= fCullDistance) {
+				Safe_Release((*it));
+				it = m_LeftMirrorRenderGroup[i].erase(it);
+			}
+			else
+				++it;
+		}
+	}
+}
+
+void CRenderer::LeftMirrorFrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	_matrix matView, matInvView;
+	_matrix matProj;
+	_matrix matObjWorld;
+
+	pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matInvView, 0, &matView);
+	pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	float m[16];
+	memcpy(m, &matProj.m, sizeof(float) * 16);
+	DirectX::XMMATRIX xmMatProj(m);
+
+	DirectX::BoundingFrustum tFrustum;
+	DirectX::BoundingFrustum::CreateFromMatrix(tFrustum, xmMatProj);
+
+	memcpy(m, &matInvView.m, sizeof(float) * 16);
+	DirectX::XMMATRIX xmMatInvView(m);
+
+	tFrustum.Transform(tFrustum, xmMatInvView);
+
+	DirectX::BoundingBox box;
+	for (size_t i = 0; i < RENDER_PARTICLE; ++i)
+	{
+		for (auto it = m_LeftMirrorRenderGroup[i].begin(); it != m_LeftMirrorRenderGroup[i].end();) {
+			if (*it == nullptr) {
+				Safe_Release((*it));
+				it = m_LeftMirrorRenderGroup[i].erase(it);
+				continue;
+			}
+
+			if (!(*it)->Get_CullEnable()) {
+				++it;
+				continue;
+			}
+
+			CVIBuffer* pBuf = (*it)->Get_Component<CVIBuffer>();
+			if (pBuf == nullptr) {
+				Safe_Release((*it));
+				it = m_LeftMirrorRenderGroup[i].erase(it);
+				continue;
+			}
+
+			matObjWorld = *(*it)->Get_Transform()->Get_World();
+			memcpy(m, &matObjWorld.m, sizeof(float) * 16);
+			DirectX::XMMATRIX xmMatWorld(m);
+
+			box = *pBuf->GetBoundingBox();
+			box.Transform(box, xmMatWorld);
+
+			if (!tFrustum.Intersects(box)) {
+				Safe_Release((*it));
+				it = m_LeftMirrorRenderGroup[i].erase(it);
+				continue;
+			}
+			++it;
+		}
+	}
+}
+
 void CRenderer::PreRender(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	for (size_t i = 0; i < RENDER_END; ++i)
@@ -766,6 +1023,85 @@ void CRenderer::SetBlur(bool bBlur)
 	//if (m_bBlur == false)
 	//	m_fBlurPower = 0.7f; // 투명도 초기화
 }
+void CRenderer::RenderLeftSideMirrorGroup(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	RTINFO* pInfo = Find_RenderTarget(L"LeftMirror");
+	if (pInfo == nullptr)
+		return;
+
+	// 0. 카메라 설정 + RenderTarget 변경
+	IDirect3DSurface9* pOldRT = nullptr;
+	IDirect3DSurface9* pOldDS = nullptr;
+	pGraphicDev->GetRenderTarget(0, &pOldRT);
+	pGraphicDev->GetDepthStencilSurface(&pOldDS);
+
+	pGraphicDev->SetRenderTarget(0, pInfo->pRTSurface);
+	pGraphicDev->SetDepthStencilSurface(pInfo->pRTDepthStencil);
+
+	pGraphicDev->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+		D3DCOLOR_ARGB(0, 255, 255, 255), 1.0f, 0);
+
+	CameraInfo OldCamInfo = CCameraMgr::GetInstance()->GetCameraInfo();
+	CAMERA_STATE OldCamState =  CCameraMgr::GetInstance()->GetCamerState();
+
+	CCameraMgr::GetInstance()->SetMainCamera(CAMERA_LEFTSIDE);
+	CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo();
+	pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &camInfo.matProj);
+
+	// 1. PreCull
+	//LeftMirrorPreCull(pGraphicDev);
+	
+	// 2. RenderObject (Set Fog(?))
+	LeftMirrorRender_Priority(pGraphicDev);
+	LeftMirrorRender_NonAlpha(pGraphicDev);
+	LeftMirrorRender_Alpha(pGraphicDev);
+	LeftMirrorRender_Skid(pGraphicDev);
+	LeftMirrorRender_Trail(pGraphicDev);
+
+	LeftMirrorRender_Particle(pGraphicDev);
+	//LeftMirrorRender_NonAlphaUI(pGraphicDev);
+	
+
+	// 4. OldCam설정 + OldRenderTarget 설정
+	CCameraMgr::GetInstance()->SetMainCamera(OldCamState);
+	pGraphicDev->SetTransform(D3DTS_VIEW, &OldCamInfo.matView);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldCamInfo.matProj);
+
+
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
+	pGraphicDev->SetRenderTarget(0, pOldRT);
+	pGraphicDev->SetDepthStencilSurface(pOldDS);
+	Safe_Release(pOldRT);
+	Safe_Release(pOldDS);
+
+
+	// 3. ClearLeftMirrorRenderGroup
+	Clear_LeftMirrorRenderGroup();
+}
+
+void CRenderer::Delete_LeftMirrorRenderGroup(CGameObject* pObj)
+{
+	for (int i = 0; i < RENDER_END; ++i) {
+		auto it = find(m_LeftMirrorRenderGroup[i].begin(), m_LeftMirrorRenderGroup[i].end(), pObj);
+
+		if (it != m_LeftMirrorRenderGroup[i].end()) {
+			Safe_Release((*it));
+			m_LeftMirrorRenderGroup[i].erase(it);
+			return;
+		}
+	}
+}
+void CRenderer::Clear_LeftMirrorRenderGroup()
+{
+	for (size_t i = 0; i < RENDER_END; ++i)
+	{
+		for_each(m_LeftMirrorRenderGroup[i].begin(), m_LeftMirrorRenderGroup[i].end(), CDeleteObj());
+		m_LeftMirrorRenderGroup[i].clear();
+	}
+}
+
 void CRenderer::OnLostDevice()
 {
 	for (auto& pair : m_mapRenderTarget)

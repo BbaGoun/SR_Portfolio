@@ -41,6 +41,7 @@ HRESULT CSkyBox::Ready_GameObject()
 _int CSkyBox::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_PRIORITY, this);
+	CRenderer::GetInstance()->Add_LeftMirrorRenderGroup(RENDER_PRIORITY, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

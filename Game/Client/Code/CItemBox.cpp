@@ -72,6 +72,7 @@ void CItemBox::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CItemBox::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+	CRenderer::GetInstance()->Add_LeftMirrorRenderGroup(RENDER_NONALPHA, this);
 
 	if (m_bShow == false)
 		m_fTimer += fDeltaTime;

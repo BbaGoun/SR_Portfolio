@@ -60,6 +60,7 @@ _int CDriftTrail::Update_GameObject(const _float& fDeltaTime)
 	}
 
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_TRAIL, this);
+	CRenderer::GetInstance()->Add_LeftMirrorRenderGroup(RENDER_TRAIL, this);
 	
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

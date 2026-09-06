@@ -45,6 +45,7 @@ void CPlayerArm::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CPlayerArm::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+	CRenderer::GetInstance()->Add_LeftMirrorRenderGroup(RENDER_NONALPHA, this);
 	if (CPlayTimeMgr::GetInstance()->GetPlayTimer() > CPlayTimeMgr::GetInstance()->GetPlayTimer() + 10.f)
 	{
 		m_bKeyInput = false;

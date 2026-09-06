@@ -228,6 +228,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CFindOthersMgr.h" />
     <ClInclude Include="..\Header\CFinishCam.h" />
     <ClInclude Include="..\Header\CItemGainEffect.h" />
+    <ClInclude Include="..\Header\CLeftMirror.h" />
+    <ClInclude Include="..\Header\CLeftSideMirrorCam.h" />
     <ClInclude Include="..\Header\CMenu_Item.h" />
     <ClInclude Include="..\Header\CMenu_Set.h" />
     <ClInclude Include="..\Header\CInvenSlotBG.h" />
@@ -281,6 +283,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CSmokeEffect.h" />
     <ClInclude Include="..\Header\CUI_InvenSlot.h" />
     <ClInclude Include="..\Header\CInvenSlotCart.h" />
+    <ClInclude Include="..\Header\CUI_LeftSideMirror.h" />
     <ClInclude Include="..\Header\CUI_Minimap.h" />
     <ClInclude Include="..\Header\CRainBow_Cloud.h" />
     <ClInclude Include="..\Header\CFollowSmoothCam.h" />
@@ -319,6 +322,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CUI_RankName.h" />
     <ClInclude Include="..\Header\CUI_RankBG.h" />
     <ClInclude Include="..\Header\CUI_RankNumber.h" />
+    <ClInclude Include="..\Header\CUI_SideMirrorFrame.h" />
     <ClInclude Include="..\Header\CUI_StartCountDown.h" />
     <ClInclude Include="..\Header\CUI_Timer.h" />
     <ClInclude Include="..\Header\CUI_UnderBar.h" />
@@ -350,6 +354,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CFindOthersMgr.cpp" />
     <ClCompile Include="..\Code\CFinishCam.cpp" />
     <ClCompile Include="..\Code\CItemGainEffect.cpp" />
+    <ClCompile Include="..\Code\CLeftMirror.cpp" />
+    <ClCompile Include="..\Code\CLeftSideMirrorCam.cpp" />
     <ClCompile Include="..\Code\CMenu_Item.cpp" />
     <ClCompile Include="..\Code\CMenu_Set.cpp" />
     <ClCompile Include="..\Code\CMinimapCartBot.cpp" />
@@ -411,6 +417,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\CUI_LeftSideMirror.cpp" />
     <ClCompile Include="..\Code\CUI_PauseMenu.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -418,6 +425,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CUI_RankName.cpp" />
     <ClCompile Include="..\Code\CUI_RankBG.cpp" />
     <ClCompile Include="..\Code\CUI_RankNumber.cpp" />
+    <ClCompile Include="..\Code\CUI_SideMirrorFrame.cpp" />
     <ClCompile Include="..\Code\CUI_StartCountDown.cpp" />
     <ClCompile Include="..\Code\CUI_UnderBar.cpp" />
     <ClCompile Include="..\Code\CUI_XButton.cpp" />

@@ -60,6 +60,7 @@ _int CDriftSpark::Update_GameObject(const _float& fDeltaTime)
 	//if (dynamic_cast<CCart*>(m_pParent)->GetDrift())
 	//{
 		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+		CRenderer::GetInstance()->Add_LeftMirrorRenderGroup(RENDER_ALPHA, this);
 
 		//m_fFrame += 45.f * fDeltaTime;
 		//if (m_fFrame > 2.f)

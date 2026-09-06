@@ -53,6 +53,9 @@
 #include "CCollisionStarEffect.h"
 #include "CItemGainEffect.h"
 #include "CUI_RankNumber.h"
+#include "CUI_SideMirrorFrame.h"
+#include "CUI_LeftSideMirror.h"
+#include "CLeftSideMirrorCam.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -420,6 +423,18 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 		static_cast<CCamera*>(pGameObject))))
 		return E_FAIL;
 
+	//LeftSideCam
+	pGameObject = CLeftSideMirrorCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45));
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_LeftSideCam", pGameObject);
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_LEFTSIDE,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+
 	// TrackCam(RePlay)
 	auto& Cameras = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"TrackCam");
 	if (!Cameras.empty())
@@ -739,6 +754,20 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		static_cast<CMinimapCartBot*>(pUIObject)->SetCartBot(pCartBot);
 	}
 
+	// UI_SideMirrorFrame
+	pUIObject = CUI_SideMirrorFrame::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_SideMirrorFrame", pUIObject)))
+		return E_FAIL;
+
+	// UI_LeftSideMirror
+	pUIObject = CUI_LeftSideMirror::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_LeftSideMirror", pUIObject)))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -771,6 +800,7 @@ CRacingScene* CRacingScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, MAP_ID eID)
 void CRacingScene::Free()
 {
 	CRenderer::GetInstance()->Clear_RenderGroup();
+	CRenderer::GetInstance()->Clear_LeftMirrorRenderGroup();
 	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
 	CRenderer::GetInstance()->Delete_RenderTarget(L"LeftMirror");
 	CRenderer::GetInstance()->Delete_RenderTarget(L"RightMirror");

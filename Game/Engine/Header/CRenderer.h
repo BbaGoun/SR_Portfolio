@@ -20,6 +20,11 @@ public:
 	void		Delete_RenderGroup(CGameObject* pObj);
 	void		Clear_RenderGroup();
 
+	void		Add_LeftMirrorRenderGroup(RENDERID eID, CGameObject* pGameObject);
+	void		RenderLeftSideMirrorGroup(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Delete_LeftMirrorRenderGroup(CGameObject* pObj);
+	void		Clear_LeftMirrorRenderGroup();
+
 public:
 
 	HRESULT		Add_RenderTarget(LPDIRECT3DDEVICE9& pGraphicDev, const _tchar* pName,float fWidth, float fHeight);
@@ -45,6 +50,15 @@ public:
 	void		Render_Fog(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
+//LeftMirrorRender
+	void		LeftMirrorRender_Priority(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		LeftMirrorRender_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		LeftMirrorRender_Alpha(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		LeftMirrorRender_Skid(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		LeftMirrorRender_Trail(LPDIRECT3DDEVICE9& pGraphicDev);
+
+	void		LeftMirrorRender_Particle(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		LeftMirrorRender_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 
 	void		SetBlur(bool bBlur);
 	void		SetBlurPower(float fBlurPower)	{ m_fBlurPower = fBlurPower; }
@@ -59,14 +73,25 @@ private:
 	void		DistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		FrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev);
 
+
+	void		LeftMirrorPreCull(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		LeftMirrorDistanceCulling(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		LeftMirrorFrustumCulling(LPDIRECT3DDEVICE9& pGraphicDev);
+
+
 	void		PreRender(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		PostRender(LPDIRECT3DDEVICE9& pGraphicDev);
 
 	HRESULT		Ready_BlurA(LPDIRECT3DDEVICE9& pGraphicDev);
 	HRESULT		Ready_BlurB(LPDIRECT3DDEVICE9& pGraphicDev);
 
+	bool		GetLeftMirrorRender() { return m_bRenderLeftMirror; }
+	void		SetLeftMirrorRender(bool bRenderLeftMirror) { m_bRenderLeftMirror = bRenderLeftMirror; }
+
 private:
 	list<CGameObject*>		m_RenderGroup[RENDER_END];
+	list<CGameObject*>		m_LeftMirrorRenderGroup[RENDER_END];
+
 	map<const _tchar*, RTINFO*> m_mapRenderTarget;
 
 	RTINFO*					m_pBlurA;
@@ -74,6 +99,9 @@ private:
 
 	bool					m_bBlur;
 	float					m_fBlurPower;
+
+	bool					m_bRenderLeftMirror = true;
+
 private:
 	virtual void	Free();
 

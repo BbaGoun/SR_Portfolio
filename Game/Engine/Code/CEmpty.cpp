@@ -24,6 +24,7 @@ HRESULT CEmpty::Ready_GameObject()
 int CEmpty::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+	CRenderer::GetInstance()->Add_LeftMirrorRenderGroup(RENDER_NONALPHA, this);
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

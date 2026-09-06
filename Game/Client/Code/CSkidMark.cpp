@@ -55,6 +55,7 @@ _int CSkidMark::Update_GameObject(const _float& fDeltaTime)
 		}
 	}
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_SKID, this);
+	CRenderer::GetInstance()->Add_LeftMirrorRenderGroup(RENDER_SKID, this);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
