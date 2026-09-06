@@ -88,10 +88,6 @@ _uint CLoadingThread::Loading_Stage()
         true, L"Terrain")))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_SkyBoxTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/burger3.dds", 1),
-        true, L"SkyBox")))
-        return E_FAIL;
-
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ExplosionEffect", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90),
         true, L"Explosion")))
         return E_FAIL;
