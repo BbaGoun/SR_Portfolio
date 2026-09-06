@@ -45,11 +45,13 @@
 #include "CRankMgr.h"
 #include "CCartBot.h"
 #include "CUI_Laps.h"
-#include "CCollisionStarEffect.h"
 #include "CWaterBombBubble.h"
 #include "CBoostAura.h"
 #include "CShield1.h"
 #include "CShield2.h"
+#include "CMinimapCartBot.h"
+#include "CCollisionStarEffect.h"
+#include "CItemGainEffect.h"
 #include "CUI_RankNumber.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
@@ -194,6 +196,8 @@ HRESULT CRacingScene::Ready_TrackMgr()
 HRESULT CRacingScene::Ready_RenderTarget()
 {
 	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"Minimap", 256, 384);
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"LeftMirror", 256, 384);
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"RightMirror", 256, 384);
 	CRenderer::GetInstance()->Ready_BlurRT(m_pGraphicDev);
 	return S_OK;
 }
@@ -354,6 +358,13 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
+
+	//ItemGainEffect
+	pGameObject = CItemGainEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"ItemGainEffect", pGameObject);
+
 
 //Camera
 	//// # 플레이어 따라다니는 3인칭 카메라
@@ -719,6 +730,15 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
 		return E_FAIL;
 
+	for (auto& pCartBot : vecCartBot) {
+		pUIObject = CMinimapCartBot::Create(m_pGraphicDev);
+		if (nullptr == pUIObject)
+			return E_FAIL;
+		if (FAILED(pUILayer->Add_GameObject(L"MinimapCartBot", pUIObject)))
+			return E_FAIL;
+		static_cast<CMinimapCartBot*>(pUIObject)->SetCartBot(pCartBot);
+	}
+
 	return S_OK;
 }
 
@@ -752,6 +772,8 @@ void CRacingScene::Free()
 {
 	CRenderer::GetInstance()->Clear_RenderGroup();
 	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
+	CRenderer::GetInstance()->Delete_RenderTarget(L"LeftMirror");
+	CRenderer::GetInstance()->Delete_RenderTarget(L"RightMirror");
 	CTrackMgr::DestroyInstance();
 	CRenderer::GetInstance()->Delete_BlurRT();
 	CScene::Free();

@@ -163,6 +163,10 @@ namespace Engine
 		bool        bIsAlive;
 	}ATTRIBUTE;
 
+	struct RGB {
+		int r, g, b;
+	};
+
 	typedef struct RenderTargetInfo
 	{
 		LPDIRECT3DTEXTURE9      pRTTexture = nullptr;

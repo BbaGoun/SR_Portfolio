@@ -227,6 +227,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CEmp_Band.h" />
     <ClInclude Include="..\Header\CFindOthersMgr.h" />
     <ClInclude Include="..\Header\CFinishCam.h" />
+    <ClInclude Include="..\Header\CItemGainEffect.h" />
     <ClInclude Include="..\Header\CMenu_Item.h" />
     <ClInclude Include="..\Header\CMenu_Set.h" />
     <ClInclude Include="..\Header\CInvenSlotBG.h" />
@@ -234,6 +235,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CMagnetBody.h" />
     <ClInclude Include="..\Header\CItemBox.h" />
     <ClInclude Include="..\Header\CMinimapCart.h" />
+    <ClInclude Include="..\Header\CMinimapCartBot.h" />
     <ClInclude Include="..\Header\CMinimapGround.h" />
     <ClInclude Include="..\Header\CMissile.h" />
     <ClInclude Include="..\Header\CMissileBody.h" />
@@ -241,6 +243,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CPause_MenuBtn.h" />
     <ClInclude Include="..\Header\CPause_ReplayBtn.h" />
     <ClInclude Include="..\Header\CPlayer.h" />
+    <ClInclude Include="..\Header\CPlayerArm.h" />
     <ClInclude Include="..\Header\CPlayerHead.h" />
     <ClInclude Include="..\Header\CPlayTimeMgr.h" />
     <ClInclude Include="..\Header\CRePlayCart.h" />
@@ -346,8 +349,10 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CCartBot.cpp" />
     <ClCompile Include="..\Code\CFindOthersMgr.cpp" />
     <ClCompile Include="..\Code\CFinishCam.cpp" />
+    <ClCompile Include="..\Code\CItemGainEffect.cpp" />
     <ClCompile Include="..\Code\CMenu_Item.cpp" />
     <ClCompile Include="..\Code\CMenu_Set.cpp" />
+    <ClCompile Include="..\Code\CMinimapCartBot.cpp" />
     <ClCompile Include="..\Code\CPause_MenuBtn.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -357,6 +362,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\CPlayer.cpp" />
+    <ClCompile Include="..\Code\CPlayerArm.cpp" />
     <ClCompile Include="..\Code\CPlayerHead.cpp" />
     <ClCompile Include="..\Code\CPlayTimeMgr.cpp" />
     <ClCompile Include="..\Code\CRePlayCart.cpp" />

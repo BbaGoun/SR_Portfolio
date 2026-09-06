@@ -77,6 +77,9 @@ _uint CLoadingThread::Loading_Stage()
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_HalfSphere", Engine::CHalfSphere::Create(m_pGraphicDev))))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_CircleCol", Engine::CCircleCol::Create(m_pGraphicDev))))
+        return E_FAIL;
+
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Sphere", Engine::CSphere::Create(m_pGraphicDev)
         , true, L"Sphere")))
         return E_FAIL;
@@ -295,6 +298,9 @@ _uint CLoadingThread::Loading_Stage()
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BeamEffect", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item/Beam/Beam%d.png", 5))))
+        return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ItemGainEffect", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Effect/ItemGainEffect/ItemGainEffect.png", 1))))
         return E_FAIL;
 
     //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_BoosterIcon", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/Item_Boost.png", 1))))
