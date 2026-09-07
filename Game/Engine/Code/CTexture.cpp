@@ -36,7 +36,7 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eID, const _tchar* pPath, const _uint&
 
     for (_uint i = 0; i < iCnt; ++i)
     {
-        TCHAR   szFileName[128] = L"";
+        TCHAR   szFileName[512] = L"";
 
         wsprintf(szFileName, pPath, i);
 

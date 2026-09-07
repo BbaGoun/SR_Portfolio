@@ -94,9 +94,9 @@ _uint CLoadingThread::Loading_Stage()
 
     //NexonLogo
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_UI_NexonLogo", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/BackGround/NexonLogo/NexonLogo (%d).png", 84))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_UI_NexonLogo", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/BackGround/NexonLogo/NexonLogo (%d).png", 106))))
         return E_FAIL;
-    
+
     //Menu UI
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Scene1_Item", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Scene/1/Scene1_Item%d.png", 2))))
         return E_FAIL;
@@ -217,9 +217,8 @@ _uint CLoadingThread::Loading_Stage()
         return E_FAIL;
 
     // ItemIcon
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ItemIconTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/ItemIcon/item%d.png", 11))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ItemIconTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/ItemIcon/item%d.png", 10))))
         return E_FAIL;
-
 
     // ItemSlot
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_ItemSlotTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/ItemSlot/slot0.png", 1))))

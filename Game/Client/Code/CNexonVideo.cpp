@@ -120,7 +120,9 @@ HRESULT CNexonVideo::Ready_Environment_Layer(const _tchar* pLayerTag)
     if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
         return E_FAIL;
 
-    pGameObject->Get_Transform()->Set_Scale({ WINCX, WINCY, 1 });
+    D3DVIEWPORT9 vp;
+    m_pGraphicDev->GetViewport(&vp);
+    pGameObject->Get_Transform()->Set_Scale({ float(vp.Width), float(vp.Height), 1 });
     pGameObject->Get_Transform()->Set_Pos({ 0, 0, 15 });
 
     m_mapLayer.insert({ pLayerTag, pLayer });
