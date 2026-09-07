@@ -30,17 +30,7 @@ HRESULT CMissile::Ready_GameObject()
 	m_fSpeed = 180.f;
 	m_fAngle = 0.f;
 
-	Engine::CComponent* pComponent = nullptr;
-
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-
-	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->Set_Extents({ 1.f, 1.f, 1.f });
-
-	m_mapComponent.insert({ L"Com_Collider", pComponent });
+	Set_CollisionLayer(CL_ITEM);
 
 	return S_OK;
 }
@@ -239,7 +229,6 @@ void CMissile::LateUpdate_GameObject(const _float& fTimeDelta)
 
 void CMissile::Render_GameObject()
 {
-	m_pColliderCom->Render_Component(D3DXCOLOR({ 1,0,0,1 }));
 }
 
 void CMissile::CollisionEnter(CCollider* pOtherCollider)

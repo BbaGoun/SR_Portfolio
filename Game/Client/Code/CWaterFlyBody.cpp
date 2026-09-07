@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CWaterFlyBody.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -21,7 +21,7 @@ HRESULT CWaterFlyBody::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 	m_pTransformCom->Set_Pos({ 0.f,-1000.f,0.f });
-	m_pTransformCom->Set_Scale({ 5.4f, 5.9f, 0.f });
+	m_pTransformCom->Set_Scale({ 10.f, 10.f, 0.f });
 
 	m_fTimer = 0.f;
 	m_fFrame = 0.f;
@@ -65,7 +65,7 @@ _int CWaterFlyBody::Update_GameObject(const _float& fTimeDelta)
 		m_fFrame = 0.f;
 
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);	// ±×·¡¼­ ÀÏ¹İ µµÇüÀº RENDER_NONALPHA
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);	// ê·¸ë˜ì„œ ì¼ë°˜ ë„í˜•ì€ RENDER_NONALPHA
 
 	return iExit;
 }

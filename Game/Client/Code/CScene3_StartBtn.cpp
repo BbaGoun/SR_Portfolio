@@ -1,8 +1,7 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CScene3_StartBtn.h"
 
 #include "CScene.h"
-#include "CCollisionTest.h"
 
 #include "CGameObject.h"
 #include "CGraphicDev.h"
@@ -10,6 +9,7 @@
 #include "CRenderer.h"
 #include "CDInputMgr.h"
 #include "CManagement.h"
+#include "CRacingScene.h"
 
 CScene3_StartBtn::CScene3_StartBtn(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -71,7 +71,7 @@ _int CScene3_StartBtn::Update_GameObject(const _float& fDeltaTime)
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
 		{
-			Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
+			Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
 
 			if (nullptr == pStage)
 				return E_FAIL;

@@ -1,14 +1,3 @@
-﻿OBJECT
-  type=TrackCam
-  prefabPath=..\..\..\Resource\Editor\Prefab\TrackCam.prefab
-  belong=1
-  name=TrackCam
-  tag=TrackCam
-  collisionLayer=0
-  cullDistance=0
-  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-    pos=0.000000 0.000000 0.000000
-    rot=0.000000 -0.000000 0.000000
-    quat=0.000000 0.000000 0.000000 1.000000
-    scale=1.000000 1.000000 1.000000
-ENDOBJECT
+version https://git-lfs.github.com/spec/v1
+oid sha256:e9a38cf0896049df37bcf75d56c51c9d20d331354cbf040995a6a222e9af3312
+size 407

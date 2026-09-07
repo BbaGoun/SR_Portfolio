@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "CBase.h"
 #include "Engine_Define.h"
 #include "Engine_Parsing.h"
@@ -28,6 +28,7 @@ public:
 
     int     Get_Rank(CGameObject* pObj);
     CGameObject* Get_Forward(CGameObject* pObj);
+    CGameObject* Get_Apex();
 
 private:
     void Update_RankingUI();
@@ -44,7 +45,7 @@ private:
     bool m_bAlreadyGoal = false;
 
 private:
-    // CBaseÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
+    // CBaseì„(ë¥¼) í†µí•´ ìƒì†ë¨
     void Free() override;
 };
 

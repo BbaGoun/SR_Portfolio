@@ -20,7 +20,7 @@ public:
 	HRESULT		Ready_CSphere_Collider();
 	static		CSphere_Collider* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-	DirectX::BoundingSphere& Get_Info()		{ return m_tBoundingSphere; }
+	DirectX::BoundingSphere& Get_Info();
 
 	void		Set_Center(_vec3 vPos)		{ m_tBoundingSphere.Center = ToXMFLOAT3(vPos); }
 	void		Set_Radius(float fRadius)	{ m_tBoundingSphere.Radius = max(0.01f, fRadius); }

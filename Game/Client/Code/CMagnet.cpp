@@ -40,11 +40,16 @@ void CMagnet::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	}
 	else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pOwner))
 	{
-		//pTarget = pCartBot->GetMagnetTarget();
-		//if (!pTarget) {
-		//	m_pLayer->Delete_GameObject(this);
-		//	return 0;
-		//}
+		pTarget = pCartBot->GetMagnetTarget();
+		if (!pTarget) {
+			m_pLayer->Delete_GameObject(this);
+			return;
+		}
+	}
+	else
+	{
+		m_pLayer->Delete_GameObject(this);
+		return;
 	}
 
 	_vec3 vCartPos, vLook, vTargetPos, vDir;

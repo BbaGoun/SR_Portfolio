@@ -91,7 +91,6 @@ public:
 	void			CreateMissileAimObject();
 	void			CreateMagnetAimObject();
 	void			CreateShieldObject();
-	void			CreateUfoObject();
 	void			CreateBarricadeObject();
 
 	// Item

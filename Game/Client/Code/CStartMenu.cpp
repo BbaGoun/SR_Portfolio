@@ -16,7 +16,6 @@
 #include "CUI_XButton.h"
 #include "CUI_UnderBar.h"
 #include "CUI_Menu.h"
-#include "CInventoryScene.h"
 #include "CRacingScene.h"
 #include "CRePlayScene.h"
 #include "SoundMgr.h"

@@ -26,13 +26,6 @@ HRESULT CSphere_Collider::Ready_CSphere_Collider()
 
 void CSphere_Collider::FixedUpdate_Component(const _float& fFixedDeltaTime)
 {
-	CTransform* pOwnerTransfrom = (m_pOwner->Get_Transform());
-
-	_vec3 vOwnerPos;
-	pOwnerTransfrom->Get_Info(INFO_POS, &vOwnerPos);
-	vOwnerPos += m_vOffset;
-
-	m_tBoundingSphere.Center = ToXMFLOAT3(vOwnerPos);
 }
 
 _int CSphere_Collider::Update_Component(const _float& fTimeDelta)
@@ -79,6 +72,19 @@ void CSphere_Collider::Render_Component(D3DXCOLOR color)
 	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE); // 기본값 복구
 
 	pSphere->Release();
+}
+
+DirectX::BoundingSphere& CSphere_Collider::Get_Info() 
+{
+	CTransform* pOwnerTransfrom = (m_pOwner->Get_Transform());
+
+	_vec3 vOwnerPos;
+	pOwnerTransfrom->Get_Info(INFO_POS, &vOwnerPos);
+	vOwnerPos += m_vOffset;
+
+	m_tBoundingSphere.Center = ToXMFLOAT3(vOwnerPos);
+
+	return m_tBoundingSphere;
 }
 
 CSphere_Collider* CSphere_Collider::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -23,8 +23,6 @@
 #include "CLoadMgr.h"
 #include "CCart.h"
 #include "CCartBody.h"
-#include "CCartBody1.h"
-#include "CCartBody2.h"
 #include "CWheel.h"
 #include "CBoostWind.h"
 #include "CBoostJet.h"
@@ -150,17 +148,16 @@ HRESULT CRacingScene::LoadSceneFromFile()
 
 	const _tchar* path = nullptr;
 	switch (m_eMapId) {
-	case MAP_TEST:
+	case MAP_ITEM:
 		path = L"../Bin/Resource/Editor/Scene/ItemScene.scene";
 		break;
-	case MAP_FOREST:
-		break;
-	case MAP_VILLAGE:
+	case MAP_SPEED:
+		path = L"../Bin/Resource/Editor/Scene/ItemScene.scene";
 		break;
 	default:
 		return E_FAIL;
 	}
-
+	int a;
 	FILE* fp = nullptr;
 	if (_wfopen_s(&fp, path, L"r, ccs=UTF-8") != 0 || !fp)
 		return E_FAIL;

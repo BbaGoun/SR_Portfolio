@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CCartBody.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -113,12 +113,12 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 			if (isPlayer) {
 				SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
 				// StarEffect
-				if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 0)
-				{
-					CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
-						(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
-					pStarParticle->ResetParticle();
-				}
+				//if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 0)
+				//{
+				//	CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
+				//		(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
+				//	pStarParticle->ResetParticle();
+				//}
 			}
 			// MTV 적용
 			_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
@@ -416,7 +416,8 @@ void CCartBody::UpdateMissileHit(const _float& fDeltaTime)
 		m_bMissileHit = false;
 		if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent))
 			pCartBot->SetMissileHit(false);
-		//else if(CCart* pCart = dynamic_cast<CCart*>(m_pParent))
+		else if(CCart* pCart = dynamic_cast<CCart*>(m_pParent))
+			pCart->SetMissileHit(false);
 	}
 }
 
