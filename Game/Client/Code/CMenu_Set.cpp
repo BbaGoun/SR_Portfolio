@@ -27,7 +27,7 @@
 #include "CDinputMgr.h"
 #include "CSlotMgr.h"
 #include "CButtonMgr.h"
-
+#include "CLoadMgr.h"
 
 CMenu_Set::CMenu_Set(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -40,6 +40,13 @@ CMenu_Set::~CMenu_Set()
 
 HRESULT CMenu_Set::Ready_Scene()
 {
+	LoadSceneFromFile();
+
+	return S_OK;
+}
+HRESULT CMenu_Set::PostReady_Scene()
+{
+	CScene::PostReady_Scene();
 	if (FAILED(Ready_Prototype()))
 		return E_FAIL;
 
@@ -52,13 +59,43 @@ HRESULT CMenu_Set::Ready_Scene()
 	if (FAILED(Ready_UI_Layer()))
 		return E_FAIL;
 
+	return S_OK;
+}
+HRESULT CMenu_Set::LoadSceneFromFile()
+{
 
+	// ì¼ë‹¨ ë„£ì–´ë‘ê¸°
+	CLayer* pGameObjectLayer = CLayer::Create();
+
+	if (pGameObjectLayer == nullptr)
+		return E_FAIL;
+
+	m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
+
+	const _tchar* path = nullptr;
+	
+	path = L"../Bin/Resource/Editor/Scene/MenuSet.scene";
+	
+	int a;
+	FILE* fp = nullptr;
+	if (_wfopen_s(&fp, path, L"r, ccs=UTF-8") != 0 || !fp)
+		return E_FAIL;
+
+	FileReadState st;
+	st.fp = fp;
+
+	wchar_t* t = nullptr;
+	CGameObject* pRoot = nullptr;
+	while (true) {
+		if (st.Next(t) && !wcscmp(t, L"OBJECT"))
+			pRoot = CLoadMgr::GetInstance()->LoadGameObjectClient(st, m_pGraphicDev, nullptr, this);
+		else
+			break;
+	}
+	fclose(fp);
 
 	return S_OK;
 }
-
-
-
 _int CMenu_Set::Update_Scene(const _float& fDeltaTime)
 {
 	_int iExit = CScene::Update_Scene(fDeltaTime);
@@ -66,10 +103,6 @@ _int CMenu_Set::Update_Scene(const _float& fDeltaTime)
 
 	return iExit;
 }
-
-
-
-
 
 void CMenu_Set::LateUpdate_Scene(const _float& fDeltaTime)
 {
@@ -130,13 +163,11 @@ HRESULT CMenu_Set::Ready_Prototype()
 
 HRESULT CMenu_Set::Ready_RenderTarget()
 {
-	
-		CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"InvenSlot0", 250, 400);
-		CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"InvenSlot1", 250, 400);
-		CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"CharSlot0", 200, 200);
-		CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"CharSlot1", 200, 200);
-		return S_OK;
-	
+	int a;
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"InvenSlot0", 250, 400);
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"InvenSlot1", 250, 400);
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"CharSlot0", 200, 200);
+	return S_OK;	
 }
 
 HRESULT CMenu_Set::Ready_UI_Layer()
@@ -146,8 +177,24 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	m_mapLayer.insert({ L"UI", pUILayer });
 	
+
+	CGameObject* pBasicCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Basic_Cart");
+	CGameObject* pCottonCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CottonCart");
+	CGameObject* pChar = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Bazzi");
+	if (pBasicCart) {
+		pBasicCart->Get_Transform()->Set_Pos({ 0.f, -4.f, 2.f });
+	}
+	if (pCottonCart) {
+		pCottonCart->Get_Transform()->Set_Pos({ 0.f, -4.f, 2.f });
+		pCottonCart->Get_Transform()->Set_Scale({ 3.f, 3.f, 3.f });
+	}
+	if (pChar) {
+		pChar->Get_Transform()->Set_Pos({ 0.f, 2.f, 2.f });
+		pChar->Get_Transform()->Set_Scale({ 2.f, 2.f, 2.f });
+	}
+
 	CGameObject* pUIObject = nullptr;
-	
+
 	pUIObject = CScene3_Map_ForestValley::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
@@ -155,7 +202,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	
 	
-// ¹öÆ°
+// ï¿½ï¿½Æ°
 	pUIObject = CScene3_StartBtn::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
@@ -207,7 +254,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 
 	
-// Ä«Æ® ½½·Ô1
+// Ä«Æ® ï¿½ï¿½ï¿½ï¿½1
 	CGameObject* pUIInvenSlot = CUI_InvenSlot::Create(m_pGraphicDev, INVEN_FIRST);
 	if (nullptr == pUIInvenSlot)
 		return E_FAIL;
@@ -224,18 +271,18 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	static_cast<CUI_InvenSlot*>(pUIInvenSlot)->SetBG(pUIObject);
 	
-	pUIObject = CInvenSlotCart::Create(m_pGraphicDev, INVEN_FIRST);
-	if (pUIObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"InvenSlotCart", pUIObject)))
-		return E_FAIL;
-	static_cast<CUI_InvenSlot*>(pUIInvenSlot)->SetItem(pUIObject);
+	//pUIObject = CInvenSlotCart::Create(m_pGraphicDev, INVEN_FIRST);
+	//if (pUIObject == nullptr)
+	//	return E_FAIL;
+	//if (FAILED(pUILayer->Add_GameObject(L"InvenSlotCart", pUIObject)))
+	//	return E_FAIL;
+	static_cast<CUI_InvenSlot*>(pUIInvenSlot)->SetItem(pBasicCart);
 
 	CSlotMgr::GetInstance()->AddCartSlot(pUIInvenSlot, INVEN_FIRST);
 
 
 
-// Ä«Æ® ½½·Ô2
+// Ä«Æ® ï¿½ï¿½ï¿½ï¿½2
 	CGameObject* pUIInvenSlot2 = CUI_InvenSlot::Create(m_pGraphicDev, INVEN_SECOND);
 	if (nullptr == pUIInvenSlot2)
 		return E_FAIL;
@@ -252,17 +299,17 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	static_cast<CUI_InvenSlot*>(pUIInvenSlot2)->SetBG(pUIObject);
 
-	pUIObject = CInvenSlotCart::Create(m_pGraphicDev, INVEN_SECOND);
-	if (pUIObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"InvenSlotCart2", pUIObject)))
-		return E_FAIL;
-	static_cast<CUI_InvenSlot*>(pUIInvenSlot2)->SetItem(pUIObject);
+	//pUIObject = CInvenSlotCart::Create(m_pGraphicDev, INVEN_SECOND);
+	//if (pUIObject == nullptr)
+	//	return E_FAIL;
+	//if (FAILED(pUILayer->Add_GameObject(L"InvenSlotCart2", pUIObject)))
+	//	return E_FAIL;
+	static_cast<CUI_InvenSlot*>(pUIInvenSlot2)->SetItem(pCottonCart);
 
 	CSlotMgr::GetInstance()->AddCartSlot(pUIInvenSlot2, INVEN_SECOND);
 
 
-// Ä³¸¯ÅÍ ½½·Ô1
+// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½1
 	CGameObject* pUICharSlot = CScene3_CharSlot::Create(m_pGraphicDev, CHAR_BAZZI);
 	if (pUICharSlot == nullptr)
 		return E_FAIL;
@@ -278,49 +325,49 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	static_cast<CScene3_CharSlot*>(pUICharSlot)->SetBG(pUIObject);
 	
-	pUIObject = CScene3_Char::Create(m_pGraphicDev, CHAR_BAZZI);
-	if (pUIObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"CharSlotChar", pUIObject)))
-		return E_FAIL;
-	static_cast<CScene3_CharSlot*>(pUICharSlot)->SetChar(pUIObject);
+	//pUIObject = CScene3_Char::Create(m_pGraphicDev, CHAR_BAZZI);
+	//if (pUIObject == nullptr)
+	//	return E_FAIL;
+	//if (FAILED(pUILayer->Add_GameObject(L"CharSlotChar", pUIObject)))
+	//	return E_FAIL;
+	static_cast<CScene3_CharSlot*>(pUICharSlot)->SetChar(pChar);
 
 	CSlotMgr::GetInstance()->AddCharSlot(pUICharSlot, CHAR_BAZZI);
 
 
 
-// Ä³¸¯ÅÍ ½½·Ô2
-	CGameObject* pUICharSlot2 = CScene3_CharSlot::Create(m_pGraphicDev, CHAR_DAO);
-	if (pUICharSlot == nullptr)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"CharSlot2", pUICharSlot2)))
-		return E_FAIL;
-	pUICharSlot2->Get_Transform()->Set_Pos({ -230, 120, 1 });
-	pUICharSlot2->Get_Transform()->Set_Scale({ 120,120,1 });
-	
-	pUIObject = CScene3_CharBG::Create(m_pGraphicDev, CHAR_DAO);
-	if (pUIObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"CharSlotBG2", pUIObject)))
-		return E_FAIL;
-	static_cast<CScene3_CharSlot*>(pUICharSlot2)->SetBG(pUIObject);
+//// Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½2
+//	CGameObject* pUICharSlot2 = CScene3_CharSlot::Create(m_pGraphicDev, CHAR_DAO);
+//	if (pUICharSlot == nullptr)
+//		return E_FAIL;
+//	if (FAILED(pUILayer->Add_GameObject(L"CharSlot2", pUICharSlot2)))
+//		return E_FAIL;
+//	pUICharSlot2->Get_Transform()->Set_Pos({ -230, 120, 1 });
+//	pUICharSlot2->Get_Transform()->Set_Scale({ 120,120,1 });
+//	
+//	pUIObject = CScene3_CharBG::Create(m_pGraphicDev, CHAR_DAO);
+//	if (pUIObject == nullptr)
+//		return E_FAIL;
+//	if (FAILED(pUILayer->Add_GameObject(L"CharSlotBG2", pUIObject)))
+//		return E_FAIL;
+//	static_cast<CScene3_CharSlot*>(pUICharSlot2)->SetBG(pUIObject);
+//
+//	pUIObject = CScene3_Char::Create(m_pGraphicDev, CHAR_DAO);
+//	if (pUIObject == nullptr)
+//		return E_FAIL;
+//	if (FAILED(pUILayer->Add_GameObject(L"CharSlotChar2", pUIObject)))
+//		return E_FAIL;
+//	static_cast<CScene3_CharSlot*>(pUICharSlot2)->SetChar(pUIObject);
+//
+//	CSlotMgr::GetInstance()->AddCharSlot(pUICharSlot2, CHAR_DAO);
+//	
+//	pUIObject = CUI_UnderBar::Create(m_pGraphicDev);
+//	if (nullptr == pUIObject)
+//		return E_FAIL;
+//	if (FAILED(pUILayer->Add_GameObject(L"UI_UnderBar", pUIObject)))
+//		return E_FAIL;
 
-	pUIObject = CScene3_Char::Create(m_pGraphicDev, CHAR_DAO);
-	if (pUIObject == nullptr)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"CharSlotChar2", pUIObject)))
-		return E_FAIL;
-	static_cast<CScene3_CharSlot*>(pUICharSlot2)->SetChar(pUIObject);
-
-	CSlotMgr::GetInstance()->AddCharSlot(pUICharSlot2, CHAR_DAO);
-	
-	pUIObject = CUI_UnderBar::Create(m_pGraphicDev);
-	if (nullptr == pUIObject)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"UI_UnderBar", pUIObject)))
-		return E_FAIL;
-
-// Á¾·á ¹öÆ°
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 	pUIObject = CUI_XButton::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;

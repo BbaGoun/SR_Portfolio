@@ -82,7 +82,9 @@ void CInvenSlotCart::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pGraphicDev->SetTexture(0, nullptr);
 
-	m_pBufferCom->Render_Buffer();
+	//m_pBufferCom->Render_Buffer();
+	
+	RenderSubtree(this);
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProj);
