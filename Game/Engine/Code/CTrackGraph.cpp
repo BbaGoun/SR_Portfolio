@@ -833,20 +833,60 @@ bool CTrackGraph::EvaluatePoseWithDodge(const TrackLocator& prev, float u, Track
 	if (!prev.bValid)
 		return false;
 
-	TrackEdge* pTE = Get_TrackEdge(prev.edgeId);
-	float localU = prev.u + u;
+	struct PathSpan
+	{
+		EdgeId id;
+		float u0;
+		float u1;
+	};
 
-	while (localU > pTE->fLength) {
-		localU -= pTE->fLength;
+	vector<PathSpan> pathSpans;
+	TrackEdge* pTE = Get_TrackEdge(prev.edgeId);
+	if (pTE == nullptr)
+		return false;
+
+	float remain = u;
+	float fromU = prev.u;
+	float localU = prev.u;
+
+	while (pTE)
+	{
+		if (remain <= 0.f)
+		{
+			localU = fromU;
+			break;
+		}
+
+		const float toU = fromU + remain;
+		if (toU <= pTE->fLength)
+		{
+			pathSpans.push_back({ pTE->id, fromU, toU });
+			localU = toU;
+			break;
+		}
+
+		pathSpans.push_back({ pTE->id, fromU, pTE->fLength });
+		remain -= (pTE->fLength - fromU);
+		fromU = 0.f;
+		localU = pTE->fLength;
+
 		TrackNode* pTN = Get_TrackNode(pTE->toNode);
+		TrackEdge* pNext = nullptr;
 		float maxBias = -FLT_MAX;
-		for (EdgeId id : pTN->vecOutEdgeIds) {
+		for (EdgeId id : pTN->vecOutEdgeIds)
+		{
 			TrackEdge* pTE_To = Get_TrackEdge(id);
-			if (maxBias < pTE_To->fCostBias) {
+			if (maxBias < pTE_To->fCostBias)
+			{
 				maxBias = pTE_To->fCostBias;
-				pTE = pTE_To;
+				pNext = pTE_To;
 			}
 		}
+
+		if (pNext == nullptr || pNext == pTE)
+			break;
+
+		pTE = pNext;
 	}
 
 	int n = pTE->vecSamples.size();
@@ -877,40 +917,50 @@ bool CTrackGraph::EvaluatePoseWithDodge(const TrackLocator& prev, float u, Track
 			bool bDodge = false;
 
 			for (auto& HR : hazards) {
-				if (pTE->id != HR.edgeId)
-					continue;
-				if (HR.u - localU > 0.f && HR.u - localU < HR.radius) {
-					float clearance = HR.radius + 1.f;
-					float leftCandidate = HR.lateral - clearance;
-					float rightCandidate = HR.lateral + clearance;
-
-					float safeHalfW = halfW - 1.f;
-					leftCandidate = clampT(leftCandidate, -safeHalfW, safeHalfW);
-					rightCandidate = clampT(leftCandidate, -safeHalfW, safeHalfW);
-
-					_vec3 leftPos = a.position + segment * t + R * leftCandidate;
-					_vec3 leftDelta = leftPos - prev.localPos;
-					_vec3 rightPos = a.position + segment * t + R * leftCandidate;
-					_vec3 rightDelta = rightPos - prev.localPos;
-					
-					float leftLength = D3DXVec3LengthSq(&leftDelta);
-					float rightLength = D3DXVec3LengthSq(&rightDelta);
-
-					// 왼쪽으로 피하기
-					if (leftLength < rightLength)
+				bool bOnLookAhead = false;
+				for (const PathSpan& span : pathSpans)
+				{
+					if (HR.edgeId != span.id)
+						continue;
+					if (HR.u >= span.u0 && HR.u <= span.u1)
 					{
-						// 범위가 더 축소
-						if(range.second > leftCandidate)
-							range.second = leftCandidate;
+						bOnLookAhead = true;
+						break;
 					}
-					else if (leftLength >= rightLength)
-					{
-						// 범위가 더 축소
-						if(range.first < rightCandidate)
-							range.first = rightCandidate;
-					}
-					bDodge = true;
 				}
+				if (!bOnLookAhead)
+					continue;
+
+				float clearance = HR.radius + 1.f;
+				float leftCandidate = HR.lateral - clearance;
+				float rightCandidate = HR.lateral + clearance;
+
+				float safeHalfW = halfW - 1.f;
+				leftCandidate = clampT(leftCandidate, -safeHalfW, safeHalfW);
+				rightCandidate = clampT(rightCandidate, -safeHalfW, safeHalfW);
+
+				_vec3 leftPos = a.position + segment * t + R * leftCandidate;
+				_vec3 leftDelta = leftPos - prev.localPos;
+				_vec3 rightPos = a.position + segment * t + R * rightCandidate;
+				_vec3 rightDelta = rightPos - prev.localPos;
+
+				float leftLength = D3DXVec3LengthSq(&leftDelta);
+				float rightLength = D3DXVec3LengthSq(&rightDelta);
+
+				// 왼쪽으로 피하기
+				if (leftLength < rightLength)
+				{
+					// 범위가 더 축소
+					if (range.second > leftCandidate)
+						range.second = leftCandidate;
+				}
+				else
+				{
+					// 범위가 더 축소
+					if (range.first < rightCandidate)
+						range.first = rightCandidate;
+				}
+				bDodge = true;
 			}
 			float dodgeLateral = (range.first + range.second) * 0.5f;
 			_vec3 localPos = a.position + segment * t + R * dodgeLateral;
@@ -930,7 +980,7 @@ bool CTrackGraph::EvaluatePoseWithDodge(const TrackLocator& prev, float u, Track
 			outPose.bValid = true;
 			outPose.halfW = halfW;
 			outPose.speed = speed;
-			outPose.bDodge = true;
+			outPose.bDodge = bDodge;
 			return true;
 		}
 	}

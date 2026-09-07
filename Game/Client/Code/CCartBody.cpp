@@ -398,7 +398,6 @@ void CCartBody::UpdateMissileHit(const _float& fDeltaTime)
 		return;
 	}
 	m_pParent->Set_Force({ 0,0,0 });
-	m_pParent->Set_Rotation({ 0,0,0 });
 	m_fMissileTimer += fDeltaTime;
 
 	_vec3 vPos;

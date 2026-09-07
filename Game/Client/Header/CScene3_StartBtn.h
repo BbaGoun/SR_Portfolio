@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CGameObject.h"
 #include "CRcTex.h"
 #include "CTexture.h"
@@ -25,8 +25,10 @@ private:
 	float	m_fFrame;
 	_vec3	m_vPos;
 	_vec3	m_vScale;
+	MAP_ID	m_eID;
+
 public:
-	static CScene3_StartBtn* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CScene3_StartBtn* Create(LPDIRECT3DDEVICE9 pGraphicDev, MAP_ID eID);
 
 protected:
 	virtual		void		Free() override;

@@ -1,10 +1,13 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CScene1_Speed.h"
 
 #include "CGameObject.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
+#include <SoundMgr.h>
+#include <CManagement.h>
+#include <CMenu_Speed.h>
 
 CScene1_Speed::CScene1_Speed(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -67,6 +70,18 @@ void CScene1_Speed::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CScene1_Speed::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
+
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
+		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
+		{
+			SoundMgr::GetInstance().PlaySound(L"Effect/UI/click.flac", SOUND_EFFECT1, 0.4f);
+			Engine::CScene* pStage = CMenu_Speed::Create(m_pGraphicDev);
+
+			if (nullptr == pStage)
+				return E_FAIL;
+
+			CManagement::GetInstance()->Request_Scene(pStage);
+		}
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

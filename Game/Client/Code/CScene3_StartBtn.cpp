@@ -69,9 +69,14 @@ _int CScene3_StartBtn::Update_GameObject(const _float& fDeltaTime)
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
-		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
+		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
-			Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_SPEED);
+			Engine::CScene* pStage = nullptr;
+			if (m_eID == MAP_SPEED)
+				pStage = CRacingScene::Create(m_pGraphicDev, MAP_SPEED);
+			else if (m_eID == MAP_ITEM)
+				pStage = CRacingScene::Create(m_pGraphicDev, MAP_ITEM);
+
 
 			if (nullptr == pStage)
 				return E_FAIL;
@@ -95,9 +100,10 @@ void CScene3_StartBtn::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 }
 
-CScene3_StartBtn* CScene3_StartBtn::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CScene3_StartBtn* CScene3_StartBtn::Create(LPDIRECT3DDEVICE9 pGraphicDev, MAP_ID eID)
 {
 	CScene3_StartBtn* pObj = new CScene3_StartBtn(pGraphicDev);
+	pObj->m_eID = eID;
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{

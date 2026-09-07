@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CScene1_Item.h"
 
 #include "CScene.h"
@@ -74,7 +74,7 @@ _int CScene1_Item::Update_GameObject(const _float& fDeltaTime)
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
-		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
+		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
 			SoundMgr::GetInstance().PlaySound(L"Effect/UI/click.flac", SOUND_EFFECT1, 0.4f);
 			Engine::CScene* pStage = CMenu_Item::Create(m_pGraphicDev);

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CGameObject.h"
 #include "CRcTex.h"
 #include "CTexture.h"

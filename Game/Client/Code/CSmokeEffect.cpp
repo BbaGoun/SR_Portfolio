@@ -31,7 +31,7 @@ HRESULT CSmokeEffect::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
-	m_pSmoke = CSmoke::Create(m_pGraphicDev, m_fSize, m_iParticleCnt);
+	m_pSmoke = CSmoke::Create(m_pGraphicDev, m_fSize, m_iParticleCnt, m_fMinAge, m_fMaxAge);
 
 	return S_OK;
 }
@@ -81,11 +81,13 @@ void CSmokeEffect::Render_GameObject()
 	m_pSmoke->Render_Particle();
 }
 
-CSmokeEffect* CSmokeEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize, int iParticleCnt)
+CSmokeEffect* CSmokeEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize, int iParticleCnt, float fMinAge, float fMaxAge)
 {
 	CSmokeEffect* pObj = new CSmokeEffect(pGraphicDev);
 	pObj->m_fSize = fSize;
 	pObj->m_iParticleCnt = iParticleCnt;
+	pObj->m_fMinAge = fMinAge;
+	pObj->m_fMaxAge = fMaxAge;
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{

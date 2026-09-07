@@ -214,6 +214,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CButtonMgr.h" />
     <ClInclude Include="..\Header\CCart.h" />
     <ClInclude Include="..\Header\CCartBody.h" />
+    <ClInclude Include="..\Header\CMenu_Set_Speed.h" />
+    <ClInclude Include="..\Header\CMenu_Speed.h" />
     <ClInclude Include="..\Header\CNexonVideo.h" />
     <ClInclude Include="..\Header\CSlotMgr.h" />
     <ClInclude Include="..\Header\CCartBot.h" />
@@ -342,6 +344,8 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CBoostAura.cpp" />
     <ClCompile Include="..\Code\CBubbleEscape.cpp" />
     <ClCompile Include="..\Code\CButtonMgr.cpp" />
+    <ClCompile Include="..\Code\CMenu_Set_Speed.cpp" />
+    <ClCompile Include="..\Code\CMenu_Speed.cpp" />
     <ClCompile Include="..\Code\CNexonVideo.cpp" />
     <ClCompile Include="..\Code\CSlotMgr.cpp" />
     <ClCompile Include="..\Code\CDriftTrail.cpp" />

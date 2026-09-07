@@ -16,13 +16,14 @@ public:
 	void SetBackDir(const _vec3& vBackDir) { m_vBackDir = vBackDir; }
 
 public:
-	static CSmoke* Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize = 1.f, int iParticleCnt = 30);
+	static CSmoke* Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize = 1.f, int iParticleCnt = 30, float fMinAge = 0.8f, float fMaxAge = 1.5f);
 
 	virtual			void		OnLostDevice();
 	virtual			void		OnResetDevice();
 private:
 	_vec3 m_vBackDir;   // 카트 뒤 방향
 	int m_iParticleCnt;
+	float m_fMinAge, m_fMaxAge;
 
 public:
 	virtual void Free() override;

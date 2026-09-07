@@ -1327,7 +1327,7 @@ void CCart::CreateMissileObject(CGameObject* pTarget)
 
 	pMissile->Set_Child(pMissileBody);
 
-	CSmokeEffect* pSmokeEffect = CSmokeEffect::Create(m_pGraphicDev, 3.f, 150);
+	CSmokeEffect* pSmokeEffect = CSmokeEffect::Create(m_pGraphicDev, 4.f, 30, 0.1f, 0.2f);
 	if (pSmokeEffect == nullptr)
 		return;
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_SmokeEffect", pSmokeEffect)))
@@ -1509,8 +1509,8 @@ void CCart::CreateBarricadeObject()
 	if (!pApex)
 		return;
 
-	TrackPose TP_front = CTrackMgr::GetInstance()->Compute_TargetPose(pApex, 70, false);
-	TrackPose TP_back = CTrackMgr::GetInstance()->Compute_TargetPose(pApex, 100, false);
+	TrackPose TP_front = CTrackMgr::GetInstance()->Compute_TargetPose(pApex, 100, false);
+	TrackPose TP_back = CTrackMgr::GetInstance()->Compute_TargetPose(pApex, 130, false);
 	if (TP_front.bValid && TP_back.bValid) {
 		CBarricade* pBar = CBarricade::Create(m_pGraphicDev);
 		if (pBar == nullptr)

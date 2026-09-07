@@ -48,7 +48,7 @@ void CSmoke::ResetParticle(Attribute* attribute)
 	attribute->color = D3DXCOLOR(0.8f, 0.8f, 0.8f, 0.6f);
 
 	attribute->fAge = 0.0f;
-	attribute->fLifeTime = GetRandomFloat(0.8f, 1.5f);
+	attribute->fLifeTime = GetRandomFloat(m_fMinAge, m_fMaxAge);
 }
 
 void CSmoke::Update_PSystme(float timeDelta)
@@ -74,11 +74,13 @@ void CSmoke::Update_PSystme(float timeDelta)
 }
 
 
-CSmoke* CSmoke::Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize, int iParticleCnt)
+CSmoke* CSmoke::Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize, int iParticleCnt, float fMinAge, float fMaxAge)
 {
 	CSmoke* pParticle = new CSmoke(pGraphicDev);
 	pParticle->m_fSize = fSize;
 	pParticle->m_iParticleCnt = iParticleCnt;
+	pParticle->m_fMinAge = fMinAge;
+	pParticle->m_fMaxAge = fMaxAge;
 
 	if (FAILED(pParticle->Ready_PSystem()))
 	{
