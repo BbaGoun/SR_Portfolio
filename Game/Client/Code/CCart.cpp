@@ -251,6 +251,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	}
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_LMENU)) {
 		if (m_eFirstSlot != ITEM_END && m_eSecondSlot != ITEM_END) {
+			SoundMgr::GetInstance().PlaySound(L"Effect/slot_changer.flac", SOUND_SLOT_CHNAGE, 0.5f, true);
 			swap(m_eFirstSlot, m_eSecondSlot);
 			m_bSlotChange = true;
 		}
