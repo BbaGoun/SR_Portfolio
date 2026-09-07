@@ -32,9 +32,11 @@ private:
 	bool			m_bTwin = true;
 	float			m_fSize;
 	float			m_iParticleCnt;
+	float			m_fMinAge;
+	float			m_fMaxAge;
 
 public:
-	static CSmokeEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize = 1.f, int iParticleCnt = 30);
+	static CSmokeEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize = 1.f, int iParticleCnt = 30, float fMinAge = 0.8f, float fMaxAge = 1.5f);
 
 protected:
 	virtual		void		Free() override;

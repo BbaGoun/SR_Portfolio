@@ -1,5 +1,5 @@
 ﻿#include "pch.h"
-#include "CMenu_Item.h"
+#include "CMenu_Speed.h"
 #include "CLoadingThread.h"
 #include "CBackGround.h"
 #include "CProtoMgr.h"
@@ -14,16 +14,16 @@
 #include "CUI_XButton.h"
 
 
-CMenu_Item::CMenu_Item(LPDIRECT3DDEVICE9 pGraphicDev)
+CMenu_Speed::CMenu_Speed(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
 {
 }
 
-CMenu_Item::~CMenu_Item()
+CMenu_Speed::~CMenu_Speed()
 {
 }
 
-HRESULT CMenu_Item::Ready_Scene()
+HRESULT CMenu_Speed::Ready_Scene()
 {
 	if (FAILED(Ready_Prototype()))
 		return E_FAIL;
@@ -41,7 +41,7 @@ HRESULT CMenu_Item::Ready_Scene()
 
 
 
-_int CMenu_Item::Update_Scene(const _float& fDeltaTime)
+_int CMenu_Speed::Update_Scene(const _float& fDeltaTime)
 {
 
 	_int iExit = CScene::Update_Scene(fDeltaTime);
@@ -54,12 +54,12 @@ _int CMenu_Item::Update_Scene(const _float& fDeltaTime)
 
 
 
-void CMenu_Item::LateUpdate_Scene(const _float& fDeltaTime)
+void CMenu_Speed::LateUpdate_Scene(const _float& fDeltaTime)
 {
 	CScene::LateUpdate_Scene(fDeltaTime);
 }
 
-void CMenu_Item::Render_Scene()
+void CMenu_Speed::Render_Scene()
 {
 	_matrix matView, matProj;
 	_vec3 vEye, vAt, vUp;
@@ -79,7 +79,7 @@ void CMenu_Item::Render_Scene()
 	//CScene::Render_Scene();
 }
 
-HRESULT CMenu_Item::Ready_Environment_Layer(const _tchar* pLayerTag)
+HRESULT CMenu_Speed::Ready_Environment_Layer(const _tchar* pLayerTag)
 {
 	CLayer* pLayer = CLayer::Create();
 
@@ -90,7 +90,7 @@ HRESULT CMenu_Item::Ready_Environment_Layer(const _tchar* pLayerTag)
 
 	// BackGround
 	pGameObject = CBackGround::Create(m_pGraphicDev);
-	dynamic_cast<CBackGround*>(pGameObject)->Change_BackgroundTexture(BACKGROUND_ITEMMENU);
+	dynamic_cast<CBackGround*>(pGameObject)->Change_BackgroundTexture(BACKGROUND_SPEEDMENU);
 
 	if (nullptr == pGameObject)
 		return E_FAIL;
@@ -106,22 +106,22 @@ HRESULT CMenu_Item::Ready_Environment_Layer(const _tchar* pLayerTag)
 	return S_OK;
 }
 
-HRESULT CMenu_Item::Ready_Prototype()
+HRESULT CMenu_Speed::Ready_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CMenu_Item::Ready_UI_Layer()
+HRESULT CMenu_Speed::Ready_UI_Layer()
 {
 	CLayer* pUILayer = CLayer::Create();
 	if (pUILayer == nullptr)
 		return E_FAIL;
 	m_mapLayer.insert({ L"UI", pUILayer });
-	
+
 	CGameObject* pUIObject = nullptr;
 
 
-	pUIObject = CScene2_ForestValley::Create(m_pGraphicDev, BACKGROUND_SETITEMMENU);
+	pUIObject = CScene2_ForestValley::Create(m_pGraphicDev, BACKGROUND_SETSPEEDMENU);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"CScene2_ForestValley", pUIObject)))
@@ -146,9 +146,9 @@ HRESULT CMenu_Item::Ready_UI_Layer()
 
 }
 
-CMenu_Item* CMenu_Item::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMenu_Speed* CMenu_Speed::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CMenu_Item* pMenu = new CMenu_Item(pGraphicDev);
+	CMenu_Speed* pMenu = new CMenu_Speed(pGraphicDev);
 
 	if (FAILED(pMenu->Ready_Scene()))
 	{
@@ -160,7 +160,7 @@ CMenu_Item* CMenu_Item::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pMenu;
 }
 
-void CMenu_Item::Free()
+void CMenu_Speed::Free()
 {
 
 	CScene::Free();

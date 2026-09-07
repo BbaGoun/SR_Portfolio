@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CScene2_ForestValley.h"
 
 #include "CScene.h"
@@ -10,6 +10,7 @@
 #include "CRenderer.h"
 #include "CDInputMgr.h"
 #include "CManagement.h"
+#include "CMenu_Set_Speed.h"
 
 CScene2_ForestValley::CScene2_ForestValley(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -69,9 +70,13 @@ _int CScene2_ForestValley::Update_GameObject(const _float& fDeltaTime)
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
-		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
+		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
-			Engine::CScene* pStage = CMenu_Set::Create(m_pGraphicDev);
+			Engine::CScene* pStage = nullptr;
+			if(m_eID == BACKGROUND_SETITEMMENU)
+				pStage = CMenu_Set::Create(m_pGraphicDev);
+			else if(m_eID == BACKGROUND_SETSPEEDMENU)
+				pStage = CMenu_Set_Speed::Create(m_pGraphicDev);
 
 			if (nullptr == pStage)
 				return E_FAIL;
@@ -96,9 +101,10 @@ void CScene2_ForestValley::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 }
 
-CScene2_ForestValley* CScene2_ForestValley::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CScene2_ForestValley* CScene2_ForestValley::Create(LPDIRECT3DDEVICE9 pGraphicDev, BACKGROUND eID)
 {
 	CScene2_ForestValley* pObj = new CScene2_ForestValley(pGraphicDev);
+	pObj->m_eID = eID;
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{

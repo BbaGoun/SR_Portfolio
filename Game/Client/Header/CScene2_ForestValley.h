@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CGameObject.h"
 #include "CRcTex.h"
 #include "CTexture.h"
@@ -25,8 +25,10 @@ private:
 	float	m_fFrame;
 	_vec3	m_vPos;
 	_vec3	m_vScale;
+	BACKGROUND m_eID;
+
 public:
-	static CScene2_ForestValley* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CScene2_ForestValley* Create(LPDIRECT3DDEVICE9 pGraphicDev, BACKGROUND eID);
 
 protected:
 	virtual		void		Free() override;

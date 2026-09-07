@@ -142,7 +142,7 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
 	if (TP.bValid && m_bActive) {
-		if(TP.bDodge)
+		if(!TP.bDodge)
 			TP.position += m_fLateralOffset * TP.R * TP.halfW;
 		TP.position.y += 0.5f; // 카트가 박히지 않도록
 
@@ -1027,8 +1027,8 @@ void CCartBot::CreateBarricadeObject()
 	if (!pApex)
 		return;
 
-	TrackPose TP_front = CTrackMgr::GetInstance()->Compute_TargetPose(pApex, 60, false);
-	TrackPose TP_back = CTrackMgr::GetInstance()->Compute_TargetPose(pApex, 90, false);
+	TrackPose TP_front = CTrackMgr::GetInstance()->Compute_TargetPose(pApex, 100, false);
+	TrackPose TP_back = CTrackMgr::GetInstance()->Compute_TargetPose(pApex, 130, false);
 	if (TP_front.bValid && TP_back.bValid) {
 		CBarricade* pBar = CBarricade::Create(m_pGraphicDev);
 		if (pBar == nullptr)

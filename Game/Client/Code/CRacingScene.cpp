@@ -79,7 +79,7 @@ HRESULT CRacingScene::PostReady_Scene()
 
 	CTrackMgr::GetInstance()->Set_MaxLap(2);
 	Ready_TrackMgr();
-	int a;
+	
 	Ready_RenderTarget();
 	Ready_GameLogic_Layer();
 	Ready_Environment_Layer();

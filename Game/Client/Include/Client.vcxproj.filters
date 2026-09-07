@@ -406,6 +406,12 @@
     <Filter Include="02. GameObject\Item\Barricade">
       <UniqueIdentifier>{df77ce2b-5810-4e65-bb30-2ec868ee7f37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\Menu\Menu_Speed">
+      <UniqueIdentifier>{17c7858c-a803-47ae-a6c6-52c69cc47475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Menu\Menu_Set_Speed">
+      <UniqueIdentifier>{778a1392-0be0-4834-b4f3-1cc0ef990511}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -798,6 +804,12 @@
     <ClInclude Include="..\Header\CBarricade.h">
       <Filter>02. GameObject\Item\Barricade</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMenu_Speed.h">
+      <Filter>01. Scene\Menu\Menu_Speed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMenu_Set_Speed.h">
+      <Filter>01. Scene\Menu\Menu_Set_Speed</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1180,6 +1192,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CBarricade.cpp">
       <Filter>02. GameObject\Item\Barricade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMenu_Speed.cpp">
+      <Filter>01. Scene\Menu\Menu_Speed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMenu_Set_Speed.cpp">
+      <Filter>01. Scene\Menu\Menu_Set_Speed</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
