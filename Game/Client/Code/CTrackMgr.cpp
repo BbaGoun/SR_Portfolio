@@ -103,6 +103,7 @@ void CTrackMgr::Update_Locator()
 		{
 			if (!m_bAlreadyGoal) {
 				CPlayTimeMgr::GetInstance()->SetCountDownStart();
+				m_pWinner = p.first;
 				m_bAlreadyGoal = true;
 			}
 			p.first->SetActive(false);
@@ -126,6 +127,7 @@ void CTrackMgr::Update_Locator()
 		{
 			if (!m_bAlreadyGoal) {
 				CPlayTimeMgr::GetInstance()->SetCountDownStart();
+				m_pWinner = p.first;
 				m_bAlreadyGoal = true;
 			}
 			p.first->SetActive(false);

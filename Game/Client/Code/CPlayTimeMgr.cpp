@@ -59,7 +59,6 @@ void CPlayTimeMgr::StartCountDown(const _float& fDeltaTime)
 
 	if (m_fStartTimer > 4.f)
 		return;
-
 	if (m_fTimerFlag < 3.f && m_fStartTimer > 3.f)
 	{
 		//cout << m_fStartTimer << endl;
@@ -97,10 +96,25 @@ void CPlayTimeMgr::EndCoundDown(const _float& fDeltaTime)
 		m_bPlaying = false;
 		//SoundMgr::GetInstance().StopSound(SOUND_BOOST);
 		//SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
-		SoundMgr::GetInstance().PlaySound(L"Effect/lab/race_over.flac", SOUND_ENDCOUND, 0.4f);
 		CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FINISH);
 		CUI_PauseMenu* pMenuBtn = static_cast<CUI_PauseMenu*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_MenuPause"));
 		pMenuBtn->Set_Show(true);
+		
+		CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+		if (pCart->GetActive() == false)
+		{
+			SoundMgr::GetInstance().StopAll();
+			SoundMgr::GetInstance().PlaySound(L"Effect/lab/RaceWin.wav", SOUND_ENDCOUND, 1.f);
+			if (pCart == CTrackMgr::GetInstance()->GetWinner())
+			{
+
+			}
+		}
+		else
+		{
+			SoundMgr::GetInstance().StopAll();
+			SoundMgr::GetInstance().PlaySound(L"Effect/lab/Retire.wav", SOUND_ENDCOUND, 1.f);
+		}
 
 		//CDInputMgr::GetInstance()->End_Record();
 	}

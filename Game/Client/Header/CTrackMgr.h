@@ -29,6 +29,8 @@ public:
     int     Get_Rank(CGameObject* pObj);
     CGameObject* Get_Forward(CGameObject* pObj);
 
+    CGameObject* GetWinner() { return m_pWinner; }
+
 private:
     void Update_RankingUI();
     void Update_LapUI();
@@ -42,6 +44,8 @@ private:
 
     int m_iMaxLap;
     bool m_bAlreadyGoal = false;
+
+    CGameObject* m_pWinner = nullptr;
 
 private:
     // CBase을(를) 통해 상속됨

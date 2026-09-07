@@ -30,7 +30,7 @@ HRESULT CUI_PauseMenu::Ready_GameObject()
 
 	
 	m_pTransformCom->Set_Scale({650,390,0});
-	m_pTransformCom->Set_Pos({ 0,0,6 });
+	m_pTransformCom->Set_Pos({ 0,-80,6 });
 
 	Engine::CComponent* pComponent = nullptr;
 	pComponent = m_pVIBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));

@@ -34,7 +34,7 @@ HRESULT CPause_MenuBtn::Ready_GameObject()
 	Engine::CComponent* pComponent = nullptr;
 
 
-	m_vPos = { 120,20,5 };
+	m_vPos = { 120,-60,5 };
 	m_vScale = { 100, 100, 0 };
 	m_pTransformCom->Set_Pos(m_vPos);
 	m_pTransformCom->Set_Scale(m_vScale);
@@ -50,7 +50,6 @@ HRESULT CPause_MenuBtn::Ready_GameObject()
 		return E_FAIL;
 
 	m_fFrame = 0;
-	//Set_Show(false);
 	return S_OK;
 
 

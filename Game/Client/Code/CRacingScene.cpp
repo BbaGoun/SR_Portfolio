@@ -409,16 +409,14 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SpeedLine", pGameObject);
 	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
-
 // Particle
 	// SmokeParticle
 	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
-	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
-
+	int a;
 	// 충돌시 나오는 별 이펙트
 	pGameObject = CCollisionStarEffect::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
@@ -440,7 +438,6 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"ItemGainEffect", pGameObject);
-
 
 //Camera
 	//// # 플레이어 따라다니는 3인칭 카메라
