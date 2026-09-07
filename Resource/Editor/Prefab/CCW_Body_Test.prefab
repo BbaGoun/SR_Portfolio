@@ -1,0 +1,16 @@
+﻿OBJECT
+  type=
+  prefabPath=..\..\..\Resource\Editor\Prefab\CCW_Body_Test.prefab
+  belong=1
+  name=Body1
+  tag=6
+  collisionLayer=0
+  cullDistance=0
+  COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+  COMP kind=Texture proto=Proto_DarkBlue mapTag=Proto_DarkBlue
+  COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+    pos=0.000000 0.000000 0.000000
+    rot=0.000000 -0.000000 0.000000
+    quat=0.000000 0.000000 0.000000 1.000000
+    scale=0.999990 0.249998 1.999979
+ENDOBJECT
