@@ -72,7 +72,7 @@ void CRainbow_Cloud::Render_GameObject()
 
 	m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
-	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
+	//m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

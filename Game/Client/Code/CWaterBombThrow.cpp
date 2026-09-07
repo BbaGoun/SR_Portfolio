@@ -5,6 +5,11 @@
 #include "CTexture.h"
 #include "CRenderer.h"
 #include "CManagement.h"
+#include "CCameraMgr.h"
+#include "CTrackMgr.h"
+#include "CWaterBomb.h"
+#include "CWaterBombBody.h"
+#include "SoundMgr.h"
 
 CWaterBombThrow::CWaterBombThrow(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -25,61 +30,65 @@ HRESULT CWaterBombThrow::Ready_GameObject()
 	m_fTimer = 0.f;
 
 	m_fThrowHeight = 0.f;
-	 
-	m_pTransformCom->Set_Pos({ 0.f,5.f,0.f });
 
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Scale({ 1.7f , 1.7f, 0.f });
+	m_pTransformCom->Set_Scale({ 2.f , 3.f, 1.f });
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	if (nullptr == pComponent)
 		return E_FAIL;
-
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
-
-	//pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RainBow_Alpha"));
-	//pComponent->Set_Owner(this);
-	//m_mapComponent.insert({ L"Com_Texture", pComponent });
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_ThrowWaterBomb"));
+	if (nullptr == pComponent)
+		return E_FAIL;
+	pComponent->Set_Owner(this);
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	return S_OK;
 }
 
 void CWaterBombThrow::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
-
-	_vec3 vPos, vUp, vCartPos, vCartUp, vCartLook;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_UP, &vUp);
-
-	pCartBody->Get_Transform()->Get_Info(INFO_UP, &vCartUp);
-	pCartBody->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
-
-	vCartPos += vCartUp * 4.f;
-
-	m_pTransformCom->Set_Pos(vCartPos + vCartUp * m_fThrowHeight);
-
-	m_fTimer += fFixedDeltaTime;
-
-	if (m_fTimer > 0.1f)
+	if (m_fThrowHeight > 50.f)
 	{
-		m_fThrowHeight += 2.6f;
-	}
+		TrackPose TP = CTrackMgr::GetInstance()->Compute_TargetPose(m_pParent, 150, false);
 
-	if (m_fTimer > 3.5f)
-	{
+		if (TP.bValid) {
+			CWaterBomb* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);
+			if (pWaterBomb == nullptr)
+				return;
+			if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBomb", pWaterBomb)))
+				return;
+
+			CWaterBombBody* pWaterBombBody = CWaterBombBody::Create(m_pGraphicDev);
+			if (pWaterBomb == nullptr)
+				return;
+			if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterBombBody", pWaterBombBody)))
+				return;
+
+			SoundMgr::GetInstance().PlaySound(L"Effect/Item_waterBomb/set.ogg", SOUND_WATERBOMB, 0.4f);
+
+			pWaterBomb->Set_Child(pWaterBombBody);
+			pWaterBomb->Get_Transform()->Set_Pos(TP.position);
+
+			_matrix	matRot;
+			D3DXMatrixIdentity(&matRot);
+			memcpy(&matRot.m[0], &TP.R, sizeof(_vec3));
+			memcpy(&matRot.m[1], &TP.U, sizeof(_vec3));
+			memcpy(&matRot.m[2], &TP.T, sizeof(_vec3));
+
+			_quaternion q;
+			D3DXQuaternionRotationMatrix(&q, &matRot);
+			pWaterBomb->Get_Transform()->Set_Quaternion(&q);
+		}
 		m_pLayer->Delete_GameObject(this);
+		return;
 	}
+	m_fThrowHeight += fFixedDeltaTime * 50.f;
 
-	pCartBody->Get_Transform()->Get_Info(INFO_LOOK, &vCartLook);
-
-
-	_quaternion q;
-	m_pTransformCom->GetFollowQuaternion(&vCartLook, &q);
-
-	m_pTransformCom->Set_Quaternion(&q);
+	m_pTransformCom->Set_Pos({ 1.f, m_fThrowHeight, 0 });
 }
 
 _int CWaterBombThrow::Update_GameObject(const _float& fDeltaTime)
@@ -96,11 +105,14 @@ void CWaterBombThrow::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CWaterBombThrow::Render_GameObject()
 {
+	_matrix	matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pTransformCom->Set_Billboard(&matView);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-
-	// m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
 	//m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 
@@ -113,12 +125,6 @@ void CWaterBombThrow::CollisionEnter(CCollider* pOtherCollider)
 
 void CWaterBombThrow::TriggerEnter(CCollider* pOtherCollider)
 {
-	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-
-	if (wcscmp(wOtherTag, L"Obj_Cart") == 0)
-	{
-
-	}
 }
 
 CWaterBombThrow* CWaterBombThrow::Create(LPDIRECT3DDEVICE9 pGraphicDev)

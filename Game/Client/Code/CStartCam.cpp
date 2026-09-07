@@ -73,7 +73,7 @@ void CStartCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		
 		// 카메라 아래 움직임
 		if (vMyPos.y >= vPlayerPos.y + 5.f)
-			m_vForce.y = -2.5f;
+			m_vForce.y = -3.f;
 		else
 			m_vForce.y = 0.f;
 
@@ -85,7 +85,8 @@ void CStartCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_vForce.x += vMyRight.x * fFixedDeltaTime * 8.f;
 		else if (m_fLRMoveTime <= 6.f)
 		{
-			m_vForce.x = 0.f;
+			m_vForce.x = vMyRight.x * fFixedDeltaTime * 25.f;
+
 			// 캐릭터 클로즈업 구간
 			_vec3 vDeltaPos = vPlayerPos - vMyPos;
 			float fDeltaPos = D3DXVec3Length(&vDeltaPos);
@@ -105,6 +106,7 @@ void CStartCam::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_pTransformCom->Move_Pos(&m_vForce, 1.f, fFixedDeltaTime);
 		m_pTransformCom->Get_Info(INFO_POS, &m_vEye);
 		m_vAt = vPlayerPos;
+		m_vAt.y += 2.f;
 		m_vUp = vPlayerUp;
 	}
 }

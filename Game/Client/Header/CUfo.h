@@ -5,6 +5,8 @@
 namespace Engine
 {
 	class CCube_Collider;
+	class CTexture;
+	class CRcTex;
 }
 class CMissileTarget;
 

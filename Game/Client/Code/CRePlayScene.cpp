@@ -550,7 +550,7 @@ HRESULT CRePlayScene::Ready_UI_Layer()
 
 HRESULT CRePlayScene::Ready_Collision_Matrix()
 {
-	Set_CollisionMatrix(CL_DEFAULT, CL_LAYER1, false);
+	//Set_CollisionMatrix(CL_DEFAULT, CL_LAYER1, false);
 
 	return S_OK;
 }

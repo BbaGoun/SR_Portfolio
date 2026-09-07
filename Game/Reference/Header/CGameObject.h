@@ -27,7 +27,7 @@ public:
 	CComponent* Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	const map<const _tchar*, CComponent*>& Get_ComponentMap() { return m_mapComponent; }
 
- 	CTransform* Get_Transform() { return m_pTransformCom; }
+  	CTransform* Get_Transform() { return m_pTransformCom; }
 	CComponent* Add_Component(const WCHAR* pProtoTag, const WCHAR* pComponentTag);
 	void	Remove_Component(CComponent* _pCom);
 
@@ -45,7 +45,8 @@ public:
 
 public:
 	virtual			HRESULT		Ready_GameObject();
-	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) {};
+	virtual			void		PostReady_GameObject() {};
+	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime);
 	virtual			_int		Update_GameObject(const _float& fDeltaTime);
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime);
 	virtual			void		Render_GameObject();

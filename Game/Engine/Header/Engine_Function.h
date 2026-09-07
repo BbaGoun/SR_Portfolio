@@ -222,8 +222,8 @@ namespace Engine
 		switch (cl) {
 		case CL_DEFAULT: return "Default";
 		case IGNORE_RAYCAST: return "Ignore Raycast";
-		case CL_LAYER1: return "Layer1"; case CL_CART_WHEEL: return "Layer2";
-		case CL_LAYER3: return "Layer3"; case CL_LAYER4: return "Layer4";
+		case CL_ITEM_BOX: return "ITEM_BOX"; case CL_CART_WHEEL: return "CART_WHEEL";
+		case CL_CART_BODY: return "CART_BODY"; case CL_ITEM: return "ITEM";
 		case CL_LAYER5: return "Layer5"; case CL_LAYER6: return "Layer6";
 		case CL_LAYER7: return "Layer7"; case CL_LAYER8: return "Layer8";
 		case CL_LAYER9: return "Layer9"; case CL_LAYER10: return "Layer10";
@@ -318,26 +318,6 @@ namespace Engine
 		rotation[2] = D3DXToDegree(atan2f(mat->m[0][1], mat->m[0][0]));
 
 		memcpy(translation, &mat->m[3], sizeof(_vec3));
-	}
-
-	inline _vec2 GetTexCoord(_vec2 texUV, _vec4 rect) {
-		// rect의 x, y, z, w는 각각 left, right, top, bottom
-
-		int quoU = std::truncf(texUV.x / 1.f);
-		int quoV = std::truncf(texUV.y / 1.f);
-
-		// 0~1 범위로 맞추기 위함
-		float U = std::fmodf(texUV.x, 1.f);
-		float V = std::fmodf(texUV.y, 1.f);
-
-		// uv 값이 음수였을 경우 0~1 사이 범위가 되도록 조정
-		if (U < 0) U += 1;
-		if (V < 0) V += 1;
-
-		return _vec2{
-			quoU + rect.x * (1.f - U) + rect.y * U,
-			quoV + rect.z * (1.f - V) + rect.w * V
-		};
 	}
 }
 

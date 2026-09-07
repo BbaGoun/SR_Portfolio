@@ -11,6 +11,7 @@ private:
 	virtual ~CSphere_Collider();
 
 public:
+	virtual void FixedUpdate_Component(const _float& fFixedDeltaTime) override;
 	virtual _int Update_Component(const _float& fTimeDelta);
 	virtual void LateUpdate_Component(const _float& fTimeDelta) override;
 	virtual void Render_Component(D3DXCOLOR color) override;
@@ -22,16 +23,12 @@ public:
 	DirectX::BoundingSphere& Get_Info()		{ return m_tBoundingSphere; }
 
 	void		Set_Center(_vec3 vPos)		{ m_tBoundingSphere.Center = ToXMFLOAT3(vPos); }
-	void		Set_Radius(float fRadius)	{ 
-		m_fRadius = max(0.01f, fRadius);
-		m_tBoundingSphere.Radius = m_fRadius;
-	}
+	void		Set_Radius(float fRadius)	{ m_tBoundingSphere.Radius = max(0.01f, fRadius); }
 
 	virtual		CComponent* Clone();
 
 private:
 	DirectX::BoundingSphere	m_tBoundingSphere;
-	float m_fRadius = 1.f;
 
 private:
 	virtual		void		Free();

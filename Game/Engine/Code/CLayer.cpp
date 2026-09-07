@@ -273,15 +273,26 @@ HRESULT CLayer::Ready_Layer()
 	return S_OK;
 }
 
+HRESULT CLayer::PostReady_Layer()
+{
+	for (auto& p : m_mapObject)
+	{
+		for (auto& pObj : p.second) {
+			pObj->PostReady_GameObject();
+		}
+	}
+	return S_OK;
+}
+
 void CLayer::FixedUpdate_Layer(const _float& fFixedDeltaTime)
 {
 	for (auto& p : m_mapObject)
 	{
 		for (auto& pObj : p.second) {
 			pObj->FixedUpdate_GameObject(fFixedDeltaTime);
+			pObj->CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
 		}
 	}	
-	int a;
 	PostProcess_Delete();
 }
 
@@ -293,11 +304,6 @@ _int CLayer::Update_Layer(const _float& fDeltaTime)
 	{
 		for (auto& pObj : p.second) {
 			iResult = pObj->Update_GameObject(fDeltaTime);
-
-			if (iResult & 0x80000000) {
-				PostProcess_Delete();
-				return iResult;
-			}
 		}
 	}
 

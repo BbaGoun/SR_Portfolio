@@ -6,6 +6,12 @@
 #include "CMissileTex.h"
 #include "CCollisionMgr.h"
 #include "CCube_Collider.h"
+#include <CCartBody.h>
+#include <CCart.h>
+#include <CShield1.h>
+#include <CShield2.h>
+#include <CCartBot.h>
+#include <SoundMgr.h>
 
 CMissile::CMissile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -88,7 +94,12 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		_vec3 vMoveDir = vBoxOrbit - vMissilePos;
 		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
+
+		_vec3 vForwardDir = vDir;
+		D3DXVec3Normalize(&vForwardDir, &vForwardDir);
+
 		vMoveDir += vDir * 0.01f;
+
 
 		_vec3 vLookDir = vBoxPos - vMissilePos;
 		vLookDir.y = 0;
@@ -107,6 +118,8 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			m_pTransformCom->GetFollowRotation(&vLookDir, &matRot2);		
 
 		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed ,fFixedDeltaTime);
+		m_pTransformCom->Move_Pos(&vAxis, 400.f, fFixedDeltaTime);
+
 	}
 	else if(fDistance > 1.f)
 	{
@@ -133,6 +146,50 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	}
 	else
 	{
+		CCartBody* pCartBody = nullptr;
+		for (auto& pChild : m_pTarget->Get_Children())
+		{
+			if (pCartBody = dynamic_cast<CCartBody*>(pChild))
+			{
+				break;
+			}
+		}
+		if (CCart* pCart = dynamic_cast<CCart*>(m_pTarget))
+		{
+			CShield1* pShield = static_cast<CShield1*>(pCart->GetShield1());
+			CShield2* pShield2 = static_cast<CShield2*>(pCart->GetShield1());
+			if (pShield->GetShow() || pShield2->GetShow())
+			{
+				pShield->SetShow(false);
+				pShield2->SetShow(true);
+			}
+			else
+			{
+				SoundMgr::GetInstance().PlaySound(L"Effect/Item_rocket/exploding.ogg", SOUND_MISSILE, 0.4f);
+				static_cast<CCartBody*>(pCartBody)->SetMissileHit(true);
+				pCartBody->Set_Force({ 0,20,0 });
+				pCart->Set_Force({ 0,0,0 });
+				pCart->SetMissileHit(true);
+			}
+		}
+		else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pTarget))
+		{
+			CShield1* pShield = static_cast<CShield1*>(pCartBot->GetShield1());
+			CShield2* pShield2 = static_cast<CShield2*>(pCartBot->GetShield1());
+			if (pShield->GetShow() || pShield2->GetShow())
+			{
+				pShield->SetShow(false);
+				pShield2->SetShow(true);
+			}
+			else
+			{
+				SoundMgr::GetInstance().PlaySound(L"Effect/Item_rocket/exploding.ogg", SOUND_MISSILE, 0.4f);
+				static_cast<CCartBody*>(pCartBody)->SetMissileHit(true);
+				pCartBody->Set_Force({ 0,20,0 });
+				pCartBot->Set_Force({ 0,0,0 });
+				pCartBot->SetMissileHit(true);
+			}
+		}
 		vector<CGameObject*> vecChildren = Get_Children();
 		for (auto& pChild : vecChildren)
 		{

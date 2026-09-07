@@ -4,6 +4,7 @@
 #include "CRankMgr.h"
 #include "CUI_Laps.h"
 #include "CPlayTimeMgr.h"
+#include "CManagement.h"
 
 IMPLEMENT_SINGLETON(CTrackMgr)
 
@@ -20,6 +21,8 @@ CTrackMgr::~CTrackMgr()
 void CTrackMgr::Register_Track(CGameObject* pGraphObj)
 {
 	m_pTGraph = pGraphObj->Get_Component<CTrackGraph>();
+	if (m_pTGraph)
+		m_pTGraph->AddRef();
 }
 
 void CTrackMgr::Register_Player(CCart* pPlayer)
@@ -38,6 +41,47 @@ void CTrackMgr::Register_Bot(CCartBot* pBot)
 	TL.bValid = false;
 
 	m_vecBot.push_back({ pBot, TL });
+}
+
+void CTrackMgr::Register_Hazard(CGameObject* pObj, ITEM_TYPE eID)
+{
+	_vec3 vPos;
+	pObj->Get_Transform()->Get_Info(INFO_POS, &vPos);
+
+	TrackLocator prevPL;
+
+	TrackLocator TL;
+	float lateral;
+	if (!m_pTGraph->ProjectPosition(vPos, prevPL, TL, &lateral)) {
+		pObj->GetLayer()->Delete_GameObject(pObj);
+		return;
+	}
+
+	HazardRecord HR;
+	HR.edgeId = TL.edgeId;
+	HR.u = TL.u;
+	HR.lateral = lateral;
+	HR.pOwner = pObj;
+
+	switch (eID) {
+	case ITEM_BANANA:
+		HR.radius = 3.f;
+		break;
+	}
+
+	m_hazardRecords.push_back(HR);
+}
+
+void CTrackMgr::Delete_Hazard(CGameObject* pObj)
+{
+	auto it = find_if(m_hazardRecords.begin(), m_hazardRecords.end(), [&](HazardRecord HR)->bool {
+		return HR.pOwner == pObj;
+		});
+
+	if (it == m_hazardRecords.end())
+		return;
+
+	m_hazardRecords.erase(it);
 }
 
 void CTrackMgr::Update_Locator()
@@ -103,7 +147,7 @@ void CTrackMgr::Update_Locator()
 	Update_LapUI();
 }
 
-TrackPose CTrackMgr::Compute_TargetPose(CGameObject* pObj, float lookAhead)
+TrackPose CTrackMgr::Compute_TargetPose(CGameObject* pObj, float lookAhead, bool bDodge)
 {
 	TrackPose TP;
 
@@ -114,18 +158,48 @@ TrackPose CTrackMgr::Compute_TargetPose(CGameObject* pObj, float lookAhead)
 	if (it == m_tempRanking.end())
 		return TP;
 
-	m_pTGraph->EvaluatePose(it->second, lookAhead, TP);
+	if (bDodge)
+		m_pTGraph->EvaluatePoseWithDodge(it->second, lookAhead, TP, m_hazardRecords);
+	else
+		m_pTGraph->EvaluatePose(it->second, lookAhead, TP);
 
 	return TP;
+}
+
+int CTrackMgr::Get_Rank(CGameObject* pObj)
+{
+	int rank = 0;
+
+	for (int i = 0; i < m_tempRanking.size(); ++i) {
+		if (m_tempRanking[i].first == pObj)
+		{
+			rank = i;
+			break;
+		}
+	}
+
+	return rank;
+}
+
+CGameObject* CTrackMgr::Get_Forward(CGameObject* pObj)
+{
+	auto it = find_if(m_tempRanking.begin(), m_tempRanking.end(), [&](pair<CGameObject*, TrackLocator> p)->bool {
+		return p.first == pObj;
+		});
+
+	if (it == m_tempRanking.end() || it == m_tempRanking.begin())
+		return nullptr;
+
+	return (*(it - 1)).first;
 }
 
 void CTrackMgr::Update_RankingUI()
 {
 	CRankMgr::GetInstance()->UpdateRank(m_tempRanking);
-	cout << "==========================\n";
-	for (auto& p : m_vecPlayer) {
-		cout << "Lap : " << p.second.iLap << " s : " << p.second.s << "\n";
-	}
+	//cout << "==========================\n";
+	//for (auto& p : m_vecPlayer) {
+	//	cout << "Lap : " << p.second.iLap << " s : " << p.second.s << "\n";
+	//}
 }
 
 void CTrackMgr::Update_LapUI()
@@ -139,4 +213,5 @@ void CTrackMgr::Update_LapUI()
 
 void CTrackMgr::Free()
 {
+	Safe_Release(m_pTGraph);
 }

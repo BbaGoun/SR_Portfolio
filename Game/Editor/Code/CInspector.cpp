@@ -988,6 +988,11 @@ void CInspector::TrackGraph_Point(CTrackGraph* pTGraph, TrackEdge* _pTE)
                     ImGui::PopID();
                     continue;
                 }
+                if (ImGui::Selectable("Insert")) {
+                    pTGraph->Insert_Point(_pTE, &cp);
+                    g_bPointSelected = false;
+                    g_uPointSelected = 0;
+                }
                 ImGui::EndPopup();
             }
 

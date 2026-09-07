@@ -1,6 +1,6 @@
 #pragma once
 #include "CScene.h"
-
+#include "Client_Enum.h"
 #include "Engine_Enum.h"
 
 class CMenu_Item : public CScene

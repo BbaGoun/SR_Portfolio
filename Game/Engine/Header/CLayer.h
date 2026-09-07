@@ -29,6 +29,7 @@ public:
 
 public:
 	HRESULT			Ready_Layer();
+	HRESULT			PostReady_Layer();
 	void			FixedUpdate_Layer(const _float& fFixedDeltaTime);
 	_int			Update_Layer(const _float& fDeltaTime);
 	void			LateUpdate_Layer(const _float& fDeltaTime);

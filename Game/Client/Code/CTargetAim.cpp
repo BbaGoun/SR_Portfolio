@@ -59,6 +59,8 @@ HRESULT CTargetAim::Ready_GameObject()
 
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
+	Set_CollisionLayer(CL_ITEM);
+
 	return S_OK;
 }
 
@@ -80,9 +82,19 @@ void CTargetAim::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-    m_pTextureCom->Set_Texture(0);
+	switch (m_eAimState) {
+	case AIM_NONE:
+	    m_pTextureCom->Set_Texture(0);
+		break;
+	case AIM_CLOSE:
+	    m_pTextureCom->Set_Texture(1);
+		break;
+	case AIM_TARGET:
+	    m_pTextureCom->Set_Texture(2);
+		break;
+	}
 	m_pBufferCom->Render_Buffer();
-	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
+	//m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

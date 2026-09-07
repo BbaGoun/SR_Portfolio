@@ -205,9 +205,6 @@
     <Filter Include="02. GameObject\Item\Missile\MissileBody">
       <UniqueIdentifier>{2a2d957b-27e8-4f80-959d-7f7f3eedceb8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\MagnetBody">
-      <UniqueIdentifier>{2cf3dfe9-2af6-4e54-8ee4-a5e1ade645d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\ItemBox">
       <UniqueIdentifier>{7271d6f9-d894-4471-b51b-cbad0c24150d}</UniqueIdentifier>
     </Filter>
@@ -328,9 +325,6 @@
     <Filter Include="02. GameObject\Item\Water\WaterFly\CWaterFlyBody">
       <UniqueIdentifier>{d565c4c7-e73e-406d-9262-0d07adddb769}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\Water\BubbleEscapeUI">
-      <UniqueIdentifier>{2a125e2a-30a6-4f5f-8aa1-11c9a81c3b98}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Item\Target_Shield">
       <UniqueIdentifier>{5480403e-f12f-4e41-b08a-635c6f76a5e2}</UniqueIdentifier>
     </Filter>
@@ -400,11 +394,35 @@
     <Filter Include="02. GameObject\Cart\CCartBot">
       <UniqueIdentifier>{5936d39c-0afd-48e9-a20d-51d67314356a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\Ufo\UfoBeam">
+      <UniqueIdentifier>{8b9f2a74-6dc9-4329-be03-ec3b7508174a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\Cart\Effect\BoostEffect\BoostAura">
       <UniqueIdentifier>{462f873a-75fa-41a2-adb7-0a6a7286b237}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Manager\FindOthersMgr">
       <UniqueIdentifier>{f07fabf1-8963-43b3-b90c-f887a71e4da9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Water\BubbleEscape">
+      <UniqueIdentifier>{2a125e2a-30a6-4f5f-8aa1-11c9a81c3b98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\MiniMap\MinimapCartBot">
+      <UniqueIdentifier>{915ff3c6-392b-40e4-9555-e77ddaa0ac06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\ItemGainEffect">
+      <UniqueIdentifier>{88c585dd-79cc-4493-a201-83b3d4f939be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Player\CPlayerArm">
+      <UniqueIdentifier>{21314f21-108b-46e9-9914-cf627f20c7b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\UI_Rank\UI_RankNumber">
+      <UniqueIdentifier>{5570ec89-7304-4a56-b7c0-394479e573e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Magnet">
+      <UniqueIdentifier>{ff2f0f4d-fe9a-4d4a-8f0e-816ba3bd877a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Magnet\MagnetBody">
+      <UniqueIdentifier>{2cf3dfe9-2af6-4e54-8ee4-a5e1ade645d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -604,7 +622,7 @@
       <Filter>02. GameObject\UI\UI_Laps</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMagnetBody.h">
-      <Filter>02. GameObject\Item\MagnetBody</Filter>
+      <Filter>02. GameObject\Item\Magnet\MagnetBody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CItemBox.h">
       <Filter>02. GameObject\ItemBox</Filter>
@@ -721,7 +739,7 @@
       <Filter>02. GameObject\Cart\Effect\DriftTrail</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CBubbleEscape.h">
-      <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
+      <Filter>02. GameObject\Item\Water\BubbleEscape</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CShield1.h">
       <Filter>02. GameObject\Item\Target_Shield\Target_Shield1</Filter>
@@ -792,11 +810,29 @@
     <ClInclude Include="..\Header\CCartBot.h">
       <Filter>02. GameObject\Cart\CCartBot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUfoBeam.h">
+      <Filter>02. GameObject\Item\Ufo\UfoBeam</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CBoostAura.h">
       <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostAura</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CFindOthersMgr.h">
       <Filter>03. Manager\FindOthersMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMinimapCartBot.h">
+      <Filter>02. GameObject\MiniMap\MinimapCartBot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemGainEffect.h">
+      <Filter>02. GameObject\Cart\Effect\ItemGainEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerArm.h">
+      <Filter>02. GameObject\Player\CPlayerArm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_RankNumber.h">
+      <Filter>02. GameObject\UI\UI_Rank\UI_RankNumber</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMagnet.h">
+      <Filter>02. GameObject\Item\Magnet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -987,7 +1023,7 @@
       <Filter>02. GameObject\UI\UI_Laps</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMagnetBody.cpp">
-      <Filter>02. GameObject\Item\MagnetBody</Filter>
+      <Filter>02. GameObject\Item\Magnet\MagnetBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CItemBox.cpp">
       <Filter>02. GameObject\ItemBox</Filter>
@@ -1104,7 +1140,7 @@
       <Filter>02. GameObject\Cart\Effect\DriftTrail</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBubbleEscape.cpp">
-      <Filter>02. GameObject\Item\Water\BubbleEscapeUI</Filter>
+      <Filter>02. GameObject\Item\Water\BubbleEscape</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CShield1.cpp">
       <Filter>02. GameObject\Item\Target_Shield\Target_Shield1</Filter>
@@ -1175,11 +1211,29 @@
     <ClCompile Include="..\Code\CCartBot.cpp">
       <Filter>02. GameObject\Cart\CCartBot</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CUfoBeam.cpp">
+      <Filter>02. GameObject\Item\Ufo\UfoBeam</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CBoostAura.cpp">
       <Filter>02. GameObject\Cart\Effect\BoostEffect\BoostAura</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CFindOthersMgr.cpp">
       <Filter>03. Manager\FindOthersMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMinimapCartBot.cpp">
+      <Filter>02. GameObject\MiniMap\MinimapCartBot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemGainEffect.cpp">
+      <Filter>02. GameObject\Cart\Effect\ItemGainEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerArm.cpp">
+      <Filter>02. GameObject\Player\CPlayerArm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_RankNumber.cpp">
+      <Filter>02. GameObject\UI\UI_Rank\UI_RankNumber</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMagnet.cpp">
+      <Filter>02. GameObject\Item\Magnet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

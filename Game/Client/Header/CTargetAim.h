@@ -28,6 +28,8 @@ public:
 
 	void			SetTarget(CGameObject* pTarget) { m_pTarget = pTarget; }
 	CGameObject*	GetTarget() { return m_pTarget; }
+	void			SetAimState(AIM_STATE eID) { m_eAimState = eID; }
+
 
 private:
 	CRcTex*				m_pBufferCom;
@@ -35,6 +37,7 @@ private:
 	CCube_Collider*		m_pColliderCom;
 
 	CGameObject*		m_pTarget = nullptr;
+	AIM_STATE			m_eAimState = AIM_END;
 
 public:
 	static CTargetAim* Create(LPDIRECT3DDEVICE9 pGraphicDev);

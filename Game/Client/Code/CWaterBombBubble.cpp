@@ -24,13 +24,9 @@ HRESULT CWaterBombBubble::Ready_GameObject()
 
 	m_fTimer		= 0.f;
 
-	m_bBubbleAppear	= false;
-
-	m_pTransformCom->Set_Pos({ 0.f,-1000.f,0.f });
-
 	CComponent* pComponent = nullptr;
 
-	m_pTransformCom->Set_Scale({ 15.5f, 15.5f, 15.5f });
+	m_pTransformCom->Set_Scale({ 12.f, 12.f, 12.f });
 	pComponent = m_pBufferCom = dynamic_cast<CSphere*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Sphere"));
 	if (nullptr == pComponent)
 		return E_FAIL;
@@ -38,20 +34,7 @@ HRESULT CWaterBombBubble::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
-
-	 // 임시 물방울 충돌처리
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
-	if (nullptr == pComponent)
-		return E_FAIL;
-
-	m_pColliderCom->Set_Owner(this);
-	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->Set_Extents({ 1.7f, 1.7f, 1.7f });
-	m_pColliderCom->Set_Offset({ 0.f, 0.f, 0.f });
-
-	m_mapComponent.insert({ L"Com_Collider", pComponent });
-
-	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RainBow_Alpha"));
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_WaterBombBubble"));
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
@@ -59,43 +42,24 @@ HRESULT CWaterBombBubble::Ready_GameObject()
 }
 
 void CWaterBombBubble::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
-{
-	//CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+{	
 
-	// _vec3 vScale, vTargetPos;
-
-	//pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-	
-	_vec3 vScale = m_pTransformCom->Get_Scale();
-
-	m_fTimer += fFixedDeltaTime;	
-
-	// if (m_fTimer > 1.6f)
-	// {
-		if (vScale.x < 4.5f && vScale.y < 4.5f && vScale.z < 4.5f)
-		{
-			vScale.x += 3.f * fFixedDeltaTime;
-			vScale.y += 3.f * fFixedDeltaTime;
-			vScale.z += 3.f * fFixedDeltaTime;
-		}
-	// }
-
-	m_pTransformCom->Set_Scale(vScale);
-	// m_pTransformCom->Set_Pos(vTargetPos);
 }
 
 _int CWaterBombBubble::Update_GameObject(const _float& fDeltaTime)
 {
-	//if (m_fTimer > 1.6f)
-	//{
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);	// 그래서 일반 도형은 RENDER_NONALPHA
-	//}
+	if (m_bShow == false)
+		return 0;
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
 void CWaterBombBubble::LateUpdate_GameObject(const _float& fDeltaTime)
 {
+	if (m_bShow == false)
+		return;
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
@@ -103,31 +67,10 @@ void CWaterBombBubble::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-	//m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-}
-
-void CWaterBombBubble::CollisionEnter(CCollider* pOtherCollider)
-{
-}
-
-void CWaterBombBubble::TriggerEnter(CCollider* pOtherCollider)
-{
-	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-
-	if (wcscmp(wOtherTag, L"Obj_Cart") == 0)
-	{
-
-	}
 }
 
 CWaterBombBubble* CWaterBombBubble::Create(LPDIRECT3DDEVICE9 pGraphicDev)

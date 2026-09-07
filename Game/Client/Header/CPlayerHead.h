@@ -23,6 +23,7 @@ public:
 	void		SetBoost(bool bBoost) { m_bBoost = bBoost; }
 	void		SetCartDirType(DIRECTION_TYPE eCartDirType) { m_eCartDirType = eCartDirType; }
 	void		KeyInput(const _float& fDeltaTime);
+	void		SetKeyInput(bool bKeyInput) { m_bKeyInput = bKeyInput; }
 public:
 	static CPlayerHead* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
@@ -31,7 +32,7 @@ private:
 
 	bool				m_bBoost;
 	DIRECTION_TYPE		m_eCartDirType;
-
+	bool				m_bKeyInput = true;
 protected:
 	virtual		void		Free() override;
 };
