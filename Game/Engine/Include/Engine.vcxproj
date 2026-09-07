@@ -25,6 +25,7 @@
     <ClInclude Include="..\Header\CCameraMgr.h" />
     <ClInclude Include="..\Header\CCartBodyCol.h" />
     <ClInclude Include="..\Header\CCartWheelCol.h" />
+    <ClInclude Include="..\Header\CCircleCol.h" />
     <ClInclude Include="..\Header\CCollider.h" />
     <ClInclude Include="..\Header\CCollisionMgr.h" />
     <ClInclude Include="..\Header\CComponent.h" />
@@ -44,11 +45,13 @@
     <ClInclude Include="..\Header\CHalfSphere.h" />
     <ClInclude Include="..\Header\CHeightMap.h" />
     <ClInclude Include="..\Header\CInnerBox.h" />
+    <ClInclude Include="..\Header\CItemGainParticle.h" />
     <ClInclude Include="..\Header\CLayer.h" />
     <ClInclude Include="..\Header\CMagnetTex.h" />
     <ClInclude Include="..\Header\CManagement.h" />
     <ClInclude Include="..\Header\CMeshRibbon.h" />
     <ClInclude Include="..\Header\CMissileTex.h" />
+    <ClInclude Include="..\Header\COuterBox.h" />
     <ClInclude Include="..\Header\CPyramid.h" />
     <ClInclude Include="..\Header\CQuadrangularPrism.h" />
     <ClInclude Include="..\Header\CRcTex.h" />
@@ -87,6 +90,7 @@
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
     <ClCompile Include="..\Code\CCartBodyCol.cpp" />
     <ClCompile Include="..\Code\CCartWheelCol.cpp" />
+    <ClCompile Include="..\Code\CCircleCol.cpp" />
     <ClCompile Include="..\Code\CCollider.cpp" />
     <ClCompile Include="..\Code\CCollisionMgr.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
@@ -106,11 +110,13 @@
     <ClCompile Include="..\Code\CHalfSphere.cpp" />
     <ClCompile Include="..\Code\CHeightMap.cpp" />
     <ClCompile Include="..\Code\CInnerBox.cpp" />
+    <ClCompile Include="..\Code\CItemGainParticle.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />
     <ClCompile Include="..\Code\CMagnetTex.cpp" />
     <ClCompile Include="..\Code\CManagement.cpp" />
     <ClCompile Include="..\Code\CMeshRibbon.cpp" />
     <ClCompile Include="..\Code\CMissileTex.cpp" />
+    <ClCompile Include="..\Code\COuterBox.cpp" />
     <ClCompile Include="..\Code\CPyramid.cpp" />
     <ClCompile Include="..\Code\CQuadrangularPrism.cpp" />
     <ClCompile Include="..\Code\CRcTex.cpp" />

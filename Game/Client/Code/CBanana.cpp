@@ -6,6 +6,7 @@
 #include "CRenderer.h"
 #include "CManagement.h"
 #include "CRcTex.h"
+#include "CTrackMgr.h"
 
 CBanana::CBanana(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -44,7 +45,14 @@ HRESULT CBanana::Ready_GameObject()
 	m_pColliderCom->Set_Radius(1.5f);
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
+	Set_CollisionLayer(CL_ITEM);
+
 	return S_OK;
+}
+
+void CBanana::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
+{
+	CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
 }
 
 _int CBanana::Update_GameObject(const _float& fDeltaTime)
@@ -82,6 +90,7 @@ void CBanana::TriggerEnter(CCollider* pOtherCollider)
 
 	if (wcscmp(wOtherTag, L"Obj_CartBody") == 0)
 	{
+		CTrackMgr::GetInstance()->Delete_Hazard(this);
 		m_pLayer->Delete_GameObject(this);
 	}
 }

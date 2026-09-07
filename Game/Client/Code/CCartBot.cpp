@@ -109,6 +109,13 @@ HRESULT CCartBot::Ready_GameObject()
 
 void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	if (m_bMissileHit == true)
+		return;
+	UpdateBubble(fFixedDeltaTime);
+
+	if (m_bBubble == true)
+		return;
+	
 	m_iCollisionTick = max(0, m_iCollisionTick - 1);
 
 	if (!CPlayTimeMgr::GetInstance()->GetPlaying()) {
@@ -129,14 +136,15 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	float lookAhead = clampT(D3DXVec3Length(&m_vForce) * m_fSpeed, 5.f, 30.f);
 
-	TrackPose TP = CTrackMgr::GetInstance()->Compute_TargetPose(this, lookAhead);
+	TrackPose TP = CTrackMgr::GetInstance()->Compute_TargetPose(this, lookAhead, true);
 
 	_vec3 vPos, vLook;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
 	if (TP.bValid && m_bActive) {
-		TP.position += m_fLateralOffset * TP.R * TP.halfW;
+		if(!TP.bDodge)
+			TP.position += m_fLateralOffset * TP.R * TP.halfW;
 		TP.position.y += 0.5f; // 카트가 박히지 않도록
 
 		_vec3 dir = TP.position - vPos;
@@ -218,8 +226,8 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_vForce = m_vForce / fForceLen * 120.f;
 	SetWheelForceLen();
 
-	for (int i = 0; i < 3; ++i) {
-		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 3.f, fFixedDeltaTime);
+	for (int i = 0; i < 2; ++i) {
+		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 2.f, fFixedDeltaTime);
 
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
 		if(!m_bCollisionGround)
@@ -231,6 +239,8 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	m_bCollisionGround = false;
 	m_bCollisionWall = false;
+
+	//CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
 }
 
 _int CCartBot::Update_GameObject(const _float& fDeltaTime)
@@ -1127,7 +1137,7 @@ void CCartBot::UpdateGravity()
 
 	switch (m_eCartState)
 	{
-	case Engine::CART_STATE_GROUND:
+	case CART_STATE_GROUND:
 		if (m_vTerrainNormal != _vec3({ 0,1,0 }))
 		{
 			// 평면의 Right벡터
@@ -1151,13 +1161,13 @@ void CCartBot::UpdateGravity()
 			m_vForce.y = 0;
 		}
 		break;
-	case Engine::CART_STATE_AIR:
+	case CART_STATE_AIR:
 		// 중력 전부 다 받기
 		m_vForce += vGravity;
 		break;
-	case Engine::CART_STATE_LANDING:
+	case CART_STATE_LANDING:
 		break;
-	case Engine::CART_STATE_END:
+	case CART_STATE_END:
 		break;
 	default:
 		break;
@@ -1230,21 +1240,53 @@ void CCartBot::UpdateBlur(const _float& fDeltaTime)
 	else
 		CRenderer::GetInstance()->SetBlurPower(0.f);
 }
+void CCartBot::UpdateBubble(const _float& fDeltaTime)
+{
+	if (m_bBubble == false)
+		return;
+	static_cast<CWaterBombBubble*>(m_pBubble)->SetShow(true);
+	m_fBubbleTimer += fDeltaTime;
 
+
+	if (m_fBubbleTimer <= 1.f)
+		m_vForce = _vec3({ 0,1,0 }) * m_fBubbleTimer * 15;
+	else if (m_fBubbleTimer <= 1.5f)
+		m_vForce = { 0,0,0 };
+	else if (m_fBubbleTimer <= 2.5f)
+		m_vForce = _vec3({ 0,-1,0 }) * (m_fBubbleTimer - 1.5f) * 15;
+	else
+	{
+		m_vForce = { 0,0,0 };
+		m_bBubble = false;
+		m_fBubbleTimer = 0.f;
+		m_vRotation.z = 0.f;
+		static_cast<CWaterBombBubble*>(m_pBubble)->SetShow(false);
+	}
+	m_pTransformCom->Move_Pos(&m_vForce, 1, fDeltaTime);
+
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	vPos.y += 3.f;
+	m_pBubble->Get_Transform()->Set_Pos(vPos);
+
+	m_vRotation.z = 0.1f;
+	m_pTransformCom->Rotate(QUATER_ROLL, m_vRotation.z);
+	
+}
 void CCartBot::OutputCarState()
 {
 	switch (m_eCartState)
 	{
-	case Engine::CART_STATE_GROUND:
+	case CART_STATE_GROUND:
 		cout << "CART_STATE_GROUND" << endl;
 		break;
-	case Engine::CART_STATE_AIR:
+	case CART_STATE_AIR:
 		cout << "CART_STATE_AIR" << endl;
 		break;
-	case Engine::CART_STATE_LANDING:
+	case CART_STATE_LANDING:
 		cout << "CART_STATE_LANDING" << endl;
 		break;
-	case Engine::CART_STATE_END:
+	case CART_STATE_END:
 		cout << "CART_STATE_GROUND" << endl;
 		break;
 	default:
@@ -1388,6 +1430,7 @@ void CCartBot::CreateTargetAimObject()
 		D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 		D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 
+		static_cast<CTargetAim*>(pTargetAim)->SetTarget(nullptr);
 		if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
 		{
 			vPos = vTarget;
@@ -1469,7 +1512,6 @@ void CCartBot::CreateWaterBombObject()
 
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	pWaterBomb->Set_ThrowLook(vLook);
 	pWaterBomb->SetLayer(m_pLayer);
 
 	CGameObject* pWaterBombBody = CWaterBombBody::Create(m_pGraphicDev);
@@ -1506,27 +1548,27 @@ void CCartBot::CreateWaterBombObject()
 
 void CCartBot::CreateWaterFlyObject()
 {
-	CGameObject* pWaterFly = CWaterFly::Create(m_pGraphicDev);
-
-	if (pWaterFly == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFly", pWaterFly)))
-		return;
-
-	pWaterFly->SetLayer(m_pLayer);
-
-
-	CGameObject* pWaterFlyBody = CWaterFlyBody::Create(m_pGraphicDev);
-
-	if (pWaterFlyBody == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFlyBody", pWaterFlyBody)))
-		return;
-
-	pWaterFlyBody->SetLayer(m_pLayer);
-	pWaterFly->Set_Child(pWaterFlyBody);
+	//CGameObject* pWaterFly = CWaterFly::Create(m_pGraphicDev);
+	//
+	//if (pWaterFly == nullptr)
+	//	return;
+	//
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFly", pWaterFly)))
+	//	return;
+	//
+	//pWaterFly->SetLayer(m_pLayer);
+	//
+	//
+	//CGameObject* pWaterFlyBody = CWaterFlyBody::Create(m_pGraphicDev);
+	//
+	//if (pWaterFlyBody == nullptr)
+	//	return;
+	//
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_WaterFlyBody", pWaterFlyBody)))
+	//	return;
+	//
+	//pWaterFlyBody->SetLayer(m_pLayer);
+	//pWaterFly->Set_Child(pWaterFlyBody);
 
 	//CGameObject* pWaterBombBubble = CWaterBombBubble::Create(m_pGraphicDev);
 
@@ -1662,28 +1704,28 @@ void CCartBot::UseItem()
 {
 	switch (m_eFirstSlot)
 	{
-	case Engine::ITEM_BOOSTER:
+	case ITEM_BOOSTER:
 		m_eBoostState = BOOST_STATE_LONG_BOOST;
 		m_fBoostCal = 1.015f;
 		break;
-	case Engine::ITEM_THUNDER:
+	case ITEM_THUNDER:
 		CreateThunderCloudObject();
 		break;
-	case Engine::ITEM_CLOUD:
+	case ITEM_CLOUD:
 		CreateRainbowObject();
 		break;
-	case Engine::ITEM_UFO:
+	case ITEM_UFO:
 		break;
-	case Engine::ITEM_WATERFLY:
+	case ITEM_WATERFLY:
 		CreateWaterFlyObject();
 		break;
-	case Engine::ITEM_BANANA:
+	case ITEM_BANANA:
 		CreateBananaObject();
 		break;
-	case Engine::ITEM_WATERBOMB:
+	case ITEM_WATERBOMB:
 		CreateWaterBombObject();
 		break;
-	case Engine::ITEM_END:
+	case ITEM_END:
 		break;
 	default:
 		break;
@@ -1700,11 +1742,11 @@ void CCartBot::UseAimItem()
 {
 	switch (m_eFirstSlot)
 	{
-	case Engine::ITEM_ROCKET:
+	case ITEM_ROCKET:
 		CreateTargetAimObject();
 		break;
 
-	case Engine::ITEM_MAGNET:
+	case ITEM_MAGNET:
 		CreateTargetAimObject();
 		break;
 	}

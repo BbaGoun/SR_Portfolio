@@ -358,7 +358,6 @@ _int CUfo::Update_GameObject(const _float& fTimeDelta)
 void CUfo::LateUpdate_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::LateUpdate_GameObject(fTimeDelta);
-
 }
 
 void CUfo::Render_GameObject()

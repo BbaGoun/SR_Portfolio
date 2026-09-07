@@ -5,7 +5,6 @@
 namespace Engine
 {
 	class CMagnetTex;
-	class CCube_Collider;
 }
 
 class CMagnetBody : public CGameObject
@@ -15,7 +14,8 @@ private:
 	virtual ~CMagnetBody() override;
 
 public:
-	virtual			HRESULT		Ready_GameObject()									  override;
+	virtual			HRESULT		Ready_GameObject();
+	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) override;
 	virtual			_int		Update_GameObject(const _float& fTimeDelta)			  override;
 	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta)		  override;
 	virtual			void		Render_GameObject()									  override;
@@ -30,7 +30,6 @@ public:
 
 private:
 	Engine::CMagnetTex* m_pBufferCom;
-	CCube_Collider* m_pColliderCom;
 
 	_float			m_fTimer;
 

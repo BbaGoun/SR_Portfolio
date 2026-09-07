@@ -16,6 +16,7 @@ private:
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
+	virtual			void		PostReady_GameObject() override;
 	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) override;
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
@@ -46,18 +47,21 @@ public:
 	}
 	float			GetThunderTimerOnOff() { return m_bThunderTimerOnOff; }
 
-	bool	GetShieldHit() { return m_bShieldHit; }
-	void	SetShieldHit(bool bShieldState) { m_bShieldHit = bShieldState; }
+	bool			GetShieldHit() { return m_bShieldHit; }
+	void			SetShieldHit(bool bShieldState) { m_bShieldHit = bShieldState; }
 
-	bool	GetShieldActive() { return m_bShieldActive; }
-	void	SetShieldActive(bool bActiveState) { m_bShieldActive = bActiveState; }
+	bool			GetShieldActive() { return m_bShieldActive; }
+	void			SetShieldActive(bool bActiveState) { m_bShieldActive = bActiveState; }
+
+// Missile
+	void			UpdateMissileHit(const _float& fDeltaTime);
+	void			SetMissileHit(bool bHit) { m_bMissileHit = bHit; }
 
 public:
 	static CCartBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	Engine::CCube_Collider* m_pColliderCom;
-	Engine::CArrowCol* m_pBufferCom;
 
 	bool			m_bBananaSpinState;
 	bool			m_bThunderSpinState;
@@ -69,10 +73,13 @@ private:
 	_vec3			m_vColliderSize;
 
 
-	_float	m_fShieldTimer;
-	_bool	m_bShieldHit;
-	_bool	m_bShieldTimer;
-	_bool	m_bShieldActive;
+	_float			m_fShieldTimer;
+	_bool			m_bShieldHit;
+	_bool			m_bShieldTimer;
+	_bool			m_bShieldActive;
+
+	bool			m_bMissileHit = false;
+	float			m_fMissileTimer = 0.f;
 
 protected:
 	virtual		void		Free() override;

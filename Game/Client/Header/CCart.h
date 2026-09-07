@@ -37,7 +37,7 @@ public:
 	void			UpdateMagnet(const _float& fDeltaTime);
 	void			UpdateStartBoost();
 	void			UpdateBlur(const _float& fDeltaTime);
-
+	void			UpdateBubble(const _float& fDeltaTime);
 
 	// Get, Set
 	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
@@ -66,6 +66,8 @@ public:
 	ITEM_TYPE		GetSecondSlot()						{ return m_eSecondSlot; }
 	void			SetSecondSlot(ITEM_TYPE eID)		{ m_eSecondSlot = eID; }
 
+	bool			GetSlotChange()						{ return m_bSlotChange; }
+	void			SetSlotChange(bool _b)				{ m_bSlotChange = _b; }
 
 	bool			GetPlayingState()					{ return m_bPlaying; }
 
@@ -78,7 +80,7 @@ public:
 	void			CollisionWall();
 
 	// CreateObject
-	void			CreateRainbowObject();
+	void			CreateCloudObject();
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
 	void			CreateMissileObject(CGameObject* pTarget);
@@ -118,6 +120,15 @@ public:
 	CGameObject*	GetShield1() { return m_pShield1; }
 	CGameObject*	GetShield2() { return m_pShield2; }
 
+	//Missile
+	void			SetMissileHit(bool bHit) { m_bMissileHit = bHit; }
+	bool			GetMissileHit() { return m_bMissileHit; }
+
+
+	//Bubble
+	void			SetBubble(bool bBubble) { if (m_bBubble == false) m_bBubble = true; }
+	bool			GetBubble() { return m_bBubble; }
+	void			SetBubble(CGameObject* pBubble) { m_pBubble = pBubble; }
 
 private:
 	_float			m_fMaxSpeed;
@@ -160,6 +171,7 @@ private:
 
 	ITEM_TYPE		m_eFirstSlot;
 	ITEM_TYPE		m_eSecondSlot;
+	bool			m_bSlotChange = false;
 
 	DIRECTION_TYPE	m_eDirection;
 	int				m_iFlatFrameCnt;
@@ -183,6 +195,14 @@ private:
 
 	CGameObject*	m_pShield1 = nullptr;
 	CGameObject*	m_pShield2 = nullptr;
+
+
+	bool			m_bMissileHit = false;
+	bool			m_bBubble = false;
+
+	float			m_fBubbleTimer = 0.f;
+	CGameObject*	m_pBubble = nullptr;
+
 protected:
 	virtual		void		Free() override;
 };

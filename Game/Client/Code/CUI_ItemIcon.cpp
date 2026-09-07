@@ -44,8 +44,6 @@ HRESULT CUI_ItemIcon::Ready_GameObject()
 	
 
 	return S_OK;
-
-
 }
 
 void CUI_ItemIcon::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
@@ -54,11 +52,17 @@ void CUI_ItemIcon::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CUI_ItemIcon::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHAUI, this);
 
-	CCart* pCart = dynamic_cast<CCart*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart"));
-	m_eFirstSlot = pCart->GetFirstSlot();
-	m_eSecondSlot = pCart->GetSecondSlot();
+	if (m_pCart) {
+		m_eFirstSlot = m_pCart->GetFirstSlot();
+		m_eSecondSlot = m_pCart->GetSecondSlot();
+
+	}
+	else if (m_pCartBot) {
+		m_eFirstSlot = m_pCartBot->GetFirstSlot();
+		m_eSecondSlot = m_pCartBot->GetSecondSlot();
+	}
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -72,23 +76,20 @@ void CUI_ItemIcon::Render_GameObject()
 {
 	if (m_eFirstSlot < ITEM_END)
 	{
-		m_pGraphicDev->SetTexture(0, nullptr);
-		m_pTransformCom->Set_Pos({ -505.f, 300.f, 1.f });
-		m_pTransformCom->Set_Scale({ 80.f,80.f,0.f });
+		m_pTransformCom->Set_Pos(m_vPosFirst);
+		m_pTransformCom->Set_Scale(m_vScaleFirst);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 		m_pTextureCom->Set_Texture(m_eFirstSlot);
 		m_pVIBufferCom->Render_Buffer();
 	}
 	if (m_eSecondSlot < ITEM_END)
 	{
-		m_pGraphicDev->SetTexture(0, nullptr);
-		m_pTransformCom->Set_Pos({ -585.f, 310.f, 1.f });
-		m_pTransformCom->Set_Scale({ 60.f,60.f,0.f });
+		m_pTransformCom->Set_Pos(m_vPosSecond);
+		m_pTransformCom->Set_Scale(m_vScaleSecond);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 		m_pTextureCom->Set_Texture(m_eSecondSlot);
 		m_pVIBufferCom->Render_Buffer();
 	}
-
 }
 
 CUI_ItemIcon* CUI_ItemIcon::Create(LPDIRECT3DDEVICE9 pGraphicDev)

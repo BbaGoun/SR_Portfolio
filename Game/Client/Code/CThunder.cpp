@@ -25,7 +25,7 @@ HRESULT CThunder::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 
 	CComponent* pComponent = nullptr;
-	m_pTransformCom->Set_Scale({ 10,10,1 });
+	m_pTransformCom->Set_Scale({ 10,5,1 });
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });

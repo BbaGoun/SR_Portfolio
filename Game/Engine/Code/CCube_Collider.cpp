@@ -33,11 +33,7 @@ HRESULT CCube_Collider::Ready_CCube_Collider()
 	return S_OK;
 }
 
-_int CCube_Collider::Update_Component(const _float& fTimeDelta)
-{
-	return 0;
-}
-void CCube_Collider::LateUpdate_Component(const _float& fTimeDelta)
+void CCube_Collider::FixedUpdate_Component(const _float& fFixedDeltaTime)
 {
 	CTransform* pOwnerTransfrom = (m_pOwner->Get_Transform());
 	_vec3 vOwnerPos;
@@ -47,6 +43,15 @@ void CCube_Collider::LateUpdate_Component(const _float& fTimeDelta)
 	D3DXQUATERNION q = pOwnerTransfrom->Get_WorldQuaternion();
 	m_tBoundingBox.Orientation = ToXMFLOAT4(q);
 	m_tBoundingBox.Center = ToXMFLOAT3(vOwnerPos);
+}
+
+_int CCube_Collider::Update_Component(const _float& fTimeDelta)
+{
+	return 0;
+}
+void CCube_Collider::LateUpdate_Component(const _float& fTimeDelta)
+{
+	
 }
 
 void CCube_Collider::Render_Component(D3DXCOLOR color)

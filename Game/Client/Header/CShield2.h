@@ -30,7 +30,7 @@ private:
 	CSphere* m_pBufferCom;
 	CTexture* m_pTextureCom;
 
-	bool	m_bShow;
+	bool	m_bShow = false;
 	float	m_fTimer;
 	float	m_fScale = 1.f;
 	float	m_fAlpha = 10.f;

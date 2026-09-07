@@ -91,10 +91,12 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 	if (m_bMissileHit)
 	{
+		m_vForce = { 0.f, 30.f, 0.f };
+		
 		_vec3 vPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
-		vPos.y += m_vForce.y * fFixedDeltaTime;
+		//vPos.y += m_vForce.y * fFixedDeltaTime;
 		m_vForce.y -= 30.f * fFixedDeltaTime;
 
 		m_vRotation.x += D3DXToRadian(350.f) * fFixedDeltaTime;
@@ -170,7 +172,6 @@ void CMissileTarget::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 			{
 				m_vRotation.y = D3DXToRadian(20.f);
 			}
-
 		}
 
 		else if (m_fTimer >= 2.f)
@@ -619,7 +620,7 @@ void CMissileTarget::TriggerEnter(CCollider* pOtherCollider)
 				m_vRotation.x += D3DXToRadian(0.f);
 			}
 		}
-		// 이미 미사일에 걸렸다면 물폭탄/물파리 검사는 할 필요 없으니까
+		 //이미 미사일에 걸렸다면 물폭탄/물파리 검사는 할 필요 없으니까
 		//if (wcsncmp(wOtherTag, L"Obj_WaterBomb", 13) == 0)
 		else if (wcscmp(wOtherTag, L"Obj_WaterBomb") == 0)
 		{

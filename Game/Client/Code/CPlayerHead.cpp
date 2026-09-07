@@ -23,7 +23,7 @@ CPlayerHead::~CPlayerHead()
 HRESULT CPlayerHead::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	Engine::CComponent* pComponent = nullptr;
+	//Engine::CComponent* pComponent = nullptr;
 
 	m_bBoost		= false;
 	m_eCartDirType	= DIR_FORWARD;
@@ -45,8 +45,9 @@ void CPlayerHead::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
-	if (CPlayTimeMgr::GetInstance()->GetPlaying() == false)
+	if (CPlayTimeMgr::GetInstance()->GetPlayTimer() > CPlayTimeMgr::GetInstance()->GetPlayTimer() + 10.f)
 	{
+		m_bKeyInput = false;
 		m_vRotation.x = 0.f;
 		m_vRotation.z = 0.f;
 		m_vRotation.y = 0.f;
@@ -76,13 +77,9 @@ _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 		}
 		// 뒤돌기
 		if (m_vRotation.y < 0.f)
-		{
 			m_vRotation.y += 180 * fDeltaTime;
-		}
 		else
-		{
 			m_vRotation.y = 0.f;
-		}
 	}
 	else
 	{
@@ -115,6 +112,8 @@ void CPlayerHead::Render_GameObject()
 }
 void CPlayerHead::KeyInput(const _float& fDeltaTime)
 {
+	if (m_bKeyInput == false)
+		return;
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 	{
 		// 고개 왼쪽

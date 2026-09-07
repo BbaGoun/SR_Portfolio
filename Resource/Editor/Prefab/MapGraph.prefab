@@ -160,29 +160,50 @@
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
+        tcp_id=55
+        tcp_pos=-663.417786 29.988485 -962.588379
+        tcp_bank=0.000000
+        tcp_width=30.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
         tcp_id=22
-        tcp_pos=-699.249023 33.187397 -961.169983
+        tcp_pos=-728.358521 33.187389 -959.524475
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=23
-        tcp_pos=-818.014587 41.090099 -927.318298
+        tcp_pos=-808.381409 41.090092 -934.888794
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=24
-        tcp_pos=-872.023132 47.186401 -858.268738
+        tcp_pos=-858.068298 47.126987 -884.323730
+        tcp_bank=0.000000
+        tcp_width=30.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=57
+        tcp_pos=-874.772644 48.347595 -835.270874
+        tcp_bank=0.000000
+        tcp_width=30.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=56
+        tcp_pos=-874.775452 49.688457 -802.558167
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=25
-        tcp_pos=-888.567566 49.833599 -768.391235
+        tcp_pos=-889.091980 49.833450 -739.692749
         tcp_bank=0.000000
         tcp_width=50.000000
         tcp_depth=30.000000
@@ -202,22 +223,36 @@
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
+        tcp_id=58
+        tcp_pos=-874.739319 70.527458 286.548431
+        tcp_bank=0.000000
+        tcp_width=30.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
         tcp_id=28
-        tcp_pos=-871.489929 68.323936 318.120270
+        tcp_pos=-871.243530 67.374466 337.518982
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=29
-        tcp_pos=-831.361023 65.099052 456.117584
+        tcp_pos=-837.323486 65.096420 442.571655
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000
       END_TRACK_CONTROL_POINT
       TRACK_CONTROL_POINT
         tcp_id=30
-        tcp_pos=-754.880371 61.373703 509.181152
+        tcp_pos=-780.899719 62.943069 499.169739
+        tcp_bank=0.000000
+        tcp_width=30.000000
+        tcp_depth=30.000000
+      END_TRACK_CONTROL_POINT
+      TRACK_CONTROL_POINT
+        tcp_id=59
+        tcp_pos=-689.774475 60.065315 511.858307
         tcp_bank=0.000000
         tcp_width=30.000000
         tcp_depth=30.000000

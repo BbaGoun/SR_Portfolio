@@ -29,13 +29,13 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 		CCube_Collider* pDstCubeCollider = dynamic_cast<CCube_Collider*>(pDstCollider);
 		CCube_Collider* pSrcCubeCollider = dynamic_cast<CCube_Collider*>(pSrcCollider);
 
-		_quaternion qDst = ToQuaternion(pDstCubeCollider->Get_Info().Orientation);
+		/*_quaternion qDst = ToQuaternion(pDstCubeCollider->Get_Info().Orientation);
 		D3DXQuaternionNormalize(&qDst, &qDst);
 		pDstCubeCollider->Get_Info().Orientation = ToXMFLOAT4(qDst);
 
 		_quaternion qSrc = ToQuaternion(pSrcCubeCollider->Get_Info().Orientation);
 		D3DXQuaternionNormalize(&qSrc, &qSrc);
-		pSrcCubeCollider->Get_Info().Orientation = ToXMFLOAT4(qSrc);
+		pSrcCubeCollider->Get_Info().Orientation = ToXMFLOAT4(qSrc);*/
 
 		if (pDstCubeCollider->Get_Info().Intersects(pSrcCubeCollider->Get_Info()))
 		{
@@ -75,9 +75,9 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 		CCube_Collider* pDstCubeCollider = dynamic_cast<CCube_Collider*>(pDstCollider);
 		CSphere_Collider* pSrcSphereCollider = dynamic_cast<CSphere_Collider*>(pSrcCollider);
 
-		_quaternion qDst = ToQuaternion(pDstCubeCollider->Get_Info().Orientation);
+		/*_quaternion qDst = ToQuaternion(pDstCubeCollider->Get_Info().Orientation);
 		D3DXQuaternionNormalize(&qDst, &qDst);
-		pDstCubeCollider->Get_Info().Orientation = ToXMFLOAT4(qDst);
+		pDstCubeCollider->Get_Info().Orientation = ToXMFLOAT4(qDst);*/
 
 		if (pDstCubeCollider->Get_Info().Intersects(pSrcSphereCollider->Get_Info()))
 		{
@@ -98,9 +98,9 @@ void CCollisionMgr::Collision(CCollider* pDstCollider, CCollider* pSrcCollider)
 		CSphere_Collider* pDstSphereCollider = dynamic_cast<CSphere_Collider*>(pDstCollider);
 		CCube_Collider* pSrcCubeCollider = dynamic_cast<CCube_Collider*>(pSrcCollider);
 
-		_quaternion qSrc = ToQuaternion(pSrcCubeCollider->Get_Info().Orientation);
+		/*_quaternion qSrc = ToQuaternion(pSrcCubeCollider->Get_Info().Orientation);
 		D3DXQuaternionNormalize(&qSrc, &qSrc);
-		pSrcCubeCollider->Get_Info().Orientation = ToXMFLOAT4(qSrc);
+		pSrcCubeCollider->Get_Info().Orientation = ToXMFLOAT4(qSrc);*/
 
 		if (pDstSphereCollider->Get_Info().Intersects(pSrcCubeCollider->Get_Info()))
 		{

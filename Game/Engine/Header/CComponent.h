@@ -15,6 +15,7 @@ protected:
 	virtual ~CComponent();
 
 public:
+	virtual void FixedUpdate_Component(const _float& fFixedDeltaTime) {}
 	virtual _int Update_Component(const _float& fDeltaTime) { return 0; }
 	virtual void LateUpdate_Component(const _float& fDeltaTime) { }
 	

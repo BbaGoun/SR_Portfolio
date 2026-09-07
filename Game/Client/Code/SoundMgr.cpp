@@ -43,7 +43,7 @@ void SoundMgr::Release()
 	ZeroMemory(m_pChannelArr, sizeof(m_pChannelArr));
 }
 
-void SoundMgr::PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume)
+void SoundMgr::PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume, bool bStop)
 {
 	auto iter = find_if(m_mapSound.begin(), m_mapSound.end(),
 		[&](auto& Pair)->bool
@@ -57,7 +57,8 @@ void SoundMgr::PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume)
 	FMOD_BOOL bPlaying;
 	if (m_pChannelArr[eID] && FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlaying) == FMOD_OK)
 	{
-		return;
+		if (!bStop)
+			return;
 		FMOD_Channel_Stop(m_pChannelArr[eID]);
 	}
 
