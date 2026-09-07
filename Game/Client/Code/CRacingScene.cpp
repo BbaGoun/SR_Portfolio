@@ -316,52 +316,6 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 
 	// Bot Shield1,2 , Bubble
 	for (int i = 0; i < vecCartBot.size(); ++i) {
-		// ## 부스터 왼쪽1 바람 이펙트
-		pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
-		static_cast<CCartBot*>(vecCartBot[i])->Set_ChildWithoutTune(pGameObject);
-
-		// ## 부스터 왼쪽2 바람 이펙트
-		// BoostWindL2
-		pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
-		static_cast<CCartBot*>(vecCartBot[i])->Set_ChildWithoutTune(pGameObject);
-
-		// ## 부스터 오른쪽1 바람 이펙트
-		// BoostWindR1
-		pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
-		static_cast<CCartBot*>(vecCartBot[i])->Set_ChildWithoutTune(pGameObject);
-		
-		// ## 부스터 오른쪽2 바람 이펙트
-		pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
-		static_cast<CCartBot*>(vecCartBot[i])->Set_ChildWithoutTune(pGameObject);
-
-		// ## 부스터 제트 이펙트
-		// BoostJet
-		pGameObject = CBoostJet::Create(m_pGraphicDev);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
-		vecCartBody[i]->Set_ChildWithoutTune(pGameObject);
-
-		// ## 부스터 제트 아우리
-		// BoostAura
-		pGameObject = CBoostAura::Create(m_pGraphicDev);
-		if (nullptr == pGameObject)
-			return E_FAIL;
-		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostAura", pGameObject);
-		vecCartBody[i]->Set_ChildWithoutTune(pGameObject);
-
 		// 쉴드
 		pGameObject = CShield1::Create(m_pGraphicDev);
 		if (nullptr == pGameObject)
