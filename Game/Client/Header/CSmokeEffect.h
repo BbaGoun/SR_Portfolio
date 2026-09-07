@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CGameObject.h"
 #include "CSmoke.h"
 #include "CTexture.h"
@@ -21,14 +21,20 @@ public:
 	virtual			void		OnResetDevice();
 	virtual			void		SetCart(CGameObject* pObj);
 
+	void			Set_Twin(bool _b) { m_bTwin = _b; }
+
+
 private:
 	CTexture*		m_pTextureCom;
 	CSmoke*			m_pSmoke;
 
 	CGameObject*	m_pCart;
+	bool			m_bTwin = true;
+	float			m_fSize;
+	float			m_iParticleCnt;
 
 public:
-	static CSmokeEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CSmokeEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize = 1.f, int iParticleCnt = 30);
 
 protected:
 	virtual		void		Free() override;

@@ -77,9 +77,9 @@ HRESULT CRacingScene::PostReady_Scene()
 {
 	CScene::PostReady_Scene();
 
-	CTrackMgr::GetInstance()->Set_MaxLap(1);
+	CTrackMgr::GetInstance()->Set_MaxLap(2);
 	Ready_TrackMgr();
-
+	int a;
 	Ready_RenderTarget();
 	Ready_GameLogic_Layer();
 	Ready_Environment_Layer();
@@ -155,7 +155,7 @@ HRESULT CRacingScene::LoadSceneFromFile()
 		path = L"../Bin/Resource/Editor/Scene/ItemScene.scene";
 		break;
 	case MAP_SPEED:
-		path = L"../Bin/Resource/Editor/Scene/ItemScene.scene";
+		path = L"../Bin/Resource/Editor/Scene/SpeedScene.scene";
 		break;
 	default:
 		return E_FAIL;
@@ -394,7 +394,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 			return E_FAIL;
 		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
 		static_cast<CDustLandingEffect*>(pGameObject)->SetOwner(vecCartBot[i]);
-		static_cast<CCart*>(vecCartBot[i])->SetDustLandingEffect(static_cast<CDustLandingEffect*>(pGameObject));
+		static_cast<CCartBot*>(vecCartBot[i])->SetDustLandingEffect(static_cast<CDustLandingEffect*>(pGameObject));
 	}
 
 // 파티클

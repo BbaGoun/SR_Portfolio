@@ -1,4 +1,4 @@
-#include "CSmoke.h"
+ï»¿#include "CSmoke.h"
 
 CSmoke::CSmoke(LPDIRECT3DDEVICE9 pGraphicDev)
 	: PSystem(pGraphicDev)
@@ -13,14 +13,13 @@ CSmoke::~CSmoke()
 HRESULT CSmoke::Ready_PSystem()
 {
 
-	m_fSize = 1.f;			// ¿¬±â ÇÏ³ªÀÇ È­¸é»ó Å©±â (ÇÈ¼¿´ÜÀ§)
-	m_dwVbSize = 100;		// ¹öÅØ½º ¹öÆÛ ÀüÃ¼ Å©±â
+	//m_fSize = 1.f;			// ì—°ê¸° í•˜ë‚˜ì˜ í™”ë©´ìƒ í¬ê¸° (í”½ì…€ë‹¨ìœ„)
+	m_dwVbSize = 100;		// ë²„í…ìŠ¤ ë²„í¼ ì „ì²´ í¬ê¸°
 	m_dwVbOffset = 0;
-	m_dwVbBatchSize = 25;   // ÇÑ ¹èÄ¡ Å©±â (100/25 = 4±¸°£)
+	m_dwVbBatchSize = 25;   // í•œ ë°°ì¹˜ í¬ê¸° (100/25 = 4êµ¬ê°„)
 
-	// ÃÊ±â ÆÄÆ¼Å¬ Ç® »ý¼º (µ¿½Ã¿¡ Á¸ÀçÇÒ ¼ö ÀÖ´Â ÃÖ´ë ¿¬±â °³¼ö)
-	int iParticleCnt = 30;
-	for (int i = 0; i < iParticleCnt; ++i)
+	// ì´ˆê¸° íŒŒí‹°í´ í’€ ìƒì„± (ë™ì‹œì— ì¡´ìž¬í•  ìˆ˜ ìžˆëŠ” ìµœëŒ€ ì—°ê¸° ê°œìˆ˜)
+	for (int i = 0; i < m_iParticleCnt; ++i)
 		AddParticle();
 
 	PSystem::Ready_PSystem();
@@ -75,9 +74,11 @@ void CSmoke::Update_PSystme(float timeDelta)
 }
 
 
-CSmoke* CSmoke::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CSmoke* CSmoke::Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize, int iParticleCnt)
 {
 	CSmoke* pParticle = new CSmoke(pGraphicDev);
+	pParticle->m_fSize = fSize;
+	pParticle->m_iParticleCnt = iParticleCnt;
 
 	if (FAILED(pParticle->Ready_PSystem()))
 	{

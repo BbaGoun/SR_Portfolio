@@ -30,10 +30,12 @@ public:
 	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
 
 	void		SetTarget(CGameObject* pTarget) { m_pTarget = pTarget; }
+	void		SetSmoke(CGameObject* pSmoke) { m_pSmoke = pSmoke; }
 private:
 			_float				m_fSpeed;
 			_float				m_fAngle;
 			CGameObject*		m_pTarget = nullptr;
+			CGameObject*		m_pSmoke = nullptr;
 
 public:
 	static CMissile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
