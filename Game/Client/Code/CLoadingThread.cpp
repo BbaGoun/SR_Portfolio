@@ -85,6 +85,11 @@ _uint CLoadingThread::Loading_Stage()
     //    return E_FAIL;
 
 
+    //NexonLogo
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_UI_NexonLogo", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/BackGround/NexonLogo/NexonLogo (%d).png", 84))))
+        return E_FAIL;
+    
     //Menu UI
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Scene1_Item", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/Scene/1/Scene1_Item%d.png", 2))))
         return E_FAIL;

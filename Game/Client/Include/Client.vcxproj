@@ -209,10 +209,13 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CBoostJet.h" />
     <ClInclude Include="..\Header\CBox.h" />
     <ClInclude Include="..\Header\CBubbleEscape.h" />
+    <ClInclude Include="..\Header\CButtonMgr.h" />
     <ClInclude Include="..\Header\CCart.h" />
     <ClInclude Include="..\Header\CCartBody.h" />
     <ClInclude Include="..\Header\CCartBody1.h" />
     <ClInclude Include="..\Header\CCartBody2.h" />
+    <ClInclude Include="..\Header\CNexonVideo.h" />
+    <ClInclude Include="..\Header\CSlotMgr.h" />
     <ClInclude Include="..\Header\CCollisionStarEffect.h" />
     <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
@@ -299,6 +302,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CUI_ItemIcon.h" />
     <ClInclude Include="..\Header\CUI_ItemSlot.h" />
     <ClInclude Include="..\Header\CScene1_Item.h" />
+    <ClInclude Include="..\Header\CUI_NexonLogo.h" />
     <ClInclude Include="..\Header\CUI_PauseMenu.h" />
     <ClInclude Include="..\Header\CUI_Rainbow.h" />
     <ClInclude Include="..\Header\CRankMgr.h" />
@@ -325,6 +329,9 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CBubbleEscape.cpp" />
+    <ClCompile Include="..\Code\CButtonMgr.cpp" />
+    <ClCompile Include="..\Code\CNexonVideo.cpp" />
+    <ClCompile Include="..\Code\CSlotMgr.cpp" />
     <ClCompile Include="..\Code\CDriftTrail.cpp" />
     <ClCompile Include="..\Code\CDustLandingEffect.cpp" />
     <ClCompile Include="..\Code\CFinishCam.cpp" />
@@ -382,6 +389,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CUI_Laps.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Code\CUI_NexonLogo.cpp" />
     <ClCompile Include="..\Code\CUI_PauseMenu.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>

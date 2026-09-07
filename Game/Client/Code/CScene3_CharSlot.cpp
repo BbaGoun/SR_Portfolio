@@ -1,14 +1,13 @@
 #include "pch.h"
 #include "CScene3_CharSlot.h"
 #include "CScene3_Char.h"
-#include "CScene3_CharBG.h"
 #include "CGameObject.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
 
 #include "CManagement.h"
-
+#include "CSlotMgr.h"
 
 CScene3_CharSlot::CScene3_CharSlot(LPDIRECT3DDEVICE9 pGraphicDev, CHAR_TYPE eID)
 	:CGameObject(pGraphicDev), m_eSlotNum(eID)
@@ -60,7 +59,7 @@ _int CScene3_CharSlot::Update_GameObject(const _float& fDeltaTime)
 
 	CScene3_Char* pChar = dynamic_cast<CScene3_Char*>(m_pChar);
 	CScene3_CharBG* pBG = dynamic_cast<CScene3_CharBG*>(m_pBG);
-
+	
 
 
 	_vec3 vPos;
@@ -81,6 +80,7 @@ _int CScene3_CharSlot::Update_GameObject(const _float& fDeltaTime)
 		{
 		
 			pBG->SetSelected(true);
+			CSlotMgr::GetInstance()->CharSlotClicked(this);
 			Set_Slot(m_eSelectSlot);
 		
 

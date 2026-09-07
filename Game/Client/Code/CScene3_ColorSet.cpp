@@ -39,11 +39,11 @@ HRESULT CScene3_ColorSet::Ready_GameObject()
 	
 	//RED
 		m_fFrame_Red = 1;
-		m_vPos1 = { -340, -40,4 };
+		m_vPos1 = { -335, -45,4 };
 
 	//GREEN
 		m_fFrame_Green = 3;
-		m_vPos2 = { -280, -40,4 };
+		m_vPos2 = { -275, -45,4 };
 	
 
 	return S_OK;

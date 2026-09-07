@@ -8,7 +8,7 @@ namespace Engine
 class CInvenSlotCart : public CGameObject
 {
 private:
-	explicit CInvenSlotCart(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID);
+	explicit CInvenSlotCart(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID);
 	explicit CInvenSlotCart(const CGameObject& rhs);
 	virtual ~CInvenSlotCart() override;
 
@@ -19,13 +19,13 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 public:
-	static CInvenSlotCart* Create(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID);
+	static CInvenSlotCart* Create(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID);
 	void						SetTurn(bool bTurn) { m_bTurn = bTurn; }
 	
 private:
 	Engine::CQuadrangularPrism* m_pBufferCom;
 	bool						m_bTurn;
-	INEN_SLOT_NUM	m_eSlotNum;
+	INVEN_SLOT_NUM	m_eSlotNum;
 
 protected:
 	virtual		void		Free() override;
