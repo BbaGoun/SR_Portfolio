@@ -155,7 +155,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	
 	
-	
+// 버튼
 	pUIObject = CScene3_StartBtn::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
@@ -207,7 +207,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 
 	
-	
+// 카트 슬롯1
 	CGameObject* pUIInvenSlot = CUI_InvenSlot::Create(m_pGraphicDev, INVEN_FIRST);
 	if (nullptr == pUIInvenSlot)
 		return E_FAIL;
@@ -235,6 +235,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 
 
 
+// 카트 슬롯2
 	CGameObject* pUIInvenSlot2 = CUI_InvenSlot::Create(m_pGraphicDev, INVEN_SECOND);
 	if (nullptr == pUIInvenSlot2)
 		return E_FAIL;
@@ -260,7 +261,8 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 
 	CSlotMgr::GetInstance()->AddCartSlot(pUIInvenSlot2, INVEN_SECOND);
 
-	
+
+// 캐릭터 슬롯1
 	CGameObject* pUICharSlot = CScene3_CharSlot::Create(m_pGraphicDev, CHAR_BAZZI);
 	if (pUICharSlot == nullptr)
 		return E_FAIL;
@@ -287,7 +289,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 
 
 
-
+// 캐릭터 슬롯2
 	CGameObject* pUICharSlot2 = CScene3_CharSlot::Create(m_pGraphicDev, CHAR_DAO);
 	if (pUICharSlot == nullptr)
 		return E_FAIL;
@@ -296,7 +298,6 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 	pUICharSlot2->Get_Transform()->Set_Pos({ -230, 120, 1 });
 	pUICharSlot2->Get_Transform()->Set_Scale({ 120,120,1 });
 	
-
 	pUIObject = CScene3_CharBG::Create(m_pGraphicDev, CHAR_DAO);
 	if (pUIObject == nullptr)
 		return E_FAIL;
@@ -318,7 +319,8 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_UnderBar", pUIObject)))
 		return E_FAIL;
-	
+
+// 종료 버튼
 	pUIObject = CUI_XButton::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;

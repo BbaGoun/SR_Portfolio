@@ -45,6 +45,7 @@ public:
 	void			Set_SceneDirty(bool _b) { m_pScene->Set_Dirty(_b); }
 	bool			Get_SceneDirty() { return m_pScene->Get_Dirty(); }
 
+	bool			Get_ChangeSceneState() { return m_bChangeScene; }
 
 public:
 	HRESULT			Set_Scene(CScene* pScene);
@@ -59,6 +60,8 @@ public:
 private:
 	CScene*					m_pScene;
 	CScene*					m_pNextScene;
+
+	bool					m_bChangeScene = false;
 
 public:
 	virtual void			Free();

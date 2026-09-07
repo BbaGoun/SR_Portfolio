@@ -39,7 +39,7 @@ private:
 public:
 	static CUI_PauseMenu* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-	bool			m_bShow;
+	bool			m_bShow = false;
 
 	CGameObject* m_pReplay;
 	CGameObject* m_pMenu;

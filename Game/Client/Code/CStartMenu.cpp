@@ -49,7 +49,7 @@ HRESULT CStartMenu::Ready_Scene()
 
 
 	SoundMgr::GetInstance().PlayBGM(L"BGM/Main/title.ogg", 0.4f);
-
+	CRenderer::GetInstance()->SetBlur(false);
 	return S_OK;
 }
 

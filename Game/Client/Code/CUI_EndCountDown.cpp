@@ -58,7 +58,7 @@ _int CUI_EndCountDown::Update_GameObject(const _float& fDeltaTime)
 		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 
-		if (m_fFrame > 0.f)
+		if (m_fFrame > 0.f && m_fFrame <= 10.f)
 		{
 			_vec3 vPos;
 			m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -111,7 +111,7 @@ void CUI_EndCountDown::SetFrame(int iFrame)
 
 	m_iShakeCnt = 0;
 
-	if (iFrame > 0)
+	if (iFrame > 0 && m_fFrame <= 10.f)
 	{
 		m_pTransformCom->Set_Scale(_vec3({ 136.f,100.f,0 }) * 0.8f);
 		m_pTransformCom->Set_Pos({ -(vp.Width * 0.5f),vp.Height * 0.1f,1.f });
@@ -119,7 +119,7 @@ void CUI_EndCountDown::SetFrame(int iFrame)
 	else
 	{
 		m_pTransformCom->Set_Scale(_vec3({ 339.f,100.f,0 }) * 0.8f);
-		m_pTransformCom->Set_Pos({ 0,vp.Height * 0.1f,1.f });
+		m_pTransformCom->Set_Pos({ 0,vp.Height * 0.15f,1.f });
 	}
 }
 
@@ -156,7 +156,22 @@ void CUI_EndCountDown::UdateFrame()
 
 	if (fPlayTimer > fEndTime + 10.f && bPlaying == false)
 	{
-		SetFrame(0);
+		CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+		if (pCart->GetActive() == false)
+		{
+			if (pCart == CTrackMgr::GetInstance()->GetWinner())
+			{
+				SetFrame(11);//성공
+			}
+			else
+			{
+				SetFrame(12);//완주
+			}
+		}
+		else
+		{
+			SetFrame(0);
+		}
 	}
 	else
 	{

@@ -51,7 +51,10 @@
 #include "CCollisionStarEffect.h"
 #include "CItemGainEffect.h"
 #include "CUI_RankNumber.h"
-#include <SoundMgr.h>
+#include "CUI_PauseMenu.h"
+#include "CPause_MenuBtn.h"
+#include "CPause_ReplayBtn.h"
+#include "SoundMgr.h"
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -384,6 +387,14 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 			return E_FAIL;
 		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BotBubble", pGameObject);
 		static_cast<CCartBot*>(vecCartBot[i])->SetBubble(pGameObject);
+
+		// 착지시 연기 이펙트
+		pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
+		static_cast<CDustLandingEffect*>(pGameObject)->SetOwner(vecCartBot[i]);
+		static_cast<CCart*>(vecCartBot[i])->SetDustLandingEffect(static_cast<CDustLandingEffect*>(pGameObject));
 	}
 
 // 파티클
@@ -395,16 +406,14 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SpeedLine", pGameObject);
 	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
-
 // Particle
 	// SmokeParticle
 	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
-	
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
-
+	int a;
 	// 충돌시 나오는 별 이펙트
 	pGameObject = CCollisionStarEffect::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
@@ -418,13 +427,14 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
+	static_cast<CDustLandingEffect*>(pGameObject)->SetOwner(pCart);
+	static_cast<CCart*>(pCart)->SetDustLandingEffect(static_cast<CDustLandingEffect*>(pGameObject));
 
 	//ItemGainEffect
 	pGameObject = CItemGainEffect::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"ItemGainEffect", pGameObject);
-
 
 //Camera
 	//// # 플레이어 따라다니는 3인칭 카메라
@@ -798,6 +808,25 @@ HRESULT CRacingScene::Ready_UI_Layer()
 			return E_FAIL;
 		static_cast<CMinimapCartBot*>(pUIObject)->SetCartBot(pCartBot);
 	}
+
+	//PauseMenu
+	CGameObject* pPauseMenu = CUI_PauseMenu::Create(m_pGraphicDev);
+	if (pPauseMenu == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_MenuPause", pPauseMenu)))
+		return E_FAIL;
+
+	pUIObject = CPause_ReplayBtn::Create(m_pGraphicDev);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"Pause_ReplayBtn", pUIObject)))
+		return E_FAIL;
+
+	pUIObject = CPause_MenuBtn::Create(m_pGraphicDev);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"Pause_MenuBtn", pUIObject)))
+		return E_FAIL;
 
 	return S_OK;
 }

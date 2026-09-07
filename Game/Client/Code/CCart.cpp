@@ -880,11 +880,8 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 			if (fDeltaY <= 0.1f)
 			{
 				if (m_fAirTime > 0.3f)//공중에 떠있는 시간
-				{
-					CDustLandingEffect* pDustLandingEffect = dynamic_cast<CDustLandingEffect*>
-						(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"DustLandingEffect"));
-					pDustLandingEffect->ResetParticle();
-				}
+					m_pDustLandingEffect->ResetParticle();
+
 				m_fAirTime = 0.f;
 				m_eCartState = CART_STATE_GROUND;
 				m_pTransformCom->Set_Pos({ vCartPos.x, fGroundY, vCartPos.z });

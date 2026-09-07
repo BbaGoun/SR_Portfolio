@@ -12,6 +12,7 @@
 #include "CManagement.h"
 
 #include "CStartMenu.h"
+#include "CPlayTimeMgr.h"
 
 
 CPause_MenuBtn::CPause_MenuBtn(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
@@ -33,7 +34,7 @@ HRESULT CPause_MenuBtn::Ready_GameObject()
 	Engine::CComponent* pComponent = nullptr;
 
 
-	m_vPos = { 120,20,5 };
+	m_vPos = { 120,-60,5 };
 	m_vScale = { 100, 100, 0 };
 	m_pTransformCom->Set_Pos(m_vPos);
 	m_pTransformCom->Set_Scale(m_vScale);
@@ -49,7 +50,6 @@ HRESULT CPause_MenuBtn::Ready_GameObject()
 		return E_FAIL;
 
 	m_fFrame = 0;
-	//Set_Show(false);
 	return S_OK;
 
 
@@ -78,16 +78,11 @@ _int CPause_MenuBtn::Update_GameObject(const _float& fDeltaTime)
 
 			if (nullptr == pStage)
 				return E_FAIL;
-
 			CManagement::GetInstance()->Request_Scene(pStage);
 		}
 	}
 	else
 		m_fFrame = 0;
-
-
-	
-
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

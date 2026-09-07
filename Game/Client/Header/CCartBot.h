@@ -10,6 +10,7 @@ namespace Engine
 	class CSphere_Collider;
 }
 
+class CDustLandingEffect;
 class CCartBot : public CGameObject
 {
 private:
@@ -123,6 +124,9 @@ public:
 	bool			GetBubble() { return m_bBubble; }
 	void			SetBubble(CGameObject* pBubble) { m_pBubble = pBubble; }
 
+	// DustLandingEffect
+	void			SetDustLandingEffect(CDustLandingEffect* pEffect) { m_pDustLandingEffect = pEffect; }
+
 private:
 	CGameObject*	AcquireAimTarget();
 	void			ConsumeFirstItem();
@@ -203,6 +207,7 @@ private:
 	float			m_fBubbleTimer = 0.f;
 	CGameObject*	m_pBubble = nullptr;
 
+	CDustLandingEffect* m_pDustLandingEffect = nullptr;
 protected:
 	virtual		void		Free() override;
 };
