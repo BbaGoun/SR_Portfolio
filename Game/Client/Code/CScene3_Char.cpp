@@ -49,7 +49,7 @@ _int CScene3_Char::Update_GameObject(const _float& fDeltaTime)
 	CRenderer::GetInstance()->Add_RenderTargetGroup(szFileName, this);
 
 	if (m_bTurn)
-		m_vRotation.y += fDeltaTime;
+		m_vRotation.y += 2 * fDeltaTime;
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -82,7 +82,15 @@ void CScene3_Char::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	m_pGraphicDev->SetTexture(0, nullptr);
 
-	m_pBufferCom->Render_Buffer();
+	//m_pBufferCom->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	RenderSubtree(this);
+
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProj);
