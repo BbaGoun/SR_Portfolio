@@ -15,6 +15,7 @@ private:
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
+	virtual			void		PostReady_GameObject() override;
 	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) override;
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
@@ -33,7 +34,8 @@ private:
 
 	bool				m_bBoost;
 	DIRECTION_TYPE		m_eCartDirType;
-	bool				m_bKeyInput = true;
+	bool				m_bKeyInput = false;
+	bool				m_bFirst = true;
 
 protected:
 	virtual		void		Free() override;

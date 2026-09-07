@@ -6,6 +6,7 @@
 #include "CCart.h"
 #include "CCameraMgr.h"
 #include "CPlayTimeMgr.h"
+#include "CCartBot.h"
 CPlayerArm::CPlayerArm(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -32,6 +33,11 @@ HRESULT CPlayerArm::Ready_GameObject()
 	return S_OK;
 }
 
+void CPlayerArm::PostReady_GameObject()
+{
+
+}
+
 void CPlayerArm::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	D3DXQUATERNION q;
@@ -44,6 +50,16 @@ void CPlayerArm::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CPlayerArm::Update_GameObject(const _float& fDeltaTime)
 {
+	if (m_bFirst) {
+		// 플레이어 바디 -> 플레이어 -> 카트 바디 -> 카트
+		CGameObject* p = m_pParent->Get_Parent()->Get_Parent()->Get_Parent()->Get_Parent();
+		if (CCart* pCart = dynamic_cast<CCart*>(p))
+			m_bKeyInput = true;
+		else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(p))
+			m_bKeyInput = false;
+		m_bFirst = false;
+	}
+
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 	if (CPlayTimeMgr::GetInstance()->GetPlayTimer() > CPlayTimeMgr::GetInstance()->GetPlayTimer() + 10.f)
 	{
