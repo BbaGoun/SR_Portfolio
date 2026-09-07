@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "PSystem.h"
 BEGIN(Engine)
 class ENGINE_DLL CSmoke : public PSystem
@@ -16,12 +16,13 @@ public:
 	void SetBackDir(const _vec3& vBackDir) { m_vBackDir = vBackDir; }
 
 public:
-	static CSmoke* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CSmoke* Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize = 1.f, int iParticleCnt = 30);
 
 	virtual			void		OnLostDevice();
 	virtual			void		OnResetDevice();
 private:
-	_vec3 m_vBackDir;   // Ä«Æ® µÚ ¹æÇâ
+	_vec3 m_vBackDir;   // ì¹´íŠ¸ ë’¤ ë°©í–¥
+	int m_iParticleCnt;
 
 public:
 	virtual void Free() override;

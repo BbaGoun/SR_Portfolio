@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CMagnetBody.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -21,7 +21,7 @@ HRESULT CMagnetBody::Ready_GameObject()
 	CGameObject::Ready_GameObject();
 	CComponent* pComponent = nullptr;
 
-	// ³ªÁß¿¡ ¸Å½Ã´Â ¿¡µðÅÍ·ÎºÎÅÍ »ý¼º
+	// ë‚˜ì¤‘ì— ë§¤ì‹œëŠ” ì—ë””í„°ë¡œë¶€í„° ìƒì„±
 
 	m_pTransformCom->Set_Scale({ 10, 10, 10 });
 
@@ -42,7 +42,7 @@ void CMagnetBody::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CMagnetBody::Update_GameObject(const _float& fDeltaTime)
 {
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -58,7 +58,7 @@ void CMagnetBody::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//m_pTextureCom->Set_Texture(0);
+	m_pGraphicDev->SetTexture(0, nullptr);
 
 	//Get_Component<CVIBuffer>()->Render_Buffer();
 	m_pBufferCom->Render_Buffer();

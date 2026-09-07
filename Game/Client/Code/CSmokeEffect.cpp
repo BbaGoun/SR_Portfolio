@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CSmokeEffect.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -31,7 +31,7 @@ HRESULT CSmokeEffect::Ready_GameObject()
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
-	m_pSmoke = CSmoke::Create(m_pGraphicDev);
+	m_pSmoke = CSmoke::Create(m_pGraphicDev, m_fSize, m_iParticleCnt);
 
 	return S_OK;
 }
@@ -46,16 +46,22 @@ _int CSmokeEffect::Update_GameObject(const _float& fDeltaTime)
 	m_pCart->Get_Transform()->Get_Info(INFO_RIGHT, &vRight);
 	D3DXVec3Normalize(&vLook, &vLook);
 	D3DXVec3Normalize(&vRight, &vRight);
-	if(rand()%2 == 0)
-		vPos += _vec3({0,1,0})* 0.5f+ vLook * -2.5f + vRight * -1.1f;
+	if (m_bTwin) {
+		if (rand() % 2 == 0)
+			vPos += _vec3({ 0,1,0 }) * 0.5f + vLook * -2.5f + vRight * -1.1f;
+		else
+			vPos += _vec3({ 0,1,0 }) * 0.5f + vLook * -2.5f + vRight * 1.1f;
+	}
 	else
-		vPos += _vec3({ 0,1,0 }) * 0.5f + vLook * -2.5f + vRight * 1.1f;
+		vPos += -3 * vLook;
 
 	vLook *= -1;
 	m_pSmoke->SetOrigin(vPos);
 	m_pSmoke->SetBackDir(vLook);
 
-	if (static_cast<CCart*>(m_pCart)->GetBoost() == false)
+	if(!m_bTwin)
+		m_pSmoke->Update_PSystme(fDeltaTime);
+	else if (static_cast<CCart*>(m_pCart)->GetBoost() == false)
 		m_pSmoke->Update_PSystme(fDeltaTime);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
@@ -75,9 +81,11 @@ void CSmokeEffect::Render_GameObject()
 	m_pSmoke->Render_Particle();
 }
 
-CSmokeEffect* CSmokeEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CSmokeEffect* CSmokeEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev, float fSize, int iParticleCnt)
 {
 	CSmokeEffect* pObj = new CSmokeEffect(pGraphicDev);
+	pObj->m_fSize = fSize;
+	pObj->m_iParticleCnt = iParticleCnt;
 
 	if (FAILED(pObj->Ready_GameObject()))
 	{

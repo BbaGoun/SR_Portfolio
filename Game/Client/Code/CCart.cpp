@@ -37,6 +37,8 @@
 #include "CMagnet.h"
 #include "CMagnetBody.h"
 #include "CBarricade.h"
+#include "CSmokeEffect.h"
+
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -1307,13 +1309,13 @@ void CCart::SetWheelTurn(WHEEL_TURN eTurn)
 
 void CCart::CreateMissileObject(CGameObject* pTarget)	
 {
-	CGameObject* pMissile = CMissile::Create(m_pGraphicDev);
+	CMissile* pMissile = CMissile::Create(m_pGraphicDev);
 
 	if (pMissile == nullptr)
 		return;
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Missile", pMissile)))
 		return;
-	static_cast<CMissile*>(pMissile)->SetTarget(pTarget);
+	pMissile->SetTarget(pTarget);
 
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_rocket/shooting.ogg", SOUND_MISSILE, 0.4f, true);
 
@@ -1325,27 +1327,20 @@ void CCart::CreateMissileObject(CGameObject* pTarget)
 
 	pMissile->Set_Child(pMissileBody);
 
-	_vec3 vPos, vLook, vTargetPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	pMissile->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-
-	_vec3 vDir = vTargetPos - vPos;
-	D3DXVec3Normalize(&vDir, &vDir);
-
-	vPos += vDir * 5.f;
-
-	if (D3DXVec3Length(&vDir) <= 0.001f)
+	CSmokeEffect* pSmokeEffect = CSmokeEffect::Create(m_pGraphicDev, 3.f, 150);
+	if (pSmokeEffect == nullptr)
+		return;
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_SmokeEffect", pSmokeEffect)))
 		return;
 
-	D3DXVec3Normalize(&vDir, &vDir);
-
-	_quaternion qRot;
-
-	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
-
+	_vec3 vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	vPos.y += 2.f;
 	pMissile->Get_Transform()->Set_Pos(vPos);
-	pMissile->Get_Transform()->Set_Quaternion(&qRot);
+	
+	pSmokeEffect->Set_Twin(false);
+	pSmokeEffect->SetCart(pMissileBody);
+	pMissile->SetSmoke(pSmokeEffect);
 }
 
 void CCart::CreateTargetAimObject()	

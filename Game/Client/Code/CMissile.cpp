@@ -37,106 +37,50 @@ HRESULT CMissile::Ready_GameObject()
 
 void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	//pTransform = dynamic_cast<Engine::CTransform*>(CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_MissileTarget", L"Com_Transform"));
-	CTransform* pTransform = m_pTarget->Get_Transform();
+	CTransform* pTargetTransform = m_pTarget->Get_Transform();
 	// 여기선 ID_DYNAMIC이 아닌 ID_STATIC 로 사용
-	if (nullptr == pTransform)
+	if (nullptr == pTargetTransform)
 		return;
 
-	_vec3 vBoxPos;
-	pTransform->Get_Info(INFO_POS, &vBoxPos);
+	_vec3 vTargetPos;
+	pTargetTransform->Get_Info(INFO_POS, &vTargetPos);
 
 	 _vec3 vMissilePos;
 	m_pTransformCom->Get_Info(INFO_POS, &vMissilePos);
 	//cout << vMissilePos.x << " | " << vMissilePos.y << " | " << vMissilePos.z << " | " << "\n";
 
-	_vec3 vDir = vBoxPos - vMissilePos;
+	_vec3 vDir = vTargetPos - vMissilePos;
 	_float fDistance = D3DXVec3Length(&vDir);
 
-	_float radius = clampT((fDistance-10.f) * 8.f, 0.f, 1500.f);
+	_float radius = clampT(fDistance, 0.f, 10.f);
 
-	m_fAngle += D3DXToRadian(800.f) * fFixedDeltaTime;
+	m_fAngle += D3DXToRadian(720.f) * fFixedDeltaTime;
+	m_fAngle = fmodf(m_fAngle, D3DX_PI * 2.f);
 
-	D3DXMATRIX matOffset;
-	D3DXMATRIX matRot;
-	D3DXMATRIX matCenter;
+	D3DXVec3Normalize(&vDir, &vDir);
 
-	_vec3 vAxis = vDir;
-	D3DXVec3Normalize(&vAxis, &vAxis);
+	m_pTransformCom->Move_Pos(&vDir, m_fSpeed, fFixedDeltaTime);
 
-	_vec3 vUp = { 0.f, 1.f, 0.f };
-	_vec3 vRight;
+	_vec3 vWorldLook = { 0, 0, 1 };
 
-	D3DXVec3Cross(&vRight, &vUp, &vAxis);
-	D3DXVec3Normalize(&vRight, &vRight);
+	float dot = D3DXVec3Dot(&vDir, &vWorldLook);
+	_vec3 cross;
+	D3DXVec3Cross(&cross, &vDir, &vWorldLook);
+	float fRadian = atan2f(cross.y, dot);
 
-	D3DXMatrixTranslation(&matOffset, vRight.x * radius, vRight.y * radius, vRight.z * radius);
-	D3DXMatrixRotationAxis(&matRot, &vAxis, m_fAngle);
-	D3DXMatrixTranslation(&matCenter, vBoxPos.x, vBoxPos.y, vBoxPos.z);
+	_quaternion q;
+	D3DXQuaternionRotationYawPitchRoll(&q, fRadian, 0, 0);
+	m_pTransformCom->Set_Quaternion(&q);
+	
+	CGameObject* pBody = m_vecChildren.front();
+	_vec3 offset{
+		cosf(m_fAngle) * radius,
+		sinf(m_fAngle) * radius,
+		0.f
+	};
+	pBody->Get_Transform()->Set_Pos(offset);
 
-	_matrix matOrbit = matOffset * matRot * matCenter;
-
-	_vec3 vBoxOrbit;
-	_vec3 vOriginPos = { 0.f, 0.f, 0.f };
-
-	D3DXVec3TransformCoord(&vBoxOrbit, &vOriginPos, &matOrbit);
-
-	if (fDistance > 8.f)
-	{
-		_vec3 vMoveDir = vBoxOrbit - vMissilePos;
-		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
-
-		_vec3 vForwardDir = vDir;
-		D3DXVec3Normalize(&vForwardDir, &vForwardDir);
-
-		vMoveDir += vDir * 0.01f;
-
-
-		_vec3 vLookDir = vBoxPos - vMissilePos;
-		vLookDir.y = 0;
-		D3DXVec3Normalize(&vLookDir, &vLookDir);
-
-		_matrix matRot2;
-		m_pTransformCom->GetFollowRotation(&vLookDir, &matRot2);
-
-		_quaternion qRot;
-		D3DXQuaternionRotationMatrix(&qRot, &matRot2);
-
-		m_pTransformCom->Multiple_Quaternion(&qRot);
-
-		_quaternion qRot2 = m_pTransformCom->Get_WorldQuaternion();
-		if (qRot2.x == 0 && qRot2.y == 0 && qRot2.z == 0 && qRot2.w == 0)
-			m_pTransformCom->GetFollowRotation(&vLookDir, &matRot2);		
-
-		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed ,fFixedDeltaTime);
-		m_pTransformCom->Move_Pos(&vAxis, 400.f, fFixedDeltaTime);
-
-	}
-	else if(fDistance > 1.f)
-	{
-		_vec3 vMoveDir = vBoxPos - vMissilePos;
-		D3DXVec3Normalize(&vMoveDir, &vMoveDir);
-
-		_vec3 vLookDir = vBoxPos - vMissilePos;
-		vLookDir.y = 0;
-		D3DXVec3Normalize(&vLookDir, &vLookDir);
-
-		_matrix matRot2;
-		m_pTransformCom->GetFollowRotation(&vLookDir, &matRot2);
-
-		_quaternion qRot;
-		D3DXQuaternionRotationMatrix(&qRot, &matRot2);
-
-		m_pTransformCom->Multiple_Quaternion(&qRot);
-		
-		_quaternion qRot2 = m_pTransformCom->Get_WorldQuaternion();
-		if (qRot2.x == 0 && qRot2.y == 0 && qRot2.z == 0 && qRot2.w == 0)
-			m_pTransformCom->GetFollowRotation(&vLookDir, &matRot2);		
-
-		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
-	}
-	else
-	{
+	if (fDistance < 3.f) {
 		CCartBody* pCartBody = nullptr;
 		for (auto& pChild : m_pTarget->Get_Children())
 		{
@@ -148,7 +92,7 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		if (CCart* pCart = dynamic_cast<CCart*>(m_pTarget))
 		{
 			CShield1* pShield = static_cast<CShield1*>(pCart->GetShield1());
-			CShield2* pShield2 = static_cast<CShield2*>(pCart->GetShield1());
+			CShield2* pShield2 = static_cast<CShield2*>(pCart->GetShield2());
 			if (pShield->GetShow() || pShield2->GetShow())
 			{
 				pShield->SetShow(false);
@@ -163,12 +107,12 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 				pCart->SetMissileHit(true);
 
 				CGameObject* pMissileEffect = CMissileEffect::Create(m_pGraphicDev);
-				
+
 				if (pMissileEffect == nullptr)
 					return;
 				if (FAILED(m_pLayer->Add_GameObject(L"Obj_MissileEffect", pMissileEffect)))
 					return;
-				
+
 				_vec3 vCartPos;
 				pCart->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
 				pMissileEffect->Get_Transform()->Set_Pos(vCartPos);
@@ -177,7 +121,7 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pTarget))
 		{
 			CShield1* pShield = static_cast<CShield1*>(pCartBot->GetShield1());
-			CShield2* pShield2 = static_cast<CShield2*>(pCartBot->GetShield1());
+			CShield2* pShield2 = static_cast<CShield2*>(pCartBot->GetShield2());
 			if (pShield->GetShow() || pShield2->GetShow())
 			{
 				pShield->SetShow(false);
@@ -191,27 +135,21 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 				pCartBot->Set_Force({ 0,0,0 });
 				pCartBot->SetMissileHit(true);
 
-				CGameObject * pMissileEffect = CMissileEffect::Create(m_pGraphicDev);
-				
+				CGameObject* pMissileEffect = CMissileEffect::Create(m_pGraphicDev);
+
 				if (pMissileEffect == nullptr)
 					return;
 				if (FAILED(m_pLayer->Add_GameObject(L"Obj_MissileEffect", pMissileEffect)))
 					return;
-				
+
 				_vec3 vCartBotPos;
 				pCartBot->Get_Transform()->Get_Info(INFO_POS, &vCartBotPos);
 				pMissileEffect->Get_Transform()->Set_Pos(vCartBotPos);
 			}
 		}
-		vector<CGameObject*> vecChildren = Get_Children();
-		for (auto& pChild : vecChildren)
-		{
-			pChild->To_Root();
-			m_pLayer->Delete_GameObject(pChild);
-		}
 		m_pLayer->Delete_GameObject(this);
+		m_pLayer->Delete_GameObject(m_pSmoke);
 	}
-	// m_pColliderCom->LateUpdate_Component(fFixedDeltaTime);	// 테스트용
 }
 
 _int CMissile::Update_GameObject(const _float& fTimeDelta)
@@ -239,18 +177,6 @@ void CMissile::CollisionEnter(CCollider* pOtherCollider)
 void CMissile::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
-
-	//if (wcscmp(wOtherTag, L"Obj_CartBotBody") == 0)
-	//{
-	//	vector<CGameObject*> vecChildren = Get_Children();
-	//
-	//	for (auto& pChild : vecChildren)
-	//	{
-	//		pChild->To_Root();
-	//		m_pLayer->Delete_GameObject(pChild);
-	//	}
-	//	m_pLayer->Delete_GameObject(this);
-	//}
 }
 
 CMissile* CMissile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
