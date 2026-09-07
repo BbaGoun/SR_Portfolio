@@ -5,7 +5,7 @@
 #include "CRenderer.h"
 
 
-CInvenSlotBG::CInvenSlotBG(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)
+CInvenSlotBG::CInvenSlotBG(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID)
 	:CGameObject(pGraphicDev), m_eSlotNum(eID)
 {
 }
@@ -87,7 +87,7 @@ void CInvenSlotBG::SetSelected(bool bSelected)
 	
 }
 
-CInvenSlotBG* CInvenSlotBG::Create(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)
+CInvenSlotBG* CInvenSlotBG::Create(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID)
 {
 	CInvenSlotBG* pObj = new CInvenSlotBG(pGraphicDev, eID);
 

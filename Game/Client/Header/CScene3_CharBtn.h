@@ -2,6 +2,7 @@
 #include "CGameObject.h"
 #include "CRcTex.h"
 #include "CTexture.h"
+#include "CScene3_CharSlot.h"
 
 class CScene3_CharBtn :
 	public CGameObject
@@ -18,7 +19,8 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
-	//virtual			HRESULT		Set_ClickIcon(const _float& fDeltaTime);
+	void						Set_WindowShow(bool bWindowShow) { dynamic_cast<CScene3_CharSlot*>(m_pChar)->Set_Show(bWindowShow); }
+	bool						Get_WindowShow() { return dynamic_cast<CScene3_CharSlot*>(m_pChar)->Get_Show(); }
 
 private:
 	CRcTex* m_pBufferCom;
@@ -29,6 +31,9 @@ private:
 	_vec3	m_vScale;
 public:
 	static CScene3_CharBtn* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+	CGameObject* m_pChar;
+
 
 protected:
 	virtual		void		Free() override;

@@ -27,7 +27,8 @@
 #include "CInvenSlotCart.h"
 #include "CInventoryScene.h"
 #include "CDinputMgr.h"
-
+#include "CSlotMgr.h"
+#include "CButtonMgr.h"
 
 
 CMenu_Set::CMenu_Set(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -162,30 +163,39 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_StartBtn", pUIObject)))
 		return E_FAIL;
+	//CButtonMgr::GetInstance()->AddBtntoVec(pUIObject);
 	
-	pUIObject = CScene3_CharBtn::Create(m_pGraphicDev);
+
+	CGameObject* pCharBtnObject = CScene3_CharBtn::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"UI_CharBtn", pUIObject)))
+	if (FAILED(pUILayer->Add_GameObject(L"UI_CharBtn", pCharBtnObject)))
 		return E_FAIL;
+	CButtonMgr::GetInstance()->AddBtntoVec(pCharBtnObject);
+
 	
 	pUIObject = CScene3_KartBtn::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_KartBtn", pUIObject)))
 		return E_FAIL;
-	
+	CButtonMgr::GetInstance()->AddBtntoVec(pUIObject);
+
+
 	pUIObject = CScene3_ColorBtn::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_ColorBtn", pUIObject)))
 		return E_FAIL;
+	CButtonMgr::GetInstance()->AddBtntoVec(pUIObject);
+
 
 	pUIObject = CScene3_ColorSetBG::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_ColorSetBG", pUIObject)))
 		return E_FAIL;
+	//CButtonMgr::GetInstance()->AddBtntoVec(pUIObject);
 
 	pUIObject = CScene3_ColorSet::Create(m_pGraphicDev, COLOR_RED);
 	if (nullptr == pUIObject)
@@ -205,7 +215,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_InvenSlot", pUIInvenSlot)))
 		return E_FAIL;
-	pUIInvenSlot->Get_Transform()->Set_Pos({ -350, 0, 1 });
+	pUIInvenSlot->Get_Transform()->Set_Pos({ -330, 10, 1 });
 	pUIInvenSlot->Get_Transform()->Set_Scale({ 100,150,1 });
 	
 	
@@ -223,12 +233,16 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	static_cast<CUI_InvenSlot*>(pUIInvenSlot)->SetItem(pUIObject);
 
+	CSlotMgr::GetInstance()->AddCartSlot(pUIInvenSlot, INVEN_FIRST);
+
+
+
 	CGameObject* pUIInvenSlot2 = CUI_InvenSlot::Create(m_pGraphicDev, INVEN_SECOND);
 	if (nullptr == pUIInvenSlot2)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_InvenSlot2", pUIInvenSlot2)))
 		return E_FAIL;
-	pUIInvenSlot2->Get_Transform()->Set_Pos({ -250, 0, 1 });
+	pUIInvenSlot2->Get_Transform()->Set_Pos({ -230, 10, 1 });
 	pUIInvenSlot2->Get_Transform()->Set_Scale({ 100,150,1 });
 
 
@@ -245,14 +259,17 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"InvenSlotCart2", pUIObject)))
 		return E_FAIL;
 	static_cast<CUI_InvenSlot*>(pUIInvenSlot2)->SetItem(pUIObject);
+
+	CSlotMgr::GetInstance()->AddCartSlot(pUIInvenSlot2, INVEN_SECOND);
+
 	
 	CGameObject* pUICharSlot = CScene3_CharSlot::Create(m_pGraphicDev, CHAR_BAZZI);
 	if (pUICharSlot == nullptr)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"CharSlot1", pUICharSlot)))
 		return E_FAIL;
-	pUICharSlot->Get_Transform()->Set_Pos({ -275, 100, 1 });
-	pUICharSlot->Get_Transform()->Set_Scale({ 200,200,1 });
+	pUICharSlot->Get_Transform()->Set_Pos({ -330, 120, 1 });
+	pUICharSlot->Get_Transform()->Set_Scale({ 120,120,1 });
 
 	pUIObject = CScene3_CharBG::Create(m_pGraphicDev, CHAR_BAZZI);
 	if (pUIObject == nullptr)
@@ -268,8 +285,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	static_cast<CScene3_CharSlot*>(pUICharSlot)->SetChar(pUIObject);
 
-
-
+	CSlotMgr::GetInstance()->AddCharSlot(pUICharSlot, CHAR_BAZZI);
 
 
 
@@ -279,8 +295,8 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"CharSlot2", pUICharSlot2)))
 		return E_FAIL;
-	pUICharSlot2->Get_Transform()->Set_Pos({ -100, 100, 1 });
-	pUICharSlot2->Get_Transform()->Set_Scale({ 200,200,1 });
+	pUICharSlot2->Get_Transform()->Set_Pos({ -230, 120, 1 });
+	pUICharSlot2->Get_Transform()->Set_Scale({ 120,120,1 });
 	
 
 	pUIObject = CScene3_CharBG::Create(m_pGraphicDev, CHAR_DAO);
@@ -297,6 +313,7 @@ HRESULT CMenu_Set::Ready_UI_Layer()
 		return E_FAIL;
 	static_cast<CScene3_CharSlot*>(pUICharSlot2)->SetChar(pUIObject);
 
+	CSlotMgr::GetInstance()->AddCharSlot(pUICharSlot2, CHAR_DAO);
 	
 	pUIObject = CUI_UnderBar::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)

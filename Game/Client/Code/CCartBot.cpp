@@ -111,8 +111,8 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	if (m_bMissileHit == true)
 		return;
-	UpdateBubble(fFixedDeltaTime);
 
+	UpdateBubble(fFixedDeltaTime);
 	if (m_bBubble == true)
 		return;
 	
@@ -193,13 +193,13 @@ void CCartBot::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		if (acceleration > 0)
 		{
-			if (acceleration > D3DXVec3Length(&m_vForce) * 1.5f)
-				m_eBoostState = BOOST_STATE_LONG_BOOST;
-			else
-				m_eBoostState = BOOST_STATE_NORMAL;
+			cout << "a\n";
+			m_eBoostState = BOOST_STATE_LONG_BOOST;
+
 			m_vForce += dir * acceleration * fFixedDeltaTime;
 		}
 		else {
+			cout << "b\n";
 			m_eBoostState = BOOST_STATE_NORMAL;
 
 			m_vForce *= clampT(1.f + acceleration * fFixedDeltaTime, 0.1f, 1.f);

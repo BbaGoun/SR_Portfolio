@@ -10,10 +10,11 @@
 #include "CRenderer.h"
 #include "CDInputMgr.h"
 #include "CManagement.h"
+#include "CButtonMgr.h"
 
 #include "CScene3_Map_ForestValley.h"
 #include "CScene3_CharSlot.h"
-
+#include "CSlotMgr.h"
 CScene3_CharBtn::CScene3_CharBtn(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
 }
@@ -75,16 +76,22 @@ _int CScene3_CharBtn::Update_GameObject(const _float& fDeltaTime)
 
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
-			if (pSlot->Get_Show() == false)
-				pSlot->Set_Show(true);
+			//if (pSlot->Get_Show() == false)
+			//	pSlot->Set_Show(true);
+			//else
+			//	pSlot->Set_Show(false);
+			//
+			//
+			//if (pSlot2->Get_Show() == false)
+			//	pSlot2->Set_Show(true);
+			//else
+			//	pSlot2->Set_Show(false);
+			if(CSlotMgr::GetInstance()->GetCharSlotShow())
+				CSlotMgr::GetInstance()->SetCharSlotShow(false);
 			else
-				pSlot->Set_Show(false);
-
-
-			if (pSlot2->Get_Show() == false)
-				pSlot2->Set_Show(true);
-			else
-				pSlot2->Set_Show(false);
+				CSlotMgr::GetInstance()->SetCharSlotShow(true);
+			
+			CButtonMgr::GetInstance()->ButtonClicked(this);
 		}
 
 	}

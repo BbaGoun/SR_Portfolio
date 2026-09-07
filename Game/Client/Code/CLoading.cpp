@@ -8,7 +8,7 @@
 #include "CRcTex.h"
 #include "CCollisionTest.h"
 #include "CItem.h"
-#include "CStartMenu.h"
+#include "CNexonVideo.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
     : CScene(pGraphicDev), m_pLoadingThread(nullptr)
@@ -41,12 +41,11 @@ _int CLoading::Update_Scene(const _float& fDeltaTime)
 
     if (m_pLoadingThread->Get_Finish())
     {
-        if (GetAsyncKeyState(VK_RETURN))
-        {
+        
             //Engine::CScene* pStage = CScene_Test::Create(m_pGraphicDev);
             //Engine::CScene* pStage = CItem::Create(m_pGraphicDev);
             //Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
-            Engine::CScene* pStage = CStartMenu::Create(m_pGraphicDev);
+            Engine::CScene* pStage = CNexonVideo::Create(m_pGraphicDev);
 
             if (nullptr == pStage)
                 return E_FAIL;
@@ -56,7 +55,7 @@ _int CLoading::Update_Scene(const _float& fDeltaTime)
                 MSG_BOX("Stage Create Failed");
                 return -1;
             }
-        }
+        
     }
 
     return iExit;
@@ -130,7 +129,7 @@ HRESULT CLoading::Ready_Prototype()
     //if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/dog0.jpg", 1))))
     //    return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/BackGround/scene%d.png", 4))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/BackGround/scene%d.png", 5))))
         return E_FAIL;
                                                                                                                               
     return S_OK;

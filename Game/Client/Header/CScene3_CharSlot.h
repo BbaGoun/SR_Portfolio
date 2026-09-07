@@ -1,6 +1,7 @@
 #pragma once
 #include "CGameObject.h"
 #include "CMenu_Set.h"
+#include "CScene3_CharBG.h"
 
 namespace Engine
 {
@@ -28,8 +29,8 @@ public:
 
 	void	Set_Slot(CHAR_TYPE eSlot) { m_eSelectSlot = eSlot; }
 
-
-
+	bool	GetBGSelected() { return dynamic_cast<CScene3_CharBG*>(m_pBG)->GetSelected(); }
+	void	SetBGSelected(bool bSelected) { dynamic_cast<CScene3_CharBG*>(m_pBG)->SetSelected(bSelected); }
 	void	Set_Show(bool bShow) { m_bShow = bShow; };
 	bool	Get_Show() { return m_bShow; }
 

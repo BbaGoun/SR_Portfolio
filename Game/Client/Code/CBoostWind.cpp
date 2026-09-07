@@ -5,6 +5,7 @@
 #include "CDInputMgr.h"
 #include "CCart.h"
 #include "CCameraMgr.h"
+#include "CCartBot.h"
 CBoostWind::CBoostWind(LPDIRECT3DDEVICE9 pGraphicDev, BOOSTER_TYPE eID)
 	:CGameObject(pGraphicDev), m_eBoosterID(eID)
 {
@@ -81,7 +82,18 @@ void CBoostWind::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CBoostWind::Update_GameObject(const _float& fDeltaTime)
 {
+	// 바로 GetBoost 하지 않도록
 	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
+	{
+		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
+		m_fFrame += 45.f * fDeltaTime;
+		if (m_fFrame > 2.f)
+			m_fFrame = 0;
+
+		return CGameObject::Update_GameObject(fDeltaTime);
+	}
+	else if (dynamic_cast<CCartBot*>(m_pParent)->GetBoost())
 	{
 		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -97,12 +109,20 @@ void CBoostWind::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
 		CGameObject::LateUpdate_GameObject(fDeltaTime);
+	else if (dynamic_cast<CCartBot*>(m_pParent)->GetBoost())
+		CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 
 void CBoostWind::Render_GameObject()
 {
 	if (dynamic_cast<CCart*>(m_pParent)->GetBoost())
 	{		
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+		m_pTextureCom->Set_Texture((_uint)m_fFrame);
+		m_pBufferCom->Render_Buffer();
+	}
+	else if (dynamic_cast<CCartBot*>(m_pParent)->GetBoost())
+	{
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 		m_pTextureCom->Set_Texture((_uint)m_fFrame);
 		m_pBufferCom->Render_Buffer();

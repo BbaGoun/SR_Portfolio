@@ -23,6 +23,8 @@ private:
 public:
 	void SetChar(CGameObject* pChar) { m_pChar = pChar; }
 	void SetBG(CGameObject* pBG) { m_pBG = pBG; }
+
+
 public:
 	void		Selected_Slot(CGameObject* pSlot) { pSlot = m_pSlots; };
 	void		Select_Cart();
