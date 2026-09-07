@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Engine_Define.h"
 #include "CTrackMgr.h"
 #include "CRankMgr.h"
@@ -65,7 +65,10 @@ void CTrackMgr::Register_Hazard(CGameObject* pObj, ITEM_TYPE eID)
 
 	switch (eID) {
 	case ITEM_BANANA:
-		HR.radius = 3.f;
+		HR.radius = 2.4f;
+		break;
+	case ITEM_BARRICADE:
+		HR.radius = 6.f;
 		break;
 	}
 
@@ -193,6 +196,14 @@ CGameObject* CTrackMgr::Get_Forward(CGameObject* pObj)
 		return nullptr;
 
 	return (*(it - 1)).first;
+}
+
+CGameObject* CTrackMgr::Get_Apex()
+{
+	if (m_tempRanking.empty())
+		return nullptr;
+
+	return m_tempRanking.front().first;
 }
 
 void CTrackMgr::Update_RankingUI()

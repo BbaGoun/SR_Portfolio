@@ -6,7 +6,6 @@
 #include "CFontMgr.h"
 #include "CManagement.h"
 #include "CRcTex.h"
-#include "CCollisionTest.h"
 #include "CItem.h"
 #include "CNexonVideo.h"
 

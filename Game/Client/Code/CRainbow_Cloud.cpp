@@ -44,6 +44,9 @@ HRESULT CRainbow_Cloud::Ready_GameObject()
 
 	m_fTimer = 0;
 
+	Set_CollisionLayer(CL_ITEM);
+
+
 	return S_OK;
 }
 

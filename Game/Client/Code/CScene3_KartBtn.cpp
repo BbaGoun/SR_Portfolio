@@ -1,9 +1,7 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CScene3_KartBtn.h"
 
 #include "CScene.h"
-#include "CCollisionTest.h"
-
 #include "CGameObject.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"

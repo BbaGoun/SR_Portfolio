@@ -214,15 +214,10 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CButtonMgr.h" />
     <ClInclude Include="..\Header\CCart.h" />
     <ClInclude Include="..\Header\CCartBody.h" />
-    <ClInclude Include="..\Header\CCartBody1.h" />
-    <ClInclude Include="..\Header\CCartBody2.h" />
     <ClInclude Include="..\Header\CNexonVideo.h" />
     <ClInclude Include="..\Header\CSlotMgr.h" />
-    <ClInclude Include="..\Header\CCart_Shield1.h" />
-    <ClInclude Include="..\Header\CCart_Shield2.h" />
     <ClInclude Include="..\Header\CCartBot.h" />
     <ClInclude Include="..\Header\CCollisionStarEffect.h" />
-    <ClInclude Include="..\Header\CCollisionTest.h" />
     <ClInclude Include="..\Header\CCollisionBox.h" />
     <ClInclude Include="..\Header\CDriftSpark.h" />
     <ClInclude Include="..\Header\CDriftTrail.h" />
@@ -236,7 +231,6 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CMenu_Item.h" />
     <ClInclude Include="..\Header\CMenu_Set.h" />
     <ClInclude Include="..\Header\CInvenSlotBG.h" />
-    <ClInclude Include="..\Header\CInventoryScene.h" />
     <ClInclude Include="..\Header\CMagnetBody.h" />
     <ClInclude Include="..\Header\CItemBox.h" />
     <ClInclude Include="..\Header\CMinimapCart.h" />
@@ -352,8 +346,6 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CButtonMgr.cpp" />
     <ClCompile Include="..\Code\CNexonVideo.cpp" />
     <ClCompile Include="..\Code\CSlotMgr.cpp" />
-    <ClCompile Include="..\Code\CCart_Shield1.cpp" />
-    <ClCompile Include="..\Code\CCart_Shield2.cpp" />
     <ClCompile Include="..\Code\CDriftTrail.cpp" />
     <ClCompile Include="..\Code\CDustLandingEffect.cpp" />
     <ClCompile Include="..\Code\CEmp_Band.cpp" />
@@ -443,7 +435,6 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CCollisionStarEffect.cpp" />
     <ClCompile Include="..\Code\CDriftSpark.cpp" />
     <ClCompile Include="..\Code\CInvenSlotBG.cpp" />
-    <ClCompile Include="..\Code\CInventoryScene.cpp" />
     <ClCompile Include="..\Code\CMagnetBody.cpp" />
     <ClCompile Include="..\Code\CItemBox.cpp" />
     <ClCompile Include="..\Code\CLoadMgr.cpp" />
@@ -462,9 +453,6 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CBox.cpp" />
     <ClCompile Include="..\Code\CCart.cpp" />
     <ClCompile Include="..\Code\CCartBody.cpp" />
-    <ClCompile Include="..\Code\CCartBody1.cpp" />
-    <ClCompile Include="..\Code\CCartBody2.cpp" />
-    <ClCompile Include="..\Code\CCollisionTest.cpp" />
     <ClCompile Include="..\Code\CCollisionBox.cpp" />
     <ClCompile Include="..\Code\CDynamicCamera.cpp" />
     <ClCompile Include="..\Code\CMinimapCart.cpp" />

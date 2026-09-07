@@ -49,9 +49,6 @@
     <Filter Include="02. GameObject\Camera\TopViewCamera">
       <UniqueIdentifier>{fea974b1-0821-4c2a-93c7-30822e6f7f09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\CollisionTest">
-      <UniqueIdentifier>{1d9596f4-f904-4f19-871e-a4c8158626b4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Cart">
       <UniqueIdentifier>{9b57413b-c72d-4546-b362-b5ed99bdabb9}</UniqueIdentifier>
     </Filter>
@@ -66,12 +63,6 @@
     </Filter>
     <Filter Include="02. GameObject\Camera\FollowSmoothCamera">
       <UniqueIdentifier>{ff88f6cc-acfd-45ab-bb08-64ffd162aa80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Cart\CartBody\CartBody1">
-      <UniqueIdentifier>{8385e4f3-0adf-4ec9-8edc-a5933d7ec8fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Cart\CartBody\CartBody2">
-      <UniqueIdentifier>{8b9571f1-d76e-464a-bab7-d7b17e618d3f}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Scene\MapTest">
       <UniqueIdentifier>{7f49cea8-a756-4797-a98f-c47c0ef0412f}</UniqueIdentifier>
@@ -226,9 +217,6 @@
     <Filter Include="02. GameObject\Cart\Effect\SmokeEffect">
       <UniqueIdentifier>{0e51cd6b-a3ef-4aa9-aa0f-1ecb58b27ae7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\Inventory">
-      <UniqueIdentifier>{443dfc68-b0e8-4e29-992d-15e8ad0cae1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\UI\UI_InvenSlot">
       <UniqueIdentifier>{b03628f0-522f-40e1-99cb-462e3618bc49}</UniqueIdentifier>
     </Filter>
@@ -336,12 +324,6 @@
     </Filter>
     <Filter Include="02. GameObject\Item\Cart_Shield">
       <UniqueIdentifier>{13e119e0-720f-4274-a7e0-4da6deb29987}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Item\Cart_Shield\Cart_Shield1">
-      <UniqueIdentifier>{282ad70b-6ccc-4dda-945f-d5b9c33c13e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Item\Cart_Shield\Cart_Shield2">
-      <UniqueIdentifier>{c7648e81-929b-4f85-a3fa-c7946d740b6e}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\Item\Ufo">
       <UniqueIdentifier>{a8308ac2-1c01-4d0d-9bb2-dd3a5d7fa208}</UniqueIdentifier>
@@ -486,9 +468,6 @@
     <ClInclude Include="..\Header\CCart.h">
       <Filter>02. GameObject\Cart</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CCollisionTest.h">
-      <Filter>01. Scene\CollisionTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CWheel.h">
       <Filter>02. GameObject\Cart\Wheel</Filter>
     </ClInclude>
@@ -500,12 +479,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\CFollowSmoothCam.h">
       <Filter>02. GameObject\Camera\FollowSmoothCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CCartBody1.h">
-      <Filter>02. GameObject\Cart\CartBody\CartBody1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CCartBody2.h">
-      <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMapTest.h">
       <Filter>01. Scene\MapTest</Filter>
@@ -648,9 +621,6 @@
     <ClInclude Include="..\Header\CWaterBombBody.h">
       <Filter>02. GameObject\Item\Water\WaterBomb\WaterBombBody</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CInventoryScene.h">
-      <Filter>01. Scene\Inventory</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUI_InvenSlot.h">
       <Filter>02. GameObject\UI\UI_InvenSlot</Filter>
     </ClInclude>
@@ -753,12 +723,6 @@
     <ClInclude Include="..\Header\CShield2.h">
       <Filter>02. GameObject\Item\Target_Shield\Target_Shield2</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CCart_Shield1.h">
-      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CCart_Shield2.h">
-      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield2</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUfo.h">
       <Filter>02. GameObject\Item\Ufo</Filter>
     </ClInclude>
@@ -806,7 +770,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\CUI_NexonLogo.h">
       <Filter>02. GameObject\UI\NexonLogo</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\CRePlayCart.h">
       <Filter>02. GameObject\RePlayCart</Filter>
     </ClInclude>
@@ -887,9 +851,6 @@
     <ClCompile Include="..\Code\CCart.cpp">
       <Filter>02. GameObject\Cart</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CCollisionTest.cpp">
-      <Filter>01. Scene\CollisionTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CWheel.cpp">
       <Filter>02. GameObject\Cart\Wheel</Filter>
     </ClCompile>
@@ -901,12 +862,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CFollowSmoothCam.cpp">
       <Filter>02. GameObject\Camera\FollowSmoothCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CCartBody1.cpp">
-      <Filter>02. GameObject\Cart\CartBody\CartBody1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CCartBody2.cpp">
-      <Filter>02. GameObject\Cart\CartBody\CartBody2</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMapTest.cpp">
       <Filter>01. Scene\MapTest</Filter>
@@ -1055,9 +1010,6 @@
     <ClCompile Include="..\Code\CWaterBombBody.cpp">
       <Filter>02. GameObject\Item\Water\WaterBomb\WaterBombBody</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CInventoryScene.cpp">
-      <Filter>01. Scene\Inventory</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CUI_InvenSlot.cpp">
       <Filter>02. GameObject\UI\UI_InvenSlot</Filter>
     </ClCompile>
@@ -1160,12 +1112,6 @@
     <ClCompile Include="..\Code\CShield2.cpp">
       <Filter>02. GameObject\Item\Target_Shield\Target_Shield2</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CCart_Shield1.cpp">
-      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CCart_Shield2.cpp">
-      <Filter>02. GameObject\Item\Cart_Shield\Cart_Shield2</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CUfo.cpp">
       <Filter>02. GameObject\Item\Ufo</Filter>
     </ClCompile>
@@ -1213,7 +1159,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_NexonLogo.cpp">
       <Filter>02. GameObject\UI\NexonLogo</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\CRePlayCart.cpp">
       <Filter>02. GameObject\RePlayCart</Filter>
     </ClCompile>

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CMenu_Item.h"
 #include "CLoadingThread.h"
 #include "CBackGround.h"
@@ -7,7 +7,6 @@
 #include "CManagement.h"
 #include "CRcTex.h"
 
-#include "CCollisionTest.h"
 #include "CLoading.h"
 
 #include "CScene2_ForestValley.h"

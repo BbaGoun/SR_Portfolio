@@ -23,7 +23,7 @@ public:
 	static		CCube_Collider* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 
-	DirectX::BoundingOrientedBox&	Get_Info()							{ return m_tBoundingBox; }
+	DirectX::BoundingOrientedBox&	Get_Info();
 
 	void							Set_Center(_vec3 vPos)				{ m_tBoundingBox.Center = ToXMFLOAT3(vPos); }
 	void							Set_Orientation(D3DXQUATERNION q)	{ m_tBoundingBox.Orientation = ToXMFLOAT4(q); }

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CGameObject.h"
 #include "CRcTex.h"
 #include "CCube.h"
@@ -14,6 +14,7 @@ private:
 
 public:
 	virtual			HRESULT		Ready_GameObject() override;
+	virtual			void		FixedUpdate_GameObject(const _float& fFixedDeltaTime) override;
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
@@ -26,12 +27,16 @@ public:
 	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
 	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
 
+	void	Set_OriginPos(_vec3 pos) { m_vOriginPos = pos; }
+
 private:
 	CCube*				m_pBufferCom;
 	CTexture*			m_pTextureCom;
 	CCube_Collider*		m_pColliderCom;
 
-	float				m_fTimer;
+	_vec3				m_vOriginPos;
+	float				m_fTimer = 0;
+	bool				m_bFirst = true;
 
 public:
 	static CBarricade* Create(LPDIRECT3DDEVICE9 pGraphicDev);

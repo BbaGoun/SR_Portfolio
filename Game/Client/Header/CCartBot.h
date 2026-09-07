@@ -28,11 +28,8 @@ public:
 
 public:
 	static CCartBot* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	// KeyInput
-	void			KeyInput(const _float& fDeltaTime);
 
 	// Update
-	void			UpdateThunder();
 	void			UpdateGravity();
 	void			UpdateMagnet(const _float& fDeltaTime);
 	void			UpdateBubble(const _float& fDeltaTime);
@@ -69,6 +66,8 @@ public:
 
 	bool			GetPlayingState() { return m_bPlaying; }
 
+	CGameObject*	GetMagnetTarget() { return m_pMagnetTarget; }
+
 	// AdjustState
 	void			AdjustPosY_Slope(_vec3 pos, const float fDeltaTime);
 
@@ -76,17 +75,15 @@ public:
 	void			CollisionWall();
 
 	// CreateObject
-	void			CreateRainbowObject();
+	void			CreateCloudObject();
 	void			CreateBananaObject();
 	void			CreateThunderCloudObject();
 	void			CreateMissileObject(CGameObject* pTarget);
 	void			CreateMagnetObject();
 	void			CreateWaterBombObject();
 	void			CreateWaterFlyObject();
-	void			CreateTargetAimObject();
-	void			CreateMissileAimObject();
-	void			CreateMagnetAimObject();
 	void			CreateShieldObject();
+	void			CreateBarricadeObject();
 
 	// Item
 	void			GainItem();
@@ -131,6 +128,9 @@ public:
 	void			SetDustLandingEffect(CDustLandingEffect* pEffect) { m_pDustLandingEffect = pEffect; }
 
 private:
+	CGameObject*	AcquireAimTarget();
+	void			ConsumeFirstItem();
+
 	_float			m_fMaxSpeed;
 	bool			m_bDrift;
 	bool			m_bBanana;
@@ -181,26 +181,29 @@ private:
 	float			m_fPreTimer;
 	bool			m_bPlaying;
 
-	CPlayerHead* m_pPlayerHead;
+	CPlayerHead*	m_pPlayerHead;
 	bool			m_bUpKey;
 
 	float			m_fLateralOffsetTarget = 0.f;
 	float			m_fLateralOffset = 0.f;
 	float			m_fOffsetTimer = 0.f;
 	float			m_fOffsetTimerEnd = 2.f;
+	float			m_fItemTimer = 0.f;
+	float			m_fItemTimerEnd = 1.5f;
 
 	vector<CGameObject*>	m_vecWheel;
 
 	bool			m_bCollisionWall = false;
 
 	_float			m_fAimRotationZ;
-
+	CGameObject*	m_pMagnetTarget = nullptr;
 
 	CGameObject*	m_pShield1 = nullptr;
 	CGameObject*	m_pShield2 = nullptr;
 
 	bool			m_bMissileHit = false;
 	bool			m_bBubble = false;
+
 	float			m_fBubbleTimer = 0.f;
 	CGameObject*	m_pBubble = nullptr;
 

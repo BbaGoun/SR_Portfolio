@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CMenu_Set.h"
 #include "CLoadingThread.h"
 #include "CBackGround.h"
@@ -7,7 +7,6 @@
 #include "CManagement.h"
 #include "CRcTex.h"
 
-#include "CCollisionTest.h"
 #include "CLoading.h"
 
 #include "CScene3_StartBtn.h"
@@ -25,7 +24,6 @@
 #include  "CInvenSlotBG.h"
 #include "CUI_InvenSlot.h"
 #include "CInvenSlotCart.h"
-#include "CInventoryScene.h"
 #include "CDinputMgr.h"
 #include "CSlotMgr.h"
 #include "CButtonMgr.h"

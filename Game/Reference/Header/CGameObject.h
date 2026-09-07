@@ -132,7 +132,7 @@ protected:
 	COLLISION_LAYER							m_eCollisionLayer;
 	uint32_t								m_uCollisionLayerBit;
 
-	uint32_t								m_uCullDistance;
+	uint32_t								m_uCullDistance = 350;
 
 	_float									m_fSpeed;
 	_vec3									m_vForce;
