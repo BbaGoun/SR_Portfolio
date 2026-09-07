@@ -316,10 +316,10 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	{
 		CreateBarricadeObject();
 	}
-	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
-	//{
-	//	CreateShieldObject_();
-	//}
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
+	{
+		CreateShieldObject();
+	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_L))
 	{
@@ -1523,7 +1523,7 @@ void CCart::CreateMagnetAimObject()
 	}
 }
 
-void CCart::CreateShieldObject_()
+void CCart::CreateShieldObject()
 {
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_shield/shield.ogg", SOUND_SHIELD, 0.4f);
 
@@ -1672,9 +1672,6 @@ void CCart::UseItem()
 	case ITEM_CLOUD:
 		CreateCloudObject();
 		break;
-	case ITEM_UFO:
-		CreateUfoObject(); 
-		break;
 	case ITEM_WATERFLY:
 		CreateWaterFlyObject();
 		break;
@@ -1683,6 +1680,9 @@ void CCart::UseItem()
 		break;
 	case ITEM_WATERBOMB:
 		CreateWaterBombObject();
+		break;
+	case ITEM_SHIELD:
+		CreateShieldObject();
 		break;
 	case ITEM_END:
 		break;
