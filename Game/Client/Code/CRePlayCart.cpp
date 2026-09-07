@@ -1593,8 +1593,6 @@ void CRePlayCart::UseItem()
 	case ITEM_CLOUD:
 		CreateRainbowObject();
 		break;
-	case ITEM_UFO:
-		break;
 	case ITEM_WATERFLY:
 		CreateWaterFlyObject();
 		break;

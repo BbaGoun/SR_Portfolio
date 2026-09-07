@@ -1611,29 +1611,32 @@ void CCartBot::CreateMagnetAimObject()
 
 void CCartBot::CreateShieldObject()
 {
-	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_shield/shield.ogg", SOUND_SHIELD, 0.4f);
 
-	CGameObject* pShield1 = CShield1::Create(m_pGraphicDev);
-
-	if (pShield1 == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
-		return;
-
-	pShield1->SetLayer(m_pLayer);
-	pCart->Set_Child(pShield1);
-
-	CGameObject* pShield2 = CShield2::Create(m_pGraphicDev);
-
-	if (pShield2 == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
-		return;
-
-	pShield2->SetLayer(m_pLayer);
-	pCart->Set_Child(pShield2);
+	static_cast<CShield1*>(m_pShield1)->SetShow(true);
+	//CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBot");
+	//
+	//CGameObject* pShield1 = CShield1::Create(m_pGraphicDev);
+	//
+	//if (pShield1 == nullptr)
+	//	return;
+	//
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
+	//	return;
+	//
+	//pShield1->SetLayer(m_pLayer);
+	//pCart->Set_Child(pShield1);
+	//
+	//CGameObject* pShield2 = CShield2::Create(m_pGraphicDev);
+	//
+	//if (pShield2 == nullptr)
+	//	return;
+	//
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
+	//	return;
+	//
+	//pShield2->SetLayer(m_pLayer);
+	//pCart->Set_Child(pShield2);
 
 	//_vec3 vPos, vPos1, vPos2;
 
@@ -1714,8 +1717,6 @@ void CCartBot::UseItem()
 	case ITEM_CLOUD:
 		CreateRainbowObject();
 		break;
-	case ITEM_UFO:
-		break;
 	case ITEM_WATERFLY:
 		CreateWaterFlyObject();
 		break;
@@ -1724,6 +1725,9 @@ void CCartBot::UseItem()
 		break;
 	case ITEM_WATERBOMB:
 		CreateWaterBombObject();
+		break;
+	case ITEM_SHIELD:
+		CreateShieldObject();
 		break;
 	case ITEM_END:
 		break;

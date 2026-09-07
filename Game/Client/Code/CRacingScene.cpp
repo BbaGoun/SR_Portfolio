@@ -336,7 +336,6 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 			return E_FAIL;
 		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BotBubble", pGameObject);
 		static_cast<CCartBot*>(pCartBot)->SetBubble(pGameObject);
-
 	}
 
 // 파티클
