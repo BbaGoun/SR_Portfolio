@@ -39,6 +39,7 @@ HRESULT CBoostJet::Ready_GameObject()
 		return E_FAIL;
 
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
+	m_bCullEnable = false;
 
 	return S_OK;
 }
@@ -99,6 +100,8 @@ void CBoostJet::Render_GameObject()
 	{
 		if (pCartBot->GetBoost()) {
 			m_pTransformCom->Set_Pos({ 0.3f,0.12f,-1.1f });
+			_matrix matWorld = *m_pTransformCom->Get_World();
+			
 			m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 			m_pTextureCom->Set_Texture(m_fFrame);
 			m_pBufferCom->Render_Buffer();

@@ -161,15 +161,13 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 2.f, fFixedDeltaTime);
 		_vec3 vPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
-		if(!m_bCollisionGround)
-			AdjustPosY_Slope(vPos, fFixedDeltaTime);
+		AdjustPosY_Slope(vPos, fFixedDeltaTime);
 		if(!m_bCollisionWall)
 			CollisionWall();
 	}
 
 	UpdateDrift(fFixedDeltaTime);
 
-	m_bCollisionGround = false;
 	m_bCollisionWall = false;
 
 	//CGameObject::FixedUpdate_GameObject(fFixedDeltaTime);
@@ -179,14 +177,14 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 
-	if (!m_bActive) {
+	m_bPlaying = CPlayTimeMgr::GetInstance()->GetPlaying();
+	if (!m_bActive || !m_bPlaying) {
 		m_bDrift = false;
 		m_bUpKey = false;
 		m_eBoostState = BOOST_STATE_NORMAL;
+		CRenderer::GetInstance()->SetBlurPower(0.f);
 		return 0;
 	}
-
-	m_bPlaying = CPlayTimeMgr::GetInstance()->GetPlaying();
 
 	UpdateStartBoost();
 	KeyInput(fDeltaTime);
@@ -841,7 +839,6 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 	m_pTransformCom->Get_Info(INFO_POS, &vCartPos);
 	if (bFind)
 	{
-		m_bCollisionGround = true;
 		float fDeltaY = vCartPos.y - fGroundY;
 		// m_eCart_State 업데이트
 		if (m_eCartState == CART_STATE_GROUND) // Ground 유지

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CNexonVideo.h"
 #include "CLoadingThread.h"
 #include "CBackGround.h"
@@ -108,24 +108,25 @@ HRESULT CNexonVideo::Ready_Environment_Layer(const _tchar* pLayerTag)
     if (nullptr == pLayer)
         return E_FAIL;
 
-    CGameObject* pGameObject = nullptr;
+    m_mapLayer.insert({ pLayerTag, pLayer });
 
-    // BackGround
-    pGameObject = CBackGround::Create(m_pGraphicDev);
+    //CGameObject* pGameObject = nullptr;
+
+    //// BackGround
+    //pGameObject = CBackGround::Create(m_pGraphicDev);
  
 
-    if (nullptr == pGameObject)
-        return E_FAIL;
+    //if (nullptr == pGameObject)
+    //    return E_FAIL;
 
-    if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
-        return E_FAIL;
+    //if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
+    //    return E_FAIL;
 
-    D3DVIEWPORT9 vp;
-    m_pGraphicDev->GetViewport(&vp);
-    pGameObject->Get_Transform()->Set_Scale({ float(vp.Width), float(vp.Height), 1 });
-    pGameObject->Get_Transform()->Set_Pos({ 0, 0, 15 });
+    //D3DVIEWPORT9 vp;
+    //m_pGraphicDev->GetViewport(&vp);
+    //pGameObject->Get_Transform()->Set_Scale({ float(vp.Width), float(vp.Height), 1 });
+    //pGameObject->Get_Transform()->Set_Pos({ 0, 10, 15 });
 
-    m_mapLayer.insert({ pLayerTag, pLayer });
 
     return S_OK;
 }

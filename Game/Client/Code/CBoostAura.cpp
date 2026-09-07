@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CBoostAura.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -37,6 +37,7 @@ HRESULT CBoostAura::Ready_GameObject()
 		return E_FAIL;
 
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
+	m_bCullEnable = false;
 
 	return S_OK;
 }
@@ -99,7 +100,7 @@ void CBoostAura::Render_GameObject()
 			m_pBufferCom->Render_Buffer();
 		}
 	}
-	if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent->Get_Parent()))
+	else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent->Get_Parent()))
 	{
 		if (pCartBot->GetBoost()) {
 			m_pTransformCom->Set_Pos({ 0.3f,0.12f,-1.1f });

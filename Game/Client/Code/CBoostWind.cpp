@@ -72,6 +72,7 @@ HRESULT CBoostWind::Ready_GameObject()
 	}
 
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
+	m_bCullEnable = false;
 
 	return S_OK;
 }
@@ -126,6 +127,7 @@ void CBoostWind::Render_GameObject()
 	else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pParent))
 	{
 		if (pCartBot->GetBoost()) {
+
 			m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 			m_pTextureCom->Set_Texture((_uint)m_fFrame);
 			m_pBufferCom->Render_Buffer();

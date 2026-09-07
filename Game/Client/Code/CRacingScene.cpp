@@ -53,6 +53,7 @@
 #include "CCollisionStarEffect.h"
 #include "CItemGainEffect.h"
 #include "CUI_RankNumber.h"
+#include <SoundMgr.h>
 
 CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -65,6 +66,9 @@ CRacingScene::~CRacingScene()
 HRESULT CRacingScene::Ready_Scene()
 {
 	LoadSceneFromFile();
+
+	SoundMgr::GetInstance().PlayBGM(L"BGM/village/village_03_re.ogg", 0.4f);
+
 	return S_OK;
 }
 
