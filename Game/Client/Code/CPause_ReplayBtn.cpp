@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CPause_ReplayBtn.h"
 
 #include "CScene.h"
@@ -75,15 +75,10 @@ _int CPause_ReplayBtn::Update_GameObject(const _float& fDeltaTime)
 		m_fFrame = 1;
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
-			Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
+			Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_ITEM);
 
 			if (nullptr == pStage)
 				return E_FAIL;
-
-			CPlayTimeMgr::GetInstance()->SetRaceEnd();
-			//CPlayTimeMgr::GetInstance()->DestroyInstance();
-			CRankMgr::GetInstance()->DestroyInstance();
-			CTrackMgr::GetInstance()->DestroyInstance();
 
 			CManagement::GetInstance()->Request_Scene(pStage);
 		}

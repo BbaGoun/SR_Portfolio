@@ -71,7 +71,7 @@ _int CScene3_StartBtn::Update_GameObject(const _float& fDeltaTime)
 	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
 		if (CDInputMgr::GetInstance()->Get_DIMouseState(DIM_LB))
 		{
-			Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
+			Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_SPEED);
 
 			if (nullptr == pStage)
 				return E_FAIL;

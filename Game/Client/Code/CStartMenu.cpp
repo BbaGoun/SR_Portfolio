@@ -17,7 +17,6 @@
 #include "CUI_UnderBar.h"
 #include "CUI_Menu.h"
 #include "CRacingScene.h"
-#include "CRePlayScene.h"
 #include "SoundMgr.h"
 
 #include "CUI_PauseMenu.h"
@@ -72,28 +71,13 @@ _int CStartMenu::Update_Scene(const _float& fDeltaTime)
 		//Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
 		//Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
 		//Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
-		Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
+		Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_ITEM);
 
 		if (nullptr == pStage)
 			return E_FAIL;
 
 		CManagement::GetInstance()->Request_Scene(pStage);
 	}
-	if (GetAsyncKeyState('N'))
-	{
-		//Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
-		//Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
-		//Engine::CScene* pStage = CInventoryScene::Create(m_pGraphicDev);
-		Engine::CScene* pStage = CRePlayScene::Create(m_pGraphicDev, MAP_TEST);
-
-		if (nullptr == pStage)
-			return E_FAIL;
-
-		CManagement::GetInstance()->Request_Scene(pStage);
-	}
-
-
-
 	return iExit;
 }
 
