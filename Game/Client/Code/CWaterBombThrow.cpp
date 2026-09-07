@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CWaterBombThrow.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -53,7 +53,7 @@ void CWaterBombThrow::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
 	if (m_fThrowHeight > 50.f)
 	{
-		TrackPose TP = CTrackMgr::GetInstance()->Compute_TargetPose(m_pParent, 150, false);
+		TrackPose TP = CTrackMgr::GetInstance()->Compute_TargetPose(m_pParent, 200, false);
 
 		if (TP.bValid) {
 			CWaterBomb* pWaterBomb = CWaterBomb::Create(m_pGraphicDev);

@@ -31,7 +31,6 @@ public:
 
 	void		SetTarget(CGameObject* pTarget) { m_pTarget = pTarget; }
 private:
-	Engine::CCube_Collider*		m_pColliderCom;
 			_float				m_fSpeed;
 			_float				m_fAngle;
 			CGameObject*		m_pTarget = nullptr;

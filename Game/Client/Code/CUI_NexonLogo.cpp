@@ -2,7 +2,6 @@
 #include "CUI_NexonLogo.h"
 
 #include "CScene.h"
-#include "CCollisionTest.h"
 
 #include "CGameObject.h"
 #include "CGraphicDev.h"

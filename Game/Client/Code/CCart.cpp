@@ -26,8 +26,6 @@
 #include "CUI_EndCountDown.h"
 #include "CPlayTimeMgr.h"
 #include "CWheel.h"
-#include "CCart_Shield1.h"
-#include "CCart_Shield2.h"
 #include "CUfo.h"
 #include "CUfoBody.h"
 #include "CUfoBeam.h"
@@ -162,7 +160,7 @@ void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 		_vec3 vPos;
 		m_pTransformCom->Get_Info(INFO_POS, &vPos);
 		AdjustPosY_Slope(vPos, fFixedDeltaTime);
-		if(!m_bCollisionWall)
+		if (!m_bCollisionWall)
 			CollisionWall();
 	}
 
@@ -317,11 +315,6 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
 	{
 		CreateShieldObject();
-	}
-
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_L))
-	{
-		CreateUfoObject();
 	}
 
 	// ShortBooster
@@ -1323,8 +1316,9 @@ void CCart::CreateMissileObject(CGameObject* pTarget)
 		return;
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Missile", pMissile)))
 		return;
-	pMissile->SetLayer(m_pLayer);
 	static_cast<CMissile*>(pMissile)->SetTarget(pTarget);
+
+	SoundMgr::GetInstance().PlaySound(L"Effect/Item_rocket/shooting.ogg", SOUND_MISSILE, 0.4f, true);
 
 	CGameObject* pMissileBody = CMissileBody::Create(m_pGraphicDev);
 	if (pMissileBody == nullptr)
@@ -1332,18 +1326,7 @@ void CCart::CreateMissileObject(CGameObject* pTarget)
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_MissileBody", pMissileBody)))
 		return;
 
-	pMissileBody->SetLayer(m_pLayer);
 	pMissile->Set_Child(pMissileBody);
-
-	//_vec3 vPos, vLook;
-
-	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-
-	//vPos += vLook * 5.f;
-
-	//pMissile->Get_Transform()->Set_Pos(vPos);
-
 
 	_vec3 vPos, vLook, vTargetPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -1388,7 +1371,7 @@ void CCart::CreateTargetAimObject()
 	//CGameObject* pTarget = nullptr;
 	_vec3 vPos;
 	auto& vecCartBot = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
-	bool	bFind = false;
+
 	CTargetAim* pAim = static_cast<CTargetAim*>(pTargetAim);
 
 	for (auto& pTarget : vecCartBot)
@@ -1411,14 +1394,14 @@ void CCart::CreateTargetAimObject()
 
 		D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
 		D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj, &tCam.matView, &matWorld);
-		
-		if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
+        pAim->SetTarget(nullptr);
+        pAim->SetAimState(AIM_NONE);
+        if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
 		{
 			SoundMgr::GetInstance().PlaySound(L"Effect/Item_rocket/ontarget.ogg", SOUND_TARGETAIM, 0.4f);
 			vPos = vTarget;
 			pAim->SetTarget(pTarget);
 			pAim->SetAimState(AIM_TARGET);
-			bFind = true;
 			break;
 		}
 		if (abs(vTargetScreen.x - vAimScreen.x) < 200.f && abs(vTargetScreen.y - vAimScreen.y) < 200.f)
@@ -1426,14 +1409,8 @@ void CCart::CreateTargetAimObject()
 			SoundMgr::GetInstance().PlaySound(L"Effect/Item_rocket/inrange.ogg", SOUND_TARGETAIM, 0.4f);
 			vPos = (vPos + vTarget) * 0.5f;
 			pAim->SetAimState(AIM_CLOSE);
-			bFind = true;
 			break;
 		}
-	}
-	if(!bFind) 
-	{
-		pAim->SetTarget(nullptr);
-		pAim->SetAimState(AIM_NONE);
 	}
 	pTargetAim->Get_Transform()->Set_Pos(vPos);
 	
@@ -1525,106 +1502,100 @@ void CCart::CreateShieldObject()
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_shield/shield.ogg", SOUND_SHIELD, 0.4f);
 
 	static_cast<CShield1*>(m_pShield1)->SetShow(true);
-	//CGameObject* pShield1 = CCart_Shield1::Create(m_pGraphicDev);
-	//
-	//if (pShield1 == nullptr)
-	//	return;
-	//
-	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
-	//	return;
-	//
-	//Set_Child(pShield1);
-	//
-	//CGameObject* pShield2 = CCart_Shield2::Create(m_pGraphicDev);
-	//
-	//if (pShield2 == nullptr)
-	//	return;
-	//
-	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
-	//	return;
-	//
-	//Set_Child(pShield2);
-	//
-	//CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
-	//
-	//pCartBody->SetShieldActive(true);
-}
-
-void CCart::CreateUfoObject()
-{
-	CGameObject* pUfo = CUfo::Create(m_pGraphicDev);
-
-	if (pUfo == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Ufo", pUfo)))
-		return;
-
-	pUfo->SetLayer(m_pLayer);
-
-
-	CGameObject* pUfoBody = CUfoBody::Create(m_pGraphicDev);
-
-	if (pUfoBody == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_UfoBody", pUfoBody)))
-		return;
-
-	pUfoBody->SetLayer(m_pLayer);
-	pUfo->Set_Child(pUfoBody);
-
-	CGameObject* pUfoBeam = CUfoBeam::Create(m_pGraphicDev);
-
-	if (pUfoBeam == nullptr)
-		return;
-
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_UfoBeam", pUfoBeam)))
-		return;
-
-	pUfoBeam->SetLayer(m_pLayer);
-	pUfo->Set_Child(pUfoBeam);
 }
 
 void CCart::CreateBarricadeObject()
 {
-	CGameObject * pBarricade = CBarricade::Create(m_pGraphicDev);
+	CGameObject* pBarricade = CBarricade::Create(m_pGraphicDev);
 
 	if (pBarricade == nullptr)
 		return;
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Barricade", pBarricade)))
 		return;
 
-	pBarricade->Get_Transform()->Set_Pos({0,5,-10});
+	CGameObject* pApex = CTrackMgr::GetInstance()->Get_Apex();
+	if (!pApex)
+		return;
+
+	TrackPose TP_front = CTrackMgr::GetInstance()->Compute_TargetPose(pApex, 70, false);
+	TrackPose TP_back = CTrackMgr::GetInstance()->Compute_TargetPose(pApex, 100, false);
+	if (TP_front.bValid && TP_back.bValid) {
+		CBarricade* pBar = CBarricade::Create(m_pGraphicDev);
+		if (pBar == nullptr)
+			return;
+		if (FAILED(m_pLayer->Add_GameObject(L"Obj_Barricade", pBar)))
+			return;
+
+		pBar->Get_Transform()->Set_Pos(TP_front.position);
+		pBar->Set_OriginPos(TP_front.position);
+
+		_matrix	matRot;
+		D3DXMatrixIdentity(&matRot);
+		memcpy(&matRot.m[0], &TP_front.R, sizeof(_vec3));
+		memcpy(&matRot.m[1], &TP_front.U, sizeof(_vec3));
+		memcpy(&matRot.m[2], &TP_front.T, sizeof(_vec3));
+
+		_quaternion q;
+		D3DXQuaternionRotationMatrix(&q, &matRot);
+		pBar->Get_Transform()->Set_Quaternion(&q);
+
+		CTrackMgr::GetInstance()->Register_Hazard(pBar, ITEM_BARRICADE);
+
+		pBar = CBarricade::Create(m_pGraphicDev);
+		if (pBar == nullptr)
+			return;
+		if (FAILED(m_pLayer->Add_GameObject(L"Obj_Barricade", pBar)))
+			return;
+
+		_vec3 vPosLeft = TP_back.position + TP_back.R * TP_back.halfW * -0.5f;
+		pBar->Get_Transform()->Set_Pos(vPosLeft);
+		pBar->Set_OriginPos(vPosLeft);
+
+		D3DXMatrixIdentity(&matRot);
+		memcpy(&matRot.m[0], &TP_back.R, sizeof(_vec3));
+		memcpy(&matRot.m[1], &TP_back.U, sizeof(_vec3));
+		memcpy(&matRot.m[2], &TP_back.T, sizeof(_vec3));
+
+		D3DXQuaternionRotationMatrix(&q, &matRot);
+		pBar->Get_Transform()->Set_Quaternion(&q);
+
+		CTrackMgr::GetInstance()->Register_Hazard(pBar, ITEM_BARRICADE);
+
+		pBar = CBarricade::Create(m_pGraphicDev);
+		if (pBar == nullptr)
+			return;
+		if (FAILED(m_pLayer->Add_GameObject(L"Obj_Barricade", pBar)))
+			return;
+
+		_vec3 vPosRight = TP_back.position + TP_back.R * TP_back.halfW * 0.5f;
+		pBar->Get_Transform()->Set_Pos(vPosRight);
+		pBar->Set_OriginPos(vPosRight);
+
+		D3DXMatrixIdentity(&matRot);
+		memcpy(&matRot.m[0], &TP_back.R, sizeof(_vec3));
+		memcpy(&matRot.m[1], &TP_back.U, sizeof(_vec3));
+		memcpy(&matRot.m[2], &TP_back.T, sizeof(_vec3));
+
+		D3DXQuaternionRotationMatrix(&q, &matRot);
+		pBar->Get_Transform()->Set_Quaternion(&q);
+
+		CTrackMgr::GetInstance()->Register_Hazard(pBar, ITEM_BARRICADE);
+	}
 }
 
 void CCart::CreateMissileAimObject()
 {
 	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
-	//CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 
 	if (nullptr != pTargetAim)//&& nullptr != pTarget
 	{
 		_vec3 vAimPos, vTargetPos, vDir;
 		
-		//pTargetAim->Get_Transform()->Get_Info(INFO_POS, &vAimPos);
-		//pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-		
-		//vDir = vTargetPos - vAimPos;
-		
-		//if (D3DXVec3Length(&vDir) < 0.1f)
-		//{
-		CGameObject* pTraget = static_cast<CTargetAim*>(pTargetAim)->GetTarget();
-		if (pTraget != nullptr)
+		CGameObject* pTarget = static_cast<CTargetAim*>(pTargetAim)->GetTarget();
+		if (pTarget != nullptr)
 		{
-			CreateMissileObject(pTraget);
-			//CGameObject* pMissile = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Missile");
-			//
-			//if (nullptr == pMissile)
-			//{
-			//}
+			CreateMissileObject(pTarget);
 		}
-		//}
 
 		m_pLayer->Delete_GameObject(pTargetAim);
 	}
@@ -1672,7 +1643,12 @@ void CCart::UseItem()
 	case ITEM_WATERFLY:
 		CreateWaterFlyObject();
 		break;
+	case ITEM_BARRICADE:
+		CreateBarricadeObject();
+		break;
 	case ITEM_BANANA:
+		if (m_eCartState == CART_STATE_AIR || m_bBubble || m_bMissileHit)
+			return;
 		CreateBananaObject();
 		break;
 	case ITEM_WATERBOMB:

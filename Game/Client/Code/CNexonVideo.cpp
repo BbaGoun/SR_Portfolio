@@ -5,7 +5,6 @@
 #include "CProtoMgr.h"
 #include "CManagement.h"
 #include "CRcTex.h"
-#include "CCollisionTest.h"
 #include "CItem.h"
 #include "CUI_NexonLogo.h"
 #include"CDInputMgr.h"

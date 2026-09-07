@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CRePlayScene.h"
 #include "CGraphicDev.h"
 #include "CProtoMgr.h"
@@ -24,8 +24,6 @@
 #include "CLoadMgr.h"
 #include "CCart.h"
 #include "CCartBody.h"
-#include "CCartBody1.h"
-#include "CCartBody2.h"
 #include "CWheel.h"
 #include "CBoostWind.h"
 #include "CBoostJet.h"
@@ -123,7 +121,7 @@ void CRePlayScene::OnResetDevice()
 
 HRESULT CRePlayScene::LoadSceneFromFile()
 {
-	// ÀÏ´Ü ³Ö¾îµÎ±â
+	// ì¼ë‹¨ ë„£ì–´ë‘ê¸°
 	CLayer* pGameObjectLayer = CLayer::Create();
 
 	if (pGameObjectLayer == nullptr)
@@ -201,8 +199,8 @@ HRESULT CRePlayScene::Ready_GameLogic_Layer()
 
 	pCartBody->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
 
-	// ÀÌÆåÆ®
-		// ## ºÎ½ºÅÍ ¿ÞÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
+	// ì´íŽ™íŠ¸
+		// ## ë¶€ìŠ¤í„° ì™¼ìª½1 ë°”ëžŒ ì´íŽ™íŠ¸
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
 
 	if (nullptr == pGameObject)
@@ -210,7 +208,7 @@ HRESULT CRePlayScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
 	pCart->Set_ChildWithoutTune(pGameObject);
 
-	// ## ºÎ½ºÅÍ ¿ÞÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
+	// ## ë¶€ìŠ¤í„° ì™¼ìª½2 ë°”ëžŒ ì´íŽ™íŠ¸
 	// BoostWindL2
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
 
@@ -219,7 +217,7 @@ HRESULT CRePlayScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
 	pCart->Set_ChildWithoutTune(pGameObject);
 
-	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ1 ¹Ù¶÷ ÀÌÆåÆ®
+	// ## ë¶€ìŠ¤í„° ì˜¤ë¥¸ìª½1 ë°”ëžŒ ì´íŽ™íŠ¸
 	// BoostWindR1
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
 
@@ -227,7 +225,7 @@ HRESULT CRePlayScene::Ready_GameLogic_Layer()
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
 	pCart->Set_ChildWithoutTune(pGameObject);
-	// ## ºÎ½ºÅÍ ¿À¸¥ÂÊ2 ¹Ù¶÷ ÀÌÆåÆ®
+	// ## ë¶€ìŠ¤í„° ì˜¤ë¥¸ìª½2 ë°”ëžŒ ì´íŽ™íŠ¸
 	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
 
 	if (nullptr == pGameObject)
@@ -235,7 +233,7 @@ HRESULT CRePlayScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
 	pCart->Set_ChildWithoutTune(pGameObject);
 
-	// ## ºÎ½ºÅÍ Á¦Æ® ÀÌÆåÆ®
+	// ## ë¶€ìŠ¤í„° ì œíŠ¸ ì´íŽ™íŠ¸
 	// BoostJet
 	pGameObject = CBoostJet::Create(m_pGraphicDev);
 
@@ -244,8 +242,8 @@ HRESULT CRePlayScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
 	pCartBody->Set_ChildWithoutTune(pGameObject);
 
-	// ÆÄÆ¼Å¬
-		// ¿¬±â ÀÌÆåÆ®
+	// íŒŒí‹°í´
+		// ì—°ê¸° ì´íŽ™íŠ¸
 		// SpeedLine
 	pGameObject = CSpeedLine::Create(m_pGraphicDev);
 
@@ -263,7 +261,7 @@ HRESULT CRePlayScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
 	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
 
-	// ÂøÁö½Ã ¸ÕÁö ÀÌÆåÆ®
+	// ì°©ì§€ì‹œ ë¨¼ì§€ ì´íŽ™íŠ¸
 	// DustParticle
 	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
 	if (nullptr == pGameObject)
@@ -271,7 +269,7 @@ HRESULT CRePlayScene::Ready_GameLogic_Layer()
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
 
 	//Camera
-		//// # ÇÃ·¹ÀÌ¾î µû¶ó´Ù´Ï´Â 3ÀÎÄª Ä«¸Þ¶ó
+		//// # í”Œë ˆì´ì–´ ë”°ë¼ë‹¤ë‹ˆëŠ” 3ì¸ì¹­ ì¹´ë©”ë¼
 	_vec3 vEye, vAt, vUp, vLook;
 	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
 	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
@@ -454,7 +452,7 @@ HRESULT CRePlayScene::Ready_UI_Layer()
 	if (FAILED(pUILayer->Add_GameObject(L"PreviewCart", pUIObject)))
 		return E_FAIL;
 
-	// ¹Ì´Ï¸Ê Cart
+	// ë¯¸ë‹ˆë§µ Cart
 	pUIObject = CMinimapCart::Create(m_pGraphicDev);
 
 	if (nullptr == pUIObject)

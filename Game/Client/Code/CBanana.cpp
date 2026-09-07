@@ -23,7 +23,7 @@ CBanana::~CBanana()
 HRESULT CBanana::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Scale({ 3,3,3 });
+	m_pTransformCom->Set_Scale({ 4,4,4 });
 
 	CComponent* pComponent = nullptr;
 	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
@@ -42,7 +42,7 @@ HRESULT CBanana::Ready_GameObject()
 
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->Set_Radius(1.5f);
+	m_pColliderCom->Set_Radius(2.f);
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
 	Set_CollisionLayer(CL_ITEM);
@@ -88,7 +88,7 @@ void CBanana::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 
-	if (wcscmp(wOtherTag, L"Obj_CartBody") == 0)
+	if (wcscmp(wOtherTag, L"Obj_CartBody") == 0 || wcscmp(wOtherTag, L"Obj_CartBotBody") == 0)
 	{
 		CTrackMgr::GetInstance()->Delete_Hazard(this);
 		m_pLayer->Delete_GameObject(this);

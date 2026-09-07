@@ -880,11 +880,11 @@ bool CTrackGraph::EvaluatePoseWithDodge(const TrackLocator& prev, float u, Track
 				if (pTE->id != HR.edgeId)
 					continue;
 				if (HR.u - localU > 0.f && HR.u - localU < HR.radius) {
-					float clearance = HR.radius + 1.5f;
+					float clearance = HR.radius + 1.f;
 					float leftCandidate = HR.lateral - clearance;
 					float rightCandidate = HR.lateral + clearance;
 
-					float safeHalfW = halfW - 1.5f;
+					float safeHalfW = halfW - 1.f;
 					leftCandidate = clampT(leftCandidate, -safeHalfW, safeHalfW);
 					rightCandidate = clampT(leftCandidate, -safeHalfW, safeHalfW);
 

@@ -35,14 +35,6 @@ HRESULT CCube_Collider::Ready_CCube_Collider()
 
 void CCube_Collider::FixedUpdate_Component(const _float& fFixedDeltaTime)
 {
-	CTransform* pOwnerTransfrom = (m_pOwner->Get_Transform());
-	_vec3 vOwnerPos;
-	pOwnerTransfrom->Get_Info(INFO_POS, &vOwnerPos);
-	vOwnerPos += m_vOffset;
-
-	D3DXQUATERNION q = pOwnerTransfrom->Get_WorldQuaternion();
-	m_tBoundingBox.Orientation = ToXMFLOAT4(q);
-	m_tBoundingBox.Center = ToXMFLOAT3(vOwnerPos);
 }
 
 _int CCube_Collider::Update_Component(const _float& fTimeDelta)
@@ -89,6 +81,20 @@ CCube_Collider* CCube_Collider::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	return pCube_Collider;
 
+}
+
+DirectX::BoundingOrientedBox& CCube_Collider::Get_Info()
+{
+	CTransform* pOwnerTransfrom = (m_pOwner->Get_Transform());
+	_vec3 vOwnerPos;
+	pOwnerTransfrom->Get_Info(INFO_POS, &vOwnerPos);
+	vOwnerPos += m_vOffset;
+
+	D3DXQUATERNION q = pOwnerTransfrom->Get_WorldQuaternion();
+	m_tBoundingBox.Orientation = ToXMFLOAT4(q);
+	m_tBoundingBox.Center = ToXMFLOAT3(vOwnerPos);
+
+	return m_tBoundingBox;
 }
 
 CComponent* CCube_Collider::Clone()
