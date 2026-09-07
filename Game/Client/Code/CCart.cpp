@@ -1607,6 +1607,8 @@ void CCart::GainItem()
 
 void CCart::GainBoost()
 {
+	if (m_eMapID == MAP_ITEM)
+		return;
 	if (m_eFirstSlot == ITEM_END)
 	{
 		m_eFirstSlot = ITEM_BOOSTER;
