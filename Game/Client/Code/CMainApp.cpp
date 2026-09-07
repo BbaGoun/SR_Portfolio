@@ -196,6 +196,8 @@ void CMainApp::Free()
 	Safe_Release(m_pGraphicDev);
 	Safe_Release(m_pDeviceClass);
 
+	m_pManagementClass->DestroyInstance();
+
 	CButtonMgr::DestroyInstance();
 	CSlotMgr::DestroyInstance();
 	CFindOthersMgr::DestroyInstance();
@@ -204,7 +206,6 @@ void CMainApp::Free()
 	CCollisionMgr::DestroyInstance();
 	CFrameMgr::DestroyInstance();
 	CTimerMgr::DestroyInstance();
-	m_pManagementClass->DestroyInstance();
 	m_pDeviceClass->DestroyInstance();
 	CProtoMgr::DestroyInstance();
 	CDInputMgr::DestroyInstance();

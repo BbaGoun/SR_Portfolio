@@ -23,7 +23,7 @@ public:
 	bool		GetCartSlotShow();
 	void		SetCartSlotShow(bool bShow);
 
-
+	void		Clear();
 private:
 	//vector<pair<CGameObject*, int >>	m_vecRankUIs;
 	

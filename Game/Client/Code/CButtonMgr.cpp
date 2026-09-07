@@ -67,7 +67,10 @@ void CButtonMgr::ButtonClicked(CGameObject* pObj)
 	}
 
 }
-
+void CButtonMgr::Clear()
+{
+	m_vecButton.clear();
+}
 void CButtonMgr::Free()
 {
 }
