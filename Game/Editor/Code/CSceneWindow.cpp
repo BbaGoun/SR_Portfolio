@@ -117,7 +117,7 @@ void CSceneWindow::Update_Window()
     ImVec2 viewSize = ImGui::GetContentRegionAvail(); // content 영역의 크기
 
     // 투영 행렬 세팅
-    D3DXMatrixPerspectiveFovLH(&m_matProj, D3DXToRadian(45.f), viewSize.x / viewSize.y, 0.1f, 100000.f);
+    D3DXMatrixPerspectiveFovLH(&m_matProj, D3DXToRadian(45.f), viewSize.x / viewSize.y, 0.1f, 1000.f);
     D3DXMatrixInverse(&m_matInvProj, 0, &m_matProj);
 
     ImGuizmo::SetDrawlist();
