@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CUI_Laps.h"
 
 #include "CGameObject.h"
@@ -64,7 +64,7 @@ void CUI_Laps::Render_GameObject()
 	m_pTransformCom->Set_Scale({ 80.f,112.f, 1.f });
 	m_pTransformCom->Set_Pos({ 530.f, 265.f, 10.f });
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pTextureCom->Set_Texture(m_iCurLap + 1);
+	m_pTextureCom->Set_Texture(clampT(m_iCurLap + 1, 1, 2));
 	m_pVIBufferCom->Render_Buffer();
 
 	m_pTransformCom->Set_Scale({ 40.f,56.f,1.f });

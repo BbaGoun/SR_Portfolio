@@ -230,13 +230,13 @@ void CCart::KeyInput(const _float& fDeltaTime)
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_TAB))
-	{
-		if (CCameraMgr::GetInstance()->GetRePlay() == true)
-			CCameraMgr::GetInstance()->SetRePlay(false);
-		else
-			CCameraMgr::GetInstance()->SetRePlay(true);
-	}
+	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_TAB))
+	//{
+	//	if (CCameraMgr::GetInstance()->GetRePlay() == true)
+	//		CCameraMgr::GetInstance()->SetRePlay(false);
+	//	else
+	//		CCameraMgr::GetInstance()->SetRePlay(true);
+	//}
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_I))
 	{
 		if (m_eFirstSlot == ITEM_END)
@@ -267,57 +267,66 @@ void CCart::KeyInput(const _float& fDeltaTime)
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Q))
 	{
-		CreateCloudObject();
+		//CreateCloudObject();
+		GainItem(ITEM_CLOUD);
 	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_W))
 	{
-		CreateBananaObject();
+		//CreateBananaObject();
+		GainItem(ITEM_BANANA);
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_E))
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_E))
 	{
-		CreateTargetAimObject();
+		//CreateTargetAimObject();
+		GainItem(ITEM_ROCKET);
 	}
 	
-	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E)) 
-	{
-		CreateMissileAimObject();
-	}
+	//if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_E)) 
+	//{
+	//	CreateMissileAimObject();
+	//}
 
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_R))
 	{
-		CreateThunderCloudObject();
+		//CreateThunderCloudObject();
+		GainItem(ITEM_THUNDER);
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_T))
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_T))
 	{
-		CreateTargetAimObject();
+		//CreateTargetAimObject();
+		GainItem(ITEM_MAGNET);
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_T))
-	{
-		CreateMagnetAimObject();
-	}
+	//if (CDInputMgr::GetInstance()->Get_DIKeyUp(DIKEYBOARD_T))
+	//{
+	//	CreateMagnetAimObject();
+	//}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_Y))
 	{
-		CreateWaterBombObject();
+		//CreateWaterBombObject();
+		GainItem(ITEM_WATERBOMB);
 	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_U))
 	{
-		CreateWaterFlyObject();
+		//CreateWaterFlyObject();
+		GainItem(ITEM_WATERFLY);
 	}
 
 	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_A))
 	{
-		CreateBarricadeObject();
+		//CreateBarricadeObject();
+		GainItem(ITEM_BARRICADE);
 	}
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_S))
 	{
-		CreateShieldObject();
+		//CreateShieldObject();
+		GainItem(ITEM_SHIELD);
 	}
 
 	// ShortBooster
@@ -1603,6 +1612,19 @@ void CCart::GainItem()
 	else if (m_eFirstSlot != ITEM_END)
 	{
 		m_eSecondSlot = ITEM_TYPE(rand() % ITEM_END);
+	}
+}
+
+void CCart::GainItem(ITEM_TYPE eID)
+{
+	if (m_eFirstSlot == ITEM_END)
+	{
+		m_eFirstSlot = eID;
+	}
+
+	else if (m_eFirstSlot != ITEM_END)
+	{
+		m_eSecondSlot = eID;
 	}
 }
 
