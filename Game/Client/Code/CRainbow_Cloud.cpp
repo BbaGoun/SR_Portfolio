@@ -85,7 +85,7 @@ void CRainbow_Cloud::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 
-	if (wcscmp(wOtherTag, L"Obj_Cart") == 0)
+	if (wcscmp(wOtherTag, L"Obj_CartBody") == 0)
 	{
 
 	}

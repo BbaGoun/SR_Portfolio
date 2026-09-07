@@ -13,13 +13,13 @@ CSmoke::~CSmoke()
 HRESULT CSmoke::Ready_PSystem()
 {
 
-	m_fSize = 0.8f;			// 연기 하나의 화면상 크기 (픽셀단위)
+	m_fSize = 1.f;			// 연기 하나의 화면상 크기 (픽셀단위)
 	m_dwVbSize = 100;		// 버텍스 버퍼 전체 크기
 	m_dwVbOffset = 0;
 	m_dwVbBatchSize = 25;   // 한 배치 크기 (100/25 = 4구간)
 
 	// 초기 파티클 풀 생성 (동시에 존재할 수 있는 최대 연기 개수)
-	int iParticleCnt = 60;
+	int iParticleCnt = 30;
 	for (int i = 0; i < iParticleCnt; ++i)
 		AddParticle();
 

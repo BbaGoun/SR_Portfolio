@@ -46,7 +46,11 @@ _int CSmokeEffect::Update_GameObject(const _float& fDeltaTime)
 	m_pCart->Get_Transform()->Get_Info(INFO_RIGHT, &vRight);
 	D3DXVec3Normalize(&vLook, &vLook);
 	D3DXVec3Normalize(&vRight, &vRight);
-	vPos += _vec3({0,1,0})* -0.1f+ vLook * -2.5f + vRight * -1.1f;
+	if(rand()%2 == 0)
+		vPos += _vec3({0,1,0})* 0.5f+ vLook * -2.5f + vRight * -1.1f;
+	else
+		vPos += _vec3({ 0,1,0 }) * 0.5f + vLook * -2.5f + vRight * 1.1f;
+
 	vLook *= -1;
 	m_pSmoke->SetOrigin(vPos);
 	m_pSmoke->SetBackDir(vLook);

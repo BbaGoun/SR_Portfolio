@@ -8,10 +8,11 @@
 #include "CCube_Collider.h"
 #include <CCartBody.h>
 #include <CCart.h>
-#include <CShield1.h>
-#include <CShield2.h>
-#include <CCartBot.h>
-#include <SoundMgr.h>
+#include "CShield1.h"
+#include "CShield2.h"
+#include "CCartBot.h"
+#include "SoundMgr.h"
+#include "CMissileEffect.h"
 
 CMissile::CMissile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -170,6 +171,17 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 				pCartBody->Set_Force({ 0,20,0 });
 				pCart->Set_Force({ 0,0,0 });
 				pCart->SetMissileHit(true);
+
+				CGameObject* pMissileEffect = CMissileEffect::Create(m_pGraphicDev);
+				
+				if (pMissileEffect == nullptr)
+					return;
+				if (FAILED(m_pLayer->Add_GameObject(L"Obj_MissileEffect", pMissileEffect)))
+					return;
+				
+				_vec3 vCartPos;
+				pCart->Get_Transform()->Get_Info(INFO_POS, &vCartPos);
+				pMissileEffect->Get_Transform()->Set_Pos(vCartPos);
 			}
 		}
 		else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pTarget))
@@ -188,6 +200,17 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 				pCartBody->Set_Force({ 0,20,0 });
 				pCartBot->Set_Force({ 0,0,0 });
 				pCartBot->SetMissileHit(true);
+
+				CGameObject * pMissileEffect = CMissileEffect::Create(m_pGraphicDev);
+				
+				if (pMissileEffect == nullptr)
+					return;
+				if (FAILED(m_pLayer->Add_GameObject(L"Obj_MissileEffect", pMissileEffect)))
+					return;
+				
+				_vec3 vCartBotPos;
+				pCartBot->Get_Transform()->Get_Info(INFO_POS, &vCartBotPos);
+				pMissileEffect->Get_Transform()->Set_Pos(vCartBotPos);
 			}
 		}
 		vector<CGameObject*> vecChildren = Get_Children();

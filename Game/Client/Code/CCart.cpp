@@ -37,7 +37,8 @@
 #include "CTrackMgr.h"
 #include "CCollisionStarEffect.h"
 #include "CMagnet.h"
-#include <CMagnetBody.h>
+#include "CMagnetBody.h"
+#include "CBarricade.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -311,6 +312,10 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateWaterFlyObject();
 	}
 
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_A))
+	{
+		CreateBarricadeObject();
+	}
 	//if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
 	//{
 	//	CreateShieldObject_();
@@ -1578,6 +1583,18 @@ void CCart::CreateUfoObject()
 
 	pUfoBeam->SetLayer(m_pLayer);
 	pUfo->Set_Child(pUfoBeam);
+}
+
+void CCart::CreateBarricadeObject()
+{
+	CGameObject * pBarricade = CBarricade::Create(m_pGraphicDev);
+
+	if (pBarricade == nullptr)
+		return;
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Barricade", pBarricade)))
+		return;
+
+	pBarricade->Get_Transform()->Set_Pos({0,5,-10});
 }
 
 void CCart::CreateMissileAimObject()

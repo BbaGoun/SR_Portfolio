@@ -92,6 +92,7 @@ public:
 	void			CreateMagnetAimObject();
 	void			CreateShieldObject_();
 	void			CreateUfoObject();
+	void			CreateBarricadeObject();
 
 	// Item
 	void			GainItem();

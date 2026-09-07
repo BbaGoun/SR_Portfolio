@@ -415,6 +415,12 @@
     <Filter Include="02. GameObject\Item\Magnet\MagnetBody">
       <UniqueIdentifier>{2cf3dfe9-2af6-4e54-8ee4-a5e1ade645d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Cart\Effect\MissileEffect">
+      <UniqueIdentifier>{b6d3d496-4e34-4b84-9a5f-28f119271bc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Barricade">
+      <UniqueIdentifier>{df77ce2b-5810-4e65-bb30-2ec868ee7f37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -813,6 +819,12 @@
     <ClInclude Include="..\Header\CMagnet.h">
       <Filter>02. GameObject\Item\Magnet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMissileEffect.h">
+      <Filter>02. GameObject\Cart\Effect\MissileEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBarricade.h">
+      <Filter>02. GameObject\Item\Barricade</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1201,6 +1213,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMagnet.cpp">
       <Filter>02. GameObject\Item\Magnet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMissileEffect.cpp">
+      <Filter>02. GameObject\Cart\Effect\MissileEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBarricade.cpp">
+      <Filter>02. GameObject\Item\Barricade</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
