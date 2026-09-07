@@ -373,8 +373,17 @@
     <Filter Include="03. Manager\RankMgr">
       <UniqueIdentifier>{d29b7f87-a875-4652-9d62-4445214be037}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Manager\CSlotMgr">
-      <UniqueIdentifier>{3b7b33a3-72b5-49b7-98a9-f5874903879b}</UniqueIdentifier>
+    <Filter Include="03. Manager\SlotMgr">
+      <UniqueIdentifier>{ffc318e1-dc1e-4372-bf46-bae647d21182}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\ButtonMgr">
+      <UniqueIdentifier>{15665797-48ef-4f72-9b83-10ba90457ada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Nexon Scene">
+      <UniqueIdentifier>{e5627b21-1911-427f-87ba-d26666308421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\UI\NexonLogo">
+      <UniqueIdentifier>{d5f883e4-4ef2-45ca-a451-92aba15aaf7f}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\RePlayCart">
       <UniqueIdentifier>{54bdf8f2-8e7f-426c-8c59-76d91f43c181}</UniqueIdentifier>
@@ -786,6 +795,18 @@
     <ClInclude Include="..\Header\CRankMgr.h">
       <Filter>03. Manager\RankMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSlotMgr.h">
+      <Filter>03. Manager\SlotMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CButtonMgr.h">
+      <Filter>03. Manager\ButtonMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CNexonVideo.h">
+      <Filter>01. Scene\Nexon Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUI_NexonLogo.h">
+      <Filter>02. GameObject\UI\NexonLogo</Filter>
+	</ClInclude>
     <ClInclude Include="..\Header\CRePlayCart.h">
       <Filter>02. GameObject\RePlayCart</Filter>
     </ClInclude>
@@ -1181,6 +1202,18 @@
     <ClCompile Include="..\Code\CRankMgr.cpp">
       <Filter>03. Manager\RankMgr</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CSlotMgr.cpp">
+      <Filter>03. Manager\SlotMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CButtonMgr.cpp">
+      <Filter>03. Manager\ButtonMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CNexonVideo.cpp">
+      <Filter>01. Scene\Nexon Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_NexonLogo.cpp">
+      <Filter>02. GameObject\UI\NexonLogo</Filter>
+	</ClCompile>
     <ClCompile Include="..\Code\CRePlayCart.cpp">
       <Filter>02. GameObject\RePlayCart</Filter>
     </ClCompile>

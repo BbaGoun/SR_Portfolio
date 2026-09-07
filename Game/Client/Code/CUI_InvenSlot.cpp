@@ -7,8 +7,9 @@
 #include "CInvenSlotCart.h"
 #include "CManagement.h"
 #include "CInvenSlotBG.h"
+#include "CSlotMgr.h"
 
-CUI_InvenSlot::CUI_InvenSlot(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)
+CUI_InvenSlot::CUI_InvenSlot(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID)
 	:CGameObject(pGraphicDev),m_eSlotNum(eID)
 {
 }
@@ -74,6 +75,9 @@ _int CUI_InvenSlot::Update_GameObject(const _float& fDeltaTime)
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
 			pBG->SetSelected(true);
+			CSlotMgr::GetInstance()->CartSlotClicked(this);
+			Set_Slot(m_eSelectSlot);
+
 		}
 	}
 	else
@@ -112,7 +116,7 @@ void CUI_InvenSlot::Render_GameObject()
 	m_pVIBufferCom->Render_Buffer();
 }
 
-CUI_InvenSlot* CUI_InvenSlot::Create(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)
+CUI_InvenSlot* CUI_InvenSlot::Create(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID)
 {
 	CUI_InvenSlot* pObj = new CUI_InvenSlot(pGraphicDev, eID);
 

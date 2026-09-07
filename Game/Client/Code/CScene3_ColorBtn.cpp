@@ -10,6 +10,7 @@
 #include "CRenderer.h"
 #include "CDInputMgr.h"
 #include "CManagement.h"
+#include "CButtonMgr.h"
 
 #include "CScene3_ColorSetBG.h"
 #include "CScene3_ColorSet.h"
@@ -77,6 +78,8 @@ _int CScene3_ColorBtn::Update_GameObject(const _float& fDeltaTime)
 		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
 		{
 
+			CButtonMgr::GetInstance()->ButtonClicked(this);
+
 			if (pSetBG->Get_Show() == false)
 				pSetBG->Set_Show(true);
 			else
@@ -93,6 +96,7 @@ _int CScene3_ColorBtn::Update_GameObject(const _float& fDeltaTime)
 				pGreen->Set_Show1(true);
 			else
 				pGreen->Set_Show1(false);
+
 		}
 	
 

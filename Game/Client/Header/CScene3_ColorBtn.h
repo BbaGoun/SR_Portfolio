@@ -2,6 +2,7 @@
 #include "CGameObject.h"
 #include "CRcTex.h"
 #include "CTexture.h"
+#include "CScene3_ColorSetBG.h"
 
 class CScene3_ColorBtn :
 	public CGameObject
@@ -18,6 +19,10 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+	void						Set_WindowShow(bool bWindowShow) { dynamic_cast<CScene3_ColorSetBG*>(m_pColorWindow)->Set_Show(bWindowShow); }
+	bool						Get_WindowShow() { return dynamic_cast<CScene3_ColorSetBG*>(m_pColorWindow)->Get_Show(); }
+
+
 	//virtual			HRESULT		Set_ClickIcon(const _float& fDeltaTime);
 
 private:
@@ -33,6 +38,7 @@ private:
 public:
 	static CScene3_ColorBtn* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	
+	CGameObject* m_pColorWindow;
 
 protected:
 	virtual		void		Free() override;

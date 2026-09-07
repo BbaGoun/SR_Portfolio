@@ -10,7 +10,7 @@ class CInvenSlotBG :
 	public CGameObject
 {
 private:
-	explicit CInvenSlotBG(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID);
+	explicit CInvenSlotBG(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID);
 	explicit CInvenSlotBG(const CInvenSlotBG& rhs);
 	virtual ~CInvenSlotBG();
 
@@ -34,10 +34,10 @@ private:
 	float			m_fFrame;
 	bool			m_bSelected;
 	bool			m_bMouseHover;
-	INEN_SLOT_NUM	m_eSlotNum;
+	INVEN_SLOT_NUM	m_eSlotNum;
 	
 public:
-	static CInvenSlotBG* Create(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID);
+	static CInvenSlotBG* Create(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID);
 
 
 protected:

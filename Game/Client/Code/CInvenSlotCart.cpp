@@ -3,7 +3,7 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CDInputMgr.h"
-CInvenSlotCart::CInvenSlotCart(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)
+CInvenSlotCart::CInvenSlotCart(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID)
 	:CGameObject(pGraphicDev),m_eSlotNum(eID)
 {
 }
@@ -88,7 +88,7 @@ void CInvenSlotCart::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProj);
 }
 
-CInvenSlotCart* CInvenSlotCart::Create(LPDIRECT3DDEVICE9 pGraphicDev, INEN_SLOT_NUM eID)
+CInvenSlotCart* CInvenSlotCart::Create(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID)
 {
 	CInvenSlotCart* pObj = new CInvenSlotCart(pGraphicDev, eID);
 

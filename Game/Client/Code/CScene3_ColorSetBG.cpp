@@ -30,7 +30,7 @@ HRESULT CScene3_ColorSetBG::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
 
-	m_vPos = { -310, -50, 5 };
+	m_vPos = { -300, -50, 5 };
 	m_vScale = { 156, 108, 1 };
 	m_pTransformCom->Set_Pos(m_vPos);
 	m_pTransformCom->Set_Scale(m_vScale);
