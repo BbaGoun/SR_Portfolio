@@ -1,0 +1,872 @@
+﻿#include "pch.h"
+#include "CRacingScene.h"
+#include "CGraphicDev.h"
+#include "CProtoMgr.h"
+#include "CRenderer.h"
+#include "CSmokeEffect.h"
+#include "CSkyBox.h"
+#include "CHUD_Main.h"
+#include "CHUD_Gage.h"
+#include "CHUD_Num.h"
+#include "CUI_Rainbow.h"
+#include "CUI_BoosterBar.h"
+#include "CUI_BoosterBG.h"
+#include "CUI_Timer.h"
+#include "CUI_ItemSlot.h"
+#include "CUI_ItemIcon.h"
+#include "CUI_Minimap.h"
+#include "CMinimapGround.h"
+#include "CMinimapCart.h"
+#include "CDynamicCamera.h"
+#include "CCameraMgr.h"
+#include "Engine_Parsing.h"
+#include "CLoadMgr.h"
+#include "CCart.h"
+#include "CCartBody.h"
+#include "CWheel.h"
+#include "CBoostWind.h"
+#include "CBoostJet.h"
+#include "CFollowSmoothCam.h"
+#include "CDustLandingEffect.h"
+#include "CSpeedLine.h"
+#include "CUI_StartCountDown.h"
+#include "CUI_EndCountDown.h"
+#include "CPlayTimeMgr.h"
+#include "CStartCam.h"
+#include "CTrackMgr.h"
+#include "CTrackCam.h"
+#include "CFinishCam.h"
+#include "CSkyDome.h"
+#include "CUI_RankBG.h"
+#include "CUI_RankName.h"
+#include "CDInputMgr.h"
+#include "CRankMgr.h"
+#include "CCartBot.h"
+#include "CUI_Laps.h"
+#include "CWaterBombBubble.h"
+#include "CBoostAura.h"
+#include "CShield1.h"
+#include "CShield2.h"
+#include "CMinimapCartBot.h"
+#include "CCollisionStarEffect.h"
+#include "CItemGainEffect.h"
+#include "CUI_RankNumber.h"
+#include "CUI_PauseMenu.h"
+#include "CPause_MenuBtn.h"
+#include "CPause_ReplayBtn.h"
+#include "SoundMgr.h"
+
+CRacingScene::CRacingScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
+{
+}
+
+CRacingScene::~CRacingScene()
+{
+}
+
+HRESULT CRacingScene::Ready_Scene()
+{
+	LoadSceneFromFile();
+
+	SoundMgr::GetInstance().PlayBGM(L"BGM/village/village_03_re.ogg", 0.4f);
+
+	return S_OK;
+}
+
+HRESULT CRacingScene::PostReady_Scene()
+{
+	CScene::PostReady_Scene();
+
+	CTrackMgr::GetInstance()->Set_MaxLap(2);
+	Ready_TrackMgr();
+	
+	Ready_RenderTarget();
+	Ready_GameLogic_Layer();
+	Ready_Environment_Layer();
+	Ready_UI_Layer();
+	Ready_Collision_Matrix();
+
+	//CPlayTimeMgr::GetInstance()->SetRaceStart();
+	return S_OK;
+}
+
+void CRacingScene::FixedUpdate_Scene(const _float& fFixedDeltaTime)
+{
+	CDInputMgr::GetInstance()->Record_FixedUpdate();
+	CScene::FixedUpdate_Scene(fFixedDeltaTime);
+
+	auto& map = Get_GameObjects(L"GameLogic");
+
+	vector<CGameObject*> objects;
+	objects.reserve(1000);
+	for (auto& p : map){
+		for (auto& pObj : p.second)
+			if (pObj->Get_Component<CCollider>())
+				objects.push_back(pObj);
+	}
+
+	Process_Collision(objects);
+
+	CTrackMgr::GetInstance()->Update_Locator();
+}
+
+_int CRacingScene::Update_Scene(const _float& fDeltaTime)
+{
+	_int iExit = CScene::Update_Scene(fDeltaTime);
+	CCameraMgr::GetInstance()->UpdateClosedRePlayCam();
+	return iExit;
+}
+
+void CRacingScene::LateUpdate_Scene(const _float& fDeltaTime)
+{
+	CScene::LateUpdate_Scene(fDeltaTime);
+}
+
+void CRacingScene::Render_Scene()
+{
+	//CScene::Render_Scene();
+}
+
+void CRacingScene::OnLostDevice()
+{
+	CScene::OnLostDevice();
+	CRenderer::GetInstance()->OnLostDevice();
+}
+
+void CRacingScene::OnResetDevice()
+{
+	CScene::OnResetDevice();
+	CRenderer::GetInstance()->OnResetDevice(m_pGraphicDev);
+}
+
+HRESULT CRacingScene::LoadSceneFromFile()
+{
+	// 일단 넣어두기
+	CLayer* pGameObjectLayer = CLayer::Create();
+
+	if (pGameObjectLayer == nullptr)
+		return E_FAIL;
+
+	m_mapLayer.insert({ L"GameLogic", pGameObjectLayer });
+
+	const _tchar* path = nullptr;
+	switch (m_eMapId) {
+	case MAP_ITEM:
+		path = L"../Bin/Resource/Editor/Scene/ItemScene.scene";
+		break;
+	case MAP_SPEED:
+		path = L"../Bin/Resource/Editor/Scene/SpeedScene.scene";
+		break;
+	default:
+		return E_FAIL;
+	}
+	int a;
+	FILE* fp = nullptr;
+	if (_wfopen_s(&fp, path, L"r, ccs=UTF-8") != 0 || !fp)
+		return E_FAIL;
+
+	FileReadState st;
+	st.fp = fp;
+
+	wchar_t* t = nullptr;
+	CGameObject* pRoot = nullptr;
+	while (true) {
+		if (st.Next(t) && !wcscmp(t, L"OBJECT"))
+			pRoot = CLoadMgr::GetInstance()->LoadGameObjectClient(st, m_pGraphicDev, nullptr, this);
+		else
+			break;
+	}
+	fclose(fp);
+
+	return S_OK;
+}
+
+HRESULT CRacingScene::Ready_TrackMgr()
+{
+	CGameObject* pGraphObj = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Graph");
+	CTrackMgr::GetInstance()->Register_Track(pGraphObj);
+
+	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	CTrackMgr::GetInstance()->Register_Player(static_cast<CCart*>(pCart));
+	
+	auto& vecBots = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
+	for (int i = 0; i < vecBots.size(); ++i) {
+		CCartBot* pCartBot = static_cast<CCartBot*>(vecBots[i]);
+		switch (i) {
+		case 0:
+			pCartBot->SetLateralOffset(-0.5f);
+			break;
+		case 1:
+			pCartBot->SetLateralOffset(-0.25f);
+			break;
+		case 2:
+			pCartBot->SetLateralOffset(0.5f);
+			break;
+		}
+
+		CTrackMgr::GetInstance()->Register_Bot(pCartBot);
+	}
+
+	return S_OK;
+}
+
+HRESULT CRacingScene::Ready_RenderTarget()
+{
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"Minimap", 256, 384);
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"LeftMirror", 256, 384);
+	CRenderer::GetInstance()->Add_RenderTarget(m_pGraphicDev, L"RightMirror", 256, 384);
+	CRenderer::GetInstance()->Ready_BlurRT(m_pGraphicDev);
+	return S_OK;
+}
+
+HRESULT CRacingScene::Ready_GameLogic_Layer()
+{
+	CGameObject* pGameObject = nullptr;
+	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	CGameObject* pCartBody = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody");
+	CGameObject* pPlayer = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Player");
+	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
+
+	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
+	static_cast<CCart*>(pCart)->SetMapID(m_eMapId);
+	static_cast<CCart*>(pCart)->AddWheel();
+
+	pCartBody->Set_ChildTuneDefault(pPlayer);
+	pCartBody->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
+
+	auto& vecCartBot = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
+	auto& vecCartBody = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBotBody");
+
+	auto& vecBot = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_Bot");
+	auto& vecBotHead = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_BotHead");
+
+	for (int i = 0; i < vecCartBot.size(); ++i) {
+		static_cast<CCartBot*>(vecCartBot[i])->SetPlayerHead(vecBotHead[i]);
+		static_cast<CCartBot*>(vecCartBot[i])->AddWheel();
+		
+		vecCartBody[i]->Set_ChildTuneDefault(vecBot[i]);
+		vecCartBody[i]->Get_Transform()->Set_Pos({ 0, 0.5f, 0 });
+	}
+
+// 이펙트
+	// ## 부스터 왼쪽1 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	
+	// ## 부스터 왼쪽2 바람 이펙트
+	// BoostWindL2
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	
+	// ## 부스터 오른쪽1 바람 이펙트
+	// BoostWindR1
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	// ## 부스터 오른쪽2 바람 이펙트
+	pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
+	
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	
+	// ## 부스터 제트 이펙트
+	// BoostJet
+	pGameObject = CBoostJet::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
+	pCartBody->Set_ChildWithoutTune(pGameObject);
+
+	// ## 부스터 제트 아우리
+	// BoostAura
+	pGameObject = CBoostAura::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostAura", pGameObject);
+	pCartBody->Set_ChildWithoutTune(pGameObject);
+
+	// Player Shield1,2
+	pGameObject = CShield1::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"PlayerShield1", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	static_cast<CCart*>(pCart)->SetShield1(pGameObject);
+
+	pGameObject = CShield2::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"PlayerShield2", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+	static_cast<CCart*>(pCart)->SetShield2(pGameObject);
+
+	pGameObject = CWaterBombBubble::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BotBubble", pGameObject);
+	static_cast<CCart*>(pCart)->SetBubble(pGameObject);
+
+	// Bot Shield1,2 , Bubble
+	for (int i = 0; i < vecCartBot.size(); ++i) {
+		// ## 부스터 왼쪽1 바람 이펙트
+		pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L1);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL1", pGameObject);
+		static_cast<CCartBot*>(vecCartBot[i])->Set_ChildWithoutTune(pGameObject);
+
+		// ## 부스터 왼쪽2 바람 이펙트
+		// BoostWindL2
+		pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_L2);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindL2", pGameObject);
+		static_cast<CCartBot*>(vecCartBot[i])->Set_ChildWithoutTune(pGameObject);
+
+		// ## 부스터 오른쪽1 바람 이펙트
+		// BoostWindR1
+		pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R1);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR1", pGameObject);
+		static_cast<CCartBot*>(vecCartBot[i])->Set_ChildWithoutTune(pGameObject);
+		
+		// ## 부스터 오른쪽2 바람 이펙트
+		pGameObject = CBoostWind::Create(m_pGraphicDev, WIND_R2);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostWindR2", pGameObject);
+		static_cast<CCartBot*>(vecCartBot[i])->Set_ChildWithoutTune(pGameObject);
+
+		// ## 부스터 제트 이펙트
+		// BoostJet
+		pGameObject = CBoostJet::Create(m_pGraphicDev);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostJet", pGameObject);
+		vecCartBody[i]->Set_ChildWithoutTune(pGameObject);
+
+		// ## 부스터 제트 아우리
+		// BoostAura
+		pGameObject = CBoostAura::Create(m_pGraphicDev);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BoostAura", pGameObject);
+		vecCartBody[i]->Set_ChildWithoutTune(pGameObject);
+
+		// 쉴드
+		pGameObject = CShield1::Create(m_pGraphicDev);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BotShield1", pGameObject);
+		vecCartBot[i]->Set_ChildWithoutTune(pGameObject);
+		static_cast<CCartBot*>(vecCartBot[i])->SetShield1(pGameObject);
+
+		pGameObject = CShield2::Create(m_pGraphicDev);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BotShield2", pGameObject);
+		vecCartBot[i]->Set_ChildWithoutTune(pGameObject);
+		static_cast<CCartBot*>(vecCartBot[i])->SetShield2(pGameObject);
+
+		// 버블
+		pGameObject = CWaterBombBubble::Create(m_pGraphicDev);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"BotBubble", pGameObject);
+		static_cast<CCartBot*>(vecCartBot[i])->SetBubble(pGameObject);
+
+		// 착지시 연기 이펙트
+		pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
+		if (nullptr == pGameObject)
+			return E_FAIL;
+		CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
+		static_cast<CDustLandingEffect*>(pGameObject)->SetOwner(vecCartBot[i]);
+		static_cast<CCartBot*>(vecCartBot[i])->SetDustLandingEffect(static_cast<CDustLandingEffect*>(pGameObject));
+	}
+
+// 파티클
+	// 연기 이펙트
+	// SpeedLine
+	pGameObject = CSpeedLine::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SpeedLine", pGameObject);
+	static_cast<CSpeedLine*>(pGameObject)->SetCart(pCart);
+// Particle
+	// SmokeParticle
+	pGameObject = CSmokeEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"SmokeEffect", pGameObject);
+	dynamic_cast<CSmokeEffect*>(pGameObject)->SetCart(pCart);
+	int a;
+	// 충돌시 나오는 별 이펙트
+	pGameObject = CCollisionStarEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"CollisionStarEffect", pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
+
+	// 착지시 먼지 이펙트
+	// DustParticle
+	pGameObject = CDustLandingEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"DustLandingEffect", pGameObject);
+	static_cast<CDustLandingEffect*>(pGameObject)->SetOwner(pCart);
+	static_cast<CCart*>(pCart)->SetDustLandingEffect(static_cast<CDustLandingEffect*>(pGameObject));
+
+	//ItemGainEffect
+	pGameObject = CItemGainEffect::Create(m_pGraphicDev);
+	if (nullptr == pGameObject)
+		return E_FAIL;
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"ItemGainEffect", pGameObject);
+
+//Camera
+	//// # 플레이어 따라다니는 3인칭 카메라
+	_vec3 vEye, vAt, vUp, vLook;
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 8.5f) + (vLook * -15.f);
+	pGameObject = CFollowSmoothCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45.f));
+	
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FollowSmoothCam", pGameObject);
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FOLLOW_SMOOTH,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+	
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FOLLOW_SMOOTH)))
+		return E_FAIL;
+
+	//StartCam
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 15) + (vLook * 15);
+	pGameObject = CStartCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45));
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_StartCam", pGameObject);
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_START,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+	if (FAILED(CCameraMgr::GetInstance()->SetMainCamera(CAMERA_START)))
+		return E_FAIL;
+
+	//FinishCam
+	pCart->Get_Transform()->Get_Info(INFO_POS, &vAt);
+	pCart->Get_Transform()->Get_Info(INFO_UP, &vUp);
+	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	vEye = vAt + (vUp * 15) + (vLook * 15);
+	pGameObject = CFinishCam::Create(m_pGraphicDev, vEye, vAt, vUp, D3DXToRadian(45));
+
+	if (pGameObject == nullptr)
+		return E_FAIL;
+
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"Obj_FinishCam", pGameObject);
+
+	if (FAILED(CCameraMgr::GetInstance()->Ready_Camera(CAMERA_FINISH,
+		static_cast<CCamera*>(pGameObject))))
+		return E_FAIL;
+
+	// TrackCam(RePlay)
+	auto& Cameras = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"TrackCam");
+	if (!Cameras.empty())
+	{
+		for(auto cam : Cameras)
+			CCameraMgr::GetInstance()->AddRePlayCam(static_cast<CCamera*>(cam));
+	}
+	CCameraMgr::GetInstance()->SetCart(pCart);
+
+	return S_OK;
+}
+
+HRESULT CRacingScene::Ready_Environment_Layer()
+{
+	CLayer* pEnvironmentLayer = CLayer::Create();
+
+	if (pEnvironmentLayer == nullptr)
+		return E_FAIL;
+
+	m_mapLayer.insert({ L"Environment", pEnvironmentLayer });
+
+	CGameObject* pEnvObject = nullptr;
+	
+	
+	//pEnvObject = CSkyBox::Create(m_pGraphicDev);
+	//
+	//if (pEnvObject == nullptr)
+	//	return E_FAIL;
+	//if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_SkyBox", pEnvObject)))
+	//	return E_FAIL;
+	
+	//CSkyDome
+	pEnvObject = CSkyDome::Create(m_pGraphicDev);
+
+	if (pEnvObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pEnvironmentLayer->Add_GameObject(L"Env_SkyDome", pEnvObject)))
+		return E_FAIL;
+	return S_OK;
+}
+
+
+HRESULT CRacingScene::Ready_UI_Layer()
+{
+	CLayer* pUILayer = CLayer::Create();
+
+	if (pUILayer == nullptr)
+		return E_FAIL;
+
+	m_mapLayer.insert({ L"UI", pUILayer });
+
+	CGameObject* pUIObject = nullptr;
+
+	// UI_HUDMain
+	pUIObject = CHUD_Main::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDMain", pUIObject)))
+		return E_FAIL;
+
+	// UI_HUDGage
+	
+	pUIObject = CHUD_Gage::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDGage", pUIObject)))
+		return E_FAIL;
+	
+	// UI_HUDNum
+	pUIObject = CHUD_Num::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDNum", pUIObject)))
+		return E_FAIL;
+
+	// UI_Rainbow
+	pUIObject = CUI_Rainbow::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Rainbow", pUIObject)))
+		return E_FAIL;
+	if (m_eMapId == MAP_SPEED)
+	{
+		// UI_BoosterBG
+		pUIObject = CUI_BoosterBG::Create(m_pGraphicDev);
+		if (nullptr == pUIObject)
+			return E_FAIL;
+		if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBG", pUIObject)))
+			return E_FAIL;
+
+		// UI_BoosterBar
+		pUIObject = CUI_BoosterBar::Create(m_pGraphicDev);
+		if (nullptr == pUIObject)
+			return E_FAIL;
+		if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
+			return E_FAIL;
+	}
+	// UI_ItemSlot
+	pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemSlot", pUIObject)))
+		return E_FAIL;
+
+	// UI_ItemIcon
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
+	CUI_ItemIcon* pItemIcon = static_cast<CUI_ItemIcon*>(pUIObject);
+	pItemIcon->Set_PosFirst({ -505.f, 300.f, 4.f });
+	pItemIcon->Set_ScaleFirst({ 80.f,80.f,0.f });
+	pItemIcon->Set_PosSecond({ -585.f, 310.f, 4.f });
+	pItemIcon->Set_ScaleSecond({ 60.f,60.f,0.f });
+	CCart* pCart = static_cast<CCart*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart"));
+	pItemIcon->Set_Player(pCart);
+
+	// CUI_Minimap
+	pUIObject = CUI_Minimap::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"PreviewCart", pUIObject)))
+		return E_FAIL;
+
+	// 미니맵 Cart
+	pUIObject = CMinimapCart::Create(m_pGraphicDev);
+
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"MinimapCart", pUIObject)))
+		return E_FAIL;
+
+	pUIObject = CMinimapGround::Create(m_pGraphicDev);
+
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"Env_MinimapGround", pUIObject)))
+		return E_FAIL;
+
+	// CUI_StartCountDown
+	pUIObject = CUI_StartCountDown::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_StartCountDown", pUIObject)))
+		return E_FAIL;
+
+	// CUI_EndCountDown
+	pUIObject = CUI_EndCountDown::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_EndCountDown", pUIObject)))
+		return E_FAIL;
+	
+	//Rank=============
+	pUIObject = CUI_RankNumber::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankNumber", pUIObject)))
+		return E_FAIL;
+	static_cast<CUI_RankNumber*>(pUIObject)->Set_Player(pCart);
+
+	// 플레이어 BG
+	CGameObject* pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_PLAYER, MARK_RED);
+	if (nullptr == pUI_RankBG)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankPlayerBG", pUI_RankBG)))
+		return E_FAIL;
+	pUI_RankBG->Get_Transform()->Set_Pos({ -525,50,2 });
+
+	// 플레이어 이름
+	pUIObject = CUI_RankName::Create(m_pGraphicDev,NAME_PLAYER);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankPlayerName", pUIObject)))
+		return E_FAIL;
+	pUIObject->Get_Transform()->Set_Pos({ -525,50,1 });
+	pUI_RankBG->Set_Child(pUIObject);
+
+	// 플레이어 아이템
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
+	pUI_RankBG->Set_Child(pUIObject);
+	pItemIcon = static_cast<CUI_ItemIcon*>(pUIObject);
+	pItemIcon->Set_PosFirst({ 0.3f, 0, -0.1f });
+	pItemIcon->Set_ScaleFirst({ 30.f/ 200.f,30.f/ 34.f,0.f });
+	pItemIcon->Set_PosSecond({ 0.41f, 0, -0.1f });
+	pItemIcon->Set_ScaleSecond({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_Player(pCart);
+
+	CRankMgr::GetInstance()->AddUI(pCart, pUI_RankBG);
+
+	// 봇 BG 1
+	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_BLUE);
+	if (nullptr == pUI_RankBG)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankBazziBG", pUI_RankBG)))
+		return E_FAIL;
+	pUI_RankBG->Get_Transform()->Set_Pos({ -525,15,2 });
+
+	// 봇 이름 1
+	pUIObject = CUI_RankName::Create(m_pGraphicDev, STUPID_BAZZI);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankStupidBazzi", pUIObject)))
+		return E_FAIL;
+	pUIObject->Get_Transform()->Set_Pos({ -525,15,1 });
+	pUI_RankBG->Set_Child(pUIObject);
+
+	// 봇 아이템 1
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
+	pUI_RankBG->Set_Child(pUIObject);
+	pItemIcon = static_cast<CUI_ItemIcon*>(pUIObject);
+	pItemIcon->Set_PosFirst({ 0.3f, 0, -0.1f });
+	pItemIcon->Set_ScaleFirst({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_PosSecond({ 0.41f, 0, -0.1f });
+	pItemIcon->Set_ScaleSecond({ 30.f / 200.f,30.f / 34.f,0.f });
+
+	// 봇 연결
+	auto& vecCartBot = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
+	CRankMgr::GetInstance()->AddUI(vecCartBot[0], pUI_RankBG);
+	pItemIcon->Set_Bot(static_cast<CCartBot*>(vecCartBot[0]));
+
+	// 봇 BG2
+	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_YELLOW);
+	if (nullptr == pUI_RankBG)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankDaoBG", pUI_RankBG)))
+		return E_FAIL;
+	pUI_RankBG->Get_Transform()->Set_Pos({ -525,-20,2 });
+
+	// 봇 이름2
+	pUIObject = CUI_RankName::Create(m_pGraphicDev, SMART_DAO);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankSmartDao", pUIObject)))
+		return E_FAIL;
+	pUIObject->Get_Transform()->Set_Pos({ -525,-20,1 });
+	pUI_RankBG->Set_Child(pUIObject);
+	
+	// 봇 아이템 2
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
+	pUI_RankBG->Set_Child(pUIObject);
+	pItemIcon = static_cast<CUI_ItemIcon*>(pUIObject);
+	pItemIcon->Set_PosFirst({ 0.3f, 0, -0.1f });
+	pItemIcon->Set_ScaleFirst({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_PosSecond({ 0.41f, 0, -0.1f });
+	pItemIcon->Set_ScaleSecond({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_Bot(static_cast<CCartBot*>(vecCartBot[1]));
+
+	// 봇 연결
+	CRankMgr::GetInstance()->AddUI(vecCartBot[1], pUI_RankBG);
+
+	// 봇 BG3
+	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_GRAY);
+	if (nullptr == pUI_RankBG)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankDaoBG", pUI_RankBG)))
+		return E_FAIL;
+	pUI_RankBG->Get_Transform()->Set_Pos({ -525,-55,2 });
+
+	// 봇 이름3
+	pUIObject = CUI_RankName::Create(m_pGraphicDev, STUPID_UNI);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_RankSmartDao", pUIObject)))
+		return E_FAIL;
+	pUIObject->Get_Transform()->Set_Pos({ -525,-55,1 });
+	pUI_RankBG->Set_Child(pUIObject);
+	
+	// 봇 아이템 3
+	pUIObject = CUI_ItemIcon::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_ItemIcon", pUIObject)))
+		return E_FAIL;
+	pUI_RankBG->Set_Child(pUIObject);
+	pItemIcon = static_cast<CUI_ItemIcon*>(pUIObject);
+	pItemIcon->Set_PosFirst({ 0.3f, 0, -0.1f });
+	pItemIcon->Set_ScaleFirst({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_PosSecond({ 0.41f, 0, -0.1f });
+	pItemIcon->Set_ScaleSecond({ 30.f / 200.f,30.f / 34.f,0.f });
+	pItemIcon->Set_Bot(static_cast<CCartBot*>(vecCartBot[2]));
+
+	// 봇 연결
+	CRankMgr::GetInstance()->AddUI(vecCartBot[2], pUI_RankBG);
+
+	// UI_Laps
+	pUIObject = CUI_Laps::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Lap", pUIObject)))
+		return E_FAIL;
+
+	// UI_Timer
+	pUIObject = CUI_Timer::Create(m_pGraphicDev);
+	if (nullptr == pUIObject)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_Timer", pUIObject)))
+		return E_FAIL;
+
+	for (auto& pCartBot : vecCartBot) {
+		pUIObject = CMinimapCartBot::Create(m_pGraphicDev);
+		if (nullptr == pUIObject)
+			return E_FAIL;
+		if (FAILED(pUILayer->Add_GameObject(L"MinimapCartBot", pUIObject)))
+			return E_FAIL;
+		static_cast<CMinimapCartBot*>(pUIObject)->SetCartBot(pCartBot);
+	}
+
+	//PauseMenu
+	CGameObject* pPauseMenu = CUI_PauseMenu::Create(m_pGraphicDev);
+	if (pPauseMenu == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"UI_MenuPause", pPauseMenu)))
+		return E_FAIL;
+
+	pUIObject = CPause_ReplayBtn::Create(m_pGraphicDev);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"Pause_ReplayBtn", pUIObject)))
+		return E_FAIL;
+
+	pUIObject = CPause_MenuBtn::Create(m_pGraphicDev);
+	if (pUIObject == nullptr)
+		return E_FAIL;
+	if (FAILED(pUILayer->Add_GameObject(L"Pause_MenuBtn", pUIObject)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CRacingScene::Ready_Collision_Matrix()
+{
+	Set_CollisionMatrix(CL_ITEM_BOX, CL_ITEM_BOX, false);
+	Set_CollisionMatrix(CL_ITEM_BOX, CL_CART_WHEEL, false);
+	Set_CollisionMatrix(CL_ITEM_BOX, CL_ITEM, false);
+	Set_CollisionMatrix(CL_CART_WHEEL, CL_CART_WHEEL, false);
+	Set_CollisionMatrix(CL_CART_WHEEL, CL_ITEM, false);
+	Set_CollisionMatrix(CL_CART_WHEEL, CL_CART_BODY, false);
+	Set_CollisionMatrix(CL_ITEM, CL_ITEM, false);
+
+	return S_OK;
+}
+
+CRacingScene* CRacingScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, MAP_ID eID)
+{
+	CRacingScene* pScene = new CRacingScene(pGraphicDev);
+	pScene->m_eMapId = eID;
+
+	if (FAILED(pScene->Ready_Scene())) {
+		MSG_BOX("CRacingScene Create Failed");
+		Safe_Release(pScene);
+		return nullptr;
+	}
+	return pScene;
+}
+
+void CRacingScene::Free()
+{
+	CRenderer::GetInstance()->Clear_RenderGroup();
+	CRenderer::GetInstance()->Delete_RenderTarget(L"Minimap");
+	CRenderer::GetInstance()->Delete_RenderTarget(L"LeftMirror");
+	CRenderer::GetInstance()->Delete_RenderTarget(L"RightMirror");
+	CTrackMgr::DestroyInstance();
+	CRenderer::GetInstance()->Delete_BlurRT();
+	CScene::Free();
+}

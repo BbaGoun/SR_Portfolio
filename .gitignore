@@ -462,3 +462,8 @@ FodyWeavers.xsd
 /Game/Reference/Library/*
 !/Game/Reference/Header/.gitkeep
 !/Game/Reference/Library/.gitkeep
+
+### FMOD ###
+!/fmod/core/lib/x64/
+!/fmod/core/lib/x64/*.dll
+!/fmod/core/lib/x64/*.lib

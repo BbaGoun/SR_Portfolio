@@ -1,10 +1,6 @@
-#include "CTerrain2.h"
+ï»¿#include "CTerrain2.h"
 #include "CHeightMapLoader.h"
 
-CTerrain2::CTerrain2() : CVIBuffer()
-, m_pTexture(nullptr)
-{
-}
 
 CTerrain2::CTerrain2(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 , m_pTexture(nullptr)
@@ -73,7 +69,7 @@ HRESULT CTerrain2::Ready_Buffer()
 
 	for (int i = 0; i < VTXCNTZ - 1; ++i) {
 		for (int j = 0; j < VTXCNTX - 1; ++j) {
-			// ¿ÞÂÊ À§ »ï°¢Çü
+			// ì™¼ìª½ ìœ„ ì‚¼ê°í˜•
 			indices[(i * (VTXCNTX - 1) + j) * 2]._0 = (i + 1) * VTXCNTX + j;
 			indices[(i * (VTXCNTX - 1) + j) * 2]._1 = (i + 1) * VTXCNTX + (j + 1);
 			indices[(i * (VTXCNTX - 1) + j) * 2]._2 = i * VTXCNTX + j;
@@ -84,7 +80,7 @@ HRESULT CTerrain2::Ready_Buffer()
 					indices[(i * (VTXCNTX - 1) + j) * 2]._2
 				},{} };
 
-			// ¿À¸¥ÂÊ ¾Æ·¡ »ï°¢Çü
+			// ì˜¤ë¥¸ìª½ ì•„ëž˜ ì‚¼ê°í˜•
 			indices[(i * (VTXCNTX - 1) + j) * 2 + 1]._0 = i * VTXCNTX + (j + 1);
 			indices[(i * (VTXCNTX - 1) + j) * 2 + 1]._1 = i * VTXCNTX + j;
 			indices[(i * (VTXCNTX - 1) + j) * 2 + 1]._2 = (i + 1) * VTXCNTX + (j + 1);
@@ -107,9 +103,9 @@ HRESULT CTerrain2::Ready_Buffer()
 	int texWidth = surfaceDesc.Width;
 	int texHeight = surfaceDesc.Height;
 
-	// °í·Î ½¦ÀÌµù
+	// ê³ ë¡œ ì‰ì´ë”©
 
-	// 1. °¢ ¸éÀÇ ¹ý¼± ±¸ÇÏ±â
+	// 1. ê° ë©´ì˜ ë²•ì„  êµ¬í•˜ê¸°
 	for (int i = 0; i < m_vecFaces.size(); ++i) {
 		VTXMESH v0, v1, v2;
 		_vec3 p0, p1, p2;
@@ -123,17 +119,17 @@ HRESULT CTerrain2::Ready_Buffer()
 		p1 = v1.vPosition;
 		p2 = v2.vPosition;
 
-		// ¸é ±¸ÇÏ±â
+		// ë©´ êµ¬í•˜ê¸°
 		D3DXPLANE upperPlane;
 		D3DXPlaneFromPoints(&upperPlane, &p1, &p2, &p0);
 		m_vecFaces[i].vNoraml = { upperPlane.a, upperPlane.b, upperPlane.c };
 	}
 
-	// 2. Á¤Á¡ ¹ý¼± ±¸ÇÏ±â
+	// 2. ì •ì  ë²•ì„  êµ¬í•˜ê¸°
 	for (int i = 0; i < VTXCNTZ; ++i) {
 		for (int j = 0; j < VTXCNTX; ++j) {
-			// ÁÖº¯ ÃÖ´ë 6¸éÀÇ ¹ý¼±À» °í·Á
-			// ½Ã°è¹æÇâÀ¸·Î 0~5±îÁöÀÇ ¸é
+			// ì£¼ë³€ ìµœëŒ€ 6ë©´ì˜ ë²•ì„ ì„ ê³ ë ¤
+			// ì‹œê³„ë°©í–¥ìœ¼ë¡œ 0~5ê¹Œì§€ì˜ ë©´
 			_vec3 vVtxNormal = { 0, 0, 0 };
 			int cnt = 0;
 
@@ -168,7 +164,7 @@ HRESULT CTerrain2::Ready_Buffer()
 		}
 	}
 
-	// 3. Á¤Á¡ ¹ý¼±À¸·Î ÅØ¼¿ÀÇ »ö»ó¿¡ ¸í¾Ï Ã³¸®ÇÏ±â
+	// 3. ì •ì  ë²•ì„ ìœ¼ë¡œ í…ì…€ì˜ ìƒ‰ìƒì— ëª…ì•” ì²˜ë¦¬í•˜ê¸°
 	_vec3 dirToLight = { 1, 1, 1 };
 	D3DXVec3Normalize(&dirToLight, &dirToLight);
 	
@@ -196,54 +192,54 @@ HRESULT CTerrain2::Ready_Buffer()
 		normal1 = v1.vNormal;
 		normal2 = v2.vNormal;
 
-		// v0, v1, v2°¡ ¸éÀ» Çü¼ºÇÑ´Ù
-		// uv·ÎºÎÅÍ ÅØ¼¿ ÁÂÇ¥¸¦ ±¸ÇÑ´Ù.
+		// v0, v1, v2ê°€ ë©´ì„ í˜•ì„±í•œë‹¤
+		// uvë¡œë¶€í„° í…ì…€ ì¢Œí‘œë¥¼ êµ¬í•œë‹¤.
 		_vec2 A = { uv0.x * texWidth, uv0.y * texHeight };
 		_vec2 B = { uv1.x * texWidth, uv1.y * texHeight };
 		_vec2 C = { uv2.x * texWidth, uv2.y * texHeight };
 
-		// ¹Ù¿îµù ¹Ú½º¸¦ °è»êÇÏ¿© ¿¬¼ÓµÈ ¿µ¿ªÀ» Á¤¼ö ÅØ¼¿ °ÝÀÚ·Î ²÷±â
+		// ë°”ìš´ë”© ë°•ìŠ¤ë¥¼ ê³„ì‚°í•˜ì—¬ ì—°ì†ëœ ì˜ì—­ì„ ì •ìˆ˜ í…ì…€ ê²©ìžë¡œ ëŠê¸°
 		int minX = (int)floor	(min(A.x, min(B.x, C.x)));
 		int maxX = (int)ceil	(max(A.x, max(B.x, C.x)));
 		int minY = (int)floor	(min(A.y, min(B.y, C.y)));
 		int maxY = (int)ceil	(max(A.y, max(B.y, C.y)));
 
-		// ÅØ½ºÃ³ ¹üÀ§·Î clamp
+		// í…ìŠ¤ì²˜ ë²”ìœ„ë¡œ clamp
 		minX = max(minX, 0);
 		maxX = min(maxX, texWidth-1);
 		minY = max(minY, 0);
 		maxY = min(maxY, texHeight-1);
 
-		// ¹«°ÔÁß½ÉÁÂÇ¥¸¦ È°¿ë
-		// »ï°¢Çü ³»ºÎÀÇ Á¡ P¸¦ ¼¼ ²ÀÁþÁ¡ A, B, C°¡ ´ç±â´Â ¿µÇâ·ÂÀÇ ºñÀ²·Î Ç¥ÇöÇÏ´Â °Í
+		// ë¬´ê²Œì¤‘ì‹¬ì¢Œí‘œë¥¼ í™œìš©
+		// ì‚¼ê°í˜• ë‚´ë¶€ì˜ ì  Pë¥¼ ì„¸ ê¼­ì§“ì  A, B, Cê°€ ë‹¹ê¸°ëŠ” ì˜í–¥ë ¥ì˜ ë¹„ìœ¨ë¡œ í‘œí˜„í•˜ëŠ” ê²ƒ
 		// P = uA + vB + wC
 		
-		// ³ª´­ ¶§ ¾²´Â ºÐ¸ð
+		// ë‚˜ëˆŒ ë•Œ ì“°ëŠ” ë¶„ëª¨
 		float denom = (B.y - C.y) * (A.x - C.x) + (C.x - B.x) * (A.y - C.y);
-		if (fabsf(denom) < 0.01) // ÅðÈ­ »ï°¢Çü ¹æ¾î
+		if (fabsf(denom) < 0.01) // í‡´í™” ì‚¼ê°í˜• ë°©ì–´
 			continue;
 
-		// ¹Ù¿îµù ¹Ú½º ³»ºÎ ÅØ¼¿À» ÇÈ¼¿ ´ÜÀ§·Î ¼øÈ¸
+		// ë°”ìš´ë”© ë°•ìŠ¤ ë‚´ë¶€ í…ì…€ì„ í”½ì…€ ë‹¨ìœ„ë¡œ ìˆœíšŒ
 		for (int py = minY; py <= maxY; ++py) {
 			for(int px = minX; px <= maxX; ++px){
-				// ÅØ¼¿ "Áß½É"À» °Ë»çÁ¡À¸·Î
+				// í…ì…€ "ì¤‘ì‹¬"ì„ ê²€ì‚¬ì ìœ¼ë¡œ
 				float Px = px + 0.5f;
 				float Py = py + 0.5f;
 
-				// 3) ¹«°ÔÁß½ÉÁÂÇ¥
+				// 3) ë¬´ê²Œì¤‘ì‹¬ì¢Œí‘œ
 				float w0 = ((B.y - C.y) * (Px - C.x) + (C.x - B.x) * (Py - C.y)) / denom;
 				float w1 = ((C.y - A.y) * (Px - C.x) + (A.x - C.x) * (Py - C.y)) / denom;
 				float w2 = 1.f - w0 - w1;
 
-				// 4) »ï°¢Çü ³»ºÎ ÆÇÁ¤
+				// 4) ì‚¼ê°í˜• ë‚´ë¶€ íŒì •
 				if (w0 < 0.f || w1 < 0.f || w2 < 0.f)
 					continue;
 
-				// 5) ³ë¸Ö º¸°£ (¹«°ÔÁß½ÉÁÂÇ¥°¡ °ð °¡ÁßÄ¡)
+				// 5) ë…¸ë©€ ë³´ê°„ (ë¬´ê²Œì¤‘ì‹¬ì¢Œí‘œê°€ ê³§ ê°€ì¤‘ì¹˜)
 				_vec3 normal = normal0 * w0 + normal1 * w1 + normal2 * w2;
 				D3DXVec3Normalize(&normal, &normal);
 
-				// 6) ÅØ¼¿ ÀÎµ¦½º (Pitch »ç¿ë ÁÖÀÇ!)
+				// 6) í…ì…€ ì¸ë±ìŠ¤ (Pitch ì‚¬ìš© ì£¼ì˜!)
 				int index = py * (lockedRect.Pitch / 4) + px;
 
 				D3DXCOLOR c(original[index]);

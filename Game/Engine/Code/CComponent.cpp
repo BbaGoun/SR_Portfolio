@@ -1,10 +1,5 @@
-#include "CComponent.h"
+﻿#include "CComponent.h"
 #include "CGameObject.h"
-
-CComponent::CComponent()
-	: m_pGraphicDev(nullptr), m_bClone(false), m_pOwner(nullptr)
-{
-}
 
 CComponent::CComponent(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev), m_bClone(false), m_pOwner(nullptr)
@@ -15,6 +10,7 @@ CComponent::CComponent(LPDIRECT3DDEVICE9 pGraphicDev)
 CComponent::CComponent(const CComponent& rhs)
 	: m_pGraphicDev(rhs.m_pGraphicDev), m_bClone(true), m_pOwner(nullptr)
 {
+	wcsncpy_s(m_wProtoTag, rhs.m_wProtoTag, 256);
 	m_pGraphicDev->AddRef();
 }
 

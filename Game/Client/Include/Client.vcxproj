@@ -98,17 +98,24 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header;../Bin/fmod/core/inc</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../Reference/Library;../Bin/fmod/core/lib/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -120,17 +127,24 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header;../Bin/fmod/core/inc</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../Reference/Library;../Bin/fmod/core/lib/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -140,17 +154,24 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header;../Bin/fmod/core/inc</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../Reference/Library;../Bin/fmod/core/lib/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -162,39 +183,156 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../Header;../../Base;../../Reference/Header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Include;../Header;../../Base;../../Reference/Header;../Bin/fmod/core/inc</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../Reference/Library;../Bin/fmod/core/lib/x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;fmod_vc.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /E /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"</Command>
+      <Command>xcopy /E /R /Y "$(SolutionDir)../Resource\*" "$(OutDir)Resource\"
+</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy /E /I /Y "$(SolutionDir)..\fmod\*" "$(OutDir)fmod\"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmod.dll" "$(OutDir)"
+xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
-    <ClInclude Include="..\Header\CCodyBody.h" />
+    <ClInclude Include="..\Header\CBanana.h" />
+    <ClInclude Include="..\Header\CBarricade.h" />
+    <ClInclude Include="..\Header\CBoostAura.h" />
+    <ClInclude Include="..\Header\CBoostWind.h" />
+    <ClInclude Include="..\Header\CBoostJet.h" />
+    <ClInclude Include="..\Header\CBox.h" />
+    <ClInclude Include="..\Header\CBubbleEscape.h" />
+    <ClInclude Include="..\Header\CButtonMgr.h" />
+    <ClInclude Include="..\Header\CCart.h" />
+    <ClInclude Include="..\Header\CCartBody.h" />
+    <ClInclude Include="..\Header\CMenu_Set_Speed.h" />
+    <ClInclude Include="..\Header\CMenu_Speed.h" />
+    <ClInclude Include="..\Header\CNexonVideo.h" />
+    <ClInclude Include="..\Header\CSlotMgr.h" />
+    <ClInclude Include="..\Header\CCartBot.h" />
+    <ClInclude Include="..\Header\CCollisionStarEffect.h" />
+    <ClInclude Include="..\Header\CCollisionBox.h" />
+    <ClInclude Include="..\Header\CDriftSpark.h" />
+    <ClInclude Include="..\Header\CDriftTrail.h" />
+    <ClInclude Include="..\Header\CDustLandingEffect.h" />
+    <ClInclude Include="..\Header\CDynamicCamera.h" />
+    <ClInclude Include="..\Header\CEmp_Band.h" />
+    <ClInclude Include="..\Header\CFindOthersMgr.h" />
+    <ClInclude Include="..\Header\CFinishCam.h" />
+    <ClInclude Include="..\Header\CItemGainEffect.h" />
+    <ClInclude Include="..\Header\CMagnet.h" />
+    <ClInclude Include="..\Header\CMenu_Item.h" />
+    <ClInclude Include="..\Header\CMenu_Set.h" />
+    <ClInclude Include="..\Header\CInvenSlotBG.h" />
+    <ClInclude Include="..\Header\CMagnetBody.h" />
+    <ClInclude Include="..\Header\CItemBox.h" />
+    <ClInclude Include="..\Header\CMinimapCart.h" />
+    <ClInclude Include="..\Header\CMinimapCartBot.h" />
+    <ClInclude Include="..\Header\CMinimapGround.h" />
+    <ClInclude Include="..\Header\CMissile.h" />
+    <ClInclude Include="..\Header\CMissileBody.h" />
+    <ClInclude Include="..\Header\CMissileEffect.h" />
+    <ClInclude Include="..\Header\CMissileTarget.h" />
+    <ClInclude Include="..\Header\CPause_MenuBtn.h" />
+    <ClInclude Include="..\Header\CPause_ReplayBtn.h" />
+    <ClInclude Include="..\Header\CPlayer.h" />
+    <ClInclude Include="..\Header\CPlayerArm.h" />
+    <ClInclude Include="..\Header\CPlayerHead.h" />
+    <ClInclude Include="..\Header\CPlayTimeMgr.h" />
+    <ClInclude Include="..\Header\CScene1_Replay.h" />
+    <ClInclude Include="..\Header\CScene1_Speed.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene2_ForestValley.h" />
+    <ClInclude Include="..\Header\CScene3_Char.h" />
+    <ClInclude Include="..\Header\CScene3_CharBG.h" />
+    <ClInclude Include="..\Header\CScene3_CharBtn.h" />
+    <ClInclude Include="..\Header\CScene3_CharSlot.h" />
+    <ClInclude Include="..\Header\CScene3_ColorBtn.h" />
+    <ClInclude Include="..\Header\CScene3_ColorSet.h" />
+    <ClInclude Include="..\Header\CScene3_ColorSetBG.h" />
+    <ClInclude Include="..\Header\CScene3_KartBtn.h" />
+    <ClInclude Include="..\Header\CScene3_Map_ForestValley.h" />
+    <ClInclude Include="..\Header\CScene3_StartBtn.h" />
+    <ClInclude Include="..\Header\CShield1.h" />
+    <ClInclude Include="..\Header\CShield2.h" />
+    <ClInclude Include="..\Header\CSkyDome.h" />
+    <ClInclude Include="..\Header\CSpeedLine.h" />
+    <ClInclude Include="..\Header\CStartCam.h" />
+    <ClInclude Include="..\Header\CTrackCam.h" />
+    <ClInclude Include="..\Header\CUfo.h" />
+    <ClInclude Include="..\Header\CUfoBeam.h" />
+    <ClInclude Include="..\Header\CUfoBody.h" />
+    <ClInclude Include="..\Header\CTrackMgr.h" />
+    <ClInclude Include="..\Header\CUI_EndCountDown.h" />
+    <ClInclude Include="..\Header\CUI_Laps.h" />
+    <ClInclude Include="..\Header\CLoadMgr.h" />
+    <ClInclude Include="..\Header\CSkidMark.h" />
+    <ClInclude Include="..\Header\CSmokeEffect.h" />
+    <ClInclude Include="..\Header\CUI_InvenSlot.h" />
+    <ClInclude Include="..\Header\CInvenSlotCart.h" />
+    <ClInclude Include="..\Header\CUI_Minimap.h" />
+    <ClInclude Include="..\Header\CRainBow_Cloud.h" />
+    <ClInclude Include="..\Header\CFollowSmoothCam.h" />
+    <ClInclude Include="..\Header\CHUD_Main.h" />
+    <ClInclude Include="..\Header\CHUD_Num.h" />
+    <ClInclude Include="..\Header\CMapTest.h" />
+    <ClInclude Include="..\Header\CITem.h" />
+    <ClInclude Include="..\Header\CLand3.h" />
+    <ClInclude Include="..\Header\CTargetAim.h" />
+    <ClInclude Include="..\Header\CStartMenu.h" />
+    <ClInclude Include="..\Header\CThunder.h" />
+    <ClInclude Include="..\Header\CThunderCloud.h" />
+    <ClInclude Include="..\Header\CThunderFloorEffect.h" />
+    <ClInclude Include="..\Header\CThunderPlayerEffect.h" />
     <ClInclude Include="..\Header\CTopViewCam.h" />
-    <ClInclude Include="..\Header\CEnemy.h" />
     <ClInclude Include="..\Header\CFirstPerCam.h" />
     <ClInclude Include="..\Header\CBackThirdPerCam.h" />
     <ClInclude Include="..\Header\CFrontThirdPerCam.h" />
-    <ClInclude Include="..\Header\CGOMay.h" />
-    <ClInclude Include="..\Header\CHeadPivot.h" />
-    <ClInclude Include="..\Header\CJet.h" />
-    <ClInclude Include="..\Header\CLand.h" />
     <ClInclude Include="..\Header\CLand2.h" />
     <ClInclude Include="..\Header\Client_Define.h" />
     <ClInclude Include="..\Header\Client_Enum.h" />
     <ClInclude Include="..\Header\CLoading.h" />
     <ClInclude Include="..\Header\CLoadingThread.h" />
     <ClInclude Include="..\Header\CMainApp.h" />
-    <ClInclude Include="..\Header\CScene_Test.h" />
     <ClInclude Include="..\Header\CSkyBox.h" />
-    <ClInclude Include="..\Header\CGOCody.h" />
+    <ClInclude Include="..\Header\CUI_BoosterBar.h" />
+    <ClInclude Include="..\Header\CHUD_Gage.h" />
+    <ClInclude Include="..\Header\CUI_BoosterBG.h" />
+    <ClInclude Include="..\Header\CUI_Button.h" />
+    <ClInclude Include="..\Header\CUI_ItemIcon.h" />
+    <ClInclude Include="..\Header\CUI_ItemSlot.h" />
+    <ClInclude Include="..\Header\CScene1_Item.h" />
+    <ClInclude Include="..\Header\CUI_NexonLogo.h" />
+    <ClInclude Include="..\Header\CUI_PauseMenu.h" />
+    <ClInclude Include="..\Header\CUI_Rainbow.h" />
+    <ClInclude Include="..\Header\CRankMgr.h" />
+    <ClInclude Include="..\Header\CUI_RankName.h" />
+    <ClInclude Include="..\Header\CUI_RankBG.h" />
+    <ClInclude Include="..\Header\CUI_RankNumber.h" />
+    <ClInclude Include="..\Header\CUI_StartCountDown.h" />
+    <ClInclude Include="..\Header\CUI_Timer.h" />
+    <ClInclude Include="..\Header\CUI_UnderBar.h" />
+    <ClInclude Include="..\Header\CUI_XButton.h" />
+    <ClInclude Include="..\Header\CWaterBomb.h" />
+    <ClInclude Include="..\Header\CWaterBombBody.h" />
+    <ClInclude Include="..\Header\CWaterBombBubble.h" />
+    <ClInclude Include="..\Header\CWaterBombThrow.h" />
+    <ClInclude Include="..\Header\CWaterFly.h" />
+    <ClInclude Include="..\Header\CWaterFlyBody.h" />
+    <ClInclude Include="..\Header\CWheel.h" />
+    <ClInclude Include="..\Header\CRacingScene.h" />
+    <ClInclude Include="..\Header\SoundMgr.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -202,25 +340,159 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CBarricade.cpp" />
+    <ClCompile Include="..\Code\CBoostAura.cpp" />
+    <ClCompile Include="..\Code\CBubbleEscape.cpp" />
+    <ClCompile Include="..\Code\CButtonMgr.cpp" />
+    <ClCompile Include="..\Code\CMenu_Set_Speed.cpp" />
+    <ClCompile Include="..\Code\CMenu_Speed.cpp" />
+    <ClCompile Include="..\Code\CNexonVideo.cpp" />
+    <ClCompile Include="..\Code\CSlotMgr.cpp" />
+    <ClCompile Include="..\Code\CDriftTrail.cpp" />
+    <ClCompile Include="..\Code\CDustLandingEffect.cpp" />
+    <ClCompile Include="..\Code\CEmp_Band.cpp" />
+    <ClCompile Include="..\Code\CCartBot.cpp" />
+    <ClCompile Include="..\Code\CFindOthersMgr.cpp" />
+    <ClCompile Include="..\Code\CFinishCam.cpp" />
+    <ClCompile Include="..\Code\CItemGainEffect.cpp" />
+    <ClCompile Include="..\Code\CMagnet.cpp" />
+    <ClCompile Include="..\Code\CMenu_Item.cpp" />
+    <ClCompile Include="..\Code\CMenu_Set.cpp" />
+    <ClCompile Include="..\Code\CMinimapCartBot.cpp" />
+    <ClCompile Include="..\Code\CMissileEffect.cpp" />
+    <ClCompile Include="..\Code\CPause_MenuBtn.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPause_ReplayBtn.cpp">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayer.cpp" />
+    <ClCompile Include="..\Code\CPlayerArm.cpp" />
+    <ClCompile Include="..\Code\CPlayerHead.cpp" />
+    <ClCompile Include="..\Code\CPlayTimeMgr.cpp" />
+    <ClCompile Include="..\Code\CScene1_Replay.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene1_Speed.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene2_ForestValley.cpp" />
+    <ClCompile Include="..\Code\CScene3_Char.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_CharBG.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_CharBtn.cpp" />
+    <ClCompile Include="..\Code\CScene3_CharSlot.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_ColorBtn.cpp" />
+    <ClCompile Include="..\Code\CScene3_ColorSet.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_ColorSetBG.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_KartBtn.cpp" />
+    <ClCompile Include="..\Code\CScene3_Map_ForestValley.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScene3_StartBtn.cpp" />
+    <ClCompile Include="..\Code\CShield1.cpp" />
+    <ClCompile Include="..\Code\CShield2.cpp" />
+    <ClCompile Include="..\Code\CSkyDome.cpp" />
+    <ClCompile Include="..\Code\CSpeedLine.cpp" />
+    <ClCompile Include="..\Code\CStartCam.cpp" />
+    <ClCompile Include="..\Code\CTrackCam.cpp" />
+    <ClCompile Include="..\Code\CUfo.cpp" />
+    <ClCompile Include="..\Code\CUfoBeam.cpp" />
+    <ClCompile Include="..\Code\CUfoBody.cpp" />
+    <ClCompile Include="..\Code\CTrackMgr.cpp" />
+    <ClCompile Include="..\Code\CUI_EndCountDown.cpp" />
+    <ClCompile Include="..\Code\CUI_Laps.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI_NexonLogo.cpp" />
+    <ClCompile Include="..\Code\CUI_PauseMenu.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRankMgr.cpp" />
+    <ClCompile Include="..\Code\CUI_RankName.cpp" />
+    <ClCompile Include="..\Code\CUI_RankBG.cpp" />
+    <ClCompile Include="..\Code\CUI_RankNumber.cpp" />
+    <ClCompile Include="..\Code\CUI_StartCountDown.cpp" />
+    <ClCompile Include="..\Code\CUI_UnderBar.cpp" />
+    <ClCompile Include="..\Code\CUI_XButton.cpp" />
+    <ClCompile Include="..\Code\CWaterBombBubble.cpp" />
+    <ClCompile Include="..\Code\CWaterFly.cpp" />
+    <ClCompile Include="..\Code\CWaterFlyBody.cpp" />
+    <ClCompile Include="..\Code\SoundMgr.cpp" />
+    <ClCompile Include="CScene1_Item.cpp" />
+    <ClCompile Include="..\Code\CCollisionStarEffect.cpp" />
+    <ClCompile Include="..\Code\CDriftSpark.cpp" />
+    <ClCompile Include="..\Code\CInvenSlotBG.cpp" />
+    <ClCompile Include="..\Code\CMagnetBody.cpp" />
+    <ClCompile Include="..\Code\CItemBox.cpp" />
+    <ClCompile Include="..\Code\CLoadMgr.cpp" />
+    <ClCompile Include="..\Code\CSkidMark.cpp" />
+    <ClCompile Include="..\Code\CSmokeEffect.cpp" />
+    <ClCompile Include="..\Code\CWaterBomb.cpp" />
+    <ClCompile Include="..\Code\CWaterBombBody.cpp" />
+    <ClCompile Include="..\Code\CWaterBombThrow.cpp" />
+    <ClCompile Include="..\Code\CUI_InvenSlot.cpp" />
+    <ClCompile Include="..\Code\CInvenSlotCart.cpp" />
+    <ClCompile Include="..\Code\CRacingScene.cpp" />
     <ClCompile Include="..\Code\CBackGround.cpp" />
-    <ClCompile Include="..\Code\CCodyBody.cpp" />
+    <ClCompile Include="..\Code\CBanana.cpp" />
+    <ClCompile Include="..\Code\CBoostWind.cpp" />
+    <ClCompile Include="..\Code\CBoostJet.cpp" />
+    <ClCompile Include="..\Code\CBox.cpp" />
+    <ClCompile Include="..\Code\CCart.cpp" />
+    <ClCompile Include="..\Code\CCartBody.cpp" />
+    <ClCompile Include="..\Code\CCollisionBox.cpp" />
+    <ClCompile Include="..\Code\CDynamicCamera.cpp" />
+    <ClCompile Include="..\Code\CMinimapCart.cpp" />
+    <ClCompile Include="..\Code\CMinimapGround.cpp" />
+    <ClCompile Include="..\Code\CMissile.cpp" />
+    <ClCompile Include="..\Code\CMissileBody.cpp" />
+    <ClCompile Include="..\Code\CMissileTarget.cpp" />
+    <ClCompile Include="..\Code\CUI_Minimap.cpp" />
+    <ClCompile Include="..\Code\CRainbow_Cloud.cpp" />
+    <ClCompile Include="..\Code\CFollowSmoothCam.cpp" />
+    <ClCompile Include="..\Code\CHUD_Main.cpp" />
+    <ClCompile Include="..\Code\CHUD_Num.cpp" />
+    <ClCompile Include="..\Code\CMapTest.cpp" />
+    <ClCompile Include="..\Code\CITem.cpp" />
+    <ClCompile Include="..\Code\CLand3.cpp" />
+    <ClCompile Include="..\Code\CTargetAim.cpp" />
+    <ClCompile Include="..\Code\CStartMenu.cpp" />
+    <ClCompile Include="..\Code\CThunder.cpp" />
+    <ClCompile Include="..\Code\CThunderCloud.cpp" />
+    <ClCompile Include="..\Code\CThunderFloorEffect.cpp" />
+    <ClCompile Include="..\Code\CThunderPlayerEffect.cpp" />
     <ClCompile Include="..\Code\CTopViewCam.cpp" />
-    <ClCompile Include="..\Code\CEnemy.cpp" />
     <ClCompile Include="..\Code\CFirstPerCam.cpp" />
     <ClCompile Include="..\Code\CBackThirdPerCam.cpp" />
     <ClCompile Include="..\Code\CFrontThirdPerCam.cpp" />
-    <ClCompile Include="..\Code\CGOMay.cpp" />
-    <ClCompile Include="..\Code\CHeadPivot.cpp" />
-    <ClCompile Include="..\Code\CJet.cpp" />
-    <ClCompile Include="..\Code\CLand.cpp" />
     <ClCompile Include="..\Code\CLand2.cpp" />
     <ClCompile Include="..\Code\Client_Define.cpp" />
     <ClCompile Include="..\Code\CLoading.cpp" />
     <ClCompile Include="..\Code\CLoadingThread.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />
-    <ClCompile Include="..\Code\CScene_Test.cpp" />
     <ClCompile Include="..\Code\CSkyBox.cpp" />
-    <ClCompile Include="..\Code\CGOCody.cpp" />
+    <ClCompile Include="..\Code\CUI_BoosterBar.cpp" />
+    <ClCompile Include="..\Code\CHUD_Gage.cpp" />
+    <ClCompile Include="..\Code\CUI_BoosterBG.cpp" />
+    <ClCompile Include="..\Code\CUI_Button.cpp" />
+    <ClCompile Include="..\Code\CUI_ItemIcon.cpp" />
+    <ClCompile Include="..\Code\CUI_ItemSlot.cpp" />
+    <ClCompile Include="..\Code\CUI_Rainbow.cpp" />
+    <ClCompile Include="..\Code\CUI_Timer.cpp" />
+    <ClCompile Include="..\Code\CWheel.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

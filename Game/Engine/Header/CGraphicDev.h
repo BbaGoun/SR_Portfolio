@@ -23,13 +23,17 @@ public:
 								const _uint& iSizeY, 
 								CGraphicDev** ppGraphicDev);
 
+	void		Reset_GraphicDev();
+	void		Resize_GraphicDev(UINT uWidth, UINT uHeight);
 
 	void		Render_Begin(D3DXCOLOR Color);
-	void		Render_End(HWND hWnd = nullptr);
+	HRESULT		Render_End(HWND hWnd = nullptr);
 
 private:
-	LPDIRECT3D9			m_pSDK;			// 그래픽 카드의 성능을 조사하는 객체
-	LPDIRECT3DDEVICE9	m_pGraphicDev;	// 그래픽 카드를 이용하여 그리기 명령을 수행하는 객체
+	DWORD					m_dwFlag = 0;
+	D3DPRESENT_PARAMETERS	m_d3dpp;
+	LPDIRECT3D9				m_pSDK;			// 그래픽 카드의 성능을 조사하는 객체
+	LPDIRECT3DDEVICE9		m_pGraphicDev;	// 그래픽 카드를 이용하여 그리기 명령을 수행하는 객체
 
 private:
 	virtual void Free();

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CVIBuffer.h"
 
 BEGIN(Engine)
@@ -7,7 +7,6 @@ class ENGINE_DLL CPyramid :
     public CVIBuffer
 {
 protected:
-    explicit CPyramid();
     explicit CPyramid(LPDIRECT3DDEVICE9 pGraphicDev);
     explicit CPyramid(const CPyramid& rhs);
     virtual ~CPyramid() override;

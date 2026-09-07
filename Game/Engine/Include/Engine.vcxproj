@@ -19,80 +19,127 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Header\CAirplane.h" />
+    <ClInclude Include="..\Header\CAlphaEmpty.h" />
+    <ClInclude Include="..\Header\CArrowTex.h" />
     <ClInclude Include="..\Header\CCalculator.h" />
     <ClInclude Include="..\Header\CCameraMgr.h" />
-    <ClInclude Include="..\Header\CCody.h" />
+    <ClInclude Include="..\Header\CCartBodyCol.h" />
+    <ClInclude Include="..\Header\CCartWheelCol.h" />
+    <ClInclude Include="..\Header\CCircleCol.h" />
+    <ClInclude Include="..\Header\CCollider.h" />
+    <ClInclude Include="..\Header\CCollisionMgr.h" />
     <ClInclude Include="..\Header\CComponent.h" />
+    <ClInclude Include="..\Header\CCube.h" />
+    <ClInclude Include="..\Header\CCube_Collider.h" />
     <ClInclude Include="..\Header\CDInputMgr.h" />
+    <ClInclude Include="..\Header\CEditorLoader.h" />
+    <ClInclude Include="..\Header\CEmpty.h" />
     <ClInclude Include="..\Header\CFont.h" />
     <ClInclude Include="..\Header\CFontMgr.h" />
     <ClInclude Include="..\Header\CFrame.h" />
     <ClInclude Include="..\Header\CFrameMgr.h" />
     <ClInclude Include="..\Header\CGameObject.h" />
     <ClInclude Include="..\Header\CCamera.h" />
+    <ClInclude Include="..\Header\CGameUI.h" />
     <ClInclude Include="..\Header\CGraphicDev.h" />
+    <ClInclude Include="..\Header\CHalfSphere.h" />
+    <ClInclude Include="..\Header\CHeightMap.h" />
     <ClInclude Include="..\Header\CInnerBox.h" />
+    <ClInclude Include="..\Header\CItemGainParticle.h" />
     <ClInclude Include="..\Header\CLayer.h" />
+    <ClInclude Include="..\Header\CMagnetTex.h" />
     <ClInclude Include="..\Header\CManagement.h" />
-    <ClInclude Include="..\Header\CMay.h" />
-    <ClInclude Include="..\Header\CMesh.h" />
-    <ClInclude Include="..\Header\CObj.h" />
-    <ClInclude Include="..\Header\CPskFile.h" />
+    <ClInclude Include="..\Header\CMeshRibbon.h" />
+    <ClInclude Include="..\Header\CMissileTex.h" />
+    <ClInclude Include="..\Header\COuterBox.h" />
     <ClInclude Include="..\Header\CPyramid.h" />
+    <ClInclude Include="..\Header\CQuadrangularPrism.h" />
     <ClInclude Include="..\Header\CRcTex.h" />
     <ClInclude Include="..\Header\CRenderer.h" />
     <ClInclude Include="..\Header\CScene.h" />
-    <ClInclude Include="..\Header\CTerrain.h" />
+    <ClInclude Include="..\Header\CSmoke.h" />
+    <ClInclude Include="..\Header\CSphere.h" />
+    <ClInclude Include="..\Header\CSphere_Collider.h" />
+    <ClInclude Include="..\Header\CSpline.h" />
+    <ClInclude Include="..\Header\CStarParticle.h" />
     <ClInclude Include="..\Header\CTerrain2.h" />
+    <ClInclude Include="..\Header\CTerrain3.h" />
     <ClInclude Include="..\Header\CTexture.h" />
     <ClInclude Include="..\Header\CTimer.h" />
     <ClInclude Include="..\Header\CTimerMgr.h" />
+    <ClInclude Include="..\Header\CTrackGraph.h" />
     <ClInclude Include="..\Header\CTransform.h" />
+    <ClInclude Include="..\Header\CTriangularPrism.h" />
     <ClInclude Include="..\Header\CVIBuffer.h" />
+    <ClInclude Include="..\Header\CDustLandingParticle.h" />
     <ClInclude Include="..\Header\Engine_Define.h" />
     <ClInclude Include="..\Header\Engine_Enum.h" />
     <ClInclude Include="..\Header\Engine_Function.h" />
     <ClInclude Include="..\Header\Engine_Macro.h" />
+    <ClInclude Include="..\Header\Engine_Parsing.h" />
     <ClInclude Include="..\Header\Engine_Struct.h" />
     <ClInclude Include="..\Header\Engine_Typedef.h" />
     <ClInclude Include="..\Header\CHeightMapLoader.h" />
     <ClInclude Include="..\Header\CProtoMgr.h" />
+    <ClInclude Include="..\Header\PSystem.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\CAirplane.cpp" />
+    <ClCompile Include="..\Code\CAlphaEmpty.cpp" />
+    <ClCompile Include="..\Code\CArrowTex.cpp" />
     <ClCompile Include="..\Code\CCalculator.cpp" />
     <ClCompile Include="..\Code\CCameraMgr.cpp" />
-    <ClCompile Include="..\Code\CCody.cpp" />
+    <ClCompile Include="..\Code\CCartBodyCol.cpp" />
+    <ClCompile Include="..\Code\CCartWheelCol.cpp" />
+    <ClCompile Include="..\Code\CCircleCol.cpp" />
+    <ClCompile Include="..\Code\CCollider.cpp" />
+    <ClCompile Include="..\Code\CCollisionMgr.cpp" />
     <ClCompile Include="..\Code\CComponent.cpp" />
+    <ClCompile Include="..\Code\CCube.cpp" />
+    <ClCompile Include="..\Code\CCube_Collider.cpp" />
     <ClCompile Include="..\Code\CDInputMgr.cpp" />
+    <ClCompile Include="..\Code\CEditorLoader.cpp" />
+    <ClCompile Include="..\Code\CEmpty.cpp" />
     <ClCompile Include="..\Code\CFont.cpp" />
     <ClCompile Include="..\Code\CFontMgr.cpp" />
     <ClCompile Include="..\Code\CFrame.cpp" />
     <ClCompile Include="..\Code\CFrameMgr.cpp" />
     <ClCompile Include="..\Code\CGameObject.cpp" />
     <ClCompile Include="..\Code\CCamera.cpp" />
+    <ClCompile Include="..\Code\CGameUI.cpp" />
     <ClCompile Include="..\Code\CGraphicDev.cpp" />
+    <ClCompile Include="..\Code\CHalfSphere.cpp" />
+    <ClCompile Include="..\Code\CHeightMap.cpp" />
     <ClCompile Include="..\Code\CInnerBox.cpp" />
+    <ClCompile Include="..\Code\CItemGainParticle.cpp" />
     <ClCompile Include="..\Code\CLayer.cpp" />
+    <ClCompile Include="..\Code\CMagnetTex.cpp" />
     <ClCompile Include="..\Code\CManagement.cpp" />
-    <ClCompile Include="..\Code\CMay.cpp" />
-    <ClCompile Include="..\Code\CMesh.cpp" />
-    <ClCompile Include="..\Code\CObj.cpp" />
-    <ClCompile Include="..\Code\CPskFile.cpp" />
+    <ClCompile Include="..\Code\CMeshRibbon.cpp" />
+    <ClCompile Include="..\Code\CMissileTex.cpp" />
+    <ClCompile Include="..\Code\COuterBox.cpp" />
     <ClCompile Include="..\Code\CPyramid.cpp" />
+    <ClCompile Include="..\Code\CQuadrangularPrism.cpp" />
     <ClCompile Include="..\Code\CRcTex.cpp" />
     <ClCompile Include="..\Code\CRenderer.cpp" />
     <ClCompile Include="..\Code\CScene.cpp" />
-    <ClCompile Include="..\Code\CTerrain.cpp" />
+    <ClCompile Include="..\Code\CSmoke.cpp" />
+    <ClCompile Include="..\Code\CSphere.cpp" />
+    <ClCompile Include="..\Code\CSphere_Collider.cpp" />
+    <ClCompile Include="..\Code\CSpline.cpp" />
+    <ClCompile Include="..\Code\CStarParticle.cpp" />
     <ClCompile Include="..\Code\CTerrain2.cpp" />
+    <ClCompile Include="..\Code\CTerrain3.cpp" />
     <ClCompile Include="..\Code\CTexture.cpp" />
     <ClCompile Include="..\Code\CTimer.cpp" />
     <ClCompile Include="..\Code\CTimerMgr.cpp" />
+    <ClCompile Include="..\Code\CTrackGraph.cpp" />
     <ClCompile Include="..\Code\CTransform.cpp" />
+    <ClCompile Include="..\Code\CTriangularPrism.cpp" />
     <ClCompile Include="..\Code\CVIBuffer.cpp" />
     <ClCompile Include="..\Code\CHeightMapLoader.cpp" />
     <ClCompile Include="..\Code\CProtoMgr.cpp" />
+    <ClCompile Include="..\Code\CDustLandingParticle.cpp" />
+    <ClCompile Include="..\Code\PSystem.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -174,6 +221,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../Header;../../Base</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -197,6 +245,7 @@ xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Editor\Bin\" /Y</Comm
       <PreprocessorDefinitions>WIN32;NDEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../Header;../../Base</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -218,6 +267,7 @@ xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Editor\Bin\" /Y</Comm
       <PreprocessorDefinitions>_DEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../Header;../../Base</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -241,6 +291,7 @@ xcopy "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Editor\Bin\" /Y</Comm
       <PreprocessorDefinitions>NDEBUG;ENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../Header;../../Base</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -1,13 +1,19 @@
 ﻿#include "pch.h"
 #include "CMainApp.h"
-#include "CScene_Test.h"
 #include "CProtoMgr.h"
 #include "CDInputMgr.h"
 #include "CLoading.h"
 #include "CFontMgr.h"
 #include "CCameraMgr.h"
 #include "CRenderer.h"
-
+#include "CCollisionMgr.h"
+#include "CLoadMgr.h"
+#include "SoundMgr.h"
+#include "CPlayTimeMgr.h"
+#include "CRankMgr.h"
+#include "CSlotMgr.h"
+#include "CButtonMgr.h"
+#include "CFindOthersMgr.h"
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr)
 	, m_pManagementClass(CManagement::GetInstance())
@@ -33,6 +39,9 @@ HRESULT CMainApp::Ready_MainApp()
 
 #endif // _DEBUG
 
+	SoundMgr::GetInstance().Initialize();
+	CLoadMgr::GetInstance()->ReadyCreateMap();
+
 	if (FAILED(Ready_DefaultSetting(&m_pGraphicDev)))
 		return E_FAIL;
 
@@ -46,11 +55,14 @@ HRESULT CMainApp::Ready_MainApp()
 void CMainApp::FixedUpdate_MainApp(const float& fFixedDeltaTime)
 {
 	m_pManagementClass->FixedUpdate_Scene(fFixedDeltaTime);
+
 }
 
 int CMainApp::Update_MainApp(const float& fDeltaTime)
 {
-	CDInputMgr::GetInstance()->Update_InputDev();
+	SoundMgr::GetInstance().Update();
+
+	CPlayTimeMgr::GetInstance()->UpdateCPlayTimeMgr(fDeltaTime);
 	m_pManagementClass->Update_Scene(fDeltaTime);
 
 	return 0;
@@ -58,15 +70,14 @@ int CMainApp::Update_MainApp(const float& fDeltaTime)
 
 void CMainApp::LateUpdate_MainApp(const float& fDeltaTime)
 {
-	m_pManagementClass->LateUpdate_Scene(fDeltaTime);
 	CDInputMgr::GetInstance()->LateUpdate_InputDev();
+	m_pManagementClass->LateUpdate_Scene(fDeltaTime);
 }
 
 void CMainApp::Render_MainApp()
 {
 	m_pDeviceClass->Render_Begin(D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 
-	m_pGraphicDev->SetViewport(&g_FullView);
 	if (CCameraMgr::GetInstance()->GetCamerState() != CAMERA_END) {
 		CameraInfo camInfo = CCameraMgr::GetInstance()->GetCameraInfo();
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &camInfo.matView);
@@ -75,7 +86,45 @@ void CMainApp::Render_MainApp()
 
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
 
-	m_pDeviceClass->Render_End();
+	HRESULT result = m_pDeviceClass->Render_End();
+	if (result == D3DERR_DEVICELOST)
+		m_bDeviceLost = true;
+}
+
+bool CMainApp::ResetTest()
+{
+	HRESULT hr = m_pGraphicDev->TestCooperativeLevel();
+	if (hr == D3DERR_DEVICELOST)
+	{
+		cout << "Lost" << "\n";
+		::Sleep(10);
+		return true;
+	}
+	if (hr == D3DERR_DEVICENOTRESET)
+	{
+		Reset_MainApp();
+		return false;
+	}
+	m_bDeviceLost = false;
+	return false;
+}
+
+void CMainApp::Reset_MainApp()
+{
+	cout << "Reset" << "\n";
+	CFontMgr::GetInstance()->OnLostDevice();
+	m_pManagementClass->OnLostDevice();
+
+	m_pDeviceClass->Reset_GraphicDev();
+
+	OnResetDevice();
+	CFontMgr::GetInstance()->OnResetDevice();
+	m_pManagementClass->OnResetDevice();
+}
+
+void CMainApp::Resize_MainApp(UINT uWidth, UINT uHeight)
+{
+	m_pDeviceClass->Resize_GraphicDev(uWidth, uHeight);
 }
 
 HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
@@ -120,6 +169,14 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 	return S_OK;
 }
 
+void CMainApp::OnResetDevice()
+{
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+}
+
 CMainApp* CMainApp::Create()
 {
 	CMainApp* pMainApp = new CMainApp;
@@ -139,6 +196,12 @@ void CMainApp::Free()
 	Safe_Release(m_pGraphicDev);
 	Safe_Release(m_pDeviceClass);
 
+	CButtonMgr::DestroyInstance();
+	CSlotMgr::DestroyInstance();
+	CFindOthersMgr::DestroyInstance();
+	CRankMgr::DestroyInstance();
+	CPlayTimeMgr::DestroyInstance();
+	CCollisionMgr::DestroyInstance();
 	CFrameMgr::DestroyInstance();
 	CTimerMgr::DestroyInstance();
 	m_pManagementClass->DestroyInstance();
@@ -148,4 +211,5 @@ void CMainApp::Free()
 	CFontMgr::DestroyInstance();
 	CCameraMgr::DestroyInstance();
 	CRenderer::DestroyInstance();
+	CLoadMgr::DestroyInstance();
 }

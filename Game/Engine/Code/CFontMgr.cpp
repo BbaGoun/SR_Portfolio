@@ -36,6 +36,20 @@ void CFontMgr::Render_Font(const _tchar* pFontTag, const _tchar* pString,
 	pFont->Render_Font(pString, pPos, Color);
 }
 
+void CFontMgr::OnLostDevice()
+{
+	for (auto& p : m_mapFont) {
+		p.second->OnLostDevice();
+	}
+}
+
+void CFontMgr::OnResetDevice()
+{
+	for (auto& p : m_mapFont) {
+		p.second->OnResetDevice();
+	}
+}
+
 CFont* CFontMgr::Find_Font(const _tchar* pFontTag)
 {
 	auto	iter = find_if(m_mapFont.begin(), m_mapFont.end(), CTag_Finder(pFontTag));

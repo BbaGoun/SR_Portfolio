@@ -48,6 +48,18 @@ void CFont::Render_Font(const _tchar* pString, const _vec2* pPos, D3DXCOLOR Colo
 	m_pSprite->End();
 }
 
+void CFont::OnLostDevice()
+{
+	m_pSprite->OnLostDevice();
+	m_pFont->OnLostDevice();
+}
+
+void CFont::OnResetDevice()
+{
+	m_pSprite->OnResetDevice();
+	m_pFont->OnResetDevice();
+}
+
 CFont* CFont::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFontType, const _uint& iWidth, const _uint& iHeight, const _uint& iWeight)
 {
 	CFont* pFont = new CFont(pGraphicDev);
@@ -64,5 +76,7 @@ CFont* CFont::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pFontType, con
 
 void CFont::Free()
 {
+	Safe_Release(m_pSprite);
+	Safe_Release(m_pFont);
 	Safe_Release(m_pGraphicDev);
 }

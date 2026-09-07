@@ -1,10 +1,6 @@
 #pragma once
 
 #include "CBase.h"
-#include "CGraphicDev.h"
-#include "CTimerMgr.h"
-#include "CFrameMgr.h"
-
 #include "CManagement.h"
 
 class CMainEditor : public CBase
@@ -14,21 +10,23 @@ private:		// 积己磊, 家戈磊
 	virtual ~CMainEditor();
 
 public:
+	void		GameLoop();
+
 	HRESULT		Ready_MainEditor();
 	void		FixedUpdate_MainEditor(const float& fFixedDeltaTime);
 	int			Update_MainEditor(const float& fDeltaTime);
 	void		LateUpdate_MainEditor(const float& fDeltaTime);
 	void		Render_MainEditor();
+	void		Reset_MainEditor();
 
 private:
 	HRESULT		Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
 	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
+	HRESULT		Ready_IMGUI();
 
 private:
-	Engine::CGraphicDev* m_pDeviceClass;
-	Engine::CManagement* m_pManagementClass;
+	Engine::CManagement*	m_pManagementClass;
 	LPDIRECT3DDEVICE9		m_pGraphicDev;
-
 
 public:		// 积己 窃荐
 	static CMainEditor* Create();

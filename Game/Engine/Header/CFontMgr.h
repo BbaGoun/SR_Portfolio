@@ -27,6 +27,9 @@ public:
 									const _vec2* pPos,
 									D3DXCOLOR Color);
 
+	void				OnLostDevice();
+	void				OnResetDevice();
+
 private:
 	CFont* Find_Font(const _tchar* pFontTag);
 

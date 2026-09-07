@@ -17,11 +17,13 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
-private:
-
+public:
+	void			Change_BackgroundTexture(BACKGROUND);
 private:
 	CRcTex* m_pBufferCom;
 	CTexture* m_pTextureCom;
+
+	BACKGROUND		m_eCurrentBackground = BACKGROUND_LOADING;
 
 public:
 	static CBackGround* Create(LPDIRECT3DDEVICE9 pGraphicDev);

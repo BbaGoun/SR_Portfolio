@@ -28,12 +28,12 @@ HRESULT CSkyBox::Ready_GameObject()
 	pComponent = m_pBufferCom = static_cast<CInnerBox*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_InnerBox"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Buffer", pComponent });
+	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
 	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SkyBoxTexture"));
 	pComponent->Set_Owner(this);
 
-	m_mapComponent[ID_STATIC].insert({ L"Com_Texture", pComponent });
+	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 	return S_OK;
 }
@@ -46,10 +46,10 @@ _int CSkyBox::Update_GameObject(const _float& fDeltaTime)
 
 void CSkyBox::LateUpdate_GameObject(const _float& fDeltaTime)
 {
-	CCamera* p_Camera = CCameraMgr::GetInstance()->GetMainCamera();
-	_vec3 pos;
-	p_Camera->Get_Transform()->Get_Info(INFO_POS, &pos);
-	m_pTransformCom->Set_Pos(pos);
+	//CCamera* p_Camera = CCameraMgr::GetInstance()->GetMainCamera();
+	//_vec3 pos;
+	//p_Camera->Get_Transform()->Get_Info(INFO_POS, &pos);
+	//m_pTransformCom->Set_Pos(pos);
 	CGameObject::LateUpdate_GameObject(fDeltaTime);
 }
 

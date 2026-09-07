@@ -13,14 +13,47 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="MainEditor">
-      <UniqueIdentifier>{4a6689b9-8e98-464a-ae2d-b6f414a5bc4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="IMGUI">
       <UniqueIdentifier>{de4b3d17-a7d1-4c46-a101-2f2c56f56058}</UniqueIdentifier>
     </Filter>
     <Filter Include="IMGIZMOS">
       <UniqueIdentifier>{2472c17e-327e-407e-9a8c-06ac19996563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. MainEditor">
+      <UniqueIdentifier>{4a6689b9-8e98-464a-ae2d-b6f414a5bc4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Windows">
+      <UniqueIdentifier>{b0ab8c8a-e073-45f4-958a-5e40b219f6fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Windows\Hierarchy">
+      <UniqueIdentifier>{28d65a66-f288-4ec7-acd9-9e42968157b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Windows\Inspector">
+      <UniqueIdentifier>{87781cbe-1df1-415d-9035-370ff01375d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Windows\Project">
+      <UniqueIdentifier>{0a593c26-7454-41fe-8221-14b094f59a93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Windows\Sequence">
+      <UniqueIdentifier>{3d43e594-93a4-4d04-b2a0-affde918902c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Windows\SceneWindow">
+      <UniqueIdentifier>{da18f1f3-65b2-4fc8-be5d-f5ee7540a134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Windows\GameWindow">
+      <UniqueIdentifier>{6b9cc8fa-c497-4442-b9e9-24a2d42786bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scenes">
+      <UniqueIdentifier>{7b8e9358-2f79-4420-8e9a-cbe2f5fb0b5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scenes\Loading">
+      <UniqueIdentifier>{2eb35cdc-1742-4754-b48b-c48736105501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scenes\Loading\LoadingThread">
+      <UniqueIdentifier>{c5c84abf-5613-4bbf-9ced-d0cb6c1650a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject">
+      <UniqueIdentifier>{b308f2f3-fd71-41cc-9548-7d6f1bdf1595}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,7 +73,7 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMainEditor.h">
-      <Filter>MainEditor</Filter>
+      <Filter>00. MainEditor</Filter>
     </ClInclude>
     <ClInclude Include="imgui-docking\imconfig.h">
       <Filter>IMGUI</Filter>
@@ -60,6 +93,39 @@
     <ClInclude Include="ImGuizmo-master\src\ImGuizmo.h">
       <Filter>IMGIZMOS</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWindow.h">
+      <Filter>01. Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGameWindow.h">
+      <Filter>01. Windows\GameWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHierarchy.h">
+      <Filter>01. Windows\Hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInspector.h">
+      <Filter>01. Windows\Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CProject.h">
+      <Filter>01. Windows\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSceneWindow.h">
+      <Filter>01. Windows\SceneWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSequence.h">
+      <Filter>01. Windows\Sequence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CEditorScene.h">
+      <Filter>02. Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLoading.h">
+      <Filter>02. Scenes\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLoadingThread.h">
+      <Filter>02. Scenes\Loading\LoadingThread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Editor_Function.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp">
@@ -69,7 +135,7 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMainEditor.cpp">
-      <Filter>MainEditor</Filter>
+      <Filter>00. MainEditor</Filter>
     </ClCompile>
     <ClCompile Include="imgui-docking\imgui.cpp">
       <Filter>IMGUI</Filter>
@@ -94,6 +160,36 @@
     </ClCompile>
     <ClCompile Include="ImGuizmo-master\src\ImGuizmo.cpp">
       <Filter>IMGIZMOS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWindow.cpp">
+      <Filter>01. Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGameWindow.cpp">
+      <Filter>01. Windows\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHierarchy.cpp">
+      <Filter>01. Windows\Hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CProject.cpp">
+      <Filter>01. Windows\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInspector.cpp">
+      <Filter>01. Windows\Inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSequence.cpp">
+      <Filter>01. Windows\Sequence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSceneWindow.cpp">
+      <Filter>01. Windows\SceneWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEditorScene.cpp">
+      <Filter>02. Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLoadingThread.cpp">
+      <Filter>02. Scenes\Loading\LoadingThread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLoading.cpp">
+      <Filter>02. Scenes\Loading</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

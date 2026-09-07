@@ -27,7 +27,10 @@ namespace Engine
 	typedef		D3DXVECTOR4					_vec4;
 
 	typedef		D3DXMATRIX					_matrix;
+	typedef		D3DXQUATERNION				_quaternion;
 
+	typedef		uint32_t NodeId;
+	typedef		uint32_t EdgeId;
 	/*typedef	 struct tagMyVec3 : public D3DXVECTOR3
 	{
 		float	Get_Dot(const d3dxvector3& vTemp);

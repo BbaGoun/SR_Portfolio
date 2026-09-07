@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CVIBuffer.h"
 
 BEGIN(Engine)
@@ -7,7 +7,6 @@ class ENGINE_DLL CInnerBox :
     public CVIBuffer
 {
 protected:
-    explicit CInnerBox();
     explicit CInnerBox(LPDIRECT3DDEVICE9 pGraphicDev);
     explicit CInnerBox(const CInnerBox& rhs);
     virtual ~CInnerBox() override;

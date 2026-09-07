@@ -25,6 +25,9 @@
 #include "Client_Define.h"
 #include "Client_Enum.h"
 
+#include "fmod.h"
+#include "fmod.hpp"
+
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC

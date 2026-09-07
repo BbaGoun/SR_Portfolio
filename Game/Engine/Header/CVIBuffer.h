@@ -7,7 +7,6 @@ class ENGINE_DLL CVIBuffer :
     public CComponent
 {
 protected:
-    explicit CVIBuffer();
     explicit CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev);
     explicit CVIBuffer(const CVIBuffer& rhs);
     virtual ~CVIBuffer() override;
@@ -18,6 +17,15 @@ public:
 
     virtual HRESULT Ready_Buffer();
     virtual void Render_Buffer();
+
+
+    DirectX::BoundingBox* GetBoundingBox() {
+        return &m_boundingBox;
+    }
+
+protected:
+    void SetBoundingBox();
+    void UpdateMinMaxVtx(_vec3 position);
 
 public:
     CComponent* Clone() override;
@@ -35,6 +43,10 @@ protected:
     LPDIRECT3DINDEXBUFFER9		m_pIB;
     DWORD						m_dwIdxCnt;
     D3DFORMAT					m_IdxFmt;
+
+    _vec3                       m_minVtx;
+    _vec3                       m_maxVtx;
+    DirectX::BoundingBox        m_boundingBox;
 
 protected:
     virtual void		Free();

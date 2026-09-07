@@ -25,6 +25,8 @@ public:
 								const _vec2* pPos,
 								D3DXCOLOR Color);
 
+	void			OnLostDevice();
+	void			OnResetDevice();
 
 public:
 	static CFont* Create(LPDIRECT3DDEVICE9 pGraphicDev,

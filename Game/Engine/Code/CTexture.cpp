@@ -1,17 +1,18 @@
-#include "CTexture.h"
-
-CTexture::CTexture()
-{
-}
+﻿#include "CTexture.h"
 
 CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
     :CComponent(pGraphicDev)
 {
+    m_eID = ID_STATIC;
+    m_eKind = CK_TEXTURE;
 }
 
 CTexture::CTexture(const CTexture& rhs)
     :CComponent(rhs)
 {
+    m_eID = ID_STATIC;
+    m_eKind = CK_TEXTURE;
+
     size_t iSize = rhs.m_vecTexture.size();
 
     m_vecTexture.reserve(iSize);
@@ -35,7 +36,7 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eID, const _tchar* pPath, const _uint&
 
     for (_uint i = 0; i < iCnt; ++i)
     {
-        TCHAR   szFileName[128] = L"";
+        TCHAR   szFileName[512] = L"";
 
         wsprintf(szFileName, pPath, i);
 
@@ -77,7 +78,9 @@ CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev,
     if (FAILED(pTexture->Ready_Texture(eID, pPath, iCnt)))
     {
         Safe_Release(pTexture);
-        MSG_BOX("Texture Create Failed");
+        _tchar buf[512];
+        wsprintf(buf, L"Texture Create Failed : %s", pPath);
+        MSG_BOXF(buf);
         return nullptr;
     }
 

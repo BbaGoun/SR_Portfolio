@@ -4,9 +4,10 @@
 #include "CBackGround.h"
 #include "CProtoMgr.h"
 #include "CFontMgr.h"
-#include "CScene_Test.h"
 #include "CManagement.h"
 #include "CRcTex.h"
+#include "CItem.h"
+#include "CNexonVideo.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
     : CScene(pGraphicDev), m_pLoadingThread(nullptr)
@@ -39,9 +40,11 @@ _int CLoading::Update_Scene(const _float& fDeltaTime)
 
     if (m_pLoadingThread->Get_Finish())
     {
-        if (GetAsyncKeyState(VK_RETURN))
-        {
-            Engine::CScene* pStage = CScene_Test::Create(m_pGraphicDev);
+        
+            //Engine::CScene* pStage = CScene_Test::Create(m_pGraphicDev);
+            //Engine::CScene* pStage = CItem::Create(m_pGraphicDev);
+            //Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
+            Engine::CScene* pStage = CNexonVideo::Create(m_pGraphicDev);
 
             if (nullptr == pStage)
                 return E_FAIL;
@@ -51,7 +54,7 @@ _int CLoading::Update_Scene(const _float& fDeltaTime)
                 MSG_BOX("Stage Create Failed");
                 return -1;
             }
-        }
+        
     }
 
     return iExit;
@@ -64,7 +67,22 @@ void CLoading::LateUpdate_Scene(const _float& fDeltaTime)
 
 void CLoading::Render_Scene()
 {
-    CScene::Render_Scene();
+    _matrix matView, matProj;
+    _vec3 vEye, vAt, vUp;
+    vEye = { 0, 0, -2 };
+    vAt = { 0, 0, 1 };
+    vUp = { 0, 1, 0 };
+    D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
+    D3DVIEWPORT9 vp;
+
+    m_pGraphicDev->GetViewport(&vp);
+
+    D3DXMatrixOrthoLH(&matProj, float(vp.Width), float(vp.Height), 1.f, 1000.f);
+
+    m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+    m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+
+    //CScene::Render_Scene();
 
     _vec2       vPos = { 100.f, 100.f };
 
@@ -76,9 +94,11 @@ void CLoading::Render_Scene()
 HRESULT CLoading::Ready_Environment_Layer(const _tchar* pLayerTag)
 {
     CLayer* pLayer = CLayer::Create();
-    
+
     if (nullptr == pLayer)
         return E_FAIL;
+    
+    m_mapLayer.insert({ pLayerTag, pLayer });
 
     CGameObject* pGameObject = nullptr;
 
@@ -91,19 +111,22 @@ HRESULT CLoading::Ready_Environment_Layer(const _tchar* pLayerTag)
     if (FAILED(pLayer->Add_GameObject(L"BackGround", pGameObject)))
         return E_FAIL;    
  
-    m_mapLayer.insert({ pLayerTag, pLayer });
+    pGameObject->Get_Transform()->Set_Scale({ WINCX, WINCY, 1 });
 
     return S_OK;
 }
 
 HRESULT CLoading::Ready_Prototype()
 {
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Transform", Engine::CTransform::Create(m_pGraphicDev))))
+        return E_FAIL;
+    
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_RcTex", Engine::CRcTex::Create(m_pGraphicDev))))
         return E_FAIL;
 
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Logo/sana.jpg", 1))))
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Cart/UI/BackGround/scene%d.png", 7))))
         return E_FAIL;
-
+                                                                                                                              
     return S_OK;
 }
 

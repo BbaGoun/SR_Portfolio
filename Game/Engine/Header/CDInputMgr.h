@@ -37,13 +37,27 @@ public:
 	}
 
 	_bool	Get_DIMouseKeyDown(MOUSEKEYSTATE eMouse) {
-		return !(m_tBeforeMouseState.rgbButtons[eMouse] & 0x80)
-			&& (m_tMouseState.rgbButtons[eMouse] & 0x80);
+		return !(
+			(m_tBeforeMouseState.rgbButtons[eMouse] & 0x80) ||
+			(m_tBeforeMouseState.rgbButtons[eMouse] & -0x80)
+			)
+			&&
+			(
+			(m_tMouseState.rgbButtons[eMouse] & 0x80) ||
+			(m_tMouseState.rgbButtons[eMouse] & -0x80)
+			);
 	}
 
 	_bool	Get_DIMouseKeyUp(MOUSEKEYSTATE eMouse) {
-		return (m_tBeforeMouseState.rgbButtons[eMouse] & 0x80)
-			&& !(m_tMouseState.rgbButtons[eMouse] & 0x80);
+		return (
+			(m_tBeforeMouseState.rgbButtons[eMouse] & 0x80) ||
+			(m_tBeforeMouseState.rgbButtons[eMouse] & -0x80)
+			)
+			&&
+			!(
+			(m_tMouseState.rgbButtons[eMouse] & 0x80) ||
+			(m_tMouseState.rgbButtons[eMouse] & -0x80)
+			);
 	}
 
 	// 현재 마우스의 특정 축 좌표를 반환
@@ -56,6 +70,13 @@ public:
 	HRESULT Ready_InputDev(HINSTANCE hInst, HWND hWnd);
 	void	Update_InputDev(void);
 	void	LateUpdate_InputDev(void);
+
+	HRESULT	BeginRecord(const wchar_t* szPath);
+	HRESULT	Load_Record(const wchar_t* szPath);
+	void	End_Record();
+	void	Record_FixedUpdate();
+	void	Load_FixedUpdate();
+	
 
 private:
 	LPDIRECTINPUT8			m_pInputSDK = nullptr;
@@ -71,6 +92,13 @@ private:
 	DIMOUSESTATE			m_tBeforeMouseState;
 	DIMOUSESTATE			m_tMouseState;
 
+	FILE*						m_pRecordFile = nullptr;
+	vector<array<_byte, 256>>	m_vecReplay; 
+	DWORD						m_dwReplayCnt = 0;
+	DWORD						m_dwFileSize = 0;
+
+	
+	
 public:
 	virtual void	Free(void);
 
