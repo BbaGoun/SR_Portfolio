@@ -147,6 +147,11 @@ _int CThunderCloud::Update_GameObject(const _float& fDeltaTime)
 	}
 	else if(m_bCreateThunder == true)
 	{
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		vPos.y -= 5.f;
+		m_pThunder->Get_Transform()->Set_Pos(vPos);
+
 		if (m_fFrame < 1)
 		{
 			m_fFrame += 5 * fDeltaTime;
@@ -221,8 +226,6 @@ void CThunderCloud::CreateThunder()
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	vPos.y -= 5.f;
 	m_pThunder->Get_Transform()->Set_Pos(vPos);
-	Set_ChildTuneDefault(m_pThunder);
-	m_pThunder->SetLayer(m_pLayer);
 }
 
 void CThunderCloud::CreateThunderPlayerEffect()
