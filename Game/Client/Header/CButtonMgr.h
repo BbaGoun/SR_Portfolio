@@ -16,7 +16,7 @@ public:
 	void		AddBtntoVec(CGameObject* pObj) { m_vecButton.push_back({ pObj}); }
 	void		ButtonClicked(CGameObject* pObj);
 
-
+	void		Clear();
 
 private:
 	//vector<pair<CGameObject*, int >>	m_vecRankUIs;

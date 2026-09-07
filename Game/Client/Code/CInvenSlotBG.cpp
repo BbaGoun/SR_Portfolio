@@ -62,6 +62,15 @@ void CInvenSlotBG::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CInvenSlotBG::Render_GameObject()
 {
+	_matrix OldView, OldProj, matView, matProj;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProj);
+
+	D3DXMatrixIdentity(&matView);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixOrthoLH(&matProj, (float)WINCX, (float)WINCY, 1.f, 1000.f);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 	if (m_bSelected == true)
 	{
@@ -74,7 +83,10 @@ void CInvenSlotBG::Render_GameObject()
 		if (m_bMouseHover == true) m_fFrame += 1;
 	}
 	m_pTextureCom->Set_Texture(m_fFrame);
-	m_pVIBufferCom->Render_Buffer();
+	m_pVIBufferCom->Render_Buffer(); 
+	
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProj);
 }
 
 void CInvenSlotBG::SetSelected(bool bSelected)

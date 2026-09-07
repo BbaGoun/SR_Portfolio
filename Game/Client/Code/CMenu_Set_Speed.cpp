@@ -397,6 +397,8 @@ CMenu_Set_Speed* CMenu_Set_Speed::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CMenu_Set_Speed::Free()
 {
+	CSlotMgr::GetInstance()->Clear();
+	CButtonMgr::GetInstance()->Clear();
 
 	CScene::Free();
 	CRenderer::GetInstance()->Clear_RenderGroup();
