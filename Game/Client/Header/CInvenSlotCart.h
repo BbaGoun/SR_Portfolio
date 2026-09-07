@@ -18,6 +18,15 @@ public:
 	virtual			_int		Update_GameObject(const _float& fDeltaTime) override;
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
+
+	void RenderSubtree(CGameObject* pObj)
+	{
+		for (auto& pChild : pObj->Get_Children())
+		{
+			pChild->Render_GameObject();
+			RenderSubtree(pChild);
+		}
+	}
 public:
 	static CInvenSlotCart* Create(LPDIRECT3DDEVICE9 pGraphicDev, INVEN_SLOT_NUM eID);
 	void						SetTurn(bool bTurn) { m_bTurn = bTurn; }

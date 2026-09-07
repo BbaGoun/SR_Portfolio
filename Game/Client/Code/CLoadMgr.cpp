@@ -10,6 +10,8 @@
 #include "CTrackCam.h"
 #include "CItemBox.h"
 #include "CPlayerArm.h"
+#include "CScene3_Char.h"
+#include "CInvenSlotCart.h"
 
 IMPLEMENT_SINGLETON(CLoadMgr)
 
@@ -40,6 +42,12 @@ void CLoadMgr::ReadyCreateMap() {
 
 	m_createMap[L"TrackCam"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CTrackCam::Create(pGraphicDev); };
 	m_createMap[L"ItemBox"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CItemBox::Create(pGraphicDev); };
+	
+	m_createMap[L"Obj_Basic_Cart"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CInvenSlotCart::Create(pGraphicDev, INVEN_FIRST); };
+	m_createMap[L"Obj_CottonCart"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CInvenSlotCart::Create(pGraphicDev, INVEN_SECOND); };
+	m_createMap[L"Obj_Bazzi"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CScene3_Char::Create(pGraphicDev, CHAR_BAZZI); };
+
+	
 }
 
 CGameObject* CLoadMgr::CreateByType(const _tchar* type, LPDIRECT3DDEVICE9 pGraphicDev) {
