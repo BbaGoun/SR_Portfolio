@@ -133,6 +133,9 @@ public:
 
 	// DustLandingEffect
 	void			SetDustLandingEffect(CDustLandingEffect* pEffect) { m_pDustLandingEffect = pEffect; }
+
+	//MapID
+	void			SetMapID(MAP_ID eID) { m_eMapID = eID; }
 private:
 	_float					m_fMaxSpeed;
 	bool					m_bDrift;
@@ -206,6 +209,8 @@ private:
 	CGameObject*			m_pBubble = nullptr;
 
 	CDustLandingEffect*		m_pDustLandingEffect = nullptr;
+
+	MAP_ID					m_eMapID = MAP_SPEED;
 
 protected:
 	virtual		void		Free() override;

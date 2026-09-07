@@ -228,6 +228,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	CGameObject* pPlayerHead = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_PlayerHead");
 
 	static_cast<CCart*>(pCart)->SetPlayerHead(pPlayerHead);
+	static_cast<CCart*>(pCart)->SetMapID(m_eMapId);
 	static_cast<CCart*>(pCart)->AddWheel();
 
 	pCartBody->Set_ChildTuneDefault(pPlayer);
@@ -551,12 +552,13 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		return E_FAIL;
 
 	// UI_HUDGage
+	
 	pUIObject = CHUD_Gage::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_HUDGage", pUIObject)))
 		return E_FAIL;
-
+	
 	// UI_HUDNum
 	pUIObject = CHUD_Num::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
@@ -570,21 +572,22 @@ HRESULT CRacingScene::Ready_UI_Layer()
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_Rainbow", pUIObject)))
 		return E_FAIL;
+	if (m_eMapId == MAP_SPEED)
+	{
+		// UI_BoosterBG
+		pUIObject = CUI_BoosterBG::Create(m_pGraphicDev);
+		if (nullptr == pUIObject)
+			return E_FAIL;
+		if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBG", pUIObject)))
+			return E_FAIL;
 
-	// UI_BoosterBG
-	pUIObject = CUI_BoosterBG::Create(m_pGraphicDev);
-	if (nullptr == pUIObject)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBG", pUIObject)))
-		return E_FAIL;
-
-	// UI_BoosterBar
-	pUIObject = CUI_BoosterBar::Create(m_pGraphicDev);
-	if (nullptr == pUIObject)
-		return E_FAIL;
-	if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
-		return E_FAIL;
-
+		// UI_BoosterBar
+		pUIObject = CUI_BoosterBar::Create(m_pGraphicDev);
+		if (nullptr == pUIObject)
+			return E_FAIL;
+		if (FAILED(pUILayer->Add_GameObject(L"UI_BoosterBar", pUIObject)))
+			return E_FAIL;
+	}
 	// UI_ItemSlot
 	pUIObject = CUI_ItemSlot::Create(m_pGraphicDev);
 	if (nullptr == pUIObject)
