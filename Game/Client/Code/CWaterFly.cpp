@@ -9,6 +9,7 @@
 #include "CCameraMgr.h"
 #include "CCart.h"
 #include "CCartBot.h"
+#include <SoundMgr.h>
 
 CWaterFly::CWaterFly(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget)
 	: CGameObject(pGraphicDev)
@@ -61,10 +62,14 @@ void CWaterFly::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 	{
 		if (CCart* pCart = dynamic_cast<CCart*>(m_pTarget))
 		{
+			SoundMgr::GetInstance().PlaySound(L"Effect/Item_waterbombFly/fired.ogg", SOUND_WATERFLY, 0.4f, true);
+
 			pCart->SetBubble(true);
 		}
 		else if (CCartBot* pCartBot = dynamic_cast<CCartBot*>(m_pTarget))
 		{
+			SoundMgr::GetInstance().PlaySound(L"Effect/Item_waterbombFly/fired.ogg", SOUND_WATERFLY, 0.4f, true);
+
 			pCartBot->SetBubble(true);
 		}
 		m_pLayer->Delete_GameObject(this);
