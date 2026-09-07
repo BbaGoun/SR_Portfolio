@@ -363,7 +363,7 @@ HRESULT CRacingScene::Ready_GameLogic_Layer()
 	if (nullptr == pGameObject)
 		return E_FAIL;
 	CManagement::GetInstance()->Add_GameObject(L"GameLogic", L"CollisionStarEffect", pGameObject);
-	pCartBody->Set_Child(pGameObject);
+	pCart->Set_ChildWithoutTune(pGameObject);
 
 	// 착지시 먼지 이펙트
 	// DustParticle

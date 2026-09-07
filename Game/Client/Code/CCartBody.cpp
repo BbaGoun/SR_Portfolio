@@ -150,16 +150,50 @@ void CCartBody::CollisionEnter(CCollider* pOtherCollider)
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////// 테스트용  Obj_MissileTarget
-	if (wcsncmp(wOtherTag, L"Obj_MissileTarget", 17) == 0)
+	if (wcsncmp(wOtherTag, L"Obj_Barricade", 13) == 0)
 	{
-		_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
-			static_cast<CCube_Collider*>(pOtherCollider), m_pColliderCom);
-
+		bool isPlayer = false;
 		CCart* pCart = dynamic_cast<CCart*>(m_pParent);
+		if (pCart)
+			isPlayer = true;
+
+		_vec3 vParentForce = m_pParent->Get_Force();
+		float vParentSpeed = m_pParent->Get_Speed();
+		if (isPlayer) {
+			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
+			// StarEffect
+			if (D3DXVec3Length(&vParentForce) * vParentSpeed >= 0)
+			{
+				CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
+					(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
+				pStarParticle->ResetParticle();
+			}
+		}
+		// MTV 적용
+		_vec3 MTV = CCollisionMgr::GetInstance()->GetMTVCubevsCube(
+			static_cast<CCube_Collider*>(pOtherCollider), Get_Component<CCube_Collider>());
+
+		MTV.y = 0;
+
+		_vec3 vNewForce = vParentForce;
+		vNewForce *= vParentSpeed;
+
+		// 2. 가속도에서 충돌쪽으로 들어가는 속도 성분울 줄이기
+		_vec3 MTV_n;
+		D3DXVec3Normalize(&MTV_n, &MTV);
+		float inward = D3DXVec3Dot(&vNewForce, &MTV_n);
+		// MTV가 벽 밖으로 나가는 방향 
+
+		if (inward < 0)
+			vNewForce -= MTV_n * inward;
+		else
+			vNewForce += MTV;
 
 		_vec3 vPos;
-		pCart->Get_Transform()->Get_Info(INFO_POS, &vPos);
-		pCart->Get_Transform()->Set_Pos(vPos + MTV);
+		m_pParent->Get_Transform()->Get_Info(INFO_POS, &vPos);
+
+		m_pParent->Set_Force(vNewForce);
+		m_pParent->Get_Transform()->Set_Pos(vPos + MTV);
 	}
 }
 

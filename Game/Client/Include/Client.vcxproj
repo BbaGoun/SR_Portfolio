@@ -205,6 +205,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClInclude Include="..\Header\CBackGround.h" />
     <ClInclude Include="..\Header\CBanana.h" />
+    <ClInclude Include="..\Header\CBarricade.h" />
     <ClInclude Include="..\Header\CBoostAura.h" />
     <ClInclude Include="..\Header\CBoostWind.h" />
     <ClInclude Include="..\Header\CBoostJet.h" />
@@ -240,6 +241,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CMinimapGround.h" />
     <ClInclude Include="..\Header\CMissile.h" />
     <ClInclude Include="..\Header\CMissileBody.h" />
+    <ClInclude Include="..\Header\CMissileEffect.h" />
     <ClInclude Include="..\Header\CMissileTarget.h" />
     <ClInclude Include="..\Header\CPause_MenuBtn.h" />
     <ClInclude Include="..\Header\CPause_ReplayBtn.h" />
@@ -340,6 +342,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CBarricade.cpp" />
     <ClCompile Include="..\Code\CBoostAura.cpp" />
     <ClCompile Include="..\Code\CBubbleEscape.cpp" />
     <ClCompile Include="..\Code\CCart_Shield1.cpp" />
@@ -355,6 +358,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CMenu_Item.cpp" />
     <ClCompile Include="..\Code\CMenu_Set.cpp" />
     <ClCompile Include="..\Code\CMinimapCartBot.cpp" />
+    <ClCompile Include="..\Code\CMissileEffect.cpp" />
     <ClCompile Include="..\Code\CPause_MenuBtn.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>

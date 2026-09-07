@@ -535,6 +535,7 @@ void CRenderer::RenderBlur(LPDIRECT3DDEVICE9& pGraphicDev)
 	Render_Alpha(pGraphicDev);
 	Render_Skid(pGraphicDev);
 	Render_Trail(pGraphicDev);
+	Render_Particle(pGraphicDev);
 
 	// 4. 이전 프레임RT(m_BlurA) 덮어쓰기
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
@@ -558,7 +559,6 @@ void CRenderer::RenderBlur(LPDIRECT3DDEVICE9& pGraphicDev)
 	Safe_Release(pOldDS);
 
 	// 8. 파티클 + UI 그리기
-	Render_Particle(pGraphicDev);
 	Render_NonAlphaUI(pGraphicDev);
 	Render_AlphaUI(pGraphicDev);
 
