@@ -1159,6 +1159,8 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 {
 	if (m_bMagnet == true)
 	{
+		if(m_fMagnetTimer<1.5f)
+			SoundMgr::GetInstance().PlaySound(L"Effect/Item_magnet/using.ogg", SOUND_MAGNET, 0.4f);
 		CGameObject* pTarget = m_pMagnetTarget;
 
 		_vec3 vPos, vLook, vTargetPos, vDir;
@@ -1454,6 +1456,8 @@ void CCart::CreateMagnetObject()
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	vPos.y += 5;
 	pMagnet->Get_Transform()->Set_Pos(vPos);
+	_quaternion q = m_pTransformCom->Get_WorldQuaternion();
+	pMagnet->Get_Transform()->Set_Quaternion(&q);
 
 	CMagnetBody* pBody = CMagnetBody::Create(m_pGraphicDev);
 	m_pLayer->Add_GameObject(L"Obj_MagnetBody", pBody);
