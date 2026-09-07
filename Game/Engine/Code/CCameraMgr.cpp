@@ -1,6 +1,7 @@
 ﻿#include "Engine_Define.h"
 #include "CCameraMgr.h"
 #include "CGameObject.h"
+#include "CManagement.h"
 
 IMPLEMENT_SINGLETON(CCameraMgr)
 

@@ -29,10 +29,13 @@ public:
 	virtual			void		TriggerExit(CCollider* pOtherCollider) {};
 	virtual			void		TriggerStay(CCollider* pOtherCollider) {};
 
+	void		SetTarget(CGameObject* pTarget) { m_pTarget = pTarget; }
 private:
-	Engine::CCube_Collider* m_pColliderCom;
-			_float			m_fSpeed;
-			_float			m_fAngle;
+	Engine::CCube_Collider*		m_pColliderCom;
+			_float				m_fSpeed;
+			_float				m_fAngle;
+			CGameObject*		m_pTarget = nullptr;
+
 public:
 	static CMissile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

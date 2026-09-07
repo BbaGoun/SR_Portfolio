@@ -25,9 +25,16 @@
 #include "SoundMgr.h"
 #include "CUI_StartCountDown.h"
 #include "CUI_EndCountDown.h"
+#include "CPlayTimeMgr.h"
+#include "CWheel.h"
+#include "CCart_Shield1.h"
+#include "CCart_Shield2.h"
+#include "CUfo.h"
+#include "CUfoBody.h"
+#include "CCollisionStarEffect.h"
 #include "CShield1.h"
 #include "CShield2.h"
-#include "CPlayTimeMgr.h"
+#include "CFindOthersMgr.h"
 
 CCart::CCart(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_bDrift(false)
@@ -98,6 +105,7 @@ HRESULT CCart::Ready_GameObject()
 	m_PreQuaternion			= { 0,0,0,1 };
 
 	m_PreQuaternion			= { 0, 0, 0, 1 };
+	m_fAimRotationZ			= 0.f;
 
 	m_bUpKey				= false;
 
@@ -106,39 +114,64 @@ HRESULT CCart::Ready_GameObject()
 
 void CCart::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
+	m_iCollisionTick = max(0, m_iCollisionTick - 1);
+
+	if (!CPlayTimeMgr::GetInstance()->GetPlaying()) {
+		m_iCollisionTick = 0;
+		return;
+	}
+
 	UpdateGravity();
 
 	D3DXQUATERNION q;
 	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, m_vRotation.x, m_vRotation.z);
 	m_pTransformCom->Set_Quaternion(&q);
 
-	m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed, fFixedDeltaTime);
+	float fForceLen = D3DXVec3Length(&m_vForce);
+	if (fForceLen < 1.f)
+		m_vForce *= 0;
+	if (m_bMagnet == false && fForceLen >= 80.f)
+		m_vForce = m_vForce / fForceLen * 80.f;
+	if (m_bMagnet == true && fForceLen >= 120.f)
+		m_vForce = m_vForce / fForceLen * 120.f;
 
-	if(!m_bUpKey)
+	SetWheelForceLen();
+
+	if (!m_bUpKey)
 		m_vForce *= 0.98;
 	if (m_bDrift)
 		m_vForce *= 0.98;
 
-	float fForceLen = D3DXVec3Length(&m_vForce);
-	if (fForceLen < 1.f)
-		m_vForce *= 0;
-	if (fForceLen >= 80.f)
-		m_vForce = m_vForce / fForceLen * 80.f;
-
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
+	for (int i = 0; i < 3; ++i)
+	{
+		m_pTransformCom->Move_Pos(&m_vForce, m_fSpeed / 3.f, fFixedDeltaTime);
+		_vec3 vPos;
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		if(!m_bCollisionGround)
+			AdjustPosY_Slope(vPos, fFixedDeltaTime);
+		if(!m_bCollisionWall)
+			CollisionWall();
+	}
 
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	AdjustPosY_Slope(vPos, fFixedDeltaTime);
-	CollisionWall();
 	UpdateDrift(fFixedDeltaTime);
+
+	m_bCollisionGround = false;
+	m_bCollisionWall = false;
 }
 
 _int CCart::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+
+	if (!m_bActive) {
+		m_bDrift = false;
+		m_bUpKey = false;
+		m_eBoostState = BOOST_STATE_NORMAL;
+		return 0;
+	}
 
 	m_bPlaying = CPlayTimeMgr::GetInstance()->GetPlaying();
 
@@ -148,8 +181,6 @@ _int CCart::Update_GameObject(const _float& fDeltaTime)
 	UpdateThunder();
 	UpdateMagnet(fDeltaTime);
 	UpdateBlur(fDeltaTime);
-	//OutputCarState();
-	//cout << m_vTerrainNormal.x << "\t" << m_vTerrainNormal.y << "\t" << m_vTerrainNormal.z << endl;
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 
@@ -177,6 +208,14 @@ void CCart::KeyInput(const _float& fDeltaTime)
 {
 	if (m_bBanana == true)
 		return;
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
+		SetWheelTurn(TURN_LEFT);
+	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
+		SetWheelTurn(TURN_RIGHT);
+	else
+		SetWheelTurn(TURN_END);
+
 	_vec3 vLook;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
@@ -254,9 +293,14 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		CreateWaterFlyObject();
 	}
 
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_O))
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
 	{
-		CreateShieldObject();
+		CreateShieldObject_();
+	}
+
+	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_L))
+	{
+		CreateUfoObject();
 	}
 
 	// ShortBooster
@@ -380,6 +424,8 @@ void CCart::KeyInput(const _float& fDeltaTime)
 		m_eDirection = DIR_REVERSE;
 	if(m_pPlayerHead)
 		m_pPlayerHead->SetCartDirType(m_eDirection);
+	SetWheelDir();
+	
 
 	if (m_bDrift == true)
 	{
@@ -396,13 +442,13 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle) * m_eDirection;
 
-				m_vRotation.z += fDeltaTime * 0.2f;
+				m_vRotation.z += -fDeltaTime * 0.2f;
 			}
 			else
 			{
 				m_vRotation.y += D3DXToRadian(-fTurnAngle * 0.5f) * m_eDirection;
 
-				m_vRotation.z += fDeltaTime * 0.2f;
+				m_vRotation.z += -fDeltaTime * 0.2f;
 				//if (m_vRotation.z > 0)
 				//	m_vRotation.z = 0;
 			}
@@ -413,13 +459,13 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			{
 				m_vRotation.y += D3DXToRadian(fTurnAngle) * m_eDirection;
 
-				m_vRotation.z += -fDeltaTime * 0.2f;
+				m_vRotation.z += fDeltaTime * 0.2f;
 			}
 			else
 			{
 				m_vRotation.y += D3DXToRadian(fTurnAngle * 0.5f) * m_eDirection;
 
-				m_vRotation.z += -fDeltaTime * 0.2f;
+				m_vRotation.z += fDeltaTime * 0.2f;
 				//if (m_vRotation.z < 0)
 				//	m_vRotation.z = 0;
 			}
@@ -450,6 +496,7 @@ void CCart::KeyInput(const _float& fDeltaTime)
 			D3DXMatrixRotationY(&matRot, D3DXToRadian(fTurnAngle));
 			D3DXVec3TransformNormal(&m_vForce, &m_vForce, &matRot);
 		}
+
 	}
 }
 
@@ -597,10 +644,11 @@ void CCart::CreateBananaObject()
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Banana", pGameObject)))
 		return;
 
-	_vec3 vPos, vLook;
+	_vec3 vPos, vLook, vUp;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	vPos -= vLook * 10;
+	m_pTransformCom->Get_Info(INFO_UP, &vUp);
+	vPos -= vLook * 10 - vUp;
 	pGameObject->Get_Transform()->Set_Pos(vPos);
 
 	pGameObject->SetLayer(m_pLayer);
@@ -609,22 +657,27 @@ void CCart::CreateBananaObject()
 void CCart::CreateThunderCloudObject()
 {
 	SoundMgr::GetInstance().PlaySound(L"Effect/Item_thunderbolt/ThunderCloud.ogg", SOUND_THUNDERCLOUD, 0.4f);
-	CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev);
+	vector<CGameObject*> vecOthers = CFindOthersMgr::GetInstance()->GetOtherCart(this);
 
-	if (nullptr == pGameObject)
-		return;
+	for (auto& pOther : vecOthers)
+	{
+		CGameObject* pGameObject = CThunderCloud::Create(m_pGraphicDev, pOther);
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_ThunderCloud", pGameObject)))
-		return;
+		if (nullptr == pGameObject)
+			return;
 
-	_vec3 vRight, vLook, vPos;
-	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	vPos += +vRight * 10 + _vec3({ 0,13,0 }) - vLook * 10;
-	pGameObject->Get_Transform()->Set_Pos(vPos);
+		if (FAILED(m_pLayer->Add_GameObject(L"Obj_ThunderCloud", pGameObject)))
+			return;
 
-	pGameObject->SetLayer(m_pLayer);
+		_vec3 vRight, vLook, vPos;
+		m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
+		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		vPos += +vRight * 10 + _vec3({ 0,13,0 }) - vLook * 10;
+		pGameObject->Get_Transform()->Set_Pos(vPos);
+
+		pGameObject->SetLayer(m_pLayer);
+	}
 }
 
 void CCart::UpdateThunder()
@@ -753,6 +806,7 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 	m_pTransformCom->Get_Info(INFO_POS, &vCartPos);
 	if (bFind)
 	{
+		m_bCollisionGround = true;
 		float fDeltaY = vCartPos.y - fGroundY;
 		// m_eCart_State 업데이트
 		if (m_eCartState == CART_STATE_GROUND) // Ground 유지
@@ -766,13 +820,17 @@ void CCart::AdjustPosY_Slope(_vec3 pos, const float fDeltaTime)
 				// 경사면에 맞게 카트 몸체 회전
 				_vec3 vCartUp;
 				m_pTransformCom->Get_Info(INFO_UP, &vCartUp);
-				float fRadian = acosf(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal));
+				float fRadian = acosf(clampT(D3DXVec3Dot(&vCartUp, &m_vTerrainNormal), -1.f, 1.f));
 
 				_vec3 vAxis;
 				D3DXVec3Cross(&vAxis, &vCartUp, &m_vTerrainNormal);
 
-				D3DXQUATERNION q;
-				D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+				D3DXQUATERNION q = { 0, 0, 0, 1 };
+
+				if (D3DXVec3LengthSq(&vAxis) > FLT_EPSILON) {
+					D3DXVec3Normalize(&vAxis, &vAxis);
+					D3DXQuaternionRotationAxis(&q, &vAxis, fRadian);
+				}
 
 				if (fabsf(m_vTerrainNormal.y) >= 0.999f)
 				{
@@ -981,24 +1039,35 @@ void CCart::CollisionWall()
 			}
 		}
 		if (bCollision) {
+			m_bCollisionWall = true;
+
 			SoundMgr::GetInstance().PlaySound(L"Effect/cart/crash.ogg", COLLISION_EFFECT, 0.4f);
+			// StarEffect
+			if (D3DXVec3Length(&m_vForce) * m_fSpeed >= 60)
+			{
+				CCollisionStarEffect* pStarParticle = dynamic_cast<CCollisionStarEffect*>
+					(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"CollisionStarEffect"));
+				pStarParticle->ResetParticle();
+			}
+
 			m_pTransformCom->Set_Pos(vPos + MTV);
 
-			// 2. 법선벡터만큼 밀어내기(들어간 만큼 이라는 것이 없어서 단위벡터만큼 밀어냄)
+			// 2. 가속도에서 벽 쪽으로 들어가는 속도 성분을 제거
+			_vec3 MTV_n;
+			D3DXVec3Normalize(&MTV_n, &MTV);
+			float inward = D3DXVec3Dot(&m_vForce, &MTV_n);
 
-			//m_vForce += MTV;
-			_vec3 vNewForce = m_vForce;
-			vNewForce = MTV * D3DXVec3Length(&vNewForce);
-			float fForceLength = D3DXVec3Length(&vNewForce);
-			if (fForceLength >= 10)
-				vNewForce = vNewForce * 10 / fForceLength;
+			// MTV가 벽 밖으로 나가는 방향 
+			if (inward < 0)
+				m_vForce -= MTV_n * inward;
 
-			//m_pTransformCom->Set_Pos(vPos + MTV);
+			// 3. 조금 튕겨나가도록
+			m_vForce += MTV_n * 10.f;
 
-			// 3. 튕기기
-			m_vForce += vNewForce;
-			
-			// 4. Gage, Drift 초기화
+			// 4. 힘 약화
+			m_vForce *= 0.98f;
+
+			// 5. Gage, Drift 초기화
 			m_fGainGage = 0;
 			m_bDrift = false;
 		}
@@ -1060,7 +1129,7 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 {
 	if (m_bMagnet == true)
 	{
-		CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+		CGameObject* pTarget = m_pMagnetTarget;
 
 		_vec3 vPos, vLook, vTargetPos, vDir;
 
@@ -1089,7 +1158,7 @@ void CCart::UpdateMagnet(const _float& fDeltaTime)
 		{
 			m_bMagnet = false;
 			m_fMagnetTimer = 0.f;
-
+			m_pMagnetTarget = nullptr;
 		}
 	}
 }
@@ -1116,7 +1185,7 @@ void CCart::UpdateBlur(const _float& fDeltaTime)
 	if (fTotalSpeed > 60.f)
 	{
 		float fBlurPower = (fTotalSpeed - 60) / 100.f;
-		fBlurPower = clampT(fBlurPower, 0.f, 0.8f);
+		fBlurPower = clampT(fBlurPower, 0.f, 0.85f);
 		CRenderer::GetInstance()->SetBlurPower(fBlurPower);
 	}
 	else
@@ -1144,24 +1213,57 @@ void CCart::OutputCarState()
 	}
 }
 
+void CCart::AddWheel()
+{
+	for (auto& pFirstChild : m_vecChildren)
+	{
+		if (dynamic_cast<CCartBody*>(pFirstChild) != nullptr)
+		{
+			for (auto& pSecondChild : pFirstChild->Get_Children())
+			{
+				if (dynamic_cast<CWheel*>(pSecondChild) != nullptr)
+				{
+					m_vecWheel.push_back(pSecondChild);
+				}
+			}
+			return;
+		}
+	}
+}
 
-void CCart::CreateMissileObject()	
+void CCart::SetWheelForceLen()
+{
+	for (auto& pWheel : m_vecWheel)
+		static_cast<CWheel*>(pWheel)->SetCartForceLen(D3DXVec3Length(&m_vForce) * m_fSpeed);
+}
+
+void CCart::SetWheelDir()
+{
+	for (auto& pWheel : m_vecWheel)
+		static_cast<CWheel*>(pWheel)->SetCartDir(m_eDirection);
+}
+
+void CCart::SetWheelTurn(WHEEL_TURN eTurn)
+{
+	for (auto& pWheel : m_vecWheel)
+		static_cast<CWheel*>(pWheel)->SetWheelTurn(eTurn);
+}
+
+
+void CCart::CreateMissileObject(CGameObject* pTarget)	
 {
 	CGameObject* pMissile = CMissile::Create(m_pGraphicDev);
 
 	if (pMissile == nullptr)
 		return;
-
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Missile", pMissile)))
 		return;
-
 	pMissile->SetLayer(m_pLayer);
+	static_cast<CMissile*>(pMissile)->SetTarget(pTarget);
 
 	CGameObject* pMissileBody = CMissileBody::Create(m_pGraphicDev);
-
 	if (pMissileBody == nullptr)
 		return;
-
 	if (FAILED(m_pLayer->Add_GameObject(L"Obj_MissileBody", pMissileBody)))
 		return;
 
@@ -1178,13 +1280,10 @@ void CCart::CreateMissileObject()
 	//pMissile->Get_Transform()->Set_Pos(vPos);
 
 
-
-	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic",L"Obj_MissileTarget");
-
 	_vec3 vPos, vLook, vTargetPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	pMissile->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
-	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+	pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
 
 	_vec3 vDir = vTargetPos - vPos;
 	D3DXVec3Normalize(&vDir, &vDir);
@@ -1220,74 +1319,50 @@ void CCart::CreateTargetAimObject()
 
 		pTargetAim->SetLayer(m_pLayer);
 	}
-	//_vec3 vPos, vLook;
-	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	//m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
-	//vPos += vLook * 20.f;
-
-	//pTargetAim->Get_Transform()->Set_Pos(vPos);
-
-	//pTargetAim->SetLayer(m_pLayer);
-
-	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-	if (pTarget == nullptr)
-		return;
-	_vec3 vPos, vLook, vTarget, vAimScreen, vTargetScreen;
-
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-
-	pTarget->Get_Transform()->Get_Info(INFO_POS, &vTarget);
-
-	vPos += vLook * 20.f;
-
-	const CameraInfo& tCam = CCameraMgr::GetInstance()->GetCameraInfo();
-
-	_matrix matWorld;
-	D3DXMatrixIdentity(&matWorld);
-
-	D3DVIEWPORT9 vp = { 0.f, 0.f, WINCX, WINCY, 0.f, 1.f };
-
-	D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
-	D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj, &tCam.matView, &matWorld);
-
-	if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
+	//CGameObject* pTarget = nullptr;
+	_vec3 vPos;
+	auto& vecCartBot = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Obj_CartBot");
+	for (auto& pTarget : vecCartBot)
 	{
-		vPos = vTarget;
+		_vec3 vLook, vTarget, vAimScreen, vTargetScreen;
+
+		m_pTransformCom->Get_Info(INFO_POS, &vPos);
+		m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+		pTarget->Get_Transform()->Get_Info(INFO_POS, &vTarget);
+
+		vPos += vLook * 20.f;
+
+		const CameraInfo& tCam = CCameraMgr::GetInstance()->GetCameraInfo();
+
+		_matrix matWorld;
+		D3DXMatrixIdentity(&matWorld);
+
+		D3DVIEWPORT9 vp = { 0.f, 0.f, WINCX, WINCY, 0.f, 1.f };
+
+		D3DXVec3Project(&vAimScreen, &vPos, &vp, &tCam.matProj, &tCam.matView, &matWorld);
+		D3DXVec3Project(&vTargetScreen, &vTarget, &vp, &tCam.matProj, &tCam.matView, &matWorld);
+
+		if (abs(vTargetScreen.x - vAimScreen.x) < 150.f && abs(vTargetScreen.y - vAimScreen.y) < 150.f)
+		{
+			vPos = vTarget;
+			static_cast<CTargetAim*>(pTargetAim)->SetTarget(pTarget);
+			break;
+		}
+		if (abs(vTargetScreen.x - vAimScreen.x) < 200.f && abs(vTargetScreen.y - vAimScreen.y) < 200.f)
+		{
+			vPos = (vPos + vTarget) * 0.5f;
+			break;
+		}
 	}
-
 	pTargetAim->Get_Transform()->Set_Pos(vPos);
-
+	
+	m_fAimRotationZ -= 0.05f;
 	_quaternion q;
-	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, 0.f);
+	D3DXQuaternionRotationYawPitchRoll(&q, m_vRotation.y, 0.f, m_fAimRotationZ);
 
 	pTargetAim->Get_Transform()->Set_Quaternion(&q);
-
-	/*CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
-	_vec3 vPos, vLook, vDir, vTargetPos;
-
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
-
-	vPos += vLook * 20.f;
-
-	pTargetAim->Get_Transform()->Set_Pos(vPos);
-	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-
-	vDir = vTargetPos - vPos;
-
-	if (D3DXVec3Length(&vDir) <= 0.001f)
-		return;
-
-	D3DXVec3Normalize(&vDir, &vDir);
-
-	_quaternion qRot;
-
-	D3DXQuaternionRotationYawPitchRoll(&qRot, m_vRotation.y, 0.f, 0.f);
-
-	pTargetAim->Get_Transform()->Set_Quaternion(&qRot);*/
 }
 
 void CCart::CreateMagnetObject()
@@ -1302,8 +1377,6 @@ void CCart::CreateMagnetObject()
 
 	pMagnetBody->SetLayer(m_pLayer);
 
-	CGameObject* pTargetPos = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
-
 	_vec3 vPos, vMagnetPos, vLook, vDir, vUp, vTargetPos;
 
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -1314,7 +1387,6 @@ void CCart::CreateMagnetObject()
 	// vPos += vUp * 7.f;
 
 	pMagnetBody->Get_Transform()->Set_Pos(vPos);
-	pTargetPos->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
 
 	vDir = vTargetPos - vPos;
 
@@ -1423,88 +1495,102 @@ void CCart::CreateWaterFlyObject()
 void CCart::CreateMagnetAimObject()
 {
 	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
-	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 
-	if (nullptr != pTargetAim && nullptr != pTarget)
+	if (nullptr != pTargetAim)//&& nullptr != pTarget
 	{
 		_vec3 vAimPos, vTargetPos, vDir;
 
-		pTargetAim->Get_Transform()->Get_Info(INFO_POS, &vAimPos);
-		pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-
-		vDir = vTargetPos - vAimPos;
-
-		if (D3DXVec3Length(&vDir) < 0.1f)
+		CGameObject* pTarget = static_cast<CTargetAim*>(pTargetAim)->GetTarget();
+		if (pTarget != nullptr)
 		{
-			CGameObject* pMagnet = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MagnetBody");
-
-			if (nullptr == pMagnet)
-			{
-				m_bMagnet = true;
-				CreateMagnetObject();
-			}
+			m_bMagnet = true;
+			m_pMagnetTarget = pTarget;
+			CreateMagnetObject();
 		}
 		m_pLayer->Delete_GameObject(pTargetAim);
 	}
 }
 
-void CCart::CreateShieldObject()
+void CCart::CreateShieldObject_()
 {
-	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	static_cast<CShield1*>(m_pShield1)->SetShow(true);
+	//CGameObject* pShield1 = CCart_Shield1::Create(m_pGraphicDev);
+	//
+	//if (pShield1 == nullptr)
+	//	return;
+	//
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
+	//	return;
+	//
+	//Set_Child(pShield1);
+	//
+	//CGameObject* pShield2 = CCart_Shield2::Create(m_pGraphicDev);
+	//
+	//if (pShield2 == nullptr)
+	//	return;
+	//
+	//if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
+	//	return;
+	//
+	//Set_Child(pShield2);
+	//
+	//CCartBody* pCartBody = dynamic_cast<CCartBody*>(CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_CartBody"));
+	//
+	//pCartBody->SetShieldActive(true);
+}
 
-	CGameObject* pShield1 = CShield1::Create(m_pGraphicDev);
+void CCart::CreateUfoObject()
+{
+	CGameObject* pUfo = CUfo::Create(m_pGraphicDev);
 
-	if (pShield1 == nullptr)
+	if (pUfo == nullptr)
 		return;
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Shield1", pShield1)))
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_Ufo", pUfo)))
 		return;
 
-	pShield1->SetLayer(m_pLayer);
-	pCart->Set_Child(pShield1);
+	pUfo->SetLayer(m_pLayer);
 
-	CGameObject* pShield2 = CShield2::Create(m_pGraphicDev);
 
-	if (pShield2 == nullptr)
+	CGameObject* pUfoBody = CUfoBody::Create(m_pGraphicDev);
+
+	if (pUfoBody == nullptr)
 		return;
 
-	if (FAILED(m_pLayer->Add_GameObject(L"Obj_pShield2", pShield2)))
+	if (FAILED(m_pLayer->Add_GameObject(L"Obj_UfoBody", pUfoBody)))
 		return;
 
-	pShield2->SetLayer(m_pLayer);
-	pCart->Set_Child(pShield2);
-
-	//_vec3 vPos, vPos1, vPos2;
-
-	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-
-	//pShield1->Get_Transform()->Set_Pos(vPos);
-	//pShield2->Get_Transform()->Set_Pos(vPos);
+	pUfoBody->SetLayer(m_pLayer);
+	pUfo->Set_Child(pUfoBody);
 }
 
 void CCart::CreateMissileAimObject()
 {
 	CGameObject* pTargetAim = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_TargetAim");
-	CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
+	//CGameObject* pTarget = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_MissileTarget");
 
-	if (nullptr != pTargetAim && nullptr != pTarget)
+	if (nullptr != pTargetAim)//&& nullptr != pTarget
 	{
 		_vec3 vAimPos, vTargetPos, vDir;
-
-		pTargetAim->Get_Transform()->Get_Info(INFO_POS, &vAimPos);
-		pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-
-		vDir = vTargetPos - vAimPos;
-
-		if (D3DXVec3Length(&vDir) < 0.1f)
+		
+		//pTargetAim->Get_Transform()->Get_Info(INFO_POS, &vAimPos);
+		//pTarget->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+		
+		//vDir = vTargetPos - vAimPos;
+		
+		//if (D3DXVec3Length(&vDir) < 0.1f)
+		//{
+		CGameObject* pTraget = static_cast<CTargetAim*>(pTargetAim)->GetTarget();
+		if (pTraget != nullptr)
 		{
-			CGameObject* pMissile = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Missile");
-
-			if (nullptr == pMissile)
-			{
-				CreateMissileObject();
-			}
+			CreateMissileObject(pTraget);
+			//CGameObject* pMissile = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Missile");
+			//
+			//if (nullptr == pMissile)
+			//{
+			//}
 		}
+		//}
 
 		m_pLayer->Delete_GameObject(pTargetAim);
 	}
@@ -1550,6 +1636,7 @@ void CCart::UseItem()
 		CreateRainbowObject();
 		break;
 	case Engine::ITEM_UFO:
+		CreateUfoObject(); 
 		break;
 	case Engine::ITEM_WATERFLY:
 		CreateWaterFlyObject();

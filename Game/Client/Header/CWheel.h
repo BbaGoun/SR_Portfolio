@@ -26,7 +26,7 @@ public:
 public:
 	void			SetWheelType(WHEEL_TYPE eType) { m_eWheelType = eType; }
 	WHEEL_TYPE		GetWheelType() { return m_eWheelType; }
-	void			KeyInput(const _float& fDeltaTime);
+	void			UpdateWheelRot(const _float& fDeltaTime);
 
 	void			ResetPrePos();
 	void			CreateSkidMark();
@@ -34,6 +34,11 @@ public:
 	bool			CheckInTerrain();
 	void			ForgetDriftTrail(CDriftTrail* pDriftTrail);
 	void			ForgetSkidMark(CSkidMark* pSkidMark);
+
+	void			SetCartForceLen(float fForceLen) { m_fCartForceLen = fForceLen; }
+	void			SetCartDir(DIRECTION_TYPE eDIR) { m_eCartDirection = eDIR; }
+	void			SetWheelTurn(WHEEL_TURN eTurn) { m_eWheelTurn = eTurn; }
+
 public:
 	static CWheel* Create(LPDIRECT3DDEVICE9 pGraphicDev, WHEEL_TYPE eType);
 
@@ -53,6 +58,9 @@ private:
 	CDriftTrail*			m_pDriftTrail = nullptr;
 	CSkidMark*				m_pSkidMark = nullptr;
 
+	float					m_fCartForceLen;
+	DIRECTION_TYPE			m_eCartDirection;
+	WHEEL_TURN				m_eWheelTurn;
 protected:
 	virtual		void		Free() override;
 };

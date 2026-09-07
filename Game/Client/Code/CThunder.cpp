@@ -42,12 +42,6 @@ HRESULT CThunder::Ready_GameObject()
 
 _int CThunder::Update_GameObject(const _float& fDeltaTime)
 {
-	CGameObject* pThunderCloud = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_ThunderCloud");
-	_vec3 vThunderCloudPos, vPos, vDir;
-	pThunderCloud->Get_Transform()->Get_Info(INFO_POS, &vThunderCloudPos);
-
-	m_pTransformCom->Set_Pos({ vThunderCloudPos.x,vThunderCloudPos.y - 5.f,vThunderCloudPos.z });
-
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 	m_fFrame += 10 * fDeltaTime;
 

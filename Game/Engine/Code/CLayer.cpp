@@ -281,7 +281,7 @@ void CLayer::FixedUpdate_Layer(const _float& fFixedDeltaTime)
 			pObj->FixedUpdate_GameObject(fFixedDeltaTime);
 		}
 	}	
-
+	int a;
 	PostProcess_Delete();
 }
 

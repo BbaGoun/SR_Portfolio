@@ -40,8 +40,8 @@ HRESULT CMissile::Ready_GameObject()
 
 void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 {
-	Engine::CTransform* pTransform = nullptr;
-	pTransform = dynamic_cast<Engine::CTransform*>(CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_MissileTarget", L"Com_Transform"));
+	//pTransform = dynamic_cast<Engine::CTransform*>(CManagement::GetInstance()->Get_Component(ID_STATIC, L"GameLogic", L"Obj_MissileTarget", L"Com_Transform"));
+	CTransform* pTransform = m_pTarget->Get_Transform();
 	// 여기선 ID_DYNAMIC이 아닌 ID_STATIC 로 사용
 	if (nullptr == pTransform)
 		return;
@@ -131,6 +131,16 @@ void CMissile::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 		m_pTransformCom->Move_Pos(&vMoveDir,m_fSpeed,fFixedDeltaTime);
 	}
+	else
+	{
+		vector<CGameObject*> vecChildren = Get_Children();
+		for (auto& pChild : vecChildren)
+		{
+			pChild->To_Root();
+			m_pLayer->Delete_GameObject(pChild);
+		}
+		m_pLayer->Delete_GameObject(this);
+	}
 	// m_pColliderCom->LateUpdate_Component(fFixedDeltaTime);	// 테스트용
 }
 
@@ -154,23 +164,24 @@ void CMissile::Render_GameObject()
 
 void CMissile::CollisionEnter(CCollider* pOtherCollider)
 {
+
 }
 
 void CMissile::TriggerEnter(CCollider* pOtherCollider)
 {
 	const WCHAR* wOtherTag = pOtherCollider->Get_Owner()->GetTag();
 
-	if (wcscmp(wOtherTag, L"Obj_MissileTarget") == 0)
-	{
-		vector<CGameObject*> vecChildren = Get_Children();
-
-		for (auto& pChild : vecChildren)
-		{
-			pChild->To_Root();
-			m_pLayer->Delete_GameObject(pChild);
-		}
-		m_pLayer->Delete_GameObject(this);
-	}
+	//if (wcscmp(wOtherTag, L"Obj_CartBotBody") == 0)
+	//{
+	//	vector<CGameObject*> vecChildren = Get_Children();
+	//
+	//	for (auto& pChild : vecChildren)
+	//	{
+	//		pChild->To_Root();
+	//		m_pLayer->Delete_GameObject(pChild);
+	//	}
+	//	m_pLayer->Delete_GameObject(this);
+	//}
 }
 
 CMissile* CMissile::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -1,13 +1,6 @@
 #pragma once
 #include "CScene.h"
 
-enum MAP_ID{
-	MAP_TEST,
-	MAP_FOREST,
-	MAP_VILLAGE,
-	MAP_END
-};
-
 class CRacingScene :
     public CScene
 {

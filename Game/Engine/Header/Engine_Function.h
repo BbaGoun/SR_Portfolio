@@ -222,7 +222,7 @@ namespace Engine
 		switch (cl) {
 		case CL_DEFAULT: return "Default";
 		case IGNORE_RAYCAST: return "Ignore Raycast";
-		case CL_LAYER1: return "Layer1"; case CL_LAYER2: return "Layer2";
+		case CL_LAYER1: return "Layer1"; case CL_CART_WHEEL: return "Layer2";
 		case CL_LAYER3: return "Layer3"; case CL_LAYER4: return "Layer4";
 		case CL_LAYER5: return "Layer5"; case CL_LAYER6: return "Layer6";
 		case CL_LAYER7: return "Layer7"; case CL_LAYER8: return "Layer8";

@@ -27,7 +27,11 @@ public:
 
     void            SetRaceStart()      { m_bStart = true; }
     void            SetRaceEnd()        { m_bStart = false; }
-    
+    void            SetCountDownStart() { m_fPlayEndTime = m_fPlayTimer; }
+
+private:
+    void            UpdateTimerUI();
+
 private:
 
     float           m_fPlayEndTime;

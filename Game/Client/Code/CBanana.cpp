@@ -5,6 +5,7 @@
 #include "CTexture.h"
 #include "CRenderer.h"
 #include "CManagement.h"
+#include "CRcTex.h"
 
 CBanana::CBanana(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -21,8 +22,10 @@ CBanana::~CBanana()
 HRESULT CBanana::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
+	m_pTransformCom->Set_Scale({ 3,3,3 });
+
 	CComponent* pComponent = nullptr;
-	pComponent = m_pBufferCom = static_cast<CInnerBox*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_InnerBox"));
+	pComponent = m_pBufferCom = static_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
 	pComponent->Set_Owner(this);
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
@@ -32,12 +35,13 @@ HRESULT CBanana::Ready_GameObject()
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
 
 
-	pComponent = m_pColliderCom = dynamic_cast<CCube_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_CubeCollider"));
+	pComponent = m_pColliderCom = dynamic_cast<CSphere_Collider*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SphereCollider"));
 	if (nullptr == pComponent)
 		return E_FAIL;
+
 	m_pColliderCom->Set_Owner(this);
 	m_pColliderCom->SetIsTrigger(true);
-	m_pColliderCom->Set_Extents({ 1,1,1 });
+	m_pColliderCom->Set_Radius(1.5f);
 	m_mapComponent.insert({ L"Com_Collider", pComponent });
 
 	return S_OK;
@@ -56,6 +60,9 @@ void CBanana::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CBanana::Render_GameObject()
 {
+	_matrix	matWorld, matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pTransformCom->Set_Billboard(&matView);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 

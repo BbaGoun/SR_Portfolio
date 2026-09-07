@@ -1,33 +1,37 @@
 ﻿OBJECT
-  type=Obj_Cart
+  type=Obj_CartBody
   prefabPath=..\..\..\Resource\Editor\Prefab\Cart.prefab
   belong=1
-  name=EnptyCartBody
-  tag=Obj_Cart
+  name=CartBody
+  tag=Obj_CartBotBody
   collisionLayer=0
   cullDistance=0
+  COMP kind=CubeCollider proto=Proto_CubeCollider mapTag=Proto_CubeCollider
+    trigger=0
+    offset=0.000000 0.300000 -0.100000
+    extents=1.000000 0.500000 1.000000
   COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-    pos=0.000000 0.000000 0.000000
-    rot=0.000000 -0.000000 0.000000
-    quat=0.000000 0.000000 0.000000 1.000000
+    pos=0.000000 0.550000 -0.500000
+    rot=180.000000 -0.000000 180.000000
+    quat=-0.000000 1.000000 -0.000000 -0.000000
     scale=1.000000 1.000000 1.000000
   OBJECT
-    type=Obj_CartBody
-    prefabPath=..\..\..\Resource\Editor\Prefab\Cart.prefab
+    type=
+    prefabPath=
     belong=1
-    name=CartBody
-    tag=Obj_CartBody
+    name=Body1
+    tag=6
     collisionLayer=0
     cullDistance=0
     COMP kind=CubeCollider proto=Proto_CubeCollider mapTag=Proto_CubeCollider
       trigger=0
-      offset=0.000000 0.300000 -0.100000
-      extents=1.000000 0.500000 1.000000
+      offset=0.000000 1.600000 0.000000
+      extents=2.500000 2.000000 3.000000
     COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
       pos=0.000000 0.000000 0.000000
       rot=0.000000 -0.000000 0.000000
       quat=0.000000 0.000000 0.000000 1.000000
-      scale=1.200000 1.000000 1.000000
+      scale=3.600000 3.000000 3.000000
     OBJECT
       type=
       prefabPath=
@@ -272,45 +276,269 @@
       prefabPath=
       belong=1
       name=Empty
-      tag=15
+      tag=23
       collisionLayer=0
       cullDistance=0
-      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
-      COMP kind=Texture proto=Proto_BrightGray mapTag=Proto_BrightGray
+      COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+      COMP kind=Texture proto=Proto_CartFrontNumber9 mapTag=Proto_CartFrontNumber9
       COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-        pos=0.000000 0.100000 -0.250000
+        pos=0.000000 -0.012000 -0.517145
         rot=0.000000 -0.000000 0.000000
         quat=0.000000 0.000000 0.000000 1.000000
-        scale=0.750000 0.150000 0.800000
+        scale=0.175071 0.941146 4.000432
     ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=8
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_CartSide mapTag=Proto_CartSide
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.500000 0.000000 -0.250000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.550000 0.200000 0.799999
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=9
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_CartSide mapTag=Proto_CartSide
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.500000 0.000000 0.699999
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.550000 0.200000 0.250000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=10
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_CartSide mapTag=Proto_CartSide
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.500000 0.000000 -0.250000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.550000 0.200000 0.800000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=11
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_CartSide mapTag=Proto_CartSide
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.500000 0.000000 0.700000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.550000 0.200000 0.250000
+  ENDOBJECT
+  OBJECT
+    type=CWheelFL
+    prefabPath=
+    belong=1
+    name=WheelFL
+    tag=8
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_CartWheelCol mapTag=Proto_CartWheelCol
+    COMP kind=Texture proto=Proto_CartWheelTex mapTag=Proto_CartWheelTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.600000 0.000000 0.359996
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.500000 0.199998 0.199998
+  ENDOBJECT
+  OBJECT
+    type=CWheelFR
+    prefabPath=
+    belong=1
+    name=WheelFR
+    tag=9
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_CartWheelCol mapTag=Proto_CartWheelCol
+    COMP kind=Texture proto=Proto_CartWheelTex mapTag=Proto_CartWheelTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.600000 0.000000 0.360000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.500000 0.199997 0.199997
+  ENDOBJECT
+  OBJECT
+    type=CWheelBR
+    prefabPath=
+    belong=1
+    name=WheelBR
+    tag=10
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_CartWheelCol mapTag=Proto_CartWheelCol
+    COMP kind=Texture proto=Proto_CartWheelTex mapTag=Proto_CartWheelTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.600000 0.000000 -0.850000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.500000 0.200000 0.200000
+  ENDOBJECT
+  OBJECT
+    type=CWheelBL
+    prefabPath=
+    belong=1
+    name=WheelBL
+    tag=11
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_CartWheelCol mapTag=Proto_CartWheelCol
+    COMP kind=Texture proto=Proto_CartWheelTex mapTag=Proto_CartWheelTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.600000 0.000000 -0.850000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.500000 0.200000 0.200000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=12
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_DarkGray mapTag=Proto_DarkGray
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.199985 0.632056
+      rot=-30.000000 -0.000000 0.000000
+      quat=-0.258819 0.000000 0.000000 0.965926
+      scale=0.399985 0.599982 0.275000
     OBJECT
       type=
       prefabPath=
       belong=1
       name=Empty
-      tag=16
+      tag=21
       collisionLayer=0
       cullDistance=0
-      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
-      COMP kind=Texture proto=Proto_BrightGray mapTag=Proto_BrightGray
+      COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+      COMP kind=Texture proto=Proto_CartFrontNumber9 mapTag=Proto_CartFrontNumber9
       COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
         pos=0.000000 0.408654 -0.643192
         rot=79.213371 -0.000000 0.000000
         quat=0.637514 0.000000 0.000000 0.770438
-        scale=0.749967 0.099999 0.999960
+        scale=0.749967 0.099999 0.999953
     ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=13
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_BrightGray mapTag=Proto_BrightGray
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.200000 0.090000 0.630000
+      rot=-44.999954 -0.000000 0.000000
+      quat=-0.382683 0.000000 0.000000 0.923880
+      scale=0.400000 0.200000 0.300000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=14
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_BrightGray mapTag=Proto_BrightGray
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.200000 0.090000 0.630000
+      rot=-44.999954 -0.000000 0.000000
+      quat=-0.382683 0.000000 0.000000 0.923880
+      scale=0.400000 0.200000 0.300000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=15
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_BrightGray mapTag=Proto_BrightGray
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.100000 -0.250000
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.750000 0.150000 0.800000
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=16
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_BrightGray mapTag=Proto_BrightGray
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.408654 -0.643192
+      rot=79.213371 -0.000000 0.000000
+      quat=0.637514 0.000000 0.000000 0.770438
+      scale=0.749967 0.099999 0.999952
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=17
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_DarkGray mapTag=Proto_DarkGray
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.551681 -0.872640
+      rot=0.000000 -0.000000 0.000000
+      quat=0.000000 0.000000 0.000000 1.000000
+      scale=0.850000 0.399992 0.149999
     OBJECT
       type=
       prefabPath=
       belong=1
       name=Empty
-      tag=17
+      tag=20
       collisionLayer=0
       cullDistance=0
-      COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
-      COMP kind=Texture proto=Proto_DarkGray mapTag=Proto_DarkGray
+      COMP kind=Mesh proto=Proto_RcTex mapTag=Proto_RcTex
+      COMP kind=Texture proto=Proto_LampTexture4 mapTag=Proto_LampTexture4
       COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
-        pos=0.000000 0.551681 -0.872640
+        pos=0.000000 0.018703 -0.519338
         rot=0.000000 -0.000000 0.000000
         quat=0.000000 0.000000 0.000000 1.000000
         scale=0.850000 0.399992 0.149999
@@ -375,7 +603,7 @@
       COMP kind=Texture proto=Proto_CartExhaustTex mapTag=Proto_CartExhaustTex
       COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
         pos=0.292937 0.120000 -1.031868
-        rot=0.000000 89.999092 0.000000
+        rot=0.000000 89.999054 0.000000
         quat=0.000000 0.707101 0.000000 0.707112
         scale=0.149990 0.150000 0.149990
     ENDOBJECT
@@ -391,9 +619,73 @@
       COMP kind=Texture proto=Proto_CartExhaustTex mapTag=Proto_CartExhaustTex
       COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
         pos=-0.293000 0.120000 -1.032000
-        rot=-179.999573 89.999992 -179.999573
+        rot=180.000000 89.999962 180.000000
         quat=-0.000000 0.707107 -0.000000 0.707107
         scale=0.150000 0.150000 0.150000
     ENDOBJECT
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Handle
+    tag=32
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_CartWheelCol mapTag=Proto_CartWheelCol
+    COMP kind=Texture proto=Proto_CartWheelTex mapTag=Proto_CartWheelTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.555410 0.417726
+      rot=-0.000026 30.000053 89.999878
+      quat=-0.183013 0.183013 0.683012 0.683013
+      scale=0.100000 0.141813 0.124758
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=33
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_Cube mapTag=Proto_Cube
+    COMP kind=Texture proto=Proto_Black mapTag=Proto_Black
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.000000 0.341295 0.551956
+      rot=-29.999996 -0.000000 0.000000
+      quat=-0.258819 0.000000 0.000000 0.965926
+      scale=0.099996 0.499980 0.099998
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=24
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_CartWheelCol mapTag=Proto_CartWheelCol
+    COMP kind=Texture proto=Proto_CartExhaustTex mapTag=Proto_CartExhaustTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=0.292937 0.120000 -1.031868
+      rot=0.000000 89.999054 0.000000
+      quat=0.000000 0.707101 0.000000 0.707112
+      scale=0.149990 0.150000 0.149990
+  ENDOBJECT
+  OBJECT
+    type=
+    prefabPath=
+    belong=1
+    name=Empty
+    tag=25
+    collisionLayer=0
+    cullDistance=0
+    COMP kind=Mesh proto=Proto_CartWheelCol mapTag=Proto_CartWheelCol
+    COMP kind=Texture proto=Proto_CartExhaustTex mapTag=Proto_CartExhaustTex
+    COMP kind=Transform proto=Proto_Transform mapTag=Com_Transform
+      pos=-0.293000 0.120000 -1.032000
+      rot=180.000000 89.999962 180.000000
+      quat=-0.000000 0.707107 -0.000000 0.707107
+      scale=0.150000 0.150000 0.150000
   ENDOBJECT
 ENDOBJECT

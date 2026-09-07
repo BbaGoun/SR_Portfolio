@@ -23,15 +23,17 @@ public:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
-private:
+	void			SetShow(bool bShow) { m_bShow = bShow; }
+	bool			GetShow()			{ return m_bShow; }
 
 private:
 	CSphere* m_pBufferCom;
 	CTexture* m_pTextureCom;
 
-	bool	m_bCurState;
+	bool	m_bShow;
 	float	m_fTimer;
-
+	float	m_fScale = 1.f;
+	float	m_fAlpha = 10.f;
 public:
 	static CShield2* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

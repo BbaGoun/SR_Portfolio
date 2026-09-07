@@ -14,6 +14,7 @@
 #include <string>
 #include <unordered_map>
 #include <ctime>
+#include <array>
 #include <Shlwapi.h>
 #pragma comment(lib, "Shlwapi.lib")
 

@@ -3,6 +3,7 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CManagement.h"
+#include "CCart.h"
 
 CSmokeEffect::CSmokeEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -45,12 +46,13 @@ _int CSmokeEffect::Update_GameObject(const _float& fDeltaTime)
 	m_pCart->Get_Transform()->Get_Info(INFO_RIGHT, &vRight);
 	D3DXVec3Normalize(&vLook, &vLook);
 	D3DXVec3Normalize(&vRight, &vRight);
-	vPos += _vec3({ 0, 1, 0 }) * 1.f + vLook * -2.f + vRight * -1.5f;
+	vPos += _vec3({0,1,0})* -0.1f+ vLook * -2.5f + vRight * -1.1f;
 	vLook *= -1;
 	m_pSmoke->SetOrigin(vPos);
 	m_pSmoke->SetBackDir(vLook);
 
-	m_pSmoke->Update_PSystme(fDeltaTime);
+	if (static_cast<CCart*>(m_pCart)->GetBoost() == false)
+		m_pSmoke->Update_PSystme(fDeltaTime);
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }

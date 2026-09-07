@@ -22,20 +22,22 @@ private:
 	virtual			void		LateUpdate_GameObject(const _float& fDeltaTime) override;
 	virtual			void		Render_GameObject() override;
 
+public:
+	void			Set_Timer(float _fPlayTime);
+
 private:
 	Engine::CRcTex* m_pVIBufferCom;
 	Engine::CTexture* m_pTextureCom;
 
-	_float		m_fFrame_1;
-	_float		m_fFrame_10;
-	_float		m_fFrame_60;
-	_float		m_fFrame_600;
-
+	int			m_iMilli_1;
+	int			m_iMilli_10;
+	int			m_iSecond_1;
+	int			m_iSecond_10;
+	int			m_iMin_1;
+	int			m_iMin_10;
 
 public:
 	static CUI_Timer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
-	
 
 protected:
 	virtual		void		Free() override;

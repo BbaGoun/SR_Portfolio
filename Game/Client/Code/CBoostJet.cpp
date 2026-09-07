@@ -22,11 +22,9 @@ CBoostJet::~CBoostJet()
 HRESULT CBoostJet::Ready_GameObject()
 {
 	CGameObject::Ready_GameObject();
-	m_pTransformCom->Set_Scale({ 0.5,2.5,1 });
-	m_pTransformCom->Set_Pos({ 0.5f,0,-2.25f });
+	m_pTransformCom->Set_Scale({ 0.5,0.5,0.5 });
+	m_pTransformCom->Set_Pos({ 0.3f,0.12f,-1.1f });
 	D3DXQUATERNION q;
-	D3DXQuaternionRotationYawPitchRoll(&q, 0.f, D3DXToRadian(90), 0.f);
-	m_pTransformCom->Set_Quaternion(&q);
 	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_RcTex"));
@@ -54,6 +52,10 @@ _int CBoostJet::Update_GameObject(const _float& fDeltaTime)
 	{
 		CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
+		m_fFrame += 20 * fDeltaTime;
+		if (m_fFrame > 2)
+			m_fFrame = 0;
+
 		return CGameObject::Update_GameObject(fDeltaTime);
 	}
 }
@@ -68,13 +70,15 @@ void CBoostJet::Render_GameObject()
 {
 	if (dynamic_cast<CCart*>(m_pParent->Get_Parent())->GetBoost())
 	{
+		m_pTransformCom->Set_Pos({ 0.3f,0.12f,-1.1f });
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-		m_pTextureCom->Set_Texture(0);
-
+		m_pTextureCom->Set_Texture(m_fFrame);
 		m_pBufferCom->Render_Buffer();
-		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+		m_pTransformCom->Set_Pos({ -0.3f,0.12f,-1.1f });
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
+		m_pTextureCom->Set_Texture(m_fFrame);
+		m_pBufferCom->Render_Buffer();
 	}
 }
 
