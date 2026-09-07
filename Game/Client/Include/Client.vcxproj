@@ -228,6 +228,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClInclude Include="..\Header\CFindOthersMgr.h" />
     <ClInclude Include="..\Header\CFinishCam.h" />
     <ClInclude Include="..\Header\CItemGainEffect.h" />
+    <ClInclude Include="..\Header\CMagnet.h" />
     <ClInclude Include="..\Header\CMenu_Item.h" />
     <ClInclude Include="..\Header\CMenu_Set.h" />
     <ClInclude Include="..\Header\CInvenSlotBG.h" />
@@ -350,6 +351,7 @@ xcopy /Y /I "$(SolutionDir)..\fmod\core\lib\x64\fmodL.dll" "$(OutDir)"</Command>
     <ClCompile Include="..\Code\CFindOthersMgr.cpp" />
     <ClCompile Include="..\Code\CFinishCam.cpp" />
     <ClCompile Include="..\Code\CItemGainEffect.cpp" />
+    <ClCompile Include="..\Code\CMagnet.cpp" />
     <ClCompile Include="..\Code\CMenu_Item.cpp" />
     <ClCompile Include="..\Code\CMenu_Set.cpp" />
     <ClCompile Include="..\Code\CMinimapCartBot.cpp" />

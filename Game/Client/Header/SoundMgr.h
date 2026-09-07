@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 enum CHANNELID { SOUND_BGM, 
-	SOUND_EFFECT1, SOUND_EFFECT2, SOUND_EFFECT3, SOUND_EFFECT4,
+	SOUND_EFFECT1, SOUND_EFFECT2, SOUND_EFFECT3, SOUND_MISSILE,
 	SOUND_WATERBOMB, SOUND_WATERFLY, SOUND_SHIELD, SOUND_TARGETAIM,
 	SOUND_SURPRISE,
 	COLLISION_EFFECT_SUB, COLLISION_EFFECT, GLOBAL_EFFECT, GLOBAL_EFFECT_SUB, 
@@ -31,7 +31,7 @@ public:
 	void Release();
 
 public:
-	void PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume);
+	void PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume, bool bStop = false);
 	void PlayBGM(const TCHAR* pSoundKey, float fVolume);
 	void StopSound(CHANNELID eID);
 	void StopAll();

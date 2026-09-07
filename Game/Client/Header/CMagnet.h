@@ -7,11 +7,11 @@ namespace Engine
 	class CMagnetTex;
 }
 
-class CMagnetBody : public CGameObject
+class CMagnet : public CGameObject
 {
 private:
-	explicit CMagnetBody(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CMagnetBody() override;
+	explicit CMagnet(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CMagnet() override;
 
 public:
 	virtual			HRESULT		Ready_GameObject();
@@ -32,9 +32,10 @@ private:
 	Engine::CMagnetTex* m_pBufferCom;
 
 	_float			m_fTimer;
+	CGameObject*	m_pOwner;
 
 public:
-	static CMagnetBody* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CMagnet* Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pOnwer);
 
 protected:
 	virtual void	Free() override;

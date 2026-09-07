@@ -205,9 +205,6 @@
     <Filter Include="02. GameObject\Item\Missile\MissileBody">
       <UniqueIdentifier>{2a2d957b-27e8-4f80-959d-7f7f3eedceb8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Item\MagnetBody">
-      <UniqueIdentifier>{2cf3dfe9-2af6-4e54-8ee4-a5e1ade645d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\ItemBox">
       <UniqueIdentifier>{7271d6f9-d894-4471-b51b-cbad0c24150d}</UniqueIdentifier>
     </Filter>
@@ -412,6 +409,12 @@
     <Filter Include="02. GameObject\UI\UI_Rank\UI_RankNumber">
       <UniqueIdentifier>{5570ec89-7304-4a56-b7c0-394479e573e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Item\Magnet">
+      <UniqueIdentifier>{ff2f0f4d-fe9a-4d4a-8f0e-816ba3bd877a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Item\Magnet\MagnetBody">
+      <UniqueIdentifier>{2cf3dfe9-2af6-4e54-8ee4-a5e1ade645d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -610,7 +613,7 @@
       <Filter>02. GameObject\UI\UI_Laps</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMagnetBody.h">
-      <Filter>02. GameObject\Item\MagnetBody</Filter>
+      <Filter>02. GameObject\Item\Magnet\MagnetBody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CItemBox.h">
       <Filter>02. GameObject\ItemBox</Filter>
@@ -807,6 +810,9 @@
     <ClInclude Include="..\Header\CUI_RankNumber.h">
       <Filter>02. GameObject\UI\UI_Rank\UI_RankNumber</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMagnet.h">
+      <Filter>02. GameObject\Item\Magnet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -996,7 +1002,7 @@
       <Filter>02. GameObject\UI\UI_Laps</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMagnetBody.cpp">
-      <Filter>02. GameObject\Item\MagnetBody</Filter>
+      <Filter>02. GameObject\Item\Magnet\MagnetBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CItemBox.cpp">
       <Filter>02. GameObject\ItemBox</Filter>
@@ -1192,6 +1198,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUI_RankNumber.cpp">
       <Filter>02. GameObject\UI\UI_Rank\UI_RankNumber</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMagnet.cpp">
+      <Filter>02. GameObject\Item\Magnet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
