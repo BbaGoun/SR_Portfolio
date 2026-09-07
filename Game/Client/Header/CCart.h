@@ -9,7 +9,8 @@ namespace Engine
 	class CSphere_Collider;
 }
 
-class CCart :  public CGameObject
+class CDustLandingEffect;
+class CCart : public CGameObject
 {
 private:
 	explicit CCart(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -25,7 +26,7 @@ public:
 
 
 public:
-	static CCart*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CCart* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	// KeyInput
 	void			KeyInput(const _float& fDeltaTime);
 
@@ -40,38 +41,38 @@ public:
 	void			UpdateBubble(const _float& fDeltaTime);
 
 	// Get, Set
-	bool			GetBoost()							{ if (m_eBoostState > 0)return true; else return false; }
-	void			SetBoost(BOOST_STATE eID)			{ m_eBoostState = eID; }
+	bool			GetBoost() { if (m_eBoostState > 0)return true; else return false; }
+	void			SetBoost(BOOST_STATE eID) { m_eBoostState = eID; }
 
-	bool			GetDrift()							{ return m_bDrift; }
-	void			SetDrift(bool bDrift)				{ m_bDrift = bDrift; }
+	bool			GetDrift() { return m_bDrift; }
+	void			SetDrift(bool bDrift) { m_bDrift = bDrift; }
 
-	bool			GetRainbowUI()						{ return m_bRainbowUI; }
-	void			SetRainbowUI(bool bRainbowState)	{ m_bRainbowUI = bRainbowState; }
+	bool			GetRainbowUI() { return m_bRainbowUI; }
+	void			SetRainbowUI(bool bRainbowState) { m_bRainbowUI = bRainbowState; }
 
 	// bool			GetBubbleUI()						{ return m_bBubbleUI; }
 	// void			SetBubbleUI(bool bBubbleUI)			{ m_bBubbleUI = bBubbleUI; }
 
-	void			SetBanana(bool bBanana)				{ m_bBanana = bBanana; }
-	bool			GetBanana()							{ return m_bBanana; }
+	void			SetBanana(bool bBanana) { m_bBanana = bBanana; }
+	bool			GetBanana() { return m_bBanana; }
 
-	float			GetCurGage()						{ return m_fCurGage; }
+	float			GetCurGage() { return m_fCurGage; }
 
-	float			GetGainGage()						{ return m_fGainGage; }
-	void			SetGainGage(float fGage)			{ m_fGainGage = fGage; }
+	float			GetGainGage() { return m_fGainGage; }
+	void			SetGainGage(float fGage) { m_fGainGage = fGage; }
 
-	ITEM_TYPE		GetFirstSlot()						{ return m_eFirstSlot; }
-	void			SetFirstSlot(ITEM_TYPE eID)			{ m_eFirstSlot = eID; }
+	ITEM_TYPE		GetFirstSlot() { return m_eFirstSlot; }
+	void			SetFirstSlot(ITEM_TYPE eID) { m_eFirstSlot = eID; }
 
-	ITEM_TYPE		GetSecondSlot()						{ return m_eSecondSlot; }
-	void			SetSecondSlot(ITEM_TYPE eID)		{ m_eSecondSlot = eID; }
+	ITEM_TYPE		GetSecondSlot() { return m_eSecondSlot; }
+	void			SetSecondSlot(ITEM_TYPE eID) { m_eSecondSlot = eID; }
 
-	bool			GetSlotChange()						{ return m_bSlotChange; }
-	void			SetSlotChange(bool _b)				{ m_bSlotChange = _b; }
+	bool			GetSlotChange() { return m_bSlotChange; }
+	void			SetSlotChange(bool _b) { m_bSlotChange = _b; }
 
-	bool			GetPlayingState()					{ return m_bPlaying; }
+	bool			GetPlayingState() { return m_bPlaying; }
 
-	CGameObject*	GetMagnetTarget()					{ return m_pMagnetTarget; }
+	CGameObject* GetMagnetTarget() { return m_pMagnetTarget; }
 
 	// AdjustState
 	void			AdjustPosY_Slope(_vec3 pos, const float fDeltaTime);
@@ -87,7 +88,7 @@ public:
 	void			CreateMagnetObject();
 	void			CreateWaterBombObject();
 	void			CreateWaterFlyObject();
-	void			CreateTargetAimObject();	
+	void			CreateTargetAimObject();
 	void			CreateMissileAimObject();
 	void			CreateMagnetAimObject();
 	void			CreateShieldObject();
@@ -118,8 +119,8 @@ public:
 	void			SetShield1(CGameObject* pShield1) { m_pShield1 = pShield1; }
 	void			SetShield2(CGameObject* pShield2) { m_pShield2 = pShield2; }
 
-	CGameObject*	GetShield1() { return m_pShield1; }
-	CGameObject*	GetShield2() { return m_pShield2; }
+	CGameObject* GetShield1() { return m_pShield1; }
+	CGameObject* GetShield2() { return m_pShield2; }
 
 	//Missile
 	void			SetMissileHit(bool bHit) { m_bMissileHit = bHit; }
@@ -131,77 +132,81 @@ public:
 	bool			GetBubble() { return m_bBubble; }
 	void			SetBubble(CGameObject* pBubble) { m_pBubble = pBubble; }
 
+	// DustLandingEffect
+	void			SetDustLandingEffect(CDustLandingEffect* pEffect) { m_pDustLandingEffect = pEffect; }
 private:
-	_float			m_fMaxSpeed;
-	bool			m_bDrift;
-	bool			m_bBanana;
-	bool			m_bRainbowUI;
-	// _bool			m_bBubbleUI;
-	_bool			m_bMagnet;
-	_float			m_fMagnetTimer;
+	_float					m_fMaxSpeed;
+	bool					m_bDrift;
+	bool					m_bBanana;
+	bool					m_bRainbowUI;
+	// _bool					m_bBubbleUI;
+	_bool					m_bMagnet;
+	_float					m_fMagnetTimer;
 
-	_bool			m_bUseItem;
+	_bool					m_bUseItem;
 
-	float			m_fNormalTurnAngle;
-	float			m_fBoostTurnAngle;
-	float			m_fDriftTurnAngle;
+	float					m_fNormalTurnAngle;
+	float					m_fBoostTurnAngle;
+	float					m_fDriftTurnAngle;
 
-	float			m_fLookForceAngle;
-	float			m_fBoostCal;
+	float					m_fLookForceAngle;
+	float					m_fBoostCal;
 
-	float			m_fBananaTimer;
-	_vec3			m_vBananaSpinStartLook;
+	float					m_fBananaTimer;
+	_vec3					m_vBananaSpinStartLook;
 
-	float			m_fCurGage;
-	float			m_fGainGage;
+	float					m_fCurGage;
+	float					m_fGainGage;
 
-	float			m_fBoostItemCnt;
+	float					m_fBoostItemCnt;
 
-	bool			m_bThunder;
+	bool					m_bThunder;
 
-	bool			m_bShortBoosterTimerOnOff;
-	float			m_fShortBoosterTimer;
+	bool					m_bShortBoosterTimerOnOff;
+	float					m_fShortBoosterTimer;
 
-	CART_STATE		m_eCartState;
-	BOOST_STATE		m_eBoostState;
+	CART_STATE				m_eCartState;
+	BOOST_STATE				m_eBoostState;
 
-	_vec3			m_vTerrainNormal;
+	_vec3					m_vTerrainNormal;
 
-	float			m_fAirTime;
-	D3DXQUATERNION	m_PreQuaternion;
+	float					m_fAirTime;
+	D3DXQUATERNION			m_PreQuaternion;
 
-	ITEM_TYPE		m_eFirstSlot;
-	ITEM_TYPE		m_eSecondSlot;
-	bool			m_bSlotChange = false;
+	ITEM_TYPE				m_eFirstSlot;
+	ITEM_TYPE				m_eSecondSlot;
+	bool					m_bSlotChange = false;
 
-	DIRECTION_TYPE	m_eDirection;
-	int				m_iFlatFrameCnt;
+	DIRECTION_TYPE			m_eDirection;
+	int						m_iFlatFrameCnt;
 
-	bool			m_bCanShortBoost;
+	bool					m_bCanShortBoost;
 
-	float			m_fPlayTimer;
-	float			m_fPreTimer;
-	bool			m_bPlaying;
+	float					m_fPlayTimer;
+	float					m_fPreTimer;
+	bool					m_bPlaying;
 
-	CPlayerHead*	m_pPlayerHead;
-	bool			m_bUpKey;
+	CPlayerHead*			m_pPlayerHead;
+	bool					m_bUpKey;
 
 	vector<CGameObject*>	m_vecWheel;
 
-	bool			m_bCollisionWall = false;
+	bool					m_bCollisionWall = false;
 
-	_float			m_fAimRotationZ;
-	CGameObject*	m_pMagnetTarget = nullptr;
+	_float					m_fAimRotationZ;
+	CGameObject*			m_pMagnetTarget = nullptr;
 
-	CGameObject*	m_pShield1 = nullptr;
-	CGameObject*	m_pShield2 = nullptr;
+	CGameObject*			m_pShield1 = nullptr;
+	CGameObject*			m_pShield2 = nullptr;
 
 
-	bool			m_bMissileHit = false;
-	bool			m_bBubble = false;
+	bool					m_bMissileHit = false;
+	bool					m_bBubble = false;
 
-	float			m_fBubbleTimer = 0.f;
-	CGameObject*	m_pBubble = nullptr;
+	float					m_fBubbleTimer = 0.f;
+	CGameObject*			m_pBubble = nullptr;
+
+	CDustLandingEffect*		m_pDustLandingEffect = nullptr;
 
 protected:
 	virtual		void		Free() override;

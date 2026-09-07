@@ -13,12 +13,12 @@
 #include "CCameraMgr.h"
 #include "CDInputMgr.h"
 #include "CUI_Timer.h"
+#include "CUI_PauseMenu.h"
 
 IMPLEMENT_SINGLETON(CPlayTimeMgr)
 
 CPlayTimeMgr::CPlayTimeMgr()
 {
-	int a;
 	m_fStartTimer	= 0.f;
 	m_fPlayTimer	= 0.f;
 	m_fTimerFlag	= 0.f;
@@ -99,6 +99,9 @@ void CPlayTimeMgr::EndCoundDown(const _float& fDeltaTime)
 		//SoundMgr::GetInstance().StopSound(SOUND_DRIFT);
 		SoundMgr::GetInstance().PlaySound(L"Effect/lab/race_over.flac", SOUND_ENDCOUND, 0.4f);
 		CCameraMgr::GetInstance()->SetMainCamera(CAMERA_FINISH);
+		CUI_PauseMenu* pMenuBtn = static_cast<CUI_PauseMenu*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"UI_MenuPause"));
+		pMenuBtn->Set_Show(true);
+
 		//CDInputMgr::GetInstance()->End_Record();
 	}
 	else
@@ -123,4 +126,5 @@ void CPlayTimeMgr::UpdateTimerUI()
 
 void CPlayTimeMgr::Free()
 {
+	//SetRaceEnd();
 }

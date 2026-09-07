@@ -2,7 +2,8 @@
 #include "CBase.h"
 #include "Engine_Define.h"
 #include "Engine_Parsing.h"
-
+#include "CRankMgr.h"
+#include "CTrackMgr.h"
 class CPlayTimeMgr :
     public CBase
 {
@@ -26,14 +27,20 @@ public:
     bool            GetPlaying()        { return m_bPlaying; }
 
     void            SetRaceStart()      { m_bStart = true; }
-    void            SetRaceEnd()        { m_bStart = false; }
+
+    void            SetRaceEnd(){ 
+        m_fStartTimer = 0.f;
+        m_fPlayTimer = 0.f;
+        m_fTimerFlag = 0.f;
+        m_bStart = false;
+        m_bPlaying = false;
+    }
     void            SetCountDownStart() { m_fPlayEndTime = m_fPlayTimer; }
 
 private:
     void            UpdateTimerUI();
 
 private:
-
     float           m_fPlayEndTime;
     float           m_fStartTimer;
     float			m_fPlayTimer;
@@ -42,7 +49,6 @@ private:
     bool            m_bStart;
 
 private:
-    // CBase을(를) 통해 상속됨
     void Free() override;
 };
 

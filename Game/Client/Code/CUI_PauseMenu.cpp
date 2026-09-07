@@ -55,31 +55,21 @@ void CUI_PauseMenu::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 
 _int CUI_PauseMenu::Update_GameObject(const _float& fDeltaTime)
 {
-	
-
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
 	CPause_ReplayBtn* pBtn = dynamic_cast<CPause_ReplayBtn*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"Pause_ReplayBtn"));
 	CPause_MenuBtn* pBtn2 = dynamic_cast<CPause_MenuBtn*>(CManagement::GetInstance()->Find_GameObjectByTag(L"UI", L"Pause_MenuBtn"));
-	if (CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_P))
+	
+	if (m_bShow == true)
 	{
-		if (Get_Show() == false)
-		{
-			Set_Show(true);
-			pBtn->Set_Show(true);
-			pBtn2->Set_Show(true);
-		}
-		else
-		{
-			Set_Show(false);
-			pBtn->Set_Show(false);
-			pBtn2->Set_Show(false);
-		}
-		
-		
+		pBtn->Set_Show(true);
+		pBtn2->Set_Show(true);
 	}
-
-
+	else
+	{
+		pBtn->Set_Show(false);
+		pBtn2->Set_Show(false);
+	}
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

@@ -123,6 +123,7 @@ HRESULT CManagement::Set_Scene(CScene* pScene)
 
     m_pScene = pScene;
     m_pNextScene = nullptr;
+    m_bChangeScene = false;
 
     m_pScene->PostReady_Scene();
 
@@ -132,6 +133,7 @@ HRESULT CManagement::Set_Scene(CScene* pScene)
 void CManagement::Request_Scene(CScene* pScene)
 {
     m_pNextScene = pScene;
+    m_bChangeScene = true;
 }
 
 void CManagement::Change_NextScene()

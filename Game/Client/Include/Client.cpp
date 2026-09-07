@@ -6,6 +6,9 @@
 #include "Client.h"
 #include "CMainApp.h"
 #include "CDInputMgr.h"
+#include "CPlayTimeMgr.h"
+#include "CTrackMgr.h"
+#include "CRankMgr.h"
 
 #define MAX_LOADSTRING 100
 
@@ -129,6 +132,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             int fixedStep = CTimerMgr::GetInstance()->Get_FixedStep(L"Timer_FPS60", &fFixed_DeltaTime);
 
             CDInputMgr::GetInstance()->Update_InputDev();
+            if (CManagement::GetInstance()->Get_ChangeSceneState())
+            {
+                CPlayTimeMgr::DestroyInstance();
+                CTrackMgr::DestroyInstance();
+                CRankMgr::DestroyInstance();
+            }
             CManagement::GetInstance()->Change_NextScene();
 
             for(int i=0; i<fixedStep; ++i)

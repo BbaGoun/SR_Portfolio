@@ -124,12 +124,26 @@ void CUI_Timer::Render_GameObject()
 
 void CUI_Timer::Set_Timer(float _fPlayTime)
 {
-	m_iMin_10 = int(floor(_fPlayTime / 600.f));
-	m_iMin_1 = int(floor(_fPlayTime / 60.f)) - 10 * m_iMin_10;
-	m_iSecond_10 = int(floor(_fPlayTime / 10.f)) - 6 * m_iMin_1 - 60 * m_iMin_10;
-	m_iSecond_1 = int(floor(_fPlayTime / 1.f)) - 10 * m_iSecond_10 + 60 * m_iMin_1 - 600 * m_iMin_10;
-	m_iMilli_10 = int(floor(fmodf(_fPlayTime, 1.f) / 0.1f));
-	m_iMilli_1 = int(floor(fmodf(_fPlayTime, 1.f) / 0.01f)) - 10 * m_iMilli_10;
+	int iTotal = int(double(_fPlayTime) * 100.0 + 0.0001);
+	if (iTotal < 0)
+		iTotal = 0;
+
+	m_iMilli_1 = iTotal % 10;   
+	iTotal /= 10;
+
+	m_iMilli_10 = iTotal % 10;   
+	iTotal /= 10;
+
+	m_iSecond_1 = iTotal % 10;   
+	iTotal /= 10;
+
+	m_iSecond_10 = iTotal % 6;    
+	iTotal /= 6; 
+
+	m_iMin_1 = iTotal % 10;   
+	iTotal /= 10;
+
+	m_iMin_10 = iTotal % 10;
 }
 
 CUI_Timer* CUI_Timer::Create(LPDIRECT3DDEVICE9 pGraphicDev)

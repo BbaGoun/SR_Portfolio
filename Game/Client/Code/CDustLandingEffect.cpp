@@ -36,11 +36,13 @@ HRESULT CDustLandingEffect::Ready_GameObject()
 _int CDustLandingEffect::Update_GameObject(const _float& fDeltaTime)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_PARTICLE, this);
-	CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	//CGameObject* pCart = CManagement::GetInstance()->Find_GameObjectByTag(L"GameLogic", L"Obj_Cart");
+	if (m_pOwner == nullptr)
+		return 0;
 
 	_vec3 vPos, vLook;
-	pCart->Get_Transform()->Get_Info(INFO_POS, &vPos);
-	pCart->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
+	m_pOwner->Get_Transform()->Get_Info(INFO_POS, &vPos);
+	m_pOwner->Get_Transform()->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
 	//vPos += _vec3({ 0, -1, 0 }) * 0.8f;
 	m_pParticleCom->SetOrigin(vPos);

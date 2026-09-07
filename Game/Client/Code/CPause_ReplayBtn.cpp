@@ -13,6 +13,7 @@
 #include "SoundMgr.h"
 
 #include "CRacingScene.h"
+#include "CPlayTimeMgr.h"
 
 CPause_ReplayBtn::CPause_ReplayBtn(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 {
@@ -68,35 +69,30 @@ _int CPause_ReplayBtn::Update_GameObject(const _float& fDeltaTime)
 	if (m_bShow == false)
 		return 0;
 
-
 	CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHAUI, this);
 
+	if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
+	{
+		m_fFrame = 1;
+		if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
+		{
+			Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
 
+			if (nullptr == pStage)
+				return E_FAIL;
 
-			if (CheckCollisionUI(g_hWnd, m_vPos, m_vScale, m_pGraphicDev))
-			{
-				m_fFrame = 1;
-				if (CDInputMgr::GetInstance()->Get_DIMouseKeyDown(DIM_LB))
-				{
-					Engine::CScene* pStage = CRacingScene::Create(m_pGraphicDev, MAP_TEST);
+			CPlayTimeMgr::GetInstance()->SetRaceEnd();
+			//CPlayTimeMgr::GetInstance()->DestroyInstance();
+			CRankMgr::GetInstance()->DestroyInstance();
+			CTrackMgr::GetInstance()->DestroyInstance();
 
-					if (nullptr == pStage)
-						return E_FAIL;
-
-					CManagement::GetInstance()->Request_Scene(pStage);
-				}
-			}
-
-			else
-			{
-				m_fFrame = 0;
-			}
-
-
-
-	
-	
-
+			CManagement::GetInstance()->Request_Scene(pStage);
+		}
+	}
+	else
+	{
+		m_fFrame = 0;
+	}
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
 

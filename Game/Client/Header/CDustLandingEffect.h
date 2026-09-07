@@ -20,11 +20,13 @@ public:
 	virtual			void		OnLostDevice();
 	virtual			void		OnResetDevice();
 
+	void		SetOwner(CGameObject* pOwner) { m_pOwner = pOwner; }
 
 private:
 	CTexture*				m_pTextureCom;
 	CDustLandingParticle*	m_pParticleCom;
 
+	CGameObject*			m_pOwner = nullptr;
 
 public:
 	static CDustLandingEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);
