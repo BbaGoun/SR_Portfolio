@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CGameObject.h"
 #include "Engine_Enum.h"
 #include "CPlayerHead.h"
@@ -188,7 +188,6 @@ private:
 
 	vector<CGameObject*>	m_vecWheel;
 
-	bool			m_bCollisionGround = false;
 	bool			m_bCollisionWall = false;
 
 	_float			m_fAimRotationZ;

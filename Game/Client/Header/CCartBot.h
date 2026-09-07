@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CGameObject.h"
 #include "Engine_Enum.h"
 #include "Client_Enum.h"
@@ -31,13 +31,9 @@ public:
 	void			KeyInput(const _float& fDeltaTime);
 
 	// Update
-	void			UpdateDrift(const _float fDeltaTime);
-	void			UpdateBoost(const _float& fDeltaTime);
 	void			UpdateThunder();
 	void			UpdateGravity();
 	void			UpdateMagnet(const _float& fDeltaTime);
-	void			UpdateStartBoost();
-	void			UpdateBlur(const _float& fDeltaTime);
 	void			UpdateBubble(const _float& fDeltaTime);
 
 	// Get, Set
@@ -191,7 +187,6 @@ private:
 
 	vector<CGameObject*>	m_vecWheel;
 
-	bool			m_bCollisionGround = false;
 	bool			m_bCollisionWall = false;
 
 	_float			m_fAimRotationZ;
