@@ -397,6 +397,8 @@ CMenu_Set* CMenu_Set::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CMenu_Set::Free()
 {
+	CSlotMgr::GetInstance()->Clear();          
+	CButtonMgr::GetInstance()->Clear();        
 
 	CScene::Free();
 	CRenderer::GetInstance()->Clear_RenderGroup();

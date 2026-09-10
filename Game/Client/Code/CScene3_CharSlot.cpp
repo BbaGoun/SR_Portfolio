@@ -98,12 +98,7 @@ _int CScene3_CharSlot::Update_GameObject(const _float& fDeltaTime)
 			pBG->SetMouseHover(false);
 
 		}
-		
-		
 	}
-
-
-
 
 	return CGameObject::Update_GameObject(fDeltaTime);
 }
@@ -120,7 +115,14 @@ void CScene3_CharSlot::Render_GameObject()
 {
 	if (m_bShow == false)
 		return;
+	_matrix OldView, OldProj, matView, matProj;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProj);
 
+	D3DXMatrixIdentity(&matView);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixOrthoLH(&matProj, (float)WINCX, (float)WINCY, 1.f, 1000.f);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 	TCHAR   szFileName[128] = L"";
@@ -131,6 +133,8 @@ void CScene3_CharSlot::Render_GameObject()
 	m_pVIBufferCom->Render_Buffer();
 
 
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProj);
 
 	
 }

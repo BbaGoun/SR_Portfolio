@@ -88,7 +88,12 @@ void CSlotMgr::SetCartSlotShow(bool bShow)
 		static_cast<CUI_InvenSlot*>(pCartSlot.first)->Set_Show(bShow);
 	}
 }
-
+void CSlotMgr::Clear()
+{
+	m_vecCharSlot.clear(); 
+	m_vecInvenSlot.clear();
+}
 void CSlotMgr::Free()
 {
+	Clear();
 }

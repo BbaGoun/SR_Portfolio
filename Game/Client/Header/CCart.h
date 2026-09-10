@@ -96,6 +96,7 @@ public:
 
 	// Item
 	void			GainItem();
+	void			GainItem(ITEM_TYPE eID);
 	void			GainBoost();
 	void			UseItem();
 	void			UseAimItem();

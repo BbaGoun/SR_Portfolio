@@ -8,6 +8,7 @@
 #include "CRcTex.h"
 #include "CItem.h"
 #include "CNexonVideo.h"
+#include "CDInputMgr.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
     : CScene(pGraphicDev), m_pLoadingThread(nullptr)
@@ -38,9 +39,8 @@ _int CLoading::Update_Scene(const _float& fDeltaTime)
 {
     _int    iExit = CScene::Update_Scene(fDeltaTime);
 
-    if (m_pLoadingThread->Get_Finish())
+    if (m_pLoadingThread->Get_Finish() && CDInputMgr::GetInstance()->Get_DIKeyDown(DIKEYBOARD_RETURN))
     {
-        
             //Engine::CScene* pStage = CScene_Test::Create(m_pGraphicDev);
             //Engine::CScene* pStage = CItem::Create(m_pGraphicDev);
             //Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
