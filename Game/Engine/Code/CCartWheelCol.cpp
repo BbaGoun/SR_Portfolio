@@ -16,7 +16,7 @@ CCartWheelCol::~CCartWheelCol()
 
 HRESULT CCartWheelCol::Ready_Buffer()
 {
-	m_dwVtxSize = sizeof(VTXTEX);
+	m_dwVtxSize = sizeof(VTXTEXNOR);
 	// 옆면 왼쪽 1 + 17
 	// 윗면 17 + 17 
 	// 옆면 오른쪽 17 + 1
@@ -25,7 +25,7 @@ HRESULT CCartWheelCol::Ready_Buffer()
 	// 윗면 16 * 2
 	// 옆면 오른쪽 16
 	m_dwTriCnt = m_iSegment * 4;
-	m_dwFVF = FVF_TEX;
+	m_dwFVF = FVF_TEXNOR;
 
 	m_dwIdxCnt = m_dwTriCnt * 3;
 	m_IdxFmt = D3DFMT_INDEX32;
@@ -33,8 +33,10 @@ HRESULT CCartWheelCol::Ready_Buffer()
 	if (FAILED(CVIBuffer::Ready_Buffer()))
 		return E_FAIL;
 
-	VTXTEX* vertices = nullptr;
+	VTXTEXNOR* vertices = nullptr;
 	int offset = 0;
+	vector<VTXTEXNOR> tmp_vertices;
+	tmp_vertices.resize(m_dwVtxCnt);
 
 	m_pVB->Lock(0, 0, (void**)&vertices, 0);
 
@@ -42,12 +44,18 @@ HRESULT CCartWheelCol::Ready_Buffer()
 	// 1개
 	vertices[0].vPosition = { -0.2f, 0, 0 };
 	vertices[0].vTexUV = { 0.5f, 0.5f };
+	tmp_vertices[0].vPosition = { -0.2f, 0, 0 };
+
 	// 17개
 	offset = 1;
 	for (int i = 0; i <= m_iSegment; ++i)
 	{
 		float radian = D3DXToRadian(360.f * i / m_iSegment);
 		vertices[i + offset].vPosition = { -0.2f,
+			cosf(radian),
+			sinf(radian)
+		};
+		tmp_vertices[i + offset].vPosition = { -0.2f,
 			cosf(radian),
 			sinf(radian)
 		};
@@ -64,6 +72,10 @@ HRESULT CCartWheelCol::Ready_Buffer()
 			cosf(radian),
 			sinf(radian)
 		};
+		tmp_vertices[i + offset].vPosition = { -0.2f,
+			cosf(radian),
+			sinf(radian)
+		};
 		vertices[i + offset].vTexUV = { 0, float(i) };
 	}
 	// 17개
@@ -72,6 +84,10 @@ HRESULT CCartWheelCol::Ready_Buffer()
 	{
 		float radian = D3DXToRadian(360.f * i / m_iSegment);
 		vertices[i + offset].vPosition = { 0.2f,
+			cosf(radian),
+			sinf(radian)
+		};
+		tmp_vertices[i + offset].vPosition = { 0.2f,
 			cosf(radian),
 			sinf(radian)
 		};
@@ -88,11 +104,16 @@ HRESULT CCartWheelCol::Ready_Buffer()
 			cosf(radian),
 			sinf(radian)
 		};
+		tmp_vertices[i + offset].vPosition = { 0.2f,
+			cosf(radian),
+			sinf(radian)
+		};
 		vertices[i + offset].vTexUV = { 0.5f - sinf(radian) / 2.f, 0.5f - cosf(radian) / 2.f };
 	}
 	// 1개
 	vertices[m_dwVtxCnt - 1].vPosition = { 0.2f, 0, 0 };
 	vertices[m_dwVtxCnt - 1].vTexUV = { 0.5f, 0.5f };
+	tmp_vertices[m_dwVtxCnt - 1].vPosition = { 0.2f, 0, 0 };
 
 	for (int i = 0; i < m_dwVtxCnt; ++i) {
 		UpdateMinMaxVtx(vertices[i].vPosition);
@@ -103,6 +124,8 @@ HRESULT CCartWheelCol::Ready_Buffer()
 	m_pVB->Unlock();
 
 	INDEX32* indices = nullptr;
+	vector<FACE32> faces;
+	faces.resize(m_dwTriCnt);
 
 	m_pIB->Lock(0, 0, (void**)&indices, 0);
 
@@ -112,6 +135,9 @@ HRESULT CCartWheelCol::Ready_Buffer()
 		indices[i]._0 = i + 1;
 		indices[i]._1 = 0;
 		indices[i]._2 = i + 2;
+		faces[i].indices._0 = i + 1;
+		faces[i].indices._1 = 0;
+		faces[i].indices._2 = i + 2;
 	}
 
 	//// 윗면
@@ -120,10 +146,17 @@ HRESULT CCartWheelCol::Ready_Buffer()
 		indices[i * 2 + m_iSegment]._0 = offset + i;
 		indices[i * 2 + m_iSegment]._1 = offset + i + 1;
 		indices[i * 2 + m_iSegment]._2 = offset + i + 1 + (m_iSegment + 1);
+		faces[i * 2 + m_iSegment].indices._0 = offset + i;
+		faces[i * 2 + m_iSegment].indices._1 = offset + i + 1;
+		faces[i * 2 + m_iSegment].indices._2 = offset + i + 1 + (m_iSegment + 1);
+
 
 		indices[i * 2 + m_iSegment + 1]._0 = offset + i;
 		indices[i * 2 + m_iSegment + 1]._1 = offset + i + 1 + (m_iSegment + 1);
 		indices[i * 2 + m_iSegment + 1]._2 = offset + i + (m_iSegment + 1);
+		faces[i * 2 + m_iSegment + 1].indices._0 = offset + i;
+		faces[i * 2 + m_iSegment + 1].indices._1 = offset + i + 1 + (m_iSegment + 1);
+		faces[i * 2 + m_iSegment + 1].indices._2 = offset + i + (m_iSegment + 1);
 	}
 
 	// 오른쪽 면
@@ -132,9 +165,34 @@ HRESULT CCartWheelCol::Ready_Buffer()
 		indices[i + m_iSegment * 3]._0 = offset + i + 1;
 		indices[i + m_iSegment * 3]._1 = m_dwVtxCnt - 1;
 		indices[i + m_iSegment * 3]._2 = offset + i;
+		faces[i + m_iSegment * 3].indices._0 = offset + i + 1;
+		faces[i + m_iSegment * 3].indices._1 = m_dwVtxCnt - 1;
+		faces[i + m_iSegment * 3].indices._2 = offset + i;
 	}
 
 	m_pIB->Unlock();
+
+	for (auto& face : faces) {
+		_vec3 p0 = tmp_vertices[face.indices._0].vPosition;
+		_vec3 p1 = tmp_vertices[face.indices._1].vPosition;
+		_vec3 p2 = tmp_vertices[face.indices._2].vPosition;
+
+		D3DXPLANE plane;
+		D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
+
+		face.vNormal = { plane.a, plane.b, plane.c };
+		tmp_vertices[face.indices._0].vNormal += face.vNormal;
+		tmp_vertices[face.indices._1].vNormal += face.vNormal;
+		tmp_vertices[face.indices._2].vNormal += face.vNormal;
+	}
+
+	m_pVB->Lock(0, 0, (void**)&vertices, 0);
+
+	for (int i = 0; i < m_dwVtxCnt; ++i) {
+		D3DXVec3Normalize(&vertices[i].vNormal, &tmp_vertices[i].vNormal);
+	}
+
+	m_pVB->Unlock();
 
 	return S_OK;
 }

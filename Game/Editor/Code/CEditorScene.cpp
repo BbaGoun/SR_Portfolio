@@ -13,6 +13,7 @@
 #include "CGameObject.h"
 #include "CManagement.h"
 #include "Engine_Parsing.h"
+#include "CRenderer.h"
 
 
 CEditorScene::CEditorScene(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
@@ -33,6 +34,8 @@ HRESULT CEditorScene::Ready_Scene()
 
 	if (FAILED(Ready_Layers()))
 		return E_FAIL;
+
+	CRenderer::GetInstance()->Set_Lighting(false);
 
 	return S_OK;
 }

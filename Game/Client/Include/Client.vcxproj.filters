@@ -412,6 +412,12 @@
     <Filter Include="01. Scene\Menu\Menu_Set_Speed">
       <UniqueIdentifier>{778a1392-0be0-4834-b4f3-1cc0ef990511}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\MirrorTest">
+      <UniqueIdentifier>{cf02b550-e479-49a6-817c-69d747bd83f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Mirror">
+      <UniqueIdentifier>{b1e12e12-ea15-42ca-8fd1-a61c5ed637d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -810,6 +816,12 @@
     <ClInclude Include="..\Header\CMenu_Set_Speed.h">
       <Filter>01. Scene\Menu\Menu_Set_Speed</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMirrorTest.h">
+      <Filter>01. Scene\MirrorTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMirror.h">
+      <Filter>02. GameObject\Mirror</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -1198,6 +1210,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMenu_Set_Speed.cpp">
       <Filter>01. Scene\Menu\Menu_Set_Speed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMirrorTest.cpp">
+      <Filter>01. Scene\MirrorTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMirror.cpp">
+      <Filter>02. GameObject\Mirror</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

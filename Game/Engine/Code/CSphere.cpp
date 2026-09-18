@@ -1,4 +1,4 @@
-#include "CSphere.h"
+ï»¿#include "CSphere.h"
 
 CSphere::CSphere(LPDIRECT3DDEVICE9 pGraphicDev) : CVIBuffer(pGraphicDev)
 {
@@ -15,13 +15,13 @@ CSphere::~CSphere()
 HRESULT CSphere::Ready_Buffer()
 {
 	float radius = 0.5f;
-	int slice = 16; // °æµµ¸¦ ³ª´©´Â °¹¼ö (xy Â÷¿ø)
-	int stack = 16; // À§µµ¸¦ ³ª´©´Â °¹¼ö (z+¿¡¼­ z-±îÁö ³»¸®´Â)
+	int slice = 16; // ê²½ë„ë¥¼ ë‚˜ëˆ„ëŠ” ê°¯ìˆ˜ (xy ì°¨ì›)
+	int stack = 16; // ìœ„ë„ë¥¼ ë‚˜ëˆ„ëŠ” ê°¯ìˆ˜ (z+ì—ì„œ z-ê¹Œì§€ ë‚´ë¦¬ëŠ”)
 
-	m_dwVtxSize = sizeof(VTXTEX);
+	m_dwVtxSize = sizeof(VTXTEXNOR);
 	m_dwVtxCnt = (slice + 1) * (stack + 1);
 	m_dwTriCnt = slice * (stack - 2) * 2 + slice * 2;
-	m_dwFVF = FVF_TEX;
+	m_dwFVF = FVF_TEXNOR;
 
 	m_dwIdxCnt = m_dwTriCnt * 3;
 	m_IdxFmt = D3DFMT_INDEX32;
@@ -29,17 +29,17 @@ HRESULT CSphere::Ready_Buffer()
 	if (FAILED(CVIBuffer::Ready_Buffer()))
 		return E_FAIL;
 
-	VTXTEX* vertices = nullptr;
+	VTXTEXNOR* vertices = nullptr;
 	m_vecVertices.resize(m_dwVtxCnt);
 
 	m_pVB->Lock(0, 0, (void**)&vertices, 0);
 
 	for (int i = 0; i <= stack; ++i) {
-		// À§µµ
+		// ìœ„ë„
 		float radianA = D3DXToRadian(180 * i / stack);
-		// UV °ªÀÌ È® ¹Ù²îÁö ¾Êµµ·Ï ÇÑ¹ÙÄû µ· ÁöÁ¡¿¡ ÇÏ³ª ´õ »ý¼º
+		// UV ê°’ì´ í™• ë°”ë€Œì§€ ì•Šë„ë¡ í•œë°”í€´ ëˆ ì§€ì ì— í•˜ë‚˜ ë” ìƒì„±
 		for (int j = 0; j <= slice; ++j) {
-			// °æµµ
+			// ê²½ë„
 			float radianB = D3DXToRadian(360 * j / slice);
 			int index = i * (slice + 1) + j;
 			_vec3 pos = radius * _vec3{
@@ -118,6 +118,28 @@ HRESULT CSphere::Ready_Buffer()
 	}
 
 	m_pIB->Unlock();
+
+	for (auto& face : m_vecFaces) {
+		_vec3 p0 = m_vecVertices[face.indices._0].vPosition;
+		_vec3 p1 = m_vecVertices[face.indices._1].vPosition;
+		_vec3 p2 = m_vecVertices[face.indices._2].vPosition;
+
+		D3DXPLANE plane;
+		D3DXPlaneFromPoints(&plane, &p0, &p1, &p2);
+
+		face.vNormal = { plane.a, plane.b, plane.c };
+		m_vecVertices[face.indices._0].vNormal += face.vNormal;
+		m_vecVertices[face.indices._1].vNormal += face.vNormal;
+		m_vecVertices[face.indices._2].vNormal += face.vNormal;
+	}
+
+	m_pVB->Lock(0, 0, (void**)&vertices, 0);
+
+	for (int i = 0; i < m_dwVtxCnt; ++i) {
+		D3DXVec3Normalize(&vertices[i].vNormal, &m_vecVertices[i].vNormal);
+	}
+
+	m_pVB->Unlock();
 
 	return S_OK;
 }

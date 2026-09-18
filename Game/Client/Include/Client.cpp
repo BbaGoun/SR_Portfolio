@@ -122,7 +122,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         _float fGlobal_TimeDelta = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_Global");
 
 
-        CDInputMgr::GetInstance()->Update_InputDev();
+        //CDInputMgr::GetInstance()->Update_InputDev();
 
         if (CFrameMgr::GetInstance()->IsPermit_Call(L"Frame60", fGlobal_TimeDelta))
         {

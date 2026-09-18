@@ -157,6 +157,9 @@ HRESULT CRacingScene::LoadSceneFromFile()
 	case MAP_SPEED:
 		path = L"../Bin/Resource/Editor/Scene/SpeedScene.scene";
 		break;
+	case MAP_TEST_MIRROR:
+		path = L"../Bin/Resource/Editor/AfterTest/Mirror.scene";
+		break;
 	default:
 		return E_FAIL;
 	}

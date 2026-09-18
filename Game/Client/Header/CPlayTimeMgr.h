@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CBase.h"
 #include "Engine_Define.h"
 #include "Engine_Parsing.h"
@@ -27,6 +27,7 @@ public:
     bool            GetPlaying()        { return m_bPlaying; }
 
     void            SetRaceStart()      { m_bStart = true; }
+    void            SetRaceStartTest() { m_bPlaying = true; }
 
     void            SetRaceEnd(){ 
         m_fStartTimer = 0.f;

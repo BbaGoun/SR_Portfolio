@@ -122,7 +122,7 @@ HRESULT CTerrain2::Ready_Buffer()
 		// 면 구하기
 		D3DXPLANE upperPlane;
 		D3DXPlaneFromPoints(&upperPlane, &p1, &p2, &p0);
-		m_vecFaces[i].vNoraml = { upperPlane.a, upperPlane.b, upperPlane.c };
+		m_vecFaces[i].vNormal = { upperPlane.a, upperPlane.b, upperPlane.c };
 	}
 
 	// 2. 정점 법선 구하기
@@ -136,25 +136,25 @@ HRESULT CTerrain2::Ready_Buffer()
 			if (i < VTXCNTZ - 1 && j < VTXCNTX - 1) {
 				int index0 = (i * (VTXCNTX - 1) + j) * 2;
 				int index1 = (i * (VTXCNTX - 1) + j) * 2 + 1;
-				vVtxNormal += m_vecFaces[index0].vNoraml;
-				vVtxNormal += m_vecFaces[index1].vNoraml;
+				vVtxNormal += m_vecFaces[index0].vNormal;
+				vVtxNormal += m_vecFaces[index1].vNormal;
 				cnt += 2;
 			}
 			if (i > 0 && j < VTXCNTZ - 1) {
 				int index2 = ((i - 1) * (VTXCNTX - 1) + j) * 2;
-				vVtxNormal += m_vecFaces[index2].vNoraml;
+				vVtxNormal += m_vecFaces[index2].vNormal;
 				++cnt;
 			}
 			if (i > 0 && j > 0) {
 				int index3 = ((i - 1) * (VTXCNTX - 1) + (j - 1)) * 2 + 1;
 				int index4 = ((i - 1) * (VTXCNTX - 1) + (j - 1)) * 2;
-				vVtxNormal += m_vecFaces[index3].vNoraml;
-				vVtxNormal += m_vecFaces[index4].vNoraml;
+				vVtxNormal += m_vecFaces[index3].vNormal;
+				vVtxNormal += m_vecFaces[index4].vNormal;
 				cnt += 2;
 			}
 			if (i < VTXCNTZ - 1 && j>0) {
 				int index5 = (i * (VTXCNTX - 1) + (j - 1)) * 2 + 1;
-				vVtxNormal += m_vecFaces[index5].vNoraml;
+				vVtxNormal += m_vecFaces[index5].vNormal;
 				++cnt;
 			}
 			

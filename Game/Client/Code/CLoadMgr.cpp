@@ -47,7 +47,7 @@ void CLoadMgr::ReadyCreateMap() {
 	m_createMap[L"Obj_CottonCart"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CInvenSlotCart::Create(pGraphicDev, INVEN_SECOND); };
 	m_createMap[L"Obj_Bazzi"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CScene3_Char::Create(pGraphicDev, CHAR_BAZZI); };
 
-	
+	m_createMap[L"Obj_Mirror"] = [](LPDIRECT3DDEVICE9 pGraphicDev) {return CEmpty::Create(pGraphicDev); };
 }
 
 CGameObject* CLoadMgr::CreateByType(const _tchar* type, LPDIRECT3DDEVICE9 pGraphicDev) {

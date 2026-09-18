@@ -91,9 +91,8 @@ void CCartBody::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CCartBody::Render_GameObject()
 {
-	int a;
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
+	//m_pColliderCom->Render_Component(D3DXCOLOR({ 0,1,0,1 }));
 }
 
 void CCartBody::CollisionEnter(CCollider* pOtherCollider)

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CVIBuffer.h"
 
 BEGIN(Engine)
@@ -15,7 +15,7 @@ public:
     HRESULT Ready_Buffer() override;
 
 public:
-    vector<VTXTEX>& GetVertices() { return m_vecVertices; }
+    vector<VTXTEXNOR>& GetVertices() { return m_vecVertices; }
     vector<FACE32>& GetFaces() { return m_vecFaces; }
 
 
@@ -24,7 +24,7 @@ public:
     CComponent* Clone() override;
 
 protected:
-    vector<VTXTEX>			m_vecVertices;
+    vector<VTXTEXNOR>			m_vecVertices;
     vector<FACE32>			m_vecFaces;
 
 protected:

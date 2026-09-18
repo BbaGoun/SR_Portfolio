@@ -1,6 +1,8 @@
 ﻿#include "CRenderer.h"
 #include "CCameraMgr.h"
 #include "CVIBuffer.h"
+#include "CManagement.h"
+
 IMPLEMENT_SINGLETON(CRenderer)
 
 CRenderer::CRenderer()
@@ -31,7 +33,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	{
 		Render_TargetPass(pGraphicDev);
 
-		PreCull(pGraphicDev);
+		//PreCull(pGraphicDev);
 		PreRender(pGraphicDev);
 
 		Render_Priority(pGraphicDev);
@@ -42,6 +44,9 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 		Render_Skid(pGraphicDev);
 		Render_Trail(pGraphicDev);
 		Render_Particle(pGraphicDev);
+
+		Render_Mirror(pGraphicDev);
+
 		Render_NonAlphaUI(pGraphicDev);
 		Render_AlphaUI(pGraphicDev);
 
@@ -190,8 +195,14 @@ void CRenderer::Render_TargetPass(LPDIRECT3DDEVICE9& pGraphicDev)
 
 void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev)
 {
-	for (auto& pObj : m_RenderGroup[RENDER_PRIORITY])
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+	for (auto& pObj : m_RenderGroup[RENDER_PRIORITY]) {
+		if(m_bReflectPass)
+			pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 		pObj->Render_GameObject();
+	}
 }
 
 void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -203,12 +214,35 @@ void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 254);
 	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
-	for (auto& pObj : m_RenderGroup[RENDER_NONALPHA])
+	if (m_bLighting) {
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+		// 법선 정규화
+		pGraphicDev->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+	}
+	
+	// 모든 빛을 반사하는 재질을 설정
+	D3DMATERIAL9 material;
+	ZeroMemory(&material, sizeof(material));
+	material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	material.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+
+	pGraphicDev->SetMaterial(&material);
+
+	for (auto& pObj : m_RenderGroup[RENDER_NONALPHA]) {
+		if (m_bReflectPass)
+			pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 		pObj->Render_GameObject();
+	}
 
 	pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	if (m_bLighting) {
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	}
 }
 
 void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -218,10 +252,7 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
-	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	//pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-	//pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
+	
 
 	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
 	{
@@ -232,13 +263,17 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 		{
 			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
 		});
-	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
-		pObj->Render_GameObject();
 
-	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
+	{
+		if (m_bReflectPass)
+			pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+		pObj->Render_GameObject();
+	}
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
 }
 
 void CRenderer::Render_Skid(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -249,10 +284,6 @@ void CRenderer::Render_Skid(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	//pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-	//pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
-
 	for (auto& pObj : m_RenderGroup[RENDER_SKID])
 	{
 		pObj->Compute_ViewZ();
@@ -262,10 +293,13 @@ void CRenderer::Render_Skid(LPDIRECT3DDEVICE9& pGraphicDev)
 		{
 			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
 		});
-	for (auto& pObj : m_RenderGroup[RENDER_SKID])
-		pObj->Render_GameObject();
 
-	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	for (auto& pObj : m_RenderGroup[RENDER_SKID])
+	{
+		if (m_bReflectPass)
+			pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+		pObj->Render_GameObject();
+	}
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -279,12 +313,10 @@ void CRenderer::Render_Trail(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	//pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-	//pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);
-
 	for (auto& pObj : m_RenderGroup[RENDER_TRAIL])
 	{
+		if (m_bReflectPass)
+			pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 		pObj->Compute_ViewZ();
 	}
 
@@ -292,10 +324,11 @@ void CRenderer::Render_Trail(LPDIRECT3DDEVICE9& pGraphicDev)
 		{
 			return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
 		});
-	for (auto& pObj : m_RenderGroup[RENDER_TRAIL])
-		pObj->Render_GameObject();
 
-	//pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	for (auto& pObj : m_RenderGroup[RENDER_TRAIL])
+	{
+		pObj->Render_GameObject();
+	}
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -306,7 +339,9 @@ void CRenderer::Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	for (auto& pObj : m_RenderGroup[RENDER_PARTICLE])
+	{
 		pObj->Render_GameObject();
+	}
 
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
@@ -327,6 +362,213 @@ void CRenderer::Render_Fog(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&fFogEnd)));
 
 	//pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
+}
+
+void CRenderer::Render_Mirror(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	auto& vecM = CManagement::GetInstance()->Find_GameObjectsByTag(L"GameLogic", L"Mirror");
+
+	// 기존에는 거리 기반과 절두체 기반 Culling을 진행했는데
+	// 내 카메라에 직접적으로 보이지는 않지만 거울을 통해 보이는 대상도 있어서
+	// 일단 Culling을 꺼놨음.
+	// Culling을 적용하려면 크게 2가지 방법이 있어보이는데,
+	// 방법 1. 현재의 반사 카메라를 사용하지 않은 구현에서 쓸 것 같은 방법.
+	// 0. 일단 거울에 대한 Culling을 적용. 보이지 않는 거울은 계산할 필요가 없음
+	// 1. RenderGroup에 넣을 때, 월드 행렬과 오브젝트 포인터를 한 쌍으로 하여 넣는다. 
+	// 2. RenderGroup에 있는 모든 오브젝트를 각 거울에 대한 거울 속 월드 행렬을 구하여 RenderGroup에 넣는다.
+	// 3. 이제 쌍인 월드 행렬을 이용하여 Culling을 적용한다.
+	// 장점 : 기존 구조를 활용할 수 있음. 단점 : 일시적인 메모리 과부하, 모든 오브젝트에 대한 거울 속 월드 행렬 계산의 부하
+	// 
+	// 방법 2. 반사 카메라를 쓰는 경우
+	// 0. 거울에 대한 Culling은 동일
+	// 1. Culling을 적용할 때 메인 카메라 뿐만 아니라 반사 카메라까지 모두 고려하여 계산
+	// 장점 : 거울 속 월드 행렬 계산을 할 필요가 없다. 단점 : 기존 구조에서 수정이 필요.
+	// 
+	// 일단 여기에서는 거울 평면에 대하여 거울 속의 월드 행렬을 구하는 방식으로 구현했음.
+	// 거울 평면에 대한 반사 카메라를 만드는 방법이 있다는데, 잘 모르겠음
+
+	for (auto& pMirror : vecM) {
+		// 스텐실 버퍼 초기화
+		// 스텐실을 초기화해놓지 않으면 이전에 그린 거울에 또 그려진다.
+		pGraphicDev->Clear(0, 0, D3DCLEAR_STENCIL, 0, 1.0f, 0);
+
+		// 스텐실 버퍼를 사용하도록 하고, 무조건 통과하도록 함.
+		pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+		pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
+		pGraphicDev->SetRenderState(D3DRS_STENCILREF, 0x1);
+		pGraphicDev->SetRenderState(D3DRS_STENCILMASK, 0xffffffff);
+		pGraphicDev->SetRenderState(D3DRS_STENCILWRITEMASK, 0xffffffff);
+
+		// 깊이 테스트가 실패했다는 것은 거울 픽셀이 가려졌다는 것, 아무 행동도 안한다.
+		pGraphicDev->SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP);
+		// 스텐실 테스트는 현재 ALWAYS라 실패할 일은 없다만 나중을 위해 미리 설정
+		pGraphicDev->SetRenderState(D3DRS_STENCILFAIL, D3DSTENCILOP_KEEP);
+		// 깊이 테스트와 스텐실 테스트가 모두 성공한 경우 스텐실 버퍼 값이 1이 되도록 REPLACE로 설정
+		pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE);
+
+		// 깊이 버퍼로의 쓰기를 막는다
+		pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+		// 후면 버퍼로의 그리기를 막는다
+		
+		//// src가 새로 그리는 대상, dest가 기존 그려진 대상이다. 
+		//// src가 0, dest가 1이라는 것은 그리지 않는다는 것.
+		//pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		//pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ZERO);
+		//pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+		// 아래 코드로 교체
+		
+		// RGBA 모든 컬러 채널을 꺼서 그리지 않도록 설정
+		pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
+
+		// 스텐실 버퍼에 거울을 그리기
+		// 이제 거울에 해당하는 픽셀의 스텐실 값이 1임
+		pMirror->Render_GameObject();
+
+
+		// 참조 값을 아까 1로 설정해놨으므로, 
+		// 스텐실 버퍼의 값이 1인 픽셀만 스텐실 테스트 통과 가능
+		pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+		pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
+
+		// 반사된 물체의 깊이는 거울의 깊이보다 크므로 거울이 반사된 물체를 가린다.
+		// 이를 해소하기 위해 깊이 버퍼를 소거
+		// 
+		// 깊이 테스트는 항상 통과시키고, 깊이 버퍼 쓰기는 켬
+		pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+		pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
+		// 컬러 버퍼는 여전히 끈 상태 유지 (화면에는 안 보이고 깊이 버퍼만 초기화하기 위함)
+		// 프로젝션 공간에서 화면 전체를 덮는 사각형(혹은 거울 크기의 사각형)을 깊이값 Z = 1.0f(가장 먼 곳)로 렌더링합니다.
+		// 이렇게 하면 스텐실이 1인 영역만 깊이 버퍼가 1.0f로 덮어씌워져 "소거"된 효과를 냅니다.
+		// [ 화면 전체를 덮는 Quad 또는 거울 Bound Quad 렌더링 (Z = 1.0f) ]
+		VTXSCREEN buffer[4];
+
+		_D3DVIEWPORT9 vp;
+		pGraphicDev->GetViewport(&vp);
+		float fWidth = vp.Width;
+		float fHeight = vp.Height;
+
+		D3DXCOLOR dwColor = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+		buffer[0] = { {-0.5f				,-0.5f			,1,1},	dwColor,		{0,0} };
+		buffer[1] = { {fWidth + 0.5f		,-0.5f			,1,1},	dwColor,		{1,0} };
+		buffer[2] = { {fWidth + 0.5f		,fHeight + 0.5f	,1,1},	dwColor,		{1,1} };
+		buffer[3] = { {-0.5f				,fHeight + 0.5f	,1,1},	dwColor,		{0,1} };
+
+		// FVF설정 및 그리기
+		pGraphicDev->SetFVF(FVF_SCREEN);
+
+		// TRIANGLEFAN을 써야지 0,1,2 -> 0,2,3 순서로 그림
+		pGraphicDev->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, buffer, sizeof(VTXSCREEN));
+
+		// 깊이 테스트 함수를 다시 정상(LESSEQUAL)으로 복구
+		pGraphicDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+
+		// 다시 원래대로 켜기 (기본값:모든 채널 켜기)
+		pGraphicDev->SetRenderState(D3DRS_COLORWRITEENABLE, D3DCOLORWRITEENABLE_ALPHA | D3DCOLORWRITEENABLE_BLUE | D3DCOLORWRITEENABLE_GREEN | D3DCOLORWRITEENABLE_RED);
+
+		_matrix R;
+		_vec3 vNormal;
+		pMirror->Get_Transform()->Get_Info(INFO_LOOK, &vNormal);
+		vNormal *= -1;
+		// d = -(n·p), p를 평면의 중앙 위치로 잡는다 치면
+		_vec3 pos;
+		pMirror->Get_Transform()->Get_Info(INFO_POS, &pos);
+		float d = -D3DXVec3Dot(&vNormal, &pos);
+
+		D3DXPLANE plane = { vNormal.x, vNormal.y, vNormal.z, d };
+		D3DXMatrixReflect(&R, &plane);
+		// 월드 행렬은 원래 정점뿐만이 아니라 법선도 같이 변환한다.
+		// 따라서 반사 행렬이 적용된 월드에 의해 법선도 반사된 상태가 된다.
+
+		// 사용자 클리핑 평면 설정
+		// 평면의 +방향에 있는 그림만 그린다
+		// 거울 안의 세상을 거울에 그리므로, 거울 안 쪽을 바라보는 평면으로 클리핑
+		vNormal *= -1;
+		d = -D3DXVec3Dot(&vNormal, &pos);
+		D3DXPLANE planeInMirror = { vNormal.x, vNormal.y, vNormal.z, d };
+		const float* pPlaneInMirror = (const float*)planeInMirror;
+
+		pGraphicDev->SetClipPlane(0, pPlaneInMirror);
+		pGraphicDev->SetRenderState(D3DRS_CLIPPLANEENABLE, D3DCLIPPLANE0);
+
+		// 거울 세계로 들어가는 광원 표현
+		D3DLIGHT9 originLight = {};
+		BOOL	originEnabled = FALSE;
+		pGraphicDev->GetLight(0, &originLight);
+		pGraphicDev->GetLightEnable(0, &originEnabled);
+
+		D3DLIGHT9 reflectedLight = originLight;
+		_vec3 reflectedDir;
+		reflectedDir = reflectedLight.Direction;
+		D3DXVec3TransformNormal(&reflectedDir, &reflectedDir, &R);
+
+		D3DXVec3Normalize(&reflectedDir, &reflectedDir);
+		reflectedLight.Direction = reflectedDir;
+
+		pGraphicDev->SetLight(0, &reflectedLight);
+		pGraphicDev->LightEnable(0, originEnabled);
+
+		// 법선 정규화
+		pGraphicDev->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+
+		// 재질 설정
+		D3DMATERIAL9 material;
+		ZeroMemory(&material, sizeof(material));
+		material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+		material.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+		material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+		material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+
+		pGraphicDev->SetMaterial(&material);
+
+		// Mirror Pass를 활성화하면 
+		// 오브젝트의 Render에서 사용하는 Get_World 시 반사 행렬을 내부적으로 곱하며,
+		// Render시 CULLMODE를 CW로 설정하게 함.
+		Start_Mirror_Pass(R);
+		
+		Render_Priority(pGraphicDev);
+		Render_NonAlpha(pGraphicDev);
+
+		Render_Alpha(pGraphicDev);
+		Render_Skid(pGraphicDev);
+		Render_Trail(pGraphicDev);
+
+		End_Mirror_Pass();
+
+		pGraphicDev->SetLight(0, &originLight);
+		pGraphicDev->LightEnable(0, originEnabled);
+
+		// 거울 표면은 정상적으로 렌더링
+		pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		// 클리핑 평면을 끄지 않으면 거울이 보이지 않음
+		pGraphicDev->SetRenderState(D3DRS_CLIPPLANEENABLE, 0);
+		
+		pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_DESTCOLOR);
+		pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+		pMirror->Render_GameObject();
+	}
+
+	pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+}
+
+void CRenderer::Start_Mirror_Pass(_matrix matReflect)
+{
+	m_matReflect = matReflect;
+	m_bReflectPass = true;
+}
+
+bool CRenderer::Get_Mirror_Pass(_matrix& outMatReflect)
+{
+	outMatReflect = m_matReflect;
+	return m_bReflectPass;
+}
+
+void CRenderer::End_Mirror_Pass()
+{
+	m_bReflectPass = false;
 }
 
 void CRenderer::Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -511,7 +753,7 @@ void CRenderer::RenderBlur(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	Render_TargetPass(pGraphicDev);
 
-	PreCull(pGraphicDev);
+	//PreCull(pGraphicDev);
 	PreRender(pGraphicDev);
 
 	// 1. 이전 RT 저장
@@ -536,6 +778,8 @@ void CRenderer::RenderBlur(LPDIRECT3DDEVICE9& pGraphicDev)
 	Render_Skid(pGraphicDev);
 	Render_Trail(pGraphicDev);
 	Render_Particle(pGraphicDev);
+
+	Render_Mirror(pGraphicDev);
 
 	// 4. 이전 프레임RT(m_BlurA) 덮어쓰기
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);

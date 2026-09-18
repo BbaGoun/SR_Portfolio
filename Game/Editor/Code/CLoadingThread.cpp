@@ -332,6 +332,10 @@ _uint CLoadingThread::Loading_Stage()
         true, L"ItemBoxTexture")))
         return E_FAIL;
 
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(L"Proto_Ice", Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/ice.bmp", 1),
+        true, L"Ice")))
+        return E_FAIL;
+
     EnterCriticalSection(Get_Crt());
     lstrcpy(m_szLoading, L"Etc Loading.....................................");
     LeaveCriticalSection(Get_Crt());
