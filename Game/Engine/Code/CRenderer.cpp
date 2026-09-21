@@ -252,7 +252,11 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	
+	if (m_bLighting) {
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+		// 법선 정규화
+		pGraphicDev->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+	}
 
 	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
 	{
@@ -273,7 +277,9 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-
+	if (m_bLighting) {
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	}
 }
 
 void CRenderer::Render_Skid(LPDIRECT3DDEVICE9& pGraphicDev)
@@ -494,9 +500,7 @@ void CRenderer::Render_Mirror(LPDIRECT3DDEVICE9& pGraphicDev)
 
 		// 거울 세계로 들어가는 광원 표현
 		D3DLIGHT9 originLight = {};
-		BOOL	originEnabled = FALSE;
 		pGraphicDev->GetLight(0, &originLight);
-		pGraphicDev->GetLightEnable(0, &originEnabled);
 
 		D3DLIGHT9 reflectedLight = originLight;
 		_vec3 reflectedDir;
@@ -507,7 +511,6 @@ void CRenderer::Render_Mirror(LPDIRECT3DDEVICE9& pGraphicDev)
 		reflectedLight.Direction = reflectedDir;
 
 		pGraphicDev->SetLight(0, &reflectedLight);
-		pGraphicDev->LightEnable(0, originEnabled);
 
 		// 법선 정규화
 		pGraphicDev->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
@@ -527,7 +530,10 @@ void CRenderer::Render_Mirror(LPDIRECT3DDEVICE9& pGraphicDev)
 		// Render시 CULLMODE를 CW로 설정하게 함.
 		Start_Mirror_Pass(R);
 		
-		Render_Priority(pGraphicDev);
+		// 안개를 끄지 않으면 기존에 설정되어있는 안개가 하늘을 가림
+		pGraphicDev->SetRenderState(D3DRS_FOGENABLE, FALSE);
+		Render_Priority(pGraphicDev);   // 스카이 돔
+		pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
 		Render_NonAlpha(pGraphicDev);
 
 		Render_Alpha(pGraphicDev);
@@ -537,17 +543,29 @@ void CRenderer::Render_Mirror(LPDIRECT3DDEVICE9& pGraphicDev)
 		End_Mirror_Pass();
 
 		pGraphicDev->SetLight(0, &originLight);
-		pGraphicDev->LightEnable(0, originEnabled);
 
+		// 거울도 빛 설정
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 		// 거울 표면은 정상적으로 렌더링
 		pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 		// 클리핑 평면을 끄지 않으면 거울이 보이지 않음
 		pGraphicDev->SetRenderState(D3DRS_CLIPPLANEENABLE, 0);
 		
 		pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+		// 거울 속 세상의 색 반영
 		pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_DESTCOLOR);
 		pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+		
 		pMirror->Render_GameObject();
+
+		// 거울 자체 투명도 반영
+		pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+		
+		pMirror->Render_GameObject();
+
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	}
 
 	pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
