@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CPlayerHead.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -59,7 +59,7 @@ _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 		if (m_bBoost == true)
 		{
 			m_vRotation.x = 0.f;
-			// °í°³ µÚ·Î xÃà È¸Àü -> zÃà È¸Àü
+			// ê³ ê°œ ë’¤ë¡œ xì¶• íšŒì „ -> zì¶• íšŒì „
 			if (m_vRotation.z > -30.f)
 				m_vRotation.z -= 100 * fDeltaTime;
 			else
@@ -68,14 +68,14 @@ _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 		}
 		else
 		{
-			// °í°³ ¿øÀ§Ä¡
+			// ê³ ê°œ ì›ìœ„ì¹˜
 			if (m_vRotation.z < 0.f)
 				m_vRotation.z += 100 * fDeltaTime;
 			else
 				m_vRotation.z = 0.f;
 			KeyInput(fDeltaTime);
 		}
-		// µÚµ¹±â
+		// ë’¤ëŒê¸°
 		if (m_vRotation.y < 0.f)
 			m_vRotation.y += 180 * fDeltaTime;
 		else
@@ -85,7 +85,7 @@ _int CPlayerHead::Update_GameObject(const _float& fDeltaTime)
 	{
 		m_vRotation.x = 0.f;
 		m_vRotation.z = 0.f;
-		// ¾Õ º¸±â
+		// ì• ë³´ê¸°
 		if (m_vRotation.y > -160.f)
 		{
 			m_vRotation.y -= 180 * fDeltaTime;
@@ -107,8 +107,6 @@ void CPlayerHead::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CPlayerHead::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-
 }
 void CPlayerHead::KeyInput(const _float& fDeltaTime)
 {
@@ -116,22 +114,22 @@ void CPlayerHead::KeyInput(const _float& fDeltaTime)
 		return;
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 	{
-		// °í°³ ¿ŞÂÊ
+		// ê³ ê°œ ì™¼ìª½
 		if (m_vRotation.x > -20.f)
 			m_vRotation.x -= 50 * fDeltaTime;
-		// À§Ä¡ ÀÌµ¿
+		// ìœ„ì¹˜ ì´ë™
 	}
 	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 	{
-		// °í°³ ¿À¸¥ÂÊ
+		// ê³ ê°œ ì˜¤ë¥¸ìª½
 		if (m_vRotation.x < 20.f)
 			m_vRotation.x += 50 * fDeltaTime;
 
-		// À§Ä¡ ÀÌµ¿
+		// ìœ„ì¹˜ ì´ë™
 	}
 	else
 	{
-		// °í°³ ¿øÀ§Ä¡
+		// ê³ ê°œ ì›ìœ„ì¹˜
 		if (m_vRotation.x < -1.f)
 			m_vRotation.x += 50 * fDeltaTime;
 		else if (m_vRotation.x > 1.f)

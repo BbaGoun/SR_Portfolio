@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CPlayerArm.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
@@ -51,7 +51,7 @@ void CPlayerArm::FixedUpdate_GameObject(const _float& fFixedDeltaTime)
 _int CPlayerArm::Update_GameObject(const _float& fDeltaTime)
 {
 	if (m_bFirst) {
-		// ÇÃ·¹ÀÌ¾î ¹Ùµð -> ÇÃ·¹ÀÌ¾î -> Ä«Æ® ¹Ùµð -> Ä«Æ®
+		// í”Œë ˆì´ì–´ ë°”ë”” -> í”Œë ˆì´ì–´ -> ì¹´íŠ¸ ë°”ë”” -> ì¹´íŠ¸
 		CGameObject* p = m_pParent->Get_Parent()->Get_Parent()->Get_Parent()->Get_Parent();
 		if (CCart* pCart = dynamic_cast<CCart*>(p))
 			m_bKeyInput = true;
@@ -76,7 +76,7 @@ _int CPlayerArm::Update_GameObject(const _float& fDeltaTime)
 	}
 	else
 	{
-		// ÈÄÁø(ÆÈ ¿øÀ§Ä¡)
+		// í›„ì§„(íŒ” ì›ìœ„ì¹˜)
 		m_vRotation.x = 0.f;
 	}
 
@@ -90,7 +90,6 @@ void CPlayerArm::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CPlayerArm::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 
 }
 void CPlayerArm::KeyInput(const _float& fDeltaTime)
@@ -99,19 +98,19 @@ void CPlayerArm::KeyInput(const _float& fDeltaTime)
 		return;
 	if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_LEFT))
 	{
-		// °í°³ ¿ÞÂÊ
+		// ê³ ê°œ ì™¼ìª½
 		if (m_vRotation.x > -20.f)
 			m_vRotation.x -= 50 * fDeltaTime;
 	}
 	else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIKEYBOARD_RIGHT))
 	{
-		// °í°³ ¿À¸¥ÂÊ
+		// ê³ ê°œ ì˜¤ë¥¸ìª½
 		if (m_vRotation.x < 20.f)
 			m_vRotation.x += 50 * fDeltaTime;
 	}
 	else
 	{
-		// °í°³ ¿øÀ§Ä¡
+		// ê³ ê°œ ì›ìœ„ì¹˜
 		if (m_vRotation.x < -1.f)
 			m_vRotation.x += 50 * fDeltaTime;
 		else if (m_vRotation.x > 1.f)

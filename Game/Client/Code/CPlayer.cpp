@@ -54,7 +54,6 @@ void CPlayer::LateUpdate_GameObject(const _float& fDeltaTime)
 
 void CPlayer::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
 }
 
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
