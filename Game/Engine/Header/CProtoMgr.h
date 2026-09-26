@@ -35,9 +35,6 @@
 #include "CMeshRibbon.h"
 #include "CCircleCol.h"
 
-// 셰이더
-#include "CDiffuseShader.h"
-
 BEGIN(Engine)
 
 
