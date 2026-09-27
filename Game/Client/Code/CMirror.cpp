@@ -29,7 +29,7 @@ HRESULT CMirror::Ready_GameObject()
 
 	m_mapComponent.insert({ L"Com_Buffer", pComponent });
 
-	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_SkyDome"));
+	pComponent = m_pTextureCom = static_cast<CTexture*>(CProtoMgr::GetInstance()->Get_CloneComponent(L"Proto_Ice"));
 	pComponent->Set_Owner(this);
 
 	m_mapComponent.insert({ L"Com_Texture", pComponent });
