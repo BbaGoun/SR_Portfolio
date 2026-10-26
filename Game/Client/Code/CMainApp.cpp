@@ -138,6 +138,7 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	m_pGraphicDev->AddRef();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	CRenderer::GetInstance()->Set_Lighting(false);
 
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);

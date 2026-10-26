@@ -45,7 +45,8 @@ _int CLoading::Update_Scene(const _float& fDeltaTime)
             //Engine::CScene* pStage = CScene_Test::Create(m_pGraphicDev);
             //Engine::CScene* pStage = CItem::Create(m_pGraphicDev);
             //Engine::CScene* pStage = CCollisionTest::Create(m_pGraphicDev);
-            Engine::CScene* pStage = CMirrorTest::Create(m_pGraphicDev);
+            //Engine::CScene* pStage = CMirrorTest::Create(m_pGraphicDev);
+            Engine::CScene* pStage = CNexonVideo::Create(m_pGraphicDev);
 
             if (nullptr == pStage)
                 return E_FAIL;
