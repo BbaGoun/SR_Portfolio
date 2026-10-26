@@ -25,6 +25,16 @@ namespace Engine
 
 	const _ulong	FVF_TEX = D3DFVF_XYZ | D3DFVF_TEX1;
 
+	typedef struct tagVertexTextureNormal
+	{
+		_vec3		vPosition = { 0, 0, 0 };
+		_vec3		vNormal = { 0, 0, 0 };
+		_vec2		vTexUV = { 0, 0 };
+	}VTXTEXNOR;
+
+	// FVF는 순서도 고정되어있다.
+	const _ulong	FVF_TEXNOR = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
+
 	typedef struct tagVertexMesh
 	{
 		_vec3		vPosition;
@@ -74,6 +84,9 @@ namespace Engine
 	const _ulong	FVF_MISSILE = D3DFVF_XYZ | D3DFVF_DIFFUSE;
 	typedef struct tagFullScreen
 	{
+		// XYZRHW에서 4번째 원소인 RHW는 뷰 스페이스에서의 Z값의 역수다.
+		// XYZRHW는 모델->투영까지의 변환 과정을 전부 생략하고 계산된 값을 바로 넣어주는 것
+		// 이때 원근이나 깊이 계산에 필요한 투영 과정에서 보존된 W값을 직접 입력하는 것이다. 
 		_vec4		vPosition;
 		_ulong		dwColor;
 		_vec2		vTexUV;
@@ -113,7 +126,7 @@ namespace Engine
 	typedef struct tagFace32
 	{
 		INDEX32 indices;
-		_vec3	vNoraml = { 0, 0 ,0 };
+		_vec3	vNormal = { 0, 0 ,0 };
 	}FACE32;
 
 

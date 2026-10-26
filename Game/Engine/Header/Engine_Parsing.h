@@ -359,7 +359,7 @@ namespace Engine
 			}
 			else if (swscanf_s(t, L"hm_face_normal=%f %f %f", &fX, &fY, &fZ) == 3)
 			{
-				face.vNoraml = { fX, fY, fZ };
+				face.vNormal = { fX, fY, fZ };
 			}
 			else if (!wcscmp(t, L"END_HM_FACE"))
 			{
@@ -521,7 +521,7 @@ namespace Engine
 						writeIndent(pf, depth + 3);
 						fwprintf(pf, L"hm_face_index=%u %u %u\n", f.indices._0, f.indices._1, f.indices._2);
 						writeIndent(pf, depth + 3);
-						fwprintf(pf, L"hm_face_normal=%f %f %f\n", f.vNoraml.x, f.vNoraml.y, f.vNoraml.z);
+						fwprintf(pf, L"hm_face_normal=%f %f %f\n", f.vNormal.x, f.vNormal.y, f.vNormal.z);
 						writeIndent(pf, depth + 2);
 						fwprintf(pf, L"END_HM_FACE\n");
 					}

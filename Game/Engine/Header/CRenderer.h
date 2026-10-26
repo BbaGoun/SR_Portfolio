@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "CBase.h"
 #include "Engine_Define.h"
@@ -43,6 +43,14 @@ public:
 
 	void		Render_Particle(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_Fog(LPDIRECT3DDEVICE9& pGraphicDev);
+
+	void		Render_Mirror(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Start_Mirror_Pass(_matrix matReflect);
+	bool		Get_Mirror_Pass(_matrix& outMatReflect);
+	void		End_Mirror_Pass();
+
+	void		Set_Lighting(bool _b) { m_bLighting = _b; }
+
 	void		Render_NonAlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 
@@ -74,6 +82,11 @@ private:
 
 	bool					m_bBlur;
 	float					m_fBlurPower;
+
+	_matrix					m_matReflect;
+	_bool					m_bReflectPass = false;
+
+	_bool					m_bLighting = true;
 private:
 	virtual void	Free();
 

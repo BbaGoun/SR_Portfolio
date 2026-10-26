@@ -128,6 +128,8 @@ private:
 	_matrix			m_matLocalWorld;
 	_bool			m_bDirty;
 
+	_matrix			m_matReflectWorld;
+
 protected:
 	virtual void		Free() override;
 };

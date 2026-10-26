@@ -1,5 +1,6 @@
 ﻿#include "CTransform.h"
 #include "CGameObject.h"
+#include "CRenderer.h"
 
 CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev) : CComponent(pGraphicDev)
 , m_localQuaternion({ 0, 0, 0, 1 })
@@ -88,8 +89,14 @@ void CTransform::Set_LocalWorld(_matrix* _MatLocal, bool bDefault)
 
 _matrix* CTransform::Get_World()
 {
-	if (!m_bDirty)
+	if (!m_bDirty) {
+		_matrix matReflect;
+		if (CRenderer::GetInstance()->Get_Mirror_Pass(matReflect)) {
+			m_matReflectWorld = m_matWorld * matReflect;
+			return &m_matReflectWorld;
+		}
 		return &m_matWorld;
+	}
 
 	// 1. 월드 행렬의 초기화
 	D3DXMatrixIdentity(&m_matLocalWorld);

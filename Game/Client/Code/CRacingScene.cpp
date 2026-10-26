@@ -157,6 +157,9 @@ HRESULT CRacingScene::LoadSceneFromFile()
 	case MAP_SPEED:
 		path = L"../Bin/Resource/Editor/Scene/SpeedScene.scene";
 		break;
+	case MAP_TEST_MIRROR:
+		path = L"../Bin/Resource/Editor/AfterTest/Mirror.scene";
+		break;
 	default:
 		return E_FAIL;
 	}
@@ -687,7 +690,7 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	CRankMgr::GetInstance()->AddUI(pCart, pUI_RankBG);
 
 	// 봇 BG 1
-	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_BLUE);
+	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_YELLOW);
 	if (nullptr == pUI_RankBG)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_RankBazziBG", pUI_RankBG)))
@@ -722,7 +725,7 @@ HRESULT CRacingScene::Ready_UI_Layer()
 	pItemIcon->Set_Bot(static_cast<CCartBot*>(vecCartBot[0]));
 
 	// 봇 BG2
-	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_YELLOW);
+	pUI_RankBG = CUI_RankBG::Create(m_pGraphicDev, ROW_OWNER_BOT, MARK_BLUE);
 	if (nullptr == pUI_RankBG)
 		return E_FAIL;
 	if (FAILED(pUILayer->Add_GameObject(L"UI_RankDaoBG", pUI_RankBG)))
